@@ -37,5 +37,7 @@ export async function ltcBlockchainExample() {
         value: 0.02969944,
       },
     ],
+    fee: '0.001',
+    changeAddress: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
   } as LtcTransactionAddress)
 }

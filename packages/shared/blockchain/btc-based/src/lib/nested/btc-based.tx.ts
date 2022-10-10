@@ -11,7 +11,7 @@ import {
   LtcTransactionUTXO,
   LtcTransactionUTXOKMS,
   LtcUTXO,
-  TransactionHashKMS,
+  TransactionHash,
 } from '@tatumio/api-client'
 import { PrivateKey, Script, Transaction } from 'bitcore-lib'
 import { amountUtils, SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
@@ -24,23 +24,23 @@ interface BtcBasedTransaction extends Transaction {
 }
 
 export type BtcBasedTx<T> = {
-  sendTransaction: (body: T, options: BtcBasedTxOptions) => Promise<TransactionHashKMS>
+  sendTransaction: (body: T, options: BtcBasedTxOptions) => Promise<TransactionHash>
   prepareSignedTransaction: (body: T, options: BtcBasedTxOptions) => Promise<string>
 }
 
 export type BtcTransactionTypes =
-  | (BtcTransactionFromAddress & FeeChange)
-  | (BtcTransactionFromAddressKMS & FeeChange)
-  | (BtcTransactionFromUTXO & FeeChange)
-  | (BtcTransactionFromUTXOKMS & FeeChange)
+  | BtcTransactionFromAddress
+  | BtcTransactionFromAddressKMS
+  | BtcTransactionFromUTXO
+  | BtcTransactionFromUTXOKMS
 
 export type FeeChange = { fee?: number; change?: string }
 
 export type LtcTransactionTypes =
-  | (LtcTransactionAddress & FeeChange)
-  | (LtcTransactionAddressKMS & FeeChange)
-  | (LtcTransactionUTXO & FeeChange)
-  | (LtcTransactionUTXOKMS & FeeChange)
+  | LtcTransactionAddress
+  | LtcTransactionAddressKMS
+  | LtcTransactionUTXO
+  | LtcTransactionUTXOKMS
 
 type BtcBasedTransactionTypes = BtcTransactionTypes | LtcTransactionTypes
 
@@ -51,16 +51,10 @@ type LtcFromAddressTypes = LtcTransactionAddress | LtcTransactionAddressKMS
 type BtcFromUtxoTypes = BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS
 type LtcFromUtxoTypes = LtcTransactionUTXO | LtcTransactionUTXOKMS
 
-export type BtcBasedFromWithChange =
-  | (BtcTransactionFromAddress & FeeChange)
-  | (LtcTransactionAddress & FeeChange)
-export type BtcBasedFromWithKmsChange =
-  | (BtcTransactionFromAddressKMS & FeeChange)
-  | (LtcTransactionAddressKMS & FeeChange)
-export type BtcBasedUtxoWithChange = (BtcTransactionFromUTXO & FeeChange) | (LtcTransactionUTXO & FeeChange)
-export type BtcBasedUtxoKMSWithChange =
-  | (BtcTransactionFromUTXOKMS & FeeChange)
-  | (LtcTransactionUTXOKMS & FeeChange)
+export type BtcBasedFromWithChange = BtcTransactionFromAddress | LtcTransactionAddress
+export type BtcBasedFromWithKmsChange = BtcTransactionFromAddressKMS | LtcTransactionAddressKMS
+export type BtcBasedUtxoWithChange = BtcTransactionFromUTXO | LtcTransactionUTXO
+export type BtcBasedUtxoKMSWithChange = BtcTransactionFromUTXOKMS | LtcTransactionUTXOKMS
 
 type GetTxByAddressType =
   | typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
@@ -216,8 +210,8 @@ export const btcBasedTransactions = (
       const tx: BtcBasedTransaction = new createTransaction()
       let privateKeysToSign: string[] = []
 
-      if (body.change) {
-        tx.change(body.change)
+      if (body.changeAddress) {
+        tx.change(body.changeAddress)
       }
       if (body.fee) {
         tx.fee(amountUtils.toSatoshis(body.fee))
@@ -281,7 +275,7 @@ export const btcBasedTransactions = (
   const sendTransaction = async function (
     body: BtcBasedTransactionTypes,
     options: BtcBasedTxOptions,
-  ): Promise<TransactionHashKMS> {
+  ): Promise<TransactionHash> {
     return apiCalls.broadcast({
       txData: await prepareSignedTransaction(body, options),
     })

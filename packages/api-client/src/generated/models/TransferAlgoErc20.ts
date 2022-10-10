@@ -4,31 +4,31 @@
 
 export type TransferAlgoErc20 = {
     /**
-     * Sender account ID
+     * The ID of the virtual account to send the ERC-20-equivalent Algorand tokens from
      */
     senderAccountId: string;
     /**
-     * Blockchain address to receive assets
+     * The blockchain address to send the ERC-20-equivalent Algorand tokens to
      */
     address: string;
     /**
-     * Amount to be sent.
+     * The amount of the ERC-20-equivalent Algorand tokens to send
      */
     amount: string;
     /**
-     * Secret for account. Secret, or signature Id must be present.
+     * The secret of the Algorand wallet (account). Secret, or signature Id must be present.
      */
     privateKey: string;
     /**
-     * Compliance check, if withdrawal is not compliant, it will not be processed.
+     * Compliance check; if the withdrawal is not compliant, it will not be processed
      */
     compliant?: boolean;
     /**
-     * Identifier of the payment, shown for created Transaction within Tatum sender account.
+     * The identifier of the token transfer that is shown on the virtual account for the created transaction
      */
     paymentId?: string;
     /**
-     * Note without any spaces.
+     * The note for the recipient; must not contain spaces
      */
     senderNote?: string;
 }

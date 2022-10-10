@@ -57,7 +57,7 @@ import type { MintNftTron } from '../models/MintNftTron';
 import type { NftTx } from '../models/NftTx';
 import type { SignatureId } from '../models/SignatureId';
 import type { SolanaMintedResult } from '../models/SolanaMintedResult';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferNft } from '../models/TransferNft';
 import type { TransferNftAlgo } from '../models/TransferNftAlgo';
 import type { TransferNftAlgoExpress } from '../models/TransferNftAlgoExpress';
@@ -126,7 +126,7 @@ export class NftErc721OrCompatibleService {
     public static nftDeployErc721(
         requestBody: (DeployNft | DeployNftCelo | DeployNftTron | DeployNftKMS | DeployNftCeloKMS | DeployNftTronKMS | DeployNftFlowPK | DeployNftFlowMnemonic | DeployNftFlowKMS),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/nft/deploy`,
@@ -326,7 +326,7 @@ export class NftErc721OrCompatibleService {
             public static nftMintErc721(
                 requestBody: (MintNftExpress | MintNftExpressSolana | MintNftExpressAlgorand | MintNftSolana | MintNftMinter | MintNft | MintNftCelo | MintNftAlgorand | MintNftFlowPK | MintNftFlowMnemonic | MintNftTron | MintNftKMS | MintNftSolanaKMS | MintNftKMSCelo | MintNftKMSTron | MintNftAlgorandKMS | MintNftFlowKMS),
                 xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-            ): CancelablePromise<(TransactionHashKMS | FlowMintedResult | SolanaMintedResult | AlgorandMintedResult | SignatureId)> {
+            ): CancelablePromise<(TransactionHash | FlowMintedResult | SolanaMintedResult | AlgorandMintedResult | SignatureId)> {
                 return __request({
                     method: 'POST',
                     path: `/v3/nft/mint`,
@@ -386,7 +386,7 @@ export class NftErc721OrCompatibleService {
             public static nftTransferErc721(
                 requestBody: (TransferNft | TransferNftCelo | TransferNftTron | TransferNftSolana | TransferNftAlgo | TransferNftAlgoExpress | TransferNftFlowPK | TransferNftFlowMnemonic | TransferNftKMS | TransferNftKMSCelo | TransferNftAlgoKMS | TransferNftSolanaKMS | TransferNftFlowKMS | TransferNftKMSTron),
                 xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-            ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+            ): CancelablePromise<(TransactionHash | SignatureId)> {
                 return __request({
                     method: 'POST',
                     path: `/v3/nft/transaction`,
@@ -491,7 +491,7 @@ export class NftErc721OrCompatibleService {
                 public static nftMintMultipleErc721(
                     requestBody: (MintMultipleNftMinter | MintMultipleNft | MintMultipleNftCelo | MintMultipleNftTron | MintMultipleNftFlowPK | MintMultipleNftFlowMnemonic | MintMultipleNftKMS | MintMultipleNftKMSCelo | MintMultipleNftKMSTron | MintMultipleNftFlowKMS),
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-                ): CancelablePromise<(TransactionHashKMS | FlowMintedMultipleResult | SignatureId)> {
+                ): CancelablePromise<(TransactionHash | FlowMintedMultipleResult | SignatureId)> {
                     return __request({
                         method: 'POST',
                         path: `/v3/nft/mint/batch`,
@@ -540,7 +540,7 @@ export class NftErc721OrCompatibleService {
                 public static nftBurnErc721(
                     requestBody: (BurnNft | BurnNftCelo | BurnNftKMSCelo | BurnNftTron | BurnNftKMSTron | BurnNftKMS | BurnNftFlowPK | BurnNftFlowMnemonic | BurnNftFlowKMS),
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-                ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+                ): CancelablePromise<(TransactionHash | SignatureId)> {
                     return __request({
                         method: 'POST',
                         path: `/v3/nft/burn`,
@@ -585,7 +585,7 @@ export class NftErc721OrCompatibleService {
                 public static nftAddMinter(
                     requestBody: (AddNftMinter | AddNftMinterKMS),
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-                ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+                ): CancelablePromise<(TransactionHash | SignatureId)> {
                     return __request({
                         method: 'POST',
                         path: `/v3/nft/mint/add`,
@@ -620,7 +620,7 @@ export class NftErc721OrCompatibleService {
                  */
                 public static nftVerifyInCollection(
                     requestBody: (VerifySolanaNFT | VerifySolanaNFTKMS),
-                ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+                ): CancelablePromise<(TransactionHash | SignatureId)> {
                     return __request({
                         method: 'POST',
                         path: `/v3/nft/verify`,
@@ -664,7 +664,7 @@ export class NftErc721OrCompatibleService {
                 public static nftUpdateCashbackErc721(
                     requestBody: (UpdateCashbackValueForAuthorNft | UpdateCashbackValueForAuthorNftCelo | UpdateCashbackValueForAuthorNftTron | UpdateCashbackValueForAuthorNftKMS | UpdateCashbackValueForAuthorNftKMSCelo | UpdateCashbackValueForAuthorNftKMSTron),
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-                ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+                ): CancelablePromise<(TransactionHash | SignatureId)> {
                     return __request({
                         method: 'PUT',
                         path: `/v3/nft/royalty`,
@@ -885,7 +885,7 @@ export class NftErc721OrCompatibleService {
                  * @throws ApiError
                  */
                 public static nftGetTokensByCollectionErc721(
-                    chain: 'CELOz' | 'MATIC' | 'ETH',
+                    chain: 'CELO' | 'MATIC' | 'ETH',
                     pageSize: number,
                     address: string,
                     offset?: number,
@@ -942,6 +942,7 @@ export class NftErc721OrCompatibleService {
                  * <li>Polygon</li>
                  * <li>Solana</li>
                  * <li>TRON</li>
+                 * <li>Algorand</li>
                  * </ul>
                  *
                  * @param chain Blockchain to work with
@@ -952,7 +953,7 @@ export class NftErc721OrCompatibleService {
                  * @throws ApiError
                  */
                 public static nftGetBalanceErc721(
-                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC' | 'SOL',
+                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC' | 'SOL' | 'ALGO',
                     address: string,
                     contractAddress: string,
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',

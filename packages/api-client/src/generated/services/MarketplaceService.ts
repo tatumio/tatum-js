@@ -18,7 +18,7 @@ import type { SellAssetOnMarketplaceCelo } from '../models/SellAssetOnMarketplac
 import type { SellAssetOnMarketplaceCeloKMS } from '../models/SellAssetOnMarketplaceCeloKMS';
 import type { SellAssetOnMarketplaceKMS } from '../models/SellAssetOnMarketplaceKMS';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { UpdateFee } from '../models/UpdateFee';
 import type { UpdateFeeCelo } from '../models/UpdateFeeCelo';
 import type { UpdateFeeCeloKMS } from '../models/UpdateFeeCeloKMS';
@@ -67,7 +67,7 @@ export class MarketplaceService {
      */
     public static generateMarketplace(
         requestBody: (GenerateMarketplace | GenerateMarketplaceKMS | GenerateMarketplaceCelo | GenerateMarketplaceCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/marketplace/listing`,
@@ -111,7 +111,7 @@ export class MarketplaceService {
      */
     public static sellAssetOnMarketplace(
         requestBody: (SellAssetOnMarketplace | SellAssetOnMarketplaceKMS | SellAssetOnMarketplaceCelo | SellAssetOnMarketplaceCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/marketplace/listing/sell`,
@@ -158,7 +158,7 @@ export class MarketplaceService {
      */
     public static buyAssetOnMarketplace(
         requestBody: (BuyAssetOnMarketplace | BuyAssetOnMarketplaceKMS | BuyAssetOnMarketplaceCelo | BuyAssetOnMarketplaceCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/marketplace/listing/buy`,
@@ -202,7 +202,7 @@ export class MarketplaceService {
      */
     public static cancelSellMarketplaceListing(
         requestBody: (CancelSellAssetOnMarketplace | CancelSellAssetOnMarketplaceKMS | CancelSellAssetOnMarketplaceCelo | CancelSellAssetOnMarketplaceCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/marketplace/listing/cancel`,
@@ -425,7 +425,7 @@ export class MarketplaceService {
      */
     public static updateFeeRecipient(
         requestBody: (UpdateFeeRecipient | UpdateFeeRecipientKMS | UpdateFeeRecipientCelo | UpdateFeeRecipientCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'PUT',
             path: `/v3/blockchain/marketplace/listing/recipient`,
@@ -465,7 +465,7 @@ export class MarketplaceService {
      */
     public static updateFee(
         requestBody: (UpdateFee | UpdateFeeKMS | UpdateFeeCelo | UpdateFeeCeloKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'PUT',
             path: `/v3/blockchain/marketplace/listing/fee`,

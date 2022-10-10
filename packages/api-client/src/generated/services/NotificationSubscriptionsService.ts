@@ -11,7 +11,6 @@ import type { CreateSubscriptionKMSSuccess } from '../models/CreateSubscriptionK
 import type { CreateSubscriptionMultiTokenTransferEvent } from '../models/CreateSubscriptionMultiTokenTransferEvent';
 import type { CreateSubscriptionNftTransferEvent } from '../models/CreateSubscriptionNftTransferEvent';
 import type { CreateSubscriptionNotification } from '../models/CreateSubscriptionNotification';
-import type { CreateSubscriptionOffchain } from '../models/CreateSubscriptionOffchain';
 import type { CreateSubscriptionPartialTradeMatch } from '../models/CreateSubscriptionPartialTradeMatch';
 import type { CreateSubscriptionPending } from '../models/CreateSubscriptionPending';
 import type { CreateSubscriptionTradeMatch } from '../models/CreateSubscriptionTradeMatch';
@@ -93,28 +92,28 @@ export class NotificationSubscriptionsService {
      * <td>Yes/Yes</td>
      * <td>BTC</td>
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
-     * <td>20 credits / day / address</td>
+     * <td>5 credits / day / address</td>
      * </tr>
      * <tr>
      * <td>Litecoin</td>
      * <td>Yes/Yes</td>
      * <td>LTC</td>
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
-     * <td>20 credits / day / address</td>
+     * <td>7 credits / day / address</td>
      * </tr>
      * <tr>
      * <td>Bitcoin Cash</td>
      * <td>Yes/Yes</td>
      * <td>BCH, only incoming transactions</td>
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
-     * <td>20 credits / day / address</td>
+     * <td>5 credits / day / address</td>
      * </tr>
      * <tr>
      * <td>Dogecoin</td>
      * <td>Yes/Yes</td>
      * <td>DOGE, only incoming transactions</td>
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
-     * <td>20 credits / day / address</td>
+     * <td>7 credits / day / address</td>
      * </tr>
      * <tr>
      * <td>Tron</td>
@@ -156,27 +155,27 @@ export class NotificationSubscriptionsService {
          * <tr>
          * <td>Ethereum</td>
          * <td>ethereum-sepolia / ethereum-mainnet</td>
-         * <td>1,000,000 credits / day</td>
+         * <td>500,000 credits / day</td>
          * </tr>
          * <tr>
          * <td>Polygon</td>
          * <td>polygon-mumbai / polygon-mainnet</td>
-         * <td>1,000,000 credits / day</td>
+         * <td>500,000 credits / day</td>
          * </tr>
          * <tr>
          * <td>Celo</td>
          * <td>celo-testnet / celo-mainnet</td>
-         * <td>1,000,000 credits / day</td>
+         * <td>500,000 credits / day</td>
          * </tr>
          * <tr>
          * <td>Klaytn</td>
          * <td>klaytn-baobab / klaytn-cypress</td>
-         * <td>1,000,000 credits / day</td>
+         * <td>500,000 credits / day</td>
          * </tr>
          * <tr>
          * <td>BNB Smart Chain</td>
          * <td>bsc-testnet / bsc-mainnet</td>
-         * <td>1,000,000 credits / day</td>
+         * <td>500,000 credits / day</td>
          * </tr>
          * </table>
          * The request body of the POST request is a JSON object with the following structure:<br/>
@@ -212,27 +211,27 @@ export class NotificationSubscriptionsService {
                      * <tr>
                      * <td>Ethereum</td>
                      * <td>ethereum-sepolia / ethereum-mainnet</td>
-                     * <td>1,000,000 credits / day</td>
+                     * <td>500,000 credits / day</td>
                      * </tr>
                      * <tr>
                      * <td>Polygon</td>
                      * <td>polygon-mumbai / polygon-mainnet</td>
-                     * <td>1,000,000 credits / day</td>
+                     * <td>500,000 credits / day</td>
                      * </tr>
                      * <tr>
                      * <td>Celo</td>
                      * <td>celo-testnet / celo-mainnet</td>
-                     * <td>1,000,000 credits / day</td>
+                     * <td>500,000 credits / day</td>
                      * </tr>
                      * <tr>
                      * <td>Klaytn</td>
                      * <td>klaytn-baobab / klaytn-cypress</td>
-                     * <td>1,000,000 credits / day</td>
+                     * <td>500,000 credits / day</td>
                      * </tr>
                      * <tr>
                      * <td>BNB Smart Chain</td>
                      * <td>bsc-testnet / bsc-mainnet</td>
-                     * <td>1,000,000 credits / day</td>
+                     * <td>500,000 credits / day</td>
                      * </tr>
                      * </table>
                      * The request body of the POST request is a JSON object with the following structure:<br/>
@@ -268,27 +267,27 @@ export class NotificationSubscriptionsService {
                                  * <tr>
                                  * <td>Ethereum</td>
                                  * <td>ethereum-sepolia / ethereum-mainnet</td>
-                                 * <td>200,000 credits / day</td>
+                                 * <td>50,000 credits / day</td>
                                  * </tr>
                                  * <tr>
                                  * <td>Polygon</td>
                                  * <td>polygon-mumbai / polygon-mainnet</td>
-                                 * <td>200,000 credits / day</td>
+                                 * <td>50,000 credits / day</td>
                                  * </tr>
                                  * <tr>
                                  * <td>Celo</td>
                                  * <td>celo-testnet / celo-mainnet</td>
-                                 * <td>200,000 credits / day</td>
+                                 * <td>50,000 credits / day</td>
                                  * </tr>
                                  * <tr>
                                  * <td>Klaytn</td>
                                  * <td>klaytn-baobab / klaytn-cypress</td>
-                                 * <td>200,000 credits / day</td>
+                                 * <td>50,000 credits / day</td>
                                  * </tr>
                                  * <tr>
                                  * <td>BNB Smart Chain</td>
                                  * <td>bsc-testnet / bsc-mainnet</td>
-                                 * <td>200,000 credits / day</td>
+                                 * <td>50,000 credits / day</td>
                                  * </tr>
                                  * </table>
                                  * The request body of the POST request is a JSON object with the following structure:<br/>
@@ -415,11 +414,6 @@ export class NotificationSubscriptionsService {
                                                                          * "txId": "0x7bb7d3b90567e89f999f2e3d263bc3738a018dbbcfa9f5397678cf17cdf0235f"
                                                                          * }</pre>
                                                                          * 10 credits will be debited every day.</li>
-                                                                         * <li><b>OFFCHAIN_WITHDRAWAL</b> - Off-chain scanning of outgoing transactions for BTC, BCH, LTC, DOGE and ETH blockchains - by default addresses in registered for off-chain
-                                                                         * scanning are synchronized only against incoming transactions. By enabling this feature, off-chain accounts with connected blockchain addresses
-                                                                         * will be scanned also for outgoing transactions. This transaction wil be recorder to the ledger and account balance will be decreased - don't use it if you perform your own transactions
-                                                                         * from the account to the blockchain.<br/>
-                                                                         * 20 credits will be debited for every address registered for scanning every day.</li>
                                                                          * <li><b>ACCOUNT_BALANCE_LIMIT</b> - Report with all account balances above desired limit.</li>
                                                                          * <li><b>TRANSACTION_HISTORY_REPORT</b> - Report with all ledger transactions for last X hours, where X is set by the subscription attribute as interval.
                                                                          * Maximum number of transactions returned by this report is 20000. Transactions are obtained from the time of the invocation of the GET method to obtain report - X hours.</li>
@@ -429,15 +423,20 @@ export class NotificationSubscriptionsService {
                                                                          * Result of the operation is subscription ID, which can be used to cancel subscription or obtain additional data connected to it like reports.</p>
                                                                          *
                                                                          * @param requestBody
+                                                                         * @param testnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
                                                                          * @returns Id OK
                                                                          * @throws ApiError
                                                                          */
                                                                         public static createSubscription(
-                                                                            requestBody: (CreateSubscriptionNotification | CreateSubscriptionNftTransferEvent | CreateSubscriptionMultiTokenTransferEvent | CreateSubscriptionContractLogEvent | CreateSubscriptionIncoming | CreateSubscriptionPending | CreateSubscriptionTradeMatch | CreateSubscriptionPartialTradeMatch | CreateSubscriptionKMSError | CreateSubscriptionKMSSuccess | CreateSubscriptionTxInTheBlock | CreateSubscriptionOffchain | CreateSubscriptionBalance | CreateSubscriptionInterval),
+                                                                            requestBody: (CreateSubscriptionNotification | CreateSubscriptionNftTransferEvent | CreateSubscriptionMultiTokenTransferEvent | CreateSubscriptionContractLogEvent | CreateSubscriptionIncoming | CreateSubscriptionPending | CreateSubscriptionTradeMatch | CreateSubscriptionPartialTradeMatch | CreateSubscriptionKMSError | CreateSubscriptionKMSSuccess | CreateSubscriptionTxInTheBlock | CreateSubscriptionBalance | CreateSubscriptionInterval),
+                                                                            testnetType: 'ethereum-sepolia' | 'ethereum-goerli' = 'ethereum-sepolia',
                                                                         ): CancelablePromise<Id> {
                                                                             return __request({
                                                                                 method: 'POST',
                                                                                 path: `/v3/subscription`,
+                                                                                query: {
+                                                                                    'testnetType': testnetType,
+                                                                                },
                                                                                 body: requestBody,
                                                                                 mediaType: 'application/json',
                                                                                 errors: {

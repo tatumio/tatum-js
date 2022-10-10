@@ -11,7 +11,7 @@ import type { OneTx } from '../models/OneTx';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferOneBlockchain } from '../models/TransferOneBlockchain';
 import type { TransferOneBlockchainKMS } from '../models/TransferOneBlockchainKMS';
 import type { Wallet } from '../models/Wallet';
@@ -334,7 +334,7 @@ export class HarmonyService {
     public static oneBlockchainTransfer(
         requestBody: (TransferOneBlockchain | TransferOneBlockchainKMS),
         shardId?: number,
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/one/transaction`,
@@ -374,7 +374,7 @@ export class HarmonyService {
     public static oneBlockchainSmartContractInvocation(
         requestBody: (CallOneReadSmartContractMethod | CallOneSmartContractMethod | CallOneSmartContractMethodKMS),
         shardId?: number,
-    ): CancelablePromise<(TransactionHashKMS | SignatureId | Data)> {
+    ): CancelablePromise<(TransactionHash | SignatureId | Data)> {
         return __request({
             method: 'POST',
             path: `/v3/one/smartcontract`,
@@ -400,13 +400,13 @@ export class HarmonyService {
      *
      * @param requestBody
      * @param shardId Shard to read data from
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static oneBroadcast(
         requestBody: BroadcastKMS,
         shardId?: number,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/one/broadcast`,

@@ -19,11 +19,13 @@ export async function bchTransactionsExample() {
           value: 0.00015,
         },
       ],
+      fee: '0.00001',
+      changeAddress: '2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc3lo6',
     },
     { testnet: true },
   )
 
-  const { txId, failed } = await bchSDK.transaction.sendTransaction(
+  const { txId } = await bchSDK.transaction.sendTransaction(
     {
       fromUTXO: [
         {
@@ -38,6 +40,8 @@ export async function bchTransactionsExample() {
           value: 0.00015,
         },
       ],
+      fee: '0.00001',
+      changeAddress: '2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc3lo6',
     },
     { testnet: true },
   )

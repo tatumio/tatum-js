@@ -4,7 +4,7 @@ import {
   ApiServices,
   DogeTransactionUTXO,
   DogeTransactionUTXOKMS,
-  TransactionHashKMS,
+  TransactionHash,
 } from '@tatumio/api-client'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 import { amountUtils } from '@tatumio/shared-abstract-sdk'
@@ -55,7 +55,7 @@ export const dogeTransactions = (
     }
   }
 
-  const sendTransaction = async (body: DogeTransactionTypes): Promise<TransactionHashKMS> => {
+  const sendTransaction = async (body: DogeTransactionTypes): Promise<TransactionHash> => {
     return apiCalls.dogeBroadcast({
       txData: await prepareSignedTransaction(body),
     })

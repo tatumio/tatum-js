@@ -4,7 +4,7 @@
 import type { BroadcastKMS } from '../models/BroadcastKMS';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferVetBlockchain } from '../models/TransferVetBlockchain';
 import type { TransferVetBlockchainKMS } from '../models/TransferVetBlockchainKMS';
 import type { VetBlock } from '../models/VetBlock';
@@ -253,12 +253,12 @@ export class VeChainService {
      * </p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static vetBlockchainTransfer(
         requestBody: (TransferVetBlockchain | TransferVetBlockchainKMS),
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/vet/transaction`,
@@ -277,15 +277,15 @@ export class VeChainService {
      * Broadcast signed VeChain transaction
      * <h4>5 credits per API call.</h4><br/>
      * <p>Broadcast signed transaction to VeChain blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static vetBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/vet/broadcast`,

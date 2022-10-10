@@ -15,6 +15,10 @@ export type BtcTransactionFromAddressKMS = {
          * Address to send assets from.
          */
         address: string;
+        /**
+         * Index of the SignatureId (mnemonic with-index).
+         */
+        index?: number;
     }>;
     /**
      * Array of addresses and values to send bitcoins to. Values must be set in BTC. Difference between from and to is transaction fee.
@@ -29,4 +33,12 @@ export type BtcTransactionFromAddressKMS = {
          */
         value: number;
     }>;
+    /**
+     * Fee to be paid in BTC.
+     */
+    fee?: string;
+    /**
+     * Address, where unspent funds will be transferred.
+     */
+    changeAddress?: string;
 }

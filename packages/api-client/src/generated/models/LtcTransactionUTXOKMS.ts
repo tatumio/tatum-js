@@ -33,4 +33,12 @@ export type LtcTransactionUTXOKMS = {
          */
         value: number;
     }>;
+    /**
+     * Fee to be paid in LTC.
+     */
+    fee?: string;
+    /**
+     * Address, where unspent funds will be transferred.
+     */
+    changeAddress?: string;
 }

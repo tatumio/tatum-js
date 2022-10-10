@@ -6,13 +6,15 @@ import type { CallReadSmartContractMethod } from '../models/CallReadSmartContrac
 import type { CallSmartContractMethod } from '../models/CallSmartContractMethod';
 import type { CallSmartContractMethodKMS } from '../models/CallSmartContractMethodKMS';
 import type { Data } from '../models/Data';
+import type { EthBalance } from '../models/EthBalance';
 import type { EthBlock } from '../models/EthBlock';
 import type { EthTx } from '../models/EthTx';
 import type { EthTxInternal } from '../models/EthTxInternal';
+import type { GeneratedAddress } from '../models/GeneratedAddress';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferEthBlockchain } from '../models/TransferEthBlockchain';
 import type { TransferEthBlockchainKMS } from '../models/TransferEthBlockchainKMS';
 import type { Wallet } from '../models/Wallet';
@@ -23,7 +25,7 @@ export class EthereumService {
 
     /**
      * Generate Ethereum wallet
-     * <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. Because they can generate 2^31 addresses from 1 mnemonic phrase, they are very convenient and secure. A mnemonic phrase consists of 24 special words in a defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value which should never be revealed</li><li>Public Key - a public address to be published</li><li>Derivation index - an index of generated address</li></ul></p><p>Tatum follows the BIP44 specification and generates for Ethereum wallets with the derivation path m'/44'/60'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
+     * <h4>1 credit per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. Because they can generate 2^31 addresses from 1 mnemonic phrase, they are very convenient and secure. A mnemonic phrase consists of 24 special words in a defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value which should never be revealed</li><li>Public Key - a public address to be published</li><li>Derivation index - an index of generated address</li></ul></p><p>Tatum follows the BIP44 specification and generates for Ethereum wallets with the derivation path m/44'/60'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
      * Generates a BIP44 compatible Ethereum wallet.</p>
      *
      * @param mnemonic Mnemonic to use for generating extended public and private keys.
@@ -61,19 +63,14 @@ export class EthereumService {
      * @param xpub Extended public key of wallet.
      * @param index Derivation index of the address to be generated.
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
-     * @returns any OK
+     * @returns GeneratedAddress OK
      * @throws ApiError
      */
     public static ethGenerateAddress(
         xpub: string,
         index: number,
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<{
-        /**
-         * Ethereum address
-         */
-        address?: string;
-    }> {
+    ): CancelablePromise<GeneratedAddress> {
         return __request({
             method: 'GET',
             path: `/v3/ethereum/address/${xpub}/${index}`,
@@ -208,18 +205,13 @@ export class EthereumService {
      * <h4>1 credit per API call.</h4><br/><p>Gets an Ethereum account balance in ETH. This method does not display the balance of ERC20 or ERC721 tokens in the account.</p>
      * @param address Account address you want to get balance of
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
-     * @returns any OK
+     * @returns EthBalance OK
      * @throws ApiError
      */
     public static ethGetBalance(
         address: string,
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<{
-        /**
-         * Balance in ETH
-         */
-        balance?: string;
-    }> {
+    ): CancelablePromise<EthBalance> {
         return __request({
             method: 'GET',
             path: `/v3/ethereum/account/balance/${address}`,
@@ -297,7 +289,7 @@ export class EthereumService {
      * @param address Account address you want to get balance of
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
-     * @param from Transactions from this block onwords will be included.
+     * @param from Transactions from this block onwards will be included.
      * @param to Transactions up to this block will be included.
      * @param sort Sorting of the data. ASC - oldest first, DESC - newest first.
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
@@ -351,7 +343,7 @@ export class EthereumService {
     public static ethBlockchainTransfer(
         requestBody: (TransferEthBlockchain | TransferEthBlockchainKMS),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/ethereum/transaction`,
@@ -391,7 +383,7 @@ export class EthereumService {
     public static ethBlockchainSmartContractInvocation(
         requestBody: (CallSmartContractMethod | CallReadSmartContractMethod | CallSmartContractMethodKMS),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<(TransactionHashKMS | SignatureId | Data)> {
+    ): CancelablePromise<(TransactionHash | SignatureId | Data)> {
         return __request({
             method: 'POST',
             path: `/v3/ethereum/smartcontract`,
@@ -449,17 +441,17 @@ export class EthereumService {
      * Broadcast signed Ethereum transaction
      * <p><b>2 credits per API call</b></p>
      * <p>Broadcast signed transaction to Ethereum blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static ethBroadcast(
         requestBody: BroadcastKMS,
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/ethereum/broadcast`,

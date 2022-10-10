@@ -15,6 +15,10 @@ export type LtcTransactionAddressKMS = {
          * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
          */
         signatureId: string;
+        /**
+         * Index of the SignatureId (mnemonic with-index).
+         */
+        index?: number;
     }>;
     /**
      * Array of addresses and values to send Litecoins to. Values must be set in LTC. Difference between from and to is transaction fee.
@@ -29,4 +33,12 @@ export type LtcTransactionAddressKMS = {
          */
         value: number;
     }>;
+    /**
+     * Fee to be paid in LTC.
+     */
+    fee?: string;
+    /**
+     * Address, where unspent funds will be transferred.
+     */
+    changeAddress?: string;
 }

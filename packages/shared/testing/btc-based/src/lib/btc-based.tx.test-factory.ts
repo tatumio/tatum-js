@@ -5,23 +5,10 @@ import {
   BtcBasedTx,
   BtcBasedUtxoKMSWithChange,
   BtcBasedUtxoWithChange,
-  FeeChange,
 } from '@tatumio/shared-blockchain-btc-based'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { testHelper } from '@tatumio/shared-testing-common'
-import {
-  BroadcastKMS,
-  BtcTransactionFromAddress,
-  BtcTransactionFromAddressKMS,
-  BtcTransactionFromUTXO,
-  BtcTransactionFromUTXOKMS,
-  CancelablePromise,
-  LtcTransactionAddress,
-  LtcTransactionAddressKMS,
-  LtcTransactionUTXO,
-  LtcTransactionUTXOKMS,
-  TransactionHashKMS,
-} from '@tatumio/api-client'
+import { BroadcastKMS, CancelablePromise, TransactionHash } from '@tatumio/api-client'
 
 export type BtcBasedTestParams = {
   fromAmount: number
@@ -47,7 +34,7 @@ export type BtcBasedMocks = {
   requestGetTxByAddress: (obj?: { outputs: [] }) => void
   requestGetUtxoNotFound: () => void
   requestGetTransactionsNotFound: () => void
-  broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHashKMS>) & jest.Mock
+  broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHash>) & jest.Mock
 }
 
 const options = { testnet: true }
@@ -70,7 +57,7 @@ function prepareManualChange(data: BtcBasedTestParams) {
 
 const definedChangeAddressUTXOBody = (
   data: BtcBasedTestParams,
-  values?: { amount?: number; fee?: number; privateKey?: string },
+  values?: { amount?: number; fee?: string; privateKey?: string },
 ): BtcBasedUtxoWithChange => {
   return {
     fromUTXO: [
@@ -81,14 +68,14 @@ const definedChangeAddressUTXOBody = (
       },
     ],
     to: prepareTo(data, values),
-    change: data.fromAddress,
-    fee: values?.fee ?? data.feeAmount,
+    changeAddress: data.fromAddress,
+    fee: values?.fee ?? data.feeAmount.toString(),
   }
 }
 
 const definedChangeAddressUTXOKmsBody = (
   data: BtcBasedTestParams,
-  values?: { amount?: number; fee?: number; signatureId?: string },
+  values?: { amount?: number; fee?: string; signatureId?: string },
 ): BtcBasedUtxoKMSWithChange => {
   return {
     fromUTXO: [
@@ -99,14 +86,14 @@ const definedChangeAddressUTXOKmsBody = (
       },
     ],
     to: prepareTo(data, values),
-    change: data.fromAddress,
-    fee: values?.fee ?? data.feeAmount,
+    changeAddress: data.fromAddress,
+    fee: values?.fee ?? data.feeAmount.toString(),
   }
 }
 
 const manualChangeAddressUTXOBody = (
   data: BtcBasedTestParams,
-  values?: { amount?: number; fee?: number; privateKey?: string },
+  values?: { amount?: number; fee?: string; privateKey?: string },
 ): BtcBasedUtxoWithChange => {
   return {
     fromUTXO: [
@@ -122,7 +109,7 @@ const manualChangeAddressUTXOBody = (
 
 const manualChangeAddressUTXOKmsBody = (
   data: BtcBasedTestParams,
-  values?: { amount?: number; fee?: number; signatureId?: string },
+  values?: { amount?: number; fee?: string; signatureId?: string },
 ): BtcBasedUtxoKMSWithChange => {
   return {
     fromUTXO: [
@@ -138,7 +125,7 @@ const manualChangeAddressUTXOKmsBody = (
 
 const manualChangeAddressFromBody = (
   data: BtcBasedTestParams,
-  values?: { amount?: number; fee?: number; privateKey?: string },
+  values?: { amount?: number; fee?: string; privateKey?: string },
 ): BtcBasedFromWithChange => {
   return {
     fromAddress: [
@@ -153,7 +140,7 @@ const manualChangeAddressFromBody = (
 
 const manualChangeAddressFromKmsBody = (
   data: BtcBasedTestParams,
-  values?: { amount?: number; fee?: number; signatureId?: string },
+  values?: { amount?: number; fee?: string; signatureId?: string },
 ): BtcBasedFromWithKmsChange => {
   return {
     fromAddress: [
@@ -168,7 +155,7 @@ const manualChangeAddressFromKmsBody = (
 
 const definedChangeAddressFromBody = (
   data: BtcBasedTestParams,
-  values?: { amount?: number; fee?: number; privateKey?: string },
+  values?: { amount?: number; fee?: string; privateKey?: string },
 ): BtcBasedFromWithChange => {
   return {
     fromAddress: [
@@ -178,14 +165,14 @@ const definedChangeAddressFromBody = (
       },
     ],
     to: prepareTo(data, values),
-    change: data.fromAddress,
-    fee: values?.fee ?? data.feeAmount,
+    changeAddress: data.fromAddress,
+    fee: values?.fee ?? data.feeAmount.toString(),
   }
 }
 
 const definedChangeAddressFromKmsBody = (
   data: BtcBasedTestParams,
-  values?: { amount?: number; fee?: number; signatureId?: string },
+  values?: { amount?: number; fee?: string; signatureId?: string },
 ): BtcBasedFromWithKmsChange => {
   return {
     fromAddress: [
@@ -195,8 +182,8 @@ const definedChangeAddressFromKmsBody = (
       },
     ],
     to: prepareTo(data, values),
-    change: data.fromAddress,
-    fee: values?.fee ?? data.feeAmount,
+    changeAddress: data.fromAddress,
+    fee: values?.fee ?? data.feeAmount.toString(),
   }
 }
 
@@ -288,7 +275,7 @@ export const btcBasedTxTestFactory = {
 
         await expect(
           args.transactions.prepareSignedTransaction(
-            definedChangeAddressUTXOBody(args.data, { amount: args.data.fromAmount, fee: 0 }),
+            definedChangeAddressUTXOBody(args.data, { amount: args.data.fromAmount, fee: '0' }),
             options,
           ),
         ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_FEE_TOO_SMALL)

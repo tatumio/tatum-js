@@ -7,7 +7,7 @@ import type { EgldTx } from '../models/EgldTx';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferEgldBlockchain } from '../models/TransferEgldBlockchain';
 import type { TransferEgldBlockchainKMS } from '../models/TransferEgldBlockchainKMS';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -320,7 +320,7 @@ export class ElrondService {
      */
     public static egldBlockchainTransfer(
         requestBody: (TransferEgldBlockchain | TransferEgldBlockchainKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/egld/transaction`,
@@ -342,12 +342,12 @@ export class ElrondService {
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static egldBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/egld/broadcast`,

@@ -4,47 +4,47 @@
 
 export type TransferCustodialWalletTronKMS = {
     /**
-     * Blockchain to work with.
+     * The blockchain to work with
      */
     chain: 'TRON';
     /**
-     * Address of custodial wallet to transfer from
+     * The gas pump address that transfers the asset
      */
     custodialAddress: string;
     /**
-     * Address of the token to transfer. Not valid for native address transfers.
+     * The gas pump address that transfers the assets in the Base58 format
      */
-    tokenAddress?: string;
+    from: string;
     /**
-     * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 3 - native asset
-     */
-    contractType: 0 | 1 | 3;
-    /**
-     * Blockchain address to send assets to
+     * The blockchain address that receives the asset
      */
     recipient: string;
     /**
-     * Amount of the assets to be sent. Not valid for ERC-721 tokens.
+     * The type of the asset to transfer. Set <code>0</code> for fungible tokens (ERC-20 or equivalent), <code>1</code> for NFTs (ERC-721 or equivalent), or <code>3</code> for native blockchain currencies.
+     */
+    contractType: 0 | 1 | 3;
+    /**
+     * (Only if the asset is a fungible token or NFT) The address of the token to transfer. Do not use if the asset is a native blockchain currency.
+     */
+    tokenAddress?: string;
+    /**
+     * (Only if the asset is a fungible token or native blockchain currency) The amount of the asset to transfer. Do not use if the asset is an NFT.
      */
     amount?: string;
     /**
-     * ID of token, if transaction is for ERC-721 or ERC-1155.
+     * (Only if the asset is an NFT) The ID of the token to transfer. Do not use if the asset is a fungible token or native blockchain currency.
      */
     tokenId?: string;
     /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The KMS identifier of the private key of the blockchain address that owns the gas pump address key ("master address")
      */
     signatureId: string;
     /**
-     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
+     * (Only if the signature ID is mnemonic-based) The index of the specific address from the mnemonic
      */
     index?: number;
     /**
-     * Fee in TRX to be paid.
+     * The maximum amount to be paid as the gas fee (in TRX)
      */
     feeLimit: number;
-    /**
-     * Sender address of TRON account in Base58 format.
-     */
-    from: string;
 }

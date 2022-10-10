@@ -38,5 +38,7 @@ export async function dogeBlockchainExample() {
         value: 0.02969944,
       },
     ],
+    fee: '0.001',
+    changeAddress: 'n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7',
   } as DogeTransactionUTXO)
 }

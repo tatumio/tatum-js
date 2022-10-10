@@ -1,3 +1,4 @@
+import { LtcTransactionAddress, LtcTransactionUTXO } from '@tatumio/api-client'
 import { TatumLtcSDK } from '@tatumio/ltc'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
@@ -19,12 +20,13 @@ export async function ltcTransactionsExample() {
           value: 0.2969944,
         },
       ],
-    },
+      fee: '0.00001',
+      changeAddress: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
+    } as LtcTransactionUTXO,
     { testnet: true },
   )
 
-  // @TODO add change param
-  const { txId, failed } = await ltcSDK.transaction.sendTransaction(
+  const { txId } = await ltcSDK.transaction.sendTransaction(
     {
       fromAddress: [
         {
@@ -38,7 +40,9 @@ export async function ltcTransactionsExample() {
           value: 0.00015,
         },
       ],
-    },
+      fee: '0.00001',
+      changeAddress: 'LYkdm7x4SCLePTi9AQfnvxRqKQfiwWp5pt',
+    } as LtcTransactionAddress,
     { testnet: true },
   )
 }

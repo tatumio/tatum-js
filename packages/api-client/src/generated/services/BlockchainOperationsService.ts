@@ -1725,23 +1725,19 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send ALGO from a virtual account to the blockchain
-     * <h4>4 credits per API call.</h4><br/>
-     * <p>Send ALGO (Algorand) or ERC-20-equivalent Algorand tokens from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
-     * <br/>
-     * <br/>
+     * Send Algos from a virtual account to the blockchain
+     * <p><b>4 credits per API call</b></p>
+     * <p>Send Algos or ERC-20-equivalent Algorand tokens from a virtual account (even from a virtual account without deposit addresses adssigned) to the Algorand blockchain.</p>
+     * <p>The recipient has to agree in advance to receive assets because Algorand charges users for storing assets on their addresses, and an Algorand blockchain address by default does not receive assets unless explicitly agreed. Before sending any asset from a virtual account to the blockchain, make sure that the recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">has agreed to receive the assets</a> to their address.</p>
+     * <p>Sending Algorand assets creates an internal Tatum withdrawal request with an ID. If everything works as expected, the withdrawal request is marked as complete and a transaction ID is assigned to it.</p>
      * <ul>
-     * <li>If server connection is unavailable, withdrawal request is cancelled.</li>
-     * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
+     * <li>If a server connection is unavailable, the withdrawal request is cancelled.</li>
+     * <li>If the transfer to the blockchain is successful, but the Tatum infrastructure cannot be accesses, the ID of the blockchain transaction is returned and you have to <a href="https://apidoc.tatum.io/tag/Withdrawal#operation/completeWithdrawal" target="_blank">complete the withdrawal request manually</a>. Otherwise, all other withdrawals will be pending.</li>
      * </ul>
-     * It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * Before transfer Algorand Erc20, you need to do zero transfer for preparing to be enable receive the token on recepient.
-     * </p>
+     * <p><b>Signing a transaction</b></p>
+     * <p>When sending Algos or ERC-20-equivalent Algorand tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK

@@ -18,7 +18,7 @@ export type TransferBscBlockchain = {
     /**
      * Currency to transfer from BSC Blockchain Account. BEP20 tokens BETH, BBTC, BADA, WBNB, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
      */
-    currency: 'BETH' | 'BBTC' | 'RMD' | 'USDC_BSC' | 'B2U_BSC' | 'BADA' | 'WBNB' | 'GMC_BSC' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'HAG' | 'CAKE' | 'BUSD_BSC';
+    currency: 'BSC' | 'BETH' | 'BBTC' | 'RMD' | 'USDC_BSC' | 'B2U_BSC' | 'BADA' | 'WBNB' | 'GMC_BSC' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'HAG' | 'CAKE' | 'BUSD_BSC';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */

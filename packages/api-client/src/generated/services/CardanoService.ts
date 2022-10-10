@@ -14,7 +14,7 @@ import type { BroadcastKMS } from '../models/BroadcastKMS';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { Wallet } from '../models/Wallet';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -292,7 +292,7 @@ export class CardanoService {
      */
     public static adaTransferBlockchain(
         requestBody: (AdaTransactionFromAddress | AdaTransactionFromAddressKMS | AdaTransactionFromUTXO | AdaTransactionFromUTXOKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/ada/transaction`,
@@ -317,12 +317,12 @@ export class CardanoService {
      * It is possible to create a custom signing mechanism and only use this method for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static adaBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/ada/broadcast`,

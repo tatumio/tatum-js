@@ -4,39 +4,39 @@
 
 export type TransferCustodialWalletBatchTron = {
     /**
-     * Blockchain to work with.
+     * The blockchain to work with
      */
     chain: 'TRON';
     /**
-     * Address of custodial wallet to transfer from
+     * The gas pump address that transfers the assets
      */
     custodialAddress: string;
     /**
-     * Address of the token to transfer. Not valid for native address transfers.
-     */
-    tokenAddress?: Array<string>;
-    /**
-     * Type of the asset to transfer. 0 - ERC20, 1 - ERC721, 3 - native asset
-     */
-    contractType: Array<0 | 1 | 3>;
-    /**
-     * Blockchain address to send assets to
+     * The blockchain address that receives the assets
      */
     recipient: Array<string>;
     /**
-     * Amount of the assets to be sent. Not valid for ERC-721 tokens.
+     * The type of the assets to transfer. Set <code>0</code> for fungible tokens (ERC-20 or equivalent), <code>1</code> for NFTs (ERC-721 or equivalent), or <code>3</code> for native blockchain currencies.
+     */
+    contractType: Array<0 | 1 | 3>;
+    /**
+     * (Only if the assets are fungible tokens or NFTs) The addresses of the tokens to transfer. Do not use if the assets are a native blockchain currency.
+     */
+    tokenAddress?: Array<string>;
+    /**
+     * (Only if the assets are fungible tokens or a native blockchain currency) The amounts of the assets to transfer. Do not use if the assets are NFTs.
      */
     amount?: Array<string>;
     /**
-     * ID of token, if transaction is for ERC-721.
+     * (Only if the assets are NFTs) The IDs of the tokens to transfer. Do not use if the assets are fungible tokens or a native blockchain currency.
      */
     tokenId?: Array<string>;
     /**
-     * Private key of sender address. Private key, or signature Id must be present.
+     * The private key of the blockchain address that owns the gas pump address ("master address")
      */
     fromPrivateKey: string;
     /**
-     * Fee in TRX to be paid.
+     * The maximum amount to be paid as the gas fee (in TRX)
      */
     feeLimit: number;
 }

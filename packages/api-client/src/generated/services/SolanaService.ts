@@ -6,7 +6,7 @@ import type { SolanaBlock } from '../models/SolanaBlock';
 import type { SolanaBroadcastConfirm } from '../models/SolanaBroadcastConfirm';
 import type { SolanaTransactionHashWithConfirm } from '../models/SolanaTransactionHashWithConfirm';
 import type { SolanaTx } from '../models/SolanaTx';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferSolanaBlockchain } from '../models/TransferSolanaBlockchain';
 import type { TransferSolanaBlockchainKMS } from '../models/TransferSolanaBlockchainKMS';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -188,7 +188,7 @@ export class SolanaService {
      */
     public static solanaBlockchainTransfer(
         requestBody: (TransferSolanaBlockchain | TransferSolanaBlockchainKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/solana/transaction`,

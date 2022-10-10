@@ -5,7 +5,7 @@ import type { AccountSettingsXrpBlockchain } from '../models/AccountSettingsXrpB
 import type { AccountSettingsXrpBlockchainKMS } from '../models/AccountSettingsXrpBlockchainKMS';
 import type { BroadcastKMS } from '../models/BroadcastKMS';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferXrpBlockchain } from '../models/TransferXrpBlockchain';
 import type { TransferXrpBlockchainAsset } from '../models/TransferXrpBlockchainAsset';
 import type { TransferXrpBlockchainAssetKMS } from '../models/TransferXrpBlockchainAssetKMS';
@@ -219,7 +219,7 @@ export class XrpService {
      */
     public static xrpTransferBlockchain(
         requestBody: (TransferXrpBlockchain | TransferXrpBlockchainAsset | TransferXrpBlockchainKMS | TransferXrpBlockchainAssetKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/xrp/transaction`,
@@ -253,7 +253,7 @@ export class XrpService {
      */
     public static xrpTrustLineBlockchain(
         requestBody: (TrustLineXrpBlockchain | TrustLineXrpBlockchainKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/xrp/trust`,
@@ -286,7 +286,7 @@ export class XrpService {
      */
     public static xrpAccountSettings(
         requestBody: (AccountSettingsXrpBlockchain | AccountSettingsXrpBlockchainKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/xrp/account/settings`,
@@ -305,15 +305,15 @@ export class XrpService {
      * Broadcast signed XRP transaction
      * <h4>5 credits per API call.</h4><br/>
      * <p>Broadcast signed transaction to XRP blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static xrpBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/xrp/broadcast`,

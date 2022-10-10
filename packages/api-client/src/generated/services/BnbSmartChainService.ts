@@ -11,7 +11,7 @@ import type { EthBlock } from '../models/EthBlock';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferBscBlockchain } from '../models/TransferBscBlockchain';
 import type { TransferBscBlockchainKMS } from '../models/TransferBscBlockchainKMS';
 import type { Wallet } from '../models/Wallet';
@@ -268,7 +268,7 @@ export class BnbSmartChainService {
      */
     public static bscBlockchainTransfer(
         requestBody: (TransferBscBlockchain | TransferBscBlockchainKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/bsc/transaction`,
@@ -303,7 +303,7 @@ export class BnbSmartChainService {
      */
     public static bscBlockchainSmartContractInvocation(
         requestBody: (CallBscSmartContractReadMethod | CallBscSmartContractMethod | CallBscSmartContractMethodKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId | Data)> {
+    ): CancelablePromise<(TransactionHash | SignatureId | Data)> {
         return __request({
             method: 'POST',
             path: `/v3/bsc/smartcontract`,
@@ -325,12 +325,12 @@ export class BnbSmartChainService {
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static bscBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/bsc/broadcast`,

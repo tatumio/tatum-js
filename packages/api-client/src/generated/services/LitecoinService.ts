@@ -14,7 +14,7 @@ import type { LtcUTXO } from '../models/LtcUTXO';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
-import type { TransactionHashKMS } from '../models/TransactionHashKMS';
+import type { TransactionHash } from '../models/TransactionHash';
 import type { Wallet } from '../models/Wallet';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -368,7 +368,7 @@ export class LitecoinService {
      */
     public static ltcTransferBlockchain(
         requestBody: (LtcTransactionAddress | LtcTransactionAddressKMS | LtcTransactionUTXO | LtcTransactionUTXOKMS),
-    ): CancelablePromise<(TransactionHashKMS | SignatureId)> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/litecoin/transaction`,
@@ -387,15 +387,15 @@ export class LitecoinService {
      * Broadcast signed Litecoin transaction
      * <h4>5 credits per API call.</h4><br/>
      * <p>Broadcast signed transaction to Litecoin blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
-     * @returns TransactionHashKMS OK
+     * @returns TransactionHash OK
      * @throws ApiError
      */
     public static ltcBroadcast(
         requestBody: BroadcastKMS,
-    ): CancelablePromise<TransactionHashKMS> {
+    ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/litecoin/broadcast`,
