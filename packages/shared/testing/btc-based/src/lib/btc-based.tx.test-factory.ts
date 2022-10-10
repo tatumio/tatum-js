@@ -57,7 +57,7 @@ function prepareManualChange(data: BtcBasedTestParams) {
 
 const definedChangeAddressUTXOBody = (
   data: BtcBasedTestParams,
-  values?: { amount?: number; fee?: string, privateKey?: string },
+  values?: { amount?: number; fee?: string; privateKey?: string },
 ): BtcBasedUtxoWithChange => {
   return {
     fromUTXO: [

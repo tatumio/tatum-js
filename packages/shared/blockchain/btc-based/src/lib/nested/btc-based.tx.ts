@@ -28,7 +28,7 @@ export type BtcBasedTx<T> = {
   prepareSignedTransaction: (body: T, options: BtcBasedTxOptions) => Promise<string>
 }
 
-export type BtcTransactionTypes = 
+export type BtcTransactionTypes =
   | BtcTransactionFromAddress
   | BtcTransactionFromAddressKMS
   | BtcTransactionFromUTXO
@@ -51,16 +51,10 @@ type LtcFromAddressTypes = LtcTransactionAddress | LtcTransactionAddressKMS
 type BtcFromUtxoTypes = BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS
 type LtcFromUtxoTypes = LtcTransactionUTXO | LtcTransactionUTXOKMS
 
-export type BtcBasedFromWithChange =
-  | BtcTransactionFromAddress
-  | LtcTransactionAddress
-export type BtcBasedFromWithKmsChange =
-  | BtcTransactionFromAddressKMS
-  | LtcTransactionAddressKMS
+export type BtcBasedFromWithChange = BtcTransactionFromAddress | LtcTransactionAddress
+export type BtcBasedFromWithKmsChange = BtcTransactionFromAddressKMS | LtcTransactionAddressKMS
 export type BtcBasedUtxoWithChange = BtcTransactionFromUTXO | LtcTransactionUTXO
-export type BtcBasedUtxoKMSWithChange =
-  | BtcTransactionFromUTXOKMS
-  | LtcTransactionUTXOKMS
+export type BtcBasedUtxoKMSWithChange = BtcTransactionFromUTXOKMS | LtcTransactionUTXOKMS
 
 type GetTxByAddressType =
   | typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
