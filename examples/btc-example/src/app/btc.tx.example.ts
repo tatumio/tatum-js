@@ -21,7 +21,7 @@ export async function btcTransactionsExample() {
         },
       ],
       fee: '0.00001',
-      change: 'tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr',
+      changeAddress: 'tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr',
     } as BtcTransactionFromUTXO,
     { testnet: true },
   )
@@ -31,7 +31,7 @@ export async function btcTransactionsExample() {
       fromAddress: [
         {
           address: 'tb1q9x2gqftyxterwt0k6ehzrm2gkzthjly677ucyr',
-          privateKey: '26d3883e-4e17-48b3-a0ee-09a3e484ac83',
+          privateKey: 'cQ1YZMep3CiAnMTA9y62ha6BjGaaTFsTvtDuGmucGvpAVmS89khV',
         },
       ],
       to: [
