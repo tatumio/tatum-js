@@ -1,8 +1,10 @@
 export const xdcUtil = {
   toHex: (address: string) => {
-    return `0x${address.substring(3)}`
+    if (address.startsWith('xdc')) return `0x${address.substring(3)}`
+    return address
   },
   fromHex: (address: string) => {
-    return `xdc${address.substring(2)}`
+    if (address.startsWith('0x')) return `xdc${address.substring(2)}`
+    return address
   },
 }
