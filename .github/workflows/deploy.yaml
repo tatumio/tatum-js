@@ -6,24 +6,24 @@ on:
       - master
 
 jobs:
-  agents:
-    if: ${{ !startsWith(github.event.head_commit.message, 'Release ') }}
-    runs-on: ubuntu-latest
-    name: Agent 1
-    timeout-minutes: 60
-    strategy:
-      matrix:
-        agent: [ 1, 2, 3 ]
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-      - uses: actions/setup-node@v1
-        with:
-          node-version: '14'
-      - run: yarn
-      - name: Start Nx Agent ${{ matrix.agent }}
-        run: npx nx-cloud start-agent
+  #  agents:
+  #    if: ${{ !startsWith(github.event.head_commit.message, 'Release ') }}
+  #    runs-on: ubuntu-latest
+  #    name: Agent 1
+  #    timeout-minutes: 60
+  #    strategy:
+  #      matrix:
+  #        agent: [ 1, 2, 3 ]
+  #    steps:
+  #      - uses: actions/checkout@v2
+  #        with:
+  #          fetch-depth: 0
+  #      - uses: actions/setup-node@v1
+  #        with:
+  #          node-version: '14'
+  #      - run: yarn
+  #      - name: Start Nx Agent ${{ matrix.agent }}
+  #        run: npx nx-cloud start-agent
 
   publish:
     if: ${{ !startsWith(github.event.head_commit.message, 'Release ') }}
@@ -58,9 +58,9 @@ jobs:
       - name: Update version of packages
         run: yarn --ignore-scripts release:apply-version
 
-      - run: npx nx-cloud start-ci-run
+      #      - run: npx nx-cloud start-ci-run
       - run: yarn build:all
-      - run: npx nx-cloud stop-all-agents
+      #      - run: npx nx-cloud stop-all-agents
 
       - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
 

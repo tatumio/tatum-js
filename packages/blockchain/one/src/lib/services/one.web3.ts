@@ -15,7 +15,6 @@ export const oneWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web3 })
     return web3
   }
 
-
   return {
     ...evmBasedWeb3Result,
     getClient(provider?: string, fromPrivateKey?: string): Web3 {
