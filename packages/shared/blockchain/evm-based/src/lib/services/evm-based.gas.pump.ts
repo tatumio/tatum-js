@@ -27,6 +27,9 @@ export const TRON_MAINNET_CUSTODIAL_FACTORY_V2 = 'TUHmKLeq26QFyMwxQSYd451c4SZQQu
 export const ONE_TESTNET_CUSTODIAL_FACTORY_V2 = '0xCd2AdA00c48A27FAa5Cc67F9A1ed55B89dDf7F77'
 export const ONE_MAINNET_CUSTODIAL_FACTORY_V2 = '0xb1462fE8E9Cf82c0296022Cca7bEfA3Fd4c12B34'
 
+export const XDC_TESTNET_CUSTODIAL_FACTORY_V2 = '0x1cfc7878cf6ae32a50f84481690f6fb04574de21'
+export const XDC_MAINNET_CUSTODIAL_FACTORY_V2 = '0x1cfc7878cf6ae32a50f84481690f6fb04574de21'
+
 export const indexesFromRange = (from: number, to: number) =>
   Array.from(Array(range(from, to)).keys()).map((val) => `0x${new BigNumber(val + from).toString(16)}`)
 
@@ -60,6 +63,8 @@ export const evmBasedGasPump = () => {
           return testnet ? KLAY_TESTNET_CUSTODIAL_FACTORY_V2 : KLAY_MAINNET_CUSTODIAL_FACTORY_V2
         case Currency.BSC:
           return testnet ? BSC_TESTNET_CUSTODIAL_FACTORY_V2 : BSC_MAINNET_CUSTODIAL_FACTORY_V2
+        case Currency.XDC:
+          return testnet ? XDC_TESTNET_CUSTODIAL_FACTORY_V2 : XDC_MAINNET_CUSTODIAL_FACTORY_V2
         default:
           throw new Error('Unsupported chain.')
       }

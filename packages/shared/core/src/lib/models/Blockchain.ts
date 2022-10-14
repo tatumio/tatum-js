@@ -44,3 +44,4 @@ export type EvmBasedBlockchain =
   | Blockchain.POLYGON
   | Blockchain.KCS
   | Blockchain.KLAY
+  | Blockchain.XDC
