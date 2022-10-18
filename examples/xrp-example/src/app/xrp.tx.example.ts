@@ -1,5 +1,6 @@
 import { TatumXrpSDK } from '@tatumio/xrp'
 
+// TODO: create asset transfer example + trustline example
 export const txExample = async () => {
   const xrpSDK = TatumXrpSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
   const { address, secret } = xrpSDK.wallet.wallet()
