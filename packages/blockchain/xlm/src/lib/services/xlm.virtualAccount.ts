@@ -3,11 +3,11 @@ import { ApiServices, Currency, TransferXlm, Withdrawal } from '@tatumio/api-cli
 import { abstractBlockchainOffchain } from '@tatumio/shared-blockchain-abstract'
 import { Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder } from 'stellar-sdk'
 
-export const xlmOffchainService = (args: { blockchain: Blockchain }) => {
+export const xlmVirtualAccountService = (args: { blockchain: Blockchain }) => {
   return {
     ...abstractBlockchainOffchain(args),
-    sendOffchainTransaction,
-    prepareSignedOffchainTransaction,
+    sendTransactionFromVirtualAccountToBlockchain,
+    prepareTransactionFromVirtualAccountToBlockchain,
   }
 }
 
@@ -20,7 +20,10 @@ export type TransferXlmOffchain = Pick<TransferXlm, 'secret'> & Withdrawal
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendOffchainTransaction = async (testnet: boolean, body: TransferXlmOffchain) => {
+export const sendTransactionFromVirtualAccountToBlockchain = async (
+  testnet: boolean,
+  body: TransferXlmOffchain,
+) => {
   const { secret, ...withdrawal } = body
   if (!withdrawal.fee) {
     withdrawal.fee = '0.00001'
@@ -38,7 +41,14 @@ export const sendOffchainTransaction = async (testnet: boolean, body: TransferXl
 
   let txData
   try {
-    txData = await prepareSignedOffchainTransaction(testnet, account, amount, address, secret, memo)
+    txData = await prepareTransactionFromVirtualAccountToBlockchain(
+      testnet,
+      account,
+      amount,
+      address,
+      secret,
+      memo,
+    )
   } catch (e) {
     console.error(e)
     if (typeof id !== 'string') {
@@ -82,7 +92,7 @@ export const sendOffchainTransaction = async (testnet: boolean, body: TransferXl
  * @param memo short memo to include in transaction
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareSignedOffchainTransaction = async (
+export const prepareTransactionFromVirtualAccountToBlockchain = async (
   testnet: boolean,
   account: any,
   amount: string,

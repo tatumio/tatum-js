@@ -1,13 +1,17 @@
-import { EvmBasedKMSServiceArgs } from '@tatumio/shared-blockchain-evm-based'
+import { EvmBasedKMSServiceArgs, EvmBasedSdkError } from '@tatumio/shared-blockchain-evm-based'
 import { ChainTransactionKMS } from '@tatumio/shared-core'
-import { ApiServices, PendingTransaction } from '@tatumio/api-client'
+import { ApiServices, Currency, PendingTransaction } from '@tatumio/api-client'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 export const ethKmsService = (args: EvmBasedKMSServiceArgs) => {
   return {
     ...abstractBlockchainKms(args),
     async sign(tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string): Promise<string> {
-      ;(tx as PendingTransaction).chain = 'ETH'
+      const typedTx = tx as PendingTransaction
+      if (typedTx.chain !== Currency.ETH) {
+        throw new EvmBasedSdkError({ code: SdkErrorCode.KMS_CHAIN_MISMATCH })
+      }
       const client = args.web3.getClient(provider)
       const transactionConfig = JSON.parse(tx.serializedTransaction)
       transactionConfig.gas = await client.eth.estimateGas(transactionConfig)

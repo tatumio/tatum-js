@@ -2,11 +2,17 @@ import { Blockchain, ChainTransactionKMS } from '@tatumio/shared-core'
 import { Message, Transaction } from '@solana/web3.js'
 import { SolanaWeb3 } from './solana.web3'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
+import { Currency, PendingTransaction } from '@tatumio/api-client'
+import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 export const solanaKmsService = (args: { web3: SolanaWeb3; blockchain: Blockchain }) => {
   return {
     ...abstractBlockchainKms(args),
     async sign(tx: ChainTransactionKMS, privateKeys: string[], provider?: string): Promise<string> {
+      const typedTx = tx as PendingTransaction
+      if (typedTx.chain !== Currency.SOL) {
+        throw new SdkError({ code: SdkErrorCode.KMS_CHAIN_MISMATCH })
+      }
       const connection = args.web3.getClient(provider)
       const { txData, mintPK } = JSON.parse(tx.serializedTransaction)
       const transaction = Transaction.populate(Message.from(Buffer.from(txData, 'hex')))

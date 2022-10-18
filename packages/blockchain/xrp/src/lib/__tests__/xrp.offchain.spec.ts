@@ -1,5 +1,5 @@
 import '@tatumio/shared-testing-common'
-import { xrpOffchainService } from '../services/xrp.offchain'
+import { xrpVirtualAccountService } from '../services/xrp.offchain'
 import { mockHelper, testHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { Currency, XrpAccount } from '@tatumio/api-client'
@@ -10,7 +10,7 @@ jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)
 
 describe('XrpSDK - offchain', () => {
-  const offchainService = xrpOffchainService({ blockchain: Blockchain.XRP })
+  const offchainService = xrpVirtualAccountService({ blockchain: Blockchain.XRP })
 
   const SECRET = 'shunwft7BwrFHdcXmAA87CazLsRMY'
   const ACCOUNT = 'rKHuaCVSzJCFh43ji9EvFAysmu1KHdMb8N'

@@ -165,6 +165,8 @@ export enum SdkErrorCode {
 
   // Smart Contract
   EVM_SMART_CONTRACT_CANNOT_PREPARE_TX = 'evm-based.smart-contract.cannot.prepare.tx',
+  KMS_CHAIN_MISMATCH = 'kms.chain.mismatch',
+  INSUFFICIENT_FUNDS = 'insufficient.funds.on.sender.account',
 }
 
 // @TODO pass params?

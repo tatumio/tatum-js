@@ -31,12 +31,9 @@ const prepareSignedTransaction = async (body: TransferXrpBlockchain) => {
   try {
     const { fromAccount, fromSecret, to, amount, fee, sourceTag, destinationTag } = body
 
-    if (!fee || Number(fee) === 0) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
-
-    const xrpFee = await ApiServices.blockchain.xrp.xrpGetFee()
-
-    // @TODO not null checks
-    const f = fee ? fee : new BigNumber(xrpFee!.drops!.base_fee!).dividedBy(1000000).toString()
+    if (fee && new BigNumber(fee).isZero()) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
+    const xrpFee = new BigNumber((await ApiServices.blockchain.xrp.xrpGetFee())?.drops?.base_fee as string)
+    const finalFee = Math.max(new BigNumber(fee || '0').toNumber(), xrpFee.toNumber())
     const payment: Payment = {
       source: {
         address: fromAccount,
@@ -56,11 +53,18 @@ const prepareSignedTransaction = async (body: TransferXrpBlockchain) => {
       },
     }
     const accountInfo = await ApiServices.blockchain.xrp.xrpGetAccountInfo(fromAccount)
+    if (
+      new BigNumber(accountInfo.account_data?.Balance as string).isLessThan(
+        new BigNumber(amount).plus(finalFee),
+      )
+    ) {
+      throw new XrpSdkError(SdkErrorCode.INSUFFICIENT_FUNDS)
+    }
     const sequence = accountInfo.account_data?.Sequence
     const maxLedgerVersion = accountInfo.ledger_current_index! + 500
     const rippleAPI = new RippleAPI()
     const prepared = await rippleAPI.preparePayment(fromAccount, payment, {
-      fee: f,
+      fee: `${finalFee}`,
       sequence,
       maxLedgerVersion,
     })
