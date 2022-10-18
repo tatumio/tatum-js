@@ -4,16 +4,9 @@ import { RippleAPI } from 'ripple-lib'
 import { Payment } from 'ripple-lib/dist/npm/transaction/payment'
 import { XrpSdkError } from '../xrp.sdk.errors'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { XrpApiCallsType } from '../../index'
 
-export const xrpTxService = (
-  apiCalls: {
-    getAccountDetail: typeof ApiServices.blockchain.xrp.xrpGetAccountInfo
-    getFee: typeof ApiServices.blockchain.xrp.xrpGetFee
-  } = {
-    getAccountDetail: ApiServices.blockchain.xrp.xrpGetAccountInfo,
-    getFee: ApiServices.blockchain.xrp.xrpGetFee,
-  },
-) => {
+export const xrpTxService = (apiCalls: XrpApiCallsType) => {
   /**
    * Send Xrp transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
    * This operation is irreversible.

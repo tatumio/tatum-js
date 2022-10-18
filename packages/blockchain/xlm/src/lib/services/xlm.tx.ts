@@ -4,15 +4,12 @@ import { XlmSdkError } from '../xlm.sdk.errors'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { BigNumber } from 'bignumber.js'
 import { FromSecretOrSignatureId } from '@tatumio/shared-blockchain-abstract'
+import { XlmApiCallsType } from '../../index'
 
 type TransferXlm = FromSecretOrSignatureId<TransferXlmBlockchain>
 type CreateTrustline = FromSecretOrSignatureId<TrustLineXlmBlockchain>
 
-export const xlmTxService = (
-  apiCalls: {
-    getAccountInfo: typeof ApiServices.blockchain.xlm.xlmGetAccountInfo
-  } = { getAccountInfo: ApiServices.blockchain.xlm.xlmGetAccountInfo },
-) => {
+export const xlmTxService = (apiCalls: XlmApiCallsType) => {
   /**
    * Send Stellar transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
    * This operation is irreversible.
