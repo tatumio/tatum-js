@@ -81,6 +81,14 @@ export interface SdkWithXrpLikeWalletFunction {
   wallet(): XrpWallet | XlmWallet
 }
 
+export type FromSecretOrSignatureId<T extends { fromSecret?: string }> = Omit<T, 'fromSecret'> &
+  Partial<SignatureId> &
+  Partial<Pick<T, 'fromSecret'>>
+
+export type SecretOrSignatureId<T extends { secret?: string }> = Omit<T, 'secret'> &
+  Partial<SignatureId> &
+  Partial<Pick<T, 'secret'>>
+
 export type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey?: string }> = Omit<T, 'fromPrivateKey'> &
   Partial<SignatureId> &
   Partial<Pick<T, 'fromPrivateKey'>>
@@ -155,11 +163,11 @@ export type ChainCancelSellAssetOnMarketplace = FromPrivateKeyOrSignatureId<Canc
 
 export type ChainTransferCustodialWallet =
   | (FromPrivateKeyOrSignatureId<TransferCustodialWallet> & {
-      index?: number
-    })
+  index?: number
+})
   | (FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
-      index?: number
-    })
+  index?: number
+})
 
 export type ChainBatchTransferCustodialWallet =
   | (FromPrivateKeyOrSignatureId<TransferCustodialWalletBatch> & { index?: number })
@@ -184,12 +192,12 @@ export type ChainGenerateCustodialWalletBatch =
 
 export type ChainCallSmartContractMethod =
   | (FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
-      index?: number
-    })
+  index?: number
+})
   | (FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod> & {
-      index?: number
-      chain: 'CELO'
-    })
+  index?: number
+  chain: 'CELO'
+})
 
 export type ChainTransferCustodialWalletCelo = FromPrivateKeyOrSignatureId<TransferCustodialWalletCelo> & {
   index?: number

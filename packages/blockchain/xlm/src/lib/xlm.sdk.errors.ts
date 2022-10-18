@@ -6,6 +6,7 @@ export const XLM_ERRORS_MAPPING = {
   'destination is invalid': SdkErrorCode.VALIDATION_TO_ADDRESS,
   'chain type is invalid': SdkErrorCode.KMS_CHAIN_MISMATCH,
   'insufficient funds on the sender account for performing the transaction': SdkErrorCode.INSUFFICIENT_FUNDS,
+  'either fromSecret or signatureId must be present.': SdkErrorCode.PARAMETER_MISMATCH,
 }
 
 export type XlmSdkErrorCode =
@@ -15,6 +16,7 @@ export type XlmSdkErrorCode =
   | SdkErrorCode.XLM_NO_SEQUENCE
   | SdkErrorCode.KMS_CHAIN_MISMATCH
   | SdkErrorCode.INSUFFICIENT_FUNDS
+  | SdkErrorCode.PARAMETER_MISMATCH
 
 export class XlmSdkError extends SdkError {
   constructor(error: Error | XlmSdkErrorCode) {

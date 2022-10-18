@@ -3,6 +3,9 @@ import { Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder 
 import { XlmSdkError } from '../xlm.sdk.errors'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { BigNumber } from 'bignumber.js'
+import { FromSecretOrSignatureId } from '@tatumio/shared-blockchain-abstract'
+
+type TransferXlm = FromSecretOrSignatureId<TransferXlmBlockchain>
 
 export const xlmTxService = () => {
   return {
@@ -14,30 +17,35 @@ export const xlmTxService = () => {
 /**
  * Send Stellar transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
  * This operation is irreversible.
- * @param options mainnet or testnet version
+ * @param options mainnet or testnet version. If token and issuerAccount are present, instead of native XLM transfer, the transfer of a token is performed.
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-const sendTransaction = async (body: TransferXlmBlockchain, options?: { testnet: boolean }) => {
+const sendTransaction = async (body: TransferXlm, options?: { testnet: boolean, token?: string, issuerAccount?: string }) => {
   return ApiServices.blockchain.xlm.xlmBroadcast({ txData: await prepareSignedTransaction(body, options) })
 }
 
 /**
  * Sign Stellar transaction with private keys locally. Nothing is broadcast to the blockchain.
- * @param options mainnet or testnet version
+ * @param options mainnet or testnet version. If token and issuerAccount are present, instead of native XLM transfer, the transfer of a token is performed.
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-const prepareSignedTransaction = async (body: TransferXlmBlockchain, options?: { testnet: boolean }) => {
+const prepareSignedTransaction = async (body: TransferXlm, options?: { testnet: boolean, token?: string, issuerAccount?: string }) => {
   try {
-    const { fromSecret, to, amount, message, initialize } = body
+    const { fromAccount, fromSecret, to, amount, message, initialize, signatureId } = body
 
+    if (!fromSecret && !signatureId) {
+      throw new XlmSdkError(SdkErrorCode.PARAMETER_MISMATCH)
+    }
+    if (fromSecret && signatureId) {
+      throw new XlmSdkError(SdkErrorCode.PARAMETER_MISMATCH)
+    }
     let memPhrase
     if (message) {
       memPhrase = message?.length > 28 ? Memo.hash(message) : Memo.text(message)
     }
     const memo = memPhrase
-    const fromAccount = Keypair.fromSecret(fromSecret).publicKey()
     const account = await ApiServices.blockchain.xlm.xlmGetAccountInfo(fromAccount)
     const balance = account.balances?.find((b) => b.asset_type === Asset.native().getCode())
     if (
@@ -59,18 +67,20 @@ const prepareSignedTransaction = async (body: TransferXlmBlockchain, options?: {
 
     const operation = initialize
       ? Operation.createAccount({
-          destination: to.trim(),
-          startingBalance: amount,
-        })
+        destination: to.trim(),
+        startingBalance: amount,
+      })
       : Operation.payment({
-          destination: to.trim(),
-          asset: Asset.native(),
-          amount,
-        })
+        destination: to.trim(),
+        asset: options.token && options.issuerAccount ? new Asset(options.token, options.issuerAccount) : Asset.native(),
+        amount,
+      })
 
     const tx = builder.addOperation(operation).build()
 
-    tx.sign(Keypair.fromSecret(fromSecret))
+    if (fromSecret) {
+      tx.sign(Keypair.fromSecret(fromSecret))
+    }
     return tx.toEnvelope().toXDR().toString('base64')
   } catch (e: any) {
     throw new XlmSdkError(e)
