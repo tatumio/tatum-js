@@ -21,7 +21,10 @@ export const xlmTxService = () => {
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-const sendTransaction = async (body: TransferXlm, options?: { testnet: boolean, token?: string, issuerAccount?: string }) => {
+const sendTransaction = async (
+  body: TransferXlm,
+  options?: { testnet: boolean; token?: string; issuerAccount?: string },
+) => {
   return ApiServices.blockchain.xlm.xlmBroadcast({ txData: await prepareSignedTransaction(body, options) })
 }
 
@@ -31,7 +34,10 @@ const sendTransaction = async (body: TransferXlm, options?: { testnet: boolean, 
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-const prepareSignedTransaction = async (body: TransferXlm, options?: { testnet: boolean, token?: string, issuerAccount?: string }) => {
+const prepareSignedTransaction = async (
+  body: TransferXlm,
+  options?: { testnet: boolean; token?: string; issuerAccount?: string },
+) => {
   try {
     const { fromAccount, fromSecret, to, amount, message, initialize, signatureId } = body
 
@@ -67,14 +73,17 @@ const prepareSignedTransaction = async (body: TransferXlm, options?: { testnet: 
 
     const operation = initialize
       ? Operation.createAccount({
-        destination: to.trim(),
-        startingBalance: amount,
-      })
+          destination: to.trim(),
+          startingBalance: amount,
+        })
       : Operation.payment({
-        destination: to.trim(),
-        asset: options.token && options.issuerAccount ? new Asset(options.token, options.issuerAccount) : Asset.native(),
-        amount,
-      })
+          destination: to.trim(),
+          asset:
+            options.token && options.issuerAccount
+              ? new Asset(options.token, options.issuerAccount)
+              : Asset.native(),
+          amount,
+        })
 
     const tx = builder.addOperation(operation).build()
 
