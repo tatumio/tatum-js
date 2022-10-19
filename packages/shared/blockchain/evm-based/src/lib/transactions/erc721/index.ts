@@ -555,9 +555,9 @@ export const erc721 = (args: {
        */
       mintSignedTransaction: async (body: ChainMintErc721, provider?: string) => {
         if (body.minter) {
-          await mintSignedTransactionMinter(body as MintNftMinter)
+          return await mintSignedTransactionMinter(body as MintNftMinter)
         } else {
-          await args.broadcastFunction({
+          return await args.broadcastFunction({
             txData: (await mintSignedTransaction(body, args.web3, provider)) as string,
             signatureId: body.signatureId,
           })
