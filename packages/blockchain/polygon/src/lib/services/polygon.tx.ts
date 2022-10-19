@@ -17,6 +17,7 @@ export const polygonTxService = (args: { blockchain: EvmBasedBlockchain; web3: E
   const nativeTxs = native({
     ...args,
     broadcastFunction: PolygonService.polygonBroadcast,
+    transferApiMethod: PolygonService.polygonBlockchainTransfer,
   })
 
   return {
@@ -68,6 +69,7 @@ export const polygonTxService = (args: { blockchain: EvmBasedBlockchain; web3: E
       ...smartContract({
         ...args,
         broadcastFunction: PolygonService.polygonBroadcast,
+        smartContractApiMethod: PolygonService.polygonBlockchainSmartContractInvocation,
       }),
     },
   }

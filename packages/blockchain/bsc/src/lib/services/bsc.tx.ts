@@ -17,6 +17,7 @@ export const bscTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
       ...native({
         ...args,
         broadcastFunction: BnbSmartChainService.bscBroadcast,
+        transferApiMethod: BnbSmartChainService.bscBlockchainTransfer,
       }),
     },
     erc20: {
@@ -53,6 +54,7 @@ export const bscTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
       ...smartContract({
         ...args,
         broadcastFunction: BnbSmartChainService.bscBroadcast,
+        smartContractApiMethod: BnbSmartChainService.bscBlockchainSmartContractInvocation,
       }),
     },
   }

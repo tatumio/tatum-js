@@ -26,7 +26,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
   console.log(`Transaction with ID ${nativeTransactionId} was sent`)
 
   // deploy erc20 (fungible token) transaction
-  const { txId: erc20DeployTransactionId } = await bscSDK.erc20.send.deploySignedTransaction({
+  const { txId: erc20DeployTransactionId } = (await bscSDK.erc20.send.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
     address,
@@ -34,7 +34,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey,
     digits: 18,
     totalCap: '10000000',
-  })
+  })) as TransactionHash
 
   console.log(`Deployed erc20 token with transaction ID ${erc20DeployTransactionId}`)
 
@@ -43,32 +43,32 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
   const transaction = await bscSDK.blockchain.get(erc20DeployTransactionId)
   const contractAddress = transaction.contractAddress as string
 
-  const { txId: mintedErc20TransactionId } = await bscSDK.erc20.send.mintSignedTransaction({
+  const { txId: mintedErc20TransactionId } = (await bscSDK.erc20.send.mintSignedTransaction({
     to,
     amount: '10',
     contractAddress,
     fromPrivateKey,
-  })
+  })) as TransactionHash
 
   console.log(`Minted erc20 token/s with transaction ID ${mintedErc20TransactionId}`)
 
   // send erc20 (fungible token) transaction
-  const { txId: erc20TokenTransactionId } = await bscSDK.erc20.send.transferSignedTransaction({
+  const { txId: erc20TokenTransactionId } = (await bscSDK.erc20.send.transferSignedTransaction({
     to,
     amount: '10',
     contractAddress,
     fromPrivateKey,
     digits: 18,
-  })
+  })) as TransactionHash
 
   console.log(`Erc20 transaction with ID ${erc20TokenTransactionId} was sent.`)
 
   // burn erc20 (fungible token) transaction
-  const { txId: burnErc20TransactionId } = await bscSDK.erc20.send.burnSignedTransaction({
+  const { txId: burnErc20TransactionId } = (await bscSDK.erc20.send.burnSignedTransaction({
     amount: '10',
     contractAddress,
     fromPrivateKey,
-  })
+  })) as TransactionHash
 
   console.log(`Burned erc20 token/s with transaction ID ${burnErc20TransactionId}`)
 }
@@ -96,7 +96,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
   console.log(`Transaction with ID ${nativeTransactionId} was sent`)
 
   // deploy erc20 (fungible token) transaction
-  const { txId: erc20DeployTransactionId } = await bscSDK.erc20.send.deploySignedTransaction({
+  const { txId: erc20DeployTransactionId } = (await bscSDK.erc20.send.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
     address,
@@ -104,7 +104,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     signatureId,
     digits: 18,
     totalCap: '10000000',
-  })
+  })) as TransactionHash
 
   console.log(`Deployed erc20 token with transaction ID ${erc20DeployTransactionId}`)
 
@@ -113,32 +113,32 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
   const transaction = await bscSDK.blockchain.get(erc20DeployTransactionId)
   const contractAddress = transaction.contractAddress as string
 
-  const { txId: mintedErc20TransactionId } = await bscSDK.erc20.send.mintSignedTransaction({
+  const { txId: mintedErc20TransactionId } = (await bscSDK.erc20.send.mintSignedTransaction({
     to,
     amount: '10',
     contractAddress,
     signatureId,
-  })
+  })) as TransactionHash
 
   console.log(`Minted erc20 token/s with transaction ID ${mintedErc20TransactionId}`)
 
   // send erc20 (fungible token) transaction
-  const { txId: erc20TokenTransactionId } = await bscSDK.erc20.send.transferSignedTransaction({
+  const { txId: erc20TokenTransactionId } = (await bscSDK.erc20.send.transferSignedTransaction({
     to,
     amount: '10',
     contractAddress,
     signatureId,
     digits: 18,
-  })
+  })) as TransactionHash
 
   console.log(`Erc20 transaction with ID ${erc20TokenTransactionId} was sent.`)
 
   // burn erc20 (fungible token) transaction
-  const { txId: burnErc20TransactionId } = await bscSDK.erc20.send.burnSignedTransaction({
+  const { txId: burnErc20TransactionId } = (await bscSDK.erc20.send.burnSignedTransaction({
     amount: '10',
     contractAddress,
     signatureId,
-  })
+  })) as TransactionHash
 
   console.log(`Burned erc20 token/s with transaction ID ${burnErc20TransactionId}`)
 }
@@ -148,12 +148,12 @@ export async function bscNftTxExample(): Promise<void> {
   const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
   const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  const { txId: deployNftTransactionHash } = await bscSDK.nft.send.deploySignedTransaction({
+  const { txId: deployNftTransactionHash } = (await bscSDK.nft.send.deploySignedTransaction({
     chain: 'BSC',
     name: 'MY_TOKEN',
     symbol: '1oido3id3',
     fromPrivateKey,
-  })
+  })) as TransactionHash
 
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetTransaction
@@ -173,23 +173,23 @@ export async function bscNftTxExample(): Promise<void> {
   console.log(`NFT mint transaction sent with transaction ID: ${mintNftTransactionHash}`)
 
   // Transfer an NFT
-  const { txId: transferNftTransactionHash } = await bscSDK.nft.send.transferSignedTransaction({
+  const { txId: transferNftTransactionHash } = (await bscSDK.nft.send.transferSignedTransaction({
     chain: 'BSC',
     tokenId: '453453',
     to,
     fromPrivateKey,
     contractAddress,
-  })
+  })) as TransactionHash
 
   console.log(`NFT transaction sent with transaction ID: ${transferNftTransactionHash}`)
 
   // Burn an NFT
-  const { txId: burnNftTransactionHash } = await bscSDK.nft.send.burnSignedTransaction({
+  const { txId: burnNftTransactionHash } = (await bscSDK.nft.send.burnSignedTransaction({
     chain: 'BSC',
     tokenId: '45343653',
     contractAddress,
     fromPrivateKey,
-  })
+  })) as TransactionHash
 
   console.log(`NFT burn transaction sent with transaction ID: ${burnNftTransactionHash}`)
 }
@@ -199,11 +199,13 @@ export async function bscMultiTokenTxExample(): Promise<void> {
   const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
   const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  const { txId: deployMultiTokenTransactionHash } = await bscSDK.multiToken.send.deployMultiTokenTransaction({
-    chain: 'BSC',
-    fromPrivateKey,
-    uri: 'example.com',
-  })
+  const { txId: deployMultiTokenTransactionHash } = (await bscSDK.multiToken.send.deployMultiTokenTransaction(
+    {
+      chain: 'BSC',
+      fromPrivateKey,
+      uri: 'example.com',
+    },
+  )) as TransactionHash
 
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetTransaction
@@ -211,37 +213,37 @@ export async function bscMultiTokenTxExample(): Promise<void> {
   const contractAddress = transaction.contractAddress as string
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 
-  const { txId: mintMultiTokenTransactionHash } = await bscSDK.multiToken.send.mintMultiTokenTransaction({
+  const { txId: mintMultiTokenTransactionHash } = (await bscSDK.multiToken.send.mintMultiTokenTransaction({
     chain: 'BSC',
     to,
     tokenId: '123',
     amount: '1000',
     fromPrivateKey,
     contractAddress,
-  })
+  })) as TransactionHash
 
   console.log(`Multi Token mint transaction sent with transaction ID: ${mintMultiTokenTransactionHash}`)
 
   const { txId: transferMultiTokenTransactionHash } =
-    await bscSDK.multiToken.send.transferMultiTokenTransaction({
+    (await bscSDK.multiToken.send.transferMultiTokenTransaction({
       chain: 'BSC',
       to,
       tokenId: '123',
       amount: '10',
       fromPrivateKey,
       contractAddress,
-    })
+    })) as TransactionHash
 
   console.log(`Sent Multi Token with transaction ID: ${transferMultiTokenTransactionHash}`)
 
-  const { txId: burnMultiTokenTransactionHash } = await bscSDK.multiToken.send.burnMultiTokenTransaction({
+  const { txId: burnMultiTokenTransactionHash } = (await bscSDK.multiToken.send.burnMultiTokenTransaction({
     chain: 'BSC',
     tokenId: '123',
     amount: '1',
     fromPrivateKey,
     contractAddress,
     account: to,
-  })
+  })) as TransactionHash
   console.log(`Sent Multi Token with transaction ID: ${burnMultiTokenTransactionHash}`)
 }
 

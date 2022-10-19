@@ -10,6 +10,7 @@ export const oneNative = (args: {
   const unpatchedNative = native({
     ...args,
     broadcastFunction: HarmonyService.oneBroadcast,
+    transferApiMethod: HarmonyService.oneBlockchainTransfer,
   })
 
   return {

@@ -1,6 +1,7 @@
-import { ApproveErc20 } from '@tatumio/api-client'
+import { ApiServices, ApproveErc20, ApproveErc20KMS } from '@tatumio/api-client'
 import {
   BroadcastFunction,
+  ChainApproveErc20,
   ChainBuyAssetOnMarketplace,
   ChainCancelSellAssetOnMarketplace,
   ChainGenerateMarketplace,
@@ -341,24 +342,34 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      approveErc20Spending: async (body: ApproveErc20, provider?: string) =>
-        args.broadcastFunction({
-          txData: await erc20(args).prepare.approveSignedTransaction(body, provider),
-        }),
+      approveErc20Spending: async (body: ChainApproveErc20, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.fungibleToken.erc20Approve(body as ApproveErc20KMS)
+        } else {
+          return args.broadcastFunction({
+            txData: await erc20(args).prepare.approveSignedTransaction(body, provider),
+          })
+        }
+      },
       /**
        * Approve NFT transfer for listing.
        * @param body request data
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      auctionApproveNftTransferSignedTransaction: async (body: ApproveNftTransfer, provider?: string) =>
-        args.broadcastFunction({
-          txData: await evmBasedAuction(args).prepare.auctionApproveNftTransferSignedTransaction(
-            body,
-            provider,
-          ),
-          signatureId: body.signatureId,
-        }),
+      auctionApproveNftTransferSignedTransaction: async (body: ApproveNftTransfer, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.auction.approveNftAuctionSpending(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: await evmBasedAuction(args).prepare.auctionApproveNftTransferSignedTransaction(
+              body,
+              provider,
+            ),
+          })
+        }
+      },
       /**
        * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
        * Operator can set a fee in percentage, which will be paid on top of the price of the asset.
@@ -372,30 +383,48 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      generateMarketplace: async (body: ChainGenerateMarketplace, provider?: string) =>
-        args.broadcastFunction({
-          txData: await generateMarketplace(body, args.web3, provider),
-        }),
+      generateMarketplace: async (body: ChainGenerateMarketplace, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.marketplace.generateMarketplace(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: await generateMarketplace(body, args.web3, provider),
+          })
+        }
+      },
       /**
        * Update marketplace fee.
        * @param body request data
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      updateFee: async (body: ChainUpdateFee, provider?: string) =>
-        args.broadcastFunction({
-          txData: await updateFee(body, args.web3, provider),
-        }),
+      updateFee: async (body: ChainUpdateFee, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.marketplace.updateFee(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: await updateFee(body, args.web3, provider),
+          })
+        }
+      },
       /**
        * Update marketplace fee recipient.
        * @param body request data
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      updateFeeRecipient: async (body: ChainUpdateFeeRecipient, provider?: string) =>
-        args.broadcastFunction({
-          txData: await updateFeeRecipient(body, args.web3, provider),
-        }),
+      updateFeeRecipient: async (body: ChainUpdateFeeRecipient, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.marketplace.updateFeeRecipient(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: await updateFeeRecipient(body, args.web3, provider),
+          })
+        }
+      },
       /**
        * Buy listing on the marketplace. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
        * After listing is sold, it's in a pending state to be processed by the marketplace. Noone receives the assets unless the marketplace operator processes that.
@@ -403,10 +432,16 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      buyMarketplaceListing: async (body: ChainBuyAssetOnMarketplace, provider?: string) =>
-        args.broadcastFunction({
-          txData: await buyAsset(body, args.web3, provider),
-        }),
+      buyMarketplaceListing: async (body: ChainBuyAssetOnMarketplace, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.marketplace.buyAssetOnMarketplace(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: await buyAsset(body, args.web3, provider),
+          })
+        }
+      },
       /**
        * Create new listing on the marketplace. Only marketplace operator can establish those on behalf of the seller of the NFT.
        * After listing is created, seller must approve the asset for spending to the marketplace smart contract.
@@ -415,20 +450,32 @@ export const marketplace = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      sellMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) =>
-        args.broadcastFunction({
-          txData: await sellAsset(body, args.web3, provider),
-        }),
+      sellMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.marketplace.sellAssetOnMarketplace(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: await sellAsset(body, args.web3, provider),
+          })
+        }
+      },
       /**
        * Cancel listing on the marketplace. Only possible for the seller or the operator. There must be no buyer present for that listing. NFT asset is sent back to the seller.
        * @param body request data
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      cancelMarketplaceListing: async (body: ChainCancelSellAssetOnMarketplace, provider?: string) =>
-        args.broadcastFunction({
-          txData: await cancelListing(body, args.web3, provider),
-        }),
+      cancelMarketplaceListing: async (body: ChainCancelSellAssetOnMarketplace, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.marketplace.cancelSellMarketplaceListing(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: await cancelListing(body, args.web3, provider),
+          })
+        }
+      },
     },
   }
 }

@@ -77,6 +77,6 @@ You can find examples [here](./src/app/bsc.auction.example.ts).
 
 You can find examples [here](./src/app/bsc.subscriptions.example.ts).
 
-# How to generate virtual account for BSC and transfer from it to a blockchain address
+### How to generate virtual account for BSC and transfer from it to a blockchain address
 
 You can find examples [here](./src/app/bsc.offchain.example.ts).
