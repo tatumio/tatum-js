@@ -62,13 +62,13 @@ import {
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 import { abstractSdk, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
-import { abstractBlockchainOffchain } from './services/offchain.abstract-blockchain'
+import { abstractBlockchainVirtualAccount } from './services/virtualAccount.abstract-blockchain'
 
 export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; blockchain: Blockchain }) => {
   return {
     ...abstractSdk(args),
     kms: abstractBlockchainKms(args),
-    offchain: abstractBlockchainOffchain(args),
+    virtualAccount: abstractBlockchainVirtualAccount(args),
     getExchangeRate(basePair?: Fiat): CancelablePromise<ExchangeRate> {
       return ExchangeRateService.getExchangeRate(
         // @ts-ignore @TODO OPENAPI fix

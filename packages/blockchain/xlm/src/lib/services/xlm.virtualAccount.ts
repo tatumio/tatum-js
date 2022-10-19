@@ -1,11 +1,11 @@
 import { Blockchain } from '@tatumio/shared-core'
 import { ApiServices, Currency, TransferXlm, Withdrawal } from '@tatumio/api-client'
-import { abstractBlockchainOffchain } from '@tatumio/shared-blockchain-abstract'
+import { abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abstract'
 import { Account, Asset, Keypair, Memo, Networks, Operation, TransactionBuilder } from 'stellar-sdk'
 
 export const xlmVirtualAccountService = (args: { blockchain: Blockchain }) => {
   return {
-    ...abstractBlockchainOffchain(args),
+    ...abstractBlockchainVirtualAccount(args),
     sendTransactionFromVirtualAccountToBlockchain,
     prepareTransactionFromVirtualAccountToBlockchain,
   }

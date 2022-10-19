@@ -1,8 +1,8 @@
-import { abstractSdkOffChain } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkVirtualAccount } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 
-export const abstractBlockchainOffchain = (args: { blockchain: Blockchain }) => {
-  const superObject = abstractSdkOffChain()
+export const abstractBlockchainVirtualAccount = (args: { blockchain: Blockchain }) => {
+  const superObject = abstractSdkVirtualAccount()
 
   return {
     ...superObject,
