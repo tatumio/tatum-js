@@ -11,7 +11,7 @@ import { xdcKmsService } from './services/xdc.kms'
 import { xdcTxService } from './services/xdc.tx'
 import { xdcAuctionService } from './services/xdc.auction'
 
-const blockchain = Blockchain.BSC
+const blockchain = Blockchain.XDC
 
 export const TatumBscSDK = (args: SDKArguments) => {
   const web3 = xdcWeb3({ blockchain })

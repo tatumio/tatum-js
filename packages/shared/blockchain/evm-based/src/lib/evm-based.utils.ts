@@ -99,10 +99,10 @@ export const evmBasedUtils = {
     client: Web3,
     privateKey: string,
     gasPrice: string,
-    gasLimit: string,
+    gasLimit?: string,
     value?: string,
   ) => {
-    let threshold = new BigNumber(gasPrice).multipliedBy(gasLimit)
+    let threshold = new BigNumber(gasPrice).multipliedBy(gasLimit == undefined ? '0' : gasLimit)
     if (value) {
       threshold = threshold.plus(value)
     }
