@@ -1,7 +1,7 @@
 import {
   AccountSettingsXrpBlockchain,
   ApiServices,
-  TransferXrpBlockchain,
+  TransferXrpBlockchainAsset,
   TrustLineXrpBlockchain,
 } from '@tatumio/api-client'
 import { BigNumber } from 'bignumber.js'
@@ -12,7 +12,7 @@ import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { XrpApiCallsType } from '../../index'
 import { FromSecretOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 
-type TransferXrp = FromSecretOrSignatureId<TransferXrpBlockchain>
+type TransferXrp = FromSecretOrSignatureId<TransferXrpBlockchainAsset>
 type Trustline = FromSecretOrSignatureId<TrustLineXrpBlockchain>
 type AccountSettings = FromSecretOrSignatureId<AccountSettingsXrpBlockchain>
 
@@ -56,7 +56,18 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
    */
   const prepareSignedTransaction = async (body: TransferXrp) => {
     try {
-      const { fromAccount, fromSecret, to, amount, fee, sourceTag, destinationTag, signatureId } = body
+      const {
+        fromAccount,
+        fromSecret,
+        to,
+        amount,
+        fee,
+        sourceTag,
+        destinationTag,
+        signatureId,
+        token,
+        issuerAccount,
+      } = body
 
       if (fee && new BigNumber(fee).isZero()) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
       const xrpFee = new BigNumber((await apiCalls.getFee())?.drops?.base_fee as string)
@@ -65,7 +76,8 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
         source: {
           address: fromAccount,
           maxAmount: {
-            currency: 'XRP',
+            currency: token || 'XRP',
+            counterparty: issuerAccount,
             value: amount,
           },
           tag: sourceTag,
@@ -73,7 +85,8 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
         destination: {
           address: to,
           amount: {
-            currency: 'XRP',
+            currency: token || 'XRP',
+            counterparty: issuerAccount,
             value: amount,
           },
           tag: destinationTag,
