@@ -54,13 +54,13 @@ jobs:
           node-version: '14'
       - run: yarn --ignore-scripts --frozen-lockfile
 
-#      - name: Update version of packages
-#        run: yarn version:alpha
-
       - name: Update version of packages
-        run: yarn --ignore-scripts release:apply-version
-        env:
-          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
+        run: yarn version:alpha
+
+#      - name: Update version of packages
+#        run: yarn --ignore-scripts release:apply-version
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
 
       #      - run: npx nx-cloud start-ci-run
       - run: yarn build:all:prod
