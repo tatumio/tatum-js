@@ -1,8 +1,8 @@
-const devKit  = require('@nrwl/devkit')
+const devKit = require('@nrwl/devkit')
 const childProcess = require('child_process')
 const packageJson = require('../../package.json')
 const replace = require('replace-in-file')
-const glob =require('glob')
+const glob = require('glob')
 
 const graph = devKit.readCachedProjectGraph()
 const onlyLibs = Object.values(graph.nodes).filter((n) => n.type === 'lib')
@@ -21,7 +21,7 @@ for (const lib of onlyLibs) {
 }
 
 function replaceVersionsInDistPackageJsons() {
-  const files = glob.sync( __dirname + '../../../dist/packages/**/package.json', {})
+  const files = glob.sync(__dirname + '../../../dist/packages/**/package.json', {})
 
   replace.replaceInFileSync({
     files,
