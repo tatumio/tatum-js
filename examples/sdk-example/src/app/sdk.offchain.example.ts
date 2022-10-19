@@ -10,9 +10,9 @@ export async function offChainExample() {
     currency: Currency.BTC,
   })
 
-  const depositAddress = await tatumSDK.offchain.depositAddress.create(account.id)
+  const depositAddress = await tatumSDK.virtualAccount.depositAddress.create(account.id)
 
-  const depositAddresses = await tatumSDK.offchain.depositAddress.createMultiple({
+  const depositAddresses = await tatumSDK.virtualAccount.depositAddress.createMultiple({
     addresses: [
       {
         accountId: 'ACCOUNT ID',
@@ -20,36 +20,36 @@ export async function offChainExample() {
     ],
   })
 
-  const getDepositAddresses = await tatumSDK.offchain.depositAddress.getByAccount(account.id)
+  const getDepositAddresses = await tatumSDK.virtualAccount.depositAddress.getByAccount(account.id)
 
   // @TODO OPENAPI - maybe return true / false?
-  const address = await tatumSDK.offchain.depositAddress.checkExists(
+  const address = await tatumSDK.virtualAccount.depositAddress.checkExists(
     Currency.BTC,
     '1N4U6RidG5XScvBoSNgq5EmHiPxU4MAyEv',
   )
 
-  const assignedAddress = await tatumSDK.offchain.depositAddress.assign(
+  const assignedAddress = await tatumSDK.virtualAccount.depositAddress.assign(
     account.id,
     '1N4U6RidG5XScvBoSNgq5EmHiPxU4MAyEv',
   )
 
-  await tatumSDK.offchain.depositAddress.remove(account.id, '1N4U6RidG5XScvBoSNgq5EmHiPxU4MAyEv')
+  await tatumSDK.virtualAccount.depositAddress.remove(account.id, '1N4U6RidG5XScvBoSNgq5EmHiPxU4MAyEv')
 
-  const withdrawalResult = await tatumSDK.offchain.withdrawal.create({
+  const withdrawalResult = await tatumSDK.virtualAccount.withdrawal.create({
     amount: '300',
     senderAccountId: account.id,
     address: '1N4U6RidG5XScvBoSNgq5EmHiPxU4MAyEv',
     fee: '50',
   })
 
-  const withdrawals = await tatumSDK.offchain.withdrawal.getAll(50)
+  const withdrawals = await tatumSDK.virtualAccount.withdrawal.getAll(50)
 
-  const broadcastResponse = await tatumSDK.offchain.withdrawal.broadcast({
+  const broadcastResponse = await tatumSDK.virtualAccount.withdrawal.broadcast({
     currency: Currency.ETH,
     signatureId: 'SIGNATURE ID',
     txData: 'Raw signed transaction to be published to network.',
   })
 
   // @TODO what is what here?
-  await tatumSDK.offchain.withdrawal.complete(withdrawalResult.id!, withdrawalResult.reference!)
+  await tatumSDK.virtualAccount.withdrawal.complete(withdrawalResult.id!, withdrawalResult.reference!)
 }

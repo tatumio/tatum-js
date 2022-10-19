@@ -4,7 +4,7 @@ import { bscLogRecordExample } from './app/xdc.log.example'
 import { bscChangeRateExample } from './app/xdc.root.example'
 import { xdcWalletExample } from './app/xdc.wallet.example'
 import { bscDriverExample, xdcWeb3Example } from './app/xdc.web3.example'
-import { xdcOffchainExample } from './app/xdc.offchain.example'
+import { xdcVirtualAccountExample } from './app/xdc.virtualAccount.example'
 import { xdcNftExample } from './app/xdc.nft.example'
 import { xdcSubscriptionsExample } from './app/xdc.subscriptions.example'
 import {
@@ -21,7 +21,7 @@ console.log(`Running ${bscLogRecordExample()}`)
 console.log(`Running ${bscChangeRateExample()}`)
 console.log(`Running ${bscDriverExample()}`)
 console.log(`Running ${xdcWeb3Example()}`)
-console.log(`Running ${xdcOffchainExample()}`)
+console.log(`Running ${xdcVirtualAccountExample()}`)
 console.log(`Running ${xdcNftExample()}`)
 console.log(`Running ${xdcSubscriptionsExample()}`)
 console.log(`Running ${bscTxWithPrivateKeyExample()}`)
