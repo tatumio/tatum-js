@@ -1,10 +1,9 @@
 {
-  "root": "packages/shared/testing/common",
   "sourceRoot": "packages/shared/testing/common/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/shared/testing/common",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/shared/testing/common"],
       "options": {
-        "jestConfig": "packages/shared/testing/common/jest.config.js",
+        "jestConfig": "packages/shared/testing/common/jest.config.ts",
         "passWithNoTests": true
       }
     }

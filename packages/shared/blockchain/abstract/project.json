@@ -1,10 +1,9 @@
 {
-  "root": "packages/shared/blockchain/abstract",
   "sourceRoot": "packages/shared/blockchain/abstract/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/shared/blockchain/abstract",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/shared/blockchain/abstract"],
       "options": {
-        "jestConfig": "packages/shared/blockchain/abstract/jest.config.js",
+        "jestConfig": "packages/shared/blockchain/abstract/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/klaytn",
   "sourceRoot": "packages/blockchain/klaytn/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/klaytn",
@@ -25,7 +24,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/klaytn"],
       "options": {
-        "jestConfig": "packages/blockchain/klaytn/jest.config.js",
+        "jestConfig": "packages/blockchain/klaytn/jest.config.ts",
         "passWithNoTests": true
       }
     }

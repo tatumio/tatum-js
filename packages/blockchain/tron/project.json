@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/tron",
   "sourceRoot": "packages/blockchain/tron/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/tron",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/tron"],
       "options": {
-        "jestConfig": "packages/blockchain/tron/jest.config.js",
+        "jestConfig": "packages/blockchain/tron/jest.config.ts",
         "passWithNoTests": true
       }
     }

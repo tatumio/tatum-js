@@ -1,10 +1,9 @@
 {
-  "root": "packages/shared/blockchain/evm-based",
   "sourceRoot": "packages/shared/blockchain/evm-based/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/shared/blockchain/evm-based",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/shared/blockchain/evm-based"],
       "options": {
-        "jestConfig": "packages/shared/blockchain/evm-based/jest.config.js",
+        "jestConfig": "packages/shared/blockchain/evm-based/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/bch",
   "sourceRoot": "packages/blockchain/bch/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/bch",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/bch"],
       "options": {
-        "jestConfig": "packages/blockchain/bch/jest.config.js",
+        "jestConfig": "packages/blockchain/bch/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/xdc",
   "sourceRoot": "packages/blockchain/xdc/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/xdc",
@@ -25,7 +24,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/xdc"],
       "options": {
-        "jestConfig": "packages/blockchain/xdc/jest.config.js",
+        "jestConfig": "packages/blockchain/xdc/jest.config.ts",
         "passWithNoTests": true
       }
     }

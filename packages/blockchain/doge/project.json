@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/doge",
   "sourceRoot": "packages/blockchain/doge/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/doge",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/doge"],
       "options": {
-        "jestConfig": "packages/blockchain/doge/jest.config.js",
+        "jestConfig": "packages/blockchain/doge/jest.config.ts",
         "passWithNoTests": true
       }
     }

@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'blockchain-eth',
+/* eslint-disable */
+export default {
+  displayName: 'blockchain-xdc',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -10,6 +11,6 @@ module.exports = {
   transform: {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
-  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  coverageDirectory: '../../../coverage/packages/blockchain/eth',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
+  coverageDirectory: '../../../coverage/packages/blockchain/xdc',
 }

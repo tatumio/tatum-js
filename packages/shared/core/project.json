@@ -1,10 +1,9 @@
 {
-  "root": "packages/shared/core",
   "sourceRoot": "packages/shared/core/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/shared/core",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/shared/core"],
       "options": {
-        "jestConfig": "packages/shared/core/jest.config.js",
+        "jestConfig": "packages/shared/core/jest.config.ts",
         "passWithNoTests": true
       }
     }

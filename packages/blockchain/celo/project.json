@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/celo",
   "sourceRoot": "packages/blockchain/celo/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/celo",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/celo"],
       "options": {
-        "jestConfig": "packages/blockchain/celo/jest.config.js",
+        "jestConfig": "packages/blockchain/celo/jest.config.ts",
         "passWithNoTests": true
       }
     }

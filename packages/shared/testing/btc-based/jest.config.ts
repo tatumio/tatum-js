@@ -1,6 +1,7 @@
-module.exports = {
-  displayName: 'shared-abstract-sdk',
-  preset: '../../../jest.preset.js',
+/* eslint-disable */
+export default {
+  displayName: 'shared-testing-btc-based',
+  preset: '../../../../jest.preset.js',
   globals: {
     'ts-jest': {
       tsconfig: '<rootDir>/tsconfig.spec.json',
@@ -11,5 +12,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../coverage/packages/shared/abstract-sdk',
+  coverageDirectory: '../../../../coverage/packages/shared/testing/btc-based',
 }

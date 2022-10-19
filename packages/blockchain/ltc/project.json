@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/ltc",
   "sourceRoot": "packages/blockchain/ltc/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/ltc",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/ltc"],
       "options": {
-        "jestConfig": "packages/blockchain/ltc/jest.config.js",
+        "jestConfig": "packages/blockchain/ltc/jest.config.ts",
         "passWithNoTests": true
       }
     }

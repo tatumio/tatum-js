@@ -1,10 +1,9 @@
 {
-  "root": "packages/shared/testing/xrp-based",
   "sourceRoot": "packages/shared/testing/xrp-based/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/shared/testing/xrp-based",
@@ -25,7 +24,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/shared/testing/xrp-based"],
       "options": {
-        "jestConfig": "packages/shared/testing/xrp-based/jest.config.js",
+        "jestConfig": "packages/shared/testing/xrp-based/jest.config.ts",
         "passWithNoTests": true
       }
     }

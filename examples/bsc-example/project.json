@@ -1,20 +1,21 @@
 {
-  "root": "examples/bsc-example",
   "sourceRoot": "examples/bsc-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:build",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/bsc-example",
         "main": "examples/bsc-example/src/index.ts",
         "tsConfig": "examples/bsc-example/tsconfig.app.json",
-        "packageJson": "examples/bsc-example/package.json"
+        "packageJson": "examples/bsc-example/package.json",
+        "target": "node",
+        "compiler": "tsc"
       }
     },
     "serve": {
-      "executor": "@nrwl/node:execute",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "bsc-example:build"
       }

@@ -1,10 +1,9 @@
 {
-  "root": "examples/doge-example",
   "sourceRoot": "examples/doge-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/doge-example",
@@ -14,7 +13,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/node:execute",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "doge-example:build"
       }

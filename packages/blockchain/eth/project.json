@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/eth",
   "sourceRoot": "packages/blockchain/eth/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/eth",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/eth"],
       "options": {
-        "jestConfig": "packages/blockchain/eth/jest.config.js",
+        "jestConfig": "packages/blockchain/eth/jest.config.ts",
         "passWithNoTests": true
       }
     }

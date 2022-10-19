@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/one",
   "sourceRoot": "packages/blockchain/one/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/one",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/one"],
       "options": {
-        "jestConfig": "packages/blockchain/one/jest.config.js",
+        "jestConfig": "packages/blockchain/one/jest.config.ts",
         "passWithNoTests": true
       }
     }

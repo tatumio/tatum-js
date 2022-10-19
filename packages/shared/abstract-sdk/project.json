@@ -1,10 +1,9 @@
 {
-  "root": "packages/shared/abstract-sdk",
   "sourceRoot": "packages/shared/abstract-sdk/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/shared/abstract-sdk",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/shared/abstract-sdk"],
       "options": {
-        "jestConfig": "packages/shared/abstract-sdk/jest.config.js",
+        "jestConfig": "packages/shared/abstract-sdk/jest.config.ts",
         "passWithNoTests": true
       }
     }

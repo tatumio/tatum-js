@@ -1,20 +1,21 @@
 {
-  "root": "examples/xlm-example",
   "sourceRoot": "examples/xlm-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:build",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/xlm-example",
         "main": "examples/xlm-example/src/index.ts",
         "tsConfig": "examples/xlm-example/tsconfig.app.json",
-        "packageJson": "examples/xlm-example/package.json"
+        "packageJson": "examples/xlm-example/package.json",
+        "target": "node",
+        "compiler": "tsc"
       }
     },
     "serve": {
-      "executor": "@nrwl/node:execute",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "xlm-example:build"
       }

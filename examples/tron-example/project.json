@@ -1,10 +1,9 @@
 {
-  "root": "examples/tron-example",
   "sourceRoot": "examples/tron-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/tron-example",
@@ -14,7 +13,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/node:execute",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "tron-example:build"
       }

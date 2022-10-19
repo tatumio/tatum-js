@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'blockchain-btc',
+/* eslint-disable */
+export default {
+  displayName: 'blockchain-kcs',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,6 +12,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  coverageDirectory: '../../../coverage/packages/blockchain/btc',
-  setupFilesAfterEnv: ['./jest.setup.ts'],
+  coverageDirectory: '../../../coverage/packages/blockchain/kcs',
 }

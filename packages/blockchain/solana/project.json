@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/solana",
   "sourceRoot": "packages/blockchain/solana/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/solana",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/solana"],
       "options": {
-        "jestConfig": "packages/blockchain/solana/jest.config.js",
+        "jestConfig": "packages/blockchain/solana/jest.config.ts",
         "passWithNoTests": true
       }
     }

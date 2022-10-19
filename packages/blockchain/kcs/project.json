@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/kcs",
   "sourceRoot": "packages/blockchain/kcs/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/kcs",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/kcs"],
       "options": {
-        "jestConfig": "packages/blockchain/kcs/jest.config.js",
+        "jestConfig": "packages/blockchain/kcs/jest.config.ts",
         "passWithNoTests": true
       }
     }

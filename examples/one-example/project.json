@@ -1,10 +1,9 @@
 {
-  "root": "examples/one-example",
   "sourceRoot": "examples/one-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/one-example",
@@ -14,7 +13,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/node:execute",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "one-example:build"
       }

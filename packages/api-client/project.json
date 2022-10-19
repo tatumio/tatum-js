@@ -1,10 +1,9 @@
 {
-  "root": "packages/api-client",
   "sourceRoot": "packages/api-client/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/api-client",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/api-client"],
       "options": {
-        "jestConfig": "packages/api-client/jest.config.js",
+        "jestConfig": "packages/api-client/jest.config.ts",
         "passWithNoTests": true
       }
     }

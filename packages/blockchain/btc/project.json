@@ -1,10 +1,9 @@
 {
-  "root": "packages/blockchain/btc",
   "sourceRoot": "packages/blockchain/btc/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/btc",
@@ -24,7 +23,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/btc"],
       "options": {
-        "jestConfig": "packages/blockchain/btc/jest.config.js",
+        "jestConfig": "packages/blockchain/btc/jest.config.ts",
         "passWithNoTests": true
       }
     }

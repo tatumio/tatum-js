@@ -1,20 +1,21 @@
 {
-  "root": "examples/sdk-example",
   "sourceRoot": "examples/sdk-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:build",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/sdk-example",
         "main": "examples/sdk-example/src/index.ts",
         "tsConfig": "examples/sdk-example/tsconfig.app.json",
-        "packageJson": "examples/sdk-example/package.json"
+        "packageJson": "examples/sdk-example/package.json",
+        "target": "node",
+        "compiler": "tsc"
       }
     },
     "serve": {
-      "executor": "@nrwl/js:node",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "sdk-example:build"
       }

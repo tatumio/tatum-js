@@ -20,6 +20,7 @@ export interface OnCancel {
 }
 
 export class CancelablePromise<T> implements Promise<T> {
+  // @ts-ignore
   readonly [Symbol.toStringTag]: string
 
   #isPending: boolean
