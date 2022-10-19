@@ -10,6 +10,12 @@
         "tsConfig": "packages/blockchain/algo/tsconfig.lib.json",
         "packageJson": "packages/blockchain/algo/package.json",
         "main": "packages/blockchain/algo/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

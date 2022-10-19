@@ -10,6 +10,12 @@
         "main": "packages/blockchain/egld/src/index.ts",
         "tsConfig": "packages/blockchain/egld/tsconfig.lib.json",
         "packageJson": "packages/blockchain/egld/package.json"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

@@ -10,6 +10,12 @@
         "tsConfig": "packages/shared/abstract-sdk/tsconfig.lib.json",
         "packageJson": "packages/shared/abstract-sdk/package.json",
         "main": "packages/shared/abstract-sdk/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

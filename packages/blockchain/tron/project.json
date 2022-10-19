@@ -10,6 +10,12 @@
         "tsConfig": "packages/blockchain/tron/tsconfig.lib.json",
         "packageJson": "packages/blockchain/tron/package.json",
         "main": "packages/blockchain/tron/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

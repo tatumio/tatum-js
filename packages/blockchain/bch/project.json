@@ -10,6 +10,12 @@
         "main": "packages/blockchain/bch/src/index.ts",
         "tsConfig": "packages/blockchain/bch/tsconfig.lib.json",
         "packageJson": "packages/blockchain/bch/package.json"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

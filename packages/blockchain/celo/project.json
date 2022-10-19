@@ -10,6 +10,12 @@
         "main": "packages/blockchain/celo/src/index.ts",
         "tsConfig": "packages/blockchain/celo/tsconfig.lib.json",
         "packageJson": "packages/blockchain/celo/package.json"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

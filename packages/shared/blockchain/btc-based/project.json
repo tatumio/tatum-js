@@ -10,6 +10,12 @@
         "main": "packages/shared/blockchain/btc-based/src/index.ts",
         "packageJson": "packages/shared/blockchain/btc-based/package.json",
         "tsConfig": "packages/shared/blockchain/btc-based/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

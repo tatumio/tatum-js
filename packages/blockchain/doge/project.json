@@ -10,6 +10,12 @@
         "tsConfig": "packages/blockchain/doge/tsconfig.lib.json",
         "packageJson": "packages/blockchain/doge/package.json",
         "main": "packages/blockchain/doge/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

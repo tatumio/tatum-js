@@ -10,6 +10,12 @@
         "tsConfig": "packages/blockchain/kcs/tsconfig.lib.json",
         "packageJson": "packages/blockchain/kcs/package.json",
         "main": "packages/blockchain/kcs/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

@@ -10,6 +10,12 @@
         "tsConfig": "packages/shared/blockchain/abstract/tsconfig.lib.json",
         "packageJson": "packages/shared/blockchain/abstract/package.json",
         "main": "packages/shared/blockchain/abstract/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

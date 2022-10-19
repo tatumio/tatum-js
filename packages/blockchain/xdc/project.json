@@ -9,8 +9,13 @@
         "outputPath": "dist/packages/blockchain/xdc",
         "tsConfig": "packages/blockchain/xdc/tsconfig.lib.json",
         "packageJson": "packages/blockchain/xdc/package.json",
-        "main": "packages/blockchain/xdc/src/index.ts",
-        "assets": ["packages/blockchain/xdc/*.md"]
+        "main": "packages/blockchain/xdc/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

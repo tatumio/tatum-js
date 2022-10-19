@@ -10,6 +10,12 @@
         "tsConfig": "packages/blockchain/eth/tsconfig.lib.json",
         "packageJson": "packages/blockchain/eth/package.json",
         "main": "packages/blockchain/eth/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

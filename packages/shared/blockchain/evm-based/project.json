@@ -10,6 +10,12 @@
         "tsConfig": "packages/shared/blockchain/evm-based/tsconfig.lib.json",
         "packageJson": "packages/shared/blockchain/evm-based/package.json",
         "main": "packages/shared/blockchain/evm-based/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

@@ -10,6 +10,12 @@
         "tsConfig": "packages/blockchain/xrp/tsconfig.lib.json",
         "packageJson": "packages/blockchain/xrp/package.json",
         "main": "packages/blockchain/xrp/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

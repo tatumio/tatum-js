@@ -9,8 +9,13 @@
         "outputPath": "dist/packages/shared/testing/xrp-based",
         "tsConfig": "packages/shared/testing/xrp-based/tsconfig.lib.json",
         "packageJson": "packages/shared/testing/xrp-based/package.json",
-        "main": "packages/shared/testing/xrp-based/src/index.ts",
-        "assets": ["packages/shared/testing/xrp-based/*.md"]
+        "main": "packages/shared/testing/xrp-based/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

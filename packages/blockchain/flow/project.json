@@ -10,6 +10,12 @@
         "tsConfig": "packages/blockchain/flow/tsconfig.lib.json",
         "packageJson": "packages/blockchain/flow/package.json",
         "main": "packages/blockchain/flow/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

@@ -10,6 +10,12 @@
         "tsConfig": "packages/shared/testing/common/tsconfig.lib.json",
         "packageJson": "packages/shared/testing/common/package.json",
         "main": "packages/shared/testing/common/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

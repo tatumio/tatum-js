@@ -10,6 +10,12 @@
         "main": "packages/api-client/src/index.ts",
         "packageJson": "packages/api-client/package.json",
         "tsConfig": "packages/api-client/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {

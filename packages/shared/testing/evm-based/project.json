@@ -9,8 +9,13 @@
         "outputPath": "dist/packages/shared/testing/evm-based",
         "tsConfig": "packages/shared/testing/evm-based/tsconfig.lib.json",
         "packageJson": "packages/shared/testing/evm-based/package.json",
-        "main": "packages/shared/testing/evm-based/src/index.ts",
-        "assets": ["packages/shared/testing/evm-based/*.md"]
+        "main": "packages/shared/testing/evm-based/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {
