@@ -1,7 +1,7 @@
 import {
   AccountSettingsXrpBlockchain,
   ApiServices,
-  TransferXrpBlockchainAsset,
+  TransferXrpBlockchain,
   TrustLineXrpBlockchain,
 } from '@tatumio/api-client'
 import { BigNumber } from 'bignumber.js'
@@ -12,7 +12,7 @@ import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { XrpApiCallsType } from '../../index'
 import { FromSecretOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 
-type TransferXrp = FromSecretOrSignatureId<TransferXrpBlockchainAsset>
+type TransferXrp = FromSecretOrSignatureId<TransferXrpBlockchain> & { issuerAccount?: string; token?: string }
 type Trustline = FromSecretOrSignatureId<TrustLineXrpBlockchain>
 type AccountSettings = FromSecretOrSignatureId<AccountSettingsXrpBlockchain>
 
