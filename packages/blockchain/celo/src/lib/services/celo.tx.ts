@@ -4,10 +4,7 @@ import { custodial as evmBasedCustodial, EvmBasedWeb3 } from '@tatumio/shared-bl
 import { erc721, multiToken, native, erc20, smartContract } from '../transactions'
 import { celoGasPump } from './celo.gas.pump'
 
-export const celoTxService = (args: {
-  blockchain: EvmBasedBlockchain
-  web3: EvmBasedWeb3
-}) => {
+export const celoTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   const nativeTxs = native({
     ...args,
     broadcastFunction: CeloService.celoBroadcast,
