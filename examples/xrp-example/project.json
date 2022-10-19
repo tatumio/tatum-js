@@ -1,20 +1,21 @@
 {
-  "root": "examples/xrp-example",
   "sourceRoot": "examples/xrp-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:build",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/xrp-example",
         "main": "examples/xrp-example/src/index.ts",
         "tsConfig": "examples/xrp-example/tsconfig.app.json",
-        "packageJson": "examples/xrp-example/package.json"
+        "packageJson": "examples/xrp-example/package.json",
+        "target": "node",
+        "compiler": "tsc"
       }
     },
     "serve": {
-      "executor": "@nrwl/js:node",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "xrp-example:build"
       }

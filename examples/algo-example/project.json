@@ -1,16 +1,17 @@
 {
-  "root": "examples/algo-example",
   "sourceRoot": "examples/algo-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:build",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/algo-example",
         "main": "examples/algo-example/src/index.ts",
         "packageJson": "examples/algo-example/package.json",
-        "tsConfig": "examples/algo-example/tsconfig.app.json"
+        "tsConfig": "examples/algo-example/tsconfig.app.json",
+        "target": "node",
+        "compiler": "tsc"
       }
     },
     "serve": {

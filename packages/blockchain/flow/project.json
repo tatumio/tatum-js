@@ -1,16 +1,21 @@
 {
-  "root": "packages/blockchain/flow",
   "sourceRoot": "packages/blockchain/flow/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/flow",
         "tsConfig": "packages/blockchain/flow/tsconfig.lib.json",
         "packageJson": "packages/blockchain/flow/package.json",
         "main": "packages/blockchain/flow/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {
@@ -24,7 +29,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/flow"],
       "options": {
-        "jestConfig": "packages/blockchain/flow/jest.config.js",
+        "jestConfig": "packages/blockchain/flow/jest.config.ts",
         "passWithNoTests": true
       }
     }

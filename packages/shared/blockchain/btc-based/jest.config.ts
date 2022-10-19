@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'shared-blockchain-abstract',
+/* eslint-disable */
+export default {
+  displayName: 'shared-blockchain-btc-based',
   preset: '../../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +12,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
-  coverageDirectory: '../../../../coverage/packages/shared/blockchain/abstract',
+  coverageDirectory: '../../../../coverage/packages/shared/blockchain/btc-based',
 }

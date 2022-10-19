@@ -1,16 +1,21 @@
 {
-  "root": "packages/blockchain/polygon",
   "sourceRoot": "packages/blockchain/polygon/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/polygon",
         "tsConfig": "packages/blockchain/polygon/tsconfig.lib.json",
         "packageJson": "packages/blockchain/polygon/package.json",
         "main": "packages/blockchain/polygon/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {
@@ -24,7 +29,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/polygon"],
       "options": {
-        "jestConfig": "packages/blockchain/polygon/jest.config.js",
+        "jestConfig": "packages/blockchain/polygon/jest.config.ts",
         "passWithNoTests": true
       }
     }

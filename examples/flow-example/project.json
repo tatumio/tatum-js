@@ -1,20 +1,21 @@
 {
-  "root": "examples/flow-example",
   "sourceRoot": "examples/flow-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:build",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/flow-example",
         "main": "examples/flow-example/src/index.ts",
         "tsConfig": "examples/flow-example/tsconfig.app.json",
-        "packageJson": "examples/flow-example/package.json"
+        "packageJson": "examples/flow-example/package.json",
+        "target": "node",
+        "compiler": "tsc"
       }
     },
     "serve": {
-      "executor": "@nrwl/node:execute",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "flow-example:build"
       }

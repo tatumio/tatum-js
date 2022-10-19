@@ -1,20 +1,21 @@
 {
-  "root": "examples/egld-example",
   "sourceRoot": "examples/egld-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:build",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/egld-example",
         "main": "examples/egld-example/src/index.ts",
         "tsConfig": "examples/egld-example/tsconfig.app.json",
-        "packageJson": "examples/egld-example/package.json"
+        "packageJson": "examples/egld-example/package.json",
+        "target": "node",
+        "compiler": "tsc"
       }
     },
     "serve": {
-      "executor": "@nrwl/node:execute",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "egld-example:build"
       }

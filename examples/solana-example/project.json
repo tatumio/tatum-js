@@ -1,20 +1,21 @@
 {
-  "root": "examples/solana-example",
   "sourceRoot": "examples/solana-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:build",
+      "executor": "@nrwl/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/solana-example",
         "main": "examples/solana-example/src/index.ts",
         "tsConfig": "examples/solana-example/tsconfig.app.json",
-        "packageJson": "examples/solana-example/package.json"
+        "packageJson": "examples/solana-example/package.json",
+        "target": "node",
+        "compiler": "tsc"
       }
     },
     "serve": {
-      "executor": "@nrwl/node:execute",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "solana-example:build"
       }

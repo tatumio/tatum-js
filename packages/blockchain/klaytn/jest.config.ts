@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'blockchain-flow',
+/* eslint-disable */
+export default {
+  displayName: 'blockchain-klaytn',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +12,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  coverageDirectory: '../../../coverage/packages/blockchain/flow',
+  coverageDirectory: '../../../coverage/packages/blockchain/klaytn',
 }

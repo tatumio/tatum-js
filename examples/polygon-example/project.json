@@ -1,10 +1,9 @@
 {
-  "root": "examples/polygon-example",
   "sourceRoot": "examples/polygon-example/src",
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/examples/polygon-example",
@@ -14,7 +13,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/node:execute",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "polygon-example:build"
       }

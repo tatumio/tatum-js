@@ -1,16 +1,21 @@
 {
-  "root": "packages/blockchain/one",
   "sourceRoot": "packages/blockchain/one/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/one",
         "main": "packages/blockchain/one/src/index.ts",
         "tsConfig": "packages/blockchain/one/tsconfig.lib.json",
         "packageJson": "packages/blockchain/one/package.json"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {
@@ -24,7 +29,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/one"],
       "options": {
-        "jestConfig": "packages/blockchain/one/jest.config.js",
+        "jestConfig": "packages/blockchain/one/jest.config.ts",
         "passWithNoTests": true
       }
     }

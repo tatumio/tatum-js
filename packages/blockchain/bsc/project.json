@@ -1,16 +1,21 @@
 {
-  "root": "packages/blockchain/bsc",
   "sourceRoot": "packages/blockchain/bsc/src",
   "projectType": "library",
   "targets": {
     "build": {
-      "executor": "@nrwl/node:package",
+      "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/blockchain/bsc",
         "main": "packages/blockchain/bsc/src/index.ts",
         "tsConfig": "packages/blockchain/bsc/tsconfig.lib.json",
         "packageJson": "packages/blockchain/bsc/package.json"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
       }
     },
     "lint": {
@@ -24,7 +29,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["coverage/packages/blockchain/bsc"],
       "options": {
-        "jestConfig": "packages/blockchain/bsc/jest.config.js",
+        "jestConfig": "packages/blockchain/bsc/jest.config.ts",
         "passWithNoTests": true
       }
     }

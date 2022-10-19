@@ -1,5 +1,6 @@
-module.exports = {
-  displayName: 'blockchain-doge',
+/* eslint-disable */
+export default {
+  displayName: 'blockchain-algo',
   preset: '../../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -11,5 +12,5 @@ module.exports = {
     '^.+\\.[tj]sx?$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json'],
-  coverageDirectory: '../../../coverage/packages/blockchain/doge',
+  coverageDirectory: '../../../coverage/packages/blockchain/algo',
 }
