@@ -1,4 +1,5 @@
 import { TatumXlmSDK } from '@tatumio/xlm'
+import { TransactionHash } from '@tatumio/api-client'
 
 export async function xlmTxExample() {
   const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
@@ -16,7 +17,7 @@ export async function xlmTxExample() {
   )
 
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
-  const { txId } = await xlmSDK.transaction.sendTransaction(
+  const { txId } = (await xlmSDK.transaction.sendTransaction(
     {
       fromAccount: address,
       fromSecret: secret,
@@ -25,7 +26,7 @@ export async function xlmTxExample() {
       initialize: true,
     },
     { testnet: true },
-  )
+  )) as TransactionHash
   console.log(`Transaction with ID ${txId} was sent.`)
 }
 
@@ -45,7 +46,7 @@ export async function xlmTrustlineTxExample() {
   )
 
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmTrustLineBlockchain
-  const { txId } = await xlmSDK.transaction.sendTrustlineTransaction(
+  const { txId } = (await xlmSDK.transaction.sendTrustlineTransaction(
     {
       fromAccount: address,
       fromSecret: secret,
@@ -54,6 +55,6 @@ export async function xlmTrustlineTxExample() {
       token: 'MY_TOKEN',
     },
     { testnet: true },
-  )
+  )) as TransactionHash
   console.log(`Transaction with ID ${txId} was sent.`)
 }

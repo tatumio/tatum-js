@@ -19,7 +19,7 @@ export const TatumXrpSDK = (
 ) => {
   return {
     ...abstractBlockchainSdk({ ...args, blockchain }),
-    ...abstractSdkLedgerService(),
+    ledger: abstractSdkLedgerService(),
     virtualAccount: xrpVirtualAccountService({ blockchain }),
     kms: xrpKmsService({ blockchain }),
     transaction: xrpTxService(apiCalls),

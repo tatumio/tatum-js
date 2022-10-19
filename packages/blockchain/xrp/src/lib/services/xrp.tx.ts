@@ -24,6 +24,9 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
    * @returns transaction id of the transaction in the blockchain
    */
   const sendTransaction = async (body: TransferXrp) => {
+    if (body.signatureId) {
+      return ApiServices.blockchain.xrp.xrpTransferBlockchain(body as any)
+    }
     return ApiServices.blockchain.xrp.xrpBroadcast({ txData: await prepareSignedTransaction(body) })
   }
   /**
@@ -34,6 +37,9 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
    * @returns transaction id of the transaction in the blockchain
    */
   const sendTrustlineTransaction = async (body: Trustline) => {
+    if (body.signatureId) {
+      return ApiServices.blockchain.xrp.xrpTrustLineBlockchain(body as any)
+    }
     return ApiServices.blockchain.xrp.xrpBroadcast({ txData: await prepareSignedTrustlineTransaction(body) })
   }
   /**
@@ -44,6 +50,9 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
    * @returns transaction id of the transaction in the blockchain
    */
   const sendAccountSettingsTransaction = async (body: AccountSettings) => {
+    if (body.signatureId) {
+      return ApiServices.blockchain.xrp.xrpAccountSettings(body as any)
+    }
     return ApiServices.blockchain.xrp.xrpBroadcast({
       txData: await prepareSignedAccountSettingsTransaction(body),
     })
