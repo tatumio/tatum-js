@@ -54,8 +54,8 @@ jobs:
           node-version: '14'
       - run: yarn --ignore-scripts --frozen-lockfile
 
-      - name: Update version of packages
-        run: yarn version:alpha
+#      - name: Update version of packages
+#        run: yarn version:alpha
 
       - name: Update version of packages
         run: yarn --ignore-scripts release:apply-version
