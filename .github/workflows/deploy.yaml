@@ -54,14 +54,6 @@ jobs:
           node-version: '14'
       - run: yarn --ignore-scripts --frozen-lockfile
 
-      - name: Update version of packages
-        run: yarn version:alpha
-
-#      - name: Update version of packages
-#        run: yarn --ignore-scripts release:apply-version
-#        env:
-#          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
-
       #      - run: npx nx-cloud start-ci-run
       - run: yarn build:all:prod
       #      - run: npx nx-cloud stop-all-agents
@@ -69,7 +61,8 @@ jobs:
       - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
 
       - name: Publish packages
-        run: yarn --ignore-scripts release:current
+        run:
+          - node tools/scripts/publish-all.mjs
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
