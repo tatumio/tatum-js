@@ -7,6 +7,7 @@ export const ethKmsService = (args: EvmBasedKMSServiceArgs) => {
   return {
     ...abstractBlockchainKms(args),
     async sign(tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string): Promise<string> {
+      // @TODO should it be here?
       /*const typedTx = tx as PendingTransaction
       if (typedTx.chain !== Currency.ETH) {
         throw new EvmBasedSdkError({ code: SdkErrorCode.KMS_CHAIN_MISMATCH })

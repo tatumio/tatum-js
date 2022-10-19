@@ -30,7 +30,7 @@ describe('XrpSDK - offchain', () => {
       mockedApi.offChain.withdrawal.broadcastBlockchainTransaction.mockResolvedValue({ txId: '1234' })
       mockedApi.offChain.withdrawal.storeWithdrawal.mockResolvedValue({ id: '1' })
 
-      const result = await offchainService.sendOffchainTransaction({
+      const result = await offchainService.sendTransactionFromVirtualAccountToBlockchain({
         senderAccountId: ACCOUNT,
         account: ACCOUNT,
         address: ACCOUNT,
@@ -49,7 +49,7 @@ describe('XrpSDK - offchain', () => {
       mockGetAccountInfo()
 
       await expect(
-        offchainService.sendOffchainTransaction({
+        offchainService.sendTransactionFromVirtualAccountToBlockchain({
           senderAccountId: ACCOUNT,
           account: ACCOUNT,
           address: ACCOUNT,
@@ -64,7 +64,7 @@ describe('XrpSDK - offchain', () => {
       mockGetAccountInfo()
 
       await expect(
-        offchainService.sendOffchainTransaction({
+        offchainService.sendTransactionFromVirtualAccountToBlockchain({
           senderAccountId: ACCOUNT,
           account: ACCOUNT,
           address: ACCOUNT,
