@@ -77,6 +77,15 @@ export const evmBasedUtils = {
     if (!fromPrivateKey) {
       throw new Error('signatureId or fromPrivateKey has to be defined')
     }
+
+    await evmBasedUtils.validateBalance(
+      client,
+      fromPrivateKey,
+      gasPriceDefined as string,
+      gasLimit,
+      tx.value == undefined ? undefined : (tx.value as string),
+    )
+
     const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey)
 
     if (!signedTransaction.rawTransaction) {
@@ -86,6 +95,23 @@ export const evmBasedUtils = {
     return signedTransaction.rawTransaction
   },
 
+  validateBalance: async (
+    client: Web3,
+    privateKey: string,
+    gasPrice: string,
+    gasLimit: string,
+    value?: string,
+  ) => {
+    let threshold = new BigNumber(gasPrice).multipliedBy(gasLimit)
+    if (value) {
+      threshold = threshold.plus(value)
+    }
+    const account = client.eth.accounts.privateKeyToAccount(privateKey)
+    const balance = await client.eth.getBalance(account.address)
+    if (!balance || new BigNumber(balance).isLessThan(threshold)) {
+      throw new EvmBasedSdkError({ code: SdkErrorCode.INSUFFICIENT_FUNDS })
+    }
+  },
   transformToWei: (amount: string, unit = 'ether') => {
     return toWei(amount, unit as Unit)
   },
