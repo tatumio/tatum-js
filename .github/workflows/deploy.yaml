@@ -59,6 +59,8 @@ jobs:
 
       - name: Update version of packages
         run: yarn --ignore-scripts release:apply-version
+        env:
+          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
 
       #      - run: npx nx-cloud start-ci-run
       - run: yarn build:all:prod
