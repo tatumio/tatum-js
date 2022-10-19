@@ -9,7 +9,7 @@
     "build:prod": "nx affected:build --configuration=production --skip-nx-cache",
     "build:all": "nx run-many --target=build --all --parallel --skip-nx-cache",
     "build:all:prod": "nx run-many --target=build --configuration=production --all --parallel --skip-nx-cache",
-    "build:libs": "nx run-many --target=build --projects=$(nx affected:libs --plain --skip-nx-cache | sed 's/ /,/g')",
+    "build:libs:prod": "nx run-many --target=build --configuration=production --skip-nx-cache --projects=$(nx affected:libs --plain --all cache | sed 's/ /,/g')",
     "test:ci": "nx run-many --target=test --all --parallel --max-parallel=3 --coverage --coverageReporters=lcov && node ./tools/coverageMerger.js --skip-nx-cache",
     "lint": "nx affected:lint --parallel --skip-nx-cache",
     "lint:all": "nx run-many --target=lint --all --parallel --skip-nx-cache",
