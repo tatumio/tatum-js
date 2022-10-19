@@ -62,7 +62,7 @@ export const xlmTxService = (apiCalls: XlmApiCallsType) => {
       }
       const memo = memPhrase
       const account = await apiCalls.getAccountInfo(fromAccount)
-      const balance = account.balances?.find((b) => b.asset_type === Asset.native().getCode())
+      const balance = account.balances?.find((b) => b.asset_type === Asset.native().getAssetType())
       const requiredBalance = new BigNumber(amount).plus(0.00001)
       const accountBalance = new BigNumber(balance?.balance || 0)
       if (accountBalance.isLessThan(requiredBalance)) {
@@ -130,7 +130,7 @@ export const xlmTxService = (apiCalls: XlmApiCallsType) => {
         )
       }
       const account = await apiCalls.getAccountInfo(fromAccount)
-      const balance = account.balances?.find((b) => b.asset_type === Asset.native().getCode())
+      const balance = account.balances?.find((b) => b.asset_type === Asset.native().getAssetType())
       const accountBalance = new BigNumber(balance?.balance || 0)
       if (accountBalance.isLessThan(0.00001)) {
         throw new XlmSdkError(
