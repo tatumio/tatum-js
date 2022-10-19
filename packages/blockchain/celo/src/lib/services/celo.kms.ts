@@ -1,11 +1,11 @@
-import { EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
-import { EvmBasedBlockchain } from '@tatumio/shared-core'
+import { EvmBasedKMSServiceArgs, EvmBasedSdkError } from '@tatumio/shared-blockchain-evm-based'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
-import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
+import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { celoUtils } from '../utils/celo.utils'
 import { Currency, PendingTransaction } from '@tatumio/api-client'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
-export const celoKmsService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
+export const celoKmsService = (args: EvmBasedKMSServiceArgs) => {
   return {
     ...abstractBlockchainKms(args),
     /**
@@ -16,12 +16,11 @@ export const celoKmsService = (args: { blockchain: EvmBasedBlockchain; web3: Evm
      * @returns transaction data to be broadcast to blockchain.
      */
     async sign(tx: PendingTransaction, fromPrivateKey: string, provider?: string): Promise<string> {
-      ;(tx as PendingTransaction).chain = Currency.CELO
-      const p = new CeloProvider(
-        provider || `${process.env.TATUM_API_URL}/v3/celo/web3/${process.env.TATUM_API_KEY}`,
-      )
-      await p.ready
-      const wallet = new CeloWallet(fromPrivateKey, p)
+      if (tx.chain !== Currency.CELO) {
+        throw new EvmBasedSdkError({ code: SdkErrorCode.KMS_CHAIN_MISMATCH })
+      }
+      const client = args.web3.getClient(provider)
+      const wallet = new CeloWallet(fromPrivateKey, client.givenProvider())
       const transaction = JSON.parse(tx.serializedTransaction)
       const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
         wallet,
