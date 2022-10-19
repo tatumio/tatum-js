@@ -13,7 +13,7 @@ import { xdcAuctionService } from './services/xdc.auction'
 
 const blockchain = Blockchain.XDC
 
-export const TatumBscSDK = (args: SDKArguments) => {
+export const TatumXdcSDK = (args: SDKArguments) => {
   const web3 = xdcWeb3({ blockchain })
   const api = XinFinService
   const txService = xdcTxService({ blockchain, web3 })
