@@ -1,7 +1,7 @@
-import { ApiServices } from '@tatumio/api-client'
+import { XlmAccount } from '@tatumio/api-client'
 
 export type XlmApiCallsType = {
-  getAccountInfo: typeof ApiServices.blockchain.xlm.xlmGetAccountInfo
+  getAccountInfo: (account: string) => Promise<XlmAccount>
 }
 
 export * from './lib/xlm.sdk'

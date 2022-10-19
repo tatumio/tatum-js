@@ -57,7 +57,7 @@ import {
   XlmWallet,
   XrpWallet,
 } from '@tatumio/api-client'
-import { Blockchain, blockchainHelper, ChainTransactionKMS } from '@tatumio/shared-core'
+import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 import { abstractSdk, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
 import { abstractBlockchainOffchain } from './services/offchain.abstract-blockchain'
@@ -311,7 +311,7 @@ export interface SdkWithMarketplaceFunctions {
 }
 
 export interface SdkWithKmsFunctions {
-  sign(tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string): Promise<string>
+  sign(tx: PendingTransaction, fromPrivateKey: string, provider?: string): Promise<string>
 
   getAllPending(signatures?: string): CancelablePromise<PendingTransaction[]>
 

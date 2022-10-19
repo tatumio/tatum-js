@@ -1,5 +1,4 @@
 import { EvmBasedKMSServiceArgs, EvmBasedSdkError } from '@tatumio/shared-blockchain-evm-based'
-import { ChainTransactionKMS } from '@tatumio/shared-core'
 import { Currency, PendingTransaction } from '@tatumio/api-client'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
 import { BigNumber } from 'ethers'
@@ -8,9 +7,8 @@ import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 export const polygonKmsService = (args: EvmBasedKMSServiceArgs) => {
   return {
     ...abstractBlockchainKms(args),
-    async sign(tx: ChainTransactionKMS, fromPrivateKey: string, provider?: string): Promise<string> {
-      const typedTx = tx as PendingTransaction
-      if (typedTx.chain !== Currency.MATIC) {
+    async sign(tx: PendingTransaction, fromPrivateKey: string, provider?: string): Promise<string> {
+      if (tx.chain !== Currency.MATIC) {
         throw new EvmBasedSdkError({ code: SdkErrorCode.KMS_CHAIN_MISMATCH })
       }
       const client = args.web3.getClient(provider, fromPrivateKey)

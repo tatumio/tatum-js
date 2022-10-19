@@ -1,5 +1,5 @@
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
-import { Blockchain, ChainTransactionKMS } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import { Currency, PendingTransaction } from '@tatumio/api-client'
 import { RippleAPI } from 'ripple-lib'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
@@ -15,9 +15,8 @@ export const xrpKmsService = (args: { blockchain: Blockchain }) => {
      * @param secret secret key to sign transaction with.
      * @returns transaction data to be broadcast to blockchain.
      */
-    async sign(tx: ChainTransactionKMS, secret: string) {
-      const typedTx = tx as PendingTransaction
-      if (typedTx.chain !== Currency.XRP) {
+    async sign(tx: PendingTransaction, secret: string) {
+      if (tx.chain !== Currency.XRP) {
         throw new XrpSdkError(SdkErrorCode.KMS_CHAIN_MISMATCH)
       }
       return rippleAPI.sign(tx.serializedTransaction, secret).signedTransaction

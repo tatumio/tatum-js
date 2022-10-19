@@ -1,16 +1,59 @@
 import { TatumXlmSDK } from '@tatumio/xlm'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
-
-const xlmSDK = TatumXlmSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function xlmTxExample() {
-  await xlmSDK.transaction.sendTransaction(
+  const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  const { address, secret } = xlmSDK.wallet.wallet()
+  console.log(`My public address is ${address}, with private key ${secret}.`)
+
+  const { address: to } = xlmSDK.wallet.wallet()
+  // FUND YOUR ACCOUNT WITH XLM FROM https://laboratory.stellar.org/#account-creator?network=testnet
+
+  const accountDetails = await xlmSDK.blockchain.getAccountInfo(address)
+  console.log(
+    `My account has ${
+      accountDetails.balances ? Number(accountDetails.balances[0].balance) / 1000000 : 0
+    } XLM.`,
+  )
+
+  // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
+  const { txId } = await xlmSDK.transaction.sendTransaction(
     {
-      fromAccount: 'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H',
-      fromSecret: 'SCVVKNLBHOWBNJYHD3CNROOA2P3K35I5GNTYUHLLMUHMHWQYNEI7LVED',
-      amount: '10000',
-      to: 'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H',
+      fromAccount: address,
+      fromSecret: secret,
+      amount: '1',
+      to: to,
+      initialize: true,
     },
     { testnet: true },
   )
+  console.log(`Transaction with ID ${txId} was sent.`)
+}
+
+export async function xlmTrustlineTxExample() {
+  const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  const { address, secret } = xlmSDK.wallet.wallet()
+  console.log(`My public address is ${address}, with private key ${secret}.`)
+
+  const { address: to } = xlmSDK.wallet.wallet()
+  // FUND YOUR ACCOUNT WITH XLM FROM https://laboratory.stellar.org/#account-creator?network=testnet
+
+  const accountDetails = await xlmSDK.blockchain.getAccountInfo(address)
+  console.log(
+    `My account has ${
+      accountDetails.balances ? Number(accountDetails.balances[0].balance) / 1000000 : 0
+    } XLM.`,
+  )
+
+  // https://apidoc.tatum.io/tag/Stellar#operation/XlmTrustLineBlockchain
+  const { txId } = await xlmSDK.transaction.sendTrustlineTransaction(
+    {
+      fromAccount: address,
+      fromSecret: secret,
+      limit: '100',
+      issuerAccount: address,
+      token: 'MY_TOKEN',
+    },
+    { testnet: true },
+  )
+  console.log(`Transaction with ID ${txId} was sent.`)
 }

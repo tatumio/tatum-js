@@ -1,4 +1,4 @@
-import { Blockchain, ChainTransactionKMS } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import { Currency, PendingTransaction } from '@tatumio/api-client'
 import { Keypair, Networks, TransactionBuilder } from 'stellar-sdk'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
@@ -15,9 +15,8 @@ export const xlmKmsService = (args: { blockchain: Blockchain }) => {
      * @param testnet mainnet or testnet version
      * @returns transaction data to be broadcast to blockchain.
      */
-    async sign(tx: ChainTransactionKMS, secret: string, testnet: boolean) {
-      const typedTx = tx as PendingTransaction
-      if (typedTx.chain !== Currency.XLM) {
+    async sign(tx: PendingTransaction, secret: string, testnet: boolean) {
+      if (tx.chain !== Currency.XLM) {
         throw new XlmSdkError(SdkErrorCode.KMS_CHAIN_MISMATCH)
       }
       const transaction = TransactionBuilder.fromXDR(

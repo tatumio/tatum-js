@@ -19,10 +19,14 @@ export type XlmSdkErrorCode =
   | SdkErrorCode.PARAMETER_MISMATCH
 
 export class XlmSdkError extends SdkError {
-  constructor(error: Error | XlmSdkErrorCode) {
+  constructor(error: Error | XlmSdkErrorCode, errorMessage?: string) {
     if (typeof error === 'string') {
       super({
         code: error,
+        originalError: {
+          name: error,
+          message: errorMessage || '',
+        },
       })
     } else {
       super({

@@ -11,12 +11,17 @@ export type XrpSdkErrorCode =
   | SdkErrorCode.XRP_SECRET_DOES_NOT_MATCH
   | SdkErrorCode.KMS_CHAIN_MISMATCH
   | SdkErrorCode.INSUFFICIENT_FUNDS
+  | SdkErrorCode.PARAMETER_MISMATCH
 
 export class XrpSdkError extends SdkError {
-  constructor(error: Error | XrpSdkErrorCode) {
+  constructor(error: Error | XrpSdkErrorCode, message?: string) {
     if (typeof error === 'string') {
       super({
         code: error,
+        originalError: {
+          name: error,
+          message: message || '',
+        },
       })
     } else {
       super({

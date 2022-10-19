@@ -50,115 +50,20 @@ console.log(`My public address is ${account}, with private key ${secret}.`)
 
 ### How to check balance of the address
 
-```typescript
-import { TatumXlmSDK } from '@tatumio/xlm'
-
-const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-const { account, secret } = xlmSDK.wallet.wallet()
-console.log(`My public address is ${account}, with private key ${secret}.`)
-
-// FUND YOUR ACCOUNT WITH XLM FROM https://laboratory.stellar.org/#account-creator?network=testnet
-
-// https://apidoc.tatum.io/tag/Stellar#operation/XlmGetAccountInfo
-const accountDetails = await xlmSDK.blockchain.xlmGetAccountInfo(account)
-// We need to divide the balance by 1_000_000, because the balance is in stroops.
-console.log(`My account has ${Number(accountDetails.balances[0].balance) / 1000000} XLM.`)
-```
+You can find examples [here](./src/app/xlm.balance.example.ts).
 
 ### How to read information from the blockchain
 
-```typescript
-import { TatumXlmSDK } from '@tatumio/xlm'
-
-const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-
-// Get current latest ledger number
-const currentLedger = await xlmSDK.blockchain.info()
-
-// Get current fee applied to transactions
-const fee = await xlmSDK.blockchain.getFee()
-
-// Get details of a specific ledger
-const ledger = await xlmSDK.blockchain.getLedger('123456')
-
-// Get list of all transctions in the specific ledger
-const ledgerTxs = await xlmSDK.blockchain.getLedgerTx('123456')
-
-// Get details of a specific transaction
-const transaction = await xlmSDK.blockchain.getTransaction(
-  '749e4f8933221b9942ef38a02856803f379789ec8d971f1f60535db70135673e',
-)
-```
+You can find examples [here](./src/app/xlm.blockchain.example.ts).
 
 ### How to send transaction to another wallet
 
-```typescript
-import { TatumXlmSDK } from '@tatumio/xlm'
+You can find examples [here](./src/app/xlm.tx.example.ts).
 
-const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-const { account, secret } = xlmSDK.wallet.wallet()
-console.log(`My public address is ${account}, with private key ${secret}.`)
+### How to send create/update/delete trustline transaction to another wallet
 
-const { account: to } = xlmSDK.wallet.wallet()
-// FUND YOUR ACCOUNT WITH XLM FROM https://laboratory.stellar.org/#account-creator?network=testnet
-
-const accountDetails = await xlmSDK.blockchain.getAccountInfo(account)
-console.log(`My account has ${accountDetails.balances[0].balance} XLM.`)
-
-// https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
-const { txId } = await xlmSDK.transaction.sendTransaction(
-  {
-    fromAccount: account,
-    fromSecret: secret,
-    amount: '1',
-    to: to,
-    initialize: true,
-  },
-  { testnet: true },
-)
-console.log(`Transaction with ID ${txId} was sent.`)
-```
+You can find examples [here](./src/app/xlm.tx.example.ts).
 
 # How to generate virtual account for XLM and transfer from it to a blockchain address
 
-```typescript
-import { TatumXlmSDK } from '@tatumio/xlm'
-import { Currency } from './Currency'
-
-const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-
-const { account, secret } = xlmSDK.wallet.wallet()
-console.log(`My public address is ${account}, with private key ${secret}.`)
-
-// Generate new virtual account for XLM with specific blockchain address
-// Each XLM virtual account must have MEMO field generated - take a look here for more details - https://docs.tatum.io/guides/ledger-and-off-chain/how-to-set-up-virtual-accounts-with-xrp-bnb-and-xlm
-// No MEMO is created with this operation, only virtual account
-// https://apidoc.tatum.io/tag/Account#operation/createAccount
-const virtualAccount = await xlmSDK.ledger.account.create({
-  currency: Currency.XLM,
-  xpub: account,
-})
-console.log(JSON.stringify(virtualAccount))
-
-// we need to generate MEMO - which is a deposit address - for this virtual account
-// https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
-const depositAddress = await xlmSdk.virtualAccount.depositAddress.create(virtualAccount.id)
-
-console.log(JSON.stringify(depositAddress))
-// Result of the operation is combination of deposit address and MEMO
-console.log(`Deposit address is ${depositAddress.address} with MEMO ${depositAddress.derivationKey}`)
-
-// FUND YOUR ACCOUNT WITH XLM FROM https://laboratory.stellar.org/#account-creator?network=testnet
-
-// I wanna send assets from virtualAccount to blockchain address
-// https://apidoc.tatum.io/tag/Blockchain-operations#operation/XlmTransfer
-const result = await xlmSDK.virtualAcount.sendTransactionFromVirtualAccountToBlockchain({
-  senderAccountId: virtualAccount.id,
-  amount: '1',
-  to: account,
-  memo: 'OPTIONAL_RECIPIENT_MEMO',
-  secret: secret,
-})
-
-console.log(JSON.stringify(result))
-```
+You can find examples [here](./src/app/xlm.virtualAccount.example.ts).

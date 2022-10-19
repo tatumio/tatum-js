@@ -103,7 +103,7 @@ describe('TatumSolanaSDK', () => {
           TEST_DATA.SOLANA.PROVIDER,
         )
         const result = await sdk.kms.sign(
-          { hashes: [], id: '', serializedTransaction: JSON.stringify(txData) },
+          { hashes: [], id: '', serializedTransaction: JSON.stringify(txData), chain: 'SOL' },
           [
             '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
           ],

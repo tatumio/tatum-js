@@ -63,11 +63,13 @@ export const xlmTxService = (apiCalls: XlmApiCallsType) => {
       const memo = memPhrase
       const account = await apiCalls.getAccountInfo(fromAccount)
       const balance = account.balances?.find((b) => b.asset_type === Asset.native().getCode())
-      if (
-        !balance ||
-        new BigNumber(balance.balance as string).isLessThan(new BigNumber(amount).plus(0.00001))
-      ) {
-        throw new XlmSdkError(SdkErrorCode.INSUFFICIENT_FUNDS)
+      const requiredBalance = new BigNumber(amount).plus(0.00001)
+      const accountBalance = new BigNumber(balance?.balance || 0)
+      if (accountBalance.isLessThan(requiredBalance)) {
+        throw new XlmSdkError(
+          SdkErrorCode.INSUFFICIENT_FUNDS,
+          `Insufficient funds to create transaction from sender account ${fromAccount} -> available balance is ${accountBalance.toString()}, required balance is ${requiredBalance.toString()}.`,
+        )
       }
 
       if (!account?.sequence || typeof account.sequence !== 'string') {
@@ -116,15 +118,25 @@ export const xlmTxService = (apiCalls: XlmApiCallsType) => {
       const { fromAccount, fromSecret, issuerAccount, token, limit, signatureId } = body
 
       if (!fromSecret && !signatureId) {
-        throw new XlmSdkError(SdkErrorCode.PARAMETER_MISMATCH)
+        throw new XlmSdkError(
+          SdkErrorCode.PARAMETER_MISMATCH,
+          'either fromSecret or signatureId must be present.',
+        )
       }
       if (fromSecret && signatureId) {
-        throw new XlmSdkError(SdkErrorCode.PARAMETER_MISMATCH)
+        throw new XlmSdkError(
+          SdkErrorCode.PARAMETER_MISMATCH,
+          'either fromSecret or signatureId must be present.',
+        )
       }
       const account = await apiCalls.getAccountInfo(fromAccount)
       const balance = account.balances?.find((b) => b.asset_type === Asset.native().getCode())
-      if (!balance || new BigNumber(balance.balance as string).isLessThan(0.00001)) {
-        throw new XlmSdkError(SdkErrorCode.INSUFFICIENT_FUNDS)
+      const accountBalance = new BigNumber(balance?.balance || 0)
+      if (accountBalance.isLessThan(0.00001)) {
+        throw new XlmSdkError(
+          SdkErrorCode.INSUFFICIENT_FUNDS,
+          `Insufficient funds to create trustline from sender account ${fromAccount} -> available balance is ${accountBalance.toString()}, required balance is 0.00001.`,
+        )
       }
 
       if (!account?.sequence || typeof account.sequence !== 'string') {

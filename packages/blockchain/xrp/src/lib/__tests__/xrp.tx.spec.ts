@@ -2,17 +2,16 @@ import '@tatumio/shared-testing-common'
 import { xrpTxService } from '../services/xrp.tx'
 import { mockHelper, testHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
-import { ApiServices, XrpAccount } from '@tatumio/api-client'
+import { XrpAccount, XrpFee } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)
 
-// @TODO SAM FIX
-describe.skip('XrpSDK - TX', () => {
+describe('XrpSDK - TX', () => {
   const txService = xrpTxService({
-    getAccountDetail: ApiServices.blockchain.xrp.xrpGetAccountInfo,
-    getFee: ApiServices.blockchain.xrp.xrpGetFee,
+    getAccountDetail: mockedApi.blockchain.xrp.xrpGetAccountInfo,
+    getFee: mockedApi.blockchain.xrp.xrpGetFee,
   })
 
   const SECRET = 'shunwft7BwrFHdcXmAA87CazLsRMY'
@@ -21,7 +20,7 @@ describe.skip('XrpSDK - TX', () => {
   const FEE = '0.00001'
   const AMOUNT = '1'
   const VALID_TX_DATA =
-    '1200002280000000240000007B201B000001F56140000000000F424068400000000000000A732102A6736884D857E721F19B91226FBA68D638009FA44B14CD46C63CC30253C8715C74473045022100CE817CB8040A4C1FF53E4BB90C35530821FEEC03830C51424325B28B595F2C1102206DA8E56E799DD6040B8C4A47B58F8D077ECE1F7A26429F97521E8DDA864BEC3E8114C8A4688E754167637D0E2C00F14C7E15AAFDA42C8314C8A4688E754167637D0E2C00F14C7E15AAFDA42C'
+    '1200002280000000240000007B201B000001F56140000000000F4240684000000000002710732102A6736884D857E721F19B91226FBA68D638009FA44B14CD46C63CC30253C8715C7446304402206C823B0B767290B1585A65DEFCBFC086495F4910D742A7AE5A2FEE8401BB55AF022004FE7441F2DA628966F37A1944E5F62445E415AEA5DB6F44975B07A17DAFC4FC8114C8A4688E754167637D0E2C00F14C7E15AAFDA42C8314C8A4688E754167637D0E2C00F14C7E15AAFDA42C'
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -30,6 +29,7 @@ describe.skip('XrpSDK - TX', () => {
   describe('sendTransaction', () => {
     it('valid', async () => {
       mockGetAccountInfo()
+      mockGetFee()
       mockedApi.blockchain.xrp.xrpBroadcast.mockResolvedValue({ txId: '12345' })
 
       const result = await txService.sendTransaction({
@@ -48,6 +48,7 @@ describe.skip('XrpSDK - TX', () => {
   describe('prepareSignedTransaction', () => {
     it('valid', async () => {
       mockGetAccountInfo()
+      mockGetFee()
 
       const signed = await txService.prepareSignedTransaction({
         fromSecret: SECRET,
@@ -62,6 +63,7 @@ describe.skip('XrpSDK - TX', () => {
 
     it('fee = 0', async () => {
       mockGetAccountInfo()
+      mockGetFee()
 
       await expect(
         txService.prepareSignedTransaction({
@@ -76,6 +78,7 @@ describe.skip('XrpSDK - TX', () => {
 
     it('secret does not match', async () => {
       mockGetAccountInfo()
+      mockGetFee()
 
       await expect(
         txService.prepareSignedTransaction({
@@ -95,6 +98,10 @@ describe.skip('XrpSDK - TX', () => {
       account_data: { Sequence: 123 },
     },
   ) {
-    mockedApi.blockchain.xrp.xrpGetAccountInfo.mockResolvedValue(args)
+    return mockedApi.blockchain.xrp.xrpGetAccountInfo.mockResolvedValue(args)
+  }
+
+  function mockGetFee(args: XrpFee = { drops: { base_fee: '1000' } }) {
+    return mockedApi.blockchain.xrp.xrpGetFee.mockResolvedValue(args)
   }
 })

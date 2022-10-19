@@ -1,13 +1,14 @@
-import { Blockchain, ChainTransactionKMS } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import { flowTxService } from './flow.tx'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
 import { FlowTxType } from '../flow.constants'
+import { PendingTransaction } from '@tatumio/api-client'
 
 export const flowKmsService = (args: { apiKey: string; blockchain: Blockchain }) => {
   return {
     ...abstractBlockchainKms(args),
     async sign(
-      tx: ChainTransactionKMS,
+      tx: PendingTransaction,
       fromPrivateKeys: string[],
       testnet: boolean,
     ): Promise<{ txId: string; address: string } | { txId: string }> {

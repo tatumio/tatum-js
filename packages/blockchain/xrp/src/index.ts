@@ -1,8 +1,8 @@
-import { ApiServices } from '@tatumio/api-client'
+import { XrpAccount, XrpFee } from '@tatumio/api-client'
 
 export type XrpApiCallsType = {
-  getAccountDetail: typeof ApiServices.blockchain.xrp.xrpGetAccountInfo
-  getFee: typeof ApiServices.blockchain.xrp.xrpGetFee
+  getAccountDetail: (account: string) => Promise<XrpAccount>
+  getFee: () => Promise<XrpFee>
 }
 
 export * from './lib/xrp.sdk'
