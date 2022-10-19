@@ -1,6 +1,6 @@
 {
   "name": "tatumio",
-  "version": "2.0.1-alpha.323",
+  "version": "2.0.1-alpha.325",
   "license": "MIT",
   "repository": "https://github.com/tatumio/tatum-js",
   "scripts": {
@@ -108,6 +108,7 @@
     "openapi-typescript-codegen": "^0.12.5",
     "patch-package": "^6.2.0",
     "prettier": "2.7.1",
+    "replace-in-file": "^6.3.5",
     "ts-jest": "28.0.8",
     "ts-node": "10.9.1",
     "typescript": "4.8.4"

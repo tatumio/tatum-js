@@ -6,6 +6,7 @@ import { tronWeb } from './services/tron.web'
 import { tronTx } from './services/tron.tx'
 import { tronWallet } from './services/tron.wallet'
 import { tronRecord } from './services/tron.record'
+import { tronKmsService } from './services/tron.kms'
 
 const blockchain = Blockchain.TRON
 
@@ -32,6 +33,7 @@ export const TatumTronSDK = (args: SDKArguments) => {
     transaction: txService.native,
     trc10: txService.trc10,
     trc20: txService.trc20,
+    kms: tronKmsService({ blockchain }),
     nft: {
       ...txService.trc721,
       deployNFTSmartContract,

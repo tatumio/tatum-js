@@ -103,7 +103,7 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
       }
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
       const balanceRequired = new BigNumber(amount).plus(finalFee)
-      const accountBalance = new BigNumber(accountInfo.account_data?.Balance as string)
+      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0).dividedBy(1000000)
       if (accountBalance.isLessThan(balanceRequired)) {
         throw new XrpSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,
@@ -150,7 +150,7 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
 
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
 
-      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0)
+      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0).dividedBy(1000000)
       if (accountBalance.isLessThan(finalFee)) {
         throw new XrpSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,
@@ -190,7 +190,7 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
       const finalFee = Math.max(new BigNumber(fee || '0').toNumber(), xrpFee.toNumber()) / 1000000
       const rippleAPI = new RippleAPI()
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
-      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0)
+      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0).dividedBy(1000000)
       if (accountBalance.isLessThan(finalFee)) {
         throw new XrpSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,
