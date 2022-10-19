@@ -63098,7 +63098,7 @@
         "properties": {
           "chain": {
             "description": "Blockchain to work with.",
-            "enum": ["ETH", "MATIC", "BSC", "ONE", "CELO"],
+            "enum": ["ETH", "MATIC", "BSC", "ONE", "CELO", "XDC"],
             "example": "MATIC",
             "type": "string"
           },
