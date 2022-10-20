@@ -1,13 +1,13 @@
 <p align="center">
-  <a href="https://getbootstrap.com/">
+  <a href="https://tatum.io/">
     <img src="https://tatum.io/images/Light.svg" alt="Logo" width="200" height="100">
   </a>
 </p>
 
-<h3 align="center">Tatum API Client v2</h3>
+<h3 align="center">Tatum SDK v2</h3>
 
 <p align="center">
-  Tatum API client allows browsers and Node.js clients to interact with Tatum API. You can find API documentation at
+  Tatum SDK allows browsers and Node.js clients to interact with Tatum API. You can find API documentation at
   <br>
   <a href="https://tatum.io/apidoc"><strong>API docs »</strong></a>
   <br>
@@ -26,7 +26,7 @@
 
 <hr>
 
-> **Are you looking for Tatum API client v1? It has been moved to long living branch [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1)**.
+> **Are you looking for Tatum SDK v1? It has been moved to long living branch [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1)**.
 
 ## Status
 
@@ -175,11 +175,11 @@ Library is written in TypeScript with ES2017 as the target JS version. Library s
 
 ## Configuration and setup
 
-| Variable                  | Required | Default value    | Description                                                                                                                                                                                                                                   |
-| ------------------------- | -------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TESTNET_TYPE              |          | ethereum-sepolia | For Ethereum, there are 2 testnet chains supported - Sepolia and Goerli. To enable Goerli, you need to use ethereum-goerli.                                                                                                                   |
-| TATUM_GAS_STATION_API_KEY |          |                  | In the library, there are functions for estimating the Ethereum transaction fee. For the estimation of the transaction fee, we are using https://ethgasstation.info. If you have your API key from https://ethgasstation.info you can use it. |
-| YOUR_TRON_PRO_API_KEY     |          |                  | If you want to work with TRON locally, you need to enter API Key for [Trongrid] (https://trongrid.io).                                                                                                                                        |
+| Variable                  | Required  | Default value    | Description                                                                                                                                                                                                                                   |
+| ------------------------- |-----------|------------------| --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| TESTNET_TYPE              | -         | ethereum-sepolia | For Ethereum, there are 2 testnet chains supported - Sepolia and Goerli. To enable Goerli, you need to use ethereum-goerli.                                                                                                                   |
+| TATUM_GAS_STATION_API_KEY | -         | -                | In the library, there are functions for estimating the Ethereum transaction fee. For the estimation of the transaction fee, we are using https://ethgasstation.info. If you have your API key from https://ethgasstation.info you can use it. |
+| YOUR_TRON_PRO_API_KEY     | -         | -                | If you want to work with TRON locally, you need to enter API Key for [Trongrid] (https://trongrid.io).                                                                                                                                        |
 
 ## Usage
 
@@ -262,7 +262,7 @@ yarn add -D react-app-rewired
 
 ## Contributing
 
-Contributions to the Tatum API client are welcome. Please ensure
+Contributions to the Tatum SDK are welcome. Please ensure
 that you have tested your changes with a local client and have added unit test
 coverage for your code.
 
