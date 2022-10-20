@@ -263,9 +263,9 @@ Examples
 
 All examples of SDK usage will be found after completion at https://github.com/tatumio/tatum-js/tree/master/examples
 
-### Usage with React - Webpack 5
 
-Webpack v5 introduced breaking changes to Web3 library used in Tatum blockchain services. To enable Tatum SDK in React apps you need to follow workaround as per https://stackoverflow.com/questions/66952972/cannot-add-web3-to-react-project
+<details>
+  <summary style='font-size: 16px; font-weight: bold'>Usage with create-react-app (which uses Webpack 5)</summary>
 
 #### 1. Install additional dependencies
 
@@ -275,6 +275,7 @@ yarn add -D react-app-rewired
 ```
 
 #### 2. Copy [config-overrides.js](https://github.com/npwork/create-react-app-with-webpack5/blob/main/config-overrides.js) to your project (next to package.json)
+
 
 #### 3. Add browserify dependencies to `package.json`
 
@@ -298,14 +299,10 @@ yarn add -D react-app-rewired
     "build": "react-app-rewired build",
     "test": "react-app-rewired test",
     "eject": "react-app-rewired eject"
-  },
+},
 ```
 
-#### 5. Start your app as usual
-
-```console
-npm start
-```
+</details>
 
 ## Contributing
 
@@ -315,4 +312,4 @@ coverage for your code.
 
 ### Bugs and feature requests
 
-Have a bug or a feature request? Please first read the issue guidelines and search for existing and closed issues. If your problem or idea is not addressed yet, please open a [new issue]( [please open a new issue](https://github.com/twbs/bootstrap/issues/new/choose)).
+Have a bug or a feature request? Please first read the issue guidelines and search for existing and closed issues. If your problem or idea is not addressed yet, please open a [new issue]( [please open a new issue](https://github.com/tatumio/tatum-js/issues/new/choose)).
