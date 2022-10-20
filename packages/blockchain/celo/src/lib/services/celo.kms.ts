@@ -20,7 +20,7 @@ export const celoKmsService = (args: EvmBasedKMSServiceArgs) => {
         throw new EvmBasedSdkError({ code: SdkErrorCode.KMS_CHAIN_MISMATCH })
       }
       const p = new CeloProvider(
-        provider || `${process.env.TATUM_API_URL}/v3/blockhcain/node/CELO/${process.env['TATUM_API_KEY']}`,
+        provider || `${process.env['TATUM_API_URL']}/v3/blockhcain/node/CELO/${process.env['TATUM_API_KEY']}`,
       )
       await p.ready
       const wallet = new CeloWallet(fromPrivateKey, p)
