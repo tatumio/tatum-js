@@ -17,7 +17,7 @@ import BigNumber from 'bignumber.js'
 import { bscTxService } from './bsc.tx'
 
 type TransferBscOffchain = FromPrivateKeyOrSignatureIdOrMnemonic<TransferBsc>
-type OffchainResponse = { id?: string; txId?: string; completed?: boolean } | void
+type OffchainResponse = { id?: string; txId?: string; completed?: boolean } | void
 
 const sendBscOffchainTransaction = async (
   body: TransferBscOffchain,
@@ -85,7 +85,7 @@ const sendBscOffchainTransaction = async (
     }
   } catch (e) {
     try {
-       return await WithdrawalService.cancelInProgressWithdrawal(id!)
+      return await WithdrawalService.cancelInProgressWithdrawal(id!)
     } catch (e1) {
       return { id }
     }
