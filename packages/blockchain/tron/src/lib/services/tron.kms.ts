@@ -21,7 +21,7 @@ export const tronKmsService = (args: { blockchain: Blockchain }) => {
       }
       const client = tronWeb().getClient(provider)
       const transactionConfig = JSON.parse(tx.serializedTransaction)
-      transactionConfig.nonce = await client.wallet().nonce
+      // transactionConfig.nonce = await client.wallet().nonce
       return JSON.stringify(await client.trx.sign(transactionConfig, fromPrivateKey))
     },
   }
