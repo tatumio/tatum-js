@@ -41,7 +41,7 @@ need to have Node.js version 10 or higher.
 ### How to generate BSC wallet
 
 ```typescript
-import { TatumBscSDK } from '@tatumio/xlm'
+import { TatumBscSDK } from '@tatumio/bsc'
 
 const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()

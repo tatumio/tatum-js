@@ -1,34 +1,40 @@
 import { TatumBscSDK } from '@tatumio/bsc'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const bscSdk = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
-
+const bscSdk = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function bscOffchainExample() {
-  const account = await bscSdk.offchain.depositAddress.checkExists(
-    '0xa7673161CbfE0116A4De9E341f8465940c2211d4',
-  )
-  const address = await bscSdk.offchain.depositAddress.create('0xa7673161CbfE0116A4De9E341f8465940c2211d4', 1)
-  const adresses = await bscSdk.offchain.depositAddress.createMultiple({
-    addresses: [
-      {
-        accountId: '5e6be8e9e6aa436299950c41',
-        derivationKey: 0,
-      },
-      {
-        accountId: '5e6be8e9e6aa436299951n35',
-        derivationKey: 1,
-      },
-    ],
+  // if you don't already have a wallet, address and private key - generate them
+  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateWallet
+  const { mnemonic, xpub } = await bscSdk.wallet.generateWallet()
+  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddressPrivateKey
+  const fromPrivateKey = await bscSdk.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+
+  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddress
+  const to = bscSdk.wallet.generateAddressFromXPub(xpub, 1)
+
+  // Generate new virtual account for BSC with specific blockchain address
+  // https://apidoc.tatum.io/tag/Account#operation/createAccount
+  const virtualAccount = await bscSdk.ledger.account.create({
+    currency: 'BSC',
+    xpub: xpub,
   })
-  const assignedAddress = await bscSdk.offchain.depositAddress.assign(
-    '5e6be8e9e6aa436299950c41',
-    '0xa7673161CbfE0116A4De9E341f8465940c2211d4',
-  )
-  const addressByAccount = await bscSdk.offchain.depositAddress.getByAccount('5e6be8e9e6aa436299950c41')
-  const withdrawals = await bscSdk.offchain.withdrawal.getAll('Done')
-  await bscSdk.offchain.depositAddress.remove(
-    '5e6be8e9e6aa436299950c41',
-    '0xa7673161CbfE0116A4De9E341f8465940c2211d4',
-  )
-  await bscSdk.offchain.storeTokenAddress('0xa7673161CbfE0116A4De9E341f8465940c2211d4', 'MY_TOKEN')
+  console.log(JSON.stringify(virtualAccount))
+
+  // create deposit address for a virtual account
+  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
+  const depositAddress = await bscSdk.offchain.depositAddress.create(virtualAccount.id)
+
+  console.log(`Deposit address is ${depositAddress.address}`)
+
+  // FUND YOUR ACCOUNT WITH BNB FROM https://testnet.binance.org/faucet-smart
+
+  // I wanna send assets from virtualAccount to blockchain address
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/BscOrBepTransfer
+  const result = await bscSdk.offchain.send({
+    senderAccountId: virtualAccount.id,
+    amount: '1',
+    fromPrivateKey,
+    address: to,
+  })
+
+  console.log(JSON.stringify(result))
 }

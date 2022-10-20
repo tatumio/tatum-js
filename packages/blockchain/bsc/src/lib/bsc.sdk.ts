@@ -10,12 +10,14 @@ import { bscWeb3 } from './services/bsc.web3'
 import { bscKmsService } from './services/bsc.kms'
 import { bscTxService } from './services/bsc.tx'
 import { bscAuctionService } from './services/bsc.auction'
+import { bscOffchainService } from './services/bsc.offchain'
 
 const blockchain = Blockchain.BSC
 
 export const TatumBscSDK = (args: SDKArguments) => {
   const web3 = bscWeb3({ blockchain })
   const api = BnbSmartChainService
+  const offchain = bscOffchainService({ blockchain, web3 })
   const txService = bscTxService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
@@ -88,5 +90,6 @@ export const TatumBscSDK = (args: SDKArguments) => {
       generateWallet: BnbSmartChainService.bscGenerateWallet,
       web3Driver: BnbSmartChainService.bscWeb3Driver,
     },
+    offchain,
   }
 }

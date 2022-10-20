@@ -48,6 +48,7 @@ import {
   TransferCustodialWalletCelo,
   TransferCustodialWalletCeloKMS,
   TransferCustodialWalletKMS,
+  TransferEthBlockchain,
   TransferMultiToken,
   TransferMultiTokenBatch,
   TransferNft,
@@ -92,6 +93,14 @@ export type SecretOrSignatureId<T extends { secret?: string }> = Omit<T, 'secret
 
 export type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey?: string }> = Omit<T, 'fromPrivateKey'> &
   Partial<SignatureId> &
+  Partial<Pick<T, 'fromPrivateKey'>>
+
+export type FromPrivateKeyOrSignatureIdOrMnemonic<T extends { fromPrivateKey?: string }> = Omit<
+  T,
+  'fromPrivateKey'
+> &
+  Partial<SignatureId & { index?: number }> &
+  Partial<{ mnemonic: string }> &
   Partial<Pick<T, 'fromPrivateKey'>>
 
 export type ChainTransferErc20 = FromPrivateKeyOrSignatureId<Omit<ChainTransferEthErc20, 'chain'>>

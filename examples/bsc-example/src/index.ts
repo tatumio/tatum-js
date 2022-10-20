@@ -11,6 +11,7 @@ import { bscTxExample } from './app/bsc.tx.example'
 import { bscAuctionExample } from './app/bsc.auction.example'
 import { bscMultiTokenExample } from './app/bsc.multitoken.example'
 import { bscErc20Example } from './app/bsc.erc20.example'
+import { bscSmartContractExample } from './app/bsc.smart.contract.examples'
 
 console.log(`Running ${bscBlockchainExample()}`)
 console.log(`Running ${bscOffchainExample()}`)
@@ -22,3 +23,4 @@ console.log(`Running ${bscMultiTokenExample()}`)
 console.log(`Running ${bscErc20Example()}`)
 console.log(`Running ${bscAuctionExample()}`)
 console.log(`Running ${bscBalanceExample()}`)
+console.log(`Running ${bscSmartContractExample()}`)
