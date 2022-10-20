@@ -8,9 +8,9 @@ export async function xdcBalanceExample() {
   const address = xdcSDK.wallet.generateAddressFromXPub(mnemonic, 0)
   console.log(`My public address is ${address}.`)
 
-  // FUND YOUR ACCOUNT WITH BNB FROM https://testnet.binance.org/faucet-smart
+  // FUND YOUR ACCOUNT WITH XDC FROM https://faucet.apothem.network/
 
-  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetBalance
+  // https://apidoc.tatum.io/tag/XinFin#operation/xdcGetBalance
 
   const balance = await xdcSDK.blockchain.getBlockchainAccountBalance(address)
   if (balance) {
