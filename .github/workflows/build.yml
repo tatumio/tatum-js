@@ -12,36 +12,38 @@ env:
   TATUM_API_KEY: ${{ secrets.TATUM_API_KEY }}
 
 jobs:
-  build-and-test:
-    runs-on: ubuntu-latest
-    name: Build and test
-    steps:
-      - uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          fetch-depth: 0
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - uses: bahmutov/npm-install@v1
-        with:
-          useRollingCache: true
-          install-command: yarn --ignore-scripts --frozen-lockfile --silent
+  nx-build:
+    name: Nx Cloud - Main Job
+    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.8
+    with:
+      number-of-agents: 3
+      parallel-commands: |
+        npx nx-cloud record -- npx nx workspace-lint
+        npx nx-cloud record -- npx nx format:check
+      parallel-commands-on-agents: |
+        npx nx affected --target=lint --parallel=3
+        npx nx affected --target=test --parallel=3 --ci --code-coverage
+        npx nx affected --target=build --parallel=3
+#  build-and-test:
+#    runs-on: ubuntu-latest
+#    name: Build and test
+#    steps:
+#      - uses: actions/checkout@v2
+#        with:
+#          ref: ${{ github.event.pull_request.head.ref }}
+#          fetch-depth: 0
+#      - uses: actions/setup-node@v3
+#        with:
+#          node-version: 16
+#      - uses: bahmutov/npm-install@v1
+#        with:
+#          useRollingCache: true
+#          install-command: yarn --ignore-scripts --frozen-lockfile --silent
 #      - name: Derive appropriate SHAs for base and head for `nx affected` commands
 #        uses: nrwl/nx-set-shas@v2
 #        with:
 #          main-branch-name: 'master'
-      - name: Nx Cloud - Main Job
-        uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.8
-        with:
-          number-of-agents: 3
-          parallel-commands: |
-            npx nx-cloud record -- npx nx workspace-lint
-            npx nx-cloud record -- npx nx format:check
-          parallel-commands-on-agents: |
-            npx nx affected --target=lint --parallel=3
-            npx nx affected --target=test --parallel=3 --ci --code-coverage
-            npx nx affected --target=build --parallel=3
+
   agents:
     name: Nx Cloud - Agents
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.8
