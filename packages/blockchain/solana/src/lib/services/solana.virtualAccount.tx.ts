@@ -10,7 +10,11 @@ import {
 } from '@tatumio/api-client'
 import { SolanaWeb3 } from './solana.web3'
 import { solanaTxService } from './solana.tx'
-import { PrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
+import {
+  abstractBlockchainVirtualAccount,
+  PrivateKeyOrSignatureId,
+} from '@tatumio/shared-blockchain-abstract'
+import { Blockchain } from '@tatumio/shared-core'
 
 export type Transfer = PrivateKeyOrSignatureId<TransferSol>
 
@@ -69,6 +73,7 @@ export const solanaVirtualAccountTxService = (args: { web3: SolanaWeb3 }) => {
      * Transfer SOL from virtual account to blockchain address.
      * @param body body of the request
      */
+    ...abstractBlockchainVirtualAccount({ blockchain: Blockchain.SOL }),
     transferFromVirtualAccountToBlockchainAddress: async (body: Transfer) => {
       if (body.signatureId) {
         return BlockchainOperationsService.solTransfer(body as any)
