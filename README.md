@@ -7,7 +7,7 @@
 <h3 align="center">Tatum API Client v2</h3>
 
 <p align="center">
-  Tatum API client allows browsers and Node.js clients to interact with Tatum API. You can find API documentation at API doc.
+  Tatum API client allows browsers and Node.js clients to interact with Tatum API. You can find API documentation at
   <br>
   <a href="https://tatum.io/apidoc"><strong>API docs »</strong></a>
   <br>
@@ -16,10 +16,12 @@
 </p>
 
 <div style="text-align: center;">
+
 [![Build all packages](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml/badge.svg?branch=master)](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml) 
 [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) 
 [![npm version](https://img.shields.io/npm/v/@tatumio/sdk.svg?style=flat-square)](https://www.npmjs.com/package/@tatumio/sdk)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+
 </div>
 
 <hr>
@@ -43,10 +45,13 @@ This repository is a monorepo with multiple packages for each blockchain.
 You can select one or more blockchain packages that you want to use in your project and install them separately.
 
 #### Install using [npm](https://www.npmjs.com/)
+
 ```console
 npm install @tatumio/eth
 ```
+
 #### Install using [yarn](https://yarnpkg.com/)
+
 ```console
 yarn add @tatumio/eth
 ```
@@ -176,9 +181,11 @@ npm start
 ```
 
 ## Contributing
+
 Contributions to the Tatum API client are welcome. Please ensure
 that you have tested your changes with a local client and have added unit test
 coverage for your code.
 
 ### Bugs and feature requests
+
 Have a bug or a feature request? Please first read the issue guidelines and search for existing and closed issues. If your problem or idea is not addressed yet, please open a [new issue]( [please open a new issue](https://github.com/twbs/bootstrap/issues/new/choose)).
