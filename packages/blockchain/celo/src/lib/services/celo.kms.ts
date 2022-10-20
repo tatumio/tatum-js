@@ -1,6 +1,6 @@
 import { EvmBasedKMSServiceArgs, EvmBasedSdkError } from '@tatumio/shared-blockchain-evm-based'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
-import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
+import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { celoUtils } from '../utils/celo.utils'
 import { Currency, PendingTransaction } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
@@ -19,11 +19,9 @@ export const celoKmsService = (args: EvmBasedKMSServiceArgs) => {
       if (tx.chain !== Currency.CELO) {
         throw new EvmBasedSdkError({ code: SdkErrorCode.KMS_CHAIN_MISMATCH })
       }
-      const p = new CeloProvider(
-        provider || `${process.env['TATUM_API_URL']}/v3/blockhcain/node/CELO/${process.env['TATUM_API_KEY']}`,
-      )
-      await p.ready
-      const wallet = new CeloWallet(fromPrivateKey, p)
+      const celoProvider = celoUtils.getProvider(provider)
+      await celoProvider.ready
+      const wallet = new CeloWallet(fromPrivateKey, celoProvider)
       const transaction = JSON.parse(tx.serializedTransaction)
       const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
         wallet,
