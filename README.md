@@ -78,7 +78,7 @@ Currently supported blockchain sdks
 <tr>
   <td align="center">Algo</td>
   <td align="center">@tatumio/algo</td>
-  <td align="center">[xlm examples](https://github.com/tatumio/tatum-js/tree/master/examples/xlm-example)</td>
+  <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/xlm-example'>xlm examples</a></td>
 </tr>
 <tr>
   <td align="center">Bitcoin cash</td>
