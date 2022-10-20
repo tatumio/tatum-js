@@ -32,7 +32,7 @@ describe('XrpSDK - TX', () => {
       mockGetFee()
       mockedApi.blockchain.xrp.xrpBroadcast.mockResolvedValue({ txId: '12345' })
 
-      const { txId } = (await txService.sendTransaction({
+      const result = (await txService.sendTransaction({
         fromSecret: SECRET,
         fromAccount: ACCOUNT,
         fee: FEE,
@@ -40,7 +40,7 @@ describe('XrpSDK - TX', () => {
         to: ACCOUNT,
       })) as TransactionHash
 
-      expect(txId).toBe('12345')
+      expect(result['txId']).toBe('12345')
       testHelper.expectMockCalled(mockedApi.blockchain.xrp.xrpBroadcast, [{ txData: VALID_TX_DATA }])
     })
   })
@@ -95,7 +95,7 @@ describe('XrpSDK - TX', () => {
   function mockGetAccountInfo(
     args: XrpAccount = {
       ledger_current_index: 1,
-      account_data: { Sequence: 123 },
+      account_data: { Sequence: 123, Balance: '1000000000' },
     },
   ) {
     return mockedApi.blockchain.xrp.xrpGetAccountInfo.mockResolvedValue(args)
