@@ -10,7 +10,6 @@ import {
   smartContract,
 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
-import { bscOffchainService } from './bsc.offchain'
 
 export const bscTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {
@@ -58,8 +57,5 @@ export const bscTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
         smartContractApiMethod: BnbSmartChainService.bscBlockchainSmartContractInvocation,
       }),
     },
-    offchain: bscOffchainService({
-      ...args,
-    }),
   }
 }

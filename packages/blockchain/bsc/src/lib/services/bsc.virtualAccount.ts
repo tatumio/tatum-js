@@ -16,13 +16,13 @@ import { Blockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { bscTxService } from './bsc.tx'
 
-type TransferBscOffchain = FromPrivateKeyOrSignatureIdOrMnemonic<TransferBsc>
-type OffchainResponse = { id?: string; txId?: string; completed?: boolean } | void
+type TransferVirtualAccountBsc = FromPrivateKeyOrSignatureIdOrMnemonic<TransferBsc>
+type VirtualAccountResponse = { id?: string; txId?: string; completed?: boolean } | void
 
-const sendBscOffchainTransaction = async (
-  body: TransferBscOffchain,
+const sendBscVirtualAccountTransaction = async (
+  body: TransferVirtualAccountBsc,
   web3: EvmBasedWeb3,
-): Promise<OffchainResponse> => {
+): Promise<VirtualAccountResponse> => {
   const txService = bscTxService({ blockchain: Blockchain.BSC, web3 })
   const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body as any
   const { amount, address } = withdrawal
@@ -30,10 +30,11 @@ const sendBscOffchainTransaction = async (
   let txData: any
 
   if (body.mnemonic && body.index !== undefined) {
-    fromPrivKey = (await ApiServices.blockchain.bsc.bscGenerateAddressPrivateKey({
-      mnemonic: body.mnemonic,
-      index: body.index,
-    })) as string
+    fromPrivKey = (await evmBasedUtils.generatePrivateKeyFromMnemonic(
+      Blockchain.BSC,
+      body.mnemonic,
+      body.index,
+    )) as string
   } else {
     fromPrivKey = body.fromPrivateKey as string
   }
@@ -55,6 +56,7 @@ const sendBscOffchainTransaction = async (
   } else {
     fee.gasLimit = '100000'
     const vc = await VirtualCurrencyService.getCurrency(account.currency)
+
     txData = await txService.erc20.send.transferSignedTransaction({
       amount,
       fee,
@@ -92,7 +94,7 @@ const sendBscOffchainTransaction = async (
   }
 }
 
-export const bscOffchainService = (args: { blockchain: Blockchain; web3: EvmBasedWeb3 }) => {
+export const virtualAccountService = (args: { blockchain: Blockchain; web3: EvmBasedWeb3 }) => {
   return {
     ...abstractBlockchainOffchain(args),
     /**
@@ -101,11 +103,11 @@ export const bscOffchainService = (args: { blockchain: Blockchain; web3: EvmBase
      * @param body content of the transaction to broadcast
      * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
      */
-    send: async (body: TransferBscOffchain) => {
+    send: async (body: TransferVirtualAccountBsc) => {
       if (body.signatureId) {
         return ApiServices.offChain.blockchain.bscOrBepTransfer(body as TransferBscKMS)
       } else {
-        return await sendBscOffchainTransaction(body, args.web3)
+        return await sendBscVirtualAccountTransaction(body, args.web3)
       }
     },
   }

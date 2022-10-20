@@ -3,7 +3,7 @@
  */
 
 import { bscBlockchainExample } from './app/bsc.blockchain.example'
-import { bscOffchainExample } from './app/bsc.offchain.example'
+import { bscVirtualAccountExample } from './app/bsc.virtualAccount.example'
 import { bscNftExample } from './app/bsc.nft.example'
 import { bscSubscriptionsExample } from './app/bsc.subscriptions.example'
 import { bscBalanceExample } from './app/bsc.balance.example'
@@ -14,7 +14,7 @@ import { bscErc20Example } from './app/bsc.erc20.example'
 import { bscSmartContractExample } from './app/bsc.smart.contract.examples'
 
 console.log(`Running ${bscBlockchainExample()}`)
-console.log(`Running ${bscOffchainExample()}`)
+console.log(`Running ${bscVirtualAccountExample()}`)
 console.log(`Running ${bscNftExample()}`)
 console.log(`Running ${bscSubscriptionsExample()}`)
 console.log(`Running ${bscTxExample()}`)

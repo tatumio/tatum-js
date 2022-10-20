@@ -10,8 +10,10 @@ export async function bscSmartContractExample(): Promise<void> {
   const { mnemonic } = await bscSDK.wallet.generateWallet()
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddressPrivateKey
   const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const address = bscSDK.wallet.generateAddressFromPrivateKey(fromPrivateKey)
 
   // FUND YOUR SENDER ACCOUNT WITH BNB FROM https://testnet.binance.org/faucet-smart
+  console.log(`Fund address: ${address}`)
 
   // any previously deployed contract address
   const contractAddress = '0x687422eEA2cB73B5d3e242bA5456b782919AFc85'

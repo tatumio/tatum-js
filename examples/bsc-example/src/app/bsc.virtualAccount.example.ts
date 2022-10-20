@@ -1,12 +1,12 @@
 import { TatumBscSDK } from '@tatumio/bsc'
 
 const bscSdk = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-export async function bscOffchainExample() {
+export async function bscVirtualAccountExample() {
   // if you don't already have a wallet, address and private key - generate them
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateWallet
   const { mnemonic, xpub } = await bscSdk.wallet.generateWallet()
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddressPrivateKey
-  const fromPrivateKey = await bscSdk.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const fromPrivateKey = await bscSdk.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1)
 
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddress
   const to = bscSdk.wallet.generateAddressFromXPub(xpub, 1)
@@ -29,7 +29,7 @@ export async function bscOffchainExample() {
 
   // I wanna send assets from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/BscOrBepTransfer
-  const result = await bscSdk.offchain.send({
+  const result = await bscSdk.virtualAccount.send({
     senderAccountId: virtualAccount.id,
     amount: '1',
     fromPrivateKey,

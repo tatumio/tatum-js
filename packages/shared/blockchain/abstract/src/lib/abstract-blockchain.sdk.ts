@@ -99,7 +99,7 @@ export type FromPrivateKeyOrSignatureIdOrMnemonic<T extends { fromPrivateKey?: s
   T,
   'fromPrivateKey'
 > &
-  Partial<SignatureId & { index?: number }> &
+  Partial<SignatureId & { index: number }> &
   Partial<{ mnemonic: string }> &
   Partial<Pick<T, 'fromPrivateKey'>>
 
