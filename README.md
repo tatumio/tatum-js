@@ -52,6 +52,8 @@ npm install @tatumio/eth
 yarn add @tatumio/eth
 ```
 
+Currently supported blockchain sdks
+
 <table>
 <tr>
 <th align="center">
@@ -66,40 +68,140 @@ Blockchain
 <img width="441" height="1">
 <p> 
 <small>
-Description
+Package
 </small>
 </p>
 </th>
 </tr>
 <tr>
-<td align="center">
-Algo
-</td>
-<td align="center">
-@tatumio/algo
-</td>
+  <td align="center">
+  Algo
+  </td>
+  <td align="center">
+  @tatumio/algo
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Bitcoin cash
+  </td>
+  <td align="center">
+  @tatumio/bch
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Bitcoin
+  </td>
+  <td align="center">
+  @tatumio/btc
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Binance smart chain
+  </td>
+  <td align="center">
+  @tatumio/bsc
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Celo
+  </td>
+  <td align="center">
+  @tatumio/celo
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Dogecoin
+  </td>
+  <td align="center">
+  @tatumio/dog
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Ethereum
+  </td>
+  <td align="center">
+  @tatumio/eth
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Flow
+  </td>
+  <td align="center">
+  @tatumio/flow
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  KuCoin
+  </td>
+  <td align="center">
+  @tatumio/kcs
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Klaytn
+  </td>
+  <td align="center">
+  @tatumio/klaytn
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Litecoin
+  </td>
+  <td align="center">
+  @tatumio/ltc
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Polygon
+  </td>
+  <td align="center">
+  @tatumio/polygon
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Solana
+  </td>
+  <td align="center">
+  @tatumio/solana
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Tron
+  </td>
+  <td align="center">
+  @tatumio/tron
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  Stellar
+  </td>
+  <td align="center">
+  @tatumio/xlm
+  </td>
+</tr>
+<tr>
+  <td align="center">
+  XRP
+  </td>
+  <td align="center">
+  @tatumio/xrp
+  </td>
 </tr>
 </table>
-
-Currently supported blockchain sdks
-| Blockchain | Description |
-| ----------- | ----------- |
-| Algo | @tatumio/algo |
-| Bitcoin cash | @tatumio/bch |
-| Bitcoin | @tatumio/btc |
-| Binance smart chain | @tatumio/bsc |
-| Celo | @tatumio/celo |
-| Dogecoin | @tatumio/doge |
-| Ethereum | @tatumio/eth |
-| Flow | @tatumio/flow |
-| KuCoin | @tatumio/kcs |
-| Klaytn | @tatumio/klaytn |
-| Litecoin | @tatumio/ltc |
-| Polygon | @tatumio/polygon |
-| Solana | @tatumio/solana |
-| Tron | @tatumio/tron |
-| Stellar | @tatumio/xlm |
-| XRP | @tatumio/xrp |
 
 ### Full package
 
