@@ -7,23 +7,18 @@ import { bscOffchainExample } from './app/bsc.offchain.example'
 import { bscNftExample } from './app/bsc.nft.example'
 import { bscSubscriptionsExample } from './app/bsc.subscriptions.example'
 import { bscBalanceExample } from './app/bsc.balance.example'
-import {
-  bscTxWithPrivateKeyExample,
-  bscTxWithSignatureIdExample,
-  bscNftTxExample,
-  bscMultiTokenTxExample,
-  gasPumpTxExample,
-} from './app/bsc.tx.example'
+import { bscTxExample } from './app/bsc.tx.example'
 import { bscAuctionExample } from './app/bsc.auction.example'
+import { bscMultiTokenExample } from './app/bsc.multitoken.example'
+import { bscErc20Example } from './app/bsc.erc20.example'
 
 console.log(`Running ${bscBlockchainExample()}`)
 console.log(`Running ${bscOffchainExample()}`)
 console.log(`Running ${bscNftExample()}`)
 console.log(`Running ${bscSubscriptionsExample()}`)
-console.log(`Running ${bscTxWithPrivateKeyExample()}`)
-console.log(`Running ${bscTxWithSignatureIdExample()}`)
-console.log(`Running ${bscNftTxExample()}`)
-console.log(`Running ${bscMultiTokenTxExample()}`)
-console.log(`Running ${gasPumpTxExample()}`)
+console.log(`Running ${bscTxExample()}`)
+console.log(`Running ${bscNftExample()}`)
+console.log(`Running ${bscMultiTokenExample()}`)
+console.log(`Running ${bscErc20Example()}`)
 console.log(`Running ${bscAuctionExample()}`)
 console.log(`Running ${bscBalanceExample()}`)

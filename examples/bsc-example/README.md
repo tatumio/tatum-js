@@ -49,6 +49,27 @@ const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
 console.log(`Created a wallet with ${mnemonic} and public key ${xpub}.`)
 ```
 
+### How to use web3
+
+```typescript
+import { TatumBscSDK } from '@tatumio/bsc'
+
+const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+
+const web3response = await bscSDK.httpDriver({
+  jsonrpc: '2.0',
+  method: 'web3_clientVersion',
+  params: [],
+  id: 2,
+})
+
+const gasPriceInWei = await bscSDK.getGasPriceInWei()
+const web3 = bscSDK.web3Client()
+
+const blockNumber = web3.eth.getBlockNumber()
+const balance = web3.eth.getTransactionFromBlock(blockNumber)
+```
+
 ### How to check balance of the address
 
 You can find examples [here](./src/app/bsc.balance.example.ts).
