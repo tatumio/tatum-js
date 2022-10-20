@@ -8,7 +8,7 @@ import {
   ChainTransferMultiToken,
   ChainTransferMultiTokenBatch,
 } from '@tatumio/shared-blockchain-abstract'
-import { MultiTokensErc1155OrCompatibleService } from '@tatumio/api-client'
+import { ApiServices, MultiTokensErc1155OrCompatibleService } from '@tatumio/api-client'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
 import { Erc1155 } from '../../contracts'
@@ -290,22 +290,32 @@ export const multiToken = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintMultiTokenTransaction: async (body: ChainMintMultiToken, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await mintMultiToken(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      mintMultiTokenTransaction: async (body: ChainMintMultiToken, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.multiToken.mintMultiToken(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: (await mintMultiToken(body, args.web3, provider)) as string,
+          })
+        }
+      },
       /**
        * Send MultiToken mint batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * @param body content of the transaction to broadcast
        * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintMultiTokenBatchTransaction: async (body: ChainMintMultiTokenBatch, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await mintMultiTokenBatch(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      mintMultiTokenBatchTransaction: async (body: ChainMintMultiTokenBatch, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.multiToken.mintMultiTokenBatch(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: (await mintMultiTokenBatch(body, args.web3, provider)) as string,
+          })
+        }
+      },
       /**
        * Send MultiToken transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -313,11 +323,16 @@ export const multiToken = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      transferMultiTokenTransaction: async (body: ChainTransferMultiToken, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await transferMultiToken(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      transferMultiTokenTransaction: async (body: ChainTransferMultiToken, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.multiToken.transferMultiToken(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: (await transferMultiToken(body, args.web3, provider)) as string,
+          })
+        }
+      },
       /**
        * Send MultiToken batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -325,44 +340,64 @@ export const multiToken = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      transferMultiTokenBatchTransaction: async (body: ChainTransferMultiTokenBatch, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await transferMultiTokenBatch(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      transferMultiTokenBatchTransaction: async (body: ChainTransferMultiTokenBatch, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.multiToken.transferMultiTokenBatch(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: (await transferMultiTokenBatch(body, args.web3, provider)) as string,
+          })
+        }
+      },
       /**
        ** Send MultiToken deploy transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * @param body content of the transaction to broadcast
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      deployMultiTokenTransaction: async (body: ChainDeployMultiToken, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await deployMultiToken(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      deployMultiTokenTransaction: async (body: ChainDeployMultiToken, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.multiToken.deployMultiToken(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: (await deployMultiToken(body, args.web3, provider)) as string,
+          })
+        }
+      },
       /**
        * Send MultiToken butn transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * @param body content of the transaction to broadcast
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      burnMultiTokenTransaction: async (body: ChainBurnMultiToken, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await burnMultiToken(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      burnMultiTokenTransaction: async (body: ChainBurnMultiToken, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.multiToken.burnMultiToken(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: (await burnMultiToken(body, args.web3, provider)) as string,
+          })
+        }
+      },
       /**
        * Send MultiToken butn batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * @param body content of the transaction to broadcast
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      burnMultiTokenBatchTransaction: async (body: ChainBurnMultiTokenBatch, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await burnMultiTokenBatch(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      burnMultiTokenBatchTransaction: async (body: ChainBurnMultiTokenBatch, provider?: string) => {
+        if (body.signatureId) {
+          // TODO: find better type
+          return ApiServices.multiToken.burnMultiTokenBatch(body as any)
+        } else {
+          return args.broadcastFunction({
+            txData: (await burnMultiTokenBatch(body, args.web3, provider)) as string,
+          })
+        }
+      },
     },
 
     getTransactionByAddress: MultiTokensErc1155OrCompatibleService.multiTokenGetTransactionByAddress,

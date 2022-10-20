@@ -1,115 +1,56 @@
 import { TatumBscSDK } from '@tatumio/bsc'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export const bscAuctionExample = async () => {
-  const auction = await bscSDK.marketplace.auction.getAuction(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-    '1',
-  )
+  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
+  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddressPrivateKey
+  const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddress
+  const feeRecipient = bscSDK.wallet.generateAddressFromXPub(xpub, 0)
+  const bidder = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  const auctionFee = await bscSDK.marketplace.auction.getAuctionFee(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-  )
-
-  const auctionFeeRecipient = await bscSDK.marketplace.auction.getAuctionFeeRecipient(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-  )
-
-  const deployAuctionTx = await bscSDK.marketplace.auction.prepare.deployAuctionSignedTransaction({
+  const txId = await bscSDK.marketplace.auction.prepare.deployAuctionSignedTransaction({
     auctionFee: 100,
-    feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    feeRecipient,
+    fromPrivateKey,
   })
 
-  const updateFeeRecipientTx =
-    await bscSDK.marketplace.auction.prepare.auctionUpdateFeeRecipientSignedTransaction({
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      fee: {
-        gasLimit: '40000',
-        gasPrice: '20',
-      },
-      amount: '10000',
-    })
+  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetTransaction
+  const transaction = await bscSDK.blockchain.get(txId)
+  const contractAddress = transaction.contractAddress as string
 
-  const createAuctionTx = await bscSDK.marketplace.auction.prepare.createAuctionSignedTransaction({
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    erc20Address: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    amount: '1',
-    endedAt: 100000,
-    tokenId: '100000',
-    isErc721: true,
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  console.log(`Deployed smart contract for NFT auction with transaction ID ${txId}`)
 
-  const approveNftSpendingTx =
-    await bscSDK.marketplace.auction.prepare.auctionApproveNftTransferSignedTransaction({
-      spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      isErc721: true,
-      tokenId: '100000',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      nonce: 1,
-      fee: {
-        gasLimit: '40000',
-        gasPrice: '20',
-      },
-      amount: '10000',
-    })
+  const auction = await bscSDK.marketplace.auction.getAuction(contractAddress, '1')
 
-  const approveErc20SpendingTx =
-    await bscSDK.marketplace.auction.prepare.auctionApproveErc20TransferSignedTransaction({
-      amount: '100000',
-      spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      nonce: 0,
-      tokenId: '1234',
-      isErc721: true,
-    })
+  console.log(`Auction from contract address ${contractAddress}: ${auction}`)
 
-  const bidAuctionTx = await bscSDK.marketplace.auction.prepare.auctionBidSignedTransaction({
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    bidder: '0x587422eEA2cB73B5d3e242bA5456b782919AFc85',
+  const { txId: bidTransactionHash } = await bscSDK.marketplace.auction.send.auctionBidSignedTransaction({
+    contractAddress,
+    bidder,
     id: 'string',
     bidValue: '1',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
+    fromPrivateKey,
   })
 
-  const cancelAuctionTx = await bscSDK.marketplace.auction.prepare.auctionCancelSignedTransaction({
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  console.log(`Auction bid transaction hash: ${bidTransactionHash}`)
 
-  const settleAuctionTx = await bscSDK.marketplace.auction.prepare.auctionSettleSignedTransaction({
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  const { txId: cancelTransactionHash } =
+    await bscSDK.marketplace.auction.send.auctionCancelSignedTransaction({
+      contractAddress,
+      id: 'string',
+      fromPrivateKey,
+    })
+
+  console.log(`Auction cancel transaction hash: ${cancelTransactionHash}`)
+
+  const { txId: settleTransactionHash } =
+    await bscSDK.marketplace.auction.send.auctionSettleSignedTransaction({
+      contractAddress,
+      id: 'string',
+      fromPrivateKey,
+    })
+
+  console.log(`Auction settle transaction hash: ${settleTransactionHash}`)
 }

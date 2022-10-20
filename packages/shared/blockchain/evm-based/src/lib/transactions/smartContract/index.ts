@@ -56,6 +56,7 @@ export const smartContract = (args: {
   blockchain: EvmBasedBlockchain
   web3: EvmBasedWeb3
   broadcastFunction: BroadcastFunction
+  smartContractApiMethod: any
 }) => {
   return {
     prepare: {
@@ -94,12 +95,13 @@ export const smartContract = (args: {
         body: ChainSmartContractMethodInvocation,
         provider?: string,
       ) => {
-        if (body.methodABI.stateMutability === 'view') {
+        if (body.signatureId) {
+          return args.smartContractApiMethod(body)
+        } else if (body.methodABI.stateMutability === 'view') {
           return smartContractReadMethodInvocation(body, args.web3, provider)
         } else {
           return args.broadcastFunction({
             txData: await smartContractWriteMethodInvocation(body, args.web3, provider),
-            signatureId: body.signatureId,
           })
         }
       },

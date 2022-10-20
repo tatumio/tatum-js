@@ -16,6 +16,7 @@ import {
   ChainBurnErc20 as ApiChainBurnErc20,
   ChainMintErc20 as ApiChainMintErc20,
   ChainTransferEthErc20,
+  Currency,
   DeployErc20,
   DeployMultiToken,
   DeployNft,
@@ -147,6 +148,7 @@ export type ChainGenerateCustodialAddress =
 
 export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>> & {
   gas?: string
+  currency?: Currency
 }
 
 export type ChainGenerateMarketplace = FromPrivateKeyOrSignatureId<GenerateMarketplace>

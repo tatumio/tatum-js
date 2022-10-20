@@ -1,140 +1,73 @@
 import { TatumBscSDK } from '@tatumio/bsc'
-import { Currency } from '@tatumio/api-client'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import { Currency, TransactionHash } from '@tatumio/api-client'
 
-const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function bscNftExample() {
-  const metadataURI = await bscSDK.nft.getNFTMetadataURI(
-    Currency.BSC,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const provenanceData = await bscSDK.nft.getNFTProvenanceData(
-    Currency.BSC,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const royalty = await bscSDK.nft.getNFTRoyalty(
-    Currency.BSC,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const transaction = await bscSDK.nft.getNFTTransaction(
-    Currency.BSC,
-    '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
-  )
+  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
+  const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const address = bscSDK.wallet.generateAddressFromXPub(xpub, 0)
+  const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  const nftAccountBalance = await bscSDK.nft.getNFTAccountBalance(
-    Currency.BSC,
-    '0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B',
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-  )
-
-  const deployHash = await bscSDK.nft.deployNFTSmartContract({
+  // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
+  const { txId } = (await bscSDK.nft.deployNFTSmartContract({
     chain: 'BSC',
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    provenance: true,
-    publicMint: true,
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+    fromPrivateKey,
+  })) as TransactionHash
 
-  const transferHash = await bscSDK.nft.transferNFT({
+  // fetch deployed contract address from transaction hash
+  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetTransaction
+  const deployedTransaction = await bscSDK.blockchain.get(txId)
+  const contractAddress = deployedTransaction.contractAddress as string
+  console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
+
+  // upload your file to the ipfs:
+  // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
+
+  // Mint NFTs on your own smart contract
+  const nftMinted = (await bscSDK.nft.mintNFT({
+    chain: 'BSC',
+    tokenId: '100000',
+    contractAddress,
+    fromPrivateKey,
+    to,
+    // uploaded metadata from ipfs
+    url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
+  })) as TransactionHash
+
+  console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
+
+  // Get NFT token metadata
+  const { data } = await bscSDK.nft.getNFTMetadataURI(Currency.BSC, contractAddress, '1')
+
+  console.log(`Token metadata: ${data}`)
+
+  // Get all minted NFTs in the collection. Returns all NFTs this contract minted.
+  const nftAccountBalance = await bscSDK.nft.getNFTAccountBalance(Currency.BSC, address, contractAddress)
+
+  console.log(`Nfts on ${contractAddress}: ${nftAccountBalance}`)
+
+  // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
+  const nftTransferred = (await bscSDK.nft.transferNFT({
     chain: 'BSC',
     value: '1',
-    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    to,
     tokenId: '1000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    provenance: true,
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+    contractAddress,
+    fromPrivateKey,
+  })) as TransactionHash
 
-  const mintMultipleHash = await bscSDK.nft.mintMultipleNFTs({
-    chain: 'BSC',
-    to: ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-    tokenId: ['100000'],
-    url: ['https://my_token_data.com'],
-    authorAddresses: [['0x687422eEA2cB73B5d3e242bA5456b782919AFc85']],
-    cashbackValues: [['0.5']],
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  console.log(`Transfered nft with transacion hash: ${nftTransferred.txId}`)
 
-  const minted = await bscSDK.nft.mintNFT({
+  // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
+  const nftBurned = (await bscSDK.nft.burnNFT({
     chain: 'BSC',
     tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    url: 'https://my_token_data.com',
-  })
+    contractAddress,
+    fromPrivateKey,
+  })) as TransactionHash
 
-  const mintedExpress = await bscSDK.nft.mintNFT({
-    chain: 'BSC',
-    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    url: 'https://my_token_data.com',
-  })
-
-  const mintedWithMinter = await bscSDK.nft.mintNFT({
-    chain: 'BSC',
-    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    url: 'https://my_token_data.com',
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-  })
-
-  const burnHash = await bscSDK.nft.burnNFT({
-    chain: 'BSC',
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
-
-  const addMinterHash = await bscSDK.nft.addNFTMinter({
-    chain: 'BSC',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
-
-  const updateRoyaltyHash = await bscSDK.nft.updateNFTRoyalty({
-    chain: 'BSC',
-    tokenId: '100000',
-    cashbackValue: '0.1',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  console.log(`NFT burn transaction sent with transaction ID: ${nftBurned.txId}`)
 }

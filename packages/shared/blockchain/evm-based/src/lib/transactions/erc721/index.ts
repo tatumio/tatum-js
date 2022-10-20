@@ -14,7 +14,17 @@ import { Erc721_Provenance } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
 import BigNumber from 'bignumber.js'
-import { ApiServices, MintNftMinter, TransactionHash } from '@tatumio/api-client'
+import {
+  ApiServices,
+  BurnNftKMS,
+  DeployNftKMS,
+  MintMultipleNftKMS,
+  MintNftKMS,
+  MintNftMinter,
+  TransactionHash,
+  TransferNftKMS,
+  UpdateCashbackValueForAuthorNftKMS,
+} from '@tatumio/api-client'
 import { Erc721Token_General } from '../../contracts/erc721General'
 import { Erc721Token_Cashback } from '../../contracts/erc721Cashback'
 
@@ -555,11 +565,12 @@ export const erc721 = (args: {
        */
       mintSignedTransaction: async (body: ChainMintErc721, provider?: string) => {
         if (body.minter) {
-          await mintSignedTransactionMinter(body as MintNftMinter)
+          return await mintSignedTransactionMinter(body as MintNftMinter)
+        } else if (body.signatureId) {
+          return await ApiServices.nft.nftMintErc721(body as MintNftKMS)
         } else {
-          await args.broadcastFunction({
+          return await args.broadcastFunction({
             txData: (await mintSignedTransaction(body, args.web3, provider)) as string,
-            signatureId: body.signatureId,
           })
         }
       },
@@ -570,11 +581,15 @@ export const erc721 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintCashbackSignedTransaction: async (body: ChainMintNft, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await mintCashbackSignedTransaction(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      mintCashbackSignedTransaction: async (body: ChainMintNft, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftMintErc721(body as MintNftKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: (await mintCashbackSignedTransaction(body, args.web3, provider)) as string,
+          })
+        }
+      },
       /**
        * Send BEP721 mint multiple transaction with cashback to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -582,11 +597,16 @@ export const erc721 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintMultipleCashbackSignedTransaction: async (body: ChainMintMultipleNft, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await mintMultipleCashbackSignedTransaction(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      mintMultipleCashbackSignedTransaction: async (body: ChainMintMultipleNft, provider?: string) => {
+        if (body.signatureId) {
+          return await ApiServices.nft.nftMintMultipleErc721(body as MintMultipleNftKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: (await mintMultipleCashbackSignedTransaction(body, args.web3, provider)) as string,
+          })
+        }
+      },
+
       /**
        * Send BEP721 mint multiple transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -594,11 +614,15 @@ export const erc721 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintMultipleSignedTransaction: async (body: ChainMintMultipleNft, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await mintMultipleSignedTransaction(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      mintMultipleSignedTransaction: async (body: ChainMintMultipleNft, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftMintMultipleErc721(body as MintMultipleNftKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: (await mintMultipleSignedTransaction(body, args.web3, provider)) as string,
+          })
+        }
+      },
       /**
        * Send BEP721 burn transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -606,11 +630,16 @@ export const erc721 = (args: {
        * @param provider url of the  Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      burnSignedTransaction: async (body: ChainBurnErc721, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await burnSignedTransaction(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      burnSignedTransaction: async (body: ChainBurnErc721, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftBurnErc721(body as BurnNftKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: (await burnSignedTransaction(body, args.web3, provider)) as string,
+          })
+        }
+      },
+
       /**
        * Send BEP721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -618,11 +647,16 @@ export const erc721 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      transferSignedTransaction: async (body: ChainTransferErc721, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await transferSignedTransaction(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      transferSignedTransaction: async (body: ChainTransferErc721, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftTransferErc721(body as TransferNftKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: (await transferSignedTransaction(body, args.web3, provider)) as string,
+          })
+        }
+      },
+
       /**
        * Send BEP721 update cashback to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -630,11 +664,18 @@ export const erc721 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      updateCashbackForAuthorSignedTransaction: async (body: ChainUpdateCashbackErc721, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await updateCashbackForAuthorSignedTransaction(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      updateCashbackForAuthorSignedTransaction: async (
+        body: ChainUpdateCashbackErc721,
+        provider?: string,
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftUpdateCashbackErc721(body as UpdateCashbackValueForAuthorNftKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: (await updateCashbackForAuthorSignedTransaction(body, args.web3, provider)) as string,
+          })
+        }
+      },
       /**
        * Send BEP721 deploy to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -642,11 +683,16 @@ export const erc721 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      deploySignedTransaction: async (body: ChainDeployErc721, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await deploySignedTransaction(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      deploySignedTransaction: async (body: ChainDeployErc721, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftDeployErc721(body as DeployNftKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: (await deploySignedTransaction(body, args.web3, provider)) as string,
+          })
+        }
+      },
+
       /**
        * Send BEP721 mint provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -654,11 +700,15 @@ export const erc721 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintProvenanceSignedTransaction: async (body: ChainMintNft, provider?: string) =>
-        args.broadcastFunction({
-          txData: (await mintProvenanceSignedTransaction(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      mintProvenanceSignedTransaction: async (body: ChainMintNft, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftMintErc721(body as MintNftKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: (await mintProvenanceSignedTransaction(body, args.web3, provider)) as string,
+          })
+        }
+      },
       /**
        * Send BEP721 mint multiple provenance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -669,11 +719,15 @@ export const erc721 = (args: {
       mintMultipleProvenanceSignedTransaction: async (
         body: ChainMintMultipleNft & { fixedValues: string[][] },
         provider?: string,
-      ) =>
-        args.broadcastFunction({
-          txData: (await mintMultipleProvenanceSignedTransaction(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
-        }),
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftMintMultipleErc721(body as MintMultipleNftKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: (await mintMultipleProvenanceSignedTransaction(body, args.web3, provider)) as string,
+          })
+        }
+      },
     },
   }
 }
