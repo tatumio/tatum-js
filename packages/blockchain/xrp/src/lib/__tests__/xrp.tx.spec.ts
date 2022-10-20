@@ -2,7 +2,7 @@ import '@tatumio/shared-testing-common'
 import { xrpTxService } from '../services/xrp.tx'
 import { mockHelper, testHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
-import { XrpAccount, XrpFee } from '@tatumio/api-client'
+import { TransactionHash, XrpAccount, XrpFee } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 jest.mock('@tatumio/api-client')
@@ -38,7 +38,7 @@ describe('XrpSDK - TX', () => {
         fee: FEE,
         amount: AMOUNT,
         to: ACCOUNT,
-      })
+      }) as TransactionHash
 
       expect(result.txId).toBe('12345')
       testHelper.expectMockCalled(mockedApi.blockchain.xrp.xrpBroadcast, [{ txData: VALID_TX_DATA }])
