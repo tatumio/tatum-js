@@ -26,11 +26,7 @@
 
 <hr>
 
-# [Tatum API client v2](http://tatum.io/) &middot;
-
-Tatum API client allows browsers and Node.js clients to interact with Tatum API. You can find API documentation at [API doc](https://tatum.io/apidoc).
-
-> **Are you looking for Tatum API client v1? It has been moved to long living branch [`/tatumio/tatum-js/tree/v1`](https://github.com/tatumio/tatum-js/tree/v1)**.
+> **Are you looking for Tatum API client v1? It has been moved to long living branch [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1)**.
 
 ## Status
 
@@ -55,6 +51,43 @@ npm install @tatumio/eth
 ```console
 yarn add @tatumio/eth
 ```
+
+<table>
+<tr>
+<th align="center">
+<img width="441" height="1">
+<p> 
+<small>
+Blockchain
+</small>
+</p>
+</th>
+<th align="center">
+<img width="441" height="1">
+<p> 
+<small>
+Description
+</small>
+</p>
+</th>
+</tr>
+<tr>
+<td>
+Algo
+</td>
+<td>
+@tatumio/algo
+</td>
+</tr>
+<tr>
+<td align="center">
+Column 1
+</td>
+<td align="center">
+Column 2
+</td>
+</tr>
+</table>
 
 Currently supported blockchain sdks
 | Blockchain | Description |
