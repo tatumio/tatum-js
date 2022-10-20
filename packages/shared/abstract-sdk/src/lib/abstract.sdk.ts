@@ -10,6 +10,7 @@ import {
 import { abstractSdkOffChain } from './services/offchain.abstract'
 import { abstractSdkKms } from './services/kms.abstract'
 import { abstractSdkNftService } from './services/nft.abstract'
+import { abstractSdkCustodialManagedWallets } from './services/custodial.abstract'
 
 export interface SDKArguments {
   apiKey: string
@@ -35,6 +36,7 @@ export const abstractSdk = (args: SDKArguments) => {
       freezeApiKey: ServiceUtilsService.freezeApiKey,
       unfreezeApiKey: ServiceUtilsService.unfreezeApiKey,
     },
+    custodialManagedWallet: abstractSdkCustodialManagedWallets(),
     offchain: abstractSdkOffChain(),
     nft: abstractSdkNftService(),
     kms: abstractSdkKms(),

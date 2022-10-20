@@ -1,15 +1,26 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumSolanaSDK } from '@tatumio/solana'
 
-const solanaSDK = TatumSolanaSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const solanaSDK = TatumSolanaSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
+/**
+ * https://apidoc.tatum.io/tag/Solana
+ */
 export async function solanaBlockchainExample() {
-  const transaction = await solanaSDK.blockchain.getTransaction(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
-  )
-
-  const balance = await solanaSDK.blockchain.getAccountBalance('0x8ce4e40889a13971681391aad29e88efaf91f784')
-  const block = await solanaSDK.blockchain.getBlock(6470657)
-
+  // https://apidoc.tatum.io/tag/Solana#operation/SolanaGetCurrentBlock
   const currentBlock = await solanaSDK.blockchain.getCurrentBlock()
+  console.log(`Current block: ${currentBlock}`)
+
+  // https://apidoc.tatum.io/tag/Solana#operation/SolanaGetBlock
+  const block = await solanaSDK.blockchain.getBlock(1638279975)
+  console.log(block)
+
+  // https://apidoc.tatum.io/tag/Solana#operation/SolanaGetTransaction
+  const transaction = await solanaSDK.blockchain.getTransaction(
+    '5oSXZkPregqGhHrTcbWhgHQJETvBHtBYssuuCMJ3qroAgHsHndsr8fyY8kY76AgwmMaZBZW8ThHAXwjDaUSweApS',
+  )
+  console.log(transaction)
+
+  // https://apidoc.tatum.io/tag/Solana#operation/SolanaGetBalance
+  const balance = await solanaSDK.blockchain.getAccountBalance('FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ')
+  console.log(`Balance of the account FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ is : ${balance}`)
 }

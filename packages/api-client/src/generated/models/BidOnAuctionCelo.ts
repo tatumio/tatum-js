@@ -12,7 +12,7 @@ export type BidOnAuctionCelo = {
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
-     * Address of the marketplace smart contract.
+     * Address of the auction smart contract.
      */
     contractAddress: string;
     /**

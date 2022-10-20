@@ -20,11 +20,15 @@ export type ActivateGasPumpCeloKMS = {
      */
     to: number;
     /**
-     * The currency to pay for the gas fee
+     * The currency to pay for the gas fee; if not set, defaults to CELO
      */
-    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * The KMS identifier of the private key of the blockchain address that will pay the gas fee for the activation transaction
      */
     signatureId: string;
+    /**
+     * (Only if the signature ID is mnemonic-based) The index of the specific address from the mnemonic
+     */
+    index?: number;
 }

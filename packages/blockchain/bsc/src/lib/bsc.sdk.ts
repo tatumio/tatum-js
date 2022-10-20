@@ -60,7 +60,7 @@ export const TatumBscSDK = (args: SDKArguments) => {
     },
     smartContract: txService.smartContract,
     multiToken: txService.multiToken,
-    custodial: txService.custodial,
+    gasPucustodial: txService.custodial,
     gasPump: txService.gasPump,
     marketplace: {
       auction: bscAuctionService({ blockchain, web3 }),

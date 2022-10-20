@@ -1,7 +1,7 @@
 export type Web3Request = {
   id: number
   method: string
-  params: string[]
+  params: any[]
   jsonrpc?: string
 }
 
