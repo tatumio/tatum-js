@@ -55,22 +55,22 @@ yarn add @tatumio/eth
 Currently supported blockchain sdks
 | Blockchain | Package | Examples |
 | ----------- | ----------- | ----------- |
-| Algo | @tatumio/algo | [xlm examples] (https://github.com/tatumio/tatum-js/tree/master/examples/xlm-example) |
-| Bitcoin cash | @tatumio/bch | [bcash examples] (https://github.com/tatumio/tatum-js/tree/master/examples/bch-example) |
-| Bitcoin | @tatumio/btc | [btc examples] (https://github.com/tatumio/tatum-js/tree/master/examples/btc-example) |
-| Binance smart chain | @tatumio/bsc | [bsc examples] (https://github.com/tatumio/tatum-js/tree/master/examples/bsc-example) |
-| Celo | @tatumio/celo | [celo examples] (https://github.com/tatumio/tatum-js/tree/master/examples/celo-example) |
-| Dogecoin | @tatumio/doge | [doge examples] (https://github.com/tatumio/tatum-js/tree/master/examples/doge-example) |
-| Ethereum | @tatumio/eth | [eth examples] (https://github.com/tatumio/tatum-js/tree/master/examples/eth-example) |
-| Flow | @tatumio/flow | [flow examples] (https://github.com/tatumio/tatum-js/tree/master/examples/flow-example) |
-| KuCoin | @tatumio/kcs | [kcs examples] (https://github.com/tatumio/tatum-js/tree/master/examples/kcs-example) |
-| Klaytn | @tatumio/klaytn | [klaytn examples] (https://github.com/tatumio/tatum-js/tree/master/examples/klaytn-example) |
-| Litecoin | @tatumio/ltc | [ltc examples] (https://github.com/tatumio/tatum-js/tree/master/examples/ltc-example) |
-| Polygon | @tatumio/polygon | [polygon examples] (https://github.com/tatumio/tatum-js/tree/master/examples/polygon-example) |
-| Solana | @tatumio/solana | [solana examples] (https://github.com/tatumio/tatum-js/tree/master/examples/solana-example) |
-| Tron | @tatumio/tron | [tron examples] (https://github.com/tatumio/tatum-js/tree/master/examples/tron-example) |
-| Stellar | @tatumio/xlm | [xlm examples] (https://github.com/tatumio/tatum-js/tree/master/examples/xlm-example) |
-| XRP | @tatumio/xrp | [xrp examples] (https://github.com/tatumio/tatum-js/tree/master/examples/xrp-example) |
+| Algo | @tatumio/algo | [xlm examples](https://github.com/tatumio/tatum-js/tree/master/examples/xlm-example) |
+| Bitcoin cash | @tatumio/bch | [bcash examples](https://github.com/tatumio/tatum-js/tree/master/examples/bch-example) |
+| Bitcoin | @tatumio/btc | [btc examples](https://github.com/tatumio/tatum-js/tree/master/examples/btc-example) |
+| Binance smart chain | @tatumio/bsc | [bsc examples](https://github.com/tatumio/tatum-js/tree/master/examples/bsc-example) |
+| Celo | @tatumio/celo | [celo examples](https://github.com/tatumio/tatum-js/tree/master/examples/celo-example) |
+| Dogecoin | @tatumio/doge | [doge examples](https://github.com/tatumio/tatum-js/tree/master/examples/doge-example) |
+| Ethereum | @tatumio/eth | [eth examples](https://github.com/tatumio/tatum-js/tree/master/examples/eth-example) |
+| Flow | @tatumio/flow | [flow examples](https://github.com/tatumio/tatum-js/tree/master/examples/flow-example) |
+| KuCoin | @tatumio/kcs | [kcs examples](https://github.com/tatumio/tatum-js/tree/master/examples/kcs-example) |
+| Klaytn | @tatumio/klaytn | [klaytn examples](https://github.com/tatumio/tatum-js/tree/master/examples/klaytn-example) |
+| Litecoin | @tatumio/ltc | [ltc examples](https://github.com/tatumio/tatum-js/tree/master/examples/ltc-example) |
+| Polygon | @tatumio/polygon | [polygon examples](https://github.com/tatumio/tatum-js/tree/master/examples/polygon-example) |
+| Solana | @tatumio/solana | [solana examples](https://github.com/tatumio/tatum-js/tree/master/examples/solana-example) |
+| Tron | @tatumio/tron | [tron examples](https://github.com/tatumio/tatum-js/tree/master/examples/tron-example) |
+| Stellar | @tatumio/xlm | [xlm examples](https://github.com/tatumio/tatum-js/tree/master/examples/xlm-example) |
+| XRP | @tatumio/xrp | [xrp examples](https://github.com/tatumio/tatum-js/tree/master/examples/xrp-example) |
 
 <hr />
 
