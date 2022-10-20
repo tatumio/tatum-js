@@ -16,9 +16,3 @@ export async function xdcBalanceExample() {
     console.log(`My account has ${Web3.utils.fromWei(balance as string)} xdc.`)
   }
 }
-
-xdcBalanceExample()
-  .then(() => {
-    console.log('Exit!')
-  })
-  .catch((err) => console.error(err))
