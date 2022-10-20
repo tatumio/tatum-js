@@ -11,6 +11,8 @@ import type { ChainBurnErc20 } from '../models/ChainBurnErc20';
 import type { ChainBurnErc20KMS } from '../models/ChainBurnErc20KMS';
 import type { ChainBurnKcsErc20 } from '../models/ChainBurnKcsErc20';
 import type { ChainBurnKcsErc20KMS } from '../models/ChainBurnKcsErc20KMS';
+import type { ChainDeployAlgoErc20 } from '../models/ChainDeployAlgoErc20';
+import type { ChainDeployAlgoErc20KMS } from '../models/ChainDeployAlgoErc20KMS';
 import type { ChainDeployCeloErc20 } from '../models/ChainDeployCeloErc20';
 import type { ChainDeployCeloErc20KMS } from '../models/ChainDeployCeloErc20KMS';
 import type { ChainDeployErc20 } from '../models/ChainDeployErc20';
@@ -60,6 +62,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Solana</li>
+     * <li>Algorand</li>
      * <li>XinFin</li>
      * </ul>
      * <p>You can review the code of a deployed smart contract <a href="https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/token.sol" target="_blank">here</a>.</p>
@@ -74,7 +77,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * @throws ApiError
      */
     public static erc20Deploy(
-        requestBody: (ChainDeployErc20 | ChainDeploySolanaSpl | ChainDeployCeloErc20 | ChainDeployKcsErc20 | ChainDeployErc20KMS | ChainDeploySolanaSplKMS | ChainDeployCeloErc20KMS | ChainDeployKcsErc20KMS),
+        requestBody: (ChainDeployErc20 | ChainDeploySolanaSpl | ChainDeployCeloErc20 | ChainDeployKcsErc20 | ChainDeployAlgoErc20 | ChainDeployErc20KMS | ChainDeploySolanaSplKMS | ChainDeployCeloErc20KMS | ChainDeployKcsErc20KMS | ChainDeployAlgoErc20KMS),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
@@ -108,6 +111,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>XinFin</li>
+     * <li>Algorand</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When minting fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>

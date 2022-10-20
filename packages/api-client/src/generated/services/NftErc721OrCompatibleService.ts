@@ -5,6 +5,7 @@ import type { AddNftMinter } from '../models/AddNftMinter';
 import type { AddNftMinterKMS } from '../models/AddNftMinterKMS';
 import type { AlgorandMintedResult } from '../models/AlgorandMintedResult';
 import type { BurnNft } from '../models/BurnNft';
+import type { BurnNftAlgo } from '../models/BurnNftAlgo';
 import type { BurnNftCelo } from '../models/BurnNftCelo';
 import type { BurnNftFlowKMS } from '../models/BurnNftFlowKMS';
 import type { BurnNftFlowMnemonic } from '../models/BurnNftFlowMnemonic';
@@ -538,7 +539,7 @@ export class NftErc721OrCompatibleService {
                  * @throws ApiError
                  */
                 public static nftBurnErc721(
-                    requestBody: (BurnNft | BurnNftCelo | BurnNftKMSCelo | BurnNftTron | BurnNftKMSTron | BurnNftKMS | BurnNftFlowPK | BurnNftFlowMnemonic | BurnNftFlowKMS),
+                    requestBody: (BurnNft | BurnNftCelo | BurnNftAlgo | BurnNftKMSCelo | BurnNftTron | BurnNftKMSTron | BurnNftKMS | BurnNftFlowPK | BurnNftFlowMnemonic | BurnNftFlowKMS),
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<(TransactionHash | SignatureId)> {
                     return __request({
@@ -932,8 +933,10 @@ export class NftErc721OrCompatibleService {
                  * <p><b>NOTE:</b> This API works only for the NFT smart contracts deployed using the <a href="https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftDeployErc721" target="_blank">Tatum smart contract API</a>.</p>
                  * <p>This API is supported for the following blockchains:</p>
                  * <ul>
+                 * <li>Algorand</li>
                  * <li>BNB Smart Chain</li>
                  * <li>Celo</li>
+                 * <li>Elrond</li>
                  * <li>Ethereum</li>
                  * <li>Flow</li>
                  * <li>Harmony</li>
@@ -942,7 +945,6 @@ export class NftErc721OrCompatibleService {
                  * <li>Polygon</li>
                  * <li>Solana</li>
                  * <li>TRON</li>
-                 * <li>Algorand</li>
                  * </ul>
                  *
                  * @param chain Blockchain to work with
@@ -953,7 +955,7 @@ export class NftErc721OrCompatibleService {
                  * @throws ApiError
                  */
                 public static nftGetBalanceErc721(
-                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC' | 'SOL' | 'ALGO',
+                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC' | 'SOL' | 'ALGO' | 'EGLD',
                     address: string,
                     contractAddress: string,
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
@@ -1033,6 +1035,7 @@ export class NftErc721OrCompatibleService {
                  * <li>Klaytn</li>
                  * <li>KuCoin Community Chain</li>
                  * <li>Polygon</li>
+                 * <li>Solana</li>
                  * <li>TRON</li>
                  * </ul>
                  *
@@ -1047,7 +1050,7 @@ export class NftErc721OrCompatibleService {
                 public static nftGetMetadataErc721(
                     chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
                     contractAddress: string,
-                    token: string,
+                    token?: string,
                     account?: string,
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<{
@@ -1088,6 +1091,7 @@ export class NftErc721OrCompatibleService {
                  * <li>Klaytn</li>
                  * <li>KuCoin Community Chain</li>
                  * <li>Polygon</li>
+                 * <li>Solana</li>
                  * <li>TRON</li>
                  * </ul>
                  *
@@ -1101,7 +1105,7 @@ export class NftErc721OrCompatibleService {
                 public static nftGetRoyaltyErc721(
                     chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'BSC',
                     contractAddress: string,
-                    token: string,
+                    token?: string,
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<{
                     /**

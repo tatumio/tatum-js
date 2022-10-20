@@ -103,6 +103,10 @@ export type FromPrivateKeyOrSignatureIdOrMnemonic<T extends { fromPrivateKey?: s
   Partial<{ mnemonic: string }> &
   Partial<Pick<T, 'fromPrivateKey'>>
 
+export type PrivateKeyOrSignatureId<T extends { privateKey?: string }> = Omit<T, 'privateKey'> &
+  Partial<SignatureId> &
+  Partial<Pick<T, 'privateKey'>>
+
 export type ChainTransferErc20 = FromPrivateKeyOrSignatureId<Omit<ChainTransferEthErc20, 'chain'>>
 
 export type ChainMintErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainMintErc20, 'chain'>>

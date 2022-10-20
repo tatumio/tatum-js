@@ -10,7 +10,7 @@ import type { EthBalance } from '../models/EthBalance';
 import type { EthBlock } from '../models/EthBlock';
 import type { EthTx } from '../models/EthTx';
 import type { EthTxInternal } from '../models/EthTxInternal';
-import type { GeneratedAddress } from '../models/GeneratedAddress';
+import type { GeneratedAddressEth } from '../models/GeneratedAddressEth';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
@@ -63,14 +63,14 @@ export class EthereumService {
      * @param xpub Extended public key of wallet.
      * @param index Derivation index of the address to be generated.
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
-     * @returns GeneratedAddress OK
+     * @returns GeneratedAddressEth OK
      * @throws ApiError
      */
     public static ethGenerateAddress(
         xpub: string,
         index: number,
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<GeneratedAddress> {
+    ): CancelablePromise<GeneratedAddressEth> {
         return __request({
             method: 'GET',
             path: `/v3/ethereum/address/${xpub}/${index}`,
@@ -440,7 +440,7 @@ export class EthereumService {
     /**
      * Broadcast signed Ethereum transaction
      * <p><b>2 credits per API call</b></p>
-     * <p>Broadcast signed transaction to Ethereum blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum client libraries.
+     * <p>Broadcast signed transaction to Ethereum blockchain. This method is used internally from Tatum KMS or Tatum client libraries.
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
      *
      * @param requestBody

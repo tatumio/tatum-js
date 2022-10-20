@@ -19,8 +19,9 @@ export const celoKmsService = (args: EvmBasedKMSServiceArgs) => {
       if (tx.chain !== Currency.CELO) {
         throw new EvmBasedSdkError({ code: SdkErrorCode.KMS_CHAIN_MISMATCH })
       }
-      const client = args.web3.getClient(provider)
-      const wallet = new CeloWallet(fromPrivateKey, client.givenProvider())
+      const celoProvider = celoUtils.getProvider(provider)
+      await celoProvider.ready
+      const wallet = new CeloWallet(fromPrivateKey, celoProvider)
       const transaction = JSON.parse(tx.serializedTransaction)
       const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
         wallet,

@@ -8,7 +8,7 @@ export type BidOnAuction = {
      */
     chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
-     * Address of the marketplace smart contract.
+     * Address of the auction smart contract.
      */
     contractAddress: string;
     /**

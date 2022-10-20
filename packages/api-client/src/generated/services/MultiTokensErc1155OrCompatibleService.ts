@@ -567,7 +567,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @param contractAddress The address of the Multi Token smart contract
      * @param tokenId The ID of the Multi Token
      * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
-     * @returns string OK
+     * @returns any OK
      * @throws ApiError
      */
     public static multiTokenGetBalance(
@@ -576,7 +576,12 @@ export class MultiTokensErc1155OrCompatibleService {
         contractAddress: string,
         tokenId: string,
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<Array<string>> {
+    ): CancelablePromise<{
+        /**
+         * The amount of the specified Multi Token
+         */
+        data?: string;
+    }> {
         return __request({
             method: 'GET',
             path: `/v3/multitoken/balance/${chain}/${contractAddress}/${address}/${tokenId}`,

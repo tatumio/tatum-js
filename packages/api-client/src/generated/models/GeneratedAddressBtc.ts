@@ -2,9 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type GeneratedAddress = {
+export type GeneratedAddressBtc = {
     /**
-     * Ethereum address
+     * Bitcoin address
      */
     address?: string;
 }
