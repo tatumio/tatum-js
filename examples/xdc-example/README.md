@@ -8,9 +8,9 @@ These examples should guide you through some basic operations of the XDC blockch
 - send XDC to another wallet
 - check the balance of your wallet
 - How to send transaction using kms
-- How to get xdc web 3 client
 - generate virtual account for XLM
 - assign deposit address to virtual account
+- How to send transaction using Gas pump
 
 ## How to start
 
@@ -65,10 +65,10 @@ You can find examples [here](./src/app/xdc.tx.example.ts).
 
 You can find examples [here](./src/app/xdc.kms.example.ts).
 
-### How to get xdc web 3 client
-
-You can find examples [here](./src/app/xdc.web3.example.ts).
-
 ### How to generate virtual account for XDC and transfer from it to a blockchain address
 
 You can find examples [here](./src/app/xdc.virtualAccount.example.ts).
+
+### How to send transaction using Gas pump
+
+You can find examples [here](./src/app/xdc.gasPump.example.ts).

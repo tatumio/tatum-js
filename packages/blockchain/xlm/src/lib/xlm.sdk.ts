@@ -17,7 +17,7 @@ export const TatumXlmSDK = (
   return {
     ...abstractBlockchainSdk({ ...args, blockchain }),
     ledger: abstractSdkLedgerService(),
-    virtualAcount: xlmVirtualAccountService({ blockchain }),
+    virtualAccount: xlmVirtualAccountService({ blockchain }),
     kms: xlmKmsService({ blockchain }),
     transaction: xlmTxService(apiCalls),
     wallet: xlmWallet(),

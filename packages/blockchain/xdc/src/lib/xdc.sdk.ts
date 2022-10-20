@@ -5,10 +5,11 @@ import {
   FungibleTokensErc20OrCompatibleService,
   XinFinService,
 } from '@tatumio/api-client'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkLedgerService, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { xdcWeb3 } from './services/xdc.web3'
 import { xdcKmsService } from './services/xdc.kms'
 import { xdcTxService } from './services/xdc.tx'
+import { abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abstract'
 
 const blockchain = Blockchain.XDC
 
@@ -21,6 +22,8 @@ export const TatumXdcSDK = (args: SDKArguments) => {
   return {
     ...evmSdk,
     kms: xdcKmsService({ blockchain, web3 }),
+    ledger: abstractSdkLedgerService(),
+    virtualAccount: abstractBlockchainVirtualAccount({ blockchain }),
     transaction: txService.native,
     erc20: {
       ...txService.erc20,
