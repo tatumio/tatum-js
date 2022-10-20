@@ -1,9 +1,10 @@
 import { TatumBchSDK } from '@tatumio/bch'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const bchSDK = TatumBchSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function bchTransactionsExample() {
+  const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+
+  // Prepare signed transaction
   const txData = await bchSDK.transaction.prepareSignedTransaction(
     {
       fromUTXO: [
@@ -24,8 +25,10 @@ export async function bchTransactionsExample() {
     },
     { testnet: true },
   )
+  console.log(txData)
 
-  const { txId } = await bchSDK.transaction.sendTransaction(
+  // Send Transaction
+  const tx = await bchSDK.transaction.sendTransaction(
     {
       fromUTXO: [
         {
@@ -45,4 +48,5 @@ export async function bchTransactionsExample() {
     },
     { testnet: true },
   )
+  console.log(tx)
 }
