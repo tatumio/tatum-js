@@ -32,13 +32,13 @@ describe('XrpSDK - TX', () => {
       mockGetFee()
       mockedApi.blockchain.xrp.xrpBroadcast.mockResolvedValue({ txId: '12345' })
 
-      const result = await txService.sendTransaction({
+      const result = (await txService.sendTransaction({
         fromSecret: SECRET,
         fromAccount: ACCOUNT,
         fee: FEE,
         amount: AMOUNT,
         to: ACCOUNT,
-      }) as TransactionHash
+      })) as TransactionHash
 
       expect(result.txId).toBe('12345')
       testHelper.expectMockCalled(mockedApi.blockchain.xrp.xrpBroadcast, [{ txData: VALID_TX_DATA }])

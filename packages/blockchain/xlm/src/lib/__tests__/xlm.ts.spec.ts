@@ -25,7 +25,7 @@ describe.skip('XlmSDK - tx', () => {
       mockGetAccountInfo()
       mockedApi.blockchain.xlm.xlmBroadcast.mockResolvedValue({ txId: '12345' })
 
-      const result = await txService.sendTransaction(
+      const result = (await txService.sendTransaction(
         {
           fromAccount: ADDRESS,
           amount: AMOUNT,
@@ -33,7 +33,7 @@ describe.skip('XlmSDK - tx', () => {
           to: ADDRESS,
         },
         { testnet: true },
-      ) as TransactionHash
+      )) as TransactionHash
 
       expect(result.txId).toBe('12345')
       testHelper.expectMockCalled(mockedApi.blockchain.xlm.xlmBroadcast)
