@@ -105,13 +105,11 @@ Currently supported blockchain sdks
   <tr>
     <td align="center">Dogecoin</td>
     <td align="center">@tatumio/dog</td>
-    <td align="center">[doge examples](https://github.com/tatumio/tatum-js/tree/master/examples/doge-example)</td>
     <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/doge-example'>doge examples</a></td>
   </tr>
   <tr>
     <td align="center">Ethereum</td>
     <td align="center">@tatumio/eth</td>
-    <td align="center">[eth examples](https://github.com/tatumio/tatum-js/tree/master/examples/eth-example)</td>
     <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/eth-example'>eth examples</a></td>
   </tr>
   <tr>
@@ -137,7 +135,6 @@ Currently supported blockchain sdks
   <tr>
     <td align="center">Polygon</td>
     <td align="center">@tatumio/polygon</td>
-    <td align="center">[polygon examples](https://github.com/tatumio/tatum-js/tree/master/examples/polygon-example)</td>
     <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/polygon-example'>polygon examples</a></td>
   </tr>
   <tr>
@@ -153,7 +150,6 @@ Currently supported blockchain sdks
   <tr>
     <td align="center">Stellar</td>
     <td align="center">@tatumio/xlm</td>
-    <td align="center">[xlm examples](https://github.com/tatumio/tatum-js/tree/master/examples/xlm-example)</td>
     <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/xlm-example'>xlm examples</a></td>
   </tr>
   <tr>
