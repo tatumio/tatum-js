@@ -54,7 +54,7 @@ yarn add @tatumio/eth
 
 Currently supported blockchain sdks
 | Blockchain | Package | Examples
-| ----------- | ----------- |
+| ----------- | ----------- | -----------
 | Algo | @tatumio/algo | [xlm examples] (https://github.com/tatumio/tatum-js/tree/master/examples/xlm-example)
 | Bitcoin cash | @tatumio/bch | [bcash examples] (https://github.com/tatumio/tatum-js/tree/master/examples/bch-example)
 | Bitcoin | @tatumio/btc | [btc examples] (https://github.com/tatumio/tatum-js/tree/master/examples/btc-example)
@@ -71,7 +71,6 @@ Currently supported blockchain sdks
 | Tron | @tatumio/tron | [tron examples] (https://github.com/tatumio/tatum-js/tree/master/examples/tron-example)
 | Stellar | @tatumio/xlm | [xlm examples] (https://github.com/tatumio/tatum-js/tree/master/examples/xlm-example)
 | XRP | @tatumio/xrp | [xrp examples] (https://github.com/tatumio/tatum-js/tree/master/examples/xrp-example)
-
 
 <hr />
 
