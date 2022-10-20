@@ -40,7 +40,7 @@ describe('XrpSDK - TX', () => {
         to: ACCOUNT,
       })
 
-      expect(result.txId).toBe('12345')
+      expect(result['txId']).toBe('12345')
       testHelper.expectMockCalled(mockedApi.blockchain.xrp.xrpBroadcast, [{ txData: VALID_TX_DATA }])
     })
   })
@@ -95,7 +95,7 @@ describe('XrpSDK - TX', () => {
   function mockGetAccountInfo(
     args: XrpAccount = {
       ledger_current_index: 1,
-      account_data: { Sequence: 123 },
+      account_data: { Sequence: 123, Balance: '1000000000' },
     },
   ) {
     return mockedApi.blockchain.xrp.xrpGetAccountInfo.mockResolvedValue(args)
