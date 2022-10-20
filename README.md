@@ -15,12 +15,12 @@
   <a href="https://github.com/tatumio/tatum-js/issues/new?assignees=-&labels=bug&template=bug_report.yml">Report bug</a>
 </p>
 
-<div style="text-align: center;">
+<div align="center">
 
-[![Build all packages](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml/badge.svg?branch=master)](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml) 
-[![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) 
-[![npm version](https://img.shields.io/npm/v/@tatumio/sdk.svg?style=flat-square)](https://www.npmjs.com/package/@tatumio/sdk)
-[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)
+<a href="">[![Build all packages](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml/badge.svg?branch=master)](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml)</a>
+<a href="">[![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum)</a>
+<a href="">[![npm version](https://img.shields.io/npm/v/@tatumio/sdk.svg?style=flat-square)](https://www.npmjs.com/package/@tatumio/sdk)</a>
+<a href="">[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)</a>
 
 </div>
 
