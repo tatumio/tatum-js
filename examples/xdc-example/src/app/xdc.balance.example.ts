@@ -11,7 +11,6 @@ export async function xdcBalanceExample() {
   // FUND YOUR ACCOUNT WITH XDC FROM https://faucet.apothem.network/
 
   // https://apidoc.tatum.io/tag/XinFin#operation/xdcGetBalance
-
   const balance = await xdcSDK.blockchain.getBlockchainAccountBalance(address)
   if (balance) {
     console.log(`My account has ${Web3.utils.fromWei(balance as string)} xdc.`)
