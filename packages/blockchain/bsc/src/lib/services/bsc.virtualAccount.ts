@@ -1,6 +1,7 @@
 import {
   AccountService,
   ApiServices,
+  BEP20_CURRENCIES,
   Currency,
   TransferBsc,
   TransferBscKMS,
@@ -12,7 +13,7 @@ import {
   FromPrivateKeyOrSignatureIdOrMnemonic,
 } from '@tatumio/shared-blockchain-abstract'
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
-import { Blockchain } from '@tatumio/shared-core'
+import { Blockchain, CONTRACT_ADDRESSES, CONTRACT_DECIMALS } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { bscTxService } from './bsc.tx'
 
@@ -24,7 +25,7 @@ const sendBscVirtualAccountTransaction = async (
   web3: EvmBasedWeb3,
 ): Promise<VirtualAccountResponse> => {
   const txService = bscTxService({ blockchain: Blockchain.BSC, web3 })
-  const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body as any
+  const { mnemonic, index, fromPrivateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
   const { amount, address } = withdrawal
   let fromPrivKey: string
   let txData: any
@@ -55,26 +56,40 @@ const sendBscVirtualAccountTransaction = async (
     })
   } else {
     fee.gasLimit = '100000'
-    const vc = await VirtualCurrencyService.getCurrency(account.currency)
-
+    let contractAddress: string
+    let decimals: number
+    if (BEP20_CURRENCIES.includes(account.currency as Currency)) {
+      contractAddress = CONTRACT_ADDRESSES[account.currency]
+      decimals = CONTRACT_DECIMALS[account.currency]
+    } else {
+      const vc = await VirtualCurrencyService.getCurrency(account.currency)
+      contractAddress = vc.erc20Address as string
+      decimals = (vc.precision as number) || 18
+    }
     txData = await txService.erc20.send.transferSignedTransaction({
       amount,
       fee,
       fromPrivateKey: fromPrivKey,
       to: address,
-      digits: 18,
+      digits: decimals,
       nonce: body.nonce,
-      contractAddress: vc.erc20Address as string,
+      contractAddress,
     })
   }
-  // @ts-ignore
-  withdrawal.fee = web3
+
+  const withdrawalFee = web3
     .getClient()
     .utils.fromWei(
       new BigNumber(fee.gasLimit).multipliedBy(evmBasedUtils.transformToWei(fee.gasPrice, 'gwei')).toString(),
       'ether',
     )
-  const { id } = await WithdrawalService.storeWithdrawal(withdrawal)
+
+  const withdrawalBody = {
+    ...withdrawal,
+    fee: withdrawalFee,
+  }
+
+  const { id } = await WithdrawalService.storeWithdrawal(withdrawalBody)
 
   try {
     return {
