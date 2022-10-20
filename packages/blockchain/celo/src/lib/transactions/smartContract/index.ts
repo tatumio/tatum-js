@@ -75,7 +75,11 @@ const smartContractWriteMethodInvocation = async (
   return wallet.signTransaction(transaction)
 }
 
-export const smartContract = (args: { web3: EvmBasedWeb3; broadcastFunction: BroadcastFunction }) => {
+export const smartContract = (args: {
+  web3: EvmBasedWeb3
+  broadcastFunction: BroadcastFunction
+  smartContractApiMethod: any
+}) => {
   return {
     prepare: {
       /**
@@ -117,12 +121,13 @@ export const smartContract = (args: { web3: EvmBasedWeb3; broadcastFunction: Bro
         provider?: string,
         testnet?: boolean,
       ) => {
-        if (body.methodABI.stateMutability === 'view') {
+        if (body.signatureId) {
+          return args.smartContractApiMethod(body)
+        } else if (body.methodABI.stateMutability === 'view') {
           return smartContractReadMethodInvocation(body, args.web3, provider)
         } else {
           return args.broadcastFunction({
             txData: await smartContractWriteMethodInvocation(body, provider, testnet),
-            signatureId: body.signatureId,
           })
         }
       },

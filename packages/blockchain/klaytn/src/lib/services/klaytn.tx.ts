@@ -17,6 +17,7 @@ export const klaytnTxService = (args: { blockchain: EvmBasedBlockchain; web3: Ev
       ...native({
         ...args,
         broadcastFunction: KlaytnService.klaytnBroadcast,
+        transferApiMethod: KlaytnService.klaytnBlockchainTransfer,
       }),
     },
     erc20: {
@@ -53,6 +54,7 @@ export const klaytnTxService = (args: { blockchain: EvmBasedBlockchain; web3: Ev
       ...smartContract({
         ...args,
         broadcastFunction: KlaytnService.klaytnBroadcast,
+        smartContractApiMethod: KlaytnService.klaytnBlockchainSmartContractInvocation,
       }),
     },
   }

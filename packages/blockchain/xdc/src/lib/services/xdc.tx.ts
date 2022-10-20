@@ -17,6 +17,7 @@ export const xdcTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
       ...native({
         ...args,
         broadcastFunction: XinFinService.xdcBroadcast,
+        transferApiMethod: XinFinService.xdcBlockchainTransfer,
       }),
     },
     erc20: {
@@ -53,6 +54,7 @@ export const xdcTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
       ...smartContract({
         ...args,
         broadcastFunction: XinFinService.xdcBroadcast,
+        smartContractApiMethod: XinFinService.xdcBlockchainSmartContractInvocation,
       }),
     },
   }
