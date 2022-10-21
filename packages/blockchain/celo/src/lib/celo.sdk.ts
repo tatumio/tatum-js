@@ -1,6 +1,6 @@
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
-import { CeloService, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
+import { BlockchainUtilsService, CeloService, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
 import { celoWeb3 } from './services/celo.web3'
 import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { celoKmsService } from './services/celo.kms'
@@ -47,6 +47,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
       getBlockchainAccountBalance: CeloService.celoGetBalance,
       get: CeloService.celoGetTransaction,
       getAccountTransactions: CeloService.celoGetTransactionByAddress,
+      smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
     },
   }
 }

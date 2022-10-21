@@ -1,7 +1,7 @@
 import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
-  BlockchainFeesService,
+  BlockchainFeesService, BlockchainUtilsService,
   BnbSmartChainService,
   FungibleTokensErc20OrCompatibleService,
 } from '@tatumio/api-client'
@@ -84,6 +84,7 @@ export const TatumBscSDK = (args: SDKArguments) => {
       get: BnbSmartChainService.bscGetTransaction,
       estimateGas: BlockchainFeesService.bscEstimateGas,
       smartContractInvocation: BnbSmartChainService.bscBlockchainSmartContractInvocation,
+      smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
       blockchainTransfer: BnbSmartChainService.bscBlockchainTransfer,
       generateAddress: BnbSmartChainService.bscGenerateAddress,
       generateAddressPrivateKey: BnbSmartChainService.bscGenerateAddressPrivateKey,

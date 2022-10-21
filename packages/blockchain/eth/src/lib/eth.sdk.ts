@@ -1,7 +1,7 @@
 import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
-  BlockchainFeesService,
+  BlockchainFeesService, BlockchainUtilsService,
   EthereumService,
   FungibleTokensErc20OrCompatibleService,
 } from '@tatumio/api-client'
@@ -58,6 +58,7 @@ export const TatumEthSDK = (args: SDKArguments) => {
       estimateGas: BlockchainFeesService.ethEstimateGas,
       estimateGasBatch: BlockchainFeesService.ethEstimateGasBatch,
       smartContractInvocation: EthereumService.ethBlockchainSmartContractInvocation,
+      smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
       blockchainTransfer: EthereumService.ethBlockchainTransfer,
       generateAddress: EthereumService.ethGenerateAddress,
       generateAddressPrivateKey: EthereumService.ethGenerateAddressPrivateKey,
