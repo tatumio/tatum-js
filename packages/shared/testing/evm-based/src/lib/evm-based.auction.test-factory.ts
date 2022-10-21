@@ -22,7 +22,7 @@ export const auctionTestFactory = {
           nonce: 1,
           fee: {
             gasLimit: '300000',
-            gasPrice: '20',
+            gasPrice: '10000',
           },
         })
 
@@ -76,7 +76,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          amount: '10000',
+          amount: '1',
         })
 
         expectHexString(tx)
@@ -202,7 +202,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          amount: '10000',
+          amount: '1',
         })
 
         expectHexString(tx)
@@ -366,7 +366,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          amount: '10000',
+          amount: '1',
         })
 
         expectHexString(tx)
@@ -383,7 +383,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          amount: '10000',
+          amount: '1',
         })
 
         const json = JSON.parse(tx)
@@ -402,7 +402,7 @@ export const auctionTestFactory = {
               gasLimit: '40000',
               gasPrice: '20',
             },
-            amount: '10000',
+            amount: '1',
           }),
         ).rejects.toThrowErrorWithMessageThatIncludes(
           invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
@@ -420,7 +420,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          amount: '10000',
+          amount: '1',
         })
 
         expectHexString(tx)

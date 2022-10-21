@@ -78,13 +78,7 @@ export const evmBasedUtils = {
       throw new Error('signatureId or fromPrivateKey has to be defined')
     }
 
-    await evmBasedUtils.validateSenderBalance(
-      client,
-      fromPrivateKey,
-      gasPriceDefined as string,
-      gasLimit,
-      tx.value == undefined ? undefined : (tx.value as string),
-    )
+    await evmBasedUtils.validateSenderBalance(client, fromPrivateKey, tx)
 
     const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey)
 
@@ -95,16 +89,13 @@ export const evmBasedUtils = {
     return signedTransaction.rawTransaction
   },
 
-  validateSenderBalance: async (
-    client: Web3,
-    privateKey: string,
-    gasPrice: string,
-    gasLimit?: string,
-    value?: string,
-  ) => {
-    let threshold = new BigNumber(gasPrice).multipliedBy(gasLimit == undefined ? '0' : gasLimit)
-    if (value) {
-      threshold = threshold.plus(value)
+  validateSenderBalance: async (client: Web3, privateKey: string, tx: TransactionConfig) => {
+    const { gas, gasPrice, ...txWithoutGas } = tx
+    let threshold = new BigNumber(await client.eth.estimateGas(txWithoutGas)).multipliedBy(
+      new BigNumber(tx.gasPrice as string),
+    )
+    if (tx.value) {
+      threshold = threshold.plus(tx.value as string)
     }
     const account = client.eth.accounts.privateKeyToAccount(privateKey)
     const balance = await client.eth.getBalance(account.address)

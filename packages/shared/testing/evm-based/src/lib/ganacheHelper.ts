@@ -23,6 +23,7 @@ export const ganacheHelper = {
     const options = {
       wallet: {
         mnemonic: args?.mnemonic ?? TEST_DATA.MNEMONIC,
+        allowUnlimitedContractSize: true,
         hdPath: DERIVATION_PATH[blockchain],
         defaultBalance: args?.defaultBalance ?? 10,
         totalAccounts: args?.totalAccounts ?? 10,
