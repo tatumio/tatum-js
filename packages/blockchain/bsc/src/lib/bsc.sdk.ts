@@ -83,6 +83,7 @@ export const TatumBscSDK = (args: SDKArguments) => {
       getBlockchainAccountBalance: BnbSmartChainService.bscGetBalance,
       get: BnbSmartChainService.bscGetTransaction,
       estimateGas: BlockchainFeesService.bscEstimateGas,
+      estimateFee: BlockchainFeesService.estimateFeeBlockchain,
       smartContractInvocation: BnbSmartChainService.bscBlockchainSmartContractInvocation,
       blockchainTransfer: BnbSmartChainService.bscBlockchainTransfer,
       generateAddress: BnbSmartChainService.bscGenerateAddress,

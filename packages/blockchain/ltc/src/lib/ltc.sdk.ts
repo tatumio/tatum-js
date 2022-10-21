@@ -1,5 +1,5 @@
 import { Blockchain } from '@tatumio/shared-core'
-import { LitecoinService } from '@tatumio/api-client'
+import { BlockchainFeesService, LitecoinService } from '@tatumio/api-client'
 import { ltcTransactions } from './transaction/ltc.tx'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { ltcWallet } from './ltc.sdk.wallet'
@@ -19,6 +19,7 @@ export const TatumLtcSDK = (args: SDKArguments) => {
       getBlockHash: LitecoinService.ltcGetBlockHash,
       getBlock: LitecoinService.ltcGetBlock,
       getUTXO: LitecoinService.ltcGetUtxo,
+      estimateFee: BlockchainFeesService.estimateFeeBlockchain,
       getBlockchainAccountBalance: LitecoinService.ltcGetBalanceOfAddress,
       getTxForAccount: LitecoinService.ltcGetTxByAddress,
       getTransaction: LitecoinService.ltcGetRawTransaction,

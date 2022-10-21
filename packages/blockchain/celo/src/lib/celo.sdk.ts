@@ -1,6 +1,11 @@
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
-import { CeloService, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
+import {
+  BlockchainFeesService,
+  CeloService,
+  FungibleTokensErc20OrCompatibleService,
+  NftErc721OrCompatibleService,
+} from '@tatumio/api-client'
 import { celoWeb3 } from './services/celo.web3'
 import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { celoKmsService } from './services/celo.kms'
@@ -28,6 +33,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
     nft: {
       ...txService.erc721,
       ...nft,
+      nftGetTokensByCollectionErc721: NftErc721OrCompatibleService.nftGetTokensByCollectionErc721,
     },
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
@@ -43,6 +49,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
       broadcast: CeloService.celoBroadcast,
       getTransactionsCount: CeloService.celoGetTransactionCount,
       getCurrentBlock: CeloService.celoGetCurrentBlock,
+      estimateFee: BlockchainFeesService.estimateFeeBlockchain,
       getBlock: CeloService.celoGetBlock,
       getBlockchainAccountBalance: CeloService.celoGetBalance,
       get: CeloService.celoGetTransaction,

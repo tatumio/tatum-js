@@ -4,6 +4,7 @@ import {
   BlockchainFeesService,
   EthereumService,
   FungibleTokensErc20OrCompatibleService,
+  NftErc721OrCompatibleService,
 } from '@tatumio/api-client'
 import { ethWeb3 } from './services/eth.web3'
 import { ethKmsService } from './services/eth.kms'
@@ -31,6 +32,7 @@ export const TatumEthSDK = (args: SDKArguments) => {
     nft: {
       ...txService.erc721,
       ...nft,
+      nftGetTokensByCollectionErc721: NftErc721OrCompatibleService.nftGetTokensByCollectionErc721,
     },
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
@@ -56,6 +58,7 @@ export const TatumEthSDK = (args: SDKArguments) => {
       get: EthereumService.ethGetTransaction,
       getAccountTransactions: EthereumService.ethGetTransactionByAddress,
       estimateGas: BlockchainFeesService.ethEstimateGas,
+      estimateFee: BlockchainFeesService.estimateFeeBlockchain,
       estimateGasBatch: BlockchainFeesService.ethEstimateGasBatch,
       smartContractInvocation: EthereumService.ethBlockchainSmartContractInvocation,
       blockchainTransfer: EthereumService.ethBlockchainTransfer,

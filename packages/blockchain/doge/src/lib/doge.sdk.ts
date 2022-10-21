@@ -1,6 +1,6 @@
 import { Blockchain } from '@tatumio/shared-core'
 import { btcBasedSdk } from '@tatumio/shared-blockchain-btc-based'
-import { DogecoinService, TatumUrl } from '@tatumio/api-client'
+import { BlockchainFeesService, DogecoinService, TatumUrl } from '@tatumio/api-client'
 import { dogeTransactions } from './doge.sdk.tx'
 import { dogeWallet } from './doge.sdk.wallet'
 
@@ -18,6 +18,7 @@ export const TatumDogeSDK = (args: { apiKey: string; url?: TatumUrl }) => {
       getBlockHash: DogecoinService.dogeGetBlockHash,
       getBlock: DogecoinService.dogeGetBlock,
       getUTXO: DogecoinService.dogeGetUtxo,
+      estimateFee: BlockchainFeesService.estimateFeeBlockchain,
       getTransaction: DogecoinService.dogeGetRawTransaction,
       sendTransaction: DogecoinService.dogeTransferBlockchain,
     },

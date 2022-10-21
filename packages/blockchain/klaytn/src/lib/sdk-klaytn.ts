@@ -73,6 +73,7 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
       getTransactionsCount: KlaytnService.klaytnGetTransactionCount,
       getCurrentBlock: KlaytnService.klaytnGetCurrentBlock,
       getBlock: KlaytnService.klaytnGetBlock,
+      estimateFee: BlockchainFeesService.estimateFeeBlockchain,
       getBlockchainAccountBalance: KlaytnService.klaytnGetBalance,
       get: KlaytnService.klaytnGetTransaction,
       estimateGas: BlockchainFeesService.klaytnEstimateGas,

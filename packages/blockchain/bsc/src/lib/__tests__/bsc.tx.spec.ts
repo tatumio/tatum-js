@@ -244,7 +244,7 @@ describe('BscSDK - tx', () => {
       })
 
       describe('generate batch custodial wallet', () => {
-        custodialTestFactory.prepare.custodialWalletBatch(sdk.custodial, TEST_DATA.BSC, 'BSC')
+        custodialTestFactory.prepare.custodialWalletBatch(sdk.gasPucustodial, TEST_DATA.BSC, 'BSC')
       })
     })
   })

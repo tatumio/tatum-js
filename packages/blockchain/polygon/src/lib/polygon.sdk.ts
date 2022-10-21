@@ -3,6 +3,7 @@ import { Blockchain, EvmBasedBlockchain, Web3Request, Web3Response } from '@tatu
 import {
   BlockchainFeesService,
   FungibleTokensErc20OrCompatibleService,
+  NftErc721OrCompatibleService,
   PolygonService,
 } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
@@ -31,6 +32,7 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
     },
     nft: {
       ...txService.erc721,
+      nftGetTokensByCollectionErc721: NftErc721OrCompatibleService.nftGetTokensByCollectionErc721,
       ...nft,
     },
     multiToken: txService.multiToken,
@@ -57,6 +59,7 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
       get: PolygonService.polygonGetTransaction,
       getAccountTransactions: PolygonService.polygonGetTransactionByAddress,
       estimateGas: BlockchainFeesService.polygonEstimateGas,
+      estimateFee: BlockchainFeesService.estimateFeeBlockchain,
       smartContractInvocation: PolygonService.polygonBlockchainSmartContractInvocation,
       blockchainTransfer: PolygonService.polygonBlockchainTransfer,
       generateAddress: PolygonService.polygonGenerateAddress,
