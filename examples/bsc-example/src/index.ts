@@ -11,7 +11,7 @@ import { bscTxExample } from './app/bsc.tx.example'
 import { bscAuctionExample } from './app/bsc.auction.example'
 import { bscMultiTokenExample } from './app/bsc.multitoken.example'
 import { bscErc20Example } from './app/bsc.erc20.example'
-import { bscSmartContractExample } from './app/bsc.smart.contract.examples'
+import { bscSmartContractExample } from './app/bsc.smartContract.example'
 
 console.log(`Running ${bscBlockchainExample()}`)
 console.log(`Running ${bscVirtualAccountExample()}`)
