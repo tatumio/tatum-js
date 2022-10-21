@@ -1,6 +1,10 @@
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, EvmBasedBlockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { BlockchainUtilsService, FungibleTokensErc20OrCompatibleService, HarmonyService } from '@tatumio/api-client'
+import {
+  BlockchainUtilsService,
+  FungibleTokensErc20OrCompatibleService,
+  HarmonyService,
+} from '@tatumio/api-client'
 import { oneWeb3 } from './services/one.web3'
 import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { oneKmsService } from './services/one.kms'

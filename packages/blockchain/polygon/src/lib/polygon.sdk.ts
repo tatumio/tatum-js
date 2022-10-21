@@ -1,7 +1,8 @@
 import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, EvmBasedBlockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
-  BlockchainFeesService, BlockchainUtilsService,
+  BlockchainFeesService,
+  BlockchainUtilsService,
   FungibleTokensErc20OrCompatibleService,
   PolygonService,
 } from '@tatumio/api-client'
