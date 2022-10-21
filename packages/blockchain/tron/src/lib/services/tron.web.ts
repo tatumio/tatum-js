@@ -13,7 +13,7 @@ export interface ITronWeb {
 export const tronWeb = (): ITronWeb => {
   return {
     getClient: (provider?: string): TronWebClient => {
-      const endpoint = provider ?? process.env['TATUM_API_URL'] ?? TATUM_API_CONSTANTS.URL
+      const endpoint = provider || `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/tron/node/${TATUM_API_CONSTANTS.API_KEY}`
 
       const HttpProvider = TronWeb.providers.HttpProvider
 
