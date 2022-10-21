@@ -1,6 +1,10 @@
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, EvmBasedBlockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { FungibleTokensErc20OrCompatibleService, HarmonyService } from '@tatumio/api-client'
+import {
+  BlockchainUtilsService,
+  FungibleTokensErc20OrCompatibleService,
+  HarmonyService,
+} from '@tatumio/api-client'
 import { oneWeb3 } from './services/one.web3'
 import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { oneKmsService } from './services/one.kms'
@@ -76,6 +80,7 @@ export const TatumOneSDK = (args: SDKArguments) => {
       getBlockchainAccountBalance: HarmonyService.oneGetBalance,
       get: HarmonyService.oneGetTransaction,
       smartContractInvocation: HarmonyService.oneBlockchainSmartContractInvocation,
+      smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
       formatAddress: HarmonyService.oneFormatAddress,
       generateAddress: HarmonyService.oneGenerateAddress,
       generateAddressPrivateKey: HarmonyService.oneGenerateAddressPrivateKey,

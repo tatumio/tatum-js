@@ -41,7 +41,7 @@ need to have Node.js version 10 or higher.
 ### How to generate BSC wallet
 
 ```typescript
-import { TatumBscSDK } from '@tatumio/xlm'
+import { TatumBscSDK } from '@tatumio/bsc'
 
 const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
@@ -78,13 +78,17 @@ You can find examples [here](./src/app/bsc.balance.example.ts).
 
 You can find examples [here](./src/app/bsc.blockchain.example.ts).
 
-### How to send native and token transactions to another wallet
+### How to send native transactions to another wallet
 
 You can find examples [here](./src/app/bsc.tx.example.ts).
 
+### How to work with fungible tokens (ERC20)
+
+You can find examples [here](./src/app/bsc.erc20.example.ts).
+
 ### How to work with nfts (ERC721)
 
-You can find examples [here](./src/app/bsc.nft.example.ts).
+You can find examples [here](./src/app/bsc.nft.example.ts) and [here](./src/app/bsc.nft.express.mint.example.ts)
 
 ### How to work with multitokens (ERC1155)
 
@@ -100,4 +104,8 @@ You can find examples [here](./src/app/bsc.subscriptions.example.ts).
 
 ### How to generate virtual account for BSC and transfer from it to a blockchain address
 
-You can find examples [here](./src/app/bsc.offchain.example.ts).
+You can find examples [here](./src/app/bsc.virtualAccount.example.ts).
+
+### How to work with smart contracts
+
+You can find examples [here](./src/app/bsc.smartContract.example.ts).

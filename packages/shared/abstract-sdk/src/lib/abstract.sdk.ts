@@ -10,6 +10,7 @@ import {
 import { abstractSdkOffChain } from './services/offchain.abstract'
 import { abstractSdkKms } from './services/kms.abstract'
 import { abstractSdkNftService } from './services/nft.abstract'
+import { abstractSdkLedgerService } from './services/ledger.abstract'
 import { abstractSdkCustodialManagedWallets } from './services/custodial.abstract'
 
 export interface SDKArguments {
@@ -41,5 +42,6 @@ export const abstractSdk = (args: SDKArguments) => {
     nft: abstractSdkNftService(),
     kms: abstractSdkKms(),
     getExchangeRate: ExchangeRateService.getExchangeRate,
+    ledger: abstractSdkLedgerService(),
   }
 }
