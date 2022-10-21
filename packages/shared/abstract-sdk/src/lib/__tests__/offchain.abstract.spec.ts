@@ -1,5 +1,5 @@
 import * as apiClient from '@tatumio/api-client'
-import { abstractSdkVirtualAccount } from '../services/offchain.abstract'
+import { abstractSdkVirtualAccount } from '../services/virtualAccount.abstract'
 import { commonTestFactory, TestCasesApiCallMapping, testHelper } from '@tatumio/shared-testing-common'
 
 jest.mock('@tatumio/api-client')

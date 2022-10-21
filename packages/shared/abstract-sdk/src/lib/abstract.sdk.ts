@@ -7,7 +7,7 @@ import {
   TatumApi,
   TatumUrl,
 } from '@tatumio/api-client'
-import { abstractSdkVirtualAccount } from './services/offchain.abstract'
+import { abstractSdkVirtualAccount } from './services/virtualAccount.abstract'
 import { abstractSdkKms } from './services/kms.abstract'
 import { abstractSdkNftService } from './services/nft.abstract'
 import { abstractSdkLedgerService } from './services/ledger.abstract'

@@ -13,12 +13,19 @@ import {
   smartContractTestFactory,
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
+import * as apiClient from '@tatumio/api-client'
 
 const blockchain = Blockchain.ETH
+jest.mock('@tatumio/api-client')
+const mockedApi = jest.mocked(apiClient.ApiServices, true)
 
 describe('EthSDK - tx', () => {
   const sdk = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
 
   const ethTxService = ethTx({
     blockchain: blockchain,

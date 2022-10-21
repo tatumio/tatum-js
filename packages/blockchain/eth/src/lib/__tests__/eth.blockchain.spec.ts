@@ -7,6 +7,7 @@ import {
 import { TatumEthSDK } from '../eth.sdk'
 import * as apiClient from '@tatumio/api-client'
 import {
+  BlockchainUtilsService,
   CallSmartContractMethod,
   EthEstimateGas,
   PrivKeyRequest,
@@ -35,6 +36,7 @@ describe('EthSDK - blockchain', () => {
     getBlock: [api.ethGetBlock, testData.BLOCK_HASH],
     getBlockchainAccountBalance: [api.ethGetBalance, testData.TESTNET.ADDRESS_0],
     get: [api.ethGetTransaction, testData.TX_HASH],
+    smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, 'BSC', testData.TX_HASH],
     getAccountTransactions: [api.ethGetTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
     getInternalTransaction: [api.ethGetInternalTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
     estimateGas: [
