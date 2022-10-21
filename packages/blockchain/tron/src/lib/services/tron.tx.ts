@@ -13,6 +13,7 @@ import {
 } from '@tatumio/api-client'
 import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
 import { evmBasedGasPump, indexesFromRange, ListingSmartContract } from '@tatumio/shared-blockchain-evm-based'
+import { TatumTronSDK } from '../tron.sdk'
 import { tronTrc10 } from './tron.trc10'
 import { tronTrc20 } from './tron.trc20'
 import { tronTrc721 } from './tron.trc721'

@@ -1,24 +1,30 @@
 import { TatumTronSDK } from '@tatumio/tron'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const tronSDK = TatumTronSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const tronSDK = TatumTronSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function tronSubscriptionsExample() {
-  const id = await tronSDK.subscriptions.createSubscription({
-    // TODO openapi bug
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/createSubscription
+  const subscriptionId = (await tronSDK.subscriptions.createSubscription({
     type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
     attr: {
       id: '5e6be8e9e6aa436299950c41',
       url: 'https://webhook.tatum.io/account',
     },
-  })
+  })) as string
 
-  await tronSDK.subscriptions.deleteSubscription('5e68c66581f2ee32bc354087')
-  await tronSDK.subscriptions.disableWebHookHmac()
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getSubscriptions
+  const subscriptions = await tronSDK.subscriptions.getSubscriptions(10)
+
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getSubscriptionReport
+  const subscriptionReport = await tronSDK.subscriptions.getSubscriptionReport(subscriptionId)
+
+  //https://apidoc.tatum.io/tag/Notification-subscriptions#operation/enableWebHookHmac
   await tronSDK.subscriptions.enableWebHookHmac({
     hmacSecret: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
   })
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/disableWebHookHmac
+  await tronSDK.subscriptions.disableWebHookHmac()
 
-  const subscriptionReport = await tronSDK.subscriptions.getSubscriptionReport('5e68c66581f2ee32bc354087')
-  const subscriptions = await tronSDK.subscriptions.getSubscriptions(10)
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/deleteSubscription
+  await tronSDK.subscriptions.deleteSubscription(subscriptionId)
 }
