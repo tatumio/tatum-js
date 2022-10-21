@@ -18,9 +18,10 @@ export async function tronNftExample() {
     feeLimit: 600,
   })) as TransactionHash
 
-  // find deployed contract address & tokenId from transaction hash in the explorer
-  // https://shasta.tronscan.org
-  const contractAddress = 'TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ'
+  // find deployed contract address from transaction hash
+  // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
+  const transactionData = await tronSDK.blockchain.smartContractGetAddress('TRON', txId)
+  const contractAddress = transactionData.contractAddress as string
 
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 

@@ -17,10 +17,10 @@ export async function bscNftExample() {
     fromPrivateKey,
   })) as TransactionHash
 
-  // fetch deployed contract address from transaction hash
-  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetTransaction
-  const deployedTransaction = await bscSDK.blockchain.get(txId)
-  const contractAddress = deployedTransaction.contractAddress as string
+  // find deployed contract address from transaction hash
+  // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
+  const transactionData = await bscSDK.blockchain.smartContractGetAddress('BSC', txId)
+  const contractAddress = transactionData.contractAddress as string
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 
   // upload your file to the ipfs:

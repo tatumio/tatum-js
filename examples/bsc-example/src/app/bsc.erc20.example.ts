@@ -23,8 +23,8 @@ export async function bscErc20Example() {
   console.log(`Deployed erc20 token with transaction ID ${erc20Deployed.txId}`)
 
   // fetch deployed contract address from transaction hash
-  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetTransaction
-  const transaction = await bscSDK.blockchain.get(erc20Deployed.txId)
+  // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
+  const transaction = await bscSDK.blockchain.smartContractGetAddress('BSC', erc20Deployed.txId)
   const contractAddress = transaction.contractAddress as string
 
   const erc20Minted = (await bscSDK.erc20.send.mintSignedTransaction({
