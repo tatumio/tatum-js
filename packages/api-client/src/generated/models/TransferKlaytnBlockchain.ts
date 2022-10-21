@@ -16,9 +16,9 @@ export type TransferKlaytnBlockchain = {
      */
     to: string;
     /**
-     * Currency to transfer from Klaytn Blockchain Account. ERC20 tokens USDC and USDT are available only for mainnet use.
+     * Currency to transfer from Klaytn Blockchain Account.
      */
-    currency: 'KLAY' | 'USDC_KLAY' | 'USDT_KLAY';
+    currency: 'KLAY';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */

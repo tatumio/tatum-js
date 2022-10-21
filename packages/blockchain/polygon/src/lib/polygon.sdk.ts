@@ -2,6 +2,7 @@ import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm
 import { Blockchain, EvmBasedBlockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
   BlockchainFeesService,
+  BlockchainUtilsService,
   FungibleTokensErc20OrCompatibleService,
   PolygonService,
 } from '@tatumio/api-client'
@@ -58,6 +59,7 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
       getAccountTransactions: PolygonService.polygonGetTransactionByAddress,
       estimateGas: BlockchainFeesService.polygonEstimateGas,
       smartContractInvocation: PolygonService.polygonBlockchainSmartContractInvocation,
+      smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
       blockchainTransfer: PolygonService.polygonBlockchainTransfer,
       generateAddress: PolygonService.polygonGenerateAddress,
       generateAddressPrivateKey: PolygonService.polygonGenerateAddressPrivateKey,

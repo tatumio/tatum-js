@@ -508,7 +508,7 @@ export class TronService {
     /**
      * Broadcast a TRON transaction
      * <p><b>5 credits per API call</b></p>
-     * <p>Broadcast Tron transaction. This method is used internally from Tatum Middleware or Tatum client libraries.
+     * <p>Broadcast Tron transaction. This method is used internally from Tatum client libraries.
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody

@@ -1,30 +1,26 @@
+/**
+ * This is example app, which shows how to use BSC SDK. For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/BNB-Smart-Chain
+ */
+
 import { bscBlockchainExample } from './app/bsc.blockchain.example'
-import { bscKmsExample } from './app/bsc.kms.example'
-import { bscLogRecordExample } from './app/bsc.log.example'
-import { bscChangeRateExample } from './app/bsc.root.example'
-import { bscWalletExample } from './app/bsc.wallet.example'
-import { bscDriverExample, bscWeb3Example } from './app/bsc.web3.example'
-import { bscOffchainExample } from './app/bsc.offchain.example'
+import { bscVirtualAccountExample } from './app/bsc.virtualAccount.example'
 import { bscNftExample } from './app/bsc.nft.example'
 import { bscSubscriptionsExample } from './app/bsc.subscriptions.example'
-import {
-  bscTxWithPrivateKeyExample,
-  bscTxWithSignatureIdExample,
-  bscTxFeesCovered,
-} from './app/bsc.tx.example'
+import { bscBalanceExample } from './app/bsc.balance.example'
+import { bscTxExample } from './app/bsc.tx.example'
 import { bscAuctionExample } from './app/bsc.auction.example'
+import { bscMultiTokenExample } from './app/bsc.multitoken.example'
+import { bscErc20Example } from './app/bsc.erc20.example'
+import { bscSmartContractExample } from './app/bsc.smartContract.example'
 
-console.log(`Running ${bscWalletExample()}`)
 console.log(`Running ${bscBlockchainExample()}`)
-console.log(`Running ${bscKmsExample()}`)
-console.log(`Running ${bscLogRecordExample()}`)
-console.log(`Running ${bscChangeRateExample()}`)
-console.log(`Running ${bscDriverExample()}`)
-console.log(`Running ${bscWeb3Example()}`)
-console.log(`Running ${bscOffchainExample()}`)
+console.log(`Running ${bscVirtualAccountExample()}`)
 console.log(`Running ${bscNftExample()}`)
 console.log(`Running ${bscSubscriptionsExample()}`)
-console.log(`Running ${bscTxWithPrivateKeyExample()}`)
-console.log(`Running ${bscTxWithSignatureIdExample()}`)
-console.log(`Running ${bscTxFeesCovered()}`)
+console.log(`Running ${bscTxExample()}`)
+console.log(`Running ${bscNftExample()}`)
+console.log(`Running ${bscMultiTokenExample()}`)
+console.log(`Running ${bscErc20Example()}`)
 console.log(`Running ${bscAuctionExample()}`)
+console.log(`Running ${bscBalanceExample()}`)
+console.log(`Running ${bscSmartContractExample()}`)

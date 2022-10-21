@@ -12,7 +12,7 @@ export const virtualAccountExample = async () => {
   // Each XRP virtual account must have MEMO field generated - take a look here for more details - https://docs.tatum.io/guides/ledger-and-off-chain/how-to-set-up-virtual-accounts-with-xrp-bnb-and-xrp
   // No MEMO is created with this operation, only virtual account
   // https://apidoc.tatum.io/tag/Account#operation/createAccount
-  const virtualAccount = await xrpSDK.account.create({
+  const virtualAccount = await xrpSDK.ledger.account.create({
     currency: Currency.XRP,
     xpub: address,
   })

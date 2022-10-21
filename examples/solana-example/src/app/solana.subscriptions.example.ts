@@ -1,23 +1,24 @@
 import { TatumSolanaSDK } from '@tatumio/solana'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const solanaSDK = TatumSolanaSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const solanaSDK = TatumSolanaSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
+/**
+ * Create subscription notification for receiving webhooks on all incoming/outgoing transactions on the address.
+ * https://apidoc.tatum.io/tag/Notification-subscriptions#operation/createSubscription
+ */
 export async function solanaSubscriptionsExample() {
-  const id = await solanaSDK.subscriptions.createSubscription({
-    type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
+  const { id } = await solanaSDK.subscriptions.createSubscription({
+    type: 'ADDRESS_TRANSACTION',
     attr: {
-      id: '5e6be8e9e6aa436299950c41',
-      url: 'https://webhook.tatum.io/account',
+      address: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+      chain: 'SOL',
+      url: 'https://dashboard.tatum.io/webhook-handler',
     },
   })
+  console.log(`Subscription ID: ${id}, could be deleted later using deleteSubscription(id)`)
+  await solanaSDK.subscriptions.deleteSubscription(id)
 
-  await solanaSDK.subscriptions.deleteSubscription('5e68c66581f2ee32bc354087')
-  await solanaSDK.subscriptions.disableWebHookHmac()
-  await solanaSDK.subscriptions.enableWebHookHmac({
-    hmacSecret: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
-  })
-
-  const subscriptionReport = await solanaSDK.subscriptions.getSubscriptionReport('5e68c66581f2ee32bc354087')
-  const subscriptions = await solanaSDK.subscriptions.getSubscriptions(10)
+  // To see list of all fired webhooks
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getAllWebhooks
+  console.log(await solanaSDK.subscriptions.getAllWebhooks(50))
 }

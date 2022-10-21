@@ -1,23 +1,30 @@
 import { TatumBscSDK } from '@tatumio/bsc'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function bscSubscriptionsExample() {
-  const id = await bscSDK.subscriptions.createSubscription({
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/createSubscription
+  const subscriptionId = (await bscSDK.subscriptions.createSubscription({
     type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
     attr: {
       id: '5e6be8e9e6aa436299950c41',
       url: 'https://webhook.tatum.io/account',
     },
-  })
+  })) as string
 
-  await bscSDK.subscriptions.deleteSubscription('5e68c66581f2ee32bc354087')
-  await bscSDK.subscriptions.disableWebHookHmac()
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getSubscriptions
+  const subscriptions = await bscSDK.subscriptions.getSubscriptions(10)
+
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getSubscriptionReport
+  const subscriptionReport = await bscSDK.subscriptions.getSubscriptionReport(subscriptionId)
+
+  //https://apidoc.tatum.io/tag/Notification-subscriptions#operation/enableWebHookHmac
   await bscSDK.subscriptions.enableWebHookHmac({
     hmacSecret: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
   })
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/disableWebHookHmac
+  await bscSDK.subscriptions.disableWebHookHmac()
 
-  const subscriptionReport = await bscSDK.subscriptions.getSubscriptionReport('5e68c66581f2ee32bc354087')
-  const subscriptions = await bscSDK.subscriptions.getSubscriptions(10)
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/deleteSubscription
+  await bscSDK.subscriptions.deleteSubscription(subscriptionId)
 }

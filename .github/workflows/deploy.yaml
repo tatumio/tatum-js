@@ -51,23 +51,17 @@ jobs:
             ${{ runner.os }}-yarn-
       - uses: actions/setup-node@v1
         with:
-          node-version: '14'
+          node-version: '16'
       - run: yarn --ignore-scripts --frozen-lockfile
 
-      - name: Update version of packages
-        run: yarn version:alpha
-
-      - name: Update version of packages
-        run: yarn --ignore-scripts release:apply-version
-
       #      - run: npx nx-cloud start-ci-run
-      - run: yarn build:all:prod
+      - run: yarn build:libs:prod
       #      - run: npx nx-cloud stop-all-agents
 
       - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
 
       - name: Publish packages
-        run: yarn --ignore-scripts release:current
+        run: node tools/scripts/publish-all.js
         env:
           GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -27,4 +27,8 @@ export type ActivateGasPumpTronKMS = {
      * The KMS identifier of the private key of the blockchain address that will pay the gas fee for the activation transaction
      */
     signatureId: string;
+    /**
+     * (Only if the signature ID is mnemonic-based) The index of the specific address from the mnemonic
+     */
+    index?: number;
 }

@@ -1,4 +1,4 @@
-import { TronService } from '@tatumio/api-client'
+import { BlockchainUtilsService, TronService } from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
@@ -6,6 +6,7 @@ import { tronWeb } from './services/tron.web'
 import { tronTx } from './services/tron.tx'
 import { tronWallet } from './services/tron.wallet'
 import { tronRecord } from './services/tron.record'
+import { tronKmsService } from './services/tron.kms'
 
 const blockchain = Blockchain.TRON
 
@@ -32,6 +33,7 @@ export const TatumTronSDK = (args: SDKArguments) => {
     transaction: txService.native,
     trc10: txService.trc10,
     trc20: txService.trc20,
+    kms: tronKmsService({ blockchain }),
     nft: {
       ...txService.trc721,
       deployNFTSmartContract,
@@ -59,6 +61,7 @@ export const TatumTronSDK = (args: SDKArguments) => {
       getAccount: TronService.tronGetAccount,
       getTransaction: TronService.tronGetTransaction,
       sendTransaction: TronService.tronTransfer,
+      smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
     },
   }
 }

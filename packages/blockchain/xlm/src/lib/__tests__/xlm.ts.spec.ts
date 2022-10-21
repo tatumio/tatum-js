@@ -1,7 +1,7 @@
 import { xlmTxService } from '../services/xlm.tx'
 import { mockHelper, testHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
-import { ApiServices, XlmAccount } from '@tatumio/api-client'
+import { ApiServices, TransactionHash, XlmAccount } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 jest.mock('@tatumio/api-client')
@@ -25,7 +25,7 @@ describe.skip('XlmSDK - tx', () => {
       mockGetAccountInfo()
       mockedApi.blockchain.xlm.xlmBroadcast.mockResolvedValue({ txId: '12345' })
 
-      const result = await txService.sendTransaction(
+      const result = (await txService.sendTransaction(
         {
           fromAccount: ADDRESS,
           amount: AMOUNT,
@@ -33,7 +33,7 @@ describe.skip('XlmSDK - tx', () => {
           to: ADDRESS,
         },
         { testnet: true },
-      )
+      )) as TransactionHash
 
       expect(result.txId).toBe('12345')
       testHelper.expectMockCalled(mockedApi.blockchain.xlm.xlmBroadcast)

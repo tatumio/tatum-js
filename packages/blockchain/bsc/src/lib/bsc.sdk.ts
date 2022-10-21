@@ -2,6 +2,7 @@ import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
   BlockchainFeesService,
+  BlockchainUtilsService,
   BnbSmartChainService,
   FungibleTokensErc20OrCompatibleService,
 } from '@tatumio/api-client'
@@ -10,12 +11,14 @@ import { bscWeb3 } from './services/bsc.web3'
 import { bscKmsService } from './services/bsc.kms'
 import { bscTxService } from './services/bsc.tx'
 import { bscAuctionService } from './services/bsc.auction'
+import { virtualAccountService } from './services/bsc.virtualAccount'
 
 const blockchain = Blockchain.BSC
 
 export const TatumBscSDK = (args: SDKArguments) => {
   const web3 = bscWeb3({ blockchain })
   const api = BnbSmartChainService
+  const virtualAccount = virtualAccountService({ blockchain, web3 })
   const txService = bscTxService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
@@ -82,11 +85,13 @@ export const TatumBscSDK = (args: SDKArguments) => {
       get: BnbSmartChainService.bscGetTransaction,
       estimateGas: BlockchainFeesService.bscEstimateGas,
       smartContractInvocation: BnbSmartChainService.bscBlockchainSmartContractInvocation,
+      smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
       blockchainTransfer: BnbSmartChainService.bscBlockchainTransfer,
       generateAddress: BnbSmartChainService.bscGenerateAddress,
       generateAddressPrivateKey: BnbSmartChainService.bscGenerateAddressPrivateKey,
       generateWallet: BnbSmartChainService.bscGenerateWallet,
       web3Driver: BnbSmartChainService.bscWeb3Driver,
     },
+    virtualAccount,
   }
 }
