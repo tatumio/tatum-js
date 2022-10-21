@@ -1,6 +1,5 @@
 import { TatumBchSDK } from '@tatumio/bch'
 
-
 export async function bchTransactionsExample() {
   const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 

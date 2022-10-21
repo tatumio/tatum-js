@@ -220,8 +220,12 @@ export const btcBasedTxTestFactory = {
           definedChangeAddressUTXOBody(args.data),
           options,
         )
-        expect(result.txId).toBe(EXPECTED_TX_ID)
-        testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
+        if ('txId' in result) {
+          expect(result.txId).toBe(EXPECTED_TX_ID)
+          testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
+        } else {
+          fail(`wrong result: ${result}`)
+        }
       })
       it('valid manual change address', async () => {
         mockRequestsUtxo(args.mock)
@@ -230,8 +234,12 @@ export const btcBasedTxTestFactory = {
           manualChangeAddressUTXOBody(args.data),
           options,
         )
-        expect(result.txId).toBe(EXPECTED_TX_ID)
-        testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
+        if ('txId' in result) {
+          expect(result.txId).toBe(EXPECTED_TX_ID)
+          testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
+        } else {
+          fail(`wrong result: ${result}`)
+        }
       })
     })
 
@@ -331,8 +339,12 @@ export const btcBasedTxTestFactory = {
           definedChangeAddressFromBody(args.data),
           options,
         )
-        expect(result.txId).toBe(EXPECTED_TX_ID)
-        testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
+        if ('txId' in result) {
+          expect(result.txId).toBe(EXPECTED_TX_ID)
+          testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
+        } else {
+          fail(`wrong result: ${result}`)
+        }
       })
 
       it(`valid manual change address`, async () => {
@@ -342,8 +354,12 @@ export const btcBasedTxTestFactory = {
           manualChangeAddressFromBody(args.data),
           options,
         )
-        expect(result.txId).toBe(EXPECTED_TX_ID)
-        testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
+        if ('txId' in result) {
+          expect(result.txId).toBe(EXPECTED_TX_ID)
+          testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.validate.txData }])
+        } else {
+          fail(`wrong result: ${result}`)
+        }
       })
     })
     describe('prepareSignedTransaction KMS', () => {

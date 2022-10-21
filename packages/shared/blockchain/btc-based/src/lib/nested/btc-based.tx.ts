@@ -11,6 +11,7 @@ import {
   LtcTransactionUTXO,
   LtcTransactionUTXOKMS,
   LtcUTXO,
+  SignatureId,
   TransactionHash,
 } from '@tatumio/api-client'
 import { PrivateKey, Script, Transaction } from 'bitcore-lib'
@@ -24,7 +25,7 @@ interface BtcBasedTransaction extends Transaction {
 }
 
 export type BtcBasedTx<T> = {
-  sendTransaction: (body: T, options: BtcBasedTxOptions) => Promise<TransactionHash>
+  sendTransaction: (body: T, options: BtcBasedTxOptions) => Promise<TransactionHash | SignatureId>
   prepareSignedTransaction: (body: T, options: BtcBasedTxOptions) => Promise<string>
 }
 

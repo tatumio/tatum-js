@@ -1,9 +1,8 @@
 import { TatumBchSDK } from '@tatumio/bch'
 
-
 export async function bchWalletExample() {
   const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-  
+
   // Generate wallet
   const { mnemonic, xpub } = await bchSDK.wallet.generateWallet()
   console.log(`Mnemonic: ${mnemonic} - xpub: ${xpub}`)

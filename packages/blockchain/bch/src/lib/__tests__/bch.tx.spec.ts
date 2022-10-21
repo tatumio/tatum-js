@@ -1,5 +1,5 @@
 import '@tatumio/shared-testing-common'
-import { bchTransactions } from '../bch.sdk.tx'
+import { bchTransactions } from '../services/bch.sdk.tx'
 import * as apiClient from '@tatumio/api-client'
 import { BchTx, BtcTransactionFromUTXO } from '@tatumio/api-client'
 import { mockHelper } from '@tatumio/shared-testing-common'

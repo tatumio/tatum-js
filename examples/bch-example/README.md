@@ -71,4 +71,3 @@ You can find examples [here](./src/app/bch.root.example.ts).
 ### How to get or delete pending transactions, sign or complete transactions from kms
 
 You can find examples [here](./src/app/bch.kms.example.ts).
-

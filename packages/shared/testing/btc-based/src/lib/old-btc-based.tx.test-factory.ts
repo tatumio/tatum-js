@@ -38,8 +38,12 @@ export const oldBtcBasedTxTestFactory = {
           args.getRequestBodyFromUTXO(args.data.validAmount),
           options,
         )
-        expect(result.txId).toBe('12345')
-        testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.data.validTxData }])
+        if ('txId' in result) {
+          expect(result.txId).toBe('12345')
+          testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.data.validTxData }])
+        } else {
+          fail(`wrong result: ${result}`)
+        }
       })
     })
 
@@ -115,8 +119,12 @@ export const oldBtcBasedTxTestFactory = {
           args.getRequestBodyFromAddress(args.data.validAmount),
           options,
         )
-        expect(result.txId).toBe('12345')
-        testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.data.validTxData }])
+        if ('txId' in result) {
+          expect(result.txId).toBe('12345')
+          testHelper.expectMockCalled(args.mock.broadcast, [{ txData: args.data.validTxData }])
+        } else {
+          fail(`wrong result: ${result}`)
+        }
       })
     })
 
