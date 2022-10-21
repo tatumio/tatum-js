@@ -28,7 +28,7 @@ export async function dogeTransactionsExample() {
     { testnet: true },
   )
 
-  const { txId } = await dogeSDK.transaction.sendTransaction(
+  const result = await dogeSDK.transaction.sendTransaction(
     {
       fromUTXO: [
         {

@@ -26,7 +26,7 @@ export async function btcTransactionsExample() {
     { testnet: true },
   )
 
-  const { txId } = await btcSDK.transaction.sendTransaction(
+  const result = await btcSDK.transaction.sendTransaction(
     {
       fromAddress: [
         {

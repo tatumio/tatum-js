@@ -26,7 +26,7 @@ export async function ltcTransactionsExample() {
     { testnet: true },
   )
 
-  const { txId } = await ltcSDK.transaction.sendTransaction(
+  const result = await ltcSDK.transaction.sendTransaction(
     {
       fromAddress: [
         {
