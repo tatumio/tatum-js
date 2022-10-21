@@ -21,7 +21,7 @@ export async function bscVirtualAccountExample() {
 
   // create deposit address for a virtual account
   // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
-  const depositAddress = await bscSdk.offchain.depositAddress.create(virtualAccount.id)
+  const depositAddress = await bscSdk.virtualAccount.depositAddress.create(virtualAccount.id)
 
   console.log(`Deposit address is ${depositAddress.address}`)
 
