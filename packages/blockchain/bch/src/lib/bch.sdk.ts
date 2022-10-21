@@ -9,7 +9,7 @@ import { BchApiCallsType } from '../index'
 const blockchain = Blockchain.BCH
 
 export const TatumBchSDK = (
-  args: SDKArguments, 
+  args: SDKArguments,
   apiCalls: BchApiCallsType = { bchGetRawTransaction: ApiServices.blockchain.bcash.bchGetRawTransaction },
 ) => {
   return {

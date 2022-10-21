@@ -1,7 +1,7 @@
 import { BchTx } from '@tatumio/api-client'
 
 export type BchApiCallsType = {
-    bchGetRawTransaction: (hash: string) => Promise<BchTx>
+  bchGetRawTransaction: (hash: string) => Promise<BchTx>
 }
 
 export * from './lib/bch.sdk'
