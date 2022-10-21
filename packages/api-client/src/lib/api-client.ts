@@ -129,4 +129,5 @@ export const ApiServices = {
   tatum: ServiceUtilsService,
   custodial: CustodialManagedWalletsService,
   auction: AuctionService,
+  gasPump: GasPumpService,
 }

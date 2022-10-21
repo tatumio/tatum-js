@@ -13,6 +13,8 @@ import type { GenerateMarketplace } from '../models/GenerateMarketplace';
 import type { GenerateMarketplaceCelo } from '../models/GenerateMarketplaceCelo';
 import type { GenerateMarketplaceCeloKMS } from '../models/GenerateMarketplaceCeloKMS';
 import type { GenerateMarketplaceKMS } from '../models/GenerateMarketplaceKMS';
+import type { GenerateMarketplaceTron } from '../models/GenerateMarketplaceTron';
+import type { GenerateMarketplaceTronKMS } from '../models/GenerateMarketplaceTronKMS';
 import type { SellAssetOnMarketplace } from '../models/SellAssetOnMarketplace';
 import type { SellAssetOnMarketplaceCelo } from '../models/SellAssetOnMarketplaceCelo';
 import type { SellAssetOnMarketplaceCeloKMS } from '../models/SellAssetOnMarketplaceCeloKMS';
@@ -66,7 +68,7 @@ export class MarketplaceService {
      * @throws ApiError
      */
     public static generateMarketplace(
-        requestBody: (GenerateMarketplace | GenerateMarketplaceKMS | GenerateMarketplaceCelo | GenerateMarketplaceCeloKMS),
+        requestBody: (GenerateMarketplace | GenerateMarketplaceKMS | GenerateMarketplaceCelo | GenerateMarketplaceCeloKMS | GenerateMarketplaceTron | GenerateMarketplaceTronKMS),
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',

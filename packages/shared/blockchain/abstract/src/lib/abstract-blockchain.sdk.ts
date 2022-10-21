@@ -98,6 +98,13 @@ export type PrivateKeyOrSignatureId<T extends { privateKey?: string }> = Omit<T,
   Partial<SignatureId> &
   Partial<Pick<T, 'privateKey'>>
 
+export type FromPrivateKeyOrSignatureIdTron<T extends { fromPrivateKey?: string }> = Omit<
+  T,
+  'fromPrivateKey'
+> &
+  Partial<SignatureId & { index: number; account: string; from: string }> &
+  Partial<Pick<T, 'fromPrivateKey'>>
+
 export type ChainTransferErc20 = FromPrivateKeyOrSignatureId<Omit<ChainTransferEthErc20, 'chain'>>
 
 export type ChainMintErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainMintErc20, 'chain'>>
