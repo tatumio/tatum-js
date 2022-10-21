@@ -9,7 +9,7 @@ import {
   WithdrawalService,
 } from '@tatumio/api-client'
 import {
-  abstractBlockchainOffchain,
+  abstractBlockchainVirtualAccount,
   FromPrivateKeyOrSignatureIdOrMnemonic,
 } from '@tatumio/shared-blockchain-abstract'
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
@@ -111,7 +111,7 @@ const sendBscVirtualAccountTransaction = async (
 
 export const virtualAccountService = (args: { blockchain: Blockchain; web3: EvmBasedWeb3 }) => {
   return {
-    ...abstractBlockchainOffchain(args),
+    ...abstractBlockchainVirtualAccount(args),
     /**
      * Send Bsc transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
      * This operation is irreversible.
