@@ -64,6 +64,7 @@ describe('PolygonSDK - blockchain', () => {
         fee: { gasLimit: '40000', gasPrice: '20' },
       } as CallSmartContractMethod,
     ],
+    smartContractGetAddress: [blockchain.smartContractGetAddress, 'MATIC', testData.TX_HASH],
     blockchainTransfer: [
       api.polygonBlockchainTransfer,
       {

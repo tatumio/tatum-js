@@ -26,6 +26,7 @@ export const TatumAlgoSDK = (args: SDKArguments) => {
       ...txService.erc20,
       getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
       getErc20AccountBalance: FungibleTokensErc20OrCompatibleService.erc20GetBalance,
+      getErc20AccountBalances: FungibleTokensErc20OrCompatibleService.erc20GetBalanceAddress,
     },
     nft: {
       ...txService.erc721,

@@ -32,6 +32,7 @@ describe('TatumTronSDK - blockchain', () => {
       api.tronTransfer,
       { fromPrivateKey: testData.TESTNET.PRIVATE_KEY_0, to: testData.TESTNET.ADDRESS_0, amount: 10 },
     ],
+    smartContractGetAddress: [blockchain.smartContractGetAddress, 'TRON', testData.TX_HASH],
   }
 
   describe('API methods mapping', () => {
