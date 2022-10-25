@@ -1,5 +1,5 @@
 import dedent from 'dedent-js'
-import {FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES} from '../../constants'
+import { FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES } from '../../constants'
 
 export const deployFlowNftTokenTypeWithMinterTxTemplate = (testnet: boolean) => dedent`
 import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
@@ -32,7 +32,7 @@ import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLO
 pub fun main(account: Address, id: UInt64, type: String): String {
     let collectionRef = getAccount(account)
         .getCapability(TatumMultiNFT.CollectionPublicPath)
-        .borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()
+        .borrow<&TatumMultiNFT.Collection>()
         ?? panic("Could not borrow capability from public collection")
 
     let ref = collectionRef.borrowTatumNFT(id: id, type: type)
@@ -50,7 +50,7 @@ import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLO
 pub fun main(address: Address, type: String): [UInt64] {
     let collectionRef = getAccount(address)
         .getCapability(TatumMultiNFT.CollectionPublicPath)
-        .borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()
+        .borrow<&TatumMultiNFT.Collection>()
         ?? panic("Could not borrow capability from public collection")
 
     return collectionRef.getIDsByType(type: type)
@@ -78,7 +78,7 @@ transaction(recipient: Address, url: String, type: String) {
         // borrow the recipient's public NFT collection reference
         let receiver = recipientAccount
             .getCapability(TatumMultiNFT.CollectionPublicPath)
-            .borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()
+            .borrow<&TatumMultiNFT.Collection>()
             ?? panic("Could not get receiver reference to the NFT Collection")
 
         // mint the NFT and deposit it to the recipient's collection
@@ -110,7 +110,7 @@ transaction(recipient: [Address], url: [String], type: String) {
         // borrow the recipient's public NFT collection reference
         let receiver = recipientAccount
             .getCapability(TatumMultiNFT.CollectionPublicPath)
-            .borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()
+            .borrow<&TatumMultiNFT.Collection>()
             ?? panic("Could not get receiver reference to the NFT Collection")
 
         // mint the NFT and deposit it to the recipient's collection
@@ -126,12 +126,12 @@ import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLO
 transaction(withdrawID: UInt64, type: String) {
 
     // local variable for storing the minter reference
-    let senderCollection: &{TatumMultiNFT.TatumMultiNftCollectionPublic}
+    let senderCollection: &TatumMultiNFT.Collection
 
     prepare(signer: AuthAccount) {
 
         // borrow a reference to the signer's NFT collection
-        self.senderCollection = signer.borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>(from: TatumMultiNFT.CollectionStoragePath)
+        self.senderCollection = signer.borrow<&TatumMultiNFT.Collection>(from: TatumMultiNFT.CollectionStoragePath)
             ?? panic("Could not borrow a reference to the owner's collection")
 
         // check if token has correct type
@@ -153,12 +153,12 @@ import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLO
 transaction(recipient: Address, withdrawID: UInt64) {
 
     // local variable for storing the minter reference
-    let senderCollection: &{TatumMultiNFT.TatumMultiNftCollectionPublic}
+    let senderCollection: &TatumMultiNFT.Collection
 
     prepare(signer: AuthAccount) {
 
         // borrow a reference to the signer's NFT collection
-        self.senderCollection = signer.borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>(from: TatumMultiNFT.CollectionStoragePath)
+        self.senderCollection = signer.borrow<&TatumMultiNFT.Collection>(from: TatumMultiNFT.CollectionStoragePath)
             ?? panic("Could not borrow a reference to the owner's collection")
 
     }
@@ -168,7 +168,7 @@ transaction(recipient: Address, withdrawID: UInt64) {
         let recipient = getAccount(recipient)
 
         // borrow a public reference to the receivers collection
-        let depositRef = recipient.getCapability(TatumMultiNFT.CollectionPublicPath).borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()!
+        let depositRef = recipient.getCapability(TatumMultiNFT.CollectionPublicPath).borrow<&TatumMultiNFT.Collection>()!
 
         // withdraw the NFT from the owner's collection
         let nft <- self.senderCollection.withdraw(withdrawID: withdrawID)
@@ -179,14 +179,14 @@ transaction(recipient: Address, withdrawID: UInt64) {
 }`
 
 export const prepareAddPublicKeyToAccountTxTemplate = () =>
-    dedent`transaction(publicKey: String) {
+  dedent`transaction(publicKey: String) {
 prepare(signer: AuthAccount) {
 signer.addPublicKey(publicKey.decodeHex())
 }
 }`
 
 export const prepareTransferFlowTxTemplate = (testnet: boolean, tokenAddress: string, tokenName: string, tokenStorage: string) =>
-    dedent`import FungibleToken from ${testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken}
+  dedent`import FungibleToken from ${testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken}
   import ${tokenName} from ${tokenAddress}
 
 transaction(amount: UFix64, recipient: Address) {
@@ -209,7 +209,7 @@ transaction(amount: UFix64, recipient: Address) {
 }`
 
 export const prepareCreateAccountWithFUSDFromPublicKeyTxTemplate = (testnet: boolean) =>
-    dedent`import FungibleToken from ${testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken}
+  dedent`import FungibleToken from ${testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken}
   import FUSD from ${testnet ? FLOW_TESTNET_ADDRESSES.FUSD : FLOW_MAINNET_ADDRESSES.FUSD}
   import TatumMultiNFT from ${testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT}
   transaction(publicKey: String) {
