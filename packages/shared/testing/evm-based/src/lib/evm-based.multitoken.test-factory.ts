@@ -19,14 +19,14 @@ export const multiTokenTestFactory = {
             uri: 'https://example.com',
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
         )
 
         const json = JSON.parse(result)
-        expect(json.gasPrice).toBe('20000000000')
+        expect(json.gasPrice).toBe('2000000000')
         expectHexString(json.data)
       })
 
@@ -38,7 +38,7 @@ export const multiTokenTestFactory = {
             uri: 'https://example.com',
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '1',
             },
           },
           provider,
@@ -67,7 +67,7 @@ export const multiTokenTestFactory = {
             amount: '1',
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
@@ -75,7 +75,7 @@ export const multiTokenTestFactory = {
 
         const json = JSON.parse(result)
 
-        expect(json.gasPrice).toBe('20000000000')
+        expect(json.gasPrice).toBe('2000000000')
         expectHexString(json.data)
       })
 
@@ -90,7 +90,7 @@ export const multiTokenTestFactory = {
             fromPrivateKey: privateKey,
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
@@ -111,7 +111,7 @@ export const multiTokenTestFactory = {
               fromPrivateKey: privateKey,
               fee: {
                 gasLimit: '259348',
-                gasPrice: '20',
+                gasPrice: '2',
               },
             },
             provider,
@@ -142,7 +142,7 @@ export const multiTokenTestFactory = {
             amounts: ['5', '5'],
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
@@ -150,7 +150,7 @@ export const multiTokenTestFactory = {
 
         const json = JSON.parse(result)
 
-        expect(json.gasPrice).toBe('20000000000')
+        expect(json.gasPrice).toBe('2000000000')
         expectHexString(json.data)
       })
 
@@ -165,7 +165,7 @@ export const multiTokenTestFactory = {
             amounts: ['5', '5'],
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
@@ -186,7 +186,7 @@ export const multiTokenTestFactory = {
               amounts: ['5', '5'],
               fee: {
                 gasLimit: '259348',
-                gasPrice: '20',
+                gasPrice: '2',
               },
             },
             provider,
@@ -214,10 +214,10 @@ export const multiTokenTestFactory = {
             to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
             contractAddress: contractAddress,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-            amount: '10',
+            amount: '1',
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
@@ -225,7 +225,7 @@ export const multiTokenTestFactory = {
 
         const json = JSON.parse(result)
 
-        expect(json.gasPrice).toBe('20000000000')
+        expect(json.gasPrice).toBe('2000000000')
         expectHexString(json.data)
       })
 
@@ -237,10 +237,10 @@ export const multiTokenTestFactory = {
             to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
             contractAddress: contractAddress,
             fromPrivateKey: privateKey,
-            amount: '10',
+            amount: '1',
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
@@ -258,10 +258,10 @@ export const multiTokenTestFactory = {
               to: 'invalidaddress',
               contractAddress: contractAddress,
               fromPrivateKey: privateKey,
-              amount: '10',
+              amount: '1',
               fee: {
                 gasLimit: '259348',
-                gasPrice: '20',
+                gasPrice: '2',
               },
             },
             provider,
@@ -292,7 +292,7 @@ export const multiTokenTestFactory = {
             amounts: [['10', '10']],
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
@@ -300,7 +300,7 @@ export const multiTokenTestFactory = {
 
         const json = JSON.parse(result)
 
-        expect(json.gasPrice).toBe('20000000000')
+        expect(json.gasPrice).toBe('2000000000')
         expectHexString(json.data)
       })
 
@@ -315,7 +315,7 @@ export const multiTokenTestFactory = {
             amounts: [['10'], ['10']],
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
@@ -336,7 +336,7 @@ export const multiTokenTestFactory = {
               amounts: [['10'], ['10']],
               fee: {
                 gasLimit: '259348',
-                gasPrice: '20',
+                gasPrice: '2',
               },
             },
             provider,
@@ -368,7 +368,7 @@ export const multiTokenTestFactory = {
             amount: '2',
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
@@ -376,7 +376,7 @@ export const multiTokenTestFactory = {
 
         const json = JSON.parse(result)
 
-        expect(json.gasPrice).toBe('20000000000')
+        expect(json.gasPrice).toBe('2000000000')
         expectHexString(json.data)
       })
 
@@ -391,7 +391,7 @@ export const multiTokenTestFactory = {
             amount: '2',
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
@@ -424,7 +424,7 @@ export const multiTokenTestFactory = {
             account,
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
@@ -432,7 +432,7 @@ export const multiTokenTestFactory = {
 
         const json = JSON.parse(result)
 
-        expect(json.gasPrice).toBe('20000000000')
+        expect(json.gasPrice).toBe('2000000000')
         expectHexString(json.data)
       })
 
@@ -449,7 +449,7 @@ export const multiTokenTestFactory = {
             account,
             fee: {
               gasLimit: '259348',
-              gasPrice: '20',
+              gasPrice: '2',
             },
           },
           provider,
