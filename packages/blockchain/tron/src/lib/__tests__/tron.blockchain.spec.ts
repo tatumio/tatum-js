@@ -89,7 +89,7 @@ describe('TatumTronSDK - blockchain', () => {
         amount: '10000',
       },
     ],
-    smartContractGetAddress: [mockedApi.blockchain.util.scGetContractAddress, 'TRON', testData.TX_HASH],
+    smartContractGetAddress: [blockchain.smartContractGetAddress, 'TRON', testData.TX_HASH],
   }
 
   describe('API methods mapping', () => {

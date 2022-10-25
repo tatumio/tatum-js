@@ -48,6 +48,7 @@ describe('OneSDK - blockchain', () => {
         fee: { gasLimit: '40000', gasPrice: '20' },
       },
     ],
+    smartContractGetAddress: [blockchain.smartContractGetAddress, 'ONE', testData.TX_HASH],
     blockchainTransfer: [
       api.oneBlockchainTransfer,
       {

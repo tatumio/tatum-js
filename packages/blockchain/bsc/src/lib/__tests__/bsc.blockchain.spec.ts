@@ -64,6 +64,7 @@ describe('BscSDK - blockchain', () => {
         fee: { gasLimit: '40000', gasPrice: '20' },
       } as CallSmartContractMethod,
     ],
+    smartContractGetAddress: [blockchain.smartContractGetAddress, 'BSC', testData.TX_HASH],
     blockchainTransfer: [
       api.bscBlockchainTransfer,
       {

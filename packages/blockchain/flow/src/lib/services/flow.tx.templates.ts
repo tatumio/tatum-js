@@ -30,7 +30,7 @@ import TatumMultiNFT from ${
 pub fun main(account: Address, id: UInt64, type: String): String {
     let collectionRef = getAccount(account)
         .getCapability(TatumMultiNFT.CollectionPublicPath)
-        .borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()
+        .borrow<&TatumMultiNFT.Collection>()
         ?? panic("Could not borrow capability from public collection")
     let ref = collectionRef.borrowTatumNFT(id: id, type: type)
     if ref != nil {
@@ -46,7 +46,7 @@ import TatumMultiNFT from ${
 pub fun main(address: Address, type: String): [UInt64] {
     let collectionRef = getAccount(address)
         .getCapability(TatumMultiNFT.CollectionPublicPath)
-        .borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()
+        .borrow<&TatumMultiNFT.Collection>()
         ?? panic("Could not borrow capability from public collection")
     return collectionRef.getIDsByType(type: type)
 }`,
@@ -68,7 +68,7 @@ transaction(recipient: Address, url: String, type: String) {
         // borrow the recipient's public NFT collection reference
         let receiver = recipientAccount
             .getCapability(TatumMultiNFT.CollectionPublicPath)
-            .borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()
+            .borrow<&TatumMultiNFT.Collection>()
             ?? panic("Could not get receiver reference to the NFT Collection")
         // mint the NFT and deposit it to the recipient's collection
         self.minter.mintNFT(recipient: receiver, type: type, url: url, address: recipient)
@@ -94,7 +94,7 @@ transaction(recipient: [Address], url: [String], type: String) {
         // borrow the recipient's public NFT collection reference
         let receiver = recipientAccount
             .getCapability(TatumMultiNFT.CollectionPublicPath)
-            .borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()
+            .borrow<&TatumMultiNFT.Collection>()
             ?? panic("Could not get receiver reference to the NFT Collection")
         // mint the NFT and deposit it to the recipient's collection
             self.minter.mintNFT(recipient: receiver, type: type, url: url[a], address: recipient[a])
@@ -108,10 +108,10 @@ import TatumMultiNFT from ${
     }
 transaction(withdrawID: UInt64, type: String) {
     // local variable for storing the minter reference
-    let senderCollection: &{TatumMultiNFT.TatumMultiNftCollectionPublic}
+    let senderCollection: &TatumMultiNFT.Collection
     prepare(signer: AuthAccount) {
         // borrow a reference to the signer's NFT collection
-        self.senderCollection = signer.borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>(from: TatumMultiNFT.CollectionStoragePath)
+        self.senderCollection = signer.borrow<&TatumMultiNFT.Collection>(from: TatumMultiNFT.CollectionStoragePath)
             ?? panic("Could not borrow a reference to the owner's collection")
         // check if token has correct type
         self.senderCollection.borrowTatumNFT(id: withdrawID, type: type)
@@ -129,17 +129,17 @@ import TatumMultiNFT from ${
     }
 transaction(recipient: Address, withdrawID: UInt64) {
     // local variable for storing the minter reference
-    let senderCollection: &{TatumMultiNFT.TatumMultiNftCollectionPublic}
+    let senderCollection: &TatumMultiNFT.Collection
     prepare(signer: AuthAccount) {
         // borrow a reference to the signer's NFT collection
-        self.senderCollection = signer.borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>(from: TatumMultiNFT.CollectionStoragePath)
+        self.senderCollection = signer.borrow<&TatumMultiNFT.Collection>(from: TatumMultiNFT.CollectionStoragePath)
             ?? panic("Could not borrow a reference to the owner's collection")
     }
     execute {
         // get the recipients public account object
         let recipient = getAccount(recipient)
         // borrow a public reference to the receivers collection
-        let depositRef = recipient.getCapability(TatumMultiNFT.CollectionPublicPath).borrow<&{TatumMultiNFT.TatumMultiNftCollectionPublic}>()!
+        let depositRef = recipient.getCapability(TatumMultiNFT.CollectionPublicPath).borrow<&TatumMultiNFT.Collection>()!
         // withdraw the NFT from the owner's collection
         let nft <- self.senderCollection.withdraw(withdrawID: withdrawID)
         // Deposit the NFT in the recipient's collection
@@ -183,8 +183,8 @@ transaction(amount: UFix64, recipient: Address) {
       }
   import FUSD from ${testnet ? FLOW_TESTNET_ADDRESSES.FUSD : FLOW_MAINNET_ADDRESSES.FUSD}
   import TatumMultiNFT from ${
-    testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT
-  }
+        testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT
+      }
   transaction(publicKey: String) {
     let account: AuthAccount
     prepare(signer: AuthAccount) {
