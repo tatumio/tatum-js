@@ -4,7 +4,9 @@ import { ApiServices, BitcoinCashService } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { bchTxService } from './services/bch.sdk.tx'
 import { bchWallet } from './bch.sdk.wallet'
+import { signKmsTransaction } from './services/bch.sdk.offchain'
 import { BchApiCallsType } from '../index'
+import { signBitcoinCashKMSTransaction } from './services/bch.sdk.kms'
 
 const blockchain = Blockchain.BCH
 
@@ -14,8 +16,16 @@ export const TatumBchSDK = (
 ) => {
   return {
     ...btcBasedSdk({ ...args, blockchain }),
+    kms: {
+      ...btcBasedSdk({ ...args, blockchain }).kms,
+      signBitcoinCashKMSTransaction,
+    },
     wallet: bchWallet(),
     transaction: bchTxService(apiCalls),
+    offchain: {
+      ...btcBasedSdk({ ...args, blockchain }).offchain,
+      signKmsTransaction,
+    },
     blockchain: {
       info: BitcoinCashService.bchGetBlockChainInfo,
       broadcast: BitcoinCashService.bchBroadcast,

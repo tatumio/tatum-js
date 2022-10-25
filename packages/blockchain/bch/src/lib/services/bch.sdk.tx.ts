@@ -54,14 +54,24 @@ export const bchTxService = (apiCalls: BchApiCallsType) => {
 
       for (const [i, item] of body.fromUTXO.entries()) {
         transactionBuilder.addInput(item.txHash, item.index, 0xffffffff, null)
-        if ('signatureId' in item)
+        if ('signatureId' in item) {
           signaturesToSign.push({ id: item.signatureId, index: item.signatureIdIndex })
-        else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
+          privateKeysToSign.push(item.signatureId)
+        } else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
 
         const vout = txs?.[i]?.vout?.[item.index]
         if (!vout || !vout.value) throw new BchSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND)
 
         amountsToSign.push(amountUtils.toSatoshis(vout.value))
+      }
+
+      // Validate if all from entries are signatureId or non signatureId
+      if (privateKeysToSign.length !== 0 && body.fromUTXO.length !== privateKeysToSign.length) {
+        throw new BchSdkError(SdkErrorCode.BTC_BASED_WRONG_BODY)
+      }
+
+      if (signaturesToSign.length !== 0 && body.fromUTXO.length !== signaturesToSign.length) {
+        throw new BchSdkError(SdkErrorCode.BTC_BASED_WRONG_BODY)
       }
 
       const fromUTXO = body.fromUTXO
@@ -98,9 +108,10 @@ export const bchTxService = (apiCalls: BchApiCallsType) => {
           i,
           ecPair,
           undefined,
-          transactionBuilder.hashTypes.SIGHASH_ALL,
+          0x01,
           amountsToSign[i],
-          transactionBuilder.signatureAlgorithms.SCHNORR,
+          undefined,
+          BitcoinCashJS.ECSignature.SCHNORR,
         )
       }
 
