@@ -10,7 +10,6 @@ import {
   DeployNftKMS as ApiDeployNftKMS,
   TransferAlgo as ApiTransferAlgo,
   TransferAlgoKMS as ApiTransferAlgoKMS,
-  TransferErc721,
   TransferNft as ApiTransferNft,
   TransferNftKMS as ApiTransferNftKMS,
 } from '@tatumio/api-client'
@@ -361,7 +360,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
           testnet = false,
           provider?: string,
         ) =>
-          AlgorandService.algoandBroadcast({
+          AlgorandService.algorandBroadcast({
             txData: await prepareCreateFTSignedTransaction(body, testnet, args.algoWeb, provider),
             ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
           }),
@@ -377,7 +376,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
           testnet = false,
           provider?: string,
         ) =>
-          AlgorandService.algoandBroadcast({
+          AlgorandService.algorandBroadcast({
             txData: await prepareTransferFTSignedTransaction(body, testnet, args.algoWeb, provider),
           }),
         /**
@@ -392,7 +391,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
           testnet = false,
           provider?: string,
         ) =>
-          AlgorandService.algoandBroadcast({
+          AlgorandService.algorandBroadcast({
             txData: await prepareBurnFTSignedTransaction(body, testnet, args.algoWeb, provider),
             ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
           }),
@@ -448,7 +447,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
           testnet = false,
           provider?: string,
         ) =>
-          AlgorandService.algoandBroadcast({
+          AlgorandService.algorandBroadcast({
             txData: await prepareCreateNFTSignedTransaction(body, testnet, args.algoWeb, provider),
             ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
           }),
@@ -464,7 +463,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
           testnet = false,
           provider?: string,
         ) =>
-          AlgorandService.algoandBroadcast({
+          AlgorandService.algorandBroadcast({
             txData: await prepareTransferNFTSignedTransaction(body, testnet, args.algoWeb, provider),
             ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
           }),
@@ -476,7 +475,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
          * @returns transaction id of the transaction in the blockchain.
          */
         burnNFTSignedTransaction: async (body: BurnNft | BurnNftKMS, testnet = false, provider?: string) =>
-          AlgorandService.algoandBroadcast({
+          AlgorandService.algorandBroadcast({
             txData: await prepareBurnNFTSignedTransaction(body, testnet, args.algoWeb, provider),
             ...(isWithSignatureId(body) && { signatureId: body.signatureId }),
           }),
@@ -505,7 +504,7 @@ export const algoTx = (args: { algoWeb: AlgoWeb }) => {
          * @returns transaction id of the transaction in the blockchain
          */
         signedTransaction: async (body: TransferAlgo | TransferAlgoKMS, testnet = false, provider?: string) =>
-          AlgorandService.algoandBroadcast({
+          AlgorandService.algorandBroadcast({
             txData: await prepareSignedTransaction(body, testnet, args.algoWeb, provider),
             ...(isTransferAlgoKMS(body) && { signatureId: body.signatureId }),
           }),

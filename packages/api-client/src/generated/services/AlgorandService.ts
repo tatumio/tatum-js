@@ -381,7 +381,7 @@ export class AlgorandService {
      * @returns AlgoTransactionHashKMS OK
      * @throws ApiError
      */
-    public static algoandBroadcast(
+    public static algorandBroadcast(
         requestBody: BroadcastKMS,
     ): CancelablePromise<AlgoTransactionHashKMS> {
         return __request({

@@ -14,7 +14,7 @@ export const TatumAlgoSDK = (args: SDKArguments) => {
   const txService = algoTx({ algoWeb: web })
   const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
 
-  const { transferNFT, burnNFT } = nft
+  const { mintNFT, transferNFT, burnNFT, getNFTAccountBalance } = nft
 
   return {
     ...abstractSdk,
@@ -30,16 +30,19 @@ export const TatumAlgoSDK = (args: SDKArguments) => {
     },
     nft: {
       ...txService.erc721,
+      mintNFT,
       transferNFT,
       burnNFT,
+      getNFTAccountBalance,
     },
     blockchain: {
-      broadcast: AlgorandService.algoandBroadcast,
+      broadcast: AlgorandService.algorandBroadcast,
       getBlock: AlgorandService.algorandGetBlock,
       getCurrentBlock: AlgorandService.algorandGetCurrentBlock,
       getBlockchainAccountBalance: AlgorandService.algorandGetBalance,
       getTransaction: AlgorandService.algorandGetTransaction,
       getPayTransactionByFromTo: AlgorandService.algorandGetPayTransactionsByFromTo,
+      receiveAsset: AlgorandService.algorandBlockchainReceiveAsset,
     },
     node: {
       indexerGetDriver: AlgorandService.algoNodeIndexerGetDriver,

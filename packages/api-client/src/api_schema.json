@@ -28921,7 +28921,7 @@
     "/v3/algorand/broadcast": {
       "post": {
         "description": "<h4>2 credits per API call.</h4><br/>\n<p>Broadcast signed transaction to Algorand blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>\n",
-        "operationId": "AlgoandBroadcast",
+        "operationId": "AlgorandBroadcast",
         "requestBody": {
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BroadcastKMS" } } },
           "required": true
