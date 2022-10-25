@@ -37,7 +37,6 @@ describe('EthSDK - blockchain', () => {
     get: [api.ethGetTransaction, testData.TX_HASH],
     getAccountTransactions: [api.ethGetTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
     getInternalTransaction: [api.ethGetInternalTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
-    smartContractGetAddress: [mockedApi.blockchain.util.scGetContractAddress, 'ETH', testData.TX_HASH],
     estimateGas: [
       blockchain.estimateGas,
       {

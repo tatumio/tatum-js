@@ -36,7 +36,6 @@ describe('PolygonSDK - blockchain', () => {
     getBlockchainAccountBalance: [api.polygonGetBalance, testData.TESTNET.ADDRESS_0],
     get: [api.polygonGetTransaction, testData.TX_HASH],
     getAccountTransactions: [api.polygonGetTransactionByAddress, testData.TESTNET.ADDRESS_0, 10],
-    smartContractGetAddress: [mockedApi.blockchain.util.scGetContractAddress, 'MATIC', testData.TX_HASH],
     estimateGas: [
       blockchain.estimateGas,
       {

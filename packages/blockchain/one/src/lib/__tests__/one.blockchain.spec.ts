@@ -28,7 +28,6 @@ describe('OneSDK - blockchain', () => {
     getBlock: [api.oneGetBlock, testData.BLOCK_HASH],
     getBlockchainAccountBalance: [api.oneGetBalance, testData.TESTNET.ADDRESS_0],
     get: [api.oneGetTransaction, testData.TX_HASH],
-    smartContractGetAddress: [mockedApi.blockchain.util.scGetContractAddress, 'ONE', testData.TX_HASH],
     smartContractInvocation: [
       api.oneBlockchainSmartContractInvocation,
       {
