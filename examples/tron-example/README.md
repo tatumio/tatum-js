@@ -72,21 +72,17 @@ You can find examples [here](./src/app/tron.blockchain.example.ts).
 
 You can find examples [here](./src/app/tron.tx.example.ts).
 
-### How to work with fungible tokens (ERC20)
+### How to work with TRC20 tokens
 
-You can find examples [here](./src/app/tron.erc20.example.ts).
+You can find examples [here](./src/app/tron.trc20.example.ts).
+
+### How to work with TRC10 tokens
+
+You can find examples [here](./src/app/tron.trc10.example.ts).
 
 ### How to work with nfts (ERC721)
 
-You can find examples [here](./src/app/tron.nft.example.ts) and [here](./src/app/tron.nft.express.mint.example.ts)
-
-### How to work with multitokens (ERC1155)
-
-You can find examples [here](./src/app/tron.multitoken.example.ts).
-
-### How to work with auctions
-
-You can find examples [here](./src/app/tron.auction.example.ts).
+You can find examples [here](./src/app/tron.nft.example.ts)
 
 ### How to setup webhooks
 
@@ -95,7 +91,3 @@ You can find examples [here](./src/app/tron.subscriptions.example.ts).
 ### How to generate virtual account for TRON and transfer from it to a blockchain address
 
 You can find examples [here](./src/app/tron.virtualAccount.example.ts).
-
-### How to work with smart contracts
-
-You can find examples [here](./src/app/tron.smartContract.example.ts).
