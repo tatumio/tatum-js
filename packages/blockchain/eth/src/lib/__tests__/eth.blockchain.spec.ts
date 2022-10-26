@@ -80,7 +80,6 @@ describe('EthSDK - blockchain', () => {
         fee: { gasLimit: '40000', gasPrice: '20' },
       } as CallSmartContractMethod,
     ],
-    smartContractGetAddress: [blockchain.smartContractGetAddress, 'ETH', testData.TX_HASH],
     blockchainTransfer: [
       api.ethBlockchainTransfer,
       {

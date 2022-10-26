@@ -91,8 +91,13 @@ export const evmBasedUtils = {
 
   validateSenderBalance: async (client: Web3, privateKey: string, tx: TransactionConfig) => {
     const { gas, gasPrice, nonce, ...txWithoutGas } = tx
-    const estimate = await client.eth.estimateGas(txWithoutGas)
-    let threshold = new BigNumber(estimate).multipliedBy(new BigNumber(tx.gasPrice as string))
+    let estimate: BigNumber
+    try {
+      estimate = new BigNumber(await client.eth.estimateGas(txWithoutGas))
+    } catch (e) {
+      estimate = new BigNumber(gas)
+    }
+    let threshold = estimate.multipliedBy(new BigNumber(tx.gasPrice as string))
     if (tx.value) {
       threshold = threshold.plus(tx.value as string)
     }

@@ -33,7 +33,6 @@ describe('BscSDK - blockchain', () => {
     broadcast: [api.bscBroadcast, { txData: 'hello' }],
     getTransactionsCount: [api.bscGetTransactionCount, testData.TESTNET.ADDRESS_0],
     getCurrentBlock: [api.bscGetCurrentBlock, {}],
-    smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, 'BSC', testData.TX_HASH],
     getBlock: [api.bscGetBlock, testData.BLOCK_HASH],
     getBlockchainAccountBalance: [api.bscGetBalance, testData.TESTNET.ADDRESS_0],
     get: [api.bscGetTransaction, testData.TX_HASH],

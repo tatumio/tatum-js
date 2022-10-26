@@ -21,11 +21,15 @@ describe('BscSDK - tx', () => {
   const bscTx = bscTxService({
     blockchain: Blockchain.BSC,
     web3: {
-      getClient: (provider?: string) => inmemoryBlockchain.web3,
+      getClient: () => inmemoryBlockchain.web3,
       async getGasPriceInWei(): Promise<string> {
         return '@TODO'
       },
     },
+  })
+
+  beforeEach(async () => {
+    await ganacheHelper.initWeb3(inmemoryBlockchain.web3)
   })
 
   describe('transaction', () => {

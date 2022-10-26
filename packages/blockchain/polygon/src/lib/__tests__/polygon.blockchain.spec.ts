@@ -31,7 +31,6 @@ describe('PolygonSDK - blockchain', () => {
 
   const blockchainFunctionsMapping: TestCasesApiCallMapping<typeof blockchain> = {
     broadcast: [api.polygonBroadcast, { txData: 'hello' }],
-    smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, 'TRON', testData.TX_HASH],
     getTransactionsCount: [api.polygonGetTransactionCount, testData.TESTNET.ADDRESS_0],
     getCurrentBlock: api.polygonGetCurrentBlock,
     getBlock: [api.polygonGetBlock, testData.BLOCK_HASH],

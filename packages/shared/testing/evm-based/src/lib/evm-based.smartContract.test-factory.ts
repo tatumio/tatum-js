@@ -9,7 +9,7 @@ export const smartContractTestFactory = {
       testData: BlockchainTestData,
       accounts?: GanacheAccount[],
     ) => {
-      const fromPrivateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
+      const fromPrivateKey = accounts ? accounts[0].privateKey : testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
       const provider = testData.TESTNET?.PROVIDER
       const contractAddress = testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
 
@@ -51,7 +51,7 @@ export const smartContractTestFactory = {
               '1',
             ],
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-            fee: { gasLimit: '100000', gasPrice: '3' },
+            fee: { gasLimit: '50000', gasPrice: '3' },
           },
           provider,
         )
@@ -95,7 +95,7 @@ export const smartContractTestFactory = {
               '0x8c76887d2e738371bd750362fb55887343472346',
               '1',
             ],
-            fromPrivateKey: accounts ? accounts[0].privateKey : fromPrivateKey,
+            fromPrivateKey,
             fee: { gasLimit: '100000', gasPrice: '3' },
           },
           provider,
