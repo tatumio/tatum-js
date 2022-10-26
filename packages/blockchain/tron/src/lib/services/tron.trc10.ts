@@ -12,6 +12,7 @@ import { ITronWeb } from './tron.web'
 type TronTransferTrc10 = FromPrivateKeyOrSignatureIdTron<TransferTronTrc10Blockchain>
 type TronCreateTrc10 = FromPrivateKeyOrSignatureIdTron<CreateTronTrc10Blockchain>
 
+// TODO: do a balance check before sending tx - https://app.clickup.com/t/24443045/TT-3496
 const prepareSignedTransaction = async (
   body: TronTransferTrc10,
   tronWeb: ITronWeb,

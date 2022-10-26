@@ -21,6 +21,7 @@ export type TronGenerateCustodialWallet = FromPrivateKeyOrSignatureIdTron<Genera
 type TronTransfer = FromPrivateKeyOrSignatureIdTron<TransferTronBlockchain>
 type TronFreeze = FromPrivateKeyOrSignatureIdTron<FreezeTron>
 
+// TODO: do a balance check before sending tx - https://app.clickup.com/t/24443045/TT-3496
 const prepareSignedTransaction = async (body: TronTransfer, tronWeb: ITronWeb, provider?: string) => {
   const { to, amount } = body
   const client = tronWeb.getClient(provider)

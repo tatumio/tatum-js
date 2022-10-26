@@ -178,6 +178,7 @@ const prepareMintSignedTransaction = async (body: MintTronNft, tronWeb: ITronWeb
   }
 }
 
+// TODO: do a balance check before sending tx - https://app.clickup.com/t/24443045/TT-3496
 const transferSignedTransaction = async (body: TransferTronNft, tronWeb: ITronWeb, provider?: string) => {
   const { to, tokenId, contractAddress, feeLimit, value } = body
   const client = tronWeb.getClient(provider)

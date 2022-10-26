@@ -13,6 +13,7 @@ import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abst
 type TransferTronTrc20 = FromPrivateKeyOrSignatureIdTron<TransferTronTrc20Blockchain>
 type CreateTronTrc20 = FromPrivateKeyOrSignatureIdTron<CreateTronTrc20Blockchain>
 
+// TODO: do a balance check before sending tx - https://app.clickup.com/t/24443045/TT-3496
 const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronWeb, provider?: string) => {
   const { to, tokenAddress, amount, feeLimit } = body
 
