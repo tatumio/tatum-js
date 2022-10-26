@@ -38,12 +38,12 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
       const signaturesToSign: Signature[] = []
       const amountToSign: number[] = []
       const outputs: number[] = []
-      
+
       const txs = await getTransactions(
         apiCalls,
         body.fromUTXO.map((u) => u.txHash),
       )
-      
+
       for (const [i, item] of body.fromUTXO.entries()) {
         transactionBuilder.addInput(item.txHash, item.index, 0xffffffff, null)
         if ('signatureId' in item) {
@@ -55,9 +55,8 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
         if (!vout || !vout.value) throw new BchSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND)
 
         amountToSign.push(amountUtils.toSatoshis(vout.value))
-
       }
-      
+
       body.to.forEach((item) => {
         const value = amountUtils.toSatoshis(item.value)
         try {
@@ -80,9 +79,9 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
         const change = Number(new BigNumber(sumOfInputs).minus(sumOfOutputs).minus(txFee))
         transactionBuilder.addOutput(bcashAddressHelper.getAddress(body.changeAddress), change)
       }
-      
+
       verifyAmounts(amountToSign, body)
-      
+
       // Validate if all from entries are signatureId or non signatureId
       if (privateKeysToSign.length !== 0 && body.fromUTXO.length !== privateKeysToSign.length) {
         throw new BchSdkError(SdkErrorCode.BTC_BASED_WRONG_BODY)
@@ -91,7 +90,7 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
       if (signaturesToSign.length !== 0 && body.fromUTXO.length !== signaturesToSign.length) {
         throw new BchSdkError(SdkErrorCode.BTC_BASED_WRONG_BODY)
       }
-      
+
       if ('signatureId' in body.fromUTXO[0]) {
         return JSON.stringify({
           txData: `${transactionBuilder.buildIncomplete().toHex()}:${JSON.stringify(amountToSign)}`,
