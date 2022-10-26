@@ -1,17 +1,33 @@
 import { Blockchain } from '@tatumio/shared-core'
 import { btcBasedSdk } from '@tatumio/shared-blockchain-btc-based'
-import { BitcoinCashService } from '@tatumio/api-client'
+import { ApiServices, BitcoinCashService } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
-import { bchTransactions } from './bch.sdk.tx'
+import { bchTransactions } from './services/bch.sdk.tx'
 import { bchWallet } from './bch.sdk.wallet'
+import { BchApiCallsType } from '..'
+import { signKmsTransaction } from './services/bch.sdk.offchain'
+import { signBitcoinCashKMSTransaction } from './services/bch.sdk.kms'
 
 const blockchain = Blockchain.BCH
 
-export const TatumBchSDK = (args: SDKArguments) => {
+export const TatumBchSDK = (
+  args: SDKArguments,
+  apiCalls: BchApiCallsType = {
+    bchGetRawTransaction: ApiServices.blockchain.bcash.bchGetRawTransaction,
+  },
+) => {
   return {
     ...btcBasedSdk({ ...args, blockchain }),
+    kms: {
+      ...btcBasedSdk({ ...args, blockchain }).kms,
+      signBitcoinCashKMSTransaction,
+    },
     wallet: bchWallet(),
-    transaction: bchTransactions(),
+    transaction: bchTransactions(apiCalls),
+    offchain: {
+      ...btcBasedSdk({ ...args, blockchain }).offchain,
+      signKmsTransaction,
+    },
     blockchain: {
       info: BitcoinCashService.bchGetBlockChainInfo,
       broadcast: BitcoinCashService.bchBroadcast,

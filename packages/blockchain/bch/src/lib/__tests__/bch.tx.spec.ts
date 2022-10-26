@@ -1,9 +1,10 @@
 import '@tatumio/shared-testing-common'
-import { bchTransactions } from '../bch.sdk.tx'
+import { bchTransactions } from '../services/bch.sdk.tx'
 import * as apiClient from '@tatumio/api-client'
 import { BchTx, BtcTransactionFromUTXO } from '@tatumio/api-client'
 import { mockHelper } from '@tatumio/shared-testing-common'
 import { oldBtcBasedTxTestFactory } from '@tatumio/shared-testing-btc-based'
+import { TatumBchSDK } from '../bch.sdk'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)
@@ -17,30 +18,41 @@ describe('BCH transactions', () => {
   const TX_HASH = '6376496662dc94c55b0a482cbc893ca7ba640551bdf7b00179634494be5e89f3'
   const PRIVATE_KEY = 'cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbPqipzobf'
 
-  const transactions = bchTransactions()
-
   afterEach(() => {
     jest.clearAllMocks()
   })
 
   describe('From UTXO', () => {
-    oldBtcBasedTxTestFactory.fromUTXO({
-      transactions,
-      data: {
-        validAmount: VALID_AMOUNT,
-        utxoAmount: UTXO_AMOUNT,
-        validTxData: VALID_TX_DATA,
-      },
-      skipTest: {
-        txNotFound: true,
-      },
-      mock: {
-        requestGetRawTx: mockRequestGetRawTx,
-        requestGetUtxo: () => {}, //TODO
-        requestGetUtxoNotFound: () => {}, //TODO
-        broadcast: mockedApi.blockchain.bcash.bchBroadcast,
-      },
-      getRequestBodyFromUTXO,
+    it('test', async () => {
+      const sdk = TatumBchSDK({
+        apiKey: '4cc0a7d8-265b-4fa4-8dcb-7b088bfeb627',
+      })
+      const res = await sdk.transaction.prepareSignedTransaction(
+        {
+          fromUTXO: [
+            {
+              txHash: 'c2f9e44d4cfdadb9a5269c242cff914ef57b14b053295f0a1ef76e85339282be',
+              index: 1,
+              signatureId: 'c8c7f7a4-e23b-4566-9508-f369b98ce772',
+              signatureIdIndex: 0,
+            },
+          ],
+          to: [
+            {
+              address: 'bchtest:qr5rrwc8nw59awgpxaemwq37arzg9f303u9fp2ws65',
+              value: 0.01,
+            },
+            {
+              address: 'bchtest:qzk6zxdyjgma9y2uq5untflqpa6wfpn99gxh5sdrtl',
+              value: 0.035,
+            },
+          ],
+        },
+        {
+          testnet: true,
+        },
+      )
+      console.log('res', res)
     })
   })
 
@@ -66,7 +78,7 @@ describe('BCH transactions', () => {
     obj: BchTx = {
       vout: [
         {
-          value: UTXO_AMOUNT.toString(),
+          value: Number(UTXO_AMOUNT.toString()),
           n: 0,
           scriptPubKey: {
             addresses: [ADDRESS],

@@ -4,6 +4,8 @@ import coininfo from 'coininfo'
 import bcash from '@tatumio/bitcoincashjs2-lib'
 import { networks } from 'bitcoinjs-lib'
 
+var Buffer = require('safe-buffer').Buffer
+
 interface Hash {
   hash: Buffer
 }
