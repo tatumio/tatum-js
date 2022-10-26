@@ -245,7 +245,6 @@ describe('BscSDK - tx', () => {
         smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
           sdk.smartContract,
           TEST_DATA.BSC,
-          inmemoryBlockchain.accounts,
         )
       })
     })
