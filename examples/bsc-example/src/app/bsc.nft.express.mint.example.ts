@@ -23,8 +23,8 @@ export async function bscNftExpressExample() {
   console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
 
   // fetch deployed contract address from transaction hash
-  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetTransaction
-  const deployedTransaction = await bscSDK.blockchain.get(nftMinted.txId)
+  // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
+  const deployedTransaction = await bscSDK.blockchain.smartContractGetAddress('BSC', nftMinted.txId)
   const contractAddress = deployedTransaction.contractAddress as string
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 

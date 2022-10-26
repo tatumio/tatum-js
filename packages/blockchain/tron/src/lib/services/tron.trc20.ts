@@ -8,13 +8,13 @@ import {
 import BigNumber from 'bignumber.js'
 import { ITronWeb } from './tron.web'
 import { Trc20Token } from '@tatumio/shared-blockchain-evm-based'
-import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
+import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
 
-const prepareSignedTransaction = async (
-  body: TransferTronTrc20Blockchain | TransferTronTrc20BlockchainKMS,
-  tronWeb: ITronWeb,
-  provider?: string,
-) => {
+type TransferTronTrc20 = FromPrivateKeyOrSignatureIdTron<TransferTronTrc20Blockchain>
+type CreateTronTrc20 = FromPrivateKeyOrSignatureIdTron<CreateTronTrc20Blockchain>
+
+// TODO: do a balance check before sending tx - https://app.clickup.com/t/24443045/TT-3496
+const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronWeb, provider?: string) => {
   const { to, tokenAddress, amount, feeLimit } = body
 
   const client = tronWeb.getClient(provider)
@@ -33,7 +33,7 @@ const prepareSignedTransaction = async (
   ]
   const feeLimitSun = client.toSun(feeLimit)
 
-  if (isWithSignatureId(body)) {
+  if (body.signatureId) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       tokenAddressHex,
       methodName,
@@ -61,7 +61,7 @@ const prepareSignedTransaction = async (
 }
 
 const prepareCreateSignedTransaction = async (
-  body: CreateTronTrc20Blockchain | CreateTronTrc20BlockchainKMS,
+  body: CreateTronTrc20,
   tronWeb: ITronWeb,
   provider?: string,
 ) => {
@@ -80,7 +80,7 @@ const prepareCreateSignedTransaction = async (
     name,
   }
 
-  if (isWithSignatureId(body)) {
+  if (body.signatureId) {
     const tx = await client.transactionBuilder.createSmartContract(params, body.from)
 
     return JSON.stringify(tx)
@@ -124,20 +124,16 @@ export const tronTrc20 = (args: { tronWeb: ITronWeb }) => {
        * @param body content of the transaction to broadcast
        * @returns transaction data to be broadcast to blockchain.
        */
-      signedTransaction: async (
-        body: TransferTronTrc20Blockchain | TransferTronTrc20BlockchainKMS,
-        provider?: string,
-      ) => prepareSignedTransaction(body, args.tronWeb, provider),
+      signedTransaction: async (body: TransferTronTrc20, provider?: string) =>
+        prepareSignedTransaction(body, args.tronWeb, provider),
       /**
        * Prepare create Tron TRC20 transaction for KMS. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
        * @param provider
        * @returns transaction data to be broadcast to blockchain.
        */
-      createSignedTransaction: async (
-        body: CreateTronTrc20Blockchain | CreateTronTrc20BlockchainKMS,
-        provider?: string,
-      ) => prepareCreateSignedTransaction(body, args.tronWeb, provider),
+      createSignedTransaction: async (body: CreateTronTrc20, provider?: string) =>
+        prepareCreateSignedTransaction(body, args.tronWeb, provider),
     },
     send: {
       /**
@@ -146,28 +142,30 @@ export const tronTrc20 = (args: { tronWeb: ITronWeb }) => {
        * @param body content of the transaction to broadcast
        * @returns transaction id of the transaction in the blockchain
        */
-      signedTransaction: async (
-        body: TransferTronTrc20Blockchain | TransferTronTrc20BlockchainKMS,
-        provider?: string,
-      ) =>
-        TronService.tronBroadcast({
-          txData: await prepareSignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
+      signedTransaction: async (body: TransferTronTrc20, provider?: string) => {
+        if (body.signatureId) {
+          return TronService.tronTransferTrc20(body as TransferTronTrc20BlockchainKMS)
+        } else {
+          return TronService.tronBroadcast({
+            txData: await prepareSignedTransaction(body, args.tronWeb, provider),
+          })
+        }
+      },
       /**
        * Create Tron TRC20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
        * @returns transaction id of the transaction in the blockchain
        */
-      createSignedTransaction: async (
-        body: CreateTronTrc20Blockchain | CreateTronTrc20BlockchainKMS,
-        provider?: string,
-      ) =>
-        TronService.tronBroadcast({
-          txData: await prepareCreateSignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
+      createSignedTransaction: async (body: CreateTronTrc20, provider?: string) => {
+        if (body.signatureId) {
+          return TronService.tronCreateTrc20(body as CreateTronTrc20BlockchainKMS)
+        } else {
+          return TronService.tronBroadcast({
+            txData: await prepareCreateSignedTransaction(body, args.tronWeb, provider),
+          })
+        }
+      },
     },
   }
 }

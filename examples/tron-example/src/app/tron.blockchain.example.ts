@@ -1,22 +1,35 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumTronSDK } from '@tatumio/tron'
 
-const tronSDK = TatumTronSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const tronSDK = TatumTronSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function tronBlockchainExample() {
-  const broadcastHash = await tronSDK.blockchain.broadcast({
-    txData: '62BD544D1B9031EFC330A3E855CC3A0D51CA5131455C1AB3BCAC6D243F65460D',
-    // TODO: OpenAPI bug
-    // signatureId: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
-  })
+  // Get Tron account by address
+  // https://apidoc.tatum.io/tag/Tron#operation/TronGetAccount
+  const account = await tronSDK.blockchain.getAccount('TGDqQAP5bduoPKVgdbk7fGyW4DwEt3RRn8')
 
+  // Get all transactions for a TRON account
+  // https://apidoc.tatum.io/tag/Tron#operation/TronAccountTx
+  const transactions = await tronSDK.blockchain.getTransactions('TGDqQAP5bduoPKVgdbk7fGyW4DwEt3RRn8')
+
+  // Get transaction details by hash
+  // https://apidoc.tatum.io/tag/Tron#operation/TronGetTransaction
   const transaction = await tronSDK.blockchain.getTransaction(
     '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
   )
-  const block = await tronSDK.blockchain.getBlock(
-    '0x527d2f059244f7cbe1ec84aa75e7d1637463a793d82cf7015b3c2a7a5a3ec053',
-  )
-  const currentBlock = await tronSDK.blockchain.getCurrentBlock()
 
-  const account = await tronSDK.blockchain.getAccount('TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh')
+  // Get TRC-20 transactions for a TRON account.
+  // https://apidoc.tatum.io/tag/Tron#operation/TronAccountTx20
+  const trc20Transactions = await tronSDK.blockchain.getTrc20Transactions(
+    'TGDqQAP5bduoPKVgdbk7fGyW4DwEt3RRn8',
+  )
+
+  // Get block by hash
+  // https://apidoc.tatum.io/tag/Tron#operation/TronGetBlock
+  const block = await tronSDK.blockchain.getBlock(
+    '0x305c58c8c62399097f1ea702e337f13be6b3a3ed28867d530d8a03191f040b9c',
+  )
+
+  // Get current block
+  // https://apidoc.tatum.io/tag/Tron#operation/TronGetCurrentBlock
+  const currentBlock = await tronSDK.blockchain.getCurrentBlock()
 }

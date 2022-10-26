@@ -21,8 +21,8 @@ export async function bscMultiTokenExample(): Promise<void> {
   })) as TransactionHash
 
   // fetch deployed contract address from transaction hash
-  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetTransaction
-  const transaction = await bscSDK.blockchain.get(multiTokenDeployed.txId)
+  // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
+  const transaction = await bscSDK.blockchain.smartContractGetAddress('BSC', multiTokenDeployed.txId)
   const contractAddress = transaction.contractAddress as string
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 

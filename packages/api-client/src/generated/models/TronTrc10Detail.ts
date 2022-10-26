@@ -4,31 +4,35 @@
 
 export type TronTrc10Detail = {
     /**
-     * Address of the owner of the token, in hex.
+     * The address of the TRC-10 token's owner in the hexadecimal format
      */
     ownerAddress?: string;
     /**
-     * Name of the token.
+     * The name of the TRC-10 token
      */
     name?: string;
     /**
-     * Abbreviation of the token.
+     * The abbreviated name of the TRC-10 token
      */
     abbr?: string;
     /**
-     * Description of the token.
+     * The description of the TRC-10 token
      */
     description?: string;
     /**
-     * URL of the token.
+     * The URL of the TRC-10 token
      */
     url?: string;
     /**
-     * Total supply of the tokens.
+     * The total supply of tokens in the TRC-10 token
      */
     totalSupply?: number;
     /**
-     * Number of decimal places of the token.
+     * The number of decimal places
      */
     precision?: number;
+    /**
+     * The ID of the TRC-10 token
+     */
+    id?: number;
 }

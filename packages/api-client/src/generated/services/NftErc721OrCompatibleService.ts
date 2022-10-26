@@ -55,6 +55,8 @@ import type { MintNftMinter } from '../models/MintNftMinter';
 import type { MintNftSolana } from '../models/MintNftSolana';
 import type { MintNftSolanaKMS } from '../models/MintNftSolanaKMS';
 import type { MintNftTron } from '../models/MintNftTron';
+import type { NftGetBalanceSc } from '../models/NftGetBalanceSc';
+import type { NftGetBalanceScAlgo } from '../models/NftGetBalanceScAlgo';
 import type { NftTx } from '../models/NftTx';
 import type { SignatureId } from '../models/SignatureId';
 import type { SolanaMintedResult } from '../models/SolanaMintedResult';
@@ -182,15 +184,17 @@ export class NftErc721OrCompatibleService {
      * <p>Depending on what blockchain you use, choose the request body schema to use in the API call.</p>
      * <ul>
      * <li>To mint NFTs on <b>BNB Smart Chain</b>, <b>Celo</b>, <b>Ethereum</b>, <b>Harmony</b>, <b>Klaytn</b>, or <b>Polygon</b>, use this API with the <code>MintNftExpress</code> schema of the request body.</li>
-     * <li>To mint NFTs on <b>Algorand</b>, use this API with the <code>MintNftExpressAlgorand</code> schema of the request body.<br/>An NFT minted on Algorand is automatically transferred to your blockchain address. After the NFT is minted, you have to transfer it to the recipient's address. The recipient has to agree in advance to receive your NFT because Algorand charges users for storing NFTs on their addresses, and an Algorand blockchain address by default does not receive NFTs unless explicitly agreed.<br/>This how it works:
+     * <li>To mint NFTs on <b>Algorand</b>, use this API with the <code>MintNftExpressAlgorand</code> schema of the request body.<br/>To be able to <a href="#operation/NftBurnErc721">burn the minted NFTs</a> any time later, specify the address of the manager account in the <code>manager</code> parameter.<br/>An NFT minted on Algorand is automatically transferred to your blockchain address. After the NFT is minted, you have to transfer it to the recipient's address. The recipient has to agree in advance to receive your NFT because Algorand charges users for storing NFTs on their addresses, and an Algorand blockchain address by default does not receive NFTs unless explicitly agreed.<br/>This how it works:
      * <ol>
      * <li>The recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">agrees to receive the NFT</a> to their address.</li>
      * <li>You <a href="#operation/NftTransferErc721">transfer the NFT</a> to the recipient's address (use the <code>transferNftAlgoExpress</code> schema of the request body).<br /><b>NOTE:</b> On the <b>mainnet</b>, Tatum covers your transaction fees for the NFT transfer and pays for them from its own blockchain address. Then, the fee amount paid by Tatum is converted to the number of credits, and these credits are deducted from the monthly credit allowance of your paid pricing plan. On the <b>testnet</b>, no credits are deducted from the monthly credit allowance.</li>
      * </ol></li>
-     * <li>To mint NFTs on <b>Solana</b>, use this API with the <code>MintNftExpressSolana</code> schema of the request body.<br/>Solana uses the <a href="https://www.metaplex.com/" target="_blank">Metaplex Protocol</a>, a smart contract and metadata standard for creating and working with NFTs. When you mint an NFT on Solana with NFT Express, the pre-built smart contract based on the Metaplex Protocol is used.<br/>When an NFT is minted on Solana, a new blockchain address is created to receive the NFT under the recipient's account address (the one in the <code>to</code> parameter of the request body). This address is returned in the <code>nftAccountAddress</code> parameter in the response body, is owned by the recipient's address, and has the same private key.<br/>The response body also returns the address of the minted NFT itself, which is held in the <code>nftAddress</code> parameter.<br/>After the NFT is minted, you have to <a href="#operation/NftTransferErc721">transfer it</a> to the recipient's address (use the <code>transferNftSolana</code> or <code>transferNftSolanaKMS</code> schema of the request body). In the request body:
+     * <li>To mint NFTs on <b>Solana</b>, use this API with the <code>MintNftExpressSolana</code> schema of the request body.<br/>Solana uses the <a href="https://www.metaplex.com/" target="_blank">Metaplex Protocol</a>, a smart contract and metadata standard for creating and working with NFTs. When you mint an NFT on Solana with NFT Express, the pre-built smart contract based on the Metaplex Protocol is used.<br/>When an NFT is minted on Solana, a new blockchain address is created to receive the NFT under the recipient's account address (the one in the <code>to</code> parameter of the request body). This address is returned in the <code>nftAccountAddress</code> parameter in the response body, is owned by the recipient's address, and has the same private key.<br/>The response body also returns the address of the minted NFT itself, which is held in the <code>nftAddress</code> parameter.<br/>After the NFT is minted, you have to <a href="#operation/NftTransferErc721">transfer it</a> to the recipient's address (use the <code>transferNftSolana</code> or <code>transferNftSolanaKMS</code> schema of the request body). In the request body of the transfer call:
      * <ul>
-     * <li>Set the <code>contractAddress</code> parameter to the address from the <code>nftAddress</code> parameter in the response body of the minting call.</li>
-     * <li>Set both <code>from</code> and <code>to</code> parameters to the recipient's address from the <code>to</code> parameter in the response body of the minting call.</li>
+     * <li>Set the <code>from</code> parameter to the address that you used in the <code>to</code> parameter in the request body of the minting call.</li>
+     * <li>Set the <code>to</code> parameter to the recipient's address.</li>
+     * <li>Set the <code>contractAddress</code> parameter to the address from the <code>nftAddress</code> parameter returned in the response body of the minting call.</li>
+     * <li>Set the <code>fromPrivateKey</code>/<code>signatureId</code> parameter to the private key/signature ID of the blockchain address that you specified in the <code>from</code> parameter.</li>
      * </ul></li></ul>
      * <h4 id="NftExpressOwn">Minting NFTs with NFT Express using your own smart contract</h4>
      * <p>If you want to mint NFTs using your own smart contract, you are going to use an <b>NTF minter</b>, a special blockchain address provided by Tatum that will cover the minting fees. The number of credits equivalent to the fees will be then deducted from the monthly credit allowance of your paid pricing plan.<br/>
@@ -300,7 +304,7 @@ export class NftErc721OrCompatibleService {
              * <ul>
              * <li>To mint NFTs natively on <b>Algorand</b> and:
              * <ul><li>To sign the transaction with your <b>private key</b>, use this API with the <code>MintNftAlgorand</code> schema of the request body.</li>
-             * <li>To sign the transaction with your <b>signature ID</b>, use this API the <code>MintNftAlgorandKMS</code> schema of the request body.<br/><b>NOTE:</b> An NFT minted on Algorand is automatically transferred to your blockchain address. After the NFT is minted, you have to transfer it to the recipient's address. The recipient has to agree in advance to receive your NFT because Algorand charges users for storing NFTs on their addresses, and an Algorand blockchain address by default does not receive NFTs unless explicitly agreed. For more information about how it works, see the section about minting NFTs on Algorand using the <a href="#NftExpressPrebuilt">pre-built NFT smart contract provided by Tatum</a>.</li></ul></li>
+             * <li>To sign the transaction with your <b>signature ID</b>, use this API the <code>MintNftAlgorandKMS</code> schema of the request body.<br/><b>NOTE:</b><ul><li>To be able to <a href="#operation/NftBurnErc721">burn the minted NFTs</a> any time later, specify the address of the manager account in the <code>manager</code> parameter.</li><li>An NFT minted on Algorand is automatically transferred to your blockchain address. After the NFT is minted, you have to transfer it to the recipient's address. The recipient has to agree in advance to receive your NFT because Algorand charges users for storing NFTs on their addresses, and an Algorand blockchain address by default does not receive NFTs unless explicitly agreed. For more information about how it works, see the section about minting NFTs on Algorand using the <a href="#NftExpressPrebuilt">pre-built NFT smart contract provided by Tatum</a>.</li></ul></li></ul></li>
              * <li>To mint NFTs natively on <b>BNB Smart Chain</b>, <b>Ethereum</b>, <b>Harmony</b>, <b>Klaytn</b>, <b>KuCoin Community Chain</b>, or <b>Polygon</b>, and:
              * <ul><li>To sign the transaction with your <b>private key</b>, use this API with the <code>MintNft</code> schema of the request body.</li>
              * <li>To sign the transaction with your <b>signature ID</b>, use this API the <code>MintNftKMS</code> schema of the request body.</li></ul></li>
@@ -366,15 +370,15 @@ export class NftErc721OrCompatibleService {
              * <li>TRON</li>
              * </ul>
              * <p>For Ethereum, Celo, and BNB Smart Chain, transferring NFTs invokes the <code>safeTransfer()</code> method.</p>
-             * <p><b>Transferring NFTs on Algorand</p></b>
+             * <p><b>Transferring NFTs on Algorand</b></p>
              * <ul>
              * <li>On Algorand, the recipient has to agree in advance to receive your NFT because Algorand charges users for storing NFTs on their addresses, and an Algorand blockchain address by default does not receive NFTs unless explicitly agreed. Before transferring an NFT, make sure that the recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">has agreed to receive the NFT</a> to their address.</li>
              * <li>If you want to transfer an NFT that <a href="#operation/NftMintErc721">was minted using NFT Express</a>, use the <code>transferNftAlgoExpress</code> schema of the request body.<br /><b>NOTE:</b> On the <b>mainnet</b>, Tatum covers your transaction fees for the NFT transfer and pays for them from its own blockchain address. Then, the fee amount paid by Tatum is converted to the number of credits, and these credits are deducted from the monthly credit allowance of your paid pricing plan. On the <b>testnet</b>, no credits are deducted from the monthly credit allowance.</li>
              * </ul>
-             * <p><b>Transferring NFTs on Solana</p></b>
-             * <p>If you want to transfer an NFT that <a href="#operation/NftMintErc721">was minted using NFT Express</a>, see the section about minting NFTs on Solana using the <a href="#operation/NftMintErc721">pre-built NFT smart contract provided by Tatum</a> for the information about how to set up the parameters in the request body.</p>
-             * <p><b>Signing a transaction</b></p>
-             * <p>When transferring an NFT, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+             * <p><b>Transferring NFTs on Solana</b><br/>
+             * If you want to transfer an NFT that <a href="#operation/NftMintErc721">was minted using NFT Express</a>, see the section about minting NFTs on Solana using the <a href="#operation/NftMintErc721">pre-built NFT smart contract provided by Tatum</a> for the information about how to set up the parameters in the request body.</p>
+             * <p><b>Signing a transaction</b><br/>
+             * When transferring an NFT, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
              * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
              * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
              * <p><b>NOTE:</b> This does not apply to transferring NFTs that were minted on Algorand using NFT Express (see earlier in this section).</p>
@@ -514,7 +518,7 @@ export class NftErc721OrCompatibleService {
                  * Burn an NFT
                  * <p><b>100 credits per API call on Flow<br/>
                  * 2 credits per API call on the other blockchains</b></p>
-                 * <p>Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.</p>
+                 * <p>Destroy an NFT. Burning the NFT transfers it to an un-spendable blockchain address that no one can access.</p>
                  * <p>This API is supported for the following blockchains:</p>
                  * <ul>
                  * <li>Algorand</li>
@@ -528,8 +532,10 @@ export class NftErc721OrCompatibleService {
                  * <li>Polygon</li>
                  * <li>TRON</li>
                  * </ul>
-                 * <p><b>Signing a transaction</b></p>
-                 * <p>When burning an NFT, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+                 * <p><b>Burning NFTs on Algorand</b><br/>
+                 * You can burn only the NFTs that were minted with the address of the manager account specified in the <code>manager</code> parameter in the <a href="#operation/NftMintErc721">minting call</a> (see the <code>MintNftExpressAlgorand</code>, <code>MintNftAlgorand</code>, and <code>MintNftAlgorandKMS</code> schemas of the request body).</p>
+                 * <p><b>Signing a transaction</b><br/>
+                 * When burning an NFT, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
                  * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
                  * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
                  *
@@ -699,7 +705,7 @@ export class NftErc721OrCompatibleService {
                  * @param tokenAddress Address of the token smart contract
                  * @param pageSize Max number of items per page is 50.
                  * @param offset Offset to obtain next page of the data.
-                 * @param from Transactions from this block onwords will be included.
+                 * @param from Transactions from this block onwards will be included.
                  * @param to Transactions up to this block will be included.
                  * @returns any OK
                  * @throws ApiError
@@ -738,7 +744,7 @@ export class NftErc721OrCompatibleService {
                  * @param tokenAddress Address of the token smart contract
                  * @param pageSize Max number of items per page is 50.
                  * @param offset Offset to obtain next page of the data.
-                 * @param from Transactions from this block onwords will be included.
+                 * @param from Transactions from this block onwards will be included.
                  * @param to Transactions up to this block will be included.
                  * @returns any OK
                  * @throws ApiError
@@ -836,13 +842,16 @@ export class NftErc721OrCompatibleService {
                     address: string,
                 ): CancelablePromise<Array<{
                     /**
-                     * The address of the NFT smart contract; for Algorand, this is the asset ID
+                     * On Algorand, this is the asset ID (the ID of the NFT); on the other blockchains, this is the address of the NFT smart contract
                      */
                     contractAddress: string;
+                    /**
+                     * On Algorand, this is an array of <code>1</code> to indicate that the NFTs with the specified IDs exist; on the other blockchains, this is an array of the IDs of the NFTs
+                     */
                     balances: Array<string>;
                     metadata?: Array<{
                         /**
-                         * The ID of the NFT owned by this address; valid for EVM-based blockchains only
+                         * (EVM-based blockchains only) The ID of the NFT owned by this address
                          */
                         tokenId?: string;
                         /**
@@ -951,7 +960,7 @@ export class NftErc721OrCompatibleService {
                  * @param address The blockchain address that you want to get the token balance of
                  * @param contractAddress The address of the NFT smart contract
                  * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
-                 * @returns string OK
+                 * @returns any OK
                  * @throws ApiError
                  */
                 public static nftGetBalanceErc721(
@@ -959,7 +968,7 @@ export class NftErc721OrCompatibleService {
                     address: string,
                     contractAddress: string,
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-                ): CancelablePromise<Array<string>> {
+                ): CancelablePromise<(NftGetBalanceScAlgo | NftGetBalanceSc)> {
                     return __request({
                         method: 'GET',
                         path: `/v3/nft/balance/${chain}/${contractAddress}/${address}`,

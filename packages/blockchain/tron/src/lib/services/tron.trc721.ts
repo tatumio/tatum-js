@@ -1,31 +1,32 @@
 import {
-  BurnNftKMSTron as ApiBurnNftKMSTron,
+  BurnNftKMSTron,
   BurnNftTron,
   DeployNftTron,
-  DeployNftTronKMS as ApiDeployNftTronKMS,
-  MintMultipleNftKMSTron as ApiMintMultipleNftKMSTron,
+  DeployNftTronKMS,
+  MintMultipleNftKMSTron,
   MintMultipleNftTron,
-  MintNftKMSTron as ApiMintNftKMSTron,
+  MintNftKMSTron,
   MintNftTron,
-  TransferNftKMSTron as ApiTransferNftKMSTron,
+  TransferNftKMSTron,
   TransferNftTron,
   TronService,
-  UpdateCashbackValueForAuthorNftKMSTron as ApiUpdateCashbackValueForAuthorNftKMSTron,
+  UpdateCashbackValueForAuthorNftKMSTron,
   UpdateCashbackValueForAuthorNftTron,
+  NftErc721OrCompatibleService,
 } from '@tatumio/api-client'
-import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
+import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
 import { Trc721Token } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
 import { ITronWeb } from './tron.web'
 
-// TODO: OpenAPI bug -> missing from property
-type DeployNftTronKMS = ApiDeployNftTronKMS & { from: string }
+type DeployTronNft = FromPrivateKeyOrSignatureIdTron<DeployNftTron>
+type MintTronNft = FromPrivateKeyOrSignatureIdTron<MintNftTron>
+type TransferTronNft = FromPrivateKeyOrSignatureIdTron<TransferNftTron>
+type BurnTronNft = FromPrivateKeyOrSignatureIdTron<BurnNftTron>
+type MintTronMultipleNft = FromPrivateKeyOrSignatureIdTron<MintMultipleNftTron>
+type UpdateTronCashbackValues = FromPrivateKeyOrSignatureIdTron<UpdateCashbackValueForAuthorNftTron>
 
-const prepareDeploySignedTransaction = async (
-  body: DeployNftTron | DeployNftTronKMS,
-  tronWeb: ITronWeb,
-  provider?: string,
-) => {
+const prepareDeploySignedTransaction = async (body: DeployTronNft, tronWeb: ITronWeb, provider?: string) => {
   const client = tronWeb.getClient(provider)
 
   const { name, symbol, feeLimit } = body
@@ -41,8 +42,8 @@ const prepareDeploySignedTransaction = async (
     name,
   }
 
-  if (isWithSignatureId(body)) {
-    const tx = await client.transactionBuilder.createSmartContract(params, body.from)
+  if (body.signatureId) {
+    const tx = await client.transactionBuilder.createSmartContract(params, body.account)
 
     return JSON.stringify(tx)
   } else {
@@ -55,11 +56,8 @@ const prepareDeploySignedTransaction = async (
   }
 }
 
-// TODO: OpenAPI bug -> missing from property
-type MintNftKMSTron = ApiMintNftKMSTron & { from: string }
-
 const prepareMintCashbackSignedTransaction = async (
-  body: MintNftTron | MintNftKMSTron,
+  body: MintTronNft,
   tronWeb: ITronWeb,
   provider?: string,
 ) => {
@@ -97,16 +95,16 @@ const prepareMintCashbackSignedTransaction = async (
     },
   ]
 
-  if (isWithSignatureId(body)) {
+  if (body.signatureId) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.from,
+        from: body.account,
       },
       params,
-      body.from,
+      body.account,
     )
 
     return JSON.stringify(transaction)
@@ -128,11 +126,7 @@ const prepareMintCashbackSignedTransaction = async (
   }
 }
 
-const prepareMintSignedTransaction = async (
-  body: MintNftTron | MintNftKMSTron,
-  tronWeb: ITronWeb,
-  provider?: string,
-) => {
+const prepareMintSignedTransaction = async (body: MintTronNft, tronWeb: ITronWeb, provider?: string) => {
   const { url, to, tokenId, contractAddress, feeLimit } = body
 
   const client = tronWeb.getClient(provider)
@@ -153,16 +147,16 @@ const prepareMintSignedTransaction = async (
     },
   ]
 
-  if (isWithSignatureId(body)) {
+  if (body.signatureId) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.from,
+        from: body.account,
       },
       params,
-      body.from,
+      body.account,
     )
 
     return JSON.stringify(transaction)
@@ -184,14 +178,8 @@ const prepareMintSignedTransaction = async (
   }
 }
 
-// TODO: OpenAPI bug -> missing from property
-type TransferNftKMSTron = ApiTransferNftKMSTron & { from: string }
-
-const transferSignedTransaction = async (
-  body: TransferNftTron | TransferNftKMSTron,
-  tronWeb: ITronWeb,
-  provider?: string,
-) => {
+// TODO: do a balance check before sending tx - https://app.clickup.com/t/24443045/TT-3496
+const transferSignedTransaction = async (body: TransferTronNft, tronWeb: ITronWeb, provider?: string) => {
   const { to, tokenId, contractAddress, feeLimit, value } = body
   const client = tronWeb.getClient(provider)
 
@@ -207,17 +195,17 @@ const transferSignedTransaction = async (
 
   client.setAddress(contractAddress)
 
-  if (isWithSignatureId(body)) {
+  if (body.signatureId) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.from,
+        from: body.account,
         callValue: value ? `0x${new BigNumber(value).multipliedBy(1e6).toString(16)}` : 0,
       },
       params,
-      body.from,
+      body.account,
     )
 
     return JSON.stringify(transaction)
@@ -240,14 +228,7 @@ const transferSignedTransaction = async (
   }
 }
 
-// TODO: OpenAPI bug -> missing from property
-type BurnNftKMSTron = ApiBurnNftKMSTron & { from: string }
-
-const burnSignedTransaction = async (
-  body: BurnNftTron | BurnNftKMSTron,
-  tronWeb: ITronWeb,
-  provider?: string,
-) => {
+const burnSignedTransaction = async (body: BurnTronNft, tronWeb: ITronWeb, provider?: string) => {
   const { tokenId, contractAddress, feeLimit } = body
 
   const client = tronWeb.getClient(provider)
@@ -262,16 +243,16 @@ const burnSignedTransaction = async (
     },
   ]
 
-  if (isWithSignatureId(body)) {
+  if (body.signatureId) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.from,
+        from: body.account,
       },
       params,
-      body.from,
+      body.account,
     )
 
     return JSON.stringify(transaction)
@@ -293,11 +274,8 @@ const burnSignedTransaction = async (
   }
 }
 
-// TODO: OpenAPI bug -> missing from property
-type MintMultipleNftKMSTron = ApiMintMultipleNftKMSTron & { from: string }
-
 const prepareMintMultipleSignedTransaction = async (
-  body: MintMultipleNftTron | MintMultipleNftKMSTron,
+  body: MintTronMultipleNft,
   tronWeb: ITronWeb,
   provider?: string,
 ) => {
@@ -323,16 +301,16 @@ const prepareMintMultipleSignedTransaction = async (
     },
   ]
 
-  if (isWithSignatureId(body)) {
+  if (body.signatureId) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.from,
+        from: body.account,
       },
       params,
-      body.from,
+      body.account,
     )
 
     return JSON.stringify(transaction)
@@ -354,11 +332,8 @@ const prepareMintMultipleSignedTransaction = async (
   }
 }
 
-// TODO: OpenAPI bug -> missing from property
-type UpdateCashbackValueForAuthorNftKMSTron = ApiUpdateCashbackValueForAuthorNftKMSTron & { from: string }
-
 const prepareUpdateCashbackValueForAuthorSignedTransaction = async (
-  body: UpdateCashbackValueForAuthorNftTron | UpdateCashbackValueForAuthorNftKMSTron,
+  body: UpdateTronCashbackValues,
   tronWeb: ITronWeb,
   provider?: string,
 ) => {
@@ -380,16 +355,16 @@ const prepareUpdateCashbackValueForAuthorSignedTransaction = async (
     },
   ]
 
-  if (isWithSignatureId(body)) {
+  if (body.signatureId) {
     const { transaction } = await client.transactionBuilder.triggerSmartContract(
       contractAddressHex,
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.from,
+        from: body.account,
       },
       params,
-      body.from,
+      body.account,
     )
 
     return JSON.stringify(transaction)
@@ -420,7 +395,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @param provider
        * @returns transaction data to be broadcast to blockchain.
        */
-      deploySignedTransaction: async (body: DeployNftTron | DeployNftTronKMS, provider?: string) =>
+      deploySignedTransaction: async (body: DeployTronNft, provider?: string) =>
         prepareDeploySignedTransaction(body, args.tronWeb, provider),
       /**
        * Sign Tron deploy trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -428,7 +403,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @param provider
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintCashbackSignedTransaction: async (body: MintNftTron | MintNftKMSTron, provider?: string) =>
+      mintCashbackSignedTransaction: async (body: MintTronNft, provider?: string) =>
         prepareMintCashbackSignedTransaction(body, args.tronWeb, provider),
       /**
        * Sign Tron deploy trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -436,7 +411,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @param provider
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintSignedTransaction: async (body: MintNftTron | MintNftKMSTron, provider?: string) =>
+      mintSignedTransaction: async (body: MintTronNft, provider?: string) =>
         prepareMintSignedTransaction(body, args.tronWeb, provider),
       /**
        * Sign Tron transfer trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -444,7 +419,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @param provider
        * @returns transaction data to be broadcast to blockchain.
        */
-      transferSignedTransaction: async (body: TransferNftTron | TransferNftKMSTron, provider?: string) =>
+      transferSignedTransaction: async (body: TransferTronNft, provider?: string) =>
         transferSignedTransaction(body, args.tronWeb, provider),
       /**
        * Sign Tron burn trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -452,7 +427,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @param provider
        * @returns transaction data to be broadcast to blockchain.
        */
-      burnSignedTransaction: async (body: BurnNftTron | BurnNftKMSTron, provider?: string) =>
+      burnSignedTransaction: async (body: BurnTronNft, provider?: string) =>
         burnSignedTransaction(body, args.tronWeb, provider),
       /**
        * Sign Tron mint multiple trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -460,10 +435,8 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @param provider
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintMultipleSignedTransaction: async (
-        body: MintMultipleNftTron | MintMultipleNftKMSTron,
-        provider?: string,
-      ) => prepareMintMultipleSignedTransaction(body, args.tronWeb, provider),
+      mintMultipleSignedTransaction: async (body: MintTronMultipleNft, provider?: string) =>
+        prepareMintMultipleSignedTransaction(body, args.tronWeb, provider),
       /**
        * Sign Tron update cashback for author trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -471,7 +444,7 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @returns transaction data to be broadcast to blockchain.
        */
       updateCashbackValueForAuthorSignedTransaction: async (
-        body: UpdateCashbackValueForAuthorNftTron | UpdateCashbackValueForAuthorNftKMSTron,
+        body: UpdateTronCashbackValues,
         provider?: string,
       ) => prepareUpdateCashbackValueForAuthorSignedTransaction(body, args.tronWeb, provider),
     },
@@ -482,68 +455,93 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @param body content of the transaction to broadcast
        * @returns transaction id of the transaction in the blockchain
        */
-      deploySignedTransaction: async (body: DeployNftTron | DeployNftTronKMS, provider?: string) =>
-        TronService.tronBroadcast({
-          txData: await prepareDeploySignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
+      deploySignedTransaction: async (body: DeployTronNft, provider?: string) => {
+        if (body.signatureId) {
+          return NftErc721OrCompatibleService.nftDeployErc721(body as DeployNftTronKMS)
+        } else {
+          return TronService.tronBroadcast({
+            txData: await prepareDeploySignedTransaction(body, args.tronWeb, provider),
+          })
+        }
+      },
+
       /**
        * Send Tron mint cashback trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
        * @returns transaction id of the transaction in the blockchain
        */
-      mintCashbackSignedTransaction: async (body: MintNftTron | MintNftKMSTron, provider?: string) =>
-        TronService.tronBroadcast({
-          txData: await prepareMintCashbackSignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
+      mintCashbackSignedTransaction: async (body: MintTronNft, provider?: string) => {
+        if (body.signatureId) {
+          return NftErc721OrCompatibleService.nftMintErc721(body as MintNftKMSTron)
+        } else {
+          return TronService.tronBroadcast({
+            txData: await prepareMintCashbackSignedTransaction(body, args.tronWeb, provider),
+          })
+        }
+      },
+
       /**
        * Send Tron mint cashback trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
        * @returns transaction id of the transaction in the blockchain
        */
-      mintSignedTransaction: async (body: MintNftTron | MintNftKMSTron, provider?: string) =>
-        TronService.tronBroadcast({
-          txData: await prepareMintSignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
+      mintSignedTransaction: async (body: MintTronNft, provider?: string) => {
+        if (body.signatureId) {
+          return NftErc721OrCompatibleService.nftMintErc721(body as MintNftKMSTron)
+        } else {
+          return TronService.tronBroadcast({
+            txData: await prepareMintSignedTransaction(body, args.tronWeb, provider),
+          })
+        }
+      },
+
       /**
        * Send Tron transfer trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
        * @returns transaction id of the transaction in the blockchain
        */
-      transferSignedTransaction: async (body: TransferNftTron | TransferNftKMSTron, provider?: string) =>
-        TronService.tronBroadcast({
-          txData: await transferSignedTransaction(body, args.tronWeb, provider),
-        }),
+      transferSignedTransaction: async (body: TransferTronNft, provider?: string) => {
+        if (body.signatureId) {
+          return NftErc721OrCompatibleService.nftTransferErc721(body as TransferNftKMSTron)
+        } else {
+          return TronService.tronBroadcast({
+            txData: await transferSignedTransaction(body, args.tronWeb, provider),
+          })
+        }
+      },
       /**
        * Send Tron burn trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
        * @returns transaction id of the transaction in the blockchain
        */
-      burnSignedTransaction: async (body: BurnNftTron | BurnNftKMSTron, provider?: string) =>
-        TronService.tronBroadcast({
-          txData: await burnSignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
+      burnSignedTransaction: async (body: BurnTronNft, provider?: string) => {
+        if (body.signatureId) {
+          return NftErc721OrCompatibleService.nftBurnErc721(body as BurnNftKMSTron)
+        } else {
+          return TronService.tronBroadcast({
+            txData: await burnSignedTransaction(body, args.tronWeb, provider),
+          })
+        }
+      },
       /**
        * Send Tron mint multiple trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
        * @returns transaction id of the transaction in the blockchain
        */
-      mintMultipleSignedTransaction: async (
-        body: MintMultipleNftTron | MintMultipleNftKMSTron,
-        provider?: string,
-      ) =>
-        TronService.tronBroadcast({
-          txData: await prepareMintMultipleSignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
+      mintMultipleSignedTransaction: async (body: MintTronMultipleNft, provider?: string) => {
+        if (body.signatureId) {
+          return NftErc721OrCompatibleService.nftMintMultipleErc721(body as MintMultipleNftKMSTron)
+        } else {
+          return TronService.tronBroadcast({
+            txData: await prepareMintMultipleSignedTransaction(body, args.tronWeb, provider),
+          })
+        }
+      },
       /**
        * Send Tron update cashback for author trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -551,13 +549,19 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        * @returns transaction id of the transaction in the blockchain
        */
       updateCashbackValueForAuthorSignedTransaction: async (
-        body: UpdateCashbackValueForAuthorNftTron | UpdateCashbackValueForAuthorNftKMSTron,
+        body: UpdateTronCashbackValues,
         provider?: string,
-      ) =>
-        TronService.tronBroadcast({
-          txData: await prepareUpdateCashbackValueForAuthorSignedTransaction(body, args.tronWeb, provider),
-          // TODO: SignatureID is missing in OpenApi
-        }),
+      ) => {
+        if (body.signatureId) {
+          return NftErc721OrCompatibleService.nftUpdateCashbackErc721(
+            body as UpdateCashbackValueForAuthorNftKMSTron,
+          )
+        } else {
+          return TronService.tronBroadcast({
+            txData: await prepareUpdateCashbackValueForAuthorSignedTransaction(body, args.tronWeb, provider),
+          })
+        }
+      },
     },
   }
 }

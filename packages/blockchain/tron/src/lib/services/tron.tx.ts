@@ -1,38 +1,32 @@
 import {
+  ApiServices,
   CallSmartContractMethod,
-  CallSmartContractMethodKMS,
-  Currency,
   FreezeTron,
   FreezeTronKMS,
   GenerateCustodialWalletTron,
   GenerateCustodialWalletTronKMS,
-  GenerateMarketplaceTron,
-  GenerateMarketplaceTronKMS,
   TransferTronBlockchain,
   TransferTronBlockchainKMS,
   TronService,
 } from '@tatumio/api-client'
-import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
-import {
-  evmBasedGasPump,
-  GasPumpChain,
-  indexesFromRange,
-  ListingSmartContract,
-} from '@tatumio/shared-blockchain-evm-based'
+import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
+import { evmBasedGasPump, indexesFromRange } from '@tatumio/shared-blockchain-evm-based'
 import { tronTrc10 } from './tron.trc10'
 import { tronTrc20 } from './tron.trc20'
 import { tronTrc721 } from './tron.trc721'
 import { ITronWeb } from './tron.web'
 
-const prepareSignedTransaction = async (
-  body: TransferTronBlockchain | TransferTronBlockchainKMS,
-  tronWeb: ITronWeb,
-  provider?: string,
-) => {
+export type CallSmartContract = FromPrivateKeyOrSignatureIdTron<CallSmartContractMethod>
+export type TronGenerateCustodialWallet = FromPrivateKeyOrSignatureIdTron<GenerateCustodialWalletTron>
+type TronTransfer = FromPrivateKeyOrSignatureIdTron<TransferTronBlockchain>
+type TronFreeze = FromPrivateKeyOrSignatureIdTron<FreezeTron>
+
+// TODO: do a balance check before sending tx - https://app.clickup.com/t/24443045/TT-3496
+const prepareSignedTransaction = async (body: TronTransfer, tronWeb: ITronWeb, provider?: string) => {
   const { to, amount } = body
   const client = tronWeb.getClient(provider)
 
-  if (isWithSignatureId(body)) {
+  if (body.signatureId) {
     const tx = await client.transactionBuilder.sendTrx(to, client.toSun(amount), body.from)
 
     return JSON.stringify(tx)
@@ -47,15 +41,11 @@ const prepareSignedTransaction = async (
   }
 }
 
-const prepareFreezeTransaction = async (
-  body: FreezeTron | FreezeTronKMS,
-  tronWeb: ITronWeb,
-  provider?: string,
-) => {
+const prepareFreezeTransaction = async (body: TronFreeze, tronWeb: ITronWeb, provider?: string) => {
   const { receiver, amount, resource, duration } = body
   const client = tronWeb.getClient(provider)
 
-  if (isWithSignatureId(body)) {
+  if (body.signatureId) {
     const tx = await client.transactionBuilder.freezeBalance(
       client.toSun(parseFloat(amount)),
       duration,
@@ -78,14 +68,8 @@ const prepareFreezeTransaction = async (
   }
 }
 
-function isCallSmartContractMethodKMS(
-  input: CallSmartContractMethod | CallSmartContractMethodKMS,
-): input is CallSmartContractMethodKMS {
-  return (input as CallSmartContractMethodKMS).signatureId !== undefined
-}
-
 const prepareSmartContractInvocation = async (
-  body: CallSmartContractMethod | CallSmartContractMethodKMS,
+  body: CallSmartContract,
   tronWeb: ITronWeb,
   provider?: string,
 ) => {
@@ -95,8 +79,8 @@ const prepareSmartContractInvocation = async (
   client.setAddress(contractAddress)
 
   const contractAddressHex = client.address.toHex(contractAddress)
-  const sender = isCallSmartContractMethodKMS(body)
-    ? body.signatureId
+  const sender = body.signatureId
+    ? body?.account || body?.from
     : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
 
   const { transaction } = await client.transactionBuilder.triggerSmartContract(
@@ -111,7 +95,7 @@ const prepareSmartContractInvocation = async (
     sender,
   )
 
-  if (isCallSmartContractMethodKMS(body)) {
+  if (body.signatureId) {
     return JSON.stringify(transaction)
   }
 
@@ -156,7 +140,7 @@ const prepareGasPumpBatch = async (body: any, tronWeb: ITronWeb, provider?: stri
 }
 
 const prepareCustodialTransferBatch = async (
-  body: CallSmartContractMethod | CallSmartContractMethodKMS,
+  body: CallSmartContract,
   tronWeb: ITronWeb,
   provider?: string,
 ) => {
@@ -166,8 +150,8 @@ const prepareCustodialTransferBatch = async (
   client.setAddress(contractAddress)
 
   const contractAddressHex = client.address.toHex(contractAddress)
-  const sender = isCallSmartContractMethodKMS(body)
-    ? body.signatureId
+  const sender = body.signatureId
+    ? body?.from || body?.account
     : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
   const methodName = 'transferBatch(address[],uint256[],address[],uint256[],uint256[])'
 
@@ -188,7 +172,7 @@ const prepareCustodialTransferBatch = async (
     sender,
   )
 
-  if (isCallSmartContractMethodKMS(body)) {
+  if (body.signatureId) {
     return JSON.stringify(transaction)
   }
 
@@ -196,7 +180,7 @@ const prepareCustodialTransferBatch = async (
 }
 
 const prepareGenerateCustodialWalletSignedTransaction = async (
-  body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
+  body: TronGenerateCustodialWallet,
   tronWeb: ITronWeb,
   provider?: string,
 ) => {
@@ -205,7 +189,7 @@ const prepareGenerateCustodialWalletSignedTransaction = async (
   // TODO: implement obtainCustodialAddressType
   const { abi, code } = {} as any
 
-  const sender = isWithSignatureId(body) ? body.from : client.address.fromPrivateKey(body.fromPrivateKey)
+  const sender = body.signatureId ? body.from : client.address.fromPrivateKey(body.fromPrivateKey)
 
   const tx = await client.transactionBuilder.createSmartContract(
     {
@@ -221,37 +205,7 @@ const prepareGenerateCustodialWalletSignedTransaction = async (
     sender,
   )
 
-  if (isWithSignatureId(body)) {
-    return JSON.stringify(tx)
-  }
-
-  return JSON.stringify(await client.trx.sign(tx, body.fromPrivateKey))
-}
-
-const prepareDeployMarketplaceListingSignedTransaction = async (
-  body: GenerateMarketplaceTron | GenerateMarketplaceTronKMS,
-  tronWeb: ITronWeb,
-  provider?: string,
-) => {
-  const client = tronWeb.getClient(provider)
-
-  const sender = isWithSignatureId(body) ? body.from : client.address.fromPrivateKey(body.fromPrivateKey)
-
-  const tx = await client.transactionBuilder.createSmartContract(
-    {
-      feeLimit: client.toSun(body.feeLimit || 300),
-      callValue: 0,
-      userFeePercentage: 100,
-      originEnergyLimit: 1,
-      abi: JSON.stringify(ListingSmartContract.abi),
-      bytecode: ListingSmartContract.bytecode,
-      parameters: [body.marketplaceFee, body.feeRecipient],
-      name: 'CustodialWallet',
-    },
-    sender,
-  )
-
-  if (isWithSignatureId(body)) {
+  if (body.signatureId) {
     return JSON.stringify(tx)
   }
 
@@ -271,17 +225,15 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
          * @param provider
          * @returns transaction data to be broadcast to blockchain.
          */
-        signedTransaction: async (
-          body: TransferTronBlockchain | TransferTronBlockchainKMS,
-          provider?: string,
-        ) => prepareSignedTransaction(body, args.tronWeb, provider),
+        signedTransaction: async (body: TronTransfer, provider?: string) =>
+          prepareSignedTransaction(body, args.tronWeb, provider),
         /**
          * Sign Tron Freeze balance transaction with private keys locally. Nothing is broadcast to the blockchain.
          * @param body content of the transaction to broadcast
          * @param provider optional provider to enter. if not present, Tatum provider will be used.
          * @returns transaction data to be broadcast to blockchain.
          */
-        freezeTransaction: async (body: FreezeTron | FreezeTronKMS, provider?: string) =>
+        freezeTransaction: async (body: TronFreeze, provider?: string) =>
           prepareFreezeTransaction(body, args.tronWeb, provider),
       },
       send: {
@@ -291,25 +243,30 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
          * @param body content of the transaction to broadcast
          * @returns transaction id of the transaction in the blockchain
          */
-        signedTransaction: async (
-          body: TransferTronBlockchain | TransferTronBlockchainKMS,
-          provider?: string,
-        ) =>
-          TronService.tronBroadcast({
-            txData: await prepareSignedTransaction(body, args.tronWeb, provider),
-            // TODO: SignatureID is missing in OpenApi
-          }),
+        signedTransaction: async (body: TronTransfer, provider?: string) => {
+          if (body.signatureId) {
+            return ApiServices.blockchain.tron.tronTransfer(body as TransferTronBlockchainKMS)
+          } else {
+            return TronService.tronBroadcast({
+              txData: await prepareSignedTransaction(body, args.tronWeb, provider),
+            })
+          }
+        },
         /**
          * Send Tron Freeze balance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
          * This operation is irreversible.
          * @param body content of the transaction to broadcast
          * @returns transaction id of the transaction in the blockchain
          */
-        freezeTransaction: async (body: FreezeTron | FreezeTronKMS, provider?: string) =>
-          TronService.tronBroadcast({
-            txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
-            // TODO: SignatureID is missing in OpenApi
-          }),
+        freezeTransaction: async (body: TronFreeze, provider?: string) => {
+          if (body.signatureId) {
+            return ApiServices.blockchain.tron.tronFreeze(body as FreezeTronKMS)
+          } else {
+            return TronService.tronBroadcast({
+              txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
+            })
+          }
+        },
       },
     },
     smartContract: {
@@ -320,10 +277,8 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
          * @param provider
          * @returns transaction data to be broadcast to blockchain.
          */
-        smartContractInvocation: async (
-          body: CallSmartContractMethod | CallSmartContractMethodKMS,
-          provider?: string,
-        ) => prepareSmartContractInvocation(body, args.tronWeb, provider),
+        smartContractInvocation: async (body: CallSmartContract, provider?: string) =>
+          prepareSmartContractInvocation(body, args.tronWeb, provider),
       },
     },
     custodial: {
@@ -334,10 +289,8 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
          * @param provider
          * @returns transaction data to be broadcast to blockchain.
          */
-        custodialTransferBatch: async (
-          body: CallSmartContractMethod | CallSmartContractMethodKMS,
-          provider?: string,
-        ) => prepareCustodialTransferBatch(body, args.tronWeb, provider),
+        custodialTransferBatch: async (body: CallSmartContract, provider?: string) =>
+          prepareCustodialTransferBatch(body, args.tronWeb, provider),
         /**
          * Sign Tron generate custodial wallet transaction with private keys locally. Nothing is broadcast to the blockchain.
          * @param body content of the transaction to broadcast
@@ -345,7 +298,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
          * @returns transaction data to be broadcast to blockchain.
          */
         generateCustodialWalletSignedTransaction: async (
-          body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
+          body: TronGenerateCustodialWallet,
           provider?: string,
         ) => prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
       },
@@ -357,51 +310,23 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
          * @returns transaction id of the transaction in the blockchain
          */
         generateCustodialWalletSignedTransaction: async (
-          body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
+          body: TronGenerateCustodialWallet,
           provider?: string,
-        ) =>
-          TronService.tronBroadcast({
-            txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
-            // TODO: SignatureID is missing in OpenApi
-          }),
+        ) => {
+          if (body.signatureId) {
+            return ApiServices.custodial.custodialCreateWallet(body as GenerateCustodialWalletTronKMS)
+          } else {
+            return TronService.tronBroadcast({
+              txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
+            })
+          }
+        },
       },
     },
     gasPump: {
       prepare: {
         prepareGasPumpBatch: async (testnet: boolean, body: any, provider?: string) =>
           prepareGasPumpBatch(body, args.tronWeb, provider, testnet),
-      },
-    },
-    marketplace: {
-      prepare: {
-        /**
-         * Sign TRON deploy new smart contract for NFT marketplace transaction. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
-         * @param body request data
-         * @param provider optional provider to enter. if not present, Tatum provider will be used.
-         * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
-         */
-        deployMarketplaceListingSignedTransaction: async (
-          body: GenerateMarketplaceTron | GenerateMarketplaceTronKMS,
-          tronWeb: ITronWeb,
-          provider?: string,
-        ) => prepareDeployMarketplaceListingSignedTransaction(body, args.tronWeb, provider),
-      },
-      send: {
-        /**
-         * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
-         * @param body request data
-         * @param provider optional provider to enter. if not present, Tatum provider will be used.
-         * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
-         */
-        deployMarketplaceListingSignedTransaction: async (
-          body: GenerateMarketplaceTron | GenerateMarketplaceTronKMS,
-          tronWeb: ITronWeb,
-          provider?: string,
-        ) =>
-          TronService.tronBroadcast({
-            txData: await prepareDeployMarketplaceListingSignedTransaction(body, args.tronWeb, provider),
-            // TODO: SignatureID is missing in OpenApi
-          }),
       },
     },
   }
