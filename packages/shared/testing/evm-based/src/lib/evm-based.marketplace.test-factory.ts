@@ -41,7 +41,7 @@ export const marketplaceTestFactory = {
             chain,
             fee: {
               gasLimit: '1000000',
-              gasPrice: '20',
+              gasPrice: '1',
             },
             feeRecipient: accounts[0].address,
             marketplaceFee: 150,
@@ -286,9 +286,9 @@ export const marketplaceTestFactory = {
           nonce: 1,
           fee: {
             gasLimit: '40000',
-            gasPrice: '2',
+            gasPrice: '1',
           },
-          amount: '0.01',
+          amount: '0.001',
         })
 
         expectHexString(tx)
