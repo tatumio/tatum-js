@@ -21,6 +21,8 @@ export enum TrcType {
   TRC20 = 'TRC20',
 }
 
+const TRON_BASED_CURRENCIES = [Currency.USDT_TRON.toString(), Currency.INRT_TRON.toString()]
+
 type TransferVirtualAccountTron = FromPrivateKeyOrSignatureIdOrMnemonic<TransferTron>
 type VirtualAccountResponse = { id?: string; txId?: string; completed?: boolean } | void
 
@@ -54,7 +56,7 @@ const sendTronVirtualAccountTransaction = async (
       fromPrivateKey: fromPrivKey,
       to: address,
     })
-  } else if (account.currency === Currency.USDT_TRON || account.currency === Currency.INRT_TRON) {
+  } else if (TRON_BASED_CURRENCIES.includes(account.currency)) {
     txData = await txService.trc20.prepare.signedTransaction({
       amount,
       fromPrivateKey: fromPrivKey,
