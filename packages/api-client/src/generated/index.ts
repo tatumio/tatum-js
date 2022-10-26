@@ -669,6 +669,8 @@ export type { MintNftSolana } from './models/MintNftSolana';
 export type { MintNftSolanaKMS } from './models/MintNftSolanaKMS';
 export type { MintNftTron } from './models/MintNftTron';
 export type { MultiTx } from './models/MultiTx';
+export type { NftGetBalanceSc } from './models/NftGetBalanceSc';
+export type { NftGetBalanceScAlgo } from './models/NftGetBalanceScAlgo';
 export type { NftTx } from './models/NftTx';
 export type { Object } from './models/Object';
 export type { OffchainAddresses } from './models/OffchainAddresses';

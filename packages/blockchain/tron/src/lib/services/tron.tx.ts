@@ -5,15 +5,12 @@ import {
   FreezeTronKMS,
   GenerateCustodialWalletTron,
   GenerateCustodialWalletTronKMS,
-  GenerateMarketplaceTron,
-  GenerateMarketplaceTronKMS,
   TransferTronBlockchain,
   TransferTronBlockchainKMS,
   TronService,
 } from '@tatumio/api-client'
 import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
-import { evmBasedGasPump, indexesFromRange, ListingSmartContract } from '@tatumio/shared-blockchain-evm-based'
-import { TatumTronSDK } from '../tron.sdk'
+import { evmBasedGasPump, indexesFromRange } from '@tatumio/shared-blockchain-evm-based'
 import { tronTrc10 } from './tron.trc10'
 import { tronTrc20 } from './tron.trc20'
 import { tronTrc721 } from './tron.trc721'
@@ -21,7 +18,6 @@ import { ITronWeb } from './tron.web'
 
 export type CallSmartContract = FromPrivateKeyOrSignatureIdTron<CallSmartContractMethod>
 export type TronGenerateCustodialWallet = FromPrivateKeyOrSignatureIdTron<GenerateCustodialWalletTron>
-export type TronGenerateMarketplace = FromPrivateKeyOrSignatureIdTron<GenerateMarketplaceTron>
 type TronTransfer = FromPrivateKeyOrSignatureIdTron<TransferTronBlockchain>
 type TronFreeze = FromPrivateKeyOrSignatureIdTron<FreezeTron>
 
@@ -215,36 +211,6 @@ const prepareGenerateCustodialWalletSignedTransaction = async (
   return JSON.stringify(await client.trx.sign(tx, body.fromPrivateKey))
 }
 
-const prepareDeployMarketplaceListingSignedTransaction = async (
-  body: TronGenerateMarketplace,
-  tronWeb: ITronWeb,
-  provider?: string,
-) => {
-  const client = tronWeb.getClient(provider)
-
-  const sender = body.signatureId ? body.from : client.address.fromPrivateKey(body.fromPrivateKey)
-
-  const tx = await client.transactionBuilder.createSmartContract(
-    {
-      feeLimit: client.toSun(body.feeLimit || 300),
-      callValue: 0,
-      userFeePercentage: 100,
-      originEnergyLimit: 1,
-      abi: JSON.stringify(ListingSmartContract.abi),
-      bytecode: ListingSmartContract.bytecode,
-      parameters: [body.marketplaceFee, body.feeRecipient],
-      name: 'CustodialWallet',
-    },
-    sender,
-  )
-
-  if (body.signatureId) {
-    return JSON.stringify(tx)
-  }
-
-  return JSON.stringify(await client.trx.sign(tx, body.fromPrivateKey))
-}
-
 export const tronTx = (args: { tronWeb: ITronWeb }) => {
   return {
     trc10: tronTrc10(args),
@@ -360,42 +326,6 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
       prepare: {
         prepareGasPumpBatch: async (testnet: boolean, body: any, provider?: string) =>
           prepareGasPumpBatch(body, args.tronWeb, provider, testnet),
-      },
-    },
-    marketplace: {
-      prepare: {
-        /**
-         * Sign TRON deploy new smart contract for NFT marketplace transaction. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
-         * @param body request data
-         * @param provider optional provider to enter. if not present, Tatum provider will be used.
-         * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
-         */
-        deployMarketplaceListingSignedTransaction: async (
-          body: TronGenerateMarketplace,
-          tronWeb: ITronWeb,
-          provider?: string,
-        ) => prepareDeployMarketplaceListingSignedTransaction(body, args.tronWeb, provider),
-      },
-      send: {
-        /**
-         * Deploy new smart contract for NFT marketplace logic. Smart contract enables marketplace operator to create new listing for NFT (ERC-721/1155).
-         * @param body request data
-         * @param provider optional provider to enter. if not present, Tatum provider will be used.
-         * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
-         */
-        deployMarketplaceListingSignedTransaction: async (
-          body: TronGenerateMarketplace,
-          tronWeb: ITronWeb,
-          provider?: string,
-        ) => {
-          if (body.signatureId) {
-            return ApiServices.marketplace.generateMarketplace(body as GenerateMarketplaceTronKMS)
-          } else {
-            return TronService.tronBroadcast({
-              txData: await prepareDeployMarketplaceListingSignedTransaction(body, args.tronWeb, provider),
-            })
-          }
-        },
       },
     },
   }

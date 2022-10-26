@@ -4,40 +4,40 @@
 
 export type MintNftAlgorand = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'ALGO';
     /**
-     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
      */
     url: string;
     /**
-     * Name of the NFT.
+     * The name of the NFT
      */
     name: string;
     /**
-     * Private key of minting address.
+     * The private key of the minting account; the transaction fee will be paid from this account
      */
     fromPrivateKey: string;
     attr?: {
         /**
-         * NFT unit name.
+         * The unit name of the NFT
          */
         assetUnit?: string;
         /**
-         * Address of clawback account.
+         * The address of the clawback account that can claw back holdings of the NFT
          */
         clawback?: string;
         /**
-         * Address of manager account.
+         * The address of the manager account that can manage the configuration of the NFT or burn it; specify this parameter if you want to be able to <a href="#operation/NftBurnErc721">burn the minted NFT</a> any time later
          */
         manager?: string;
         /**
-         * Address of reserve account.
+         * The address of the reserve account that holds the reserve (non-minted) units of the NFT
          */
         reserve?: string;
         /**
-         * Address of freeze account.
+         * The address of the freeze account that is used to freeze holdings of the NFT
          */
         freeze?: string;
     };

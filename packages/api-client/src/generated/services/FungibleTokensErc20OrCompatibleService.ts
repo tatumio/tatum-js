@@ -303,7 +303,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * @param tokenAddress Address of the token smart contract
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
-     * @param from Transactions from this block onwords will be included.
+     * @param from Transactions from this block onwards will be included.
      * @param to Transactions up to this block will be included.
      * @param sort Sorting of the data. ASC - oldest first, DESC - newest first.
      * @returns FungibleTx OK
