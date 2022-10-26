@@ -175,19 +175,39 @@ describe('BscSDK - tx', () => {
   describe('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
-        multiTokenTestFactory.prepare.deployMultiTokenTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(
+          bscTx.multiToken,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('mintMultiToken', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(
+          bscTx.multiToken,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('mintMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
+          bscTx.multiToken,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('transferMultiToken', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(
+          bscTx.multiToken,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('transferMultiTokenBatch', () => {
@@ -195,15 +215,26 @@ describe('BscSDK - tx', () => {
           bscTx.multiToken,
           TEST_DATA.BSC,
           'BSC',
+          inmemoryBlockchain.accounts,
         )
       })
 
       describe('burnMultiToken', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(
+          bscTx.multiToken,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('burnMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(bscTx.multiToken, TEST_DATA.BSC, 'BSC')
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
+          bscTx.multiToken,
+          TEST_DATA.BSC,
+          'BSC',
+          inmemoryBlockchain.accounts,
+        )
       })
     })
   })
@@ -214,6 +245,7 @@ describe('BscSDK - tx', () => {
         smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
           sdk.smartContract,
           TEST_DATA.BSC,
+          inmemoryBlockchain.accounts,
         )
       })
     })

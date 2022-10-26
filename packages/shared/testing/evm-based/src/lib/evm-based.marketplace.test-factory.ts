@@ -9,7 +9,7 @@ export const marketplaceTestFactory = {
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
-      accounts: GanacheAccount[],
+      accounts?: GanacheAccount[],
     ) => {
       jest.setTimeout(99999)
       const nonce = 3252345722143
@@ -58,7 +58,7 @@ export const marketplaceTestFactory = {
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
-      accounts: GanacheAccount[],
+      accounts?: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER
 
@@ -111,7 +111,7 @@ export const marketplaceTestFactory = {
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
-      accounts: GanacheAccount[],
+      accounts?: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER
 
@@ -160,7 +160,7 @@ export const marketplaceTestFactory = {
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
-      accounts: GanacheAccount[],
+      accounts?: GanacheAccount[],
     ) => {
       jest.setTimeout(99999)
       const nonce = 3252345722143
@@ -233,7 +233,7 @@ export const marketplaceTestFactory = {
       sdk: SdkWithMarketplaceFunctions,
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY',
-      accounts: GanacheAccount[],
+      accounts?: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER
 
@@ -264,8 +264,8 @@ export const marketplaceTestFactory = {
               gasLimit: '1000000',
               gasPrice: '20',
             },
-            fromPrivateKey: accounts[0].privateKey,
-            contractAddress: '0xd093bEd4BC06403bfEABB54667B42C48533D3Fd9',
+            fromPrivateKey: testData.TESTNET.PRIVATE_KEY_0,
+            contractAddress: testData.TESTNET.CONTRACT_ADDRESS,
             listingId: '1',
           },
           provider,
@@ -286,9 +286,9 @@ export const marketplaceTestFactory = {
           nonce: 1,
           fee: {
             gasLimit: '40000',
-            gasPrice: '20',
+            gasPrice: '2',
           },
-          amount: '10000',
+          amount: '0.01',
         })
 
         expectHexString(tx)

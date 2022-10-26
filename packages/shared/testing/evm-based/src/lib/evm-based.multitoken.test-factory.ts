@@ -1,5 +1,6 @@
 import { SdkWithMultiTokenFunctions } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
+import { GanacheAccount } from './ganacheHelper'
 
 type Chains = 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY'
 export const multiTokenTestFactory = {
@@ -8,6 +9,7 @@ export const multiTokenTestFactory = {
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
       chain: Chains,
+      addresses?: GanacheAccount[],
     ) => {
       const privateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
       const provider = testData.TESTNET?.PROVIDER
@@ -34,7 +36,7 @@ export const multiTokenTestFactory = {
         const result = await sdk.prepare.deployMultiTokenTransaction(
           {
             chain,
-            fromPrivateKey: privateKey,
+            fromPrivateKey: addresses ? addresses[0].privateKey : privateKey,
             uri: 'https://example.com',
             fee: {
               gasLimit: '259348',
@@ -52,8 +54,9 @@ export const multiTokenTestFactory = {
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
       chain: Chains,
+      accounts?: GanacheAccount[],
     ) => {
-      const contractAddress = testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
+      const contractAddress = accounts ? accounts[0].address : testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
       const privateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
       const provider = testData.TESTNET?.PROVIDER
       it('valid from signatureId', async () => {
@@ -87,9 +90,9 @@ export const multiTokenTestFactory = {
             to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
             contractAddress,
             amount: '1',
-            fromPrivateKey: privateKey,
+            fromPrivateKey: accounts ? accounts[0].privateKey : privateKey,
             fee: {
-              gasLimit: '259348',
+              gasLimit: '299348',
               gasPrice: '2',
             },
           },
@@ -127,8 +130,9 @@ export const multiTokenTestFactory = {
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
       chain: Chains,
+      accounts?: GanacheAccount[],
     ) => {
-      const contractAddress = testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
+      const contractAddress = accounts ? accounts[0].address : testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
       const privateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
       const provider = testData.TESTNET?.PROVIDER
       it('valid from signatureId', async () => {
@@ -161,7 +165,7 @@ export const multiTokenTestFactory = {
             tokenId: ['123456', '12345644'],
             to: '0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342',
             contractAddress,
-            fromPrivateKey: privateKey,
+            fromPrivateKey: accounts ? accounts[0].privateKey : privateKey,
             amounts: ['5', '5'],
             fee: {
               gasLimit: '259348',
@@ -202,6 +206,7 @@ export const multiTokenTestFactory = {
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
       chain: Chains,
+      accounts?: GanacheAccount[],
     ) => {
       const contractAddress = testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
       const privateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
@@ -236,7 +241,7 @@ export const multiTokenTestFactory = {
             tokenId: '123456',
             to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
             contractAddress: contractAddress,
-            fromPrivateKey: privateKey,
+            fromPrivateKey: accounts ? accounts[0].privateKey : privateKey,
             amount: '1',
             fee: {
               gasLimit: '259348',
@@ -277,6 +282,7 @@ export const multiTokenTestFactory = {
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
       chain: Chains,
+      accounts?: GanacheAccount[],
     ) => {
       const contractAddress = testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
       const privateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
@@ -311,7 +317,7 @@ export const multiTokenTestFactory = {
             tokenId: [['123456'], ['12345644']],
             to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
             contractAddress: contractAddress,
-            fromPrivateKey: privateKey,
+            fromPrivateKey: accounts ? accounts[0].privateKey : privateKey,
             amounts: [['10'], ['10']],
             fee: {
               gasLimit: '259348',
@@ -352,8 +358,9 @@ export const multiTokenTestFactory = {
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
       chain: Chains,
+      accounts?: GanacheAccount[],
     ) => {
-      const contractAddress = testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
+      const contractAddress = accounts ? accounts[0].address : testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
       const privateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
       const account = testData.TESTNET?.MULTITOKEN?.ADDRESS
       const provider = testData.TESTNET?.PROVIDER
@@ -387,7 +394,7 @@ export const multiTokenTestFactory = {
             tokenId: new Date().getTime().toString(),
             account,
             contractAddress: contractAddress,
-            fromPrivateKey: privateKey,
+            fromPrivateKey: accounts ? accounts[0].privateKey : privateKey,
             amount: '2',
             fee: {
               gasLimit: '259348',
@@ -405,8 +412,9 @@ export const multiTokenTestFactory = {
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
       chain: Chains,
+      accounts?: GanacheAccount[],
     ) => {
-      const contractAddress = testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
+      const contractAddress = accounts ? accounts[0].address : testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
       const privateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
       const provider = testData.TESTNET?.PROVIDER
       const account = testData.TESTNET?.MULTITOKEN.ADDRESS
@@ -444,7 +452,7 @@ export const multiTokenTestFactory = {
             chain,
             tokenId: [token1.toString(), token2.toString()],
             contractAddress,
-            fromPrivateKey: privateKey,
+            fromPrivateKey: accounts ? accounts[0].privateKey : privateKey,
             amounts: ['2', '2'],
             account,
             fee: {

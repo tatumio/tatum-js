@@ -22,7 +22,7 @@ export const auctionTestFactory = {
           nonce: 1,
           fee: {
             gasLimit: '300000',
-            gasPrice: '10000',
+            gasPrice: '1',
           },
         })
 

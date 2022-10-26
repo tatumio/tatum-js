@@ -1,5 +1,6 @@
 import { SdkWithErc721Functions } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
+import { GanacheAccount } from './ganacheHelper'
 
 export const erc721TestFactory = {
   prepare: {
@@ -353,8 +354,10 @@ export const erc721TestFactory = {
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
+      accounts?: GanacheAccount[],
+      inMemoryProvider?: string,
     ) => {
-      const provider = testData?.PROVIDER
+      const provider = inMemoryProvider ? inMemoryProvider : testData?.PROVIDER
       const address = testData.TESTNET.ERC_721?.ADDRESS
         ? testData.TESTNET.ERC_721?.ADDRESS
         : '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'
@@ -363,8 +366,8 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintProvenanceSignedTransaction(
           {
             to: address,
-            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: accounts ? accounts[0].address : testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: accounts ? accounts[0].privateKey : testData.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: new Date().getTime().toString(),
             url: 'https://my_token_data.com',
             chain,
@@ -512,6 +515,7 @@ export const erc721TestFactory = {
       sdk: SdkWithErc721Functions,
       testData: BlockchainTestData,
       chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY',
+      accounts?: GanacheAccount[],
     ) => {
       const provider = testData?.PROVIDER
       const address = testData.TESTNET.ERC_721?.ADDRESS
@@ -522,8 +526,8 @@ export const erc721TestFactory = {
         const result = await sdk.prepare.mintMultipleProvenanceSignedTransaction(
           {
             to: [address, address],
-            contractAddress: testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
-            fromPrivateKey: testData.TESTNET.ERC_721!.PRIVATE_KEY,
+            contractAddress: accounts ? accounts[0].address : testData.TESTNET.ERC_721!.CONTRACT_ADDRESS,
+            fromPrivateKey: accounts ? accounts[0].privateKey : testData.TESTNET.ERC_721!.PRIVATE_KEY,
             tokenId: [new Date().getTime().toString(), new Date().getTime().toString()],
             url: ['https://my_token_data.com', 'https://my_token_data.com'],
             chain,

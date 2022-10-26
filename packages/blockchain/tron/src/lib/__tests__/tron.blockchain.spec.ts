@@ -6,6 +6,7 @@ import {
 } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { TatumTronSDK } from '../tron.sdk'
+import { BlockchainUtilsService } from '@tatumio/api-client'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
@@ -23,6 +24,7 @@ describe('TatumTronSDK - blockchain', () => {
 
   const blockchainFunctionsMapping: TestCasesApiCallMapping<typeof blockchain> = {
     broadcast: [api.tronBroadcast, { txData: 'hello' }],
+    smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, 'TRON', testData.TX_HASH],
     getBlock: [api.tronGetBlock, testData.BLOCK_HASH],
     getCurrentBlock: [api.tronGetCurrentBlock, undefined],
     getAccount: [api.tronGetAccount, testData.TESTNET.ADDRESS_0],
