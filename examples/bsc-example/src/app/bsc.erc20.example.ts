@@ -9,6 +9,9 @@ export async function bscErc20Example() {
   const address = bscSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
 
+  // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+  // You can fund your address here: https://testnet.binance.org/faucet-smart
+
   // deploy erc20 (fungible token) transaction
   const erc20Deployed = (await bscSDK.erc20.send.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
