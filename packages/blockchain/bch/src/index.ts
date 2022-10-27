@@ -6,5 +6,5 @@ export type BchApiCallsType = {
 
 export * from './lib/bch.sdk'
 export * from './lib/bch.sdk.wallet'
-export { BchTransactionTypes, bchTransactions } from './lib/services/bch.sdk.tx'
+export { bchTransactions } from './lib/services/bch.sdk.tx'
 export * from './lib/bch.wallet.utils'
