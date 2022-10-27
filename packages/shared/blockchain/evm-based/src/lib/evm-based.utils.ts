@@ -96,7 +96,7 @@ export const evmBasedUtils = {
       estimate = new BigNumber(await client.eth.estimateGas(txWithoutGas))
     } catch (e) {
       if (gas) estimate = new BigNumber(gas as string)
-      else throw new EvmBasedSdkError({ error: e as Error })
+      else throw new EvmBasedSdkError({ error: new Error(`Unable to estimate gas, reason ${e}`) })
     }
     let threshold = estimate.multipliedBy(new BigNumber(tx.gasPrice as string))
     if (tx.value) {
