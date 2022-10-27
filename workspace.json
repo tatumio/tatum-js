@@ -46,6 +46,7 @@
     "tron": "packages/blockchain/tron",
     "tron-example": "examples/tron-example",
     "xdc": "packages/blockchain/xdc",
+    "xdc-example": "examples/xdc-example",
     "xlm": "packages/blockchain/xlm",
     "xlm-example": "examples/xlm-example",
     "xrp": "packages/blockchain/xrp",
