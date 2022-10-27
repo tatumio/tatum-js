@@ -25,7 +25,7 @@ export async function bscBlockchainExample() {
   const block = await bscSDK.blockchain.getBlock(
     '0x30454a103e3a0c94fa715eff8f73fafc19928ab7c5b3056f5fa3d667a9fb3669',
   )
-  console.log(`Block: ${block}` )
+  console.log(`Block: ${block}`)
 
   // Get current block
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetCurrentBlock
