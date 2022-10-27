@@ -1,6 +1,7 @@
 import {
   ApiServices,
   CallSmartContractMethod,
+  Currency,
   FreezeTron,
   FreezeTronKMS,
   GenerateCustodialWalletTron,
@@ -9,6 +10,7 @@ import {
   TransferTronBlockchainKMS,
   TronService,
 } from '@tatumio/api-client'
+import { WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
 import { evmBasedGasPump, indexesFromRange } from '@tatumio/shared-blockchain-evm-based'
 import { tronTrc10 } from './tron.trc10'
@@ -17,7 +19,9 @@ import { tronTrc721 } from './tron.trc721'
 import { ITronWeb } from './tron.web'
 
 export type CallSmartContract = FromPrivateKeyOrSignatureIdTron<CallSmartContractMethod>
-export type TronGenerateCustodialWallet = FromPrivateKeyOrSignatureIdTron<GenerateCustodialWalletTron>
+export type TronGenerateCustodialWallet = WithoutChain<
+  FromPrivateKeyOrSignatureIdTron<GenerateCustodialWalletTron>
+> & { chain: Currency.TRON }
 type TronTransfer = FromPrivateKeyOrSignatureIdTron<TransferTronBlockchain>
 type TronFreeze = FromPrivateKeyOrSignatureIdTron<FreezeTron>
 

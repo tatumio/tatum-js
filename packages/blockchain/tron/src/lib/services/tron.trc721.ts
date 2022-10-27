@@ -13,18 +13,26 @@ import {
   UpdateCashbackValueForAuthorNftKMSTron,
   UpdateCashbackValueForAuthorNftTron,
   NftErc721OrCompatibleService,
+  Currency,
 } from '@tatumio/api-client'
+import { WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
 import { Trc721Token } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
 import { ITronWeb } from './tron.web'
 
-type DeployTronNft = FromPrivateKeyOrSignatureIdTron<DeployNftTron>
-type MintTronNft = FromPrivateKeyOrSignatureIdTron<MintNftTron>
-type TransferTronNft = FromPrivateKeyOrSignatureIdTron<TransferNftTron>
-type BurnTronNft = FromPrivateKeyOrSignatureIdTron<BurnNftTron>
-type MintTronMultipleNft = FromPrivateKeyOrSignatureIdTron<MintMultipleNftTron>
-type UpdateTronCashbackValues = FromPrivateKeyOrSignatureIdTron<UpdateCashbackValueForAuthorNftTron>
+type DeployTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<DeployNftTron>> & { chain: Currency.TRON }
+type MintTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<MintNftTron>> & { chain: Currency.TRON }
+type TransferTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<TransferNftTron>> & {
+  chain: Currency.TRON
+}
+type BurnTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<BurnNftTron>> & { chain: Currency.TRON }
+type MintTronMultipleNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<MintMultipleNftTron>> & {
+  chain: Currency.TRON
+}
+type UpdateTronCashbackValues = WithoutChain<
+  FromPrivateKeyOrSignatureIdTron<UpdateCashbackValueForAuthorNftTron>
+> & { chain: Currency.TRON }
 
 const prepareDeploySignedTransaction = async (body: DeployTronNft, tronWeb: ITronWeb, provider?: string) => {
   const client = tronWeb.getClient(provider)

@@ -1,4 +1,5 @@
 import {
+  Currency,
   GasPumpService,
   TransferCustodialWalletBatchTron,
   TransferCustodialWalletBatchTronKMS,
@@ -12,13 +13,18 @@ import { CustodialFullTokenWallet } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
 import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
 import { CallSmartContract, TronGenerateCustodialWallet } from './tron.tx'
+import { WithoutChain } from '@tatumio/shared-abstract-sdk'
 
 const NATIVE_ASSET_CONTRACT_TYPE = 3
 const NON_FUNGIBLE_TOKEN_CONTRACT_TYPE = 1
 const FUNGIBLE_TOKEN_CONTRACT_TYPE = 0
 
-type TronTransferCustodial = FromPrivateKeyOrSignatureIdTron<TransferCustodialWalletTron>
-type TronTransferBatchCustodial = FromPrivateKeyOrSignatureIdTron<TransferCustodialWalletBatchTron>
+type TronTransferCustodial = WithoutChain<FromPrivateKeyOrSignatureIdTron<TransferCustodialWalletTron>> & {
+  chain: Currency.TRON
+}
+type TronTransferBatchCustodial = WithoutChain<
+  FromPrivateKeyOrSignatureIdTron<TransferCustodialWalletBatchTron>
+> & { chain: Currency.TRON }
 
 const prepareTransferFromCustodialWallet = async (
   body: TronTransferCustodial,
