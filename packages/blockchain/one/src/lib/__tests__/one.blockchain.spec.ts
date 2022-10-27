@@ -24,7 +24,6 @@ describe('OneSDK - blockchain', () => {
 
   const blockchainFunctionsMapping: TestCasesApiCallMapping<typeof blockchain> = {
     broadcast: [api.oneBroadcast, { txData: 'hello' }],
-    smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, 'ONE', testData.TX_HASH],
     getTransactionsCount: [api.oneGetTransactionCount, testData.TESTNET.ADDRESS_0],
     getCurrentBlock: api.oneGetCurrentBlock,
     getBlock: [api.oneGetBlock, testData.BLOCK_HASH],

@@ -41,7 +41,7 @@ export const marketplaceTestFactory = {
             chain,
             fee: {
               gasLimit: '1000000',
-              gasPrice: '1',
+              gasPrice: '20',
             },
             feeRecipient: accounts[0].address,
             marketplaceFee: 150,
@@ -286,7 +286,7 @@ export const marketplaceTestFactory = {
           nonce: 1,
           fee: {
             gasLimit: '40000',
-            gasPrice: '1',
+            gasPrice: '2',
           },
           amount: '0.001',
         })
@@ -321,13 +321,13 @@ export const marketplaceTestFactory = {
             isErc721: true,
             tokenId: '100000',
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
-            fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+            fromPrivateKey: accounts[0].privateKey,
             nonce: 1,
             fee: {
               gasLimit: '40000',
               gasPrice: '20',
             },
-            amount: '10000',
+            amount: '0.001',
           }),
         ).rejects.toThrowErrorWithMessageThatIncludes(
           invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),

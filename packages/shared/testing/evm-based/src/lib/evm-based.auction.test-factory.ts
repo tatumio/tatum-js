@@ -102,12 +102,12 @@ export const auctionTestFactory = {
           sdk.prepare.auctionUpdateFeeRecipientSignedTransaction({
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-            fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+            fromPrivateKey: accounts[0].privateKey,
             fee: {
               gasLimit: '40000',
               gasPrice: '20',
             },
-            amount: '10000',
+            amount: '0.001',
           }),
         ).rejects.toThrowErrorWithMessageThatIncludes(
           invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
@@ -174,7 +174,7 @@ export const auctionTestFactory = {
             tokenId: '100000',
             endedAt: 100000,
             isErc721: true,
-            fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+            fromPrivateKey: accounts[0].privateKey,
             nonce: 1,
             fee: {
               gasLimit: '40000',
@@ -202,7 +202,7 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          amount: '1',
+          amount: '0.001',
         })
 
         expectHexString(tx)
@@ -235,13 +235,13 @@ export const auctionTestFactory = {
             isErc721: true,
             tokenId: '100000',
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
-            fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+            fromPrivateKey: accounts[0].privateKey,
             nonce: 1,
             fee: {
               gasLimit: '40000',
               gasPrice: '20',
             },
-            amount: '10000',
+            amount: '0.001',
           }),
         ).rejects.toThrowErrorWithMessageThatIncludes(
           invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
@@ -450,13 +450,13 @@ export const auctionTestFactory = {
           sdk.prepare.auctionSettleSignedTransaction({
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             id: 'string',
-            fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
+            fromPrivateKey: accounts[0].privateKey,
             nonce: 1,
             fee: {
               gasLimit: '40000',
               gasPrice: '20',
             },
-            amount: '10000',
+            amount: '0.001',
           }),
         ).rejects.toThrowErrorWithMessageThatIncludes(
           invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
