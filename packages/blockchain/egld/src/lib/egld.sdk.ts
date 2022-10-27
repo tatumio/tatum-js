@@ -16,7 +16,7 @@ export const TatumEgldSDK = (args: SDKArguments) => {
     record: egldRecord(),
     wallet: egldWallet(),
     transaction: egldTransactionService(),
-    offchain: egldOffchainService({ blockchain }),
+    virtualAccount: egldOffchainService({ blockchain }),
     kms: egldKmsService({ blockchain }),
     blockchain: {
       broadcast: ElrondService.egldBroadcast,

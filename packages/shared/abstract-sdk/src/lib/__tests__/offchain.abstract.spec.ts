@@ -1,5 +1,5 @@
 import * as apiClient from '@tatumio/api-client'
-import { abstractSdkOffChain } from '../services/offchain.abstract'
+import { abstractSdkVirtualAccount } from '../services/virtualAccount.abstract'
 import { commonTestFactory, TestCasesApiCallMapping, testHelper } from '@tatumio/shared-testing-common'
 
 jest.mock('@tatumio/api-client')
@@ -15,7 +15,7 @@ describe('SDK - offchain', () => {
   const address = 'some-address'
 
   describe('depositAddress', () => {
-    const depositAddress = abstractSdkOffChain().depositAddress
+    const depositAddress = abstractSdkVirtualAccount().depositAddress
 
     const api = mockedApi.offChain.account
 
@@ -39,13 +39,13 @@ describe('SDK - offchain', () => {
   it('storeTokenAddress', async () => {
     const name = 'some-name'
 
-    await abstractSdkOffChain().storeTokenAddress(address, name)
+    await abstractSdkVirtualAccount().storeTokenAddress(address, name)
 
     testHelper.expectMockCalled(mockedApi.offChain.blockchain.storeTokenAddress, [address, name])
   })
 
   describe('withdrawal', () => {
-    const withdrawal = abstractSdkOffChain().withdrawal
+    const withdrawal = abstractSdkVirtualAccount().withdrawal
 
     const api = mockedApi.offChain.withdrawal
 

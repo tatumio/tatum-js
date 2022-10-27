@@ -20,6 +20,10 @@ describe('EthSDK - tx', () => {
   const sdk = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
 
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   const ethTxService = ethTx({
     blockchain: blockchain,
     web3: {

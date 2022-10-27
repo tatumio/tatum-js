@@ -5,7 +5,7 @@ import { ethAuctionService } from '../services/eth.auction'
 const blockchain = Blockchain.ETH
 
 describe('EthSDK - auctions', () => {
-  const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
+  const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain, { defaultBalance: 1000 })
 
   const auctionService = ethAuctionService({
     blockchain,
@@ -20,6 +20,8 @@ describe('EthSDK - auctions', () => {
   describe('prepare', () => {
     beforeEach(async () => {
       await ganacheHelper.initWeb3(inmemoryBlockchain.web3)
+      const a = await inmemoryBlockchain.web3.eth.getBalance(inmemoryBlockchain.accounts[0].address)
+      console.log(a)
     })
 
     describe('deploy auction', () => {

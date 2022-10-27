@@ -8,7 +8,7 @@ import {
   WithdrawalService,
 } from '@tatumio/api-client'
 import {
-  abstractBlockchainOffchain,
+  abstractBlockchainVirtualAccount,
   FromPrivateKeyOrSignatureIdOrMnemonic,
 } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain, CONTRACT_ADDRESSES } from '@tatumio/shared-core'
@@ -111,7 +111,7 @@ const sendTronVirtualAccountTransaction = async (
 
 export const virtualAccountService = (args: { blockchain: Blockchain; tronWeb: ITronWeb }) => {
   return {
-    ...abstractBlockchainOffchain(args),
+    ...abstractBlockchainVirtualAccount(args),
     /**
      * Send Tron transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
      * This operation is irreversible.

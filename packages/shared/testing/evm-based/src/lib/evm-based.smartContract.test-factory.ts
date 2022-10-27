@@ -1,13 +1,15 @@
 import { SdkWithSmartContractFunctions } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainTestData } from '@tatumio/shared-testing-common'
+import { GanacheAccount } from './ganacheHelper'
 
 export const smartContractTestFactory = {
   prepare: {
     smartContractWriteMethodInvocationTransaction: (
       sdk: SdkWithSmartContractFunctions,
       testData: BlockchainTestData,
+      accounts?: GanacheAccount[],
     ) => {
-      const fromPrivateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
+      const fromPrivateKey = accounts ? accounts[0].privateKey : testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
       const provider = testData.TESTNET?.PROVIDER
       const contractAddress = testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
 
@@ -49,7 +51,7 @@ export const smartContractTestFactory = {
               '1',
             ],
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-            fee: { gasLimit: '100000', gasPrice: '3' },
+            fee: { gasLimit: '50000', gasPrice: '3' },
           },
           provider,
         )

@@ -4,7 +4,7 @@ import {
   WithdrawalService,
 } from '@tatumio/api-client'
 
-export const abstractSdkOffChain = () => {
+export const abstractSdkVirtualAccount = () => {
   return {
     depositAddress: {
       create: BlockchainAddressesService.generateDepositAddress,

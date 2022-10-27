@@ -20,7 +20,7 @@ export async function xlmVirtualAccountExample() {
 
   // we need to generate MEMO - which is a deposit address - for this virtual account
   // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
-  const depositAddress = await xlmSDK.virtualAcount.depositAddress.create(virtualAccount.id)
+  const depositAddress = await xlmSDK.virtualAccount.depositAddress.create(virtualAccount.id)
 
   console.log(JSON.stringify(depositAddress))
   // Result of the operation is combination of deposit address and MEMO
@@ -30,7 +30,7 @@ export async function xlmVirtualAccountExample() {
 
   // I wanna send assets from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/XlmTransfer
-  const result = await xlmSDK.virtualAcount.sendTransactionFromVirtualAccountToBlockchain(true, {
+  const result = await xlmSDK.virtualAccount.sendTransactionFromVirtualAccountToBlockchain(true, {
     fee: '0.00001',
     senderAccountId: virtualAccount.id,
     amount: '1',

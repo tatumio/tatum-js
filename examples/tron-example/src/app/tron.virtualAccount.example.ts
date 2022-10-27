@@ -20,7 +20,7 @@ export async function tronVirtualAccountExample() {
 
   // create deposit address for a virtual account
   // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
-  const depositAddress = await tronSDK.offchain.depositAddress.create(virtualAccount.id)
+  const depositAddress = await tronSDK.virtualAccount.depositAddress.create(virtualAccount.id)
 
   console.log(`Deposit address is ${depositAddress.address}`)
 

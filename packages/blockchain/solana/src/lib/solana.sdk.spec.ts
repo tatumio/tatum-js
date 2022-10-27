@@ -15,7 +15,7 @@ describe('TatumSolanaSDK', () => {
     const signatureId = TEST_DATA.SOLANA.SIGNATURE_ID
 
     describe('mint', () => {
-      it('should be valid from privateKey', async () => {
+      it.skip('should be valid from privateKey', async () => {
         const result = (await sdk.transaction.mintNft(
           {
             to,

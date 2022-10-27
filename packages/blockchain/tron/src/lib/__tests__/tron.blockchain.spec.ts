@@ -6,6 +6,7 @@ import {
 } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { TatumTronSDK } from '../tron.sdk'
+import { BlockchainUtilsService } from '@tatumio/api-client'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
