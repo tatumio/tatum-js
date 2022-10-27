@@ -116,15 +116,13 @@ const send = async (
 
   const balance = await connection.getBalance(from)
   if (new BigNumber(body.amount).isGreaterThan(balance)) {
-    throw new SdkError(
-      {
-        code: SdkErrorCode.INSUFFICIENT_FUNDS,
-        originalError: {
-          name: SdkErrorCode.INSUFFICIENT_FUNDS,
-          message: `Insufficient funds to create transaction from sender account ${from} -> available balance is ${balance}, required balance is ${body.amount}.`,
-        },
+    throw new SdkError({
+      code: SdkErrorCode.INSUFFICIENT_FUNDS,
+      originalError: {
+        name: SdkErrorCode.INSUFFICIENT_FUNDS,
+        message: `Insufficient funds to create transaction from sender account ${from} -> available balance is ${balance}, required balance is ${body.amount}.`,
       },
-    )
+    })
   }
 
   const transaction = new Transaction({ feePayer: feePayerKey })

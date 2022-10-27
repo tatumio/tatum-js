@@ -21,6 +21,8 @@ export async function solanaBlockchainExample() {
   console.log(transaction)
 
   // https://apidoc.tatum.io/tag/Solana#operation/SolanaGetBalance
-  const { balance } = await solanaSDK.blockchain.getAccountBalance('FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ')
+  const { balance } = await solanaSDK.blockchain.getAccountBalance(
+    'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+  )
   console.log(`Balance of the account FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ is : ${balance}`)
 }
