@@ -1,3 +1,4 @@
+import { TransactionHash } from '@tatumio/api-client'
 import { TatumBscSDK } from '@tatumio/bsc'
 
 const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
@@ -10,11 +11,15 @@ export const bscAuctionExample = async () => {
   const feeRecipient = bscSDK.wallet.generateAddressFromXPub(xpub, 0)
   const bidder = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  const txId = await bscSDK.marketplace.auction.prepare.deployAuctionSignedTransaction({
+  // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+  // You can fund your address here: https://testnet.binance.org/faucet-smart
+  const { txId } = (await bscSDK.marketplace.auction.send.deployAuctionSignedTransaction({
     auctionFee: 100,
     feeRecipient,
     fromPrivateKey,
-  })
+  })) as TransactionHash
+
+  console.log(`TransactionId: ${txId}`)
 
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetTransaction
   const transaction = await bscSDK.blockchain.get(txId)
