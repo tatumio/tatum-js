@@ -12,7 +12,7 @@ export async function bscSubscriptionsExample() {
     attr: {
       address,
       chain: 'BSC',
-      url: 'https://webhook.tatum.io/account',
+      url: 'https://dashboard.tatum.io/webhook-handler',
     },
   })
   console.log(`Subscription id: ${subscription.id}`)
