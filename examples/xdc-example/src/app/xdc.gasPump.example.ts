@@ -23,6 +23,7 @@ export async function xdcTxWithGasPumpExample(): Promise<void> {
     fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
     contractType: [0, 1, 2, 3],
     custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenId: ['0', '1', '0'],
     tokenAddress: [
       '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
       '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698',
