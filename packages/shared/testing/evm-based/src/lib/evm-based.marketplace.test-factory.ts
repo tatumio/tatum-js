@@ -41,7 +41,7 @@ export const marketplaceTestFactory = {
             chain,
             fee: {
               gasLimit: '1000000',
-              gasPrice: '20',
+              gasPrice: '2',
             },
             feeRecipient: accounts[0].address,
             marketplaceFee: 150,

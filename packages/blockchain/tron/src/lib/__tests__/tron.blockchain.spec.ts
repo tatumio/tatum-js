@@ -24,7 +24,6 @@ describe('TatumTronSDK - blockchain', () => {
 
   const blockchainFunctionsMapping: TestCasesApiCallMapping<typeof blockchain> = {
     broadcast: [api.tronBroadcast, { txData: 'hello' }],
-    smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, 'TRON', testData.TX_HASH],
     getBlock: [api.tronGetBlock, testData.BLOCK_HASH],
     getCurrentBlock: [api.tronGetCurrentBlock, undefined],
     getAccount: [api.tronGetAccount, testData.TESTNET.ADDRESS_0],
