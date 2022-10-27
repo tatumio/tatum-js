@@ -13,6 +13,6 @@ export async function solanaBalanceExample(): Promise<void> {
   // Fund the address on https://solfaucet.com/
 
   // Get balance of SOL
-  const balance = await solanaSDK.blockchain.getAccountBalance(address)
+  const { balance } = await solanaSDK.blockchain.getAccountBalance(address)
   console.log(`Balance of the account ${address} is : ${balance}`)
 }

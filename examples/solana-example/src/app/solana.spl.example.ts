@@ -23,7 +23,7 @@ export async function solanaSplTokenExample() {
   const { txId: transferTx } = (await solanaSDK.transaction.transferSplToken({
     digits: 6,
     chain: Currency.SOL,
-    to: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+    to: '2NeZDp7HD1BEZ1Hpgx8RYwVY5GneGruvkYzoBY5iGK3g',
     from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
     amount: '100',
     fromPrivateKey:

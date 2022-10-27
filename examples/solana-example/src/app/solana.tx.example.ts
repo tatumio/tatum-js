@@ -13,7 +13,7 @@ export async function solanaTxWithPrivateKeyExample(): Promise<void> {
     fromPrivateKey:
       'cb6ef9dc81967be3f9157a2dedf14d89fcf4b5fbb7cd2a9fcab7a600179d929cd840de2a454960308f688cd3ee308c1fa01ecfa0b03770aaaf3b52d71d46c31d',
     to: 'ET7gwtm6QZfjRQboBLjxZ4PSHDAH7y6AAiAJE8sPaWvv',
-    amount: '1',
+    amount: '0.0001',
   })) as TransactionHash
   console.log(`Transaction hash is ${txId}`)
 
@@ -25,7 +25,7 @@ export async function solanaTxWithPrivateKeyExample(): Promise<void> {
       fromPrivateKey:
         'cb6ef9dc81967be3f9157a2dedf14d89fcf4b5fbb7cd2a9fcab7a600179d929cd840de2a454960308f688cd3ee308c1fa01ecfa0b03770aaaf3b52d71d46c31d',
       to: 'ET7gwtm6QZfjRQboBLjxZ4PSHDAH7y6AAiAJE8sPaWvv',
-      amount: '1',
+      amount: '0.00001',
     },
     undefined,
     'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',

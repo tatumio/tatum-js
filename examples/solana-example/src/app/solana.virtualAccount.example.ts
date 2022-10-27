@@ -28,7 +28,7 @@ export async function solanaVirtualAccountExample() {
   // Let's fund our virtual account from faucet and list all incoming transactions
   // https://apidoc.tatum.io/tag/Transaction#operation/getTransactionsByAccountId
   // https://solfaucet.com/
-  const transactions = await solanaSdk.ledger.transaction.getAllByAccount({ id: account.id })
+  const transactions = await solanaSdk.ledger.transaction.getAllByAccount({ id: account.id }, 50)
   console.log(`My transactions are ${JSON.stringify(transactions)}`)
 
   // Lets send some SOL from virtual account to another blockchain address
