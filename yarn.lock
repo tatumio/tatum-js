@@ -1633,29 +1633,20 @@
   resolved "https://registry.yarnpkg.com/@leichtgewicht/ip-codec/-/ip-codec-2.0.4.tgz#b2ac626d6cb9c8718ab459166d4bb405b8ffa78b"
   integrity sha512-Hcv+nVC0kZnQ3tD9GVu5xSMR4VVYOteQIr/hwFPVEvPdlXqgGEuRjiheChHgdM+JyqdgNcmzZOX/tnl0JOiI7A==
 
-"@metaplex-foundation/beet-solana@^0.3.0":
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/@metaplex-foundation/beet-solana/-/beet-solana-0.3.1.tgz#4b37cda5c7f32ffd2bdd8b3164edc05c6463ab35"
-  integrity sha512-tgyEl6dvtLln8XX81JyBvWjIiEcjTkUwZbrM5dIobTmoqMuGewSyk9CClno8qsMsFdB5T3jC91Rjeqmu/6xk2g==
+"@metaplex-foundation/beet-solana@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@metaplex-foundation/beet-solana/-/beet-solana-0.4.0.tgz#52891e78674aaa54e0031f1bca5bfbc40de12e8d"
+  integrity sha512-B1L94N3ZGMo53b0uOSoznbuM5GBNJ8LwSeznxBxJ+OThvfHQ4B5oMUqb+0zdLRfkKGS7Q6tpHK9P+QK0j3w2cQ==
   dependencies:
     "@metaplex-foundation/beet" ">=0.1.0"
     "@solana/web3.js" "^1.56.2"
     bs58 "^5.0.0"
     debug "^4.3.4"
 
-"@metaplex-foundation/beet@>=0.1.0":
+"@metaplex-foundation/beet@>=0.1.0", "@metaplex-foundation/beet@^0.7.1":
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/@metaplex-foundation/beet/-/beet-0.7.1.tgz#0975314211643f87b5f6f3e584fa31abcf4c612c"
   integrity sha512-hNCEnS2WyCiYyko82rwuISsBY3KYpe828ubsd2ckeqZr7tl0WVLivGkoyA/qdiaaHEBGdGl71OpfWa2rqL3DiA==
-  dependencies:
-    ansicolors "^0.3.2"
-    bn.js "^5.2.0"
-    debug "^4.3.3"
-
-"@metaplex-foundation/beet@^0.4.0":
-  version "0.4.0"
-  resolved "https://registry.yarnpkg.com/@metaplex-foundation/beet/-/beet-0.4.0.tgz#eb2a0a6eb084bb25d67dd9bed2f7387ee7e63a55"
-  integrity sha512-2OAKJnLatCc3mBXNL0QmWVQKAWK2C7XDfepgL0p/9+8oSx4bmRAFHFqptl1A/C0U5O3dxGwKfmKluW161OVGcA==
   dependencies:
     ansicolors "^0.3.2"
     bn.js "^5.2.0"
@@ -1666,13 +1657,13 @@
   resolved "https://registry.yarnpkg.com/@metaplex-foundation/cusper/-/cusper-0.0.2.tgz#dc2032a452d6c269e25f016aa4dd63600e2af975"
   integrity sha512-S9RulC2fFCFOQraz61bij+5YCHhSO9llJegK8c8Y6731fSi6snUSQJdCUqYS8AIgR0TKbQvdvgSyIIdbDFZbBA==
 
-"@metaplex-foundation/mpl-token-metadata@^2.2.2":
-  version "2.3.3"
-  resolved "https://registry.yarnpkg.com/@metaplex-foundation/mpl-token-metadata/-/mpl-token-metadata-2.3.3.tgz#f7ce99689ff1fdfc5d382781f50943692f1ebb77"
-  integrity sha512-BUn95TWj1U9g91WEtn4z4oZdHOnrT7qgwzUaIZ6Im9l9V8G2prNVvQjkoD86WLXjtR0Dgu378Er0A3mVtPmlzg==
+"@metaplex-foundation/mpl-token-metadata@^2.5.0":
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/@metaplex-foundation/mpl-token-metadata/-/mpl-token-metadata-2.5.0.tgz#4afb191b1874b69013931b0ce9ac033119ff1aa7"
+  integrity sha512-J0exVEiX1LJoHbMeUJa6dvM0M2OGb4Jp0UAa/cyU0fedbrKR+DTxE1HLTjqad3NZgbdvDRWYnDqJNNKZ3CMy1A==
   dependencies:
-    "@metaplex-foundation/beet" "^0.4.0"
-    "@metaplex-foundation/beet-solana" "^0.3.0"
+    "@metaplex-foundation/beet" "^0.7.1"
+    "@metaplex-foundation/beet-solana" "^0.4.0"
     "@metaplex-foundation/cusper" "^0.0.2"
     "@solana/spl-token" "^0.2.0"
     "@solana/web3.js" "^1.35.1"
