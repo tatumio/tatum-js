@@ -1,27 +1,34 @@
 import { Blockchain } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
-import { AlgorandService, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
+import { AlgorandService, ApiServices, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
 import { algoWeb } from './services/algo.web'
 import { algoRecord } from './services/algo.record'
 import { algoWallet } from './services/algo.wallet'
-import { algoTx } from './services/algo.tx'
+import { algoTxService } from './services/algo.tx'
+import { AlgoApiCallsType } from '../index'
+import { algoOffchainService } from './services/algo.offchain'
 
 const blockchain = Blockchain.ALGO
 
-export const TatumAlgoSDK = (args: SDKArguments) => {
+export const TatumAlgoSDK = (
+  args: SDKArguments,
+  apiCalls: AlgoApiCallsType = {
+    getBlockchainAccountBalance: ApiServices.blockchain.algo.algorandGetBalance,
+  },
+) => {
   const web = algoWeb()
-  const txService = algoTx({ algoWeb: web })
+  const txService = algoTxService({ algoWeb: web }, apiCalls)
   const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
 
-  const { mintNFT, transferNFT, burnNFT, getNFTAccountBalance } = nft
+  const { mintNFT, transferNFT, burnNFT, getNFTAccountBalance, getNFTContractAddress } = nft
 
   return {
     ...abstractSdk,
     algoWeb: web,
     record: algoRecord(),
     wallet: algoWallet(),
-    transaction: txService.native,
+    transaction: txService,
     erc20: {
       ...txService.erc20,
       getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
@@ -34,9 +41,10 @@ export const TatumAlgoSDK = (args: SDKArguments) => {
       transferNFT,
       burnNFT,
       getNFTAccountBalance,
+      getNFTContractAddress,
     },
     blockchain: {
-      broadcast: AlgorandService.algorandBroadcast,
+      broadcast: AlgorandService.algoandBroadcast,
       getBlock: AlgorandService.algorandGetBlock,
       getCurrentBlock: AlgorandService.algorandGetCurrentBlock,
       getBlockchainAccountBalance: AlgorandService.algorandGetBalance,
@@ -44,6 +52,7 @@ export const TatumAlgoSDK = (args: SDKArguments) => {
       getPayTransactionByFromTo: AlgorandService.algorandGetPayTransactionsByFromTo,
       receiveAsset: AlgorandService.algorandBlockchainReceiveAsset,
     },
+    offchain: algoOffchainService({ blockchain }),
     node: {
       indexerGetDriver: AlgorandService.algoNodeIndexerGetDriver,
       getDriver: AlgorandService.algoNodeGetDriver,

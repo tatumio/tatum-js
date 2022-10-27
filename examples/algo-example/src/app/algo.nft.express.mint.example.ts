@@ -1,5 +1,5 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
-import { TransactionHash } from '@tatumio/api-client'
+import { Currency, TransactionHash } from '@tatumio/api-client'
 
 const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
@@ -26,11 +26,9 @@ export async function algoNftExpressExample() {
   console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
 
   // fetch deployed contract address from transaction hash
-  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/ALGOGetTransaction
-  const deployedTransaction = await algoSDK.blockchain.getTransaction(nftMinted.txId)
-  // const contractAddress = deployedTransaction.contractAddress as string
-  const contractAddress = 'J3TDBIGKPGRWLQWJOZZJMT2KGUYGPM7ZHE3LHEH2VGA2F7KWHPU6DZ5MUU'
-  // console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetContractAddress
+  const { contractAddress } = await algoSDK.nft.getNFTContractAddress(Currency.ALGO, nftMinted.txId)
+  console.log(`Created NFT smart contract with contract address: ${contractAddress}`)
 
   // Enable receiving asset on account
   // https://docs.tatum.io/nft-express/use-nft-express-to-mint-nfts-on-algorand
@@ -57,7 +55,6 @@ export async function algoNftExpressExample() {
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
   const nftBurned = (await algoSDK.nft.burnNFT({
     chain: 'ALGO',
-    tokenId: '1000',
     contractAddress,
     fromPrivateKey: recipientAddress.secret,
   })) as TransactionHash

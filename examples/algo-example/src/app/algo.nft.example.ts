@@ -25,12 +25,10 @@ export async function algoNftExample() {
   })) as TransactionHash
   console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
 
-  // fetch deployed contract address from transaction hash
-  // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGetTransaction
-  const deployedTransaction = await algoSDK.blockchain.getTransaction(nftMinted.txId)
-  // const contractAddress = deployedTransaction.contractAddress as string
-  const contractAddress = 'J3TDBIGKPGRWLQWJOZZJMT2KGUYGPM7ZHE3LHEH2VGA2F7KWHPU6DZ5MUU'
-  // console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
+  // fetch created contract address from transaction hash
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetContractAddress
+  const { contractAddress } = await algoSDK.nft.getNFTContractAddress(Currency.ALGO, nftMinted.txId)
+  console.log(`Created NFT smart contract with contract address: ${contractAddress}`)
 
   // Get all minted NFTs in the collection. Returns all NFTs this contract minted.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetBalanceErc721
@@ -62,7 +60,6 @@ export async function algoNftExample() {
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
   const nftBurned = (await algoSDK.nft.burnNFT({
     chain: 'ALGO',
-    tokenId: '1001',
     contractAddress,
     fromPrivateKey: recipientAddress.secret,
   })) as TransactionHash

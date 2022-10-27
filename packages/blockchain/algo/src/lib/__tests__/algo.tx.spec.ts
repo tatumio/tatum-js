@@ -1,17 +1,19 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
-// import { ESDT_SYSTEM_SMART_CONTRACT_ADDRESS } from '../../constants'
+import {
+  commonTestFactory,
+  REPLACE_ME_WITH_TATUM_API_KEY,
+  TEST_DATA,
+  TestCasesApiCallMapping,
+} from '@tatumio/shared-testing-common'
 import { TatumAlgoSDK } from '../algo.sdk'
 
 describe('AlgoSDK - tx', () => {
-  const sdk = TatumAlgoSDK({
-    apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
-  })
+  const sdk = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   describe('ALGO', () => {
     const testData = TEST_DATA.ALGO.TESTNET
 
-    it.skip('should prepare ALGO signed transaction', async () => {
-      const tx = await sdk.transaction.prepare.signedTransaction(
+    it('should prepare ALGO signed transaction', async () => {
+      const tx = await sdk.transaction.native.prepare.signedTransaction(
         {
           account: testData.ADDRESS_0,
           privateKey: testData.PRIVATE_KEY_0,

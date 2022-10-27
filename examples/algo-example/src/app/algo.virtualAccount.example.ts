@@ -1,36 +1,48 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import { Currency, TransferAlgo as ApiTransferAlgo } from '@tatumio/api-client'
 
-const algoSdk = TatumAlgoSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-export async function algoOffchainExample() {
-  const account = await algoSdk.virtualAccount.depositAddress.checkExists(
-    'LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b',
-  )
-  const address = await algoSdk.virtualAccount.depositAddress.create('LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b', 1)
-  const adresses = await algoSdk.virtualAccount.depositAddress.createMultiple({
-    addresses: [
-      {
-        accountId: '5e6be8e9e6aa436299950c41',
-        derivationKey: 0,
-      },
-      {
-        accountId: '5e6be8e9e6aa436299951n35',
-        derivationKey: 1,
-      },
-    ],
+export async function algoVirtualAccountExample() {
+  // generate "from" and "to" addresses for wallets
+  // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet
+  const { address, secret } = algoSDK.wallet.generateWallet()
+  const privateKey = secret
+  const recipientAddress = algoSDK.wallet.generateWallet()
+  const to = recipientAddress.address
+
+  // Generate new virtual account for ALGO with specific blockchain address
+  // https://apidoc.tatum.io/tag/Account#operation/createAccount
+  const virtualAccount = await algoSDK.ledger.account.create({
+    currency: Currency.ALGO,
+    xpub: address,
   })
-  const assignedAddress = await algoSdk.virtualAccount.depositAddress.assign(
-    '5e6be8e9e6aa436299950c41',
-    'LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b',
-  )
-  const addressByAccount = await algoSdk.virtualAccount.depositAddress.getByAccount(
-    '5e6be8e9e6aa436299950c41',
-  )
-  const withdrawals = await algoSdk.virtualAccount.withdrawal.getAll('Done')
-  await algoSdk.virtualAccount.depositAddress.remove(
-    '5e6be8e9e6aa436299950c41',
-    'LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b',
-  )
-  await algoSdk.virtualAccount.storeTokenAddress('LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b', 'MY_TOKEN')
+  console.log(JSON.stringify(virtualAccount))
+
+  // Assign a blockchain address to a virtual account
+  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/assignAddress
+  const depositAddress = await algoSDK.offchain.depositAddress.assign(virtualAccount.id, address)
+  console.log(`Deposit address is ${depositAddress.address}`)
+
+  // FUND YOUR DEPOSIT ADDRESS WITH ALGOs FROM https://bank.testnet.algorand.network/
+
+  const balance = await algoSDK.ledger.account.getBalance(virtualAccount.id)
+  console.log(`Virtual account balance is: ${JSON.stringify(balance)}`)
+
+  // Get list of all incoming transactions from virtual account
+  // https://apidoc.tatum.io/tag/Transaction#operation/getTransactionsByAccountId
+  const transactions = await algoSDK.ledger.transaction.getAllByAccount({ id: virtualAccount.id })
+  console.log(`Transactions are ${JSON.stringify(transactions)}`)
+
+  // I will send assets from virtualAccount to blockchain address
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/AlgoTransfer
+  const result = await algoSDK.transaction.offchain.send.signedTransaction({
+    senderAccountId: virtualAccount.id,
+    amount: '1',
+    privateKey,
+    account: address,
+    address: to,
+    fee: '0.001',
+  })
+  console.log(JSON.stringify(result))
 }

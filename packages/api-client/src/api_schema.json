@@ -4169,7 +4169,7 @@
     },
     "/v3/blockchain/sc/custodial/transfer": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Transfer (send) an asset from a gas pump address to the other address. The gas fee for sending the asset will be covered by crypto funds on the master address. Make sure that the master address always has enough funds to cover gas fees.</p>\n<ul>\n<li>To be able to send the asset, the gas pump address must be <a href=\"#operation/ActivateGasPumpAddresses\">activated</a>.</li>\n<li>To check whether the gas pump address is activated, use <a href=\"#operation/GasPumpAddressesActivatedOrNot\">this API</a>.</li>\n</ul>\n<p>With this API, you can send only one asset per API call. If you want to send multiple assets, use the <a href=\"#operation/TransferCustodialWalletBatch\">API for transferring multiple assets from a gas pump account</a>.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>Polygon</li>\n<li>TRON</li>\n<li>XinFin</li>\n</ul>\n<p><b>Signing a transaction</b><br/>\nWhen transferring an asset, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Transfer (send) an asset from a gas pump address to the other address.</p>\n<p>This operation is usually performed by users in your custodial application: a user who has a gas pump address assigned wants to transfer an asset to some address on the blockchain.</p>\n<p>The gas fee for sending the asset will be covered by crypto funds on the master address. Make sure that the master address always has enough funds to cover gas fees.</p>\n<ul>\n<li>To be able to send the asset, the gas pump address must be <a href=\"#operation/ActivateGasPumpAddresses\">activated</a>.</li>\n<li>To check whether the gas pump address is activated, use <a href=\"#operation/GasPumpAddressesActivatedOrNot\">this API</a>.</li>\n</ul>\n<p>With this API, you can send only one asset per API call. If you want to send multiple assets, use the <a href=\"#operation/TransferCustodialWalletBatch\">API for transferring multiple assets from a gas pump account</a>.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>Polygon</li>\n<li>TRON</li>\n<li>XinFin</li>\n</ul>\n<p><b>Signing a transaction</b><br/>\nWhen transferring an asset, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "operationId": "TransferCustodialWallet",
         "requestBody": {
           "content": {
@@ -4238,7 +4238,7 @@
     },
     "/v3/blockchain/sc/custodial/transfer/batch": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Transfer (send) multiple assets from a gas pump address to the other address. The gas fee for sending the assets will be covered by crypto funds on the master address. Make sure that the master address always has enough funds to cover gas fees.</p>\n<ul>\n<li>To be able to send the assets, the gas pump address must be <a href=\"#operation/ActivateGasPumpAddresses\">activated</a>.</li>\n<li>To check whether the gas pump address is activated, use <a href=\"#operation/GasPumpAddressesActivatedOrNot\">this API</a>.</li>\n</ul>\n<p>If you want to send only one asset, you can also use the <a href=\"#operation/TransferCustodialWallet\">API for transferring an asset from a gas pump account</a>.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>Polygon</li>\n<li>TRON</li>\n<li>XinFin</li>\n</ul>\n<p><b>Signing a transaction</b><br/>\nWhen transferring assets, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Transfer (send) multiple assets from a gas pump address to one or more addresses.</p>\n<p>This operation is usually performed by users in your custodial application: a user who has a gas pump address assigned wants to transfer multiple assets to one or more addresses on the blockchain.</p>\n<p>The gas fee for sending the assets will be covered by crypto funds on the master address. Make sure that the master address always has enough funds to cover gas fees.</p>\n<ul>\n<li>To be able to send the assets, the gas pump address must be <a href=\"#operation/ActivateGasPumpAddresses\">activated</a>.</li>\n<li>To check whether the gas pump address is activated, use <a href=\"#operation/GasPumpAddressesActivatedOrNot\">this API</a>.</li>\n</ul>\n<p>If you want to send only one asset, you can also use the <a href=\"#operation/TransferCustodialWallet\">API for transferring an asset from a gas pump account</a>.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>Polygon</li>\n<li>TRON</li>\n<li>XinFin</li>\n</ul>\n<p><b>Signing a transaction</b><br/>\nWhen transferring assets, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "operationId": "TransferCustodialWalletBatch",
         "requestBody": {
           "content": {
@@ -21098,7 +21098,7 @@
                   "chain": {
                     "type": "string",
                     "example": "SOL",
-                    "enum": ["BSC", "ETH", "KLAY", "ONE", "CELO", "MATIC", "SOL", "LTC", "BTC", "TRON"]
+                    "enum": ["BSC", "ETH", "KLAY", "ONE", "CELO", "MATIC", "SOL", "LTC", "BTC"]
                   }
                 },
                 "required": ["chain"]
@@ -22837,7 +22837,7 @@
     },
     "/v3/nft/address/{chain}/{hash}": {
       "get": {
-        "description": "<p><p>This endpoint is deprecated. Do not use it.<br/>\nInstead, use <a href=\"https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress\" target=\"_blank\">this API</a>.</b></p><br/>\n<p><b>1 credit per API call</b></p>\n<p>Get NFT contract address from deploy transaction.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Flow</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>TRON</li>\n</ul>\n",
+        "description": "<p><p>This endpoint is deprecated. Do not use it.<br/>\nInstead, use <a href=\"https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress\" target=\"_blank\">this API</a>.</b></p><br/>\n<p><b>1 credit per API call</b></p>\n<p>Get NFT contract address from deploy transaction.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Flow</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>TRON</li>\n</ul>\n",
         "deprecated": true,
         "operationId": "NftGetContractAddress",
         "parameters": [
@@ -22848,7 +22848,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["ETH", "ONE", "KLAY", "CELO", "TRON", "FLOW", "MATIC", "KCS", "BSC"]
+              "enum": ["ALGO", "ETH", "ONE", "KLAY", "CELO", "TRON", "FLOW", "MATIC", "KCS", "BSC"]
             }
           },
           {
@@ -22925,7 +22925,7 @@
     },
     "/v3/blockchain/token/deploy": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Deploy a fungible token smart contract on the blockchain. In a deployed smart contract, you can mint and burn fungible tokens. The whole supply of fungible tokens (the <code>supply</code> parameter in the request body) will be transferred to the specified blockchain address (the <code>address</code> parameter in the request body).<br/>\nSmart contracts are standardized and audited.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>Solana</li>\n<li>Algorand</li>\n<li>XinFin</li>\n</ul>\n<p>You can review the code of a deployed smart contract <a href=\"https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/token.sol\" target=\"_blank\">here</a>.</p>\n<p><b>Signing a transaction</b></p>\n<p>When deploying a fungible token smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Deploy a fungible token smart contract on the blockchain. In a deployed smart contract, you can mint and burn fungible tokens. The whole supply of fungible tokens (the <code>supply</code> parameter in the request body) will be transferred to the specified blockchain address (the <code>address</code> parameter in the request body).<br/>\nSmart contracts are standardized and audited.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>Solana</li>\n<li>XinFin</li>\n</ul>\n<p>You can review the code of a deployed smart contract <a href=\"https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/token.sol\" target=\"_blank\">here</a>.</p>\n<p><b>Signing a transaction</b><br/>\nWhen deploying a fungible token smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "operationId": "Erc20Deploy",
         "parameters": [
           {
@@ -23007,7 +23007,7 @@
     },
     "/v3/blockchain/token/mint": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Create new fungible tokens in the smart contract (the <code>contractAddress</code> parameter in the request body) and transfer them to the specified blockchain address (the <code>to</code> parameter in the request body). You can mint new fungible tokens only if the current supply of tokens in the smart contract is lower than the total supply set for this contract.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>XinFin</li>\n<li>Algorand</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When minting fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Create new fungible tokens in the smart contract (the <code>contractAddress</code> parameter in the request body) and transfer them to the specified blockchain address (the <code>to</code> parameter in the request body). You can mint new fungible tokens only if the current supply of tokens in the smart contract is lower than the total supply set for this contract.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>XinFin</li>\n</ul>\n<p><b>Signing a transaction</b><br/>\nWhen minting fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "parameters": [
           {
             "description": "Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.",
@@ -23085,7 +23085,7 @@
     },
     "/v3/blockchain/token/burn": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Burn fungible tokens. Burning fungible tokens deletes the specified supply of the tokens (the <code>amount</code> parameter in the request body) from the smart contract (the <code>contractAddress</code> parameter in the request body).</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>XinFin</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When burning fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Burn fungible tokens. Burning fungible tokens deletes the specified supply of the tokens (the <code>amount</code> parameter in the request body) from the smart contract (the <code>contractAddress</code> parameter in the request body).</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>XinFin</li>\n</ul>\n<p><b>Signing a transaction</b><br/>\nWhen burning fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "parameters": [
           {
             "description": "Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.",
@@ -23163,7 +23163,7 @@
     },
     "/v3/blockchain/token/approve": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Allow another blockchain address (the <code>spender</code> parameter in the request body) to spend and burn fungible tokens on behalf of the smart contract owner.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When approving spending of fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Allow another blockchain address (the <code>spender</code> parameter in the request body) to spend and burn fungible tokens on behalf of the smart contract owner.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b><br/>\nWhen approving spending of fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "parameters": [
           {
             "description": "Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.",
@@ -23239,7 +23239,7 @@
     },
     "/v3/blockchain/token/transaction": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Transfer a supply of fungible tokens existing in the smart contract (the <code>contractAddress</code> parameter in the request body) to the specified blockchain address (the <code>to</code> parameter in the request body).<br/>\nTransferring fungible tokens invokes the <code>transfer()</code> method.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>Solana</li>\n<li>XinFin</li>\n</ul>\n<p><b>Transferring fungible tokens on Algorand</b></p>\n<p>On Algorand, the recipient has to agree in advance to receive your fungible tokens because Algorand charges users for storing the tokens on their addresses, and an Algorand blockchain address by default does not receive the tokens unless explicitly agreed. Before transferring the fungible tokens, make sure that the recipient <a href=\"https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset\" target=\"_blank\">has agreed to receive the NFT</a> to their address.</p>\n<p><b>Signing a transaction</b></p>\n<p>When transferring fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Transfer a supply of fungible tokens existing in the smart contract (the <code>contractAddress</code> parameter in the request body) to the specified blockchain address (the <code>to</code> parameter in the request body).<br/>\nTransferring fungible tokens invokes the <code>transfer()</code> method.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>Solana</li>\n<li>XinFin</li>\n</ul>\n<p><b>Transferring fungible tokens on Algorand</b><br/>\nOn Algorand, the recipient has to agree in advance to receive your fungible tokens because Algorand charges users for storing the tokens on their addresses, and an Algorand blockchain address by default does not receive the tokens unless explicitly agreed. Before transferring the fungible tokens, make sure that the recipient <a href=\"https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset\" target=\"_blank\">has agreed to receive the NFT</a> to their address.</p>\n<p><b>Blockchain-specific APIs to transfer fungible tokens</b><br/>\nYou can also use blockchain-specific APIs for transferring fungible tokens on the following blockchains:\n<ul>\n<li><a href=\"https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscBlockchainTransfer\" target=\"_blank\">BNB Smart Chain</a></li>\n<li><a href=\"https://apidoc.tatum.io/tag/Celo#operation/CeloBlockchainTransfer\" target=\"_blank\">Celo</a></li>\n<li><a href=\"https://apidoc.tatum.io/tag/Ethereum#operation/EthBlockchainTransfer\" target=\"_blank\">Ethereum</a></li>\n<li><a href=\"https://apidoc.tatum.io/tag/Harmony#operation/OneBlockchainTransfer\" target=\"_blank\">Harmony</a></li>\n<li><a href=\"https://apidoc.tatum.io/tag/KuCoin#operation/KcsBlockchainTransfer\" target=\"_blank\">KuCoin Community Chain</a></li>\n<li><a href=\"https://apidoc.tatum.io/tag/Polygon#operation/PolygonBlockchainTransfer\" target=\"_blank\">Polygon</a></li>\n<li><a href=\"https://apidoc.tatum.io/tag/XinFin#operation/XdcBlockchainTransfer\" target=\"_blank\">XinFin</a></li>\n</ul>\n<p><b>Signing a transaction</b><br/>\nWhen transferring fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "parameters": [
           {
             "description": "Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.",
@@ -23418,7 +23418,7 @@
     },
     "/v3/blockchain/token/balance/{chain}/{contractAddress}/{address}": {
       "get": {
-        "description": "<p><b>1 credit per API call</b></p>\n<p>Get the number of the fungible tokens minted on a specific smart contract (the <code>contractAddress</code> path parameter in the request endpoint URL) that a blockchain address holds.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Elrond</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>XinFin</li>\n</ul>\n",
+        "description": "<p><b>1 credit per API call</b></p>\n<p>Get the number of the fungible tokens minted on a specific smart contract (the <code>contractAddress</code> path parameter in the request endpoint URL) that a blockchain address holds.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Elrond</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>Solana</li>\n<li>XinFin</li>\n</ul>\n",
         "operationId": "Erc20GetBalance",
         "parameters": [
           {
@@ -23428,7 +23428,7 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["CELO", "ALGO", "MATIC", "ETH", "BSC", "XDC", "KLAY", "ONE", "EGLD", "KCS"],
+              "enum": ["CELO", "ALGO", "MATIC", "ETH", "BSC", "XDC", "KLAY", "ONE", "EGLD", "KCS", "SOL"],
               "example": "CELO"
             }
           },
@@ -25891,7 +25891,7 @@
     },
     "/v3/bsc/broadcast": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to BSC blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to BSC blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>\n",
         "operationId": "BscBroadcast",
         "requestBody": {
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BroadcastKMS" } } },
@@ -26386,7 +26386,7 @@
             "schema": { "type": "number", "example": 0 }
           },
           {
-            "description": "Transactions from this block onwords will be included.",
+            "description": "Transactions from this block onwards will be included.",
             "in": "query",
             "name": "from",
             "schema": { "type": "number", "minimum": 0, "example": 1087623 }
@@ -26657,7 +26657,7 @@
     },
     "/v3/polygon/broadcast": {
       "post": {
-        "description": "<b><p>2 credits per API call</p></b>\n<p>Broadcast signed transaction to Polygon blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>\n",
+        "description": "<b><p>2 credits per API call</p></b>\n<p>Broadcast signed transaction to Polygon blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>\n",
         "operationId": "PolygonBroadcast",
         "requestBody": {
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BroadcastKMS" } } },
@@ -27103,7 +27103,7 @@
             "schema": { "type": "number", "example": 0 }
           },
           {
-            "description": "Transactions from this block onwords will be included.",
+            "description": "Transactions from this block onwards will be included.",
             "in": "query",
             "name": "from",
             "schema": { "type": "number", "minimum": 0, "example": 1087623 }
@@ -27419,7 +27419,7 @@
     },
     "/v3/celo/broadcast": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to Celo blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to Celo blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>\n",
         "operationId": "CeloBroadcast",
         "requestBody": {
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BroadcastKMS" } } },
@@ -28182,7 +28182,7 @@
     },
     "/v3/egld/broadcast": {
       "post": {
-        "description": "<h4>2 credits per API call.</h4><br/>\n<p>Broadcast signed transaction to EGLD blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>\n",
+        "description": "<h4>2 credits per API call.</h4><br/>\n<p>Broadcast signed transaction to EGLD blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>\n",
         "operationId": "EgldBroadcast",
         "requestBody": {
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BroadcastKMS" } } },
@@ -28920,8 +28920,8 @@
     },
     "/v3/algorand/broadcast": {
       "post": {
-        "description": "<h4>2 credits per API call.</h4><br/>\n<p>Broadcast signed transaction to Algorand blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>\n",
-        "operationId": "AlgorandBroadcast",
+        "description": "<h4>2 credits per API call.</h4><br/>\n<p>Broadcast signed transaction to Algorand blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>\n",
+        "operationId": "AlgoandBroadcast",
         "requestBody": {
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BroadcastKMS" } } },
           "required": true
@@ -30580,7 +30580,7 @@
     },
     "/v3/klaytn/broadcast": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to Klaytn blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to Klaytn blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>\n",
         "operationId": "KlaytnBroadcast",
         "requestBody": {
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BroadcastKMS" } } },
@@ -31389,7 +31389,7 @@
     },
     "/v3/one/broadcast": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to ONE blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to ONE blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>\n",
         "operationId": "OneBroadcast",
         "parameters": [
           {
@@ -32084,7 +32084,7 @@
     },
     "/v3/xdc/broadcast": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to XDC blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to XDC blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>\n",
         "operationId": "XdcBroadcast",
         "requestBody": {
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BroadcastKMS" } } },
@@ -32768,7 +32768,7 @@
     },
     "/v3/kcs/broadcast": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to Kcs blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Broadcast signed transaction to Kcs blockchain. This method is used internally from Tatum KMS or Tatum client libraries.\nIt is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>\n",
         "operationId": "KcsBroadcast",
         "requestBody": {
           "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BroadcastKMS" } } },
@@ -55989,7 +55989,7 @@
           "custodialAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "The gas pump address that transfers the asset",
+            "description": "The gas pump address that transfers the asset; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
@@ -56071,7 +56071,7 @@
           "custodialAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "The gas pump address that transfers the asset",
+            "description": "The gas pump address that transfers the asset; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
@@ -56165,7 +56165,7 @@
           "custodialAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "The gas pump address that transfers the asset",
+            "description": "The gas pump address that transfers the asset; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
@@ -56256,7 +56256,7 @@
           "custodialAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "The gas pump address that transfers the asset",
+            "description": "The gas pump address that transfers the asset; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
@@ -56342,7 +56342,7 @@
           "custodialAddress": {
             "maxLength": 34,
             "minLength": 34,
-            "description": "The gas pump address that transfers the asset",
+            "description": "The gas pump address that transfers the asset; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh",
             "type": "string"
           },
@@ -56425,7 +56425,7 @@
           "custodialAddress": {
             "maxLength": 34,
             "minLength": 34,
-            "description": "The gas pump address that transfers the asset",
+            "description": "The gas pump address that transfers the asset; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh",
             "type": "string"
           },
@@ -56489,7 +56489,7 @@
           "custodialAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "The gas pump address that transfers the assets",
+            "description": "The gas pump address that transfers the assets; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
@@ -56587,7 +56587,7 @@
           "custodialAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "The gas pump address that transfers the assets",
+            "description": "The gas pump address that transfers the assets; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
@@ -56691,7 +56691,7 @@
           "custodialAddress": {
             "maxLength": 34,
             "minLength": 34,
-            "description": "The gas pump address that transfers the assets",
+            "description": "The gas pump address that transfers the assets; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh",
             "type": "string"
           },
@@ -56772,7 +56772,7 @@
           "custodialAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "The gas pump address that transfers the assets",
+            "description": "The gas pump address that transfers the assets; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
@@ -56880,7 +56880,7 @@
           "custodialAddress": {
             "maxLength": 34,
             "minLength": 34,
-            "description": "The gas pump address that transfers the assets",
+            "description": "The gas pump address that transfers the assets; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh",
             "type": "string"
           },
@@ -56973,7 +56973,7 @@
           "custodialAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "The gas pump address that transfers the assets",
+            "description": "The gas pump address that transfers the assets; this is the address that you <a href=\"#operation/PrecalculateGasPumpAddresses\">precalculated</a> and <a href=\"#operation/ActivateGasPumpAddresses\">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the \"master address\"",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
@@ -63098,7 +63098,7 @@
         "properties": {
           "chain": {
             "description": "Blockchain to work with.",
-            "enum": ["ETH", "MATIC", "BSC", "ONE", "CELO", "XDC"],
+            "enum": ["ETH", "MATIC", "BSC", "ONE", "CELO"],
             "example": "MATIC",
             "type": "string"
           },
@@ -64346,7 +64346,6 @@
             "example": 6,
             "description": "Number of decimal places of this virtual currency."
           },
-          "trcType": { "type": "string", "example": "TRC10", "description": "Type of Tron token." },
           "basePair": {
             "description": "Base pair for virtual currency. Transaction value will be calculated according to this base pair. e.g. 1 VC_VIRTUAL is equal to 1 BTC, if basePair is set to BTC.",
             "enum": [
@@ -76413,7 +76412,7 @@
             }
           },
           "amount": {
-            "description": "Amount to be sent in Ether.",
+            "description": "Amount to be sent.",
             "example": "100000",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
             "type": "string"
@@ -76508,7 +76507,7 @@
             }
           },
           "amount": {
-            "description": "Amount to be sent in Ether.",
+            "description": "Amount to be sent.",
             "example": "100000",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
             "type": "string"
@@ -77395,7 +77394,7 @@
             }
           },
           "amount": {
-            "description": "Amount to be sent in Ether.",
+            "description": "Amount to be sent.",
             "example": "100000",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
             "type": "string"
@@ -77490,7 +77489,7 @@
             }
           },
           "amount": {
-            "description": "Amount to be sent in Ether.",
+            "description": "Amount to be sent.",
             "example": "100000",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
             "type": "string"
@@ -78062,7 +78061,7 @@
           "data": {
             "type": "string",
             "maxLength": 50000,
-            "description": "Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.",
+            "description": "Additional data, that can be passed to blockchain transaction as data property.",
             "example": "My note to recipient."
           },
           "nonce": {
@@ -78088,7 +78087,7 @@
             "enum": ["CELO", "CUSD", "CEUR"]
           },
           "amount": {
-            "description": "Amount to be sent in Celoer.",
+            "description": "Amount to be sent.",
             "example": "100000",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
             "type": "string"
@@ -78109,7 +78108,7 @@
           "data": {
             "type": "string",
             "maxLength": 50000,
-            "description": "Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.",
+            "description": "Additional data, that can be passed to blockchain transaction as data property.",
             "example": "My note to recipient."
           },
           "nonce": {
@@ -78135,7 +78134,7 @@
             "enum": ["CELO", "CUSD", "CEUR"]
           },
           "amount": {
-            "description": "Amount to be sent in Celoer.",
+            "description": "Amount to be sent.",
             "example": "100000",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
             "type": "string"
@@ -78172,7 +78171,7 @@
             "type": "string"
           },
           "amount": {
-            "description": "Amount to be sent in Ether.",
+            "description": "Amount to be sent.",
             "example": "100000",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
             "type": "string"
@@ -78180,7 +78179,7 @@
           "data": {
             "type": "string",
             "maxLength": 50000,
-            "description": "Additinal data, that can be passed to blockchain transaction as data property.",
+            "description": "Additional data, that can be passed to blockchain transaction as data property.",
             "example": "My note to recipient.",
             "pattern": "^(0x|0h)?[0-9A-F]+$"
           }
@@ -79061,7 +79060,7 @@
             }
           },
           "data": {
-            "description": "Additinal data, that will be passed to blockchain transaction as data property.",
+            "description": "Additional data, that will be passed to blockchain transaction as data property.",
             "type": "string",
             "example": "Hello world"
           },
@@ -79112,7 +79111,7 @@
             }
           },
           "data": {
-            "description": "Additinal data, that will be passed to blockchain transaction as data property.",
+            "description": "Additional data, that will be passed to blockchain transaction as data property.",
             "type": "string",
             "example": "Hello world"
           },
@@ -81119,7 +81118,7 @@
             }
           },
           "amount": {
-            "description": "Amount to be sent in Ether.",
+            "description": "Amount to be sent.",
             "example": "100000",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
             "type": "string"
@@ -81820,7 +81819,7 @@
           "data": {
             "type": "string",
             "maxLength": 50000,
-            "description": "Additinal data, that can be passed to blockchain transaction as data property.",
+            "description": "Additional data, that can be passed to blockchain transaction as data property.",
             "example": "My note to recipient."
           },
           "currency": {
@@ -81902,7 +81901,7 @@
           "data": {
             "type": "string",
             "maxLength": 50000,
-            "description": "Additinal data, that can be passed to blockchain transaction as data property.",
+            "description": "Additional data, that can be passed to blockchain transaction as data property.",
             "example": "My note to recipient.",
             "pattern": "^(0x|0h)?[0-9A-F]+$"
           }
@@ -81915,7 +81914,7 @@
           "data": {
             "type": "string",
             "maxLength": 50000,
-            "description": "Additinal data, that can be passed to blockchain transaction as data property.",
+            "description": "Additional data, that can be passed to blockchain transaction as data property.",
             "example": "My note to recipient."
           },
           "currency": {
@@ -82540,7 +82539,7 @@
             }
           },
           "amount": {
-            "description": "Amount to be sent in Ether.",
+            "description": "Amount to be sent.",
             "example": "100000",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
             "type": "string"
@@ -83275,7 +83274,7 @@
             }
           },
           "amount": {
-            "description": "Amount to be sent in Ether.",
+            "description": "Amount to be sent.",
             "example": "100000",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
             "type": "string"
@@ -83370,7 +83369,7 @@
             }
           },
           "amount": {
-            "description": "Amount to be sent in Ether.",
+            "description": "Amount to be sent.",
             "example": "100000",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
             "type": "string"

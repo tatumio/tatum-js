@@ -14,7 +14,7 @@ export async function algoTxExample() {
 
   // Send Algos to an Algorand account using private key
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainTransfer
-  const sentAlgoTransaction = await algoSDK.transaction.send.signedTransaction({
+  const sentAlgoTransaction = await algoSDK.transaction.native.send.signedTransaction({
     amount: '1',
     privateKey,
     address: to,
@@ -26,7 +26,7 @@ export async function algoTxExample() {
   const signatureId = '26d3883e-4e17-48b3-a0ee-09a3e484ac83'
   // Send Algos to an Algorand account using signatureId
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainTransfer
-  const sentAlgoSignedTransactionKms = await algoSDK.transaction.send.signedTransaction({
+  const sentAlgoSignedTransactionKms = await algoSDK.transaction.native.send.signedTransaction({
     amount: '10',
     signatureId,
     address: to,
