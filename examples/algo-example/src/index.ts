@@ -10,8 +10,7 @@ import { algoVirtualAccountExample } from './app/algo.virtualAccount.example'
 import { algoTxExample } from './app/algo.tx.example'
 import { algoErc20Example } from './app/algo.erc20.example'
 import { algoBalanceExample } from './app/algo.balance.example'
-// NOT SUPPORTED YET:
-// import { algoSubscriptionsExample } from './app/algo.subscriptions.example'
+import { algoSubscriptionsExample } from './app/algo.subscriptions.example'
 
 console.log(`Running ${algoBalanceExample()}`)
 console.log(`Running ${algoBlockchainExample()}`)
@@ -20,5 +19,4 @@ console.log(`Running ${algoNftExpressExample()}`)
 console.log(`Running ${algoErc20Example()}`)
 console.log(`Running ${algoVirtualAccountExample()}`)
 console.log(`Runninf ${algoTxExample()}`)
-// NOT SUPPORTED YET:
-// console.log(`Running ${algoSubscriptionsExample()}`)
+console.log(`Running ${algoSubscriptionsExample()}`)

@@ -1,5 +1,5 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
-import { Currency, TransferAlgo as ApiTransferAlgo } from '@tatumio/api-client'
+import { Currency } from '@tatumio/api-client'
 
 const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 

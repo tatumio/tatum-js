@@ -1,9 +1,4 @@
-import {
-  commonTestFactory,
-  REPLACE_ME_WITH_TATUM_API_KEY,
-  TEST_DATA,
-  TestCasesApiCallMapping,
-} from '@tatumio/shared-testing-common'
+import { TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumAlgoSDK } from '../algo.sdk'
 
 describe('AlgoSDK - tx', () => {

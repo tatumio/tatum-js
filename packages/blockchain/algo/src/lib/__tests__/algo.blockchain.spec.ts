@@ -22,7 +22,7 @@ describe('TatumAlgoSDK - blockchain', () => {
   const testData = TEST_DATA.ALGO
 
   const blockchainFunctionsMapping: TestCasesApiCallMapping<typeof blockchain> = {
-    broadcast: [api.algoandBroadcast, { txData: 'hello' }],
+    broadcast: [api.algorandBroadcast, { txData: 'hello' }],
     getBlock: [api.algorandGetBlock, testData.BLOCK_HASH],
     getCurrentBlock: [api.algorandGetCurrentBlock, undefined],
     getBlockchainAccountBalance: [api.algorandGetBalance, testData.TESTNET.ADDRESS_0],

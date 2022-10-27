@@ -7,7 +7,6 @@ import { algoRecord } from './services/algo.record'
 import { algoWallet } from './services/algo.wallet'
 import { algoTxService } from './services/algo.tx'
 import { AlgoApiCallsType } from '../index'
-import { algoOffchainService } from './services/algo.offchain'
 
 const blockchain = Blockchain.ALGO
 
@@ -44,7 +43,7 @@ export const TatumAlgoSDK = (
       getNFTContractAddress,
     },
     blockchain: {
-      broadcast: AlgorandService.algoandBroadcast,
+      broadcast: AlgorandService.algorandBroadcast,
       getBlock: AlgorandService.algorandGetBlock,
       getCurrentBlock: AlgorandService.algorandGetCurrentBlock,
       getBlockchainAccountBalance: AlgorandService.algorandGetBalance,
@@ -52,7 +51,6 @@ export const TatumAlgoSDK = (
       getPayTransactionByFromTo: AlgorandService.algorandGetPayTransactionsByFromTo,
       receiveAsset: AlgorandService.algorandBlockchainReceiveAsset,
     },
-    offchain: algoOffchainService({ blockchain }),
     node: {
       indexerGetDriver: AlgorandService.algoNodeIndexerGetDriver,
       getDriver: AlgorandService.algoNodeGetDriver,
