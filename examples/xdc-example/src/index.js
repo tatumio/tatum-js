@@ -1,16 +1,16 @@
-"use strict";
-exports.__esModule = true;
-var xdc_blockchain_example_1 = require("./app/xdc.blockchain.example");
-var xdc_kms_example_1 = require("./app/xdc.kms.example");
-var xdc_wallet_example_1 = require("./app/xdc.wallet.example");
-var xdc_virtualAccount_example_1 = require("./app/xdc.virtualAccount.example");
-var xdc_subscriptions_example_1 = require("./app/xdc.subscriptions.example");
-var xdc_gasPump_example_1 = require("./app/xdc.gasPump.example");
-var xdc_balance_example_1 = require("./app/xdc.balance.example");
-console.log("Running ".concat((0, xdc_wallet_example_1.xdcWalletExample)()));
-console.log("Running ".concat((0, xdc_blockchain_example_1.xdcBlockchainExample)()));
-console.log("Running ".concat((0, xdc_kms_example_1.xdcKmsExample)()));
-console.log("Running ".concat((0, xdc_virtualAccount_example_1.xdcVirtualAccountExample)()));
-console.log("Running ".concat((0, xdc_subscriptions_example_1.xdcSubscriptionsExample)()));
-console.log("Running ".concat((0, xdc_gasPump_example_1.xdcTxWithGasPumpExample)()));
-console.log("Running ".concat((0, xdc_balance_example_1.xdcBalanceExample)()));
+'use strict'
+exports.__esModule = true
+var xdc_blockchain_example_1 = require('./app/xdc.blockchain.example')
+var xdc_kms_example_1 = require('./app/xdc.kms.example')
+var xdc_wallet_example_1 = require('./app/xdc.wallet.example')
+var xdc_virtualAccount_example_1 = require('./app/xdc.virtualAccount.example')
+var xdc_subscriptions_example_1 = require('./app/xdc.subscriptions.example')
+var xdc_gasPump_example_1 = require('./app/xdc.gasPump.example')
+var xdc_balance_example_1 = require('./app/xdc.balance.example')
+console.log('Running '.concat((0, xdc_wallet_example_1.xdcWalletExample)()))
+console.log('Running '.concat((0, xdc_blockchain_example_1.xdcBlockchainExample)()))
+console.log('Running '.concat((0, xdc_kms_example_1.xdcKmsExample)()))
+console.log('Running '.concat((0, xdc_virtualAccount_example_1.xdcVirtualAccountExample)()))
+console.log('Running '.concat((0, xdc_subscriptions_example_1.xdcSubscriptionsExample)()))
+console.log('Running '.concat((0, xdc_gasPump_example_1.xdcTxWithGasPumpExample)()))
+console.log('Running '.concat((0, xdc_balance_example_1.xdcBalanceExample)()))
