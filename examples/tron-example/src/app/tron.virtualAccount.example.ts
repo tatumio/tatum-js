@@ -6,8 +6,9 @@ export async function tronVirtualAccountExample() {
   // https://apidoc.tatum.io/tag/Tron#operation/GenerateTronwallet
   const { mnemonic, xpub } = await tronSDK.wallet.generateWallet()
   //https://apidoc.tatum.io/tag/Tron#operation/TronGenerateAddressPrivateKey
-  const fromPrivateKey = await tronSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1)
+  const fromPrivateKey = await tronSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
   // https://apidoc.tatum.io/tag/Tron#operation/TronGenerateAddress
+  const addressToFund = tronSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = tronSDK.wallet.generateAddressFromXPub(xpub, 1)
 
   // Generate new virtual account for TRON with specific blockchain address
@@ -24,13 +25,14 @@ export async function tronVirtualAccountExample() {
 
   console.log(`Deposit address is ${depositAddress.address}`)
 
-  // FUND YOUR ACCOUNT WITH TRX FROM https://twitter.com/TronTest2
+  // In order for this example to work you need to fund your address:  https://twitter.com/TronTest2
+  console.log(`Fund me to activate account! ${addressToFund}`)
 
   // I wanna send assets from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/TronTransferOffchain
   const result = await tronSDK.virtualAccount.send({
     senderAccountId: virtualAccount.id,
-    amount: '1',
+    amount: '100',
     fromPrivateKey,
     address: to,
   })

@@ -7,7 +7,8 @@ export async function tronBalanceExample() {
 
   console.log(`My public address is ${address}.`)
 
-  // FUND YOUR ACCOUNT WITH TRX FROM https://twitter.com/TronTest2
+  // In order to retrieve balance first fund your address here: https://twitter.com/TronTest2
+  // Funding your address will activate it and make it usable
 
   // https://apidoc.tatum.io/tag/Tron#operation/TronGetAccount
   const { balance } = await tronSDK.blockchain.getAccount(address)

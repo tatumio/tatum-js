@@ -9,6 +9,9 @@ export async function tronTrc20Example() {
   const address = tronSdk.wallet.generateAddressFromXPub(xpub, 0)
   const to = tronSdk.wallet.generateAddressFromXPub(xpub, 1)
 
+  // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+  // You can fund your address here: https://twitter.com/TronTest2
+
   // create trc20 token
   // https://apidoc.tatum.io/tag/Tron#operation/TronCreateTrc20
   const trc20Created = (await tronSdk.trc20.send.createSignedTransaction({
@@ -16,7 +19,7 @@ export async function tronTrc20Example() {
     name: 'myTrc20',
     recipient: address,
     fromPrivateKey,
-    decimals: 10,
+    decimals: 2,
     totalSupply: 10000000,
   })) as TransactionHash
 

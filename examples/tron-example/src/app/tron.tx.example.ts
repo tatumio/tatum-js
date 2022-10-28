@@ -13,7 +13,8 @@ export async function tronTxExample(): Promise<void> {
   const address = tronSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = tronSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  // FUND YOUR ACCOUNT WITH TRX FROM https://twitter.com/TronTest2
+  // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+  // You can fund your address here: https://twitter.com/TronTest2
 
   // send native transaction using private key
   const { txId } = await tronSDK.transaction.send.signedTransaction({
