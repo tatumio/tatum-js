@@ -24,12 +24,12 @@ export async function xdcSubscriptionsExample() {
     hmacSecret: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
   })
 
+  // Cancel an existing subscription
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/deleteSubscription
+  await xdcSDK.subscriptions.deleteSubscription(id.id as string)
+
   // List all active subscriptions
   // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getSubscriptions
   const subscriptions = await xdcSDK.subscriptions.getSubscriptions(10)
   console.log(`Subscriptions ${JSON.stringify(subscriptions)}`)
-
-  // Cancel an existing subscription
-  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/deleteSubscription
-  await xdcSDK.subscriptions.deleteSubscription(id.id as string)
 }
