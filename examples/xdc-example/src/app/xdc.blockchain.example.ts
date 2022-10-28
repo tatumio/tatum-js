@@ -5,8 +5,8 @@ const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function xdcBlockchainExample() {
   const address = '0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B'
-  const blockHash = '0x305c58c8c62399097f1ea702e337f13be6b3a3ed28867d530d8a03191f040b9c'
-  const transactionHash = '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7'
+  const blockHash = '0x3b02c4d021936eca0605118e9386c1b58fa87a9d7160e675abe4c160fb6f76f7'
+  const transactionHash = '0xc29abb7bbfebc70dd07ab8556ede2615a01c3c648925658e769222a263df7eaa'
 
   // Get gasLimit and gasPrice for a transaction
   // https://apidoc.tatum.io/tag/Blockchain-fees#operation/XdcEstimateGas
@@ -25,7 +25,7 @@ export async function xdcBlockchainExample() {
   // Get Balance on account
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGetBalance
   const balance = await xdcSDK.blockchain.getBlockchainAccountBalance(address)
-  console.log(`Balance on address ${address} is ${balance}`)
+  console.log(`Balance on address ${address} is ${JSON.stringify(balance)}`)
 
   // Get block by hash
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGetBlock

@@ -10,7 +10,6 @@ These examples should guide you through some basic operations of the XDC blockch
 - How to send transaction using kms
 - generate virtual account for XLM
 - assign deposit address to virtual account
-- How to send transaction using Gas pump
 
 ## How to start
 

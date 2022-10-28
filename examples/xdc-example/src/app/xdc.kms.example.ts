@@ -10,19 +10,20 @@ export async function xdcKmsExample() {
 
   //Get transaction by signature id
   // https://apidoc.tatum.io/tag/Key-Management-System#operation/GetPendingTransactionsToSign
-  const tx = await xdcSDK.kms.get(pendingSignatureIds[0].id)
+  if (pendingSignatureIds.length > 0) {
+    const tx = await xdcSDK.kms.get(pendingSignatureIds[0].id)
+    // Sign
+    const signedRawTx = await xdcSDK.kms.sign(
+      tx,
+      '0x9483c22a4b68745d41500ba87d2a66f7b220790a373116716a83d987cb10b4a6',
+    )
 
-  // Sign
-  const signedRawTx = await xdcSDK.kms.sign(
-    tx,
-    '0x9483c22a4b68745d41500ba87d2a66f7b220790a373116716a83d987cb10b4a6',
-  )
+    // Complete pending transaction to sign
+    // https://apidoc.tatum.io/tag/Key-Management-System#operation/CompletePendingSignature
+    await xdcSDK.kms.complete(tx.id, signedRawTx!)
 
-  // Complete pending transaction to sign
-  // https://apidoc.tatum.io/tag/Key-Management-System#operation/CompletePendingSignature
-  await xdcSDK.kms.complete(tx.id, signedRawTx!)
-
-  // Delete KMS transaction
-  // https://apidoc.tatum.io/tag/Key-Management-System#operation/DeletePendingTransactionToSign
-  await xdcSDK.kms.delete(tx.id)
+    // Delete KMS transaction
+    // https://apidoc.tatum.io/tag/Key-Management-System#operation/DeletePendingTransactionToSign
+    await xdcSDK.kms.delete(tx.id)
+  }
 }
