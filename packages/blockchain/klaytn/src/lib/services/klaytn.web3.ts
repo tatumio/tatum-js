@@ -1,4 +1,4 @@
-import { TATUM_API_CONSTANTS } from '@tatumio/api-client';
+import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
 import { evmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain, httpHelper } from '@tatumio/shared-core'
 import Caver from 'caver-js'
