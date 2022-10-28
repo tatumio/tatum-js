@@ -10,7 +10,6 @@ These examples should guide you through some basic operations of the XDC blockch
 - How to send transaction using kms
 - generate virtual account for XLM
 - assign deposit address to virtual account
-- How to send transaction using Gas pump
 
 ## How to start
 
@@ -68,7 +67,3 @@ You can find examples [here](./src/app/xdc.kms.example.ts).
 ### How to generate virtual account for XDC and transfer from it to a blockchain address
 
 You can find examples [here](./src/app/xdc.virtualAccount.example.ts).
-
-### How to send transaction using Gas pump
-
-You can find examples [here](./src/app/xdc.gasPump.example.ts).
