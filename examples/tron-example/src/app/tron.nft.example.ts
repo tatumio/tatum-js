@@ -8,6 +8,10 @@ export async function tronNftExample() {
   const fromPrivateKey = await tronSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
   const address = tronSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = tronSDK.wallet.generateAddressFromXPub(xpub, 1)
+  const tokenId = '1000'
+
+  // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+  // You can fund your address here: https://twitter.com/TronTest2
 
   // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
   const { txId } = (await tronSDK.nft.deployNFTSmartContract({
@@ -34,7 +38,7 @@ export async function tronNftExample() {
     contractAddress,
     fromPrivateKey,
     to,
-    tokenId: '10000',
+    tokenId,
     // uploaded metadata from ipfs
     url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
     feeLimit: 600,
@@ -42,8 +46,8 @@ export async function tronNftExample() {
 
   console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
 
-  // Get NFT token metadata
-  const { data } = await tronSDK.nft.getNFTMetadataURI(Currency.TRON, contractAddress, '1')
+  // Get your NFT token metadata
+  const { data } = await tronSDK.nft.getNFTMetadataURI(Currency.TRON, contractAddress, tokenId)
 
   console.log(`Token metadata: ${data}`)
 
@@ -57,7 +61,7 @@ export async function tronNftExample() {
     chain: 'TRON',
     value: '1',
     to,
-    tokenId: '1000',
+    tokenId,
     contractAddress,
     fromPrivateKey,
     feeLimit: 600,
@@ -68,7 +72,7 @@ export async function tronNftExample() {
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
   const nftBurned = (await tronSDK.nft.burnNFT({
     chain: 'TRON',
-    tokenId: '1000',
+    tokenId,
     contractAddress,
     fromPrivateKey,
     feeLimit: 600,
