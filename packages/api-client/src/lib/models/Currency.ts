@@ -62,7 +62,6 @@ export enum Currency {
   CAKE = 'CAKE',
   BUSD_BSC = 'BUSD_BSC',
   B2U_BSC = 'B2U_BSC',
-  BUSDT_BSC = 'BUSDT_BSC',
   WBTC = 'WBTC',
   USDT_TRON = 'USDT_TRON',
   USDT_MATIC = 'USDT_MATIC',

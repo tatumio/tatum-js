@@ -41,7 +41,6 @@ export const CONTRACT_ADDRESSES = {
   [Currency.BBCH.toString()]: '0x8ff795a6f4d97e7887c79bea79aba5cc76444adf',
   [Currency.CAKE.toString()]: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
   [Currency.BUSD_BSC.toString()]: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
-  [Currency.BUSDT_BSC.toString()]: '0x55d398326f99059ff775485246999027b3197955',
   [Currency.GMC_BSC.toString()]: '0xa6272359bc37f61af398071b65c8934aca744d53',
 }
 
@@ -61,7 +60,6 @@ export const CONTRACT_DECIMALS = {
   [Currency.BUSD.toString()]: 18,
   [Currency.CAKE.toString()]: 18,
   [Currency.BUSD_BSC.toString()]: 18,
-  [Currency.BUSDT_BSC.toString()]: 18,
   [Currency.LINK.toString()]: 18,
   [Currency.UNI.toString()]: 18,
   [Currency.FREE.toString()]: 18,
