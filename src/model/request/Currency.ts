@@ -16,6 +16,7 @@ export enum Currency {
   BNB = 'BNB',
   BSC = 'BSC',
   CAKE = 'CAKE',
+  ZIL = 'ZIL',
   BUSD_BSC = 'BUSD_BSC',
   B2U_BSC = 'B2U_BSC',
   BETH = 'BETH',
