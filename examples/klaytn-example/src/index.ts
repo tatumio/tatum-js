@@ -9,13 +9,13 @@ import { klaytnSubscriptionsExample } from './app/klaytn.subscriptions.example'
 import { klaytnTxExample } from './app/klaytn.tx.example'
 import { klaytnVirtualAccountExample } from './app/klaytn.virtualAccount.example'
 
-// console.log(`Running ${klaytnBlockchainExample()}`)
-// console.log(`Running ${klaytnVirtualAccountExample()}`)
-// console.log(`Running ${klaytnNftExample()}`)
-// console.log(`Running ${klaytnSubscriptionsExample()}`)
-// console.log(`Running ${klaytnTxExample()}`)
-// console.log(`Running ${klaytnMultiTokenExample()}`)
-// console.log(`Running ${klaytnErc20Example()}`)
-// console.log(`Running ${klaytnAuctionExample()}`)
-// console.log(`Running ${klaytnBalanceExample()}`)
+console.log(`Running ${klaytnBlockchainExample()}`)
+console.log(`Running ${klaytnVirtualAccountExample()}`)
+console.log(`Running ${klaytnNftExample()}`)
+console.log(`Running ${klaytnSubscriptionsExample()}`)
+console.log(`Running ${klaytnTxExample()}`)
+console.log(`Running ${klaytnMultiTokenExample()}`)
+console.log(`Running ${klaytnErc20Example()}`)
+console.log(`Running ${klaytnAuctionExample()}`)
+console.log(`Running ${klaytnBalanceExample()}`)
 console.log(`Running ${klaytnSmartContractExample()}`)

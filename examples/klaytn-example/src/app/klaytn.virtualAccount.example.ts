@@ -9,7 +9,7 @@ export async function klaytnVirtualAccountExample() {
   const privateKey = await klaytnSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
   const to = klaytnSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  // Generate new virtual account for BSC with specific blockchain address
+  // Generate new virtual account for KLAY with specific blockchain address
   // https://apidoc.tatum.io/tag/Account#operation/createAccount
   const virtualAccount = await klaytnSDK.ledger.account.create({
     currency: 'KLAY',
