@@ -93,3 +93,5 @@ const generatePubKey = (bytes: Buffer) => {
 
 export const generateAddress = (publicKey: Buffer) =>
   byteArray2hexStr(computeAddress(hexStr2byteArray(generatePubKey(publicKey))))
+
+export const isBase58 = (value: string): boolean => /^[A-HJ-NP-Za-km-z1-9]*$/.test(value)

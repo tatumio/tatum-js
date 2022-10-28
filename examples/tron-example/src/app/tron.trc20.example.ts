@@ -19,7 +19,7 @@ export async function tronTrc20Example() {
     name: 'myTrc20',
     recipient: address,
     fromPrivateKey,
-    decimals: 2,
+    decimals: 10,
     totalSupply: 10000000,
   })) as TransactionHash
 
@@ -32,7 +32,7 @@ export async function tronTrc20Example() {
     amount: '10',
     fromPrivateKey,
     tokenAddress: address,
-    feeLimit: 0.01,
+    feeLimit: 600,
   })) as TransactionHash
 
   console.log(`Trc20 transaction with transaction ID ${trc20Transffered.txId} was sent.`)

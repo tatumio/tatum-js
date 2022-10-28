@@ -19,7 +19,7 @@ export async function tronNftExample() {
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
     fromPrivateKey,
-    feeLimit: 600,
+    feeLimit: 5000,
   })) as TransactionHash
 
   // find deployed contract address from transaction hash
@@ -41,7 +41,7 @@ export async function tronNftExample() {
     tokenId,
     // uploaded metadata from ipfs
     url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
-    feeLimit: 600,
+    feeLimit: 5000,
   })) as TransactionHash
 
   console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
@@ -64,7 +64,7 @@ export async function tronNftExample() {
     tokenId,
     contractAddress,
     fromPrivateKey,
-    feeLimit: 600,
+    feeLimit: 5000,
   })) as TransactionHash
 
   console.log(`Transfered nft with transacion hash: ${nftTransferred.txId}`)
@@ -75,7 +75,7 @@ export async function tronNftExample() {
     tokenId,
     contractAddress,
     fromPrivateKey,
-    feeLimit: 600,
+    feeLimit: 5000,
   })) as TransactionHash
 
   console.log(`NFT burn transaction sent with transaction ID: ${nftBurned.txId}`)
