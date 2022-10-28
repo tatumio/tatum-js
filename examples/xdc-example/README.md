@@ -67,3 +67,7 @@ You can find examples [here](./src/app/xdc.kms.example.ts).
 ### How to generate virtual account for XDC and transfer from it to a blockchain address
 
 You can find examples [here](./src/app/xdc.virtualAccount.example.ts).
+
+### How to send transaction using Gas pump
+
+You can find examples [here](./src/app/xdc.gasPump.example.ts).
