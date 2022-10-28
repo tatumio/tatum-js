@@ -15,13 +15,12 @@ export async function algoVirtualAccountExample() {
   // https://apidoc.tatum.io/tag/Account#operation/createAccount
   const virtualAccount = await algoSDK.ledger.account.create({
     currency: Currency.ALGO,
-    xpub: address,
   })
   console.log(JSON.stringify(virtualAccount))
 
   // Assign a blockchain address to a virtual account
   // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/assignAddress
-  const depositAddress = await algoSDK.offchain.depositAddress.assign(virtualAccount.id, address)
+  const depositAddress = await algoSDK.virtualAccount.depositAddress.assign(virtualAccount.id, address)
   console.log(`Deposit address is ${depositAddress.address}`)
 
   // FUND YOUR DEPOSIT ADDRESS WITH ALGOs FROM https://bank.testnet.algorand.network/
@@ -36,7 +35,7 @@ export async function algoVirtualAccountExample() {
 
   // I will send assets from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/AlgoTransfer
-  const result = await algoSDK.transaction.offchain.send.signedTransaction({
+  const result = await algoSDK.transaction.virtualAccount.send.signedTransaction({
     senderAccountId: virtualAccount.id,
     amount: '1',
     privateKey,

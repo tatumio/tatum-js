@@ -1,12 +1,13 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
 import { Currency, TransactionHash } from '@tatumio/api-client'
+import { BigNumber } from 'bignumber.js'
 
 const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function algoNftExpressExample() {
   // generate "from" and "to" addresses for wallets
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet
-  const { secret } = algoSDK.wallet.generateWallet()
+  const { address, secret } = algoSDK.wallet.generateWallet()
   const fromPrivateKey = secret
   const recipientAddress = algoSDK.wallet.generateWallet()
   const to = recipientAddress.address
@@ -22,6 +23,9 @@ export async function algoNftExpressExample() {
     to,
     // uploaded metadata from ipfs from tutorial above
     url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
+    attr: {
+      manager: address,
+    },
   })) as TransactionHash
   console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
 
@@ -34,7 +38,7 @@ export async function algoNftExpressExample() {
   // https://docs.tatum.io/nft-express/use-nft-express-to-mint-nfts-on-algorand
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset
   const assetEnabled = (await algoSDK.blockchain.receiveAsset({
-    assetId: 1000,
+    assetId: new BigNumber(contractAddress).toNumber(),
     fromPrivateKey: recipientAddress.secret,
   })) as TransactionHash
   console.log(`Enabled nft with transaction hash: ${assetEnabled.txId}`)
@@ -43,9 +47,8 @@ export async function algoNftExpressExample() {
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
   const nftTransferred = (await algoSDK.nft.transferNFT({
     chain: Currency.ALGO,
-    value: '1',
     to,
-    tokenId: '1000',
+    tokenId: contractAddress,
     contractAddress,
     fromPrivateKey,
   })) as TransactionHash

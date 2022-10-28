@@ -12,13 +12,12 @@ export async function algoSubscriptionsExample() {
   // https://apidoc.tatum.io/tag/Account#operation/createAccount
   const virtualAccount = await algoSDK.ledger.account.create({
     currency: Currency.ALGO,
-    xpub: address,
   })
   console.log(JSON.stringify(virtualAccount))
 
   // Assign a blockchain address to a virtual account
   // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/assignAddress
-  const depositAddress = await algoSDK.offchain.depositAddress.assign(virtualAccount.id, address)
+  const depositAddress = await algoSDK.virtualAccount.depositAddress.assign(virtualAccount.id, address)
   console.log(`Deposit address is ${depositAddress.address}`)
 
   // Create a subscription
