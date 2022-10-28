@@ -27,7 +27,7 @@ export const TatumAlgoSDK = (
     algoWeb: web,
     record: algoRecord(),
     wallet: algoWallet(),
-    transaction: txService,
+    transaction: txService.native,
     erc20: {
       ...txService.erc20,
       getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
@@ -42,6 +42,7 @@ export const TatumAlgoSDK = (
       getNFTAccountBalance,
       getNFTContractAddress,
     },
+    multiToken: txService.multiToken,
     blockchain: {
       broadcast: AlgorandService.algorandBroadcast,
       getBlock: AlgorandService.algorandGetBlock,

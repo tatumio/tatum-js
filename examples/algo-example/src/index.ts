@@ -9,6 +9,7 @@ import { algoNftExpressExample } from './app/algo.nft.express.mint.example'
 import { algoVirtualAccountExample } from './app/algo.virtualAccount.example'
 import { algoTxExample } from './app/algo.tx.example'
 import { algoAsaExample } from './app/algo.asa.example'
+import { algoMultiTokenExample } from './app/algo.multitoken.example'
 import { algoBalanceExample } from './app/algo.balance.example'
 import { algoSubscriptionsExample } from './app/algo.subscriptions.example'
 
@@ -17,6 +18,7 @@ console.log(`Running ${algoBlockchainExample()}`)
 console.log(`Running ${algoNftExample()}`)
 console.log(`Running ${algoNftExpressExample()}`)
 console.log(`Running ${algoAsaExample()}`)
+console.log(`Running ${algoMultiTokenExample()}`)
 console.log(`Running ${algoVirtualAccountExample()}`)
 console.log(`Runninf ${algoTxExample()}`)
 console.log(`Running ${algoSubscriptionsExample()}`)

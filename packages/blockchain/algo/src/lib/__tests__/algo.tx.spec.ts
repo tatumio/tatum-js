@@ -8,7 +8,7 @@ describe('AlgoSDK - tx', () => {
     const testData = TEST_DATA.ALGO.TESTNET
 
     it('should prepare ALGO signed transaction', async () => {
-      const tx = await sdk.transaction.native.prepare.signedTransaction(
+      const tx = await sdk.transaction.prepare.signedTransaction(
         {
           account: testData.ADDRESS_0,
           privateKey: testData.PRIVATE_KEY_0,
