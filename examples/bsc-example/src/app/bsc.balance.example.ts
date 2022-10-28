@@ -7,7 +7,7 @@ export async function bscBalanceExample() {
 
   console.log(`My public address is ${address}.`)
 
-  // FUND YOUR ACCOUNT WITH BNB FROM https://testnet.binance.org/faucet-smart
+  // Fund your address here: https://testnet.binance.org/faucet-smart
 
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetBalance
   const { balance } = await bscSDK.blockchain.getBlockchainAccountBalance(address)

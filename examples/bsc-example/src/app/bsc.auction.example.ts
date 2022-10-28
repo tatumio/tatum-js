@@ -12,7 +12,7 @@ export const bscAuctionExample = async () => {
   const bidder = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
 
   // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
-  // You can fund your address here: https://testnet.binance.org/faucet-smart
+  // Fund your address here: https://testnet.binance.org/faucet-smart
   const { txId } = (await bscSDK.marketplace.auction.send.deployAuctionSignedTransaction({
     auctionFee: 100,
     feeRecipient,

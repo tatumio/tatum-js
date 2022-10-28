@@ -1,19 +1,19 @@
-import { TatumBscSDK } from '@tatumio/bsc'
+import { TatumKlaytnSDK } from '@tatumio/klaytn'
 import { TransactionHash } from '@tatumio/api-client'
 
-const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const klaytnSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-export async function bscErc20Example() {
-  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
-  const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
-  const address = bscSDK.wallet.generateAddressFromXPub(xpub, 0)
-  const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
+export async function klaytnErc20Example() {
+  const { mnemonic, xpub } = await klaytnSDK.wallet.generateWallet()
+  const fromPrivateKey = await klaytnSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const address = klaytnSDK.wallet.generateAddressFromXPub(xpub, 0)
+  const to = klaytnSDK.wallet.generateAddressFromXPub(xpub, 1)
 
   // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
-  // Fund your address here: https://testnet.binance.org/faucet-smart
+  // Fund your address here: https://baobab.wallet.klaytn.foundation/faucet
 
   // deploy erc20 (fungible token) transaction
-  const erc20Deployed = (await bscSDK.erc20.send.deploySignedTransaction({
+  const erc20Deployed = (await klaytnSDK.erc20.send.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
     address,
@@ -27,10 +27,10 @@ export async function bscErc20Example() {
 
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
-  const transaction = await bscSDK.blockchain.smartContractGetAddress('BSC', erc20Deployed.txId)
+  const transaction = await klaytnSDK.blockchain.smartContractGetAddress('KLAY', erc20Deployed.txId)
   const contractAddress = transaction.contractAddress as string
 
-  const erc20Minted = (await bscSDK.erc20.send.mintSignedTransaction({
+  const erc20Minted = (await klaytnSDK.erc20.send.mintSignedTransaction({
     to,
     amount: '10',
     contractAddress,
@@ -40,7 +40,7 @@ export async function bscErc20Example() {
   console.log(`Minted erc20 token/s with transaction ID ${erc20Minted.txId}`)
 
   // send erc20 (fungible token) transaction
-  const erc20Transffered = (await bscSDK.erc20.send.transferSignedTransaction({
+  const erc20Transffered = (await klaytnSDK.erc20.send.transferSignedTransaction({
     to,
     amount: '10',
     contractAddress,
@@ -51,7 +51,7 @@ export async function bscErc20Example() {
   console.log(`Erc20 transaction with transaction ID ${erc20Transffered.txId} was sent.`)
 
   // burn erc20 (fungible token) transaction
-  const erc20Burned = (await bscSDK.erc20.send.burnSignedTransaction({
+  const erc20Burned = (await klaytnSDK.erc20.send.burnSignedTransaction({
     amount: '10',
     contractAddress,
     fromPrivateKey,
