@@ -4,7 +4,7 @@
 
 export type TransferOneBlockchain = {
     /**
-     * Additinal data, that can be passed to blockchain transaction as data property.
+     * Additional data, that can be passed to blockchain transaction as data property.
      */
     data?: string;
     /**

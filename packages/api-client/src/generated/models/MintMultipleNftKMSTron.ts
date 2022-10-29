@@ -20,7 +20,7 @@ export type MintMultipleNftKMSTron = {
      */
     tokenId: Array<string>;
     /**
-     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
      */
     url: Array<string>;
     /**

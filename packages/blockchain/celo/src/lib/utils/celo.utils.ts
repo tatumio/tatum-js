@@ -44,12 +44,6 @@ export interface CeloTransactionConfig {
   feeCurrency?: string
 }
 
-export type ChainMintErc721Celo =
-  | MintNftCelo & {
-      signatureId?: string
-      chain: 'CELO'
-    }
-
 export type ChainMintNftCelo = FromPrivateKeyOrSignatureId<MintNftCelo>
 
 export type ChainMintMultipleNftCelo = FromPrivateKeyOrSignatureId<MintMultipleNftCelo> & {

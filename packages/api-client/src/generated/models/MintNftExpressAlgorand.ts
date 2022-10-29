@@ -2,6 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
+/**
+ * <p>The <code>MintNftExpressAlgorand</code> schema lets you mint NFTs on Algorand using <b>NTF Express</b> with the pre-built smart contract provided by Tatum.<br/>For more information, see "Use the pre-built smart contract provided by Tatum to mint NFTs" in <a href="#operation/NftMintErc721">Mint an NFT</a>.</p><br/>
+ */
 export type MintNftExpressAlgorand = {
     /**
      * The blockchain to work with

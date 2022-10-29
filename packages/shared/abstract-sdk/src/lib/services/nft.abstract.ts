@@ -20,6 +20,7 @@ export const abstractSdkNftService = () => {
     getNFTMetadataURI: NftErc721OrCompatibleService.nftGetMetadataErc721,
     getNFTRoyalty: NftErc721OrCompatibleService.nftGetRoyaltyErc721,
     getNFTAccountBalance: NftErc721OrCompatibleService.nftGetBalanceErc721,
+    getNFTContractAddress: NftErc721OrCompatibleService.nftGetContractAddress,
     getNFTImage: async (
       chain: 'ETH' | 'MATIC' | 'KCS' | 'SOL' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC',
       contractAddress: string,

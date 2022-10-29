@@ -5,7 +5,6 @@ import {
   FreezeTron,
   FreezeTronKMS,
   GenerateCustodialWalletTron,
-  GenerateCustodialWalletTronKMS,
   TransferTronBlockchain,
   TransferTronBlockchainKMS,
   TronService,
@@ -318,7 +317,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
           provider?: string,
         ) => {
           if (body.signatureId) {
-            return ApiServices.custodial.custodialCreateWallet(body as GenerateCustodialWalletTronKMS)
+            return ApiServices.custodial.custodialCreateWallet(body as any)
           } else {
             return TronService.tronBroadcast({
               txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
