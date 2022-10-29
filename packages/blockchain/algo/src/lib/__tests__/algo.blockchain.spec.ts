@@ -28,11 +28,6 @@ describe('TatumAlgoSDK - blockchain', () => {
     getBlockchainAccountBalance: [api.algorandGetBalance, testData.TESTNET.ADDRESS_0],
     getTransaction: [api.algorandGetTransaction, testData.TX_HASH],
     getPayTransactionByFromTo: [api.algorandGetPayTransactionsByFromTo, '1644830680', '1644830682'],
-    receiveAsset: [
-      api.algorandBlockchainReceiveAsset,
-      testData.TESTNET.ADDRESS_0,
-      testData.TESTNET.PRIVATE_KEY_0,
-    ],
   }
 
   describe('API methods mapping', () => {

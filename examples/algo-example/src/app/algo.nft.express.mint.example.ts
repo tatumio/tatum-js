@@ -19,7 +19,7 @@ export async function algoNftExpressExample() {
 
   // Mint NFTs on the pre-built smart contract provided by Tatum
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftMintErc721
-  const nftMinted = (await algoSDK.nft.mintNFT({
+  const nftMinted = (await algoSDK.token.nft.mintNFT({
     chain: Currency.ALGO,
     name: 'HELLO-ALGO',
     to,
@@ -33,13 +33,13 @@ export async function algoNftExpressExample() {
 
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetContractAddress
-  const { contractAddress } = await algoSDK.nft.getNFTContractAddress(Currency.ALGO, nftMinted.txId)
+  const { contractAddress } = await algoSDK.token.nft.getNFTContractAddress(Currency.ALGO, nftMinted.txId)
   console.log(`Created NFT smart contract with contract address: ${contractAddress}`)
 
   // Enable receiving asset on account
   // https://docs.tatum.io/nft-express/use-nft-express-to-mint-nfts-on-algorand
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset
-  const assetEnabled = (await algoSDK.blockchain.receiveAsset({
+  const assetEnabled = (await algoSDK.token.receiveAsset({
     assetId: new BigNumber(contractAddress).toNumber(),
     fromPrivateKey: recipientAddress.secret,
   })) as TransactionHash
@@ -47,7 +47,7 @@ export async function algoNftExpressExample() {
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
-  const nftTransferred = (await algoSDK.nft.transferNFT({
+  const nftTransferred = (await algoSDK.token.nft.transferNFT({
     chain: Currency.ALGO,
     to,
     tokenId: contractAddress,
@@ -58,7 +58,7 @@ export async function algoNftExpressExample() {
 
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
-  const nftBurned = (await algoSDK.nft.burnNFT({
+  const nftBurned = (await algoSDK.token.nft.burnNFT({
     chain: Currency.ALGO,
     contractAddress,
     fromPrivateKey: recipientAddress.secret,

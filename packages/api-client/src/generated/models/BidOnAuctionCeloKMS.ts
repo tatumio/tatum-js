@@ -30,7 +30,7 @@ export type BidOnAuctionCeloKMS = {
     /**
      * Amount of the assets to be bid. This must include auction fee.
      */
-    bidValue?: string;
+    bidValue: string;
     /**
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */

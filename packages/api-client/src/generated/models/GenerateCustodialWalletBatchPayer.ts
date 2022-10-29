@@ -6,7 +6,7 @@ export type GenerateCustodialWalletBatchPayer = {
     /**
      * Blockchain to work with.
      */
-    chain: 'ETH' | 'MATIC' | 'BSC' | 'ONE' | 'CELO' | 'XDC';
+    chain: 'ETH' | 'MATIC' | 'BSC' | 'ONE' | 'CELO';
     /**
      * If set to true, blockchain fees will be covered from credits.
      */

@@ -23,7 +23,7 @@ export class CustodialManagedWalletsService {
      */
     public static custodialCreateWallet(
         requestBody?: {
-            chain: 'BSC' | 'ETH' | 'KLAY' | 'ONE' | 'CELO' | 'MATIC' | 'SOL' | 'LTC' | 'BTC' | 'TRON';
+            chain: 'BSC' | 'ETH' | 'KLAY' | 'ONE' | 'CELO' | 'MATIC' | 'SOL' | 'LTC' | 'BTC';
         },
     ): CancelablePromise<CustodialManagedAddress> {
         return __request({

@@ -17,7 +17,7 @@ export async function algoAsaExample() {
 
   // create ASA (erc20 fungible token) transaction
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy
-  const mintedAsa = (await algoSDK.erc20.send.createFTSignedTransaction({
+  const mintedAsa = (await algoSDK.token.fungible.send.createFTSignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
     address,
@@ -31,11 +31,11 @@ export async function algoAsaExample() {
 
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/ALGOGetTransaction
-  const { contractAddress } = await algoSDK.nft.getNFTContractAddress(Currency.ALGO, mintedAsa.txId)
+  const { contractAddress } = await algoSDK.token.nft.getNFTContractAddress(Currency.ALGO, mintedAsa.txId)
 
   // send ASA (fungible token) transaction
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Transfer
-  const transferredAsa = (await algoSDK.erc20.send.transferFTSignedTransaction({
+  const transferredAsa = (await algoSDK.token.fungible.send.transferFTSignedTransaction({
     to,
     amount: '1',
     contractAddress,
@@ -45,7 +45,7 @@ export async function algoAsaExample() {
 
   // burn ASA (fungible token) transaction
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Burn
-  const burnedAsa = (await algoSDK.erc20.send.burnFTSignedTransaction({
+  const burnedAsa = (await algoSDK.token.fungible.send.burnFTSignedTransaction({
     to,
     amount: '1',
     contractAddress,

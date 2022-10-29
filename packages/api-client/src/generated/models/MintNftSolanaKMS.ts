@@ -4,6 +4,9 @@
 
 import type { SolanaNftMetadataKMS } from './SolanaNftMetadataKMS';
 
+/**
+ * <p>The <code>MintNftSolanaKMS</code> schema lets you mint NFTs natively on Solana and sign the transaction with your signature ID.<br/>For more information, see "Minting NFTs natively on a blockchain" in <a href="#operation/NftMintErc721">Mint an NFT</a>.</p><br/>
+ */
 export type MintNftSolanaKMS = {
     /**
      * The blockchain to work with
@@ -14,11 +17,11 @@ export type MintNftSolanaKMS = {
      */
     to: string;
     /**
-     * The blockchain address to mint the NFT from. The transaction fee will be paid from this address.
+     * The blockchain address that will pay the fee for the transaction
      */
     from: string;
     /**
-     * The KMS identifier of the private key of the sender's address
+     * The KMS identifier of the private key of the blockchain address that will pay the fee for the transaction
      */
     signatureId: string;
     metadata: SolanaNftMetadataKMS;

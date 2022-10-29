@@ -3,7 +3,6 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk, abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abstract'
 import { AlgorandService, ApiServices, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
 import { algoWeb } from './services/algo.web'
-import { algoRecord } from './services/algo.record'
 import { algoWallet } from './services/algo.wallet'
 import { algoTxService } from './services/algo.tx'
 import { AlgoApiCallsType } from '../index'
@@ -25,24 +24,26 @@ export const TatumAlgoSDK = (
   return {
     ...abstractSdk,
     algoWeb: web,
-    record: algoRecord(),
     wallet: algoWallet(),
     transaction: txService.native,
-    erc20: {
-      ...txService.erc20,
-      getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
-      getErc20AccountBalance: FungibleTokensErc20OrCompatibleService.erc20GetBalance,
-      getErc20AccountBalances: FungibleTokensErc20OrCompatibleService.erc20GetBalanceAddress,
+    token: {
+      asset: txService.asset,
+      receiveAsset: txService.asset.send.receive,
+      fungible: {
+        ...txService.fungible,
+        getFTTransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
+        getFTAccountBalance: FungibleTokensErc20OrCompatibleService.erc20GetBalance,
+        getFTAccountBalances: FungibleTokensErc20OrCompatibleService.erc20GetBalanceAddress,
+      },
+      nft: {
+        ...txService.nft,
+        mintNFT,
+        transferNFT,
+        burnNFT,
+        getNFTAccountBalance,
+        getNFTContractAddress,
+      },
     },
-    nft: {
-      ...txService.erc721,
-      mintNFT,
-      transferNFT,
-      burnNFT,
-      getNFTAccountBalance,
-      getNFTContractAddress,
-    },
-    multiToken: txService.multiToken,
     blockchain: {
       broadcast: AlgorandService.algorandBroadcast,
       getBlock: AlgorandService.algorandGetBlock,
@@ -50,7 +51,6 @@ export const TatumAlgoSDK = (
       getBlockchainAccountBalance: AlgorandService.algorandGetBalance,
       getTransaction: AlgorandService.algorandGetTransaction,
       getPayTransactionByFromTo: AlgorandService.algorandGetPayTransactionsByFromTo,
-      receiveAsset: AlgorandService.algorandBlockchainReceiveAsset,
     },
     virtualAccount: {
       ...abstractBlockchainVirtualAccount({ blockchain }),

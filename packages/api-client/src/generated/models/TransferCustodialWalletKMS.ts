@@ -8,7 +8,7 @@ export type TransferCustodialWalletKMS = {
      */
     chain: 'BSC' | 'ETH' | 'KLAY' | 'MATIC' | 'ONE' | 'XDC';
     /**
-     * The gas pump address that transfers the asset
+     * The gas pump address that transfers the asset; this is the address that you <a href="#operation/PrecalculateGasPumpAddresses">precalculated</a> and <a href="#operation/ActivateGasPumpAddresses">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the "master address"
      */
     custodialAddress: string;
     /**

@@ -4,7 +4,7 @@
 
 export type TransferCeloBlockchain = {
     /**
-     * Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+     * Additional data, that can be passed to blockchain transaction as data property.
      */
     data?: string;
     /**
@@ -24,7 +24,7 @@ export type TransferCeloBlockchain = {
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
-     * Amount to be sent in Celoer.
+     * Amount to be sent.
      */
     amount: string;
     /**

@@ -1,6 +1,6 @@
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { MintNftCelo } from '@tatumio/api-client'
+import { ApiServices, MintNftCelo } from '@tatumio/api-client'
 import {
   Erc721_Provenance,
   Erc721Token_Cashback,
@@ -15,14 +15,13 @@ import {
   celoUtils,
   ChainBurnErc721Celo,
   ChainDeployErc721Celo,
-  ChainMintErc721Celo,
   ChainMintMultipleNftCelo,
   ChainMintNftCelo,
   ChainTransferErc721Celo,
   ChainUpdateCashbackErc721Celo,
 } from '../../utils/celo.utils'
 import Web3 from 'web3'
-import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: string, testnet?: boolean) => {
   const { fromPrivateKey, name, symbol, feeCurrency, nonce, signatureId, cashback, provenance, publicMint } =
@@ -81,7 +80,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
   return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
 }
 
-const mintSignedTransaction = async (body: ChainMintErc721Celo, provider?: string, testnet?: boolean) => {
+const mintSignedTransaction = async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) => {
   const { contractAddress, nonce, signatureId, feeCurrency, to, tokenId, url, fromPrivateKey } = body
 
   const celoProvider = celoUtils.getProvider(provider)
@@ -683,7 +682,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * Prepare a signed Celo mint erc732 transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
        */
-      mintSignedTransaction: async (body: ChainMintErc721Celo, provider?: string, testnet?: boolean) =>
+      mintSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) =>
         evmBasedUtils.tryCatch(
           () => mintSignedTransaction(body, provider, testnet),
           SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_TX,
@@ -694,7 +693,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        */
       mintCashbackSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) =>
         evmBasedUtils.tryCatch(
-          () => mintCashbackSignedTransaction(body, provider, testnet),
+          () => mintCashbackSignedTransaction(body as any, provider, testnet),
           SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_CASHBACK_TX,
         ),
 
@@ -800,8 +799,11 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintSignedTransaction: async (body: ChainMintErc721Celo, provider?: string, testnet?: boolean) => {
-        await args.broadcastFunction({
+      mintSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftMintErc721(body)
+        }
+        return args.broadcastFunction({
           txData: await mintSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
         })
@@ -814,11 +816,15 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintCashbackSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) =>
-        await args.broadcastFunction({
-          txData: (await mintCashbackSignedTransaction(body, provider, testnet)) as string,
+      mintCashbackSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftMintErc721(body)
+        }
+        return args.broadcastFunction({
+          txData: (await mintCashbackSignedTransaction(body as any, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo mint multiple cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -827,15 +833,19 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintMultipleCashbackSignedTransaction: async (
+      async mintMultipleCashbackSignedTransaction(
         body: ChainMintMultipleNftCelo,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) {
+        if (body.signatureId) {
+          return ApiServices.nft.nftMintMultipleErc721(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await mintMultipleCashbackSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo mint multiple erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -848,11 +858,15 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         body: ChainMintMultipleNftCelo,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftMintMultipleErc721(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await mintMultipleSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo burn erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -861,11 +875,15 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      burnSignedTransaction: async (body: ChainBurnErc721Celo, provider?: string, testnet?: boolean) =>
-        await args.broadcastFunction({
+      burnSignedTransaction: async (body: ChainBurnErc721Celo, provider?: string, testnet?: boolean) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftBurnErc721(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await burnSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo transfer nft transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -878,11 +896,15 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         body: ChainTransferErc721Celo,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftTransferErc721(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await transferSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo update cashback for author erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -895,11 +917,15 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         body: ChainUpdateCashbackErc721Celo,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftUpdateCashbackErc721(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await updateCashbackForAuthorSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo deploy erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -908,11 +934,15 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      deploySignedTransaction: async (body: ChainDeployErc721Celo, provider?: string, testnet?: boolean) =>
-        await args.broadcastFunction({
+      deploySignedTransaction: async (body: ChainDeployErc721Celo, provider?: string, testnet?: boolean) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftDeployErc721(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await deploySignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo mint provenance cashback erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -921,11 +951,19 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintProvenanceSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) =>
-        await args.broadcastFunction({
+      mintProvenanceSignedTransaction: async (
+        body: ChainMintNftCelo,
+        provider?: string,
+        testnet?: boolean,
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftMintMultipleErc721(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await mintProvenanceSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo mint multiple provenance erc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -938,11 +976,15 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         body: ChainMintMultipleNftCelo & { fixedValues: string[][] },
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.nft.nftMintMultipleErc721(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await mintMultipleProvenanceSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
     },
   }
 }
