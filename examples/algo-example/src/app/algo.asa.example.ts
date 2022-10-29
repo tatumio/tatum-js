@@ -13,6 +13,8 @@ export async function algoAsaExample() {
   const recipientAddress = algoSDK.wallet.generateWallet()
   const to = recipientAddress.address
 
+  // FUND YOUR ACCOUNT WITH ALGOs FROM https://bank.testnet.algorand.network/
+
   // create ASA (erc20 fungible token) transaction
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy
   const mintedAsa = (await algoSDK.erc20.send.createFTSignedTransaction({

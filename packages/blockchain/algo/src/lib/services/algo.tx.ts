@@ -369,9 +369,9 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
 
     const decoder = new base32.Decoder({ type: 'rfc4648' })
 
-    const from = isWithSignatureId(body)
-      ? body.from
-      : algoWallet().generateAddressFromPrivatetKey((body as MintMultiToken).fromPrivateKey)
+    const from = (body as MintMultiToken).fromPrivateKey
+      ? algoWallet().generateAddressFromPrivatetKey((body as MintMultiToken).fromPrivateKey)
+      : undefined
 
     const v = Math.floor(Math.log10(new BigNumber(body.amount).toNumber()))
     const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
@@ -390,10 +390,10 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       undefined,
       params,
     )
-    if ('signatureId' in body) {
+    if (isWithSignatureId(body)) {
       return JSON.stringify(txn)
     }
-    const secretKey = new Uint8Array(decoder.write(body.fromPrivateKey).buf)
+    const secretKey = new Uint8Array(decoder.write((body as MintMultiToken).fromPrivateKey).buf)
     return Buffer.from(txn.signTxn(secretKey)).toString('hex')
   }
 
@@ -423,10 +423,10 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       params,
       undefined,
     )
-    if ('signatureId' in body) {
+    if (isWithSignatureId(body)) {
       return JSON.stringify(txn)
     }
-    const secretKey = new Uint8Array(decoder.write(body.fromPrivateKey).buf)
+    const secretKey = new Uint8Array(decoder.write((body as TransferMultiToken).fromPrivateKey).buf)
     return Buffer.from(txn.signTxn(secretKey)).toString('hex')
   }
 
@@ -452,10 +452,10 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       params,
       undefined,
     )
-    if ('signatureId' in body) {
+    if (isWithSignatureId(body)) {
       return JSON.stringify(txn)
     }
-    const secretKey = new Uint8Array(decoder.write(body.fromPrivateKey).buf)
+    const secretKey = new Uint8Array(decoder.write((body as BurnMultiToken).fromPrivateKey).buf)
     return Buffer.from(txn.signTxn(secretKey)).toString('hex')
   }
 
@@ -513,7 +513,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           provider?: string,
         ) => {
           const txData = await prepareCreateFTSignedTransaction(body, testnet, args.algoWeb, provider)
-          if ('signatureId' in body) {
+          if (isWithSignatureId(body)) {
             return ApiServices.blockchain.algo.algorandBlockchainTransfer(JSON.parse(txData))
           }
           return AlgorandService.algorandBroadcast({
@@ -533,7 +533,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           provider?: string,
         ) => {
           const txData = await prepareTransferFTSignedTransaction(body, testnet, args.algoWeb, provider)
-          if ('signatureId' in body) {
+          if (isWithSignatureId(body)) {
             return ApiServices.blockchain.algo.algorandBlockchainTransfer(JSON.parse(txData))
           }
           return AlgorandService.algorandBroadcast({
@@ -553,7 +553,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           provider?: string,
         ) => {
           const txData = await prepareBurnFTSignedTransaction(body, testnet, args.algoWeb, provider)
-          if ('signatureId' in body) {
+          if (isWithSignatureId(body)) {
             return ApiServices.blockchain.algo.algorandBlockchainTransfer(JSON.parse(txData))
           }
           return AlgorandService.algorandBroadcast({
@@ -613,7 +613,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           provider?: string,
         ) => {
           const txData = await prepareCreateNFTSignedTransaction(body, testnet, args.algoWeb, provider)
-          if ('signatureId' in body) {
+          if (isWithSignatureId(body)) {
             return ApiServices.blockchain.algo.algorandBlockchainTransfer(JSON.parse(txData))
           }
           return AlgorandService.algorandBroadcast({
@@ -633,7 +633,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           provider?: string,
         ) => {
           const txData = await prepareTransferNFTSignedTransaction(body, testnet, args.algoWeb, provider)
-          if ('signatureId' in body) {
+          if (isWithSignatureId(body)) {
             return ApiServices.blockchain.algo.algorandBlockchainTransfer(JSON.parse(txData))
           }
           return AlgorandService.algorandBroadcast({
@@ -649,7 +649,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
          */
         burnNFTSignedTransaction: async (body: BurnNft | BurnNftKMS, testnet = false, provider?: string) => {
           const txData = await prepareBurnNFTSignedTransaction(body, testnet, args.algoWeb, provider)
-          if ('signatureId' in body) {
+          if (isWithSignatureId(body)) {
             return ApiServices.blockchain.algo.algorandBlockchainTransfer(JSON.parse(txData))
           }
           return AlgorandService.algorandBroadcast({
@@ -712,17 +712,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           testnet = false,
           provider?: string,
         ) => {
-          const txData = await prepareCreateFractionalNFTSignedTransaction(
-            body,
-            testnet,
-            args.algoWeb,
-            provider,
-          )
-          if ('signatureId' in body) {
-            return ApiServices.blockchain.algo.algorandBlockchainTransfer(JSON.parse(txData))
+          if (isWithSignatureId(body)) {
+            return ApiServices.multiToken.mintMultiToken(body)
           }
           return AlgorandService.algorandBroadcast({
-            txData,
+            txData: await prepareCreateFractionalNFTSignedTransaction(body, testnet, args.algoWeb, provider),
           })
         },
         /**
@@ -737,17 +731,16 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           testnet = false,
           provider?: string,
         ) => {
-          const txData = await prepareTransferFractionalNFTSignedTransaction(
-            body,
-            testnet,
-            args.algoWeb,
-            provider,
-          )
-          if ('signatureId' in body) {
-            return ApiServices.blockchain.algo.algorandBlockchainTransfer(JSON.parse(txData))
+          if (isWithSignatureId(body)) {
+            return ApiServices.multiToken.transferMultiToken(body)
           }
           return AlgorandService.algorandBroadcast({
-            txData,
+            txData: await prepareTransferFractionalNFTSignedTransaction(
+              body,
+              testnet,
+              args.algoWeb,
+              provider,
+            ),
           })
         },
         /**
@@ -763,17 +756,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           testnet = false,
           provider?: string,
         ) => {
-          const txData = await prepareBurnFractionalNFTSignedTransaction(
-            body,
-            testnet,
-            args.algoWeb,
-            provider,
-          )
-          if ('signatureId' in body) {
-            return ApiServices.blockchain.algo.algorandBlockchainTransfer(JSON.parse(txData))
+          if (isWithSignatureId(body)) {
+            return ApiServices.multiToken.burnMultiToken(body)
           }
           return AlgorandService.algorandBroadcast({
-            txData,
+            txData: await prepareBurnFractionalNFTSignedTransaction(body, testnet, args.algoWeb, provider),
           })
         },
       },
@@ -806,7 +793,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           provider?: string,
         ) => {
           const txData = await prepareSignedTransaction(body, testnet, args.algoWeb, provider)
-          if ('signatureId' in body) {
+          if (isWithSignatureId(body as TransferAlgoKMS)) {
             return ApiServices.blockchain.algo.algorandBlockchainTransfer(JSON.parse(txData))
           }
           return AlgorandService.algorandBroadcast({
@@ -817,82 +804,83 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
     },
 
     virtualAccount: {
-      send: {
-        /**
-         * Send ALGO transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
-         * This operation is irreversible.
-         * @param body content of the transaction to broadcast
-         * @param testnet if the algorand node is testnet or not
-         * @param provider url of the algorand server endpoint for purestake.io restapi
-         * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
-         */
-        signedTransaction: async (
-          body: ApiTransferAlgo | ApiTransferAlgoKMS | ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS,
-          testnet = false,
-          provider?: string,
-        ): Promise<SendOffchainResponse> => {
-          let txData
+      /**
+       * Send ALGO transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param body content of the transaction to broadcast
+       * @param testnet if the algorand node is testnet or not
+       * @param provider url of the algorand server endpoint for purestake.io restapi
+       * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
+       */
+      // signedTransaction: async (
+      send: async (
+        body: ApiTransferAlgo | ApiTransferAlgoKMS | ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS,
+        testnet = false,
+        provider?: string,
+      ): Promise<SendOffchainResponse> => {
+        if ((body as ApiTransferAlgoKMS).signatureId) {
+          return ApiServices.offChain.blockchain.algoTransfer(body as ApiTransferAlgoKMS)
+        }
 
-          const { fee, ...withdrawal } = body as ApiTransferAlgoKMS
+        const { fee, ...withdrawal } = body as ApiTransferAlgoKMS
 
-          const { senderAccountId } = withdrawal
-          const account = await AccountService.getAccountByAccountId(senderAccountId)
+        const { senderAccountId } = withdrawal
+        const account = await AccountService.getAccountByAccountId(senderAccountId)
+        let txData
+        if (account.currency === Currency.ALGO) {
+          txData = await prepareSignedTransaction(
+            body as ApiTransferAlgo | ApiTransferAlgoKMS,
+            testnet,
+            args.algoWeb,
+            provider,
+          )
+        } else {
+          txData = await prepareTransferFTSignedTransaction(
+            {
+              from: (
+                await AlgorandService.algorandGenerateAddress((body as ChainTransferAlgoErc20).fromPrivateKey)
+              )?.address,
+              fromPrivateKey: (body as ChainTransferAlgoErc20).fromPrivateKey,
+              signatureId: (body as ChainTransferAlgoErc20KMS).signatureId,
+              to: (body as ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS).to,
+              amount: body.amount,
+              contractAddress: (body as ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS).contractAddress,
+            },
+            testnet,
+            args.algoWeb,
+            provider,
+          )
+        }
 
-          if (account.currency === Currency.ALGO) {
-            txData = await prepareSignedTransaction(
-              body as ApiTransferAlgo | ApiTransferAlgoKMS,
-              testnet,
-              args.algoWeb,
-              provider,
-            )
-          } else {
-            txData = await prepareTransferFTSignedTransaction(
-              {
-                from: (
-                  await AlgorandService.algorandGenerateAddress(
-                    (body as ChainTransferAlgoErc20).fromPrivateKey,
-                  )
-                )?.address,
-                fromPrivateKey: (body as ChainTransferAlgoErc20).fromPrivateKey,
-                signatureId: (body as ChainTransferAlgoErc20KMS).signatureId,
-                to: (body as ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS).to,
-                amount: body.amount,
-                contractAddress: (body as ChainTransferAlgoErc20 | ChainTransferAlgoErc20KMS).contractAddress,
-              },
-              testnet,
-              args.algoWeb,
-              provider,
-            )
-          }
+        const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal({
+          ...withdrawal,
+          fee: new BigNumber(fee || '0.001').toString(),
+        })
 
-          const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal({
-            ...withdrawal,
-            fee: new BigNumber(fee || '0.001').toString(),
-          })
-
-          if ('signatureId' in body) {
+        if (isWithSignatureId(body as ApiTransferAlgoKMS)) {
+          try {
+            return {
+              ...(await ApiServices.offChain.withdrawal.broadcastBlockchainTransaction({
+                txData,
+                withdrawalId: id,
+                currency: Currency.ALGO,
+              })),
+              id,
+            }
+          } catch (_) {
             try {
-              return {
-                ...(await ApiServices.offChain.withdrawal.broadcastBlockchainTransaction({
-                  txData,
-                  withdrawalId: id,
-                  currency: Currency.ALGO,
-                })),
-                id,
-              }
+              return await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id!)
             } catch (_) {
-              try {
-                return await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id!)
-              } catch (_) {
-                return { id }
-              }
+              return { id }
             }
           }
-          const { txId } = (await ApiServices.blockchain.algo.algorandBlockchainTransfer(
-            JSON.parse(txData),
-          )) as TransactionHash
-          return { id, txId }
-        },
+        }
+
+        const { txId } = (await ApiServices.blockchain.algo.algorandBroadcast(
+          JSON.parse(txData),
+        )) as TransactionHash
+        return { id, txId }
+        // },
       },
     },
   }

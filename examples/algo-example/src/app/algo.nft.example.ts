@@ -12,6 +12,8 @@ export async function algoNftExample() {
   const recipientAddress = algoSDK.wallet.generateWallet()
   const to = recipientAddress.address
 
+  // FUND YOUR ACCOUNT WITH ALGOs FROM https://bank.testnet.algorand.network/
+
   // upload your file to the ipfs:
   // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
 

@@ -6,10 +6,13 @@ const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function algoMultiTokenExample() {
   // generate "from" and "to" addresses for wallets
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet
-  const { secret } = algoSDK.wallet.generateWallet()
+  const { address, secret } = algoSDK.wallet.generateWallet()
   const fromPrivateKey = secret
   const recipientAddress = algoSDK.wallet.generateWallet()
   const to = recipientAddress.address
+  console.log(`public address of sender is ${address} and recipient is ${to}.`)
+
+  // FUND YOUR ACCOUNT WITH ALGOs FROM https://bank.testnet.algorand.network/
 
   // Mint Multi token on your own smart contract
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/MintMultiToken

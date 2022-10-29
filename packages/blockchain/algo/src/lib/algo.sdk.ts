@@ -1,6 +1,6 @@
 import { Blockchain } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
-import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
+import { abstractBlockchainSdk, abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abstract'
 import { AlgorandService, ApiServices, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
 import { algoWeb } from './services/algo.web'
 import { algoRecord } from './services/algo.record'
@@ -51,6 +51,10 @@ export const TatumAlgoSDK = (
       getTransaction: AlgorandService.algorandGetTransaction,
       getPayTransactionByFromTo: AlgorandService.algorandGetPayTransactionsByFromTo,
       receiveAsset: AlgorandService.algorandBlockchainReceiveAsset,
+    },
+    virtualAccount: {
+      ...abstractBlockchainVirtualAccount({ blockchain }),
+      ...txService.virtualAccount,
     },
     node: {
       indexerGetDriver: AlgorandService.algoNodeIndexerGetDriver,

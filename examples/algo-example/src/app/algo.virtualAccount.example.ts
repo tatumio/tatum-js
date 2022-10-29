@@ -35,7 +35,7 @@ export async function algoVirtualAccountExample() {
 
   // I will send assets from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/AlgoTransfer
-  const result = await algoSDK.transaction.virtualAccount.send.signedTransaction({
+  const result = await algoSDK.virtualAccount.send({
     senderAccountId: virtualAccount.id,
     amount: '1',
     privateKey,
