@@ -4,33 +4,52 @@ import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testin
 const dogeSDK = TatumDogeSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function dogeOffchainExample() {
-  const address = await dogeSDK.virtualAccount.depositAddress.create('5e68c66581f2ee32bc354087', 1)
-  const adresses = await dogeSDK.virtualAccount.depositAddress.createMultiple({
-    addresses: [
+  //------------------------------------
+  // Generate mnemonic and private key (or use your own)
+  // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGenerateWallet
+  const { mnemonic, xpub } = await dogeSDK.wallet.generateWallet()
+
+  // Generate address for 0 and 1 indexes from xpub
+  // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGenerateAddress
+  const addressToFund = dogeSDK.wallet.generateAddressFromXPub(xpub, 0)
+
+  // Generate new virtual account for DOGE with specific blockchain address
+  // https://apidoc.tatum.io/tag/Account#operation/createAccount
+  const virtualAccount = await dogeSDK.ledger.account.create({
+    currency: 'DOGE',
+    xpub,
+  })
+  console.log('Virtual account: ' + JSON.stringify(virtualAccount))
+
+  // Create deposit address for a virtual account
+  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
+  const depositAddress = await dogeSDK.virtualAccount.depositAddress.create(virtualAccount.id)
+  const depositAddressPrivateKey = await dogeSDK.wallet.generatePrivateKeyFromMnemonic(
+    mnemonic,
+    depositAddress.derivationKey,
+  )
+  console.log(`Deposit address is ${depositAddress.address}`)
+
+  // Generate test recepient address for 100 index from xpub
+  // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGenerateAddress
+  const recipientAddress = dogeSDK.wallet.generateAddressFromXPub(xpub, 100)
+
+  // Please fund your deposit address
+  // If you have funds on account - you can transfer it to another DOGE address
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/DogeTransfer
+  const result = await dogeSDK.virtualAccount.send({
+    senderAccountId: virtualAccount.id,
+    amount: '1',
+    keyPair: [
       {
-        accountId: '5e6be8e9e6aa436299950c41',
-        derivationKey: 0,
-      },
-      {
-        accountId: '5e6be8e9e6aa436299951n35',
-        derivationKey: 1,
+        address: addressToFund,
+        privateKey: depositAddressPrivateKey,
       },
     ],
+    fee: '0.1',
+    attr: addressToFund,
+    address: recipientAddress,
   })
-  const assignedAddress = await dogeSDK.virtualAccount.depositAddress.assign(
-    '5e6be8e9e6aa436299950c41',
-    '7c21ed165e294db78b95f0f181086d6f',
-  )
-  const account = await dogeSDK.virtualAccount.depositAddress.checkExists(
-    'n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7',
-  )
-  const addressByAccount = await dogeSDK.virtualAccount.depositAddress.getByAccount(
-    '5e6be8e9e6aa436299950c41',
-  )
-  await dogeSDK.virtualAccount.depositAddress.remove(
-    '5e6be8e9e6aa436299950c41',
-    '7c21ed165e294db78b95f0f181086d6f',
-  )
-  await dogeSDK.virtualAccount.storeTokenAddress('7c21ed165e294db78b95f0f181086d6f', 'MY_TOKEN')
-  const withdrawals = await dogeSDK.virtualAccount.withdrawal.getAll('Done')
+
+  console.log('Transaction result: ' + JSON.stringify(result))
 }

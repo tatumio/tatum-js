@@ -41,26 +41,4 @@ export async function dogeBlockchainExample() {
   // Get blockchain info
   // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGetBlockChainInfo
   const blockchainInfo = await dogeSDK.blockchain.info()
-
-  // Send transaction
-  // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeTransferBlockchain
-  const transfer = await dogeSDK.blockchain.sendTransaction({
-    fromUTXO: [
-      {
-        txHash: 'fcdc23f5c8bd811195921cd113f5724f3cf8b3fa0287a04366c51b9e8545c4c7',
-        index: 1,
-        privateKey: 'QTEcWfGqd2RbCRuAvoXAz99D8RwENfy8j6X92vPnUKR7yL1kXouk',
-        address: 'n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7',
-        value: '60',
-      },
-    ],
-    to: [
-      {
-        address: '2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7',
-        value: 0.02969944,
-      },
-    ],
-    fee: '0.001',
-    changeAddress: 'n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7',
-  })
 }
