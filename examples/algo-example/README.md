@@ -66,13 +66,17 @@ You can find examples [here](./src/app/algo.tx.example.ts).
 You can find examples [here](./src/app/algo.virtualAccount.example.ts).
 
 ### How to create notification subscription for your virtual account
+
 You can find examples [here](./src/app/algo.subscriptions.example.ts).
 
 ### How to create, transfer and burn NFT token
+
 You can find examples [here](./src/app/algo.nft.example.ts).
 
 ### How to create NFT token with express
+
 You can find examples [here](./src/app/algo.nft.express.mint.example.ts).
 
 ### How to create, transfer and burn ASA (ERC20) token
+
 You can find examples [here](./src/app/algo.asa.example.ts).
