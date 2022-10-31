@@ -105,6 +105,8 @@ export enum SdkErrorCode {
   SECRET_CHECKSUM = 'validation.secret.checksum',
   VALIDATION_TO_ADDRESS = 'validation.to-address',
 
+  TX_PREPARATION_FAILED = 'tx.preparation',
+
   // XLM
   XLM_NO_SEQUENCE = 'xlm.account.no-sequence',
 

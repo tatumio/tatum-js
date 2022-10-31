@@ -14,6 +14,7 @@ export const BlockchainCurrencyMapping: Record<
   Blockchain,
   NativeCurrency | { nativeCurrency: NativeCurrency; currencies: Currency[] }
 > = {
+  BNB: Currency.BNB,
   BTC: Currency.BTC,
   LTC: Currency.LTC,
   KLAY: Currency.KLAY,

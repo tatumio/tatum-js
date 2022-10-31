@@ -34,15 +34,11 @@ const isBlob = (value: any): value is Blob => {
     typeof value.constructor.name === 'string' &&
     /^(Blob|File)$/.test(value.constructor.name) &&
     /^(Blob|File)$/.test(value[Symbol.toStringTag])
-  );
-};
+  )
+}
 
 function isFile(value: any): value is File {
-  return (
-    typeof value.name === 'string' &&
-    typeof value.lastModified === 'number' &&
-    isBlob(value)
-  )
+  return typeof value.name === 'string' && typeof value.lastModified === 'number' && isBlob(value)
 }
 
 function isSuccess(status: number): boolean {
@@ -249,12 +245,15 @@ export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
       const formData = await getFormData(options)
       const body = getRequestBody(options)
       const headers = await getHeaders(options, formData)
+      //const headers = { Accept: 'application/json', 'x-api-key': '4cc0a7d8-265b-4fa4-8dcb-7b088bfeb627' }
+
+      console.log('url: ' + url)
+      console.log('headers: ' + JSON.stringify(headers))
 
       if (!onCancel.isCancelled) {
         const response = await sendRequest(options, url, formData, body, headers, onCancel)
         const responseBody = getResponseBody(response)
         const responseHeader = getResponseHeader(response, options.responseHeader)
-
         const result: ApiResult = {
           url,
           ok: isSuccess(response.status),
@@ -264,7 +263,6 @@ export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
         }
 
         catchErrors(options, result)
-
         resolve(result.body)
       }
     } catch (error) {
