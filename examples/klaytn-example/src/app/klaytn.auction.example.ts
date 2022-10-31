@@ -1,115 +1,64 @@
+import { TransactionHash } from '@tatumio/api-client'
 import { TatumKlaytnSDK } from '@tatumio/klaytn'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const klaytnSDK = TatumKlaytnSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const klaytnSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export const klaytnAuctionExample = async () => {
-  const auction = await klaytnSDK.marketplace.auction.getAuction(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-    '1',
-  )
+  // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGenerateWallet
+  const { mnemonic, xpub } = await klaytnSDK.wallet.generateWallet()
+  // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGenerateAddressPrivateKey
+  const fromPrivateKey = await klaytnSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGenerateAddress
+  const feeRecipient = klaytnSDK.wallet.generateAddressFromXPub(xpub, 0)
+  const bidder = klaytnSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  const auctionFee = await klaytnSDK.marketplace.auction.getAuctionFee(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-  )
+  // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+  // Fund your address here: https://baobab.wallet.klaytn.foundation/faucet
 
-  const auctionFeeRecipient = await klaytnSDK.marketplace.auction.getAuctionFeeRecipient(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-  )
-
-  const deployAuctionTx = await klaytnSDK.marketplace.auction.prepare.deployAuctionSignedTransaction({
+  // https://apidoc.tatum.io/tag/Auction#operation/GenerateAuction
+  const { txId } = (await klaytnSDK.marketplace.auction.send.deployAuctionSignedTransaction({
     auctionFee: 100,
-    feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-  })
+    feeRecipient,
+    fromPrivateKey,
+  })) as TransactionHash
 
-  const updateFeeRecipientTx =
-    await klaytnSDK.marketplace.auction.prepare.auctionUpdateFeeRecipientSignedTransaction({
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      fee: {
-        gasLimit: '40000',
-        gasPrice: '20',
-      },
-      amount: '10000',
-    })
+  console.log(`TransactionId: ${txId}`)
 
-  const createAuctionTx = await klaytnSDK.marketplace.auction.prepare.createAuctionSignedTransaction({
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    erc20Address: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    amount: '1',
-    endedAt: 100000,
-    tokenId: '100000',
-    isErc721: true,
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGetTransaction
+  const transaction = await klaytnSDK.blockchain.get(txId)
+  const contractAddress = transaction.contractAddress as string
 
-  const approveNftSpendingTx =
-    await klaytnSDK.marketplace.auction.prepare.auctionApproveNftTransferSignedTransaction({
-      spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      isErc721: true,
-      tokenId: '100000',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      nonce: 1,
-      fee: {
-        gasLimit: '40000',
-        gasPrice: '20',
-      },
-      amount: '10000',
-    })
+  console.log(`Deployed smart contract for NFT auction with transaction ID ${txId}`)
 
-  const approveErc20SpendingTx =
-    await klaytnSDK.marketplace.auction.prepare.auctionApproveErc20TransferSignedTransaction({
-      amount: '100000',
-      spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      nonce: 0,
-      isErc721: true,
-      tokenId: '1234',
-    })
+  const auction = await klaytnSDK.marketplace.auction.getAuction(contractAddress, '1')
 
-  const bidAuctionTx = await klaytnSDK.marketplace.auction.prepare.auctionBidSignedTransaction({
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    bidder: '0x587422eEA2cB73B5d3e242bA5456b782919AFc85',
+  console.log(`Auction from contract address ${contractAddress}: ${auction}`)
+
+  const { txId: bidTransactionHash } = await klaytnSDK.marketplace.auction.send.auctionBidSignedTransaction({
+    contractAddress,
+    bidder,
     id: 'string',
     bidValue: '1',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
+    fromPrivateKey,
   })
 
-  const cancelAuctionTx = await klaytnSDK.marketplace.auction.prepare.auctionCancelSignedTransaction({
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  console.log(`Auction bid transaction hash: ${bidTransactionHash}`)
 
-  const settleAuctionTx = await klaytnSDK.marketplace.auction.prepare.auctionSettleSignedTransaction({
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  const { txId: cancelTransactionHash } =
+    await klaytnSDK.marketplace.auction.send.auctionCancelSignedTransaction({
+      contractAddress,
+      id: 'string',
+      fromPrivateKey,
+    })
+
+  console.log(`Auction cancel transaction hash: ${cancelTransactionHash}`)
+
+  const { txId: settleTransactionHash } =
+    await klaytnSDK.marketplace.auction.send.auctionSettleSignedTransaction({
+      contractAddress,
+      id: 'string',
+      fromPrivateKey,
+    })
+
+  console.log(`Auction settle transaction hash: ${settleTransactionHash}`)
 }

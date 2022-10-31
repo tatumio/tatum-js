@@ -10,7 +10,7 @@ export async function bscNftExample() {
   const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
 
   // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
-  // You can fund your address here: https://testnet.binance.org/faucet-smart
+  // Fund your address here: https://testnet.binance.org/faucet-smart
 
   // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
   const { txId } = (await bscSDK.nft.deployNFTSmartContract({
