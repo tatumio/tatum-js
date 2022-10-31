@@ -1,3 +1,4 @@
+import { TransactionHash } from '@tatumio/api-client';
 import { TatumXdcSDK } from '@tatumio/xdc'
 
 const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
@@ -13,7 +14,7 @@ export async function xdcTxWithGasPumpExample(): Promise<void> {
     tokenAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
     recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
     tokenId: '20',
-  })
+  }) as TransactionHash
   console.log(`Gas pump transaction sent with transaction ID: ${transferFromCustodialWallet.txId}`)
 
   // Transfer multiple assets from a gas pum address
@@ -37,7 +38,7 @@ export async function xdcTxWithGasPumpExample(): Promise<void> {
       '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
     ],
     amount: ['1', '0', '1', '3'],
-  })
+  }) as TransactionHash
   console.log(`Gas pump transaction sent with transaction ID: ${sentBatchTransferFromCustodialWallet.txId}`)
 
   // Approve the transfer of an asset from a gas pump address
@@ -50,7 +51,7 @@ export async function xdcTxWithGasPumpExample(): Promise<void> {
     tokenAddress: '0x0fd723c4db392f4bc4b999eaacd2b4a8099fefa3',
     spender: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
     amount: '1',
-  })
+  }) as TransactionHash
   console.log(
     `Gas pump transaction Approve request with transaction ID: ${sentApproveFromCustodialWallet.txId}`,
   )
@@ -62,7 +63,7 @@ export async function xdcTxWithGasPumpExample(): Promise<void> {
     fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
     batchCount: 100,
     owner: '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
-  })
+  }) as TransactionHash
 
   console.log(`Gas pump transaction with transaction: ${JSON.stringify(sentCustodialWalletBatch)}`)
 }
