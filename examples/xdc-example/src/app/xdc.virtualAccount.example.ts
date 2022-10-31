@@ -4,7 +4,7 @@ const xdcSdk = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function xdcVirtualAccountExample() {
   // Check whether a blockchain address is assigned to a virtual account
-  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/addressExists
+  // https://apidoc.tatum.io/tag/Blockchain-addresses/#operation/generateDepositAddressesBatch
   const account = await xdcSdk.virtualAccount.depositAddress.checkExists(
     'xdcae14761e5db0ef472848cc4e4a4480311cb7caec',
   )
