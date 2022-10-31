@@ -1,6 +1,10 @@
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
-import { CeloService, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
+import {
+  BlockchainUtilsService,
+  CeloService,
+  FungibleTokensErc20OrCompatibleService,
+} from '@tatumio/api-client'
 import { celoWeb3 } from './services/celo.web3'
 import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { celoKmsService } from './services/celo.kms'
@@ -24,6 +28,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
       ...txService.erc20,
       getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
       getErc20AccountBalance: FungibleTokensErc20OrCompatibleService.erc20GetBalance,
+      getErc20AccountBalances: FungibleTokensErc20OrCompatibleService.erc20GetBalanceAddress,
     },
     nft: {
       ...txService.erc721,
@@ -47,6 +52,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
       getBlockchainAccountBalance: CeloService.celoGetBalance,
       get: CeloService.celoGetTransaction,
       getAccountTransactions: CeloService.celoGetTransactionByAddress,
+      smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
     },
   }
 }

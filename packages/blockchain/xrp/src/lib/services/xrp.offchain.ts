@@ -2,14 +2,14 @@ import { BigNumber } from 'bignumber.js'
 import { ApiServices, Currency, TransferXrp, Withdrawal } from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
 import { RippleAPI } from 'ripple-lib'
-import { abstractBlockchainOffchain } from '@tatumio/shared-blockchain-abstract'
+import { abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abstract'
 import { XrpSdkError } from '../xrp.sdk.errors'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { Payment } from 'ripple-lib/dist/npm/transaction/payment'
 
 export const xrpVirtualAccountService = (args: { blockchain: Blockchain }) => {
   return {
-    ...abstractBlockchainOffchain(args),
+    ...abstractBlockchainVirtualAccount(args),
     sendTransactionFromVirtualAccountToBlockchain,
     prepareTransactionFromVirtualAccountToBlockchain,
   }

@@ -21,6 +21,9 @@ export const xlmTxService = (apiCalls: XlmApiCallsType) => {
     body: TransferXlm,
     options?: { testnet: boolean; token?: string; issuerAccount?: string },
   ) => {
+    if (body.signatureId) {
+      return ApiServices.blockchain.xlm.xlmTransferBlockchain(body as any)
+    }
     return ApiServices.blockchain.xlm.xlmBroadcast({ txData: await prepareSignedTransaction(body, options) })
   }
 
@@ -32,6 +35,9 @@ export const xlmTxService = (apiCalls: XlmApiCallsType) => {
    * @returns transaction id of the transaction in the blockchain
    */
   const sendTrustlineTransaction = async (body: CreateTrustline, options?: { testnet: boolean }) => {
+    if (body.signatureId) {
+      return ApiServices.blockchain.xlm.xlmTrustLineBlockchain(body as any)
+    }
     return ApiServices.blockchain.xlm.xlmBroadcast({
       txData: await prepareSignedTrustlineTransaction(body, options),
     })

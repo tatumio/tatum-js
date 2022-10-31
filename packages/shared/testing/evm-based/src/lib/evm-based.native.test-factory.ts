@@ -10,7 +10,7 @@ export const nativeTestFactory = {
 
         const result = await sdk.prepare.transferSignedTransaction({
           to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-          amount: '10',
+          amount: '1',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           nonce,
           fee: {
@@ -23,7 +23,7 @@ export const nativeTestFactory = {
 
         expect(json.nonce).toBe(nonce)
         expect(json.gasPrice).toBe('20000000000')
-        expect(json.value).toBe('10000000000000000000')
+        expect(json.value).toBe('1000000000000000000')
       })
 
       it('valid from privateKey', async () => {
@@ -31,7 +31,7 @@ export const nativeTestFactory = {
 
         const result = await sdk.prepare.transferSignedTransaction({
           to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-          amount: '10',
+          amount: '1',
           fromPrivateKey: accounts[0].privateKey,
           nonce,
           fee: {
@@ -47,7 +47,7 @@ export const nativeTestFactory = {
         try {
           await sdk.prepare.transferSignedTransaction({
             to: 'someinvalidaddress',
-            amount: '10',
+            amount: '1',
             fromPrivateKey: accounts[0].privateKey,
             nonce: 3252345722143,
             fee: {

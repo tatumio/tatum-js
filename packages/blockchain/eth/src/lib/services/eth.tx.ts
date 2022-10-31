@@ -16,6 +16,7 @@ export const ethTx = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3
       ...native({
         ...args,
         broadcastFunction: EthereumService.ethBroadcast,
+        transferApiMethod: EthereumService.ethBlockchainTransfer,
       }),
     },
     erc20: {
@@ -52,6 +53,7 @@ export const ethTx = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3
       ...smartContract({
         ...args,
         broadcastFunction: EthereumService.ethBroadcast,
+        smartContractApiMethod: EthereumService.ethBlockchainSmartContractInvocation,
       }),
     },
   }

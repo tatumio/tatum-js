@@ -46,10 +46,13 @@ export class NodeRpcService {
                      * <li><a href="https://developer.algorand.org/docs/rest-apis/restendpoints/" target="_blank">Algorand</a></li>
                      * <li><a href="https://ethereum.org/en/developers/docs/apis/json-rpc/" target="_blank">Arbitrum</a></li>
                      * <li><a href="https://doc.aurora.dev/compat/rpc/" target="_blank">Aurora</a></li>
+                     * <li><a href="https://docs.avax.network/apis/avalanchego/apis/c-chain" target="_blank">Avalanche C-Chain</a></li>
+                     * <li><a href="https://docs.avax.network/apis/avalanchego/apis/p-chain" target="_blank">Avalanche P-Chain</a></li>
+                     * <li><a href="https://docs.avax.network/apis/avalanchego/apis/x-chain" target="_blank">Avalanche X-Chain</a></li>
                      * <li><a href="https://developer.bitcoin.org/reference/rpc/index.html" target="_blank">Bitcoin</a></li>
                      * <li><a href="https://docs.bitcoincashnode.org/doc/json-rpc/" target="_blank">Bitcoin Cash</a></li>
                      * <li><a href="https://docs.bnbchain.org/docs/rpc" target="_blank">BNB Smart Chain</a></li>
-                     * <li><a href="https://docs.cardano.org/cardano-components/cardano-graphql" target="_blank">Cardano</a></li>
+                     * <li><a href="https://docs.cardano.org/cardano-components/cardano-rosetta" target="_blank">Cardano</a></li>
                      * <li><a href="https://explorer.celo.org/api-docs" target="_blank">Celo</a></li>
                      * <li><a href="https://cronos.org/docs/resources/chain-integration.html" target="_blank">Cronos</a></li>
                      * <li><a href="https://dogecoin.com/" target="_blank">Dogecoin</a></li>
@@ -75,10 +78,11 @@ export class NodeRpcService {
                      * <li><a href="https://docs.solana.com/developing/clients/jsonrpc-api" target="_blank">Solana</a></li>
                      * <li><a href="https://developers.stellar.org/api" target="_blank">Stellar</a></li>
                      * <li><a href="https://opentezos.com/tezos-basics/cli-and-rpc/" target="_blank">Tezos</a></li>
-                     * <li><a href="https://zcash-rpc.github.io/" target="_blank">ZCash</a></li>
                      * <li><a href="https://developers.tron.network/reference/full-node-api-overview" target="_blank">TRON</a></li>
                      * <li><a href="https://www.vechain.org/" target="_blank">VeChain</a></li>
                      * <li><a href="https://apidocs.xinfin.network/docs/" target="_blank">XinFin</a></li>
+                     * <li><a href="https://zcash-rpc.github.io/" target="_blank">ZCash</a></li>
+                     * <li><a href="https://dev.zilliqa.com/docs/apis/api-introduction" target="_blank">Zilliqa</a></li>
                      * </ul>
                      *
                      * @param chain Blockchain to communicate with.
@@ -86,16 +90,18 @@ export class NodeRpcService {
                      * @param xApiKey Tatum X-API-Key used for authorization. You can omit this path parameter and either use the X-Api-Key header, or the API key tied to your IP address without any header.
                      * @param nodeType Type of the node to access for Algorand.
                      * @param testnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+                     * @param chainType Type of Avalanche network. Defaults to Avalanche C-Chain.
                      * @param rpcPath Optional path of rpc call for non EVM nodes, e.g. Algorand or Stellar.
                      * @returns any OK
                      * @throws ApiError
                      */
                     public static nodeJsonPostRpcDriver(
-                        chain: 'ADA' | 'ARB' | 'AURORA' | 'ALGO' | 'BCH' | 'BSC' | 'BTC' | 'CELO' | 'CRO' | 'DOGE' | 'EGLD' | 'EOS' | 'ETH' | 'FTM' | 'GNO' | 'KCS' | 'KSM' | 'KLAY' | 'LISK' | 'LTC' | 'NEAR' | 'OASIS' | 'OPTIMISM' | 'DOT' | 'PALM' | 'MATIC' | 'ONE' | 'RSK' | 'SOL' | 'TEZOS' | 'ZCASH' | 'TRON' | 'VET' | 'XDC' | 'XLM' | 'NEO',
+                        chain: 'ADA' | 'ALGO' | 'ARB' | 'AURORA' | 'AVAX' | 'BCH' | 'BSC' | 'BTC' | 'CELO' | 'CRO' | 'DOGE' | 'DOT' | 'EGLD' | 'EOS' | 'ETH' | 'FTM' | 'GNO' | 'KCS' | 'KSM' | 'KLAY' | 'LISK' | 'LTC' | 'NEAR' | 'NEO' | 'MATIC' | 'OASIS' | 'ONE' | 'OPTIMISM' | 'PALM' | 'RSK' | 'SOL' | 'TEZOS' | 'TRON' | 'VET' | 'XDC' | 'XLM' | 'ZCASH' | 'ZIL',
                         requestBody: any,
                         xApiKey?: string,
                         nodeType?: 'ALGOD' | 'INDEXER',
                         testnetType: 'ethereum-sepolia' | 'ethereum-goerli' = 'ethereum-sepolia',
+                        chainType: 'avax-c' | 'avax-p' | 'avax-x' = 'avax-c',
                         rpcPath?: string,
                     ): CancelablePromise<any> {
                         return __request({
@@ -104,6 +110,7 @@ export class NodeRpcService {
                             query: {
                                 'nodeType': nodeType,
                                 'testnetType': testnetType,
+                                'chainType': chainType,
                             },
                             body: requestBody,
                             mediaType: 'application/json',

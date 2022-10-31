@@ -22,20 +22,8 @@ export type AdaBlock = {
      */
     slotNo?: number;
     /**
-     * The root node of a merkle tree, a descendant of all the hashed pairs in the tree.
-     */
-    merkleRoot?: string;
-    /**
      * Time of the block.
      */
     forgedAt?: string;
-    /**
-     * Sum of fees paid in the block.
-     */
-    fees?: number;
-    /**
-     * Number of the slot in the epoch.
-     */
-    slotInEpoch?: number;
     transactions?: Array<AdaTx>;
 }

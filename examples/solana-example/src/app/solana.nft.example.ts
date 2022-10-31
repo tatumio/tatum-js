@@ -1,18 +1,14 @@
 import { TatumSolanaSDK } from '@tatumio/solana'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import { Currency } from '@tatumio/api-client'
 
-const solanaSDK = TatumSolanaSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const solanaSDK = TatumSolanaSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
+/**
+ * https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftMintErc721
+ */
 export async function solanaNftExample() {
-  const metadataURI = await solanaSDK.nft.getNFTMetadataURI(
-    'SOL',
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-
-  const royalty = await solanaSDK.nft.getNFTRoyalty('SOL', '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326', '1')
-
-  const minted = await solanaSDK.transaction.mintNft({
+  // Lets mint new NFT on Solana
+  const { txId, nftAddress } = (await solanaSDK.transaction.mintNft({
     chain: 'SOL',
     to: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
     from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
@@ -25,14 +21,24 @@ export async function solanaNftExample() {
       uri: 'https://my_token_data.com',
       creators: [],
     },
-  })
+  })) as { txId: string; nftAddress: string }
+  console.log(`Minted NFT: ${nftAddress} in tx: ${txId}`)
 
-  const transferred = await solanaSDK.transaction.transferNft({
-    chain: 'SOL',
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetMetadataErc721
+  const metadata = await solanaSDK.nft.getNFTMetadataURI(Currency.SOL, nftAddress, '')
+  console.log(`Metadata of NFT: ${metadata}`)
+
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetRoyaltyErc721
+  const royalty = await solanaSDK.nft.getNFTRoyalty(Currency.SOL, nftAddress, '')
+  console.log(`Royalty of NFT: ${royalty}`)
+
+  const { txId: transferTx } = (await solanaSDK.transaction.transferNft({
+    chain: Currency.SOL,
     to: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
     from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
     fromPrivateKey:
       '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
-    contractAddress: minted['nftAddress'],
-  })
+    contractAddress: nftAddress,
+  })) as { txId: string }
+  console.log(`Transfered NFT: ${nftAddress} in tx: ${transferTx}`)
 }

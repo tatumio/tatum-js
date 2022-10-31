@@ -15,6 +15,7 @@ export const kcsTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
       ...native({
         ...args,
         broadcastFunction: KuCoinService.kcsBroadcast,
+        transferApiMethod: KuCoinService.kcsBlockchainTransfer,
       }),
     },
     erc20: {
@@ -39,6 +40,7 @@ export const kcsTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
       ...smartContract({
         ...args,
         broadcastFunction: KuCoinService.kcsBroadcast,
+        smartContractApiMethod: KuCoinService.kcsBlockchainSmartContractInvocation,
       }),
     },
   }

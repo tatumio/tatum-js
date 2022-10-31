@@ -24,6 +24,9 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
    * @returns transaction id of the transaction in the blockchain
    */
   const sendTransaction = async (body: TransferXrp) => {
+    if (body.signatureId) {
+      return ApiServices.blockchain.xrp.xrpTransferBlockchain(body as any)
+    }
     return ApiServices.blockchain.xrp.xrpBroadcast({ txData: await prepareSignedTransaction(body) })
   }
   /**
@@ -34,6 +37,9 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
    * @returns transaction id of the transaction in the blockchain
    */
   const sendTrustlineTransaction = async (body: Trustline) => {
+    if (body.signatureId) {
+      return ApiServices.blockchain.xrp.xrpTrustLineBlockchain(body as any)
+    }
     return ApiServices.blockchain.xrp.xrpBroadcast({ txData: await prepareSignedTrustlineTransaction(body) })
   }
   /**
@@ -44,6 +50,9 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
    * @returns transaction id of the transaction in the blockchain
    */
   const sendAccountSettingsTransaction = async (body: AccountSettings) => {
+    if (body.signatureId) {
+      return ApiServices.blockchain.xrp.xrpAccountSettings(body as any)
+    }
     return ApiServices.blockchain.xrp.xrpBroadcast({
       txData: await prepareSignedAccountSettingsTransaction(body),
     })
@@ -94,7 +103,7 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
       }
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
       const balanceRequired = new BigNumber(amount).plus(finalFee)
-      const accountBalance = new BigNumber(accountInfo.account_data?.Balance as string)
+      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0).dividedBy(1000000)
       if (accountBalance.isLessThan(balanceRequired)) {
         throw new XrpSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,
@@ -141,7 +150,7 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
 
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
 
-      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0)
+      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0).dividedBy(1000000)
       if (accountBalance.isLessThan(finalFee)) {
         throw new XrpSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,
@@ -181,7 +190,7 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
       const finalFee = Math.max(new BigNumber(fee || '0').toNumber(), xrpFee.toNumber()) / 1000000
       const rippleAPI = new RippleAPI()
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
-      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0)
+      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0).dividedBy(1000000)
       if (accountBalance.isLessThan(finalFee)) {
         throw new XrpSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,

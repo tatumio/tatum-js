@@ -10,6 +10,7 @@ export const oneSmartContract = (args: {
   const unpatchedSmartContract = smartContract({
     ...args,
     broadcastFunction: HarmonyService.oneBroadcast,
+    smartContractApiMethod: HarmonyService.oneBlockchainSmartContractInvocation,
   })
 
   return {

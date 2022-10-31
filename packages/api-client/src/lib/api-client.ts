@@ -1,6 +1,7 @@
 import {
   AccountService,
   AlgorandService,
+  AuctionService,
   BitcoinCashService,
   BitcoinService,
   BlockchainAddressesService,
@@ -127,4 +128,6 @@ export const ApiServices = {
   exchangeRate: ExchangeRateService,
   tatum: ServiceUtilsService,
   custodial: CustodialManagedWalletsService,
+  auction: AuctionService,
+  gasPump: GasPumpService,
 }

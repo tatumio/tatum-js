@@ -141,6 +141,10 @@ export class NotificationSubscriptionsService {
          * "type": "token", // the type of the transaction; can be either "native" or "token"
          * "mempool": true, // (EMV-based blockchains only) if appears and set to "true", the transaction is in the mempool; if set to "false" or does not appear at all, the transaction has been added to a block
          * "counterAddress": undefined // an optional counter party address of the transaction; for EVM-based blockchains, this is the recipient's address
+         * "addressesRiskRatio": [ // (optional, subject to change; for Solana mainnet only) risk levels assigned to the addresses with which the address communicated within the transaction; the addresses are assessed using the AML/CFT solution by blockmate.io, see https://docs.blockmate.io/docs/risk-API/sources
+         * {"vTEfAhXTmvgFmepgfhzBbRrJ4EtUP9adbMJjpzLsDMk": 0},
+         * {"zBbRrJ4EtUP9adbMJjpzLsDMkvTEfAhXTmvgFmepgfh": 100}
+         * ]
          * }</pre>
          * <b>5 credits are debited for each fired web hook.</b><br/></li>
          * <li><b>CONTRACT_NFT_TXS_PER_BLOCK</b> - Enable HTTP POST JSON notifications for any event of minting, transferring, or burning an NFT that was emitted from any smart contract. This notification is fired as a batch notification per block: it includes all NFT minting, transferring, or burning events from all smart contracts that got recorded into a block.<br/>

@@ -4,15 +4,15 @@
 
 export type SolanaMintedResult = {
     /**
-     * Transaction ID
+     * The ID of the transaction
      */
     txId?: string;
     /**
-     * Address of the minted NFT contract
+     * The blockchain address of the minted NFT
      */
     nftAddress?: string;
     /**
-     * Address of the account owned by a mint recipient, which holds the minted NFT
+     * The blockchain address that received the minted NFT; this address was created under the recipient's account address (the one in the <code>to</code> parameter of the request body), is owned by the recipient's address, and has the same private key
      */
     nftAccountAddress?: string;
 }

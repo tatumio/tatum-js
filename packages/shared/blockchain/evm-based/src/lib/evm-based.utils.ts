@@ -77,6 +77,9 @@ export const evmBasedUtils = {
     if (!fromPrivateKey) {
       throw new Error('signatureId or fromPrivateKey has to be defined')
     }
+
+    await evmBasedUtils.validateSenderBalance(client, fromPrivateKey, tx)
+
     const signedTransaction = await client.eth.accounts.signTransaction(tx, fromPrivateKey)
 
     if (!signedTransaction.rawTransaction) {
@@ -86,6 +89,35 @@ export const evmBasedUtils = {
     return signedTransaction.rawTransaction
   },
 
+  validateSenderBalance: async (client: Web3, privateKey: string, tx: TransactionConfig) => {
+    const { gas, gasPrice, nonce, ...txWithoutGas } = tx
+    let estimate: BigNumber
+    try {
+      estimate = new BigNumber(await client.eth.estimateGas(txWithoutGas))
+    } catch (e) {
+      if (!gas) {
+        throw new EvmBasedSdkError({
+          code: SdkErrorCode.EVM_TRANSACTION_ERROR,
+          error: new Error(`Unable to estimate gas. transaction ${tx}, returned with error ${e}`),
+        })
+      }
+      estimate = new BigNumber(gas as string)
+    }
+    let threshold = estimate.multipliedBy(new BigNumber(tx.gasPrice as string))
+    if (tx.value) {
+      threshold = threshold.plus(tx.value as string)
+    }
+    const account = client.eth.accounts.privateKeyToAccount(privateKey)
+    const balance = await client.eth.getBalance(account.address)
+    if (!balance || new BigNumber(balance).isLessThan(threshold)) {
+      throw new EvmBasedSdkError({
+        code: SdkErrorCode.INSUFFICIENT_FUNDS,
+        error: new Error(
+          `Insufficient funds send transaction from account ${account.address} -> available balance is ${balance}, required balance is ${threshold}`,
+        ),
+      })
+    }
+  },
   transformToWei: (amount: string, unit = 'ether') => {
     return toWei(amount, unit as Unit)
   },

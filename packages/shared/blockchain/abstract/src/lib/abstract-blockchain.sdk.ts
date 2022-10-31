@@ -16,6 +16,7 @@ import {
   ChainBurnErc20 as ApiChainBurnErc20,
   ChainMintErc20 as ApiChainMintErc20,
   ChainTransferEthErc20,
+  Currency,
   DeployErc20,
   DeployMultiToken,
   DeployNft,
@@ -47,6 +48,7 @@ import {
   TransferCustodialWalletCelo,
   TransferCustodialWalletCeloKMS,
   TransferCustodialWalletKMS,
+  TransferEthBlockchain,
   TransferMultiToken,
   TransferMultiTokenBatch,
   TransferNft,
@@ -60,13 +62,13 @@ import {
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
 import { abstractSdk, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
-import { abstractBlockchainOffchain } from './services/offchain.abstract-blockchain'
+import { abstractBlockchainVirtualAccount } from './services/virtualAccount.abstract-blockchain'
 
 export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; blockchain: Blockchain }) => {
   return {
     ...abstractSdk(args),
     kms: abstractBlockchainKms(args),
-    offchain: abstractBlockchainOffchain(args),
+    virtualAccount: abstractBlockchainVirtualAccount(args),
     getExchangeRate(basePair?: Fiat): CancelablePromise<ExchangeRate> {
       return ExchangeRateService.getExchangeRate(
         // @ts-ignore @TODO OPENAPI fix
@@ -91,6 +93,25 @@ export type SecretOrSignatureId<T extends { secret?: string }> = Omit<T, 'secret
 
 export type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey?: string }> = Omit<T, 'fromPrivateKey'> &
   Partial<SignatureId> &
+  Partial<Pick<T, 'fromPrivateKey'>>
+
+export type FromPrivateKeyOrSignatureIdOrMnemonic<T extends { fromPrivateKey?: string }> = Omit<
+  T,
+  'fromPrivateKey'
+> &
+  Partial<SignatureId & { index: number }> &
+  Partial<{ mnemonic: string }> &
+  Partial<Pick<T, 'fromPrivateKey'>>
+
+export type PrivateKeyOrSignatureId<T extends { privateKey?: string }> = Omit<T, 'privateKey'> &
+  Partial<SignatureId> &
+  Partial<Pick<T, 'privateKey'>>
+
+export type FromPrivateKeyOrSignatureIdTron<T extends { fromPrivateKey?: string }> = Omit<
+  T,
+  'fromPrivateKey'
+> &
+  Partial<SignatureId & { index: number; account: string; from: string }> &
   Partial<Pick<T, 'fromPrivateKey'>>
 
 export type ChainTransferErc20 = FromPrivateKeyOrSignatureId<Omit<ChainTransferEthErc20, 'chain'>>
@@ -147,6 +168,7 @@ export type ChainGenerateCustodialAddress =
 
 export type ChainTransferNative = FromPrivateKeyOrSignatureId<Omit<TransferPolygonBlockchain, 'currency'>> & {
   gas?: string
+  currency?: Currency
 }
 
 export type ChainGenerateMarketplace = FromPrivateKeyOrSignatureId<GenerateMarketplace>

@@ -1,4 +1,10 @@
-import { ApproveErc20 } from '@tatumio/api-client'
+import {
+  ApiServices,
+  ChainBurnErc20KMS,
+  ChainDeployErc20KMS,
+  ChainMintErc20KMS,
+  ChainTransferEthErc20KMS,
+} from '@tatumio/api-client'
 import {
   BroadcastFunction,
   ChainApproveErc20,
@@ -246,7 +252,7 @@ export const erc20 = (args: {
        * @param body body of the approve operation
        * @param provider optional Web3 provider
        */
-      approveSignedTransaction: async (body: ApproveErc20, provider?: string) =>
+      approveSignedTransaction: async (body: ChainApproveErc20, provider?: string) =>
         approveSignedTransaction(body, args.web3, provider),
     },
     send: {
@@ -257,11 +263,15 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      deploySignedTransaction: async (body: ChainDeployErc20, provider?: string) =>
-        args.broadcastFunction({
-          txData: await deploySignedTransaction(body, args.web3, provider),
-          signatureId: body.signatureId,
-        }),
+      deploySignedTransaction: async (body: ChainDeployErc20, provider?: string) => {
+        if (body.signatureId) {
+          return await ApiServices.fungibleToken.erc20Deploy(body as ChainDeployErc20KMS)
+        } else {
+          return args.broadcastFunction({
+            txData: await deploySignedTransaction(body, args.web3, provider),
+          })
+        }
+      },
       /**
        * Send transfer erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -269,11 +279,16 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      transferSignedTransaction: async (body: ChainTransferErc20, provider?: string) =>
-        args.broadcastFunction({
-          txData: await transferSignedTransaction(body, args.web3, provider),
-          signatureId: body.signatureId,
-        }),
+      transferSignedTransaction: async (body: ChainTransferErc20, provider?: string) => {
+        if (body.signatureId) {
+          return await ApiServices.fungibleToken.erc20Transfer(body as ChainTransferEthErc20KMS)
+        } else {
+          return args.broadcastFunction({
+            txData: await transferSignedTransaction(body, args.web3, provider),
+          })
+        }
+      },
+
       /**
        * Send mint erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -281,11 +296,15 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintSignedTransaction: async (body: ChainMintErc20, provider?: string) =>
-        args.broadcastFunction({
-          txData: await mintSignedTransaction(body, args.web3, provider),
-          signatureId: body.signatureId,
-        }),
+      mintSignedTransaction: async (body: ChainMintErc20, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.fungibleToken.erc20Mint(body as ChainMintErc20KMS)
+        } else {
+          return args.broadcastFunction({
+            txData: await mintSignedTransaction(body, args.web3, provider),
+          })
+        }
+      },
       /**
        * Send burn erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -293,11 +312,15 @@ export const erc20 = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      burnSignedTransaction: async (body: ChainBurnErc20, provider?: string) =>
-        args.broadcastFunction({
-          txData: await burnSignedTransaction(body, args.web3, provider),
-          signatureId: body.signatureId,
-        }),
+      burnSignedTransaction: async (body: ChainBurnErc20, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.fungibleToken.erc20Burn(body as ChainBurnErc20KMS)
+        } else {
+          return args.broadcastFunction({
+            txData: await burnSignedTransaction(body, args.web3, provider),
+          })
+        }
+      },
     },
   }
 }

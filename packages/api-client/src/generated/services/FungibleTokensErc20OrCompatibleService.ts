@@ -11,6 +11,8 @@ import type { ChainBurnErc20 } from '../models/ChainBurnErc20';
 import type { ChainBurnErc20KMS } from '../models/ChainBurnErc20KMS';
 import type { ChainBurnKcsErc20 } from '../models/ChainBurnKcsErc20';
 import type { ChainBurnKcsErc20KMS } from '../models/ChainBurnKcsErc20KMS';
+import type { ChainDeployAlgoErc20 } from '../models/ChainDeployAlgoErc20';
+import type { ChainDeployAlgoErc20KMS } from '../models/ChainDeployAlgoErc20KMS';
 import type { ChainDeployCeloErc20 } from '../models/ChainDeployCeloErc20';
 import type { ChainDeployCeloErc20KMS } from '../models/ChainDeployCeloErc20KMS';
 import type { ChainDeployErc20 } from '../models/ChainDeployErc20';
@@ -52,6 +54,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * Smart contracts are standardized and audited.</p>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
+     * <li>Algorand</li>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
      * <li>Ethereum</li>
@@ -63,8 +66,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>XinFin</li>
      * </ul>
      * <p>You can review the code of a deployed smart contract <a href="https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/token.sol" target="_blank">here</a>.</p>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When deploying a fungible token smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When deploying a fungible token smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
@@ -74,7 +77,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * @throws ApiError
      */
     public static erc20Deploy(
-        requestBody: (ChainDeployErc20 | ChainDeploySolanaSpl | ChainDeployCeloErc20 | ChainDeployKcsErc20 | ChainDeployErc20KMS | ChainDeploySolanaSplKMS | ChainDeployCeloErc20KMS | ChainDeployKcsErc20KMS),
+        requestBody: (ChainDeployErc20 | ChainDeploySolanaSpl | ChainDeployCeloErc20 | ChainDeployKcsErc20 | ChainDeployAlgoErc20 | ChainDeployErc20KMS | ChainDeploySolanaSplKMS | ChainDeployCeloErc20KMS | ChainDeployKcsErc20KMS | ChainDeployAlgoErc20KMS),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
@@ -100,6 +103,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>Create new fungible tokens in the smart contract (the <code>contractAddress</code> parameter in the request body) and transfer them to the specified blockchain address (the <code>to</code> parameter in the request body). You can mint new fungible tokens only if the current supply of tokens in the smart contract is lower than the total supply set for this contract.</p>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
+     * <li>Algorand</li>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
      * <li>Ethereum</li>
@@ -109,8 +113,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Polygon</li>
      * <li>XinFin</li>
      * </ul>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When minting fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When minting fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
@@ -156,8 +160,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Polygon</li>
      * <li>XinFin</li>
      * </ul>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When burning fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When burning fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
@@ -200,8 +204,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Klaytn</li>
      * <li>Polygon</li>
      * </ul>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When approving spending of fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When approving spending of fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
@@ -249,10 +253,21 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Solana</li>
      * <li>XinFin</li>
      * </ul>
-     * <p><b>Transferring fungible tokens on Algorand</b></p>
-     * <p>On Algorand, the recipient has to agree in advance to receive your fungible tokens because Algorand charges users for storing the tokens on their addresses, and an Algorand blockchain address by default does not receive the tokens unless explicitly agreed. Before transferring the fungible tokens, make sure that the recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">has agreed to receive the NFT</a> to their address.</p>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When transferring fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p><b>Transferring fungible tokens on Algorand</b><br/>
+     * On Algorand, the recipient has to agree in advance to receive your fungible tokens because Algorand charges users for storing the tokens on their addresses, and an Algorand blockchain address by default does not receive the tokens unless explicitly agreed. Before transferring the fungible tokens, make sure that the recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">has agreed to receive the NFT</a> to their address.</p>
+     * <p><b>Blockchain-specific APIs to transfer fungible tokens</b><br/>
+     * You can also use blockchain-specific APIs for transferring fungible tokens on the following blockchains:
+     * <ul>
+     * <li><a href="https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscBlockchainTransfer" target="_blank">BNB Smart Chain</a></li>
+     * <li><a href="https://apidoc.tatum.io/tag/Celo#operation/CeloBlockchainTransfer" target="_blank">Celo</a></li>
+     * <li><a href="https://apidoc.tatum.io/tag/Ethereum#operation/EthBlockchainTransfer" target="_blank">Ethereum</a></li>
+     * <li><a href="https://apidoc.tatum.io/tag/Harmony#operation/OneBlockchainTransfer" target="_blank">Harmony</a></li>
+     * <li><a href="https://apidoc.tatum.io/tag/KuCoin#operation/KcsBlockchainTransfer" target="_blank">KuCoin Community Chain</a></li>
+     * <li><a href="https://apidoc.tatum.io/tag/Polygon#operation/PolygonBlockchainTransfer" target="_blank">Polygon</a></li>
+     * <li><a href="https://apidoc.tatum.io/tag/XinFin#operation/XdcBlockchainTransfer" target="_blank">XinFin</a></li>
+     * </ul>
+     * <p><b>Signing a transaction</b><br/>
+     * When transferring fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
@@ -299,7 +314,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * @param tokenAddress Address of the token smart contract
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
-     * @param from Transactions from this block onwords will be included.
+     * @param from Transactions from this block onwards will be included.
      * @param to Transactions up to this block will be included.
      * @param sort Sorting of the data. ASC - oldest first, DESC - newest first.
      * @returns FungibleTx OK
@@ -348,6 +363,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Solana</li>
      * <li>XinFin</li>
      * </ul>
      *
@@ -359,7 +375,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * @throws ApiError
      */
     public static erc20GetBalance(
-        chain: 'CELO' | 'ALGO' | 'MATIC' | 'ETH' | 'BSC' | 'XDC' | 'KLAY' | 'ONE' | 'EGLD' | 'KCS',
+        chain: 'CELO' | 'ALGO' | 'MATIC' | 'ETH' | 'BSC' | 'XDC' | 'KLAY' | 'ONE' | 'EGLD' | 'KCS' | 'SOL',
         address: string,
         contractAddress: string,
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',

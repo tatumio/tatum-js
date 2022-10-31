@@ -1,4 +1,5 @@
 import { TatumXrpSDK } from '@tatumio/xrp'
+import { TransactionHash } from '@tatumio/api-client'
 
 export const txExample = async () => {
   const xrpSDK = TatumXrpSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
@@ -13,12 +14,12 @@ export const txExample = async () => {
   console.log(`My account has ${Number(accountDetails.account_data?.Balance as string) / 1_000_000} XRP.`)
 
   // https://apidoc.tatum.io/tag/XRP#operation/XrpTransferBlockchain
-  const { txId } = await xrpSDK.transaction.sendTransaction({
+  const { txId } = (await xrpSDK.transaction.sendTransaction({
     fromAccount: address,
     fromSecret: secret,
     amount: '1',
     to: to,
-  })
+  })) as TransactionHash
   console.log(`Transaction with ID ${txId} was sent.`)
 }
 
@@ -34,13 +35,13 @@ export const txTrustlineExample = async () => {
   console.log(`My account has ${Number(accountDetails.account_data?.Balance as string) / 1_000_000} XRP.`)
 
   // https://apidoc.tatum.io/tag/XRP#operation/XrpTrustLineBlockchain
-  const { txId } = await xrpSDK.transaction.sendTrustlineTransaction({
+  const { txId } = (await xrpSDK.transaction.sendTrustlineTransaction({
     fromAccount: address,
     fromSecret: secret,
     limit: '1',
     issuerAccount: address,
     token: 'MY_TOKEN',
-  })
+  })) as TransactionHash
   console.log(`Transaction with ID ${txId} was sent.`)
 }
 
@@ -56,10 +57,10 @@ export const txAccountSettingsExample = async () => {
   console.log(`My account has ${Number(accountDetails.account_data?.Balance as string) / 1_000_000} XRP.`)
 
   // https://apidoc.tatum.io/tag/XRP#operation/XrpAccountSettings
-  const { txId } = await xrpSDK.transaction.sendAccountSettingsTransaction({
+  const { txId } = (await xrpSDK.transaction.sendAccountSettingsTransaction({
     fromAccount: address,
     fromSecret: secret,
     rippling: true,
-  })
+  })) as TransactionHash
   console.log(`Transaction with ID ${txId} was sent.`)
 }

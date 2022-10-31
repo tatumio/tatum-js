@@ -6,6 +6,7 @@ import {
 } from '@tatumio/shared-testing-common'
 import { TatumOneSDK } from '../one.sdk'
 import * as apiClient from '@tatumio/api-client'
+import { BlockchainAddressesService, BlockchainUtilsService } from '@tatumio/api-client'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
@@ -47,6 +48,7 @@ describe('OneSDK - blockchain', () => {
         fee: { gasLimit: '40000', gasPrice: '20' },
       },
     ],
+    smartContractGetAddress: [blockchain.smartContractGetAddress, 'ONE', testData.TX_HASH],
     blockchainTransfer: [
       api.oneBlockchainTransfer,
       {

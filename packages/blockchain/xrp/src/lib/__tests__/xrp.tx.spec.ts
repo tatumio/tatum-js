@@ -2,7 +2,7 @@ import '@tatumio/shared-testing-common'
 import { xrpTxService } from '../services/xrp.tx'
 import { mockHelper, testHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
-import { XrpAccount, XrpFee } from '@tatumio/api-client'
+import { TransactionHash, XrpAccount, XrpFee } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 jest.mock('@tatumio/api-client')
@@ -32,15 +32,15 @@ describe('XrpSDK - TX', () => {
       mockGetFee()
       mockedApi.blockchain.xrp.xrpBroadcast.mockResolvedValue({ txId: '12345' })
 
-      const result = await txService.sendTransaction({
+      const result = (await txService.sendTransaction({
         fromSecret: SECRET,
         fromAccount: ACCOUNT,
         fee: FEE,
         amount: AMOUNT,
         to: ACCOUNT,
-      })
+      })) as TransactionHash
 
-      expect(result.txId).toBe('12345')
+      expect(result['txId']).toBe('12345')
       testHelper.expectMockCalled(mockedApi.blockchain.xrp.xrpBroadcast, [{ txData: VALID_TX_DATA }])
     })
   })
@@ -95,7 +95,7 @@ describe('XrpSDK - TX', () => {
   function mockGetAccountInfo(
     args: XrpAccount = {
       ledger_current_index: 1,
-      account_data: { Sequence: 123 },
+      account_data: { Sequence: 123, Balance: '1000000000' },
     },
   ) {
     return mockedApi.blockchain.xrp.xrpGetAccountInfo.mockResolvedValue(args)

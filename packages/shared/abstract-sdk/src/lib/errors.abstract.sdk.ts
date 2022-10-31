@@ -173,6 +173,7 @@ export enum SdkErrorCode {
 
   // Validation errors
   INSUFFICIENT_FUNDS = 'insufficient.funds.on.sender.account',
+  EVM_TRANSACTION_ERROR = 'evm-based.smart-contract.transaction.error',
   PARAMETER_MISMATCH = 'parameter.mismatch',
 }
 

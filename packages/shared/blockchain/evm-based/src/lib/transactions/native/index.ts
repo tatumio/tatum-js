@@ -39,6 +39,7 @@ export const native = (args: {
   blockchain: EvmBasedBlockchain
   web3: EvmBasedWeb3
   broadcastFunction: BroadcastFunction
+  transferApiMethod: any
 }) => {
   return {
     prepare: {
@@ -59,11 +60,15 @@ export const native = (args: {
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      transferSignedTransaction: async (body: ChainTransferNative, provider?: string) =>
-        args.broadcastFunction({
-          txData: await transferSignedTransaction(body, args.web3, provider),
-          signatureId: body.signatureId,
-        }),
+      transferSignedTransaction: async (body: ChainTransferNative, provider?: string) => {
+        if (body.signatureId) {
+          return args.transferApiMethod(body)
+        } else {
+          return args.broadcastFunction({
+            txData: await transferSignedTransaction(body, args.web3, provider),
+          })
+        }
+      },
     },
   }
 }

@@ -1,5 +1,5 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { ApiServices, TATUM_API_CONSTANTS } from '@tatumio/api-client'
 import { amountUtils, SdkErrorCode, toHexString } from '@tatumio/shared-abstract-sdk'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { Erc20Token, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
@@ -274,11 +274,15 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      deploySignedTransaction: async (body: ChainDeployErc20Celo, provider?: string, testnet?: boolean) =>
-        args.broadcastFunction({
+      deploySignedTransaction: async (body: ChainDeployErc20Celo, provider?: string, testnet?: boolean) => {
+        if (body.signatureId) {
+          return ApiServices.fungibleToken.erc20Deploy(body as any)
+        }
+        return args.broadcastFunction({
           txData: await prepareDeploySignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Mint Celo or cUsd transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -287,11 +291,15 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintSignedTransaction: async (body: ChainMintErc20Celo, provider?: string, testnet?: boolean) =>
-        args.broadcastFunction({
+      mintSignedTransaction: async (body: ChainMintErc20Celo, provider?: string, testnet?: boolean) => {
+        if (body.signatureId) {
+          return ApiServices.fungibleToken.erc20Mint(body as any)
+        }
+        return args.broadcastFunction({
           txData: await prepareMintSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo or cUsd transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -300,11 +308,19 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      transferSignedTransaction: async (body: ChainTransferErc20Celo, provider?: string, testnet?: boolean) =>
-        args.broadcastFunction({
+      transferSignedTransaction: async (
+        body: ChainTransferErc20Celo,
+        provider?: string,
+        testnet?: boolean,
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.fungibleToken.erc20Transfer(body as any)
+        }
+        return args.broadcastFunction({
           txData: await prepareTransferSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Burn Celo or cUsd transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -313,11 +329,15 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      burnSignedTransaction: async (body: ChainBurnErc20Celo, provider?: string, testnet?: boolean) =>
-        args.broadcastFunction({
+      burnSignedTransaction: async (body: ChainBurnErc20Celo, provider?: string, testnet?: boolean) => {
+        if (body.signatureId) {
+          return ApiServices.fungibleToken.erc20Burn(body as any)
+        }
+        return args.broadcastFunction({
           txData: await prepareBurnSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
-        }),
+        })
+      },
     },
   }
 }

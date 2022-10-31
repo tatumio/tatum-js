@@ -11,7 +11,7 @@ describe('Offchain - tx', () => {
   // skiped because account doesn't have balance
   // TODO find a way to fund the account
   it.skip('should send offchain transaction', async () => {
-    const tx = (await sdk.offchain.send({
+    const tx = (await sdk.virtualAccount.send({
       address: testData.ADDRESS_0,
       privateKey: testData.PRIVATE_KEY_0,
       amount: '0.001',
