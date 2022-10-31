@@ -22,6 +22,8 @@ import {
     tokenByAddressFlowNftTokenScript,
     transferFlowNftTokenTxTemplate
 } from './flowTransaction';
+// @ts-ignore
+import { send as transportGRPC } from "@onflow/transport-grpc"
 
 export enum FlowTxType {
     CREATE_ACCOUNT,
@@ -147,7 +149,8 @@ const sendTransaction = async (testnet: boolean, {
     payer,
     keyHash,
 }: Transaction): Promise<TransactionResult> => {
-    fcl.config().put('accessNode.api', testnet ? 'https://rest-testnet.onflow.org' : 'https://rest-mainnet.onflow.org');
+    fcl.config().put('sdk.transport', transportGRPC)
+    fcl.config().put('accessNode.api', testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org');
     let response;
     try {
         response = await fcl.send([
@@ -192,7 +195,8 @@ const sendTransaction = async (testnet: boolean, {
 };
 
 const sendScript = async (testnet: boolean, code: string, args: FlowArgs[]) => {
-    fcl.config().put('accessNode.api', testnet ? 'https://rest-testnet.onflow.org' : 'https://rest-mainnet.onflow.org');
+    fcl.config().put('sdk.transport', transportGRPC)
+    fcl.config().put('accessNode.api', testnet ? 'https://access-testnet.onflow.org' : 'https://access-mainnet-beta.onflow.org');
     const response = await fcl.send([
         fcl.script(code),
         fcl.args(args.map(arg => fcl.arg(arg.type === 'UInt64' ? parseInt(arg.value as string) : arg.value, types[arg.type]))),
