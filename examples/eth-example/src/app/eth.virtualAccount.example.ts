@@ -1,9 +1,9 @@
 import { TatumEthSDK } from '@tatumio/eth'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const ethSdk = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const ethSdk = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-export async function ethOffchainExample() {
+export async function ethVirtualAccountExample() {
   const account = await ethSdk.virtualAccount.depositAddress.checkExists('LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b')
   const address = await ethSdk.virtualAccount.depositAddress.create('LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b', 1)
   const adresses = await ethSdk.virtualAccount.depositAddress.createMultiple({
