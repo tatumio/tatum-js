@@ -11,7 +11,7 @@ import {
 import dedent from 'dedent-js'
 import { flowTxService } from '../services/flow.tx'
 
-describe('flowTxService', () => {
+describe.skip('flowTxService', () => {
   jest.setTimeout(999999)
 
   const txService = flowTxService({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
