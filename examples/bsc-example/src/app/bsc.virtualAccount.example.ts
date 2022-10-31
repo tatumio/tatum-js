@@ -6,7 +6,7 @@ export async function bscVirtualAccountExample() {
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateWallet
   const { mnemonic, xpub } = await bscSdk.wallet.generateWallet()
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddressPrivateKey
-  const fromPrivateKey = await bscSdk.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1)
+  const fromPrivateKey = await bscSdk.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
 
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddress
   const to = bscSdk.wallet.generateAddressFromXPub(xpub, 1)
@@ -25,7 +25,8 @@ export async function bscVirtualAccountExample() {
 
   console.log(`Deposit address is ${depositAddress.address}`)
 
-  // FUND YOUR ACCOUNT WITH BNB FROM https://testnet.binance.org/faucet-smart
+  // Fund your address here: https://testnet.binance.org/faucet-smart
+  console.log(`Fund me ${depositAddress.address} to send offchain transaction!`)
 
   // I wanna send assets from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/BscOrBepTransfer

@@ -1,32 +1,40 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumKlaytnSDK } from '@tatumio/klaytn'
 
-const klaytnSDK = TatumKlaytnSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const klaytnSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function klaytnBlockchainExample() {
-  const broadcastHash = await klaytnSDK.blockchain.broadcast({
-    txData: '62BD544D1B9031EFC330A3E855CC3A0D51CA5131455C1AB3BCAC6D243F65460D',
-    signatureId: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
-  })
-
+  // Get gasLimit and gasPrice for a transaction
+  // https://apidoc.tatum.io/tag/Blockchain-fees#operation/KlaytnEstimateGas
   const gasInfo = await klaytnSDK.blockchain.estimateGas({
     from: '0xfb99f8ae9b70a0c8cd96ae665bbaf85a7e01a2ef',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     amount: '100000',
-    data: 'My note to recipient.',
   })
+  console.log('Gas estimate: ', gasInfo)
 
+  // Get transaction details by hash
+  // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGetTransaction
   const transaction = await klaytnSDK.blockchain.get(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
+    '0xa71e938eaae42da7d485afdeb616bcc810fa952a5c64928561457851660b01d9',
   )
-  const balance = await klaytnSDK.blockchain.getBlockchainAccountBalance(
-    '0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B',
-  )
+  console.log('Transaction: ', transaction)
+
+  // Get block by hash
+  // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGetBlock
   const block = await klaytnSDK.blockchain.getBlock(
-    '0x305c58c8c62399097f1ea702e337f13be6b3a3ed28867d530d8a03191f040b9c',
+    '0x9089a6d4d24ddebfec27f9db7527bd6bf2ba0628efa1ea67084d91aeaf43d7b5',
   )
+  console.log('Block: ', block)
+
+  // Get current block
+  // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGetCurrentBlock
   const currentBlock = await klaytnSDK.blockchain.getCurrentBlock()
+  console.log('Current block: ', currentBlock)
+
+  // Get transaction count of an address
+  // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGetTransactionCount
   const transactionsCount = await klaytnSDK.blockchain.getTransactionsCount(
-    '0xdac17f958d2ee523a2206206994597c13d831ec7',
+    '0x1a4df737e347b51643f054c37d04798bdda66c75',
   )
+  console.log('Transactions count: ', transactionsCount)
 }

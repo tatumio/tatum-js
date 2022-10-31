@@ -2,6 +2,7 @@ import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
   BlockchainFeesService,
+  BlockchainUtilsService,
   FungibleTokensErc20OrCompatibleService,
   KlaytnService,
 } from '@tatumio/api-client'
@@ -10,12 +11,14 @@ import { klaytnWeb3 } from './services/klaytn.web3'
 import { klaytnKmsService } from './services/klaytn.kms'
 import { klaytnTxService } from './services/klaytn.tx'
 import { klaytnAuctionService } from './services/klaytn.auction'
+import { virtualAccountService } from './services/klaytn.virtualAccount'
 
 const blockchain = Blockchain.KLAY
 
 export const TatumKlaytnSDK = (args: SDKArguments) => {
   const web3 = klaytnWeb3({ blockchain })
   const txService = klaytnTxService({ blockchain, web3 })
+  const virtualAccount = virtualAccountService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
   const {
     deployNFTSmartContract,
@@ -76,6 +79,9 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
       getBlockchainAccountBalance: KlaytnService.klaytnGetBalance,
       get: KlaytnService.klaytnGetTransaction,
       estimateGas: BlockchainFeesService.klaytnEstimateGas,
+      smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
     },
+    smartContract: txService.smartContract,
+    virtualAccount,
   }
 }

@@ -8,7 +8,7 @@ import {
   ChainTransferMultiToken,
   ChainTransferMultiTokenBatch,
 } from '@tatumio/shared-blockchain-abstract'
-import { ApiServices, MultiTokensErc1155OrCompatibleService } from '@tatumio/api-client'
+import { MultiTokensErc1155OrCompatibleService } from '@tatumio/api-client'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
 import { Erc1155 } from '../../contracts'
@@ -293,7 +293,7 @@ export const multiToken = (args: {
       mintMultiTokenTransaction: async (body: ChainMintMultiToken, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.multiToken.mintMultiToken(body as any)
+          return MultiTokensErc1155OrCompatibleService.mintMultiToken(body as any)
         } else {
           return args.broadcastFunction({
             txData: (await mintMultiToken(body, args.web3, provider)) as string,
@@ -309,7 +309,7 @@ export const multiToken = (args: {
       mintMultiTokenBatchTransaction: async (body: ChainMintMultiTokenBatch, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.multiToken.mintMultiTokenBatch(body as any)
+          return MultiTokensErc1155OrCompatibleService.mintMultiTokenBatch(body as any)
         } else {
           return args.broadcastFunction({
             txData: (await mintMultiTokenBatch(body, args.web3, provider)) as string,
@@ -326,7 +326,7 @@ export const multiToken = (args: {
       transferMultiTokenTransaction: async (body: ChainTransferMultiToken, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.multiToken.transferMultiToken(body as any)
+          return MultiTokensErc1155OrCompatibleService.transferMultiToken(body as any)
         } else {
           return args.broadcastFunction({
             txData: (await transferMultiToken(body, args.web3, provider)) as string,
@@ -343,7 +343,7 @@ export const multiToken = (args: {
       transferMultiTokenBatchTransaction: async (body: ChainTransferMultiTokenBatch, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.multiToken.transferMultiTokenBatch(body as any)
+          return MultiTokensErc1155OrCompatibleService.transferMultiTokenBatch(body as any)
         } else {
           return args.broadcastFunction({
             txData: (await transferMultiTokenBatch(body, args.web3, provider)) as string,
@@ -359,7 +359,7 @@ export const multiToken = (args: {
       deployMultiTokenTransaction: async (body: ChainDeployMultiToken, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.multiToken.deployMultiToken(body as any)
+          return MultiTokensErc1155OrCompatibleService.deployMultiToken(body as any)
         } else {
           return args.broadcastFunction({
             txData: (await deployMultiToken(body, args.web3, provider)) as string,
@@ -375,7 +375,7 @@ export const multiToken = (args: {
       burnMultiTokenTransaction: async (body: ChainBurnMultiToken, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.multiToken.burnMultiToken(body as any)
+          return MultiTokensErc1155OrCompatibleService.burnMultiToken(body as any)
         } else {
           return args.broadcastFunction({
             txData: (await burnMultiToken(body, args.web3, provider)) as string,
@@ -391,7 +391,7 @@ export const multiToken = (args: {
       burnMultiTokenBatchTransaction: async (body: ChainBurnMultiTokenBatch, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.multiToken.burnMultiTokenBatch(body as any)
+          return MultiTokensErc1155OrCompatibleService.burnMultiTokenBatch(body as any)
         } else {
           return args.broadcastFunction({
             txData: (await burnMultiTokenBatch(body, args.web3, provider)) as string,

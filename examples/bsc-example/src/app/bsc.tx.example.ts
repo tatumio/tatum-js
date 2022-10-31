@@ -13,7 +13,7 @@ export async function bscTxExample(): Promise<void> {
   const address = bscSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  // FUND YOUR SENDER ACCOUNT WITH BNB FROM https://testnet.binance.org/faucet-smart
+  // Fund your address here: https://testnet.binance.org/faucet-smart
 
   // send native transaction using private key
   const { txId } = await bscSDK.transaction.send.transferSignedTransaction({

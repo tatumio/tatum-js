@@ -1,19 +1,19 @@
 import { TransactionHash } from '@tatumio/api-client'
-import { TatumBscSDK } from '@tatumio/bsc'
+import { TatumKlaytnSDK } from '@tatumio/klaytn'
 
-const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const klaytnSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-//https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscBlockchainSmartContractInvocation
-export async function bscSmartContractExample(): Promise<void> {
+// https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnBlockchainSmartContractInvocation
+export async function klaytnSmartContractExample(): Promise<void> {
   // if you don't already have a wallet, address and private key - generate them
-  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateWallet
-  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
-  // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddressPrivateKey
-  const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
-  const address = bscSDK.wallet.generateAddressFromPrivateKey(fromPrivateKey)
-  const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
+  // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGenerateWallet
+  const { mnemonic, xpub } = await klaytnSDK.wallet.generateWallet()
+  // /https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGenerateAddressPrivateKey
+  const fromPrivateKey = await klaytnSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const address = klaytnSDK.wallet.generateAddressFromPrivateKey(fromPrivateKey)
+  const to = klaytnSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  // Fund your address here: https://testnet.binance.org/faucet-smart
+  // You can fund your address here: https://baobab.wallet.klaytn.foundation/faucet
   console.log(`Fund address: ${address}`)
   console.log(`Private key for ${address}: ${fromPrivateKey}`)
 
@@ -21,7 +21,7 @@ export async function bscSmartContractExample(): Promise<void> {
   const contractAddress = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd'
 
   // smart contract read method
-  const { data } = await bscSDK.smartContract.send.smartContractReadMethodInvocationTransaction({
+  const { data } = await klaytnSDK.smartContract.send.smartContractReadMethodInvocationTransaction({
     contractAddress,
     methodName: 'balanceOf',
     methodABI: {
@@ -44,13 +44,13 @@ export async function bscSmartContractExample(): Promise<void> {
       type: 'function',
     },
     // address we want the balance of
-    params: ['0x352a7a5277eC7619500b06fA051974621C1acd12'],
+    params: [address],
   })
   console.log(`Smart contract data: ${data}`)
 
   // smart contract write method
   // make sure your address is funded
-  const { txId } = (await bscSDK.smartContract.send.smartContractMethodInvocationTransaction({
+  const { txId } = (await klaytnSDK.smartContract.send.smartContractMethodInvocationTransaction({
     contractAddress,
     methodName: 'transfer',
     methodABI: {

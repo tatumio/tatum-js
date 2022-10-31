@@ -1,41 +1,40 @@
 import { TransactionHash } from '@tatumio/api-client'
-import { TatumBscSDK } from '@tatumio/bsc'
+import { TatumKlaytnSDK } from '@tatumio/klaytn'
 
-const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const klaytnSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-export async function bscMultiTokenExample(): Promise<void> {
-  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
-  const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
-  const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
+export async function klaytnMultiTokenExample(): Promise<void> {
+  const { mnemonic, xpub } = await klaytnSDK.wallet.generateWallet()
+  const fromPrivateKey = await klaytnSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const to = klaytnSDK.wallet.generateAddressFromXPub(xpub, 1)
+  const tokenId = '123'
 
   // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
-  // Fund your address here: https://testnet.binance.org/faucet-smart
+  // Fund your address here: https://baobab.wallet.klaytn.foundation/faucet
 
   // upload your file to the ipfs:
   // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
 
-  const multiTokenDeployed = (await bscSDK.multiToken.send.deployMultiTokenTransaction({
-    chain: 'BSC',
+  const multiTokenDeployed = (await klaytnSDK.multiToken.send.deployMultiTokenTransaction({
+    chain: 'KLAY',
     // your private key of the address that has coins
     fromPrivateKey,
     // uploaded metadata from ipfs
     uri: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
   })) as TransactionHash
 
+  console.log('Deployed multi token transaction: ', multiTokenDeployed)
+
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
-  const transaction = await bscSDK.blockchain.smartContractGetAddress(
-    'BSC',
-    // replace with your deployed transaction hash
-    '0xb9e87148c399efedea0f459a421c3cac56b3e2ab31b2bca83124f22fd4a8cfe6',
-  )
+  const transaction = await klaytnSDK.blockchain.smartContractGetAddress('KLAY', multiTokenDeployed.txId)
   const contractAddress = transaction.contractAddress as string
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 
-  const multiTokenMinted = (await bscSDK.multiToken.send.mintMultiTokenTransaction({
-    chain: 'BSC',
+  const multiTokenMinted = (await klaytnSDK.multiToken.send.mintMultiTokenTransaction({
+    chain: 'KLAY',
     to,
-    tokenId: '123',
+    tokenId,
     amount: '1000',
     fromPrivateKey,
     contractAddress,
@@ -43,10 +42,10 @@ export async function bscMultiTokenExample(): Promise<void> {
 
   console.log(`Multi Token mint transaction sent with transaction ID: ${multiTokenMinted.txId}`)
 
-  const multiTokenTransferred = (await bscSDK.multiToken.send.transferMultiTokenTransaction({
-    chain: 'BSC',
+  const multiTokenTransferred = (await klaytnSDK.multiToken.send.transferMultiTokenTransaction({
+    chain: 'KLAY',
     to,
-    tokenId: '123',
+    tokenId,
     amount: '10',
     fromPrivateKey,
     contractAddress,
@@ -54,9 +53,9 @@ export async function bscMultiTokenExample(): Promise<void> {
 
   console.log(`Sent Multi Token with transaction ID: ${multiTokenTransferred.txId}`)
 
-  const multiTokenBurned = (await bscSDK.multiToken.send.burnMultiTokenTransaction({
-    chain: 'BSC',
-    tokenId: '123',
+  const multiTokenBurned = (await klaytnSDK.multiToken.send.burnMultiTokenTransaction({
+    chain: 'KLAY',
+    tokenId,
     amount: '1',
     fromPrivateKey,
     contractAddress,
