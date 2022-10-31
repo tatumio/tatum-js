@@ -245,10 +245,6 @@ export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
       const formData = await getFormData(options)
       const body = getRequestBody(options)
       const headers = await getHeaders(options, formData)
-      //const headers = { Accept: 'application/json', 'x-api-key': '4cc0a7d8-265b-4fa4-8dcb-7b088bfeb627' }
-
-      console.log('url: ' + url)
-      console.log('headers: ' + JSON.stringify(headers))
 
       if (!onCancel.isCancelled) {
         const response = await sendRequest(options, url, formData, body, headers, onCancel)
