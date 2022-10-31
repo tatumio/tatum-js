@@ -15,12 +15,12 @@ import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
 import BigNumber from 'bignumber.js'
 import {
-  ApiServices,
   BurnNftKMS,
   DeployNftKMS,
   MintMultipleNftKMS,
   MintNftKMS,
   MintNftMinter,
+  NftErc721OrCompatibleService,
   TransactionHash,
   TransferNftKMS,
   UpdateCashbackValueForAuthorNftKMS,
@@ -29,7 +29,7 @@ import { Erc721Token_General } from '../../contracts/erc721General'
 import { Erc721Token_Cashback } from '../../contracts/erc721Cashback'
 
 const mintSignedTransactionMinter = async (body: MintNftMinter) => {
-  const request = await ApiServices.nft.nftMintErc721(body)
+  const request = await NftErc721OrCompatibleService.nftMintErc721(body)
   if (request) return (request as TransactionHash).txId
   else throw new Error('Unable to mint NFT with a minter.')
 }
@@ -567,7 +567,7 @@ export const erc721 = (args: {
         if (body.minter) {
           return await mintSignedTransactionMinter(body as MintNftMinter)
         } else if (body.signatureId) {
-          return await ApiServices.nft.nftMintErc721(body as MintNftKMS)
+          return await NftErc721OrCompatibleService.nftMintErc721(body as MintNftKMS)
         } else {
           return await args.broadcastFunction({
             txData: (await mintSignedTransaction(body, args.web3, provider)) as string,
@@ -583,7 +583,7 @@ export const erc721 = (args: {
        */
       mintCashbackSignedTransaction: async (body: ChainMintNft, provider?: string) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftMintErc721(body as MintNftKMS)
+          return NftErc721OrCompatibleService.nftMintErc721(body as MintNftKMS)
         } else {
           return args.broadcastFunction({
             txData: (await mintCashbackSignedTransaction(body, args.web3, provider)) as string,
@@ -599,7 +599,7 @@ export const erc721 = (args: {
        */
       mintMultipleCashbackSignedTransaction: async (body: ChainMintMultipleNft, provider?: string) => {
         if (body.signatureId) {
-          return await ApiServices.nft.nftMintMultipleErc721(body as MintMultipleNftKMS)
+          return await NftErc721OrCompatibleService.nftMintMultipleErc721(body as MintMultipleNftKMS)
         } else {
           return args.broadcastFunction({
             txData: (await mintMultipleCashbackSignedTransaction(body, args.web3, provider)) as string,
@@ -616,7 +616,7 @@ export const erc721 = (args: {
        */
       mintMultipleSignedTransaction: async (body: ChainMintMultipleNft, provider?: string) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftMintMultipleErc721(body as MintMultipleNftKMS)
+          return NftErc721OrCompatibleService.nftMintMultipleErc721(body as MintMultipleNftKMS)
         } else {
           return args.broadcastFunction({
             txData: (await mintMultipleSignedTransaction(body, args.web3, provider)) as string,
@@ -632,7 +632,7 @@ export const erc721 = (args: {
        */
       burnSignedTransaction: async (body: ChainBurnErc721, provider?: string) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftBurnErc721(body as BurnNftKMS)
+          return NftErc721OrCompatibleService.nftBurnErc721(body as BurnNftKMS)
         } else {
           return args.broadcastFunction({
             txData: (await burnSignedTransaction(body, args.web3, provider)) as string,
@@ -649,7 +649,7 @@ export const erc721 = (args: {
        */
       transferSignedTransaction: async (body: ChainTransferErc721, provider?: string) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftTransferErc721(body as TransferNftKMS)
+          return NftErc721OrCompatibleService.nftTransferErc721(body as TransferNftKMS)
         } else {
           return args.broadcastFunction({
             txData: (await transferSignedTransaction(body, args.web3, provider)) as string,
@@ -669,7 +669,9 @@ export const erc721 = (args: {
         provider?: string,
       ) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftUpdateCashbackErc721(body as UpdateCashbackValueForAuthorNftKMS)
+          return NftErc721OrCompatibleService.nftUpdateCashbackErc721(
+            body as UpdateCashbackValueForAuthorNftKMS,
+          )
         } else {
           return args.broadcastFunction({
             txData: (await updateCashbackForAuthorSignedTransaction(body, args.web3, provider)) as string,
@@ -685,7 +687,7 @@ export const erc721 = (args: {
        */
       deploySignedTransaction: async (body: ChainDeployErc721, provider?: string) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftDeployErc721(body as DeployNftKMS)
+          return NftErc721OrCompatibleService.nftDeployErc721(body as DeployNftKMS)
         } else {
           return args.broadcastFunction({
             txData: (await deploySignedTransaction(body, args.web3, provider)) as string,
@@ -702,7 +704,7 @@ export const erc721 = (args: {
        */
       mintProvenanceSignedTransaction: async (body: ChainMintNft, provider?: string) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftMintErc721(body as MintNftKMS)
+          return NftErc721OrCompatibleService.nftMintErc721(body as MintNftKMS)
         } else {
           return args.broadcastFunction({
             txData: (await mintProvenanceSignedTransaction(body, args.web3, provider)) as string,
@@ -721,7 +723,7 @@ export const erc721 = (args: {
         provider?: string,
       ) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftMintMultipleErc721(body as MintMultipleNftKMS)
+          return NftErc721OrCompatibleService.nftMintMultipleErc721(body as MintMultipleNftKMS)
         } else {
           return args.broadcastFunction({
             txData: (await mintMultipleProvenanceSignedTransaction(body, args.web3, provider)) as string,

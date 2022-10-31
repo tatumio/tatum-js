@@ -29,7 +29,7 @@ describe('SDK - nft', () => {
 
   const nftAddressFunctionsMapping: Omit<
     TestCasesApiCallMapping<typeof nft>,
-    'getNFTImage' | 'prepareAddNftMinterAbstraction'
+    'getNFTImage' | 'prepareAddNftMinterAbstraction' | 'getNFTContractAddress'
   > = {
     addNFTMinter: [
       api.nftAddMinter,
@@ -64,10 +64,9 @@ describe('SDK - nft', () => {
   }
 
   describe('API methods mapping', () => {
-    commonTestFactory.apiMethods<Omit<typeof nft, 'getNFTImage' | 'prepareAddNftMinterAbstraction'>>(
-      nft,
-      nftAddressFunctionsMapping,
-    )
+    commonTestFactory.apiMethods<
+      Omit<typeof nft, 'getNFTImage' | 'prepareAddNftMinterAbstraction' | 'getNFTContractAddress'>
+    >(nft, nftAddressFunctionsMapping)
   })
 
   it('prepareAddNftMinterAbstraction', () => {

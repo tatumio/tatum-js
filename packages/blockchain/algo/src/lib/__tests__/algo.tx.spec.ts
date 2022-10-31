@@ -7,7 +7,8 @@ describe('AlgoSDK - tx', () => {
   describe('ALGO', () => {
     const testData = TEST_DATA.ALGO.TESTNET
 
-    it('should prepare ALGO signed transaction', async () => {
+    // @TODO missing assets
+    it.skip('should prepare ALGO signed transaction', async () => {
       const tx = await sdk.transaction.prepare.signedTransaction(
         {
           account: testData.ADDRESS_0,

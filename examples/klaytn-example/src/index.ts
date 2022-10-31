@@ -1,23 +1,21 @@
+import { klaytnAuctionExample } from './app/klaytn.auction.example'
+import { klaytnBalanceExample } from './app/klaytn.balance.example'
 import { klaytnBlockchainExample } from './app/klaytn.blockchain.example'
-import { klaytnKmsExample } from './app/klaytn.kms.example'
-import { klaytnLogRecordExample } from './app/klaytn.log.example'
-import { klaytnChangeRateExample } from './app/klaytn.root.example'
-import { klaytnWalletExample } from './app/klaytn.wallet.example'
-import { klaytnDriverExample, klaytnWeb3Example } from './app/klaytn.web3.example'
-import { klaytnOffchainExample } from './app/klaytn.offchain.example'
+import { klaytnErc20Example } from './app/klaytn.erc20.example'
+import { klaytnMultiTokenExample } from './app/klaytn.multitoken.example'
 import { klaytnNftExample } from './app/klaytn.nft.example'
+import { klaytnSmartContractExample } from './app/klaytn.smartContract.example'
 import { klaytnSubscriptionsExample } from './app/klaytn.subscriptions.example'
-import { klaytnTxWithPrivateKeyExample, klaytnTxWithSignatureIdExample } from './app/klaytn.tx.example'
+import { klaytnTxExample } from './app/klaytn.tx.example'
+import { klaytnVirtualAccountExample } from './app/klaytn.virtualAccount.example'
 
-console.log(`Running ${klaytnWalletExample()}`)
 console.log(`Running ${klaytnBlockchainExample()}`)
-console.log(`Running ${klaytnKmsExample()}`)
-console.log(`Running ${klaytnLogRecordExample()}`)
-console.log(`Running ${klaytnChangeRateExample()}`)
-console.log(`Running ${klaytnDriverExample()}`)
-console.log(`Running ${klaytnWeb3Example()}`)
-console.log(`Running ${klaytnOffchainExample()}`)
+console.log(`Running ${klaytnVirtualAccountExample()}`)
 console.log(`Running ${klaytnNftExample()}`)
 console.log(`Running ${klaytnSubscriptionsExample()}`)
-console.log(`Running ${klaytnTxWithPrivateKeyExample()}`)
-console.log(`Running ${klaytnTxWithSignatureIdExample()}`)
+console.log(`Running ${klaytnTxExample()}`)
+console.log(`Running ${klaytnMultiTokenExample()}`)
+console.log(`Running ${klaytnErc20Example()}`)
+console.log(`Running ${klaytnAuctionExample()}`)
+console.log(`Running ${klaytnBalanceExample()}`)
+console.log(`Running ${klaytnSmartContractExample()}`)
