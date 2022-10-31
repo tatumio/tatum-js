@@ -5,17 +5,18 @@ import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import Web3 from 'web3'
 import {
+  CeloTransactionConfig,
   celoUtils,
   ChainBurnMultiTokenBatchCelo,
   ChainBurnMultiTokenCelo,
   ChainDeployMultiTokenCelo,
-  ChainMintMultiTokenCelo,
   ChainMintMultiTokenBatchCelo,
+  ChainMintMultiTokenCelo,
   ChainTransferMultiTokenBatchCelo,
   ChainTransferMultiTokenCelo,
-  CeloTransactionConfig,
 } from '../../utils/celo.utils'
-import { SdkError, SdkErrorCode, SdkErrorMessage } from '@tatumio/shared-abstract-sdk'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { ApiServices } from '@tatumio/api-client'
 
 const deployMultiTokenTransaction = async (
   body: ChainDeployMultiTokenCelo,
@@ -485,11 +486,15 @@ export const multiToken = (args: {
         body: ChainMintMultiTokenCelo,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.multiToken.mintMultiToken(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await mintMultiTokenTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo mint multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -502,11 +507,15 @@ export const multiToken = (args: {
         body: ChainMintMultiTokenBatchCelo,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.multiToken.mintMultiTokenBatch(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await mintMultiTokenBatchTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo transfer multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -519,11 +528,15 @@ export const multiToken = (args: {
         body: ChainTransferMultiTokenCelo,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.multiToken.transferMultiToken(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await transferMultiTokenTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo transfer multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -536,11 +549,15 @@ export const multiToken = (args: {
         body: ChainTransferMultiTokenBatchCelo,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.multiToken.transferMultiTokenBatch(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await transferMultiTokenBatchTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo burn multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -553,11 +570,15 @@ export const multiToken = (args: {
         body: ChainBurnMultiTokenCelo,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.multiToken.burnMultiToken(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await burnMultiTokenTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send Celo burn multiple tokens batch transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -570,11 +591,15 @@ export const multiToken = (args: {
         body: ChainBurnMultiTokenBatchCelo,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.multiToken.burnMultiTokenBatch(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await burnMultiTokenBatchTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
 
       /**
        * Send Celo deploy multiple tokens transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -588,11 +613,15 @@ export const multiToken = (args: {
         body: ChainDeployMultiTokenCelo,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        await args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.multiToken.deployMultiToken(body as any)
+        }
+        return args.broadcastFunction({
           txData: (await deployMultiTokenTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
-        }),
+        })
+      },
     },
   }
 }

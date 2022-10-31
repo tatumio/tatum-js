@@ -375,13 +375,13 @@ export class AlgorandService {
      * Broadcast signed Algorand transaction
      * <h4>2 credits per API call.</h4><br/>
      * <p>Broadcast signed transaction to Algorand blockchain. This method is used internally from Tatum KMS or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
      * @returns AlgoTransactionHashKMS OK
      * @throws ApiError
      */
-    public static algoandBroadcast(
+    public static algorandBroadcast(
         requestBody: BroadcastKMS,
     ): CancelablePromise<AlgoTransactionHashKMS> {
         return __request({

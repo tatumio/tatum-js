@@ -4,17 +4,17 @@ import { EvmBasedBlockchain, TRANSFER_METHOD_ABI } from '@tatumio/shared-core'
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import Web3 from 'web3'
 import {
-  celoUtils,
-  CeloTransactionConfig,
-  ChainTransferCeloBlockchain,
-  ChainStoreDataCelo,
-  ChainTransferCeloOrCUsd,
   CELO_CONSTANTS,
+  CeloTransactionConfig,
+  celoUtils,
+  ChainStoreDataCelo,
+  ChainTransferCeloBlockchain,
+  ChainTransferCeloOrCUsd,
 } from '../../utils/celo.utils'
-import { Erc20Token, EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
+import { EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import { isHex, stringToHex, toHex } from 'web3-utils'
-import { Currency } from '@tatumio/api-client'
-import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { ApiServices, Currency } from '@tatumio/api-client'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const transferSignedTransaction = async (
   body: ChainTransferCeloBlockchain,
@@ -223,17 +223,22 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
        * @param provider url of the Server to connect to. If not set, default public server will be used.
+       * @param testnet
        * @returns transaction id of the transaction in the blockchain
        */
       transferSignedTransaction: async (
         body: ChainTransferCeloBlockchain,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.blockchain.celo.celoBlockchainTransfer(body as any)
+        }
+        return args.broadcastFunction({
           txData: await transferSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Send store data transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
@@ -242,27 +247,36 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
        */
-      storeDataTransaction: async (body: ChainStoreDataCelo, provider?: string, testnet?: boolean) =>
-        args.broadcastFunction({
+      storeDataTransaction: async (body: ChainStoreDataCelo, provider?: string, testnet?: boolean) => {
+        if (body.signatureId) {
+          return ApiServices.record.storeLog(body as any)
+        }
+        return args.broadcastFunction({
           txData: await prepareStoreDataTransaction(body, provider, testnet),
           signatureId: body.signatureId,
-        }),
+        })
+      },
       /**
        * Sign store data transaction with private keys locally. This method broadcasts signed transaction to the blockchain.
        * This operation is irreversible.
        * @param body content of the transaction to broadcast
        * @param provider url of the Server to connect to. If not set, default public server will be used.
+       * @param testnet
        * @returns transaction id of the transaction in the blockchain
        */
       celoOrCUsdSignedTransaction: async (
         body: ChainTransferCeloOrCUsd,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        args.broadcastFunction({
+      ) => {
+        if (body.signatureId) {
+          return ApiServices.blockchain.celo.celoBlockchainTransfer(body as any)
+        }
+        return args.broadcastFunction({
           txData: await prepareCeloOrCUsdSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
-        }),
+        })
+      },
     },
   }
 }

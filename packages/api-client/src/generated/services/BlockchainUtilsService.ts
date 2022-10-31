@@ -12,6 +12,7 @@ export class BlockchainUtilsService {
      * <p>Get the blockchain address of a smart contract by the ID of its deployment transaction.</p>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
+     * <li>Algorand</li>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
      * <li>Elrond</li>
@@ -30,7 +31,7 @@ export class BlockchainUtilsService {
      * @throws ApiError
      */
     public static scGetContractAddress(
-        chain: 'BSC' | 'CELO' | 'EGLD' | 'ETH' | 'FLOW' | 'KLAY' | 'MATIC' | 'ONE' | 'TRON' | 'XDC',
+        chain: 'ALGO' | 'BSC' | 'CELO' | 'EGLD' | 'ETH' | 'FLOW' | 'KLAY' | 'MATIC' | 'ONE' | 'TRON' | 'XDC',
         hash: string,
     ): CancelablePromise<{
         /**

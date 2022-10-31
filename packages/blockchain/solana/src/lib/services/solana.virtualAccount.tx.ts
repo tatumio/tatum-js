@@ -22,7 +22,7 @@ const send = async (
   body: Transfer,
   web3: SolanaWeb3,
   testnet = false,
-): Promise<{ id: string; txId: string }> => {
+): Promise<{ id: string; txId: string; completed?: boolean }> => {
   const txService = solanaTxService({ web3 })
   const { privateKey, ...w } = body
   const withdrawal: Withdrawal = w as Withdrawal
@@ -30,6 +30,8 @@ const send = async (
 
   withdrawal.fee = body.fee || '0.000005'
   const account = await AccountService.getAccountByAccountId(withdrawal.senderAccountId)
+  const withdrawalResponse = await WithdrawalService.storeWithdrawal(withdrawal)
+
   let transactionData: TransactionHash
   if (account.currency === Currency.SOL) {
     transactionData = (await txService.send({
@@ -61,10 +63,14 @@ const send = async (
       digits: decimals,
     })) as TransactionHash
   }
-  const withdrawalResponse = await WithdrawalService.storeWithdrawal(withdrawal)
   const txId = Object.values(transactionData)[0]
-  await WithdrawalService.completeWithdrawal(withdrawalResponse.id as string, txId)
-  return { id: withdrawalResponse.id as string, txId }
+  try {
+    await WithdrawalService.completeWithdrawal(withdrawalResponse.id as string, txId)
+    return { id: withdrawalResponse.id as string, txId }
+  } catch (e) {
+    console.error(e)
+    return { id: withdrawalResponse.id as string, txId, completed: false }
+  }
 }
 
 export const solanaVirtualAccountTxService = (args: { web3: SolanaWeb3 }) => {

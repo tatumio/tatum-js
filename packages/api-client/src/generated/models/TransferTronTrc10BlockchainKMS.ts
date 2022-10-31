@@ -14,7 +14,7 @@ export type TransferTronTrc10BlockchainKMS = {
     /**
      * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
      */
-    index: number;
+    index?: number;
     /**
      * Recipient address of TRON account in Base58 format.
      */
