@@ -16,7 +16,11 @@ export async function ethGasPumpWithSignatureIdExample() {
     recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
     tokenId: '20',
   })
-  console.log(`Gas pump transaction sent with transaction ID: ${(sentTransferFromCustodialWallet as TransactionHash).txId}`)
+  console.log(
+    `Gas pump transaction sent with transaction ID: ${
+      (sentTransferFromCustodialWallet as TransactionHash).txId
+    }`,
+  )
 
   // Transfer multiple assets from a gas pum address
   // https://apidoc.tatum.io/tag/Gas-pump#operation/TransferCustodialWalletBatch
@@ -40,7 +44,11 @@ export async function ethGasPumpWithSignatureIdExample() {
     ],
     amount: ['1', '0', '1', '3'],
   })
-  console.log(`Gas pump transaction sent with transaction ID: ${(sentBatchTransferFromCustodialWallet as TransactionHash).txId}`)
+  console.log(
+    `Gas pump transaction sent with transaction ID: ${
+      (sentBatchTransferFromCustodialWallet as TransactionHash).txId
+    }`,
+  )
 
   // Approve the transfer of an asset from a gas pump address
   // https://apidoc.tatum.io/tag/Gas-pump#operation/ApproveTransferCustodialWallet
@@ -54,7 +62,9 @@ export async function ethGasPumpWithSignatureIdExample() {
     amount: '1',
   })
   console.log(
-    `Gas pump transaction Approve request with transaction ID: ${(sentApproveFromCustodialWallet as TransactionHash).txId}`,
+    `Gas pump transaction Approve request with transaction ID: ${
+      (sentApproveFromCustodialWallet as TransactionHash).txId
+    }`,
   )
 
   // Transfer multiple assets from a gas pump address
@@ -81,7 +91,11 @@ export async function ethGasPumpWithPrivateKeyExample() {
     recipient: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
     tokenId: '20',
   })
-  console.log(`Gas pump transaction sent with transaction ID: ${(sentTransferFromCustodialWallet as TransactionHash).txId}`)
+  console.log(
+    `Gas pump transaction sent with transaction ID: ${
+      (sentTransferFromCustodialWallet as TransactionHash).txId
+    }`,
+  )
 
   // Transfer multiple assets from a gas pum address
   // https://apidoc.tatum.io/tag/Gas-pump#operation/TransferCustodialWalletBatch
@@ -105,7 +119,11 @@ export async function ethGasPumpWithPrivateKeyExample() {
     ],
     amount: ['1', '0', '1', '3'],
   })
-  console.log(`Gas pump transaction sent with transaction ID: ${(sentBatchTransferFromCustodialWallet as TransactionHash).txId}`)
+  console.log(
+    `Gas pump transaction sent with transaction ID: ${
+      (sentBatchTransferFromCustodialWallet as TransactionHash).txId
+    }`,
+  )
 
   // Approve the transfer of an asset from a gas pump address
   // https://apidoc.tatum.io/tag/Gas-pump#operation/ApproveTransferCustodialWallet
@@ -119,7 +137,9 @@ export async function ethGasPumpWithPrivateKeyExample() {
     amount: '1',
   })
   console.log(
-    `Gas pump transaction Approve request with transaction ID: ${(sentApproveFromCustodialWallet as TransactionHash).txId}`,
+    `Gas pump transaction Approve request with transaction ID: ${
+      (sentApproveFromCustodialWallet as TransactionHash).txId
+    }`,
   )
 
   // Transfer multiple assets from a gas pump address

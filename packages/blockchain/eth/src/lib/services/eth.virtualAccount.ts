@@ -2,13 +2,17 @@ import {
   AccountService,
   ApiServices,
   Currency,
-  ERC20_CURRENCIES, TransferErc20,
+  ERC20_CURRENCIES,
+  TransferErc20,
   TransferEth,
   TransferEthKMS,
   VirtualCurrencyService,
   WithdrawalService,
 } from '@tatumio/api-client'
-import { abstractBlockchainVirtualAccount, PrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
+import {
+  abstractBlockchainVirtualAccount,
+  PrivateKeyOrSignatureId,
+} from '@tatumio/shared-blockchain-abstract'
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, CONTRACT_ADDRESSES, CONTRACT_DECIMALS } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
