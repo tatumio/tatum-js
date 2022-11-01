@@ -52,8 +52,9 @@ export type TatumApiType = ReturnType<typeof TatumApi>
 export enum TatumUrl {
   EU = 'https://api-eu1.tatum.io',
   US_WEST = 'https://api-us-west1.tatum.io',
-  LOCALHOST = 'http://localhost:3000',
 }
+
+export type TatumUrlArg = TatumUrl | string
 
 export const TATUM_API_CONSTANTS = {
   URL: TatumUrl.EU,
@@ -63,7 +64,7 @@ export const TATUM_API_CONSTANTS = {
   TRON_PRO_API_KEY: '',
 }
 
-export function TatumApi(apiKey: string, url = TATUM_API_CONSTANTS.URL) {
+export function TatumApi(apiKey: string, url: string = TATUM_API_CONSTANTS.URL) {
   OpenAPI.HEADERS = { [TATUM_API_CONSTANTS.HEADER_API_KEY]: apiKey }
   OpenAPI.BASE = url
 
