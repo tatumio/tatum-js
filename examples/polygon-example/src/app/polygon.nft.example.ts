@@ -2,15 +2,18 @@ import { TatumPolygonSDK } from '@tatumio/polygon'
 import { Currency, TransactionHash } from '@tatumio/api-client'
 
 const polygonSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const testnet = true
 
 export async function polygonNftExample() {
   // Generate wallet
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet
-  const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet(undefined, { testnet })
   // Generate private keys
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
-  const fromPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
-  const destinationPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1)
+  const fromPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet })
+  const destinationPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1, {
+    testnet,
+  })
   // Generate source and destination addresses
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
   const address = polygonSDK.wallet.generateAddressFromXPub(xpub, 0)
@@ -38,7 +41,7 @@ export async function polygonNftExample() {
 
   // Mint NFTs on your own smart contract
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftMintErc721
-  const tokenId = 'HELLO-MATIC'
+  const tokenId = '123456'
   const nftMinted = (await polygonSDK.nft.mintNFT({
     chain: Currency.MATIC,
     tokenId,
@@ -58,6 +61,11 @@ export async function polygonNftExample() {
     contractAddress as string,
   )
   console.log(`Nfts on ${contractAddress}: ${nftAccountBalance}`)
+
+  // Get NFT token metadata
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetMetadataErc721
+  const data = await polygonSDK.nft.getNFTMetadataURI(Currency.MATIC, contractAddress as string, tokenId)
+  console.log(`Token metadata: ${JSON.stringify(data)}`)
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721

@@ -2,14 +2,15 @@ import { TatumPolygonSDK } from '@tatumio/polygon'
 import { Currency, TransactionHash } from '@tatumio/api-client'
 
 const polygonSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const testnet = true
 
 export async function polygonMultitokenExample() {
   // Generate wallet
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet
-  const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet(undefined, { testnet })
   // Generate private key
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
-  const fromPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const fromPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet })
   // Generate source and destination address
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
   const to = polygonSDK.wallet.generateAddressFromXPub(xpub, 1)

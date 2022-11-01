@@ -2,15 +2,18 @@ import { TatumPolygonSDK } from '@tatumio/polygon'
 import { Currency, TransactionHash } from '@tatumio/api-client'
 
 const polygonSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const testnet = true
 
 export async function polygonNftExpressExample() {
   // Generate wallet
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet
-  const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet(undefined, { testnet })
   // Generate private keys
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
-  const fromPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
-  const destinationPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1)
+  const fromPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet })
+  const destinationPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1, {
+    testnet,
+  })
   // Generate source and destination addresses
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
   const address = polygonSDK.wallet.generateAddressFromXPub(xpub, 0)
@@ -48,9 +51,10 @@ export async function polygonNftExpressExample() {
 
   // Mint NFT using NTF Express with the pre-built smart contract provided by Tatum
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftMintErc721
-  const tokenId = 'HELLO-MATIC'
-  // minter address mainnet:
-  const minter = '0x49678AAB11E001eb3cB2cBD9aA96b36DC2461A94'
+  const tokenId = '1234'
+  // minter address testnet:
+  // https://docs.tatum.io/nft-express/use-nft-express-with-your-own-smart-contract
+  const minter = '0x542b9ac4945a3836fd12ad98acbc76a0c8b743f5'
   const nftMinter = (await polygonSDK.nft.mintNFT({
     chain: Currency.MATIC,
     contractAddress: contractAddress as string,

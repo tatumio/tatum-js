@@ -2,11 +2,12 @@ import { TatumPolygonSDK } from '@tatumio/polygon'
 import { Currency } from '@tatumio/api-client'
 
 const polygonSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const testnet = true
 
 export async function polygonSubscriptionsExample() {
   // Generate wallet
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet
-  const { xpub } = await polygonSDK.wallet.generateWallet()
+  const { xpub } = await polygonSDK.wallet.generateWallet(undefined, { testnet })
   const address = polygonSDK.wallet.generateAddressFromXPub(xpub, 0)
   console.log(`Address for wallet is ${address} and extended public key is ${xpub}.`)
 

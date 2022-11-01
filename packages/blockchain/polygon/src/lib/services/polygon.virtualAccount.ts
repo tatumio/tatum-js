@@ -6,13 +6,14 @@ import {
   TransferEth,
   VirtualCurrencyService,
   WithdrawalService,
+  ERC20_CURRENCIES,
 } from '@tatumio/api-client'
 import {
   abstractBlockchainVirtualAccount,
   PrivateKeyOrSignatureId,
 } from '@tatumio/shared-blockchain-abstract'
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
-import { Blockchain } from '@tatumio/shared-core'
+import { Blockchain, CONTRACT_ADDRESSES, CONTRACT_DECIMALS } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { polygonTxService } from './polygon.tx'
 
@@ -51,15 +52,24 @@ const sendPolygonVirtualAccountTransaction = async (
     })
   } else {
     fee.gasLimit = '100000'
-    const vc = await VirtualCurrencyService.getCurrency(account.currency)
+    let contractAddress: string
+    let digits: number
+    if (ERC20_CURRENCIES.includes(account.currency as Currency)) {
+      contractAddress = CONTRACT_ADDRESSES[account.currency]
+      digits = CONTRACT_DECIMALS[account.currency]
+    } else {
+      const vc = await VirtualCurrencyService.getCurrency(account.currency)
+      contractAddress = vc.erc20Address as string
+      digits = (vc.precision as number) || 18
+    }
     txData = await txService.erc20.prepare.transferSignedTransaction({
       amount,
       fee,
       fromPrivateKey,
       to: address,
-      digits: vc.precision as number,
+      digits,
       nonce,
-      contractAddress: vc.erc20Address as string,
+      contractAddress,
     })
   }
 
