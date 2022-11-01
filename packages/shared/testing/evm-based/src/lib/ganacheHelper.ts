@@ -31,9 +31,9 @@ export const ganacheHelper = {
       miner: {
         blockTime: 0,
       },
-      logging:{
-        quiet: true
-      }
+      logging: {
+        quiet: true,
+      },
     }
 
     const provider = ganache.provider(options)
