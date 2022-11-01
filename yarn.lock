@@ -1027,25 +1027,6 @@
   resolved "https://registry.yarnpkg.com/@humanwhocodes/object-schema/-/object-schema-1.2.0.tgz#87de7af9c231826fdd68ac7258f77c429e0e5fcf"
   integrity sha512-wdppn25U8z/2yiaT6YGquE6X8sSv7hNMWSXYSSU1jGv/yd6XqjXgTDJ8KP4NgjTXfJ3GbRjeeb8RTV7a/VpM+w==
 
-"@improbable-eng/grpc-web-node-http-transport@^0.14.0":
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/@improbable-eng/grpc-web-node-http-transport/-/grpc-web-node-http-transport-0.14.1.tgz#16c078db2e10aca9a8f7fb235a80b2fa447273a3"
-  integrity sha512-ZsCTzI1iKUbmQjB5DNZSI5/hvdliuaPpS2h8mVj1QzynL3IFb5NrNnHVHbfcH1wbm26Ka6Z1CrKFGvKLrmbFIg==
-
-"@improbable-eng/grpc-web@^0.12.0":
-  version "0.12.0"
-  resolved "https://registry.yarnpkg.com/@improbable-eng/grpc-web/-/grpc-web-0.12.0.tgz#9b10a7edf2a1d7672f8997e34a60e7b70e49738f"
-  integrity sha512-uJjgMPngreRTYPBuo6gswMj1gK39Wbqre/RgE0XnSDXJRg6ST7ZhuS53dFE6Vc2CX4jxgl+cO+0B3op8LA4Q0Q==
-  dependencies:
-    browser-headers "^0.4.0"
-
-"@improbable-eng/grpc-web@^0.14.0":
-  version "0.14.1"
-  resolved "https://registry.yarnpkg.com/@improbable-eng/grpc-web/-/grpc-web-0.14.1.tgz#f4662f64dc89c0f956a94bb8a3b576556c74589c"
-  integrity sha512-XaIYuunepPxoiGVLLHmlnVminUGzBTnXr8Wv7khzmLWbNw4TCwJKX09GSMJlKhu/TRk6gms0ySFxewaETSBqgw==
-  dependencies:
-    browser-headers "^0.4.1"
-
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.1.0.tgz#fd3db1d59ecf7cf121e80650bb86712f9b55eced"
@@ -1503,15 +1484,6 @@
   resolved "https://registry.yarnpkg.com/@onflow/interaction/-/interaction-0.0.11.tgz#4db8f4304039e33d6fc3b14c38b392d724113374"
   integrity sha512-Xuq1Mmx6Wyba/F/L+QLQs0yJeQDsIDwy5SKk5vrCuVgIj0yD8k506g5L8ODrbM1LWll8i0tQsoOi0F85vNl5sA==
 
-"@onflow/protobuf@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@onflow/protobuf/-/protobuf-1.1.0.tgz#93960a50c8cc70027d853d6577a2d9898583b1b3"
-  integrity sha512-tpGE/5J98S3BxThBkBkkzwKeD19qJ+kJOz22uHm62D26HakYq2SufL9lvYfFa4fGJuKhNwji0olFxy/V2TwJmQ==
-  dependencies:
-    "@improbable-eng/grpc-web" "^0.12.0"
-    elliptic "^6.5.4"
-    google-protobuf "3.11.4"
-
 "@onflow/rlp@^1.0.2", "@onflow/rlp@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@onflow/rlp/-/rlp-1.0.4.tgz#9db83571d7212294e79c8416ce269c919ae982ab"
@@ -1536,20 +1508,6 @@
     "@onflow/util-template" "^1.0.3"
     deepmerge "^4.2.2"
     sha3 "^2.1.4"
-
-"@onflow/transport-grpc@^1.1.3":
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/@onflow/transport-grpc/-/transport-grpc-1.1.3.tgz#eb37a8cc0e25b77611c63c2a2205b62177b8965f"
-  integrity sha512-70varzIQKtfMHJhLLzyWNJqQ7rObNsaYFs73FyS0NgySdEo8d23Mv3uHdyZyx9WDF44/QNe9QnqVOO/blx6wAQ==
-  dependencies:
-    "@babel/runtime" "^7.18.6"
-    "@improbable-eng/grpc-web" "^0.14.0"
-    "@improbable-eng/grpc-web-node-http-transport" "^0.14.0"
-    "@onflow/protobuf" "^1.1.0"
-    "@onflow/rlp" "^1.0.3"
-    "@onflow/util-address" "^1.0.3"
-    "@onflow/util-invariant" "^1.0.3"
-    "@onflow/util-template" "^1.0.4"
 
 "@onflow/transport-http@^1.5.0":
   version "1.5.0"
@@ -1578,7 +1536,7 @@
     "@babel/runtime" "^7.18.6"
     queue-microtask "1.1.2"
 
-"@onflow/util-address@^1.0.2", "@onflow/util-address@^1.0.3":
+"@onflow/util-address@^1.0.2":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@onflow/util-address/-/util-address-1.0.3.tgz#7ffe0ed1c5544a60660ef45033aca78ad093e475"
   integrity sha512-w8DPYSvYm5h0hhZ0hZwiCwu9UgJBtIv2KyhDiH3TZG8srT+9GxtTPX4NzZtAVuxqWTNVlTGePD/Upxusiwnk6g==
@@ -1609,7 +1567,7 @@
     "@babel/runtime" "^7.18.6"
     "@onflow/config" "^1.0.4"
 
-"@onflow/util-template@^1.0.3", "@onflow/util-template@^1.0.4":
+"@onflow/util-template@^1.0.3":
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/@onflow/util-template/-/util-template-1.0.4.tgz#5affdb46713b5aa4c64d133788a996f02bc56c37"
   integrity sha512-syTJzhFn+CaW/FAqVLJJ3Oq9pTuxS5Wk0+g9AkSKWJ8PCY+FLr7UC2mGr/5pO//L13Elz7cv/djXVxNA1ULQmw==
@@ -3451,11 +3409,6 @@ brorand@^1.0.1, brorand@^1.0.5, brorand@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/brorand/-/brorand-1.1.0.tgz#12c25efe40a45e3c323eb8675a0a0ce57b22371f"
   integrity sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8=
-
-browser-headers@^0.4.0, browser-headers@^0.4.1:
-  version "0.4.1"
-  resolved "https://registry.yarnpkg.com/browser-headers/-/browser-headers-0.4.1.tgz#4308a7ad3b240f4203dbb45acedb38dc2d65dd02"
-  integrity sha512-CA9hsySZVo9371qEHjHZtYxV2cFtVj5Wj/ZHi8ooEsrtm4vOnl9Y9HmyYWk9q+05d7K3rdoAE0j3MVEFVvtQtg==
 
 browser-process-hrtime@^1.0.0:
   version "1.0.0"
@@ -5933,11 +5886,6 @@ globby@^11.0.3:
     ignore "^5.1.4"
     merge2 "^1.3.0"
     slash "^3.0.0"
-
-google-protobuf@3.11.4:
-  version "3.11.4"
-  resolved "https://registry.yarnpkg.com/google-protobuf/-/google-protobuf-3.11.4.tgz#598ca405a3cfa917a2132994d008b5932ef42014"
-  integrity sha512-lL6b04rDirurUBOgsY2+LalI6Evq8eH5TcNzi7TYQ3BsIWelT0KSOQSBsXuavEkNf+odQU6c0lgz3UsZXeNX9Q==
 
 got@9.6.0:
   version "9.6.0"
