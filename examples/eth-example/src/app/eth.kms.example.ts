@@ -25,7 +25,7 @@ export async function ethKmsExample() {
 
     // Complete pending transaction to sign
     // https://apidoc.tatum.io/tag/Key-Management-System#operation/CompletePendingSignature
-    await ethSDK.kms.complete(tx.id, signedRawTx!)
+    await ethSDK.kms.complete(tx.id, signedRawTx)
     console.log(`Transaction with id ${tx.id} completed successfully`)
 
     // Delete KMS transaction

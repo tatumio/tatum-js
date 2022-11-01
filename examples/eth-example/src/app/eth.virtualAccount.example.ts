@@ -1,32 +1,42 @@
 import { TatumEthSDK } from '@tatumio/eth'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const ethSdk = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function ethVirtualAccountExample() {
-  const account = await ethSdk.virtualAccount.depositAddress.checkExists('LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b')
-  const address = await ethSdk.virtualAccount.depositAddress.create('LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b', 1)
-  const adresses = await ethSdk.virtualAccount.depositAddress.createMultiple({
-    addresses: [
-      {
-        accountId: '5e6be8e9e6aa436299950c41',
-        derivationKey: 0,
-      },
-      {
-        accountId: '5e6be8e9e6aa436299951n35',
-        derivationKey: 1,
-      },
-    ],
+  // if you don't already have a wallet, address and private key - generate them
+  // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateWallet
+  const { mnemonic, xpub } = await ethSdk.wallet.generateWallet()
+  // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateAddressPrivateKey
+  const fromPrivateKey = await ethSdk.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+
+  // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateAddress
+  const to = ethSdk.wallet.generateAddressFromXPub(xpub, 1)
+
+  // Generate new virtual account for ETH with specific blockchain address
+  // https://apidoc.tatum.io/tag/Account#operation/createAccount
+  const virtualAccount = await ethSdk.ledger.account.create({
+    currency: 'ETH',
+    xpub: xpub,
   })
-  const assignedAddress = await ethSdk.virtualAccount.depositAddress.assign(
-    '5e6be8e9e6aa436299950c41',
-    'LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b',
-  )
-  const addressByAccount = await ethSdk.virtualAccount.depositAddress.getByAccount('5e6be8e9e6aa436299950c41')
-  const withdrawals = await ethSdk.virtualAccount.withdrawal.getAll('Done')
-  await ethSdk.virtualAccount.depositAddress.remove(
-    '5e6be8e9e6aa436299950c41',
-    'LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b',
-  )
-  await ethSdk.virtualAccount.storeTokenAddress('LepMzqfXSgQommH2qu3fk7Gf5xgoHQsP1b', 'MY_TOKEN')
+  console.log(JSON.stringify(virtualAccount))
+
+  // create deposit address for a virtual account
+  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
+  const depositAddress = await ethSdk.virtualAccount.depositAddress.create(virtualAccount.id)
+
+  console.log(`Deposit address is ${depositAddress.address}`)
+
+  // Fund your address here: https://faucet.sepolia.dev/
+  console.log(`Fund me ${depositAddress.address} to send offchain transaction!`)
+
+  // I wanna send ETH from virtualAccount to blockchain address
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/EthTransfer
+  const result = await ethSdk.virtualAccount.send({
+    senderAccountId: virtualAccount.id,
+    amount: '1',
+    privateKey: fromPrivateKey,
+    address: to,
+  })
+
+  console.log(JSON.stringify(result))
 }

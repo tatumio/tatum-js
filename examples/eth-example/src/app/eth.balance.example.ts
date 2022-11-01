@@ -1,9 +1,10 @@
 import { TatumEthSDK } from '@tatumio/eth'
-import Web3 from 'web3'
 
 export async function ethBalanceExample() {
   const ethSDK = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateWallet
   const { xpub } = await ethSDK.wallet.generateWallet()
+  // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateAddress
   const address = ethSDK.wallet.generateAddressFromXPub(xpub, 0)
 
   console.log(`My public address is ${address}.`)
@@ -13,5 +14,5 @@ export async function ethBalanceExample() {
   // https://apidoc.tatum.io/tag/Ethereum#operation/EthGetBalance
   const { balance } = await ethSDK.blockchain.getBlockchainAccountBalance(address)
 
-  console.log(`My account has ${Web3.utils.fromWei(balance as string)} ETH.`)
+  console.log(`My account has ${balance} ETH.`)
 }

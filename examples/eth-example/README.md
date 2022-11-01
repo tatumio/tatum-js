@@ -30,7 +30,7 @@ yarn add @tatumio/eth
 At the end, you need to initialize new SDK with your API Key.
 
 ```typescript
-import { TatumXlmSDK } from '@tatumio/eth'
+import { TatumEthSDK } from '@tatumio/eth'
 
 const ethSDK = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 ```
@@ -67,4 +67,20 @@ You can find examples [here](./src/app/eth.kms.example.ts).
 ### How to generate virtual account for ETH and transfer from it to a blockchain address
 
 You can find examples [here](./src/app/eth.virtualAccount.example.ts).
+
+### How to work with fungible tokens (ERC20)
+
+You can find examples [here](./src/app/eth.erc20.example.ts).
+
+### How to work with nfts (ERC721)
+
+You can find examples [here](./src/app/eth.nft.example.ts) and [here](./src/app/eth.nft.express.mint.example.ts)
+
+### How to work with multitokens (ERC1155)
+
+You can find examples [here](./src/app/eth.multitoken.example.ts).
+
+### How to work with auctions
+
+You can find examples [here](./src/app/eth.auction.example.ts).
 

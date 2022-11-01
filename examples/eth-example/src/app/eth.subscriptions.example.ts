@@ -14,20 +14,20 @@ export async function ethSubscriptionsExample() {
     },
   })
 
-  // Disable Webhook HMAC
-  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/disableWebHookHmac
-  await ethSDK.subscriptions.disableWebHookHmac()
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getSubscriptions
+  const subscriptions = await ethSDK.subscriptions.getSubscriptions(10)
+  console.log('Subscriptions: ', subscriptions)
 
   // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/enableWebHookHmac
-  // Enable HMAC hash ID on the fired webhooks from Tatum API. In order to make sure that a
-  // webhook is sent by us, we have the possibility to sign it with the HMAC Sha512 Hex algorithm.
   await ethSDK.subscriptions.enableWebHookHmac({
     hmacSecret: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
   })
 
+  // Disable Webhook HMAC
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/disableWebHookHmac
+  await ethSDK.subscriptions.disableWebHookHmac()
+
   // Cancel an existing subscription
   // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/deleteSubscription
   await ethSDK.subscriptions.deleteSubscription(id.id as string)
-
-  const subscriptions = await ethSDK.subscriptions.getSubscriptions(10)
 }
