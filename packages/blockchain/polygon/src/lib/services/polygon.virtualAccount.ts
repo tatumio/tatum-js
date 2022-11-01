@@ -57,9 +57,9 @@ const sendPolygonVirtualAccountTransaction = async (
       fee,
       fromPrivateKey,
       to: address,
-      digits: vc.precision,
+      digits: vc.precision as number,
       nonce,
-      contractAddress: vc.erc20Address,
+      contractAddress: vc.erc20Address as string,
     })
   }
 
