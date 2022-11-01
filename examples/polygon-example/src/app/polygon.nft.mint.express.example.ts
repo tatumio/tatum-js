@@ -3,7 +3,7 @@ import { Currency, TransactionHash } from '@tatumio/api-client'
 
 const polygonSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-export async function polygonNftExample() {
+export async function polygonNftExpressExample() {
   // Generate wallet
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet
   const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet()
@@ -36,19 +36,31 @@ export async function polygonNftExample() {
   // upload your file to the ipfs following this tutorial:
   // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
 
-  // Mint NFTs on your own smart contract
+  // Mint NFT using NTF Express with the pre-built smart contract provided by Tatum
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftMintErc721
-  const tokenId = 'HELLO-MATIC'
-  const nftMinted = (await polygonSDK.nft.mintNFT({
+  const nftMintedExpress = (await polygonSDK.nft.mintNFT({
     chain: Currency.MATIC,
-    tokenId,
-    contractAddress: contractAddress as string,
     to,
-    fromPrivateKey,
     // uploaded metadata from ipfs
     url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
   })) as TransactionHash
-  console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
+  console.log(`Minted nft with NFT express: transaction ID: ${nftMintedExpress.txId}`)
+
+  // Mint NFT using NTF Express with the pre-built smart contract provided by Tatum
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftMintErc721
+  const tokenId = 'HELLO-MATIC'
+  // minter address mainnet:
+  const minter = '0x49678AAB11E001eb3cB2cBD9aA96b36DC2461A94'
+  const nftMinter = (await polygonSDK.nft.mintNFT({
+    chain: Currency.MATIC,
+    contractAddress: contractAddress as string,
+    tokenId,
+    minter,
+    to,
+    // uploaded metadata from ipfs
+    url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
+  })) as TransactionHash
+  console.log(`Minted nft with minter: transaction ID: ${nftMinter.txId}`)
 
   // Get all minted NFTs in the collection. Returns all NFTs this contract minted.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetBalanceErc721
