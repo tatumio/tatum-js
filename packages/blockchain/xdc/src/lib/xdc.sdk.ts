@@ -1,10 +1,6 @@
-import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
+import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import {
-  BlockchainFeesService,
-  FungibleTokensErc20OrCompatibleService,
-  XinFinService,
-} from '@tatumio/api-client'
+import { BlockchainFeesService, FungibleTokensErc20OrCompatibleService, XinFinService } from '@tatumio/api-client'
 import { abstractSdkLedgerService, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { xdcWeb3 } from './services/xdc.web3'
 import { xdcKmsService } from './services/xdc.kms'

@@ -11,6 +11,7 @@ import { polygonWeb3 } from './services/polygon.web3'
 import { polygonKmsService } from './services/polygon.kms'
 import { polygonTxService } from './services/polygon.tx'
 import { polygonAuctionService } from './services/polygon.auction'
+import { virtualAccountService } from './services/polygon.virtualAccount'
 
 const blockchain: EvmBasedBlockchain = Blockchain.POLYGON
 
@@ -18,6 +19,7 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
   const web3 = polygonWeb3({ blockchain })
   const api = PolygonService
   const txService = polygonTxService({ blockchain, web3 })
+  const virtualAccount = virtualAccountService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
@@ -39,6 +41,7 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
     smartContract: txService.smartContract,
     custodial: txService.custodial,
     gasPump: txService.gasPump,
+    virtualAccount,
     marketplace: {
       ...evmBasedMarketplace({
         blockchain,

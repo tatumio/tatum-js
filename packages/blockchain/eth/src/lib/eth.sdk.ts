@@ -11,6 +11,7 @@ import { ethKmsService } from './services/eth.kms'
 import { ethTx } from './services/eth.tx'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { ethAuctionService } from './services/eth.auction'
+import { virtualAccountService } from './services/eth.virtualAccount'
 
 const blockchain = Blockchain.ETH
 
@@ -18,6 +19,7 @@ export const TatumEthSDK = (args: SDKArguments) => {
   const web3 = ethWeb3({ blockchain })
   const api = EthereumService
   const txService = ethTx({ blockchain, web3 })
+  const virtualAccount = virtualAccountService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
@@ -68,5 +70,6 @@ export const TatumEthSDK = (args: SDKArguments) => {
       getInternalTransaction: EthereumService.ethGetInternalTransactionByAddress,
       web3Driver: EthereumService.ethWeb3Driver,
     },
+    virtualAccount,
   }
 }
