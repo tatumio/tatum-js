@@ -24,7 +24,7 @@ export async function xdcVirtualAccountExample() {
   // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
   const depositAddress = await xdcSDK.virtualAccount.depositAddress.create(virtualAccount.id)
 
-  console.log(`Deposit address`,depositAddress.address)
+  console.log(`Deposit address`, depositAddress.address)
 
   // FUND YOUR ACCOUNT WITH XDC FROM https://faucet.apothem.network/
   console.log(`Fund me ${depositAddress.address} to send offchain transaction!`)

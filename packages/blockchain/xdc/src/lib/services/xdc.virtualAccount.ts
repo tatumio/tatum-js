@@ -7,7 +7,10 @@ import {
   VirtualCurrencyService,
   WithdrawalService,
 } from '@tatumio/api-client'
-import { abstractBlockchainVirtualAccount, PrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
+import {
+  abstractBlockchainVirtualAccount,
+  PrivateKeyOrSignatureId,
+} from '@tatumio/shared-blockchain-abstract'
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'

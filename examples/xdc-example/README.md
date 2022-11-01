@@ -49,20 +49,21 @@ console.log(`My public address is ${account}, with private key ${secret}.`)
 ```
 
 ### How to use web3
- ```typescript
- import { TatumXdcSDK } from '@tatumio/xdc'
- const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
- const web3response = await xdcSDK.httpDriver({
-   jsonrpc: '2.0',
-   method: 'web3_clientVersion',
-   params: [],
-   id: 2,
- })
- const gasPriceInWei = await xdcSDK.getGasPriceInWei()
- const web3 = xdcSDK.web3Client()
- const blockNumber = web3.eth.getBlockNumber()
- const balance = web3.eth.getTransactionFromBlock(blockNumber)
- ```
+
+```typescript
+import { TatumXdcSDK } from '@tatumio/xdc'
+const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const web3response = await xdcSDK.httpDriver({
+  jsonrpc: '2.0',
+  method: 'web3_clientVersion',
+  params: [],
+  id: 2,
+})
+const gasPriceInWei = await xdcSDK.getGasPriceInWei()
+const web3 = xdcSDK.web3Client()
+const blockNumber = web3.eth.getBlockNumber()
+const balance = web3.eth.getTransactionFromBlock(blockNumber)
+```
 
 ### How to check balance of the address
 

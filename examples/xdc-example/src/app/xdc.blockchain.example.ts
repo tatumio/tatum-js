@@ -23,7 +23,7 @@ export async function xdcBlockchainExample() {
 
   // Get Balance on account
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGetBalance
-  const {balance} = await xdcSDK.blockchain.getBlockchainAccountBalance(address)
+  const { balance } = await xdcSDK.blockchain.getBlockchainAccountBalance(address)
   console.log(`Balance`, balance)
 
   // Get block by hash
