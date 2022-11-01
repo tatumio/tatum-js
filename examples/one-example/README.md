@@ -41,7 +41,7 @@ need to have Node.js version 10 or higher.
 ### How to generate ONE wallet
 
 ```typescript
-import { TatumOneSDK } from '@tatumio/bsc'
+import { TatumOneSDK } from '@tatumio/one'
 
 const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 const { mnemonic, xpub } = await oneSDK.wallet.generateWallet()
@@ -52,7 +52,7 @@ console.log(`Created a wallet with ${mnemonic} and public key ${xpub}.`)
 ### How to use web3
 
 ```typescript
-import { TatumOneSDK } from '@tatumio/bsc'
+import { TatumOneSDK } from '@tatumio/one'
 
 const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
@@ -102,7 +102,7 @@ You can find examples [here](./src/app/one.auction.example.ts).
 
 You can find examples [here](./src/app/one.subscriptions.example.ts).
 
-### How to generate virtual account for BSC and transfer from it to a blockchain address
+### How to generate virtual account for ONE and transfer from it to a blockchain address
 
 You can find examples [here](./src/app/one.virtualAccount.example.ts).
 
