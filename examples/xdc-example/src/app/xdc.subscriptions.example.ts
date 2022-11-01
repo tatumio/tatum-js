@@ -9,13 +9,14 @@ export async function xdcSubscriptionsExample() {
     type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
     attr: {
       id: '635b92d6f9aeb823db30c43f',
-      url: 'dashboard.tatum.io/webhook-handler',
+      url: 'https://dashboard.tatum.io/webhook-handler',
     },
   })
 
-  // Disable Webhook HMAC
-  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/disableWebHookHmac
-  await xdcSDK.subscriptions.disableWebHookHmac()
+  // List all active subscriptions
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getSubscriptions
+  const subscriptions = await xdcSDK.subscriptions.getSubscriptions(10)
+  console.log(`Subscriptions ${JSON.stringify(subscriptions)}`)
 
   // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/enableWebHookHmac
   // Enable HMAC hash ID on the fired webhooks from Tatum API. In order to make sure that a
@@ -24,12 +25,11 @@ export async function xdcSubscriptionsExample() {
     hmacSecret: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
   })
 
+  // Disable Webhook HMAC
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/disableWebHookHmac
+  await xdcSDK.subscriptions.disableWebHookHmac()
+
   // Cancel an existing subscription
   // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/deleteSubscription
   await xdcSDK.subscriptions.deleteSubscription(id.id as string)
-
-  // List all active subscriptions
-  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getSubscriptions
-  const subscriptions = await xdcSDK.subscriptions.getSubscriptions(10)
-  console.log(`Subscriptions ${JSON.stringify(subscriptions)}`)
 }

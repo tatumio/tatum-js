@@ -8,7 +8,7 @@ These examples should guide you through some basic operations of the XDC blockch
 - send XDC to another wallet
 - check the balance of your wallet
 - How to send transaction using kms
-- generate virtual account for XLM
+- generate virtual account for XDC
 - assign deposit address to virtual account
 
 ## How to start
@@ -30,7 +30,7 @@ yarn add @tatumio/xdc
 At the end, you need to initialize new SDK with your API Key.
 
 ```typescript
-import { TatumXlmSDK } from '@tatumio/xdc'
+import { TatumXdcSDK } from '@tatumio/xdc'
 
 const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 ```
@@ -38,7 +38,7 @@ const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 Examples are written in TypeScript, but you can use them in JavaScript as well. We are following ES6 standard, so you
 need to have Node.js version 10 or higher.
 
-### How to generate XLM wallet
+### How to generate XDC wallet
 
 ```typescript
 import { TatumXdcSDK } from '@tatumio/xdc'
@@ -47,6 +47,22 @@ const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 const { account, secret } = xdcSDK.wallet.wallet()
 console.log(`My public address is ${account}, with private key ${secret}.`)
 ```
+
+### How to use web3
+ ```typescript
+ import { TatumXdcSDK } from '@tatumio/xdc'
+ const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+ const web3response = await xdcSDK.httpDriver({
+   jsonrpc: '2.0',
+   method: 'web3_clientVersion',
+   params: [],
+   id: 2,
+ })
+ const gasPriceInWei = await xdcSDK.getGasPriceInWei()
+ const web3 = xdcSDK.web3Client()
+ const blockNumber = web3.eth.getBlockNumber()
+ const balance = web3.eth.getTransactionFromBlock(blockNumber)
+ ```
 
 ### How to check balance of the address
 
@@ -71,3 +87,7 @@ You can find examples [here](./src/app/xdc.virtualAccount.example.ts).
 ### How to send transaction using Gas pump
 
 You can find examples [here](./src/app/xdc.gasPump.example.ts).
+
+# How to work with smart contracts
+
+You can find examples [here](./src/app/xdc.smartContract.example.ts).

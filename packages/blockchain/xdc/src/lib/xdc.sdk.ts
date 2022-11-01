@@ -1,7 +1,8 @@
-import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
+import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
   BlockchainFeesService,
+  BlockchainUtilsService,
   FungibleTokensErc20OrCompatibleService,
   XinFinService,
 } from '@tatumio/api-client'
@@ -9,7 +10,7 @@ import { abstractSdkLedgerService, SDKArguments } from '@tatumio/shared-abstract
 import { xdcWeb3 } from './services/xdc.web3'
 import { xdcKmsService } from './services/xdc.kms'
 import { xdcTxService } from './services/xdc.tx'
-import { abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abstract'
+import { virtualAccountService } from './services/xdc.virtualAccount'
 
 const blockchain = Blockchain.XDC
 
@@ -17,13 +18,13 @@ export const TatumXdcSDK = (args: SDKArguments) => {
   const web3 = xdcWeb3({ blockchain })
   const api = XinFinService
   const txService = xdcTxService({ blockchain, web3 })
+  const virtualAccount = virtualAccountService({ blockchain, web3 })
   const { ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
     ...evmSdk,
     kms: xdcKmsService({ blockchain, web3 }),
     ledger: abstractSdkLedgerService(),
-    virtualAccount: abstractBlockchainVirtualAccount({ blockchain }),
     transaction: txService.native,
     erc20: {
       ...txService.erc20,
@@ -50,7 +51,9 @@ export const TatumXdcSDK = (args: SDKArguments) => {
       generateAddress: XinFinService.xdcGenerateAddress,
       generateAddressPrivateKey: XinFinService.xdcGenerateAddressPrivateKey,
       generateWallet: XinFinService.xdcGenerateWallet,
+      smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
       web3Driver: XinFinService.xdcWeb3Driver,
     },
+    virtualAccount,
   }
 }

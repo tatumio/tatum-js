@@ -2,11 +2,14 @@ import { TatumXdcSDK } from '@tatumio/xdc'
 
 const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
+/**
+ * https://apidoc.tatum.io/tag/Key-Management-System
+ */
 export async function xdcKmsExample() {
   // Get All pending KMS
   // https://apidoc.tatum.io/tag/Key-Management-System#operation/GetPendingTransactionsToSign
   const pendingSignatureIds = await xdcSDK.kms.getAllPending()
-  console.log(`Pending kms transaction ${JSON.stringify(pendingSignatureIds)}`)
+  console.log(`Pending kms transactions`, pendingSignatureIds)
 
   //Get transaction by signature id
   // https://apidoc.tatum.io/tag/Key-Management-System#operation/GetPendingTransactionsToSign
@@ -20,7 +23,7 @@ export async function xdcKmsExample() {
 
     // Complete pending transaction to sign
     // https://apidoc.tatum.io/tag/Key-Management-System#operation/CompletePendingSignature
-    await xdcSDK.kms.complete(tx.id, signedRawTx!)
+    await xdcSDK.kms.complete(tx.id, signedRawTx)
 
     // Delete KMS transaction
     // https://apidoc.tatum.io/tag/Key-Management-System#operation/DeletePendingTransactionToSign
