@@ -1,9 +1,9 @@
 import {
-  ApiServices,
   ChainBurnErc20KMS,
   ChainDeployErc20KMS,
   ChainMintErc20KMS,
   ChainTransferEthErc20KMS,
+  FungibleTokensErc20OrCompatibleService,
 } from '@tatumio/api-client'
 import {
   BroadcastFunction,
@@ -265,7 +265,7 @@ export const erc20 = (args: {
        */
       deploySignedTransaction: async (body: ChainDeployErc20, provider?: string) => {
         if (body.signatureId) {
-          return await ApiServices.fungibleToken.erc20Deploy(body as ChainDeployErc20KMS)
+          return await FungibleTokensErc20OrCompatibleService.erc20Deploy(body as ChainDeployErc20KMS)
         } else {
           return args.broadcastFunction({
             txData: await deploySignedTransaction(body, args.web3, provider),
@@ -281,7 +281,7 @@ export const erc20 = (args: {
        */
       transferSignedTransaction: async (body: ChainTransferErc20, provider?: string) => {
         if (body.signatureId) {
-          return await ApiServices.fungibleToken.erc20Transfer(body as ChainTransferEthErc20KMS)
+          return await FungibleTokensErc20OrCompatibleService.erc20Transfer(body as ChainTransferEthErc20KMS)
         } else {
           return args.broadcastFunction({
             txData: await transferSignedTransaction(body, args.web3, provider),
@@ -298,7 +298,7 @@ export const erc20 = (args: {
        */
       mintSignedTransaction: async (body: ChainMintErc20, provider?: string) => {
         if (body.signatureId) {
-          return ApiServices.fungibleToken.erc20Mint(body as ChainMintErc20KMS)
+          return FungibleTokensErc20OrCompatibleService.erc20Mint(body as ChainMintErc20KMS)
         } else {
           return args.broadcastFunction({
             txData: await mintSignedTransaction(body, args.web3, provider),
@@ -314,7 +314,7 @@ export const erc20 = (args: {
        */
       burnSignedTransaction: async (body: ChainBurnErc20, provider?: string) => {
         if (body.signatureId) {
-          return ApiServices.fungibleToken.erc20Burn(body as ChainBurnErc20KMS)
+          return FungibleTokensErc20OrCompatibleService.erc20Burn(body as ChainBurnErc20KMS)
         } else {
           return args.broadcastFunction({
             txData: await burnSignedTransaction(body, args.web3, provider),

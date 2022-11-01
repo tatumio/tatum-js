@@ -92,20 +92,14 @@ export type SecretOrSignatureId<T extends { secret?: string }> = Omit<T, 'secret
   Partial<Pick<T, 'secret'>>
 
 export type FromPrivateKeyOrSignatureId<T extends { fromPrivateKey?: string }> = Omit<T, 'fromPrivateKey'> &
-  Partial<SignatureId> &
-  Partial<Pick<T, 'fromPrivateKey'>>
-
-export type FromPrivateKeyOrSignatureIdOrMnemonic<T extends { fromPrivateKey?: string }> = Omit<
-  T,
-  'fromPrivateKey'
-> &
   Partial<SignatureId & { index: number }> &
-  Partial<{ mnemonic: string }> &
-  Partial<Pick<T, 'fromPrivateKey'>>
+  Partial<Pick<T, 'fromPrivateKey'>> &
+  Partial<{ mnemonic: string }>
 
 export type PrivateKeyOrSignatureId<T extends { privateKey?: string }> = Omit<T, 'privateKey'> &
-  Partial<SignatureId> &
-  Partial<Pick<T, 'privateKey'>>
+  Partial<SignatureId & { index: number }> &
+  Partial<Pick<T, 'privateKey'>> &
+  Partial<{ mnemonic: string }>
 
 export type FromPrivateKeyOrSignatureIdTron<T extends { fromPrivateKey?: string }> = Omit<
   T,

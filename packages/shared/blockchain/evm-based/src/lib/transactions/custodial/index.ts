@@ -13,7 +13,16 @@ import BigNumber from 'bignumber.js'
 import { CustodialFullTokenWallet } from '../../contracts'
 import { evmBasedSmartContract } from '../../services/evm-based.smartContract'
 import { evmBasedUtils } from '../../evm-based.utils'
-import { ApiServices, GenerateCustodialWalletBatchPayer, TransactionHash } from '@tatumio/api-client'
+import {
+  ApiServices,
+  ApproveTransferCustodialWalletKMS,
+  CustodialManagedWalletsService,
+  GasPumpService,
+  GenerateCustodialWalletBatchPayer,
+  TransactionHash,
+  TransferCustodialWalletBatchKMS,
+  TransferCustodialWalletKMS,
+} from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const transferFromCustodialWallet = async (
@@ -182,12 +191,15 @@ export const custodial = (args: {
         body: ChainTransferCustodialWallet,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        args.broadcastFunction({
-          txData: await transferFromCustodialWallet(body, args.web3, testnet, provider),
-          signatureId: body.signatureId,
-        }),
-
+      ) => {
+        if (body.signatureId) {
+          return GasPumpService.transferCustodialWallet(body as TransferCustodialWalletKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: await transferFromCustodialWallet(body, args.web3, testnet, provider),
+          })
+        }
+      },
       /**
        * Send signed batch transaction from the custodial SC wallet.
        * @param testnet chain to work with
@@ -199,22 +211,30 @@ export const custodial = (args: {
         body: ChainBatchTransferCustodialWallet,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        args.broadcastFunction({
-          txData: await batchTransferFromCustodialWallet(body, args.web3, testnet, provider),
-          signatureId: 'signatureId' in body ? body.signatureId : undefined,
-        }),
+      ) => {
+        if (body.signatureId) {
+          return GasPumpService.transferCustodialWalletBatch(body as TransferCustodialWalletBatchKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: await batchTransferFromCustodialWallet(body, args.web3, testnet, provider),
+          })
+        }
+      },
       /**
        * Send signed approve transaction from the custodial SC wallet.
        * @param body request data
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      approveFromCustodialWallet: async (body: ChainApproveCustodialTransfer, provider?: string) =>
-        args.broadcastFunction({
-          txData: await approveFromCustodialWallet(body, args.web3, provider),
-          signatureId: body.signatureId,
-        }),
+      approveFromCustodialWallet: async (body: ChainApproveCustodialTransfer, provider?: string) => {
+        if (body.signatureId) {
+          return GasPumpService.approveTransferCustodialWallet(body as ApproveTransferCustodialWalletKMS)
+        } else {
+          return args.broadcastFunction({
+            txData: await approveFromCustodialWallet(body, args.web3, provider),
+          })
+        }
+      },
       /**
        * Generate new smart contract based custodial wallet. This wallet is able to receive any type of assets, but transaction costs connected to the withdrawal
        * of assets is covered by the deployer.
@@ -227,13 +247,17 @@ export const custodial = (args: {
         body: ChainGenerateCustodialWalletBatch,
         provider?: string,
         testnet?: boolean,
-      ) =>
-        'feesCovered' in body
-          ? generateCustodialBatch(body)
-          : args.broadcastFunction({
-              txData: await custodialWalletBatch(body, args.web3, testnet, provider),
-              signatureId: 'signatureId' in body ? body.signatureId : undefined,
-            }),
+      ) => {
+        if ('feesCovered' in body) {
+          return generateCustodialBatch(body)
+        } else if ('signatureId' in body) {
+          return GasPumpService.generateCustodialWalletBatch(body)
+        } else {
+          return args.broadcastFunction({
+            txData: await custodialWalletBatch(body, args.web3, testnet, provider),
+          })
+        }
+      },
     },
   }
 }

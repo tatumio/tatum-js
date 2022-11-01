@@ -24,7 +24,7 @@ describe('EthSDK - nft', () => {
 
   const nftFunctionsMapping: Omit<
     TestCasesApiCallMapping<typeof nft>,
-    'prepare' | 'send' | 'getNFTImage' | 'prepareAddNftMinterAbstraction'
+    'prepare' | 'send' | 'getNFTImage' | 'prepareAddNftMinterAbstraction' | 'getNFTContractAddress'
   > = {
     deployNFTSmartContract: [
       api.nftDeployErc721,
@@ -144,7 +144,10 @@ describe('EthSDK - nft', () => {
 
   describe('API methods mapping', () => {
     commonTestFactory.apiMethods<
-      Omit<typeof nft, 'prepare' | 'send' | 'getNFTImage' | 'prepareAddNftMinterAbstraction'>
+      Omit<
+        typeof nft,
+        'prepare' | 'send' | 'getNFTImage' | 'prepareAddNftMinterAbstraction' | 'getNFTContractAddress'
+      >
     >(nft, nftFunctionsMapping)
   })
 })

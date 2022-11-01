@@ -25,7 +25,7 @@ export async function solanaNftExample() {
   console.log(`Minted NFT: ${nftAddress} in tx: ${txId}`)
 
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetMetadataErc721
-  const metadata = await solanaSDK.nft.getNFTMetadataURI(Currency.SOL, nftAddress, '')
+  const { data: metadata } = await solanaSDK.nft.getNFTMetadataURI(Currency.SOL, nftAddress, '')
   console.log(`Metadata of NFT: ${metadata}`)
 
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetRoyaltyErc721
@@ -40,5 +40,5 @@ export async function solanaNftExample() {
       '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
     contractAddress: nftAddress,
   })) as { txId: string }
-  console.log(`Transfered NFT: ${nftAddress} in tx: ${transferTx}`)
+  console.log(`Transferred NFT: ${nftAddress} in tx: ${transferTx}`)
 }

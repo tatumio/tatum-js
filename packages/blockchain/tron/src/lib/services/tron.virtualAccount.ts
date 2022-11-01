@@ -9,7 +9,7 @@ import {
 } from '@tatumio/api-client'
 import {
   abstractBlockchainVirtualAccount,
-  FromPrivateKeyOrSignatureIdOrMnemonic,
+  FromPrivateKeyOrSignatureId,
 } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain, CONTRACT_ADDRESSES } from '@tatumio/shared-core'
 import { tronWallet } from './tron.wallet'
@@ -23,7 +23,7 @@ export enum TrcType {
 
 const TRON_BASED_CURRENCIES = [Currency.USDT_TRON.toString(), Currency.INRT_TRON.toString()]
 
-type TransferVirtualAccountTron = FromPrivateKeyOrSignatureIdOrMnemonic<TransferTron>
+type TransferVirtualAccountTron = FromPrivateKeyOrSignatureId<TransferTron>
 type VirtualAccountResponse = { id?: string; txId?: string; completed?: boolean } | void
 
 const sendTronVirtualAccountTransaction = async (
