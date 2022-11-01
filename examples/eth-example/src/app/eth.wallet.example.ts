@@ -1,12 +1,20 @@
 import { TatumEthSDK } from '@tatumio/eth'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const ethSDK = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const ethSDK = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function ethWalletExample() {
+  // Generate ethereum wallet
+  // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateWallet
   const { mnemonic, xpub } = await ethSDK.wallet.generateWallet()
 
-  const address = ethSDK.wallet.generateAddressFromXPub(mnemonic, 0)
+  // Generate public address from xpub
+  // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateAddress
+  const address = ethSDK.wallet.generateAddressFromXPub(xpub, 0)
+  console.log(`Public address is ${address}`)
+
+  // Generate private key from mnemonic
+  // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateAddressPrivateKey
   const privateKey = await ethSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
-  const addressFromXpub = ethSDK.wallet.generateAddressFromXPub(xpub, 0)
+  console.log(`private key is ${privateKey}`)
 }
