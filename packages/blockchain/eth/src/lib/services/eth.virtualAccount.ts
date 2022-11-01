@@ -103,7 +103,7 @@ const sendEthVirtualAccountTransaction = async (
     }
   } catch (e) {
     try {
-      return await WithdrawalService.cancelInProgressWithdrawal(id)
+      return await WithdrawalService.cancelInProgressWithdrawal(id!)
     } catch (e1) {
       return { id }
     }
