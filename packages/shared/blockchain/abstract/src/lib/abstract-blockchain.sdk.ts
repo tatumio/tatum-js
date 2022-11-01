@@ -72,7 +72,7 @@ export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; bl
     getExchangeRate(basePair?: Fiat): CancelablePromise<ExchangeRate> {
       return ExchangeRateService.getExchangeRate(
         // @ts-ignore @TODO OPENAPI fix
-        blockchainHelper.getDefaultCurrencyByBlockchain(blockchain),
+        blockchainHelper.getDefaultCurrencyByBlockchain(args.blockchain),
         basePair,
       )
     },

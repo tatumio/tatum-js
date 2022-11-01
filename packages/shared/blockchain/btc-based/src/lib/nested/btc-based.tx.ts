@@ -260,7 +260,7 @@ export const btcBasedTransactions = (
       .reduce((e, acc) => e.plus(acc), new BigNumber(0))
 
     const inputsSum: BigNumber = tx.inputs
-      .map((i: any) => new BigNumber(i.output.satoshis))
+      .map((i: Transaction.Input) => new BigNumber(i.output.satoshis))
       .reduce((v: BigNumber, acc: BigNumber) => v.plus(acc), new BigNumber(0))
 
     if (outputsSum.eq(inputsSum)) {
