@@ -12,7 +12,7 @@ export async function oneVirtualAccountExample() {
   // https://apidoc.tatum.io/tag/Harmony#operation/OneGenerateAddress
   const to = oneSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  // Generate new virtual account for BSC with specific blockchain address
+  // Generate new virtual account for ONE with specific blockchain address
   // https://apidoc.tatum.io/tag/Account#operation/createAccount
   const virtualAccount = await oneSDK.ledger.account.create({
     currency: Currency.ONE,

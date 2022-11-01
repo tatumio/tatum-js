@@ -13,7 +13,7 @@ export async function oneSmartContractExample(): Promise<void> {
   const address = oneSDK.wallet.generateAddressFromPrivateKey(fromPrivateKey)
   const to = oneSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  // FUND YOUR SENDER ACCOUNT WITH BNB FROM https://faucet.pops.one/
+  // FUND YOUR SENDER ACCOUNT WITH ONE FROM https://faucet.pops.one/
   console.log(`Fund address: ${address}`)
   console.log(`Private key for ${address}: ${fromPrivateKey}`)
 
