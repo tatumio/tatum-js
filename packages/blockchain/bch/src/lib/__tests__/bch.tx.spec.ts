@@ -1,4 +1,3 @@
-import '@tatumio/shared-testing-common'
 import { mockHelper, testHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { ApiServices, TransactionHash } from '@tatumio/api-client'
