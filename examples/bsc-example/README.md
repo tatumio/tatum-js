@@ -32,7 +32,7 @@ At the end, you need to initialize new SDK with your API Key.
 ```typescript
 import { TatumBscSDK } from '@tatumio/bsc'
 
-const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 ```
 
 Examples are written in TypeScript, but you can use them in JavaScript as well. We are following ES6 standard, so you
@@ -43,7 +43,7 @@ need to have Node.js version 10 or higher.
 ```typescript
 import { TatumBscSDK } from '@tatumio/bsc'
 
-const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
 
 console.log(`Created a wallet with ${mnemonic} and public key ${xpub}.`)
@@ -54,7 +54,7 @@ console.log(`Created a wallet with ${mnemonic} and public key ${xpub}.`)
 ```typescript
 import { TatumBscSDK } from '@tatumio/bsc'
 
-const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 const web3response = await bscSDK.httpDriver({
   jsonrpc: '2.0',
