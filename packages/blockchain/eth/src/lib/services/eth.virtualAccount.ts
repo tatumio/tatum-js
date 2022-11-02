@@ -16,7 +16,7 @@ import {
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, CONTRACT_ADDRESSES, CONTRACT_DECIMALS } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { ethTx } from '@tatumio/eth'
+import { ethTx } from '../services/eth.tx'
 
 type TransferVirtualAccountEth = PrivateKeyOrSignatureId<TransferEth>
 type VirtualAccountResponse = { id?: string; txId?: string; completed?: boolean } | void
