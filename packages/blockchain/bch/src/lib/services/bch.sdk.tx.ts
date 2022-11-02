@@ -10,7 +10,7 @@ import BigNumber from 'bignumber.js'
 import _ from 'lodash'
 import { BchApiCallsType } from '../..'
 // @ts-ignore
-import * as bitbox from 'bitcore-lib-cash'
+import * as bitcoreLibCash from 'bitcore-lib-cash'
 import { BchTransactionTypes, Signature } from '../bch.sdk.types'
 
 export const bchTransactions = (apiCalls: BchApiCallsType) => {
@@ -64,7 +64,7 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
           transactionBuilder.addOutput(address, value)
           outputs.push(value)
         } catch (e: any) {
-          const address = new bitbox.Address.fromString(item.address)
+          const address = new bitcoreLibCash.Address.fromString(item.address)
           transactionBuilder.addOutput(address.toLegacyAddress(), value)
           outputs.push(value)
         }
