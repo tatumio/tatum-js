@@ -25,7 +25,7 @@ export const TatumBchSDK = (
     wallet: bchWallet(),
     transaction: bchTransactions(apiCalls),
     virtualAccount: {
-      ...btcBasedSdk({ ...args, blockchain }).offchain,
+      ...btcBasedSdk({ ...args, blockchain }).virtualAccount,
       signKmsTransaction,
     },
     blockchain: {
