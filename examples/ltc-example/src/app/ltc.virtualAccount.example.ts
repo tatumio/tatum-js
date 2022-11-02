@@ -1,7 +1,8 @@
 import { TatumLtcSDK } from '@tatumio/ltc'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 export async function ltcVirtualAccountExample() {
-  const ltcSDK = TatumLtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  const ltcSDK = TatumLtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   // Create an extended public key
   const { xpub } = await ltcSDK.wallet.generateWallet(undefined, { testnet: true })

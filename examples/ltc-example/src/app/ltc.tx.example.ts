@@ -1,7 +1,9 @@
 import { TatumLtcSDK } from '@tatumio/ltc'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 export async function ltcTransactionsExample() {
-  const ltcSDK = TatumLtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  const ltcSDK = TatumLtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+  const REPLACE_ME_WITH_PRIVATE_KEY = ''
 
   // Send LTC to a blockchain address
   // This example requires a funded blockchain address, you can top up your testnet balance with https://testnet-faucet.com/ltc-testnet/
@@ -10,7 +12,7 @@ export async function ltcTransactionsExample() {
     fromAddress: [
       {
         address: 'LYkdm7x4SCLePTi9AQfnvxRqKQfiwWp5pt',
-        privateKey: 'cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbPqipzobf',
+        privateKey: REPLACE_ME_WITH_PRIVATE_KEY,
       },
     ],
     to: [
