@@ -1,12 +1,15 @@
 import { TransactionHash } from '@tatumio/api-client'
 import { TatumOneSDK } from '@tatumio/one'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function oneMultiTokenExample(): Promise<void> {
   const { mnemonic, xpub } = await oneSDK.wallet.generateWallet()
   const fromPrivateKey = await oneSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const account = oneSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = oneSDK.wallet.generateAddressFromXPub(xpub, 1)
+  const tokenId = '1234'
 
   // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
   // You can fund your address here: https://faucet.pops.one/
@@ -17,26 +20,24 @@ export async function oneMultiTokenExample(): Promise<void> {
   const { txId } = (await oneSDK.multiToken.send.deployMultiTokenTransaction({
     chain: 'ONE',
     // your private key of the address that has coins
-    fromPrivateKey,
+    fromPrivateKey: '0xcc3580f2176fd811c15cdbc56edb606a7852447980513a7a378fae3994303172',
     // uploaded metadata from ipfs
     uri: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
   })) as TransactionHash
 
+  console.log('Deployed multitoken contract with id:', txId)
+
   // fetch deployed contract address from transaction hash
-  // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
-  const transaction = await oneSDK.blockchain.smartContractGetAddress(
-    'ONE',
-    // replace with your deployed transaction hash
-    txId,
-  )
+  // https://apidoc.tatum.io/tag/Harmony#operation/OneGetTransaction
+  const transaction = await oneSDK.blockchain.get(txId)
   const contractAddress = transaction.contractAddress as string
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 
   const multiTokenMinted = (await oneSDK.multiToken.send.mintMultiTokenTransaction({
     chain: 'ONE',
-    to,
-    tokenId: '123',
-    amount: '1000',
+    to: account,
+    tokenId,
+    amount: '100',
     fromPrivateKey,
     contractAddress,
   })) as TransactionHash
@@ -46,8 +47,8 @@ export async function oneMultiTokenExample(): Promise<void> {
   const multiTokenTransferred = (await oneSDK.multiToken.send.transferMultiTokenTransaction({
     chain: 'ONE',
     to,
-    tokenId: '123',
-    amount: '10',
+    tokenId,
+    amount: '1',
     fromPrivateKey,
     contractAddress,
   })) as TransactionHash
@@ -56,12 +57,12 @@ export async function oneMultiTokenExample(): Promise<void> {
 
   const multiTokenBurned = (await oneSDK.multiToken.send.burnMultiTokenTransaction({
     chain: 'ONE',
-    tokenId: '123',
+    tokenId,
     amount: '1',
     fromPrivateKey,
     contractAddress,
-    account: to,
+    account,
   })) as TransactionHash
 
-  console.log(`Sent Multi Token with transaction ID: ${multiTokenBurned.txId}`)
+  console.log(`Burned Multi Token with transaction ID: ${multiTokenBurned.txId}`)
 }

@@ -1,6 +1,7 @@
 import { TatumOneSDK } from '@tatumio/one'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function oneTxExample(): Promise<void> {
   // if you don't already have a wallet, address and private key - generate them

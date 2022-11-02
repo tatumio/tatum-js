@@ -74,9 +74,7 @@ const sendOneVirtualAccountTransaction = async (
   const withdrawalFee = web3
     .getClient()
     .utils.fromWei(
-      new BigNumber(gasLimit as string)
-        .multipliedBy(evmBasedUtils.transformToWei(gasPrice as string, 'gwei'))
-        .toString(),
+      new BigNumber(fee.gasLimit).multipliedBy(evmBasedUtils.transformToWei(fee.gasPrice, 'gwei')).toString(),
       'ether',
     )
 

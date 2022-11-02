@@ -1,7 +1,8 @@
 import { TransactionHash } from '@tatumio/api-client'
 import { TatumOneSDK } from '@tatumio/one'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 // https://apidoc.tatum.io/tag/Harmony#operation/OneBlockchainSmartContractInvocation
 export async function oneSmartContractExample(): Promise<void> {
@@ -44,7 +45,7 @@ export async function oneSmartContractExample(): Promise<void> {
       type: 'function',
     },
     // address we want the balance of
-    params: ['one1x2p0wrqkntjdmak6h53lrqgl2sxye7hfj0w4mf'],
+    params: ['0x3282f70c169ae4ddf6dabd23f1811f540c4cfae9'],
   })
   console.log(`Smart contract data: ${data}`)
 

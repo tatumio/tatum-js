@@ -1,7 +1,8 @@
 import { TatumOneSDK } from '@tatumio/one'
 import { TransactionHash } from '@tatumio/api-client'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function oneErc20Example() {
   const { mnemonic, xpub } = await oneSDK.wallet.generateWallet()
@@ -18,17 +19,17 @@ export async function oneErc20Example() {
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
     address,
-    supply: '10000000',
+    supply: '100000',
     fromPrivateKey,
     digits: 18,
-    totalCap: '10000000',
+    totalCap: '1000000000',
   })) as TransactionHash
 
   console.log(`Deployed erc20 token with transaction ID ${erc20Deployed.txId}`)
 
   // fetch deployed contract address from transaction hash
-  // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
-  const transaction = await oneSDK.blockchain.smartContractGetAddress('ONE', erc20Deployed.txId)
+  // https://apidoc.tatum.io/tag/Harmony#operation/OneGetTransaction
+  const transaction = await oneSDK.blockchain.get(erc20Deployed.txId)
   const contractAddress = transaction.contractAddress as string
 
   // mint erc20 (fungible token)
