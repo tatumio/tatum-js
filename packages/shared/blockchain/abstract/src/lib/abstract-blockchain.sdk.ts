@@ -1,4 +1,5 @@
 import {
+  AddNftMinter,
   ApproveErc20,
   ApproveNftSpending,
   ApproveTransferCustodialWallet,
@@ -134,6 +135,8 @@ export type ChainMintMultipleNft = FromPrivateKeyOrSignatureId<MintMultipleNft> 
 }
 
 export type ChainBurnErc721 = FromPrivateKeyOrSignatureId<BurnNft>
+
+export type ChainAddMinterErc721 = FromPrivateKeyOrSignatureId<AddNftMinter>
 
 export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<TransferNft>
 
