@@ -30,6 +30,9 @@ export async function bscErc20Example() {
   const transaction = await bscSDK.blockchain.smartContractGetAddress('BSC', erc20Deployed.txId)
   const contractAddress = transaction.contractAddress as string
 
+  // Please note that minted tokens might not appear immediately on the blockchain so in order to execute
+  // all examples at once you should set some timeout between the calls or execute examples separately
+
   const erc20Minted = (await bscSDK.erc20.send.mintSignedTransaction({
     to,
     amount: '10',
