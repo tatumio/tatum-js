@@ -32,6 +32,9 @@ export async function tronNftExample() {
   // upload your file to the ipfs:
   // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
 
+  // Please note that minted tokens might not appear immediately on the blockchain so in order to execute
+  // all examples at once you should set some timeout between the calls or execute examples separately
+
   // Mint NFTs on your own smart contract
   const nftMinted = (await tronSDK.nft.mintNFT({
     chain: 'TRON',
