@@ -1,9 +1,13 @@
 import { TatumDogeSDK } from '@tatumio/doge'
-import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const dogeSDK = TatumDogeSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
-export async function dogeOffchainExample() {
+export async function dogeVirtualAccountExample() {
+  // Virtual account example
+  // We will receive assets on account and withdraw it
+  // More info here: https://docs.tatum.io/guides/ledger-and-off-chain
+
   // Generate mnemonic and private key (or use your own)
   // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGenerateWallet
   const { mnemonic, xpub } = await dogeSDK.wallet.generateWallet()
@@ -29,11 +33,14 @@ export async function dogeOffchainExample() {
   )
   console.log(`Deposit address is ${depositAddress.address}`)
 
-  // Generate test recepient address for 100 index from xpub
-  // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGenerateAddress
-  const recipientAddress = dogeSDK.wallet.generateAddressFromXPub(xpub, 100)
+  // Here it is needed to fund deposit address and check if we have balance on it
 
-  // Please fund your deposit address
+  // Generate test recipient from another xpub
+  // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGenerateWallet
+  // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGenerateAddress
+  const { mnemonic: mnemonicRecipient, xpub: xpubRecipient } = await dogeSDK.wallet.generateWallet()
+  const recipientAddress = dogeSDK.wallet.generateAddressFromXPub(xpubRecipient, 0)
+
   // If you have funds on account - you can transfer it to another DOGE address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/DogeTransfer
   const result = await dogeSDK.virtualAccount.send({
