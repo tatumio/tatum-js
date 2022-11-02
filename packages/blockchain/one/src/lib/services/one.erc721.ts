@@ -6,7 +6,10 @@ import { oneUtils } from '../one.utils'
 export const oneErc721 = (args: {
   blockchain: EvmBasedBlockchain
   web3: EvmBasedWeb3
-}): ReturnType<typeof erc721> => {
+}): {
+  send: ReturnType<typeof erc721>['send']
+  prepare: Omit<ReturnType<typeof erc721>['prepare'], 'addMinterSignedTransaction'>
+} => {
   const unpatchedErc721 = erc721({
     ...args,
     broadcastFunction: HarmonyService.oneBroadcast,

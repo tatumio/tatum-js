@@ -1,12 +1,19 @@
 import { TatumKcsSDK } from '@tatumio/kcs'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const kcsSDK = TatumKcsSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function kcsWalletExample() {
+  // Generate KCS wallet
+  // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGenerateWallet
   const { mnemonic, xpub } = await kcsSDK.wallet.generateWallet()
 
-  const address = kcsSDK.wallet.generateAddressFromXPub(mnemonic, 0)
+  // Generate public address from xpub
+  // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGenerateAddress
+  const address = kcsSDK.wallet.generateAddressFromXPub(xpub, 0)
+  console.log(`Public address is ${address}`)
+
+  // Generate private key from mnemonic
+  // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGenerateAddressPrivateKey
   const privateKey = await kcsSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
-  const addressFromXpub = kcsSDK.wallet.generateAddressFromXPub(xpub, 0)
+  console.log(`private key is ${privateKey}`)
 }
