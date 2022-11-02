@@ -5,6 +5,8 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 const dogeSDK = TatumDogeSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function dogeTransactionsExample() {
+  // Transaction - prepare tx to be sent
+  // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeTransferBlockchain
   const txData = await dogeSDK.transaction.prepareSignedTransaction(
     {
       fromUTXO: [
@@ -28,6 +30,8 @@ export async function dogeTransactionsExample() {
     { testnet: true },
   )
 
+  // Transaction - send to blockchain
+  // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeTransferBlockchain
   const { txId } = await dogeSDK.transaction.sendTransaction(
     {
       fromUTXO: [
