@@ -1,33 +1,26 @@
-import { polygonApiExample } from './app/polygon.api.example'
+/**
+ * This is example app, which shows how to use Polygon SDK.
+ * For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/Polygon
+ */
+
 import { polygonBlockchainExample } from './app/polygon.blockchain.example'
-import { polygonKmsExample } from './app/polygon.kms.example'
-import { polygonLogRecordExample } from './app/polygon.log.example'
-import { polygonChangeRateExample } from './app/polygon.root.example'
-import { polygonWalletExample } from './app/polygon.wallet.example'
-import { polygonDriverExample, polygonWeb3Example } from './app/polygon.web3.example'
-import { polygonOffchainExample } from './app/polygon.offchain.example'
+import { polygonVirtualAccountExample } from './app/polygon.virtualAccount.example'
 import { polygonNftExample } from './app/polygon.nft.example'
 import { polygonSubscriptionsExample } from './app/polygon.subscriptions.example'
-import {
-  polygonTxWithPrivateKeyExample,
-  polygonTxWithSignatureIdExample,
-  polygonTxFeesCovered,
-} from './app/polygon.tx.example'
 import { polygonAuctionExample } from './app/polygon.auction.example'
+import { algoBalanceExample } from './app/polygon.balance.example'
+import { polygonErc20Example } from './app/polygon.erc20.example'
+import { polygonNftExpressExample } from './app/polygon.nft.mint.express.example'
+import { polygonTransactionExample } from './app/polygon.tx.example'
+import { polygonMultitokenExample } from './app/polygon.multitoken.example'
 
-// TODO add auction example
-console.log(`Running ${polygonApiExample()}`)
-console.log(`Running ${polygonWalletExample()}`)
+console.log(`Running ${algoBalanceExample()}`)
 console.log(`Running ${polygonBlockchainExample()}`)
-console.log(`Running ${polygonKmsExample()}`)
-console.log(`Running ${polygonLogRecordExample()}`)
-console.log(`Running ${polygonChangeRateExample()}`)
-console.log(`Running ${polygonDriverExample()}`)
-console.log(`Running ${polygonWeb3Example()}`)
-console.log(`Running ${polygonOffchainExample()}`)
+console.log(`Running ${polygonTransactionExample()}`)
 console.log(`Running ${polygonNftExample()}`)
+console.log(`Running ${polygonNftExpressExample()}`)
+console.log(`Running ${polygonErc20Example()}`)
+console.log(`Running ${polygonMultitokenExample()}`)
+console.log(`Running ${polygonVirtualAccountExample()}`)
 console.log(`Running ${polygonSubscriptionsExample()}`)
-console.log(`Runninf ${polygonTxWithPrivateKeyExample()}`)
-console.log(`Runninf ${polygonTxWithSignatureIdExample()}`)
-console.log(`Runninf ${polygonTxFeesCovered()}`)
 console.log(`Running ${polygonAuctionExample()}`)

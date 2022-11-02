@@ -15,7 +15,7 @@
       }
     },
     "serve": {
-      "executor": "@nrwl/js:execute",
+      "executor": "@nrwl/node:node",
       "options": {
         "buildTarget": "algo-example:build"
       }

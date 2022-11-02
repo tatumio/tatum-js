@@ -40,7 +40,7 @@ import {
   PendingTransaction,
   SellAssetOnMarketplace,
   SignatureId,
-  TatumUrl,
+  TatumUrlArg,
   TransactionHash,
   TransferCustodialWallet,
   TransferCustodialWalletBatch,
@@ -48,7 +48,6 @@ import {
   TransferCustodialWalletCelo,
   TransferCustodialWalletCeloKMS,
   TransferCustodialWalletKMS,
-  TransferEthBlockchain,
   TransferMultiToken,
   TransferMultiTokenBatch,
   TransferNft,
@@ -64,7 +63,11 @@ import { abstractSdk, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
 import { abstractBlockchainVirtualAccount } from './services/virtualAccount.abstract-blockchain'
 
-export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; blockchain: Blockchain }) => {
+export const abstractBlockchainSdk = (args: {
+  apiKey: string
+  url?: TatumUrlArg
+  blockchain: Blockchain
+}) => {
   return {
     ...abstractSdk(args),
     kms: abstractBlockchainKms(args),

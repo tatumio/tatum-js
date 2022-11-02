@@ -1,21 +1,23 @@
 import { ethWalletExample } from './app/eth.wallet.example'
 import { ethKmsExample } from './app/eth.kms.example'
-import { ethOffchainExample } from './app/eth.offchain.example'
-import { exchangeRateExample } from './app/eth.root.example'
+import { ethVirtualAccountExample } from './app/eth.virtualAccount.example'
 import { ethSubscriptionsExample } from './app/eth.subscriptions.example'
-import {
-  ethTxWithPrivateKeyExample,
-  ethTxWithSignatureIdExample,
-  ethTxFeesCovered,
-} from './app/eth.tx.example'
+import { ethBalanceExample } from './app/eth.balance.example'
+import { ethErc20Example } from './app/eth.erc20.example'
+import { ethMultiTokenExample } from './app/eth.multitoken.example'
+import { ethNftExample } from './app/eth.nft.example'
+import { ethSmartContractExample } from './app/eth.smartContract.example'
+import { ethNftExpressExample } from './app/eth.nft.express.mint.example'
 import { ethAuctionExample } from './app/eth.auction.example'
 
-console.log(`Running ${ethAuctionExample()}`)
 console.log(`Running ${ethWalletExample()}`)
 console.log(`Running ${ethKmsExample()}`)
-console.log(`Running ${ethOffchainExample()}`)
-console.log(`Running ${exchangeRateExample()}`)
+console.log(`Running ${ethVirtualAccountExample()}`)
 console.log(`Running ${ethSubscriptionsExample()}`)
-console.log(`Runninf ${ethTxWithPrivateKeyExample()}`)
-console.log(`Runninf ${ethTxWithSignatureIdExample()}`)
-console.log(`Runninf ${ethTxFeesCovered()}`)
+console.log(`Running ${ethBalanceExample()}`)
+console.log(`Running ${ethErc20Example()}`)
+console.log(`Running ${ethAuctionExample()}`)
+console.log(`Running ${ethNftExample()}`)
+console.log(`Running ${ethNftExpressExample()}`)
+console.log(`Running ${ethSmartContractExample()}`)
+console.log(`Running ${ethMultiTokenExample()}`)

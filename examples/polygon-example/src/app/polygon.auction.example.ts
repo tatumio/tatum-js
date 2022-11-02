@@ -1,123 +1,80 @@
 import { TatumPolygonSDK } from '@tatumio/polygon'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import { TransactionHash } from '@tatumio/api-client'
 
-const polygonSDK = TatumPolygonSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const polygonSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const testnet = true
 
-export const polygonAuctionExample = async () => {
-  const auction = await polygonSDK.marketplace.auction.getAuction(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-    '1',
-  )
+export async function polygonAuctionExample() {
+  // Generate wallet
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet
+  const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet(undefined, { testnet })
+  // Generate private key
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
+  const fromPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet })
+  // Generate source and destination addresses
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
+  const feeRecipient = polygonSDK.wallet.generateAddressFromXPub(xpub, 0)
+  const bidder = polygonSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  const auctionFee = await polygonSDK.marketplace.auction.getAuctionFee(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-  )
+  // FUND YOUR ACCOUNT WITH MATIC FROM https://faucet.matic.network/
 
-  const auctionFeeRecipient = await polygonSDK.marketplace.auction.getAuctionFeeRecipient(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-  )
-
-  const deployAuctionTx = await polygonSDK.marketplace.auction.prepare.deployAuctionSignedTransaction({
-    chain: 'MATIC',
+  // create NFT auction
+  // https://apidoc.tatum.io/tag/Auction#operation/GenerateAuction
+  const { txId } = (await polygonSDK.marketplace.auction.send.deployAuctionSignedTransaction({
     auctionFee: 100,
-    feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-  })
+    feeRecipient,
+    fromPrivateKey,
+    chain: 'MATIC',
+  })) as TransactionHash
+  console.log(`TransactionId: ${txId}`)
 
-  const updateFeeRecipientTx =
-    await polygonSDK.marketplace.auction.prepare.auctionUpdateFeeRecipientSignedTransaction({
+  // get smart contract address
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGetTransaction
+  const transaction = await polygonSDK.blockchain.get(txId)
+  const contractAddress = transaction.contractAddress as string
+  console.log(`Deployed smart contract ${contractAddress} for NFT auction with transaction ID ${txId}`)
+
+  // auction ID: it's up to the developer to generate unique ID
+  const auctionId = '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6'
+
+  // get auction details
+  // https://apidoc.tatum.io/tag/Auction#operation/GetAuction
+  const auction = await polygonSDK.marketplace.auction.getAuction(contractAddress, auctionId)
+  console.log(`Auction from contract address ${contractAddress}: ${JSON.stringify(auction)}`)
+
+  // Bid for asset on auction
+  // https://apidoc.tatum.io/tag/Auction#operation/BidOnAuction
+  const { txId: bidTransactionHash } = (await polygonSDK.marketplace.auction.send.auctionBidSignedTransaction(
+    {
+      contractAddress,
+      bidder,
+      id: auctionId,
+      bidValue: '1',
+      fromPrivateKey,
       chain: 'MATIC',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      fee: {
-        gasLimit: '40000',
-        gasPrice: '20',
-      },
-      amount: '10000',
-    })
-
-  const createAuctionTx = await polygonSDK.marketplace.auction.prepare.createAuctionSignedTransaction({
-    chain: 'MATIC',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    erc20Address: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    amount: '1',
-    endedAt: 100000,
-    tokenId: '100000',
-    isErc721: true,
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
     },
-  })
+  )) as TransactionHash
+  console.log(`Auction bid transaction hash: ${bidTransactionHash}`)
 
-  const approveNftSpendingTx =
-    await polygonSDK.marketplace.auction.prepare.auctionApproveNftTransferSignedTransaction({
+  // Cancel auction
+  // https://apidoc.tatum.io/tag/Auction#operation/CancelAuction
+  const { txId: cancelTransactionHash } =
+    (await polygonSDK.marketplace.auction.send.auctionCancelSignedTransaction({
+      contractAddress,
+      id: auctionId,
+      fromPrivateKey,
       chain: 'MATIC',
-      spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      isErc721: true,
-      tokenId: '100000',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      nonce: 1,
-      fee: {
-        gasLimit: '40000',
-        gasPrice: '20',
-      },
-      amount: '10000',
-    })
+    })) as TransactionHash
+  console.log(`Auction cancel transaction hash: ${cancelTransactionHash}`)
 
-  const approveErc20SpendingTx =
-    await polygonSDK.marketplace.auction.prepare.auctionApproveErc20TransferSignedTransaction({
+  // Settle auction. There must be buyer present for that auction.
+  // https://apidoc.tatum.io/tag/Auction#operation/SettleAuction
+  const { txId: settleTransactionHash } =
+    (await polygonSDK.marketplace.auction.send.auctionSettleSignedTransaction({
+      contractAddress,
+      id: auctionId,
+      fromPrivateKey,
       chain: 'MATIC',
-      amount: '100000',
-      spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      nonce: 0,
-      tokenId: '1',
-      isErc721: true,
-    })
-
-  const bidAuctionTx = await polygonSDK.marketplace.auction.prepare.auctionBidSignedTransaction({
-    chain: 'MATIC',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    bidder: '0x587422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    bidValue: '1',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
-
-  const cancelAuctionTx = await polygonSDK.marketplace.auction.prepare.auctionCancelSignedTransaction({
-    chain: 'MATIC',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
-
-  const settleAuctionTx = await polygonSDK.marketplace.auction.prepare.auctionSettleSignedTransaction({
-    chain: 'MATIC',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+    })) as TransactionHash
+  console.log(`Auction settle transaction hash: ${settleTransactionHash}`)
 }
