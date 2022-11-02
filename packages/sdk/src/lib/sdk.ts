@@ -1,6 +1,6 @@
 import { TatumBtcSDK } from '@tatumio/btc'
 import { walletSdk } from './services/sdk.wallet'
-import { BlockchainStorageService, Currency, TatumUrl } from '@tatumio/api-client'
+import { BlockchainStorageService, Currency, TatumUrlArg } from '@tatumio/api-client'
 import { abstractSdk, abstractSdkLedgerService } from '@tatumio/shared-abstract-sdk'
 import { sdkKms } from './services/sdk.kms'
 import { TatumEthSDK } from '@tatumio/eth'
@@ -21,7 +21,7 @@ import { TatumTronSDK } from '@tatumio/tron'
 import { TatumAlgoSDK } from '@tatumio/algo'
 import { TatumEgldSDK } from '@tatumio/egld'
 
-export const TatumSDK = (args: { apiKey: string; url?: TatumUrl }) => {
+export const TatumSDK = (args: { apiKey: string; url?: TatumUrlArg }) => {
   const blockchainSpecificSDKs: SDKS = {
     btc: TatumBtcSDK(args),
     eth: TatumEthSDK(args),
