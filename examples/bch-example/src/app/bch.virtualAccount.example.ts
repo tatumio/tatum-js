@@ -4,7 +4,7 @@ export async function bchVirtualAccountExample() {
   // Virtual account example
   // We will receive assets on account and withdraw it
   // More info here: https://docs.tatum.io/guides/ledger-and-off-chain
-  
+
   const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   // Check whether a blockchain address is assigned to a virtual account
@@ -15,7 +15,7 @@ export async function bchVirtualAccountExample() {
   console.log(account)
 
   // Create a deposit address for a virtual account
-  // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccount
+  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
   const address = await bchSDK.virtualAccount.depositAddress.create('5e68c66581f2ee32bc354087', 1)
   console.log(address)
 
