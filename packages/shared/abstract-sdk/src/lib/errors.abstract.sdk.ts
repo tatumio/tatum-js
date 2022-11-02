@@ -173,7 +173,7 @@ export enum SdkErrorCode {
   // Validation errors
   INSUFFICIENT_FUNDS = 'insufficient.funds.on.sender.account',
   PARAMETER_MISMATCH = 'parameter.mismatch',
-  UNSUPPORTED_CHAIN = 'unsupported.chain'
+  UNSUPPORTED_CHAIN = 'unsupported.chain',
 }
 
 // @TODO pass params?

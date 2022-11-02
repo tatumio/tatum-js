@@ -15,7 +15,11 @@ import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signKmsTransaction = async (tx: PendingTransaction, mnemonic: string, testnet: boolean): Promise<string> => {
+export const signKmsTransaction = async (
+  tx: PendingTransaction,
+  mnemonic: string,
+  testnet: boolean,
+): Promise<string> => {
   if (tx.chain !== Currency.BCH || !tx.withdrawalResponses) {
     throw new BchSdkError(SdkErrorCode.UNSUPPORTED_CHAIN)
   }
