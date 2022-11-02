@@ -4,7 +4,6 @@ import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testin
 const dogeSDK = TatumDogeSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function dogeOffchainExample() {
-  //------------------------------------
   // Generate mnemonic and private key (or use your own)
   // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGenerateWallet
   const { mnemonic, xpub } = await dogeSDK.wallet.generateWallet()
