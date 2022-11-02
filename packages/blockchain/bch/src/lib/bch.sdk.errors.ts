@@ -9,6 +9,7 @@ export type BchSdkErrorCode =
   | SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND
   | SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE
   | SdkErrorCode.BTC_BASED_WRONG_BODY
+  | SdkErrorCode.UNSUPPORTED_CHAIN
 
 export class BchSdkError extends SdkError {
   constructor(error: Error | BchSdkErrorCode) {

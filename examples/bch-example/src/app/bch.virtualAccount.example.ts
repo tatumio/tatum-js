@@ -1,6 +1,6 @@
 import { TatumBchSDK } from '@tatumio/bch'
 
-export async function bchOffchainExample() {
+export async function bchVirtualAccountExample() {
   const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   // Check if an account exists

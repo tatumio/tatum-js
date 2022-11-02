@@ -33,7 +33,7 @@ export type TransferBscBlockchain = {
         gasPrice: string;
     };
     /**
-     * Amount to be sent in Ether.
+     * Amount to be sent.
      */
     amount: string;
     /**

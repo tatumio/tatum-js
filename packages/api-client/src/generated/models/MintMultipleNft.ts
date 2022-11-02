@@ -16,7 +16,7 @@ export type MintMultipleNft = {
      */
     tokenId: Array<string>;
     /**
-     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
      */
     url: Array<string>;
     /**
@@ -24,7 +24,7 @@ export type MintMultipleNft = {
      */
     authorAddresses?: Array<Array<string>>;
     /**
-     * List of values for every token, which will be paid as a royalty for author of the NFT token with every token transfer. This is exact value in native blockhain currency.
+     * List of values for every token, which will be paid as a royalty for author of the NFT token with every token transfer. This is exact value in native blockchain currency.
      */
     cashbackValues?: Array<Array<string>>;
     /**

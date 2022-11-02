@@ -250,7 +250,9 @@ export class GasPumpService {
         /**
          * Transfer an asset from a gas pump address
          * <p><b>2 credits per API call</b></p>
-         * <p>Transfer (send) an asset from a gas pump address to the other address. The gas fee for sending the asset will be covered by crypto funds on the master address. Make sure that the master address always has enough funds to cover gas fees.</p>
+         * <p>Transfer (send) an asset from a gas pump address to the other address.</p>
+         * <p>This operation is usually performed by users in your custodial application: a user who has a gas pump address assigned wants to transfer an asset to some address on the blockchain.</p>
+         * <p>The gas fee for sending the asset will be covered by crypto funds on the master address. Make sure that the master address always has enough funds to cover gas fees.</p>
          * <ul>
          * <li>To be able to send the asset, the gas pump address must be <a href="#operation/ActivateGasPumpAddresses">activated</a>.</li>
          * <li>To check whether the gas pump address is activated, use <a href="#operation/GasPumpAddressesActivatedOrNot">this API</a>.</li>
@@ -296,7 +298,9 @@ export class GasPumpService {
         /**
          * Transfer multiple assets from a gas pump address
          * <p><b>2 credits per API call</b></p>
-         * <p>Transfer (send) multiple assets from a gas pump address to the other address. The gas fee for sending the assets will be covered by crypto funds on the master address. Make sure that the master address always has enough funds to cover gas fees.</p>
+         * <p>Transfer (send) multiple assets from a gas pump address to one or more addresses.</p>
+         * <p>This operation is usually performed by users in your custodial application: a user who has a gas pump address assigned wants to transfer multiple assets to one or more addresses on the blockchain.</p>
+         * <p>The gas fee for sending the assets will be covered by crypto funds on the master address. Make sure that the master address always has enough funds to cover gas fees.</p>
          * <ul>
          * <li>To be able to send the assets, the gas pump address must be <a href="#operation/ActivateGasPumpAddresses">activated</a>.</li>
          * <li>To check whether the gas pump address is activated, use <a href="#operation/GasPumpAddressesActivatedOrNot">this API</a>.</li>
