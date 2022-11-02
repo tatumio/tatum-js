@@ -1,3 +1,4 @@
+import { TransactionHash } from '@tatumio/api-client'
 import { TatumOneSDK } from '@tatumio/one'
 
 const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
@@ -11,6 +12,7 @@ export const oneAuctionExample = async () => {
   const bidder = oneSDK.wallet.generateAddressFromXPub(xpub, 1)
 
   const txId = await oneSDK.marketplace.auction.prepare.deployAuctionSignedTransaction({
+    chain: 'ONE',
     auctionFee: 100,
     feeRecipient,
     fromPrivateKey,
@@ -26,31 +28,34 @@ export const oneAuctionExample = async () => {
 
   console.log(`Auction from contract address ${contractAddress}: ${auction}`)
 
-  const { txId: bidTransactionHash } = await oneSDK.marketplace.auction.send.auctionBidSignedTransaction({
+  const { txId: bidTransactionHash } = (await oneSDK.marketplace.auction.send.auctionBidSignedTransaction({
+    chain: 'ONE',
     contractAddress,
     bidder,
     id: 'string',
     bidValue: '1',
     fromPrivateKey,
-  })
+  })) as TransactionHash
 
   console.log(`Auction bid transaction hash: ${bidTransactionHash}`)
 
   const { txId: cancelTransactionHash } =
-    await oneSDK.marketplace.auction.send.auctionCancelSignedTransaction({
+    (await oneSDK.marketplace.auction.send.auctionCancelSignedTransaction({
+      chain: 'ONE',
       contractAddress,
       id: 'string',
       fromPrivateKey,
-    })
+    })) as TransactionHash
 
   console.log(`Auction cancel transaction hash: ${cancelTransactionHash}`)
 
   const { txId: settleTransactionHash } =
-    await oneSDK.marketplace.auction.send.auctionSettleSignedTransaction({
+    (await oneSDK.marketplace.auction.send.auctionSettleSignedTransaction({
+      chain: 'ONE',
       contractAddress,
       id: 'string',
       fromPrivateKey,
-    })
+    })) as TransactionHash
 
   console.log(`Auction settle transaction hash: ${settleTransactionHash}`)
 }

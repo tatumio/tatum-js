@@ -1,9 +1,7 @@
 import {
   AccountService,
   ApiServices,
-  BEP20_CURRENCIES,
   Currency,
-  TransactionHash,
   TransferEth,
   TransferEthKMS,
   VirtualCurrencyService,
@@ -15,7 +13,7 @@ import {
   PrivateKeyOrSignatureId,
 } from '@tatumio/shared-blockchain-abstract'
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
-import { Blockchain, CONTRACT_ADDRESSES, CONTRACT_DECIMALS } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { oneTxService } from './one.tx'
 
@@ -27,11 +25,53 @@ const sendOneVirtualAccountTransaction = async (
   web3: EvmBasedWeb3,
 ): Promise<VirtualAccountResponse> => {
   const txService = oneTxService({ blockchain: Blockchain.HARMONY, web3 })
-  const { privateKey, gasLimit, gasPrice, nonce, ...w } = body
+  const { privateKey, gasLimit, gasPrice, nonce, mnemonic, index, ...w } = body
   const withdrawal: Withdrawal = w as Withdrawal
   const { amount, address } = withdrawal
+  let fromPrivKey: string
+  let txData: any
 
-  withdrawal.fee = web3
+  if (mnemonic && index !== undefined) {
+    fromPrivKey = (await evmBasedUtils.generatePrivateKeyFromMnemonic(
+      Blockchain.HARMONY,
+      mnemonic,
+      index,
+    )) as string
+  } else {
+    fromPrivKey = privateKey as string
+  }
+
+  const account = await AccountService.getAccountByAccountId(withdrawal.senderAccountId)
+
+  // values from estimate fee for ERC_20 transfer call
+  const fee = {
+    gasLimit: gasLimit || '150000',
+    gasPrice: gasPrice || '50',
+  }
+
+  if (account.currency === Currency.ONE) {
+    txData = await txService.native.prepare.transferSignedTransaction({
+      fromPrivateKey: fromPrivKey,
+      to: address,
+      nonce,
+      amount,
+      fee,
+    })
+  } else {
+    fee.gasLimit = '100000'
+    const vc = await VirtualCurrencyService.getCurrency(account.currency)
+    txData = await txService.erc20.prepare.transferSignedTransaction({
+      amount,
+      fee,
+      fromPrivateKey: fromPrivKey,
+      to: address,
+      digits: vc.precision as number,
+      nonce: body.nonce,
+      contractAddress: vc.erc20Address as string,
+    })
+  }
+
+  const withdrawalFee = web3
     .getClient()
     .utils.fromWei(
       new BigNumber(gasLimit as string)
@@ -39,53 +79,28 @@ const sendOneVirtualAccountTransaction = async (
         .toString(),
       'ether',
     )
-  const fee = {
-    gasLimit: gasLimit || '21000',
-    gasPrice: gasPrice || '20',
+
+  const withdrawalBody = {
+    ...withdrawal,
+    fee: withdrawalFee,
   }
-  const account = await AccountService.getAccountByAccountId(withdrawal.senderAccountId)
-  const withdrawalResponse = await WithdrawalService.storeWithdrawal(withdrawal)
+  const { id } = await WithdrawalService.storeWithdrawal(withdrawalBody)
 
-  let transactionData: TransactionHash
-  if (account.currency === Currency.ONE) {
-    transactionData = (await txService.native.send.transferSignedTransaction({
-      fromPrivateKey: privateKey,
-      to: address,
-      nonce,
-      amount,
-      fee,
-    })) as TransactionHash
-  } else {
-    fee.gasLimit = '100000'
-    let contractAddress: string
-    let decimals = 6
-    if (BEP20_CURRENCIES.includes(account.currency as Currency)) {
-      contractAddress = CONTRACT_ADDRESSES[account.currency]
-      decimals = CONTRACT_DECIMALS[account.currency]
-    } else {
-      const vc = await VirtualCurrencyService.getCurrency(account.currency)
-      contractAddress = vc.erc20Address as string
-      decimals = (vc.precision as number) || 18
-    }
-
-    transactionData = (await txService.erc20.send.transferSignedTransaction({
-      amount,
-      fee,
-      fromPrivateKey: privateKey,
-      to: address,
-      digits: decimals,
-      nonce: body.nonce,
-      contractAddress,
-    })) as TransactionHash
-  }
-
-  const txId = Object.values(transactionData)[0]
   try {
-    await WithdrawalService.completeWithdrawal(withdrawalResponse.id as string, txId)
-    return { id: withdrawalResponse.id as string, txId }
+    return {
+      ...(await WithdrawalService.broadcastBlockchainTransaction({
+        txData,
+        withdrawalId: id,
+        currency: Currency.ONE,
+      })),
+    }
   } catch (e) {
     console.error(e)
-    return { id: withdrawalResponse.id as string, txId, completed: false }
+    try {
+      return await WithdrawalService.cancelInProgressWithdrawal(id!)
+    } catch (e1) {
+      return { id }
+    }
   }
 }
 

@@ -18,12 +18,14 @@ export const ethAuctionExample = async () => {
   )
 
   const deployAuctionTx = await ethSDK.marketplace.auction.prepare.deployAuctionSignedTransaction({
+    chain: 'ETH',
     auctionFee: 100,
     feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
   })
 
   const updateFeeRecipientTx =
     await ethSDK.marketplace.auction.prepare.auctionUpdateFeeRecipientSignedTransaction({
+      chain: 'ETH',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -35,6 +37,7 @@ export const ethAuctionExample = async () => {
     })
 
   const createAuctionTx = await ethSDK.marketplace.auction.prepare.createAuctionSignedTransaction({
+    chain: 'ETH',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
@@ -54,6 +57,7 @@ export const ethAuctionExample = async () => {
 
   const approveNftSpendingTx =
     await ethSDK.marketplace.auction.prepare.auctionApproveNftTransferSignedTransaction({
+      chain: 'ETH',
       spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       isErc721: true,
       tokenId: '100000',
@@ -69,6 +73,7 @@ export const ethAuctionExample = async () => {
 
   const approveErc20SpendingTx =
     await ethSDK.marketplace.auction.prepare.auctionApproveErc20TransferSignedTransaction({
+      chain: 'ETH',
       amount: '100000',
       spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -79,6 +84,7 @@ export const ethAuctionExample = async () => {
     })
 
   const bidAuctionTx = await ethSDK.marketplace.auction.prepare.auctionBidSignedTransaction({
+    chain: 'ETH',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     bidder: '0x587422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
@@ -92,6 +98,7 @@ export const ethAuctionExample = async () => {
   })
 
   const cancelAuctionTx = await ethSDK.marketplace.auction.prepare.auctionCancelSignedTransaction({
+    chain: 'ETH',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -103,6 +110,7 @@ export const ethAuctionExample = async () => {
   })
 
   const settleAuctionTx = await ethSDK.marketplace.auction.prepare.auctionSettleSignedTransaction({
+    chain: 'ETH',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',

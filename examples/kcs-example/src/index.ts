@@ -7,7 +7,6 @@ import { kcsDriverExample, kcsWeb3Example } from './app/kcs.web3.example'
 import { kcsOffchainExample } from './app/kcs.offchain.example'
 import { kcsSubscriptionsExample } from './app/kcs.subscriptions.example'
 import { kcsTxWithPrivateKeyExample, kcsTxWithSignatureIdExample } from './app/kcs.tx.example'
-import { kcsAuctionExample } from './app/kcs.auction.example'
 
 console.log(`Running ${kcsWalletExample()}`)
 console.log(`Running ${kcsBlockchainExample()}`)
@@ -20,4 +19,3 @@ console.log(`Running ${kcsOffchainExample()}`)
 console.log(`Running ${kcsSubscriptionsExample()}`)
 console.log(`Runninf ${kcsTxWithPrivateKeyExample()}`)
 console.log(`Runninf ${kcsTxWithSignatureIdExample()}`)
-console.log(`Running ${kcsAuctionExample()}`)

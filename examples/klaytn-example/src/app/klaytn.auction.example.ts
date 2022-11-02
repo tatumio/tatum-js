@@ -17,6 +17,7 @@ export const klaytnAuctionExample = async () => {
 
   // https://apidoc.tatum.io/tag/Auction#operation/GenerateAuction
   const { txId } = (await klaytnSDK.marketplace.auction.send.deployAuctionSignedTransaction({
+    chain: 'KLAY',
     auctionFee: 100,
     feeRecipient,
     fromPrivateKey,
@@ -34,31 +35,34 @@ export const klaytnAuctionExample = async () => {
 
   console.log(`Auction from contract address ${contractAddress}: ${auction}`)
 
-  const { txId: bidTransactionHash } = await klaytnSDK.marketplace.auction.send.auctionBidSignedTransaction({
+  const { txId: bidTransactionHash } = (await klaytnSDK.marketplace.auction.send.auctionBidSignedTransaction({
+    chain: 'KLAY',
     contractAddress,
     bidder,
     id: 'string',
     bidValue: '1',
     fromPrivateKey,
-  })
+  })) as TransactionHash
 
   console.log(`Auction bid transaction hash: ${bidTransactionHash}`)
 
   const { txId: cancelTransactionHash } =
-    await klaytnSDK.marketplace.auction.send.auctionCancelSignedTransaction({
+    (await klaytnSDK.marketplace.auction.send.auctionCancelSignedTransaction({
+      chain: 'KLAY',
       contractAddress,
       id: 'string',
       fromPrivateKey,
-    })
+    })) as TransactionHash
 
   console.log(`Auction cancel transaction hash: ${cancelTransactionHash}`)
 
   const { txId: settleTransactionHash } =
-    await klaytnSDK.marketplace.auction.send.auctionSettleSignedTransaction({
+    (await klaytnSDK.marketplace.auction.send.auctionSettleSignedTransaction({
+      chain: 'KLAY',
       contractAddress,
       id: 'string',
       fromPrivateKey,
-    })
+    })) as TransactionHash
 
   console.log(`Auction settle transaction hash: ${settleTransactionHash}`)
 }
