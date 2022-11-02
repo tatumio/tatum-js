@@ -6,6 +6,7 @@ const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function oneKmsExample() {
   // https://apidoc.tatum.io/tag/Key-Management-System#operation/GetPendingTransactionsToSign
   const pendingSignatureIds = await oneSDK.kms.getAllPending()
+  console.log('Pending signatures: ', pendingSignatureIds)
   const tx = await oneSDK.kms.get(pendingSignatureIds[0].id)
 
   // https://apidoc.tatum.io/tag/Key-Management-System#operation/CompletePendingSignature

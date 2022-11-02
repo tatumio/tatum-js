@@ -8,19 +8,19 @@ export async function oneBlockchainExample() {
   const transaction = await oneSDK.blockchain.get(
     '0x73e25d4f202b983b97afeea547c6b3b7fda8a88161ee2d94198e35f41f8c9dfa',
   )
-  console.log(`Transaction: ${transaction}`)
+  console.log(`Transaction: ${JSON.stringify(transaction)}`)
 
   // Get block by hash
   // https://apidoc.tatum.io/tag/Harmony#operation/OneGetBlock
   const block = await oneSDK.blockchain.getBlock(
     '0x041676cff3ecac486c9e076176554987aa073bd9bd56f4a078a58ade01ea467a',
   )
-  console.log(`Block: ${block}`)
+  console.log(`Block: ${JSON.stringify(block)}`)
 
   // Get current block
   // https://apidoc.tatum.io/tag/Harmony#operation/OneGetCurrentBlock
   const currentBlock = await oneSDK.blockchain.getCurrentBlock()
-  console.log(`Current block: ${currentBlock}`)
+  console.log(`Current block: ${JSON.stringify(currentBlock)}`)
 
   // Get transaction count of an address
   // https://apidoc.tatum.io/tag/Harmony#operation/OneGetTransactionCount

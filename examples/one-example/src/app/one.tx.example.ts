@@ -13,6 +13,7 @@ export async function oneTxExample(): Promise<void> {
   const address = oneSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = oneSDK.wallet.generateAddressFromXPub(xpub, 1)
 
+  console.log(`Address to fund: ${address}`)
   // FUND YOUR SENDER ACCOUNT WITH ONE FROM https://faucet.pops.one/
 
   // send native transaction using private key
