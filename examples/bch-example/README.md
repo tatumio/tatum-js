@@ -56,9 +56,9 @@ You can find examples [here](./src/app/bch.wallet.example.ts).
 
 You can find examples [here](./src/app/bch.tx.example.ts).
 
-### How to execute offchain methods for bch
+### How to execute virtual accounts methods for bch
 
-You can find examples [here](./src/app/bch.offchain.example.ts).
+You can find examples [here](./src/app/bch.virtualAccount.example.ts).
 
 ### How to get exchange rates for bch
 
