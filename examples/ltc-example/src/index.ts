@@ -8,10 +8,10 @@ import { ltcVirtualAccountExample } from './app/ltc.virtualAccount.example'
 import { ltcBalanceExample } from './app/ltc.balance.example'
 
 console.log(`Running ${ltcWalletExample()}`)
-//console.log(`Running ${ltcBlockchainExample()}`) // todo: retest with faucet
+console.log(`Running ${ltcBlockchainExample()}`)
 console.log(`Running ${ltcBalanceExample()}`)
-//console.log(`Running ${ltcSubscriptionsExample()}`) // todo: free plan limit
+console.log(`Running ${ltcSubscriptionsExample()}`)
 console.log(`Running ${ltcKmsExample()}`)
 console.log(`Running ${ltcVirtualAccountExample()}`)
 console.log(`Running ${exchangeRateExample()}`)
-//console.log(`Running ${ltcTransactionsExample()}`) // todo: retest with faucet
+console.log(`Running ${ltcTransactionsExample()}`)

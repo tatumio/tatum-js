@@ -4,7 +4,7 @@ export async function ltcKmsExample() {
   const ltcSDK = TatumLtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   // Get all pending transactions to be signed
-  // You can find more details in https://apidoc.tatum.io/tag/Key-Management-System#operation/GetPendingTransactionsToSign 
+  // You can find more details in https://apidoc.tatum.io/tag/Key-Management-System#operation/GetPendingTransactionsToSign
   const pendingSignatureIds = await ltcSDK.kms.getAllPending()
 
   if (pendingSignatureIds.length) {

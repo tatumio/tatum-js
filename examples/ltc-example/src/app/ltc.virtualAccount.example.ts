@@ -18,7 +18,7 @@ export async function ltcVirtualAccountExample() {
   })
   console.log(`Created xpub account: ${JSON.stringify(xpubAccount)}`)
   const plainAccount = await ltcSDK.ledger.account.create({
-    currency: 'LTC'
+    currency: 'LTC',
   })
   console.log(`Created account: ${JSON.stringify(plainAccount)}`)
 
@@ -29,7 +29,7 @@ export async function ltcVirtualAccountExample() {
   } catch (e) {
     console.log(`Account: ${e.message}`)
   }
-  
+
   // Create a deposit address for an account and derivation index
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
   const address = await ltcSDK.virtualAccount.depositAddress.create(xpubAccount.id, 1)
@@ -59,7 +59,7 @@ export async function ltcVirtualAccountExample() {
     1,
   )
   console.log(`Assign address: ${JSON.stringify(assignedAddress)}`)
-  
+
   // Get all deposit addresses for an account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/getAllDepositAddresses
   const addressByAccount = await ltcSDK.virtualAccount.depositAddress.getByAccount(xpubAccount.id)
@@ -67,10 +67,7 @@ export async function ltcVirtualAccountExample() {
 
   // Remove a deposit address from an account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/removeAddress
-  await ltcSDK.virtualAccount.depositAddress.remove(
-    plainAccount.id,
-    plainAccountAddress,
-  )
+  await ltcSDK.virtualAccount.depositAddress.remove(plainAccount.id, plainAccountAddress)
 
   // Get withdrawals for a given status (Done)
   // You can find more details in https://apidoc.tatum.io/tag/Withdrawal#operation/GetWithdrawals

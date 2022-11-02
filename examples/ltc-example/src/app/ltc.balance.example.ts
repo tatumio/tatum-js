@@ -2,7 +2,7 @@ import { TatumLtcSDK } from '@tatumio/ltc'
 
 export async function ltcBalanceExample(): Promise<void> {
   const ltcSDK = TatumLtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-  
+
   // Generate a LTC wallet
   // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcGenerateWallet
   const { mnemonic, xpub } = await ltcSDK.wallet.generateWallet(undefined, { testnet: true })

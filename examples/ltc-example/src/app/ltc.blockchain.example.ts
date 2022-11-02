@@ -23,7 +23,9 @@ export async function ltcBlockchainExample() {
 
   // Get LTC transaction by its hash. Returns the transaction detail.
   // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcGetRawTransaction
-  const transaction = await ltcSDK.blockchain.getTransaction('4bf8135258bc96ef240078add0cbfdeebde9b5e60b9019dcfe4c413354bbca27')
+  const transaction = await ltcSDK.blockchain.getTransaction(
+    '4bf8135258bc96ef240078add0cbfdeebde9b5e60b9019dcfe4c413354bbca27',
+  )
   console.log(`Transaction: ${JSON.stringify(transaction)}`)
 
   // Get LTC transaction in mempool. Returns the list of transaction ids.
@@ -50,26 +52,30 @@ export async function ltcBlockchainExample() {
   console.log(`UTXO: ${JSON.stringify(utxo)}`)
 
   // Broadcast LTC transaction to the blockchain.
+  // First we prepare the signed TX data to be used for the broadcast.
   // Account balance is needed for the transfer to work, you can top up your testnet LTC balance with https://testnet-faucet.com/ltc-testnet/
   // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcBroadcast
-  const signedTxData = await ltcSDK.transaction.prepareSignedTransaction({
-    fromAddress: [
-      {
-        address: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
-        privateKey: 'cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbP',
-      },
-    ],
-    to: [
-      {
-        address: '2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7',
-        value: 0.02969944,
-      },
-    ],
-    fee: '0.001',
-    changeAddress: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
-  }, { testnet: true })
+  const signedTxData = await ltcSDK.transaction.prepareSignedTransaction(
+    {
+      fromAddress: [
+        {
+          address: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
+          privateKey: 'cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbP',
+        },
+      ],
+      to: [
+        {
+          address: '2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7',
+          value: 0.02969944,
+        },
+      ],
+      fee: '0.001',
+      changeAddress: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
+    },
+    { testnet: true },
+  )
   const broadcastTx = await ltcSDK.blockchain.broadcast({
-    txData: signedTxData
+    txData: signedTxData,
   })
   console.log(`Broadcast TX: ${JSON.stringify(broadcastTx)}`)
 
