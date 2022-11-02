@@ -29,7 +29,7 @@ export async function solanaTxWithCustodialManagedWallet() {
   transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
   const txData = transaction.compileMessage().serialize().toString('hex')
 
-  const walletId = '5f9f1b9b-8c9e-4b9c-9b9b-8c9e4b9c9b9b'
+  const walletId = '30a0ef1e-dfd7-4aff-bac9-5c1f48a86693'
   const { txId } = await solanaSDK.custodialManagedWallet.transfer({
     chain: Currency.SOL,
     txData,

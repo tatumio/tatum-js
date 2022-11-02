@@ -169,7 +169,12 @@ describe('KlaytnSDK - tx', () => {
   describe('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
-        multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.KLAYTN, 'KLAY')
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(
+          sdk.multiToken,
+          TEST_DATA.KLAYTN,
+          'KLAY',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('mintMultiToken', () => {
@@ -181,7 +186,12 @@ describe('KlaytnSDK - tx', () => {
       })
 
       describe('transferMultiToken', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenTransaction(sdk.multiToken, TEST_DATA.KLAYTN, 'KLAY')
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(
+          sdk.multiToken,
+          TEST_DATA.KLAYTN,
+          'KLAY',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('transferMultiTokenBatch', () => {
@@ -189,15 +199,26 @@ describe('KlaytnSDK - tx', () => {
           sdk.multiToken,
           TEST_DATA.KLAYTN,
           'KLAY',
+          inmemoryBlockchain.accounts,
         )
       })
 
       describe('burnMultiToken', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenTransaction(sdk.multiToken, TEST_DATA.KLAYTN, 'KLAY')
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(
+          sdk.multiToken,
+          TEST_DATA.KLAYTN,
+          'KLAY',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('burnMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.KLAYTN, 'KLAY')
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
+          sdk.multiToken,
+          TEST_DATA.KLAYTN,
+          'KLAY',
+          inmemoryBlockchain.accounts,
+        )
       })
     })
   })

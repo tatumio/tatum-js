@@ -7,57 +7,65 @@ const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function bscSmartContractExample(): Promise<void> {
   // if you don't already have a wallet, address and private key - generate them
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateWallet
-  const { mnemonic } = await bscSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddressPrivateKey
   const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
   const address = bscSDK.wallet.generateAddressFromPrivateKey(fromPrivateKey)
+  const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  // FUND YOUR SENDER ACCOUNT WITH BNB FROM https://testnet.binance.org/faucet-smart
+  // Fund your address here: https://testnet.binance.org/faucet-smart
   console.log(`Fund address: ${address}`)
+  console.log(`Private key for ${address}: ${fromPrivateKey}`)
 
-  // any previously deployed contract address
-  const contractAddress = '0x687422eEA2cB73B5d3e242bA5456b782919AFc85'
+  // your previously deployed contract address
+  const contractAddress = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd'
 
   // smart contract read method
   const { data } = await bscSDK.smartContract.send.smartContractReadMethodInvocationTransaction({
     contractAddress,
-    methodName: 'transfer',
+    methodName: 'balanceOf',
     methodABI: {
+      constant: true,
       inputs: [
         {
-          internalType: 'uint256',
-          name: 'amount',
+          name: 'owner',
+          type: 'address',
+        },
+      ],
+      name: 'balanceOf',
+      outputs: [
+        {
+          name: '',
           type: 'uint256',
         },
       ],
-      name: 'stake',
-      outputs: [],
-      stateMutability: 'nonpayable',
+      payable: false,
+      stateMutability: 'view',
       type: 'function',
     },
-    params: ['0x632'],
+    // address we want the balance of
+    params: ['0x352a7a5277eC7619500b06fA051974621C1acd12'],
   })
-
   console.log(`Smart contract data: ${data}`)
 
   // smart contract write method
+  // make sure your address is funded
   const { txId } = (await bscSDK.smartContract.send.smartContractMethodInvocationTransaction({
     contractAddress,
     methodName: 'transfer',
     methodABI: {
+      constant: false,
       inputs: [
-        {
-          internalType: 'uint256',
-          name: 'amount',
-          type: 'uint256',
-        },
+        { name: '_value', type: 'uint256' },
+        { name: '_to', type: 'address' },
       ],
-      name: 'stake',
-      outputs: [],
+      name: 'transfer',
+      outputs: [{ name: '', type: 'bool' }],
+      payable: false,
       stateMutability: 'nonpayable',
       type: 'function',
     },
-    params: ['0x632'],
+    params: [100000000, to],
     fromPrivateKey,
   })) as TransactionHash
 

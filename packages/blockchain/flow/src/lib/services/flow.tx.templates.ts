@@ -183,8 +183,8 @@ transaction(amount: UFix64, recipient: Address) {
       }
   import FUSD from ${testnet ? FLOW_TESTNET_ADDRESSES.FUSD : FLOW_MAINNET_ADDRESSES.FUSD}
   import TatumMultiNFT from ${
-        testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT
-      }
+    testnet ? FLOW_TESTNET_ADDRESSES.TatumMultiNFT : FLOW_MAINNET_ADDRESSES.TatumMultiNFT
+  }
   transaction(publicKey: String) {
     let account: AuthAccount
     prepare(signer: AuthAccount) {

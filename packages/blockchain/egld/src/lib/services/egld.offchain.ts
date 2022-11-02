@@ -7,14 +7,14 @@ import {
   TransferEthKMS,
   TransferEthMnemonic,
 } from '@tatumio/api-client'
-import { abstractBlockchainOffchain } from '@tatumio/shared-blockchain-abstract'
+import { abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { prepareSignedTransaction } from './egld.tx'
 
 export const egldOffchainService = (args: { blockchain: Blockchain }) => {
   return {
-    ...abstractBlockchainOffchain(args),
+    ...abstractBlockchainVirtualAccount(args),
     /**
      * Send EGLD transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
      * This operation is irreversible.

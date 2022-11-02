@@ -1,8 +1,6 @@
 import {
-  CallSmartContractMethod,
-  CallSmartContractMethodKMS,
-  GenerateCustodialWalletTron,
-  GenerateCustodialWalletTronKMS,
+  Currency,
+  GasPumpService,
   TransferCustodialWalletBatchTron,
   TransferCustodialWalletBatchTronKMS,
   TransferCustodialWalletTron,
@@ -13,13 +11,23 @@ import { ITronWeb } from './tron.web'
 import { tronTx } from './tron.tx'
 import { CustodialFullTokenWallet } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
+import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
+import { CallSmartContract, TronGenerateCustodialWallet } from './tron.tx'
+import { WithoutChain } from '@tatumio/shared-abstract-sdk'
 
 const NATIVE_ASSET_CONTRACT_TYPE = 3
 const NON_FUNGIBLE_TOKEN_CONTRACT_TYPE = 1
 const FUNGIBLE_TOKEN_CONTRACT_TYPE = 0
 
+type TronTransferCustodial = WithoutChain<FromPrivateKeyOrSignatureIdTron<TransferCustodialWalletTron>> & {
+  chain: Currency.TRON
+}
+type TronTransferBatchCustodial = WithoutChain<
+  FromPrivateKeyOrSignatureIdTron<TransferCustodialWalletBatchTron>
+> & { chain: Currency.TRON }
+
 const prepareTransferFromCustodialWallet = async (
-  body: TransferCustodialWalletTron | TransferCustodialWalletTronKMS,
+  body: TronTransferCustodial,
   getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<number>,
   tronWeb: ITronWeb,
   provider?: string,
@@ -44,7 +52,7 @@ const prepareTransferFromCustodialWallet = async (
     )
   }
 
-  const params: CallSmartContractMethod | CallSmartContractMethodKMS = {
+  const params: CallSmartContract = {
     ...body,
     methodName,
     contractAddress: body.custodialAddress,
@@ -62,7 +70,7 @@ const prepareTransferFromCustodialWallet = async (
 }
 
 const prepareBatchTransferFromCustodialWallet = async (
-  body: TransferCustodialWalletBatchTron | TransferCustodialWalletBatchTronKMS,
+  body: TronTransferBatchCustodial,
   getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<number>,
   tronWeb: ITronWeb,
   provider?: string,
@@ -92,7 +100,7 @@ const prepareBatchTransferFromCustodialWallet = async (
     tokenIds.push(`0x${tokenId.toString(16)}`)
   }
 
-  const params: CallSmartContractMethod | CallSmartContractMethodKMS = {
+  const params: CallSmartContract = {
     ...body,
     amount: undefined,
     methodName,
@@ -121,10 +129,8 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      custodialWallet: async (
-        body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
-        provider?: string,
-      ) => tronTx(args).custodial.prepare.generateCustodialWalletSignedTransaction(body, provider),
+      custodialWallet: async (body: TronGenerateCustodialWallet, provider?: string) =>
+        tronTx(args).custodial.prepare.generateCustodialWalletSignedTransaction(body, provider),
       /**
        * Prepare signed transaction from the custodial SC wallet.
        * @param testnet chain to work with
@@ -133,7 +139,7 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
       transferFromCustodialWallet: (
-        body: TransferCustodialWalletTron | TransferCustodialWalletTronKMS,
+        body: TronTransferCustodial,
         getContractDecimals: (
           contractAddress: string,
           provider?: string,
@@ -159,7 +165,7 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
       batchTransferFromCustodialWallet: (
-        body: TransferCustodialWalletBatchTron | TransferCustodialWalletBatchTronKMS,
+        body: TronTransferBatchCustodial,
         getContractDecimals: (
           contractAddress: string,
           provider?: string,
@@ -186,10 +192,8 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      custodialWallet: async (
-        body: GenerateCustodialWalletTron | GenerateCustodialWalletTronKMS,
-        provider?: string,
-      ) => tronTx(args).custodial.send.generateCustodialWalletSignedTransaction(body, provider),
+      custodialWallet: async (body: TronGenerateCustodialWallet, provider?: string) =>
+        tronTx(args).custodial.send.generateCustodialWalletSignedTransaction(body, provider),
       /**
        * Send signed transaction from the custodial SC wallet.
        * @param testnet chain to work with
@@ -198,7 +202,7 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
       transferFromCustodialWallet: async (
-        body: TransferCustodialWalletTron | TransferCustodialWalletTronKMS,
+        body: TronTransferCustodial,
         getContractDecimals: (
           contractAddress: string,
           provider?: string,
@@ -207,17 +211,23 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
         provider?: string,
         decimals = 18,
         testnet = false,
-      ) =>
-        TronService.tronBroadcast({
-          txData: await prepareTransferFromCustodialWallet(
-            body,
-            getContractDecimals,
-            args.tronWeb,
-            provider,
-            decimals,
-            testnet,
-          ),
-        }),
+      ) => {
+        if (body.signatureId) {
+          return GasPumpService.transferCustodialWallet(body as TransferCustodialWalletTronKMS)
+        } else {
+          return TronService.tronBroadcast({
+            txData: await prepareTransferFromCustodialWallet(
+              body,
+              getContractDecimals,
+              args.tronWeb,
+              provider,
+              decimals,
+              testnet,
+            ),
+          })
+        }
+      },
+
       /**
        * Send signed batch transaction from the custodial SC wallet.
        * @param testnet chain to work with
@@ -226,7 +236,7 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
       batchTransferFromCustodialWallet: async (
-        body: TransferCustodialWalletBatchTron | TransferCustodialWalletBatchTronKMS,
+        body: TronTransferBatchCustodial,
         getContractDecimals: (
           contractAddress: string,
           provider?: string,
@@ -235,17 +245,22 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
         provider?: string,
         decimals = 6,
         testnet = false,
-      ) =>
-        TronService.tronBroadcast({
-          txData: await prepareBatchTransferFromCustodialWallet(
-            body,
-            getContractDecimals,
-            args.tronWeb,
-            provider,
-            decimals,
-            testnet,
-          ),
-        }),
+      ) => {
+        if (body.signatureId) {
+          return GasPumpService.transferCustodialWalletBatch(body as TransferCustodialWalletBatchTronKMS)
+        } else {
+          return TronService.tronBroadcast({
+            txData: await prepareBatchTransferFromCustodialWallet(
+              body,
+              getContractDecimals,
+              args.tronWeb,
+              provider,
+              decimals,
+              testnet,
+            ),
+          })
+        }
+      },
     },
   }
 }

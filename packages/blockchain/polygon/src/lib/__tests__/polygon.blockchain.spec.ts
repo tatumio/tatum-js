@@ -7,6 +7,7 @@ import {
 import { TatumPolygonSDK } from '../polygon.sdk'
 import * as apiClient from '@tatumio/api-client'
 import {
+  BlockchainUtilsService,
   CallSmartContractMethod,
   PolygonEstimateGas,
   PrivKeyRequest,

@@ -9,15 +9,15 @@ import {
   WithdrawalService,
 } from '@tatumio/api-client'
 import {
-  abstractBlockchainOffchain,
-  FromPrivateKeyOrSignatureIdOrMnemonic,
+  abstractBlockchainVirtualAccount,
+  FromPrivateKeyOrSignatureId,
 } from '@tatumio/shared-blockchain-abstract'
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, CONTRACT_ADDRESSES, CONTRACT_DECIMALS } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { bscTxService } from './bsc.tx'
 
-type TransferVirtualAccountBsc = FromPrivateKeyOrSignatureIdOrMnemonic<TransferBsc>
+type TransferVirtualAccountBsc = FromPrivateKeyOrSignatureId<TransferBsc>
 type VirtualAccountResponse = { id?: string; txId?: string; completed?: boolean } | void
 
 const sendBscVirtualAccountTransaction = async (
@@ -47,7 +47,7 @@ const sendBscVirtualAccountTransaction = async (
   }
 
   if (account.currency === 'BSC') {
-    txData = txService.native.send.transferSignedTransaction({
+    txData = txService.native.prepare.transferSignedTransaction({
       amount,
       fromPrivateKey: fromPrivKey,
       fee,
@@ -66,7 +66,7 @@ const sendBscVirtualAccountTransaction = async (
       contractAddress = vc.erc20Address as string
       decimals = (vc.precision as number) || 18
     }
-    txData = await txService.erc20.send.transferSignedTransaction({
+    txData = await txService.erc20.prepare.transferSignedTransaction({
       amount,
       fee,
       fromPrivateKey: fromPrivKey,
@@ -111,7 +111,7 @@ const sendBscVirtualAccountTransaction = async (
 
 export const virtualAccountService = (args: { blockchain: Blockchain; web3: EvmBasedWeb3 }) => {
   return {
-    ...abstractBlockchainOffchain(args),
+    ...abstractBlockchainVirtualAccount(args),
     /**
      * Send Bsc transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
      * This operation is irreversible.

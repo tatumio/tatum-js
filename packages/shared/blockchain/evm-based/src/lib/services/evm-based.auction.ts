@@ -306,7 +306,7 @@ const auctionApproveNftTransferSignedTransaction = async (
   const data = contract.methods[methodName](...params).encodeABI()
 
   const tx: TransactionConfig = {
-    from: 0,
+    from: `0x0000000000000000000000000000000000000000`,
     to: body.contractAddress.trim(),
     value: body.amount
       ? `0x${new BigNumber(client.utils.toWei(body.amount, 'ether')).toString(16)}`

@@ -1,4 +1,10 @@
-import { ApiServices, ApproveErc20, ApproveErc20KMS } from '@tatumio/api-client'
+import {
+  ApproveErc20,
+  ApproveErc20KMS,
+  AuctionService,
+  FungibleTokensErc20OrCompatibleService,
+  MarketplaceService,
+} from '@tatumio/api-client'
 import {
   BroadcastFunction,
   ChainApproveErc20,
@@ -344,7 +350,7 @@ export const marketplace = (args: {
        */
       approveErc20Spending: async (body: ChainApproveErc20, provider?: string) => {
         if (body.signatureId) {
-          return ApiServices.fungibleToken.erc20Approve(body as ApproveErc20KMS)
+          return FungibleTokensErc20OrCompatibleService.erc20Approve(body as ApproveErc20KMS)
         } else {
           return args.broadcastFunction({
             txData: await erc20(args).prepare.approveSignedTransaction(body, provider),
@@ -360,7 +366,7 @@ export const marketplace = (args: {
       auctionApproveNftTransferSignedTransaction: async (body: ApproveNftTransfer, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.auction.approveNftAuctionSpending(body as any)
+          return AuctionService.approveNftAuctionSpending(body as any)
         } else {
           return args.broadcastFunction({
             txData: await evmBasedAuction(args).prepare.auctionApproveNftTransferSignedTransaction(
@@ -386,7 +392,7 @@ export const marketplace = (args: {
       generateMarketplace: async (body: ChainGenerateMarketplace, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.marketplace.generateMarketplace(body as any)
+          return MarketplaceService.generateMarketplace(body as any)
         } else {
           return args.broadcastFunction({
             txData: await generateMarketplace(body, args.web3, provider),
@@ -402,7 +408,7 @@ export const marketplace = (args: {
       updateFee: async (body: ChainUpdateFee, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.marketplace.updateFee(body as any)
+          return MarketplaceService.updateFee(body as any)
         } else {
           return args.broadcastFunction({
             txData: await updateFee(body, args.web3, provider),
@@ -418,7 +424,7 @@ export const marketplace = (args: {
       updateFeeRecipient: async (body: ChainUpdateFeeRecipient, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.marketplace.updateFeeRecipient(body as any)
+          return MarketplaceService.updateFeeRecipient(body as any)
         } else {
           return args.broadcastFunction({
             txData: await updateFeeRecipient(body, args.web3, provider),
@@ -435,7 +441,7 @@ export const marketplace = (args: {
       buyMarketplaceListing: async (body: ChainBuyAssetOnMarketplace, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.marketplace.buyAssetOnMarketplace(body as any)
+          return MarketplaceService.buyAssetOnMarketplace(body as any)
         } else {
           return args.broadcastFunction({
             txData: await buyAsset(body, args.web3, provider),
@@ -453,7 +459,7 @@ export const marketplace = (args: {
       sellMarketplaceListing: async (body: ChainSellAssetOnMarketplace, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.marketplace.sellAssetOnMarketplace(body as any)
+          return MarketplaceService.sellAssetOnMarketplace(body as any)
         } else {
           return args.broadcastFunction({
             txData: await sellAsset(body, args.web3, provider),
@@ -469,7 +475,7 @@ export const marketplace = (args: {
       cancelMarketplaceListing: async (body: ChainCancelSellAssetOnMarketplace, provider?: string) => {
         if (body.signatureId) {
           // TODO: find better type
-          return ApiServices.marketplace.cancelSellMarketplaceListing(body as any)
+          return MarketplaceService.cancelSellMarketplaceListing(body as any)
         } else {
           return args.broadcastFunction({
             txData: await cancelListing(body, args.web3, provider),

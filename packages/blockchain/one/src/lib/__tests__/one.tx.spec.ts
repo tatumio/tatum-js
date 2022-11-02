@@ -171,31 +171,66 @@ describe('OneSDK - tx', () => {
   describe('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
-        multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(
+          sdk.multiToken,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('mintMultiToken', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(
+          sdk.multiToken,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('mintMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
+          sdk.multiToken,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('transferMultiToken', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(
+          sdk.multiToken,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('transferMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
+        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
+          sdk.multiToken,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('burnMultiToken', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(
+          sdk.multiToken,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
       })
 
       describe('burnMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.ONE, 'ONE')
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
+          sdk.multiToken,
+          TEST_DATA.ONE,
+          'ONE',
+          inmemoryBlockchain.accounts,
+        )
       })
     })
   })
@@ -206,6 +241,7 @@ describe('OneSDK - tx', () => {
         smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
           sdk.smartContract,
           TEST_DATA.ONE,
+          inmemoryBlockchain.accounts,
         )
       })
     })

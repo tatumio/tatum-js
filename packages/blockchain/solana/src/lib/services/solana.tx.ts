@@ -41,6 +41,7 @@ import {
   createVerifySizedCollectionItemInstruction,
 } from '@metaplex-foundation/mpl-token-metadata'
 import BigNumber from 'bignumber.js'
+import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 export type TransferSolana = FromPrivateKeyOrSignatureId<TransferSolanaBlockchain>
 export type TransferSolanaNft = FromPrivateKeyOrSignatureId<TransferNftSolana>
@@ -48,6 +49,7 @@ export type TransferSolanaSpl = FromPrivateKeyOrSignatureId<ChainTransferSolanaS
 export type CreateSolanaSpl = FromPrivateKeyOrSignatureId<ChainDeploySolanaSpl>
 export type MintSolanaNft = FromPrivateKeyOrSignatureId<MintNftSolana>
 export type CreateSolanaNftCollection = FromPrivateKeyOrSignatureId<MintNftSolana>
+
 export interface VerifyNftCollection {
   nftMintAddress: string
   collectionAddress: string
@@ -111,6 +113,18 @@ const send = async (
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from)
   const feePayerKey = getFeePayer(externalFeePayer, from, feePayer)
+
+  const balance = await connection.getBalance(from)
+  if (new BigNumber(body.amount).isGreaterThan(balance)) {
+    throw new SdkError({
+      code: SdkErrorCode.INSUFFICIENT_FUNDS,
+      originalError: {
+        name: SdkErrorCode.INSUFFICIENT_FUNDS,
+        message: `Insufficient funds to create transaction from sender account ${from} -> available balance is ${balance}, required balance is ${body.amount}.`,
+      },
+    })
+  }
+
   const transaction = new Transaction({ feePayer: feePayerKey })
   transaction.add(
     SystemProgram.transfer({
@@ -238,9 +252,11 @@ const createSplToken = async (
   feePayer?: string,
   feePayerPrivateKey?: string,
   externalFeePayer = false,
+  freezeAuthority?: string,
 ) => {
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from)
+  const freezeAuthorityKey = freezeAuthority ? new PublicKey(freezeAuthority) : from
   const feePayerKey = getFeePayer(externalFeePayer, from, feePayer)
   const transaction = new Transaction({ feePayer: feePayerKey })
   const lamports = await getMinimumBalanceForRentExemptMint(connection)
@@ -254,7 +270,7 @@ const createSplToken = async (
       lamports,
       programId: TOKEN_PROGRAM_ID,
     }),
-    createInitializeMintInstruction(mint.publicKey, body.digits, from, from, TOKEN_PROGRAM_ID),
+    createInitializeMintInstruction(mint.publicKey, body.digits, from, freezeAuthorityKey, TOKEN_PROGRAM_ID),
   )
   const userTokenAccountAddress = (
     await PublicKey.findProgramAddress(
@@ -362,9 +378,11 @@ const mintNft = async (
   feePayerPrivateKey?: string,
   collectionVerifierPrivateKey?: string,
   externalFeePayer = false,
+  freezeAuthority?: string,
 ) => {
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from)
+  const freezeAuthorityKey = freezeAuthority ? new PublicKey(freezeAuthority) : from
   const feePayerKey = getFeePayer(externalFeePayer, from, feePayer)
   const transaction = new Transaction({ feePayer: feePayerKey })
   const mintRent = await connection.getMinimumBalanceForRentExemption(MintLayout.span)
@@ -378,7 +396,7 @@ const mintNft = async (
       space: MintLayout.span,
       programId: TOKEN_PROGRAM_ID,
     }),
-    createInitializeMintInstruction(mint.publicKey, 0, from, null, TOKEN_PROGRAM_ID),
+    createInitializeMintInstruction(mint.publicKey, 0, from, freezeAuthorityKey, TOKEN_PROGRAM_ID),
   )
 
   const userTokenAccountAddress = (
@@ -594,6 +612,7 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
      * @param feePayer optional address of the account, which will cover fees
      * @param feePayerPrivateKey optional private key of the account which will cover fees
      * @param externalFeePayer if this is set to true, feePayer and feePayerPrivateKey are ignored and fee is paid externally using <a href="https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress">https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress</a>
+     * @param freezeAuthority optional address of the account, which can freeze token accounts
      */
     createSplToken: async (
       body: CreateSolanaSpl,
@@ -601,7 +620,17 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
       feePayer?: string,
       feePayerPrivateKey?: string,
       externalFeePayer = false,
-    ) => createSplToken(body, args.web3, provider, feePayer, feePayerPrivateKey, externalFeePayer),
+      freezeAuthority?: string,
+    ) =>
+      createSplToken(
+        body,
+        args.web3,
+        provider,
+        feePayer,
+        feePayerPrivateKey,
+        externalFeePayer,
+        freezeAuthority,
+      ),
     /**
      * Transfer NFT on Solana network.
      * @param body body of the request
@@ -626,6 +655,7 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
      * @param feePayerPrivateKey optional private key of the account which will cover fees
      * @param collectionVerifierPrivateKey optional private key of the account which can verify NFT minted inside collection - must be Update Authority of the NFT Collection
      * @param externalFeePayer if this is set to true, feePayer and feePayerPrivateKey are ignored and fee is paid externally using <a href="https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress">https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress</a>
+     * @param freezeAuthority optional address of the account, which can freeze token accounts
      */
     mintNft: async (
       body: MintSolanaNft,
@@ -634,6 +664,7 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
       feePayerPrivateKey?: string,
       collectionVerifierPrivateKey?: string,
       externalFeePayer = false,
+      freezeAuthority?: string,
     ) =>
       mintNft(
         body,
@@ -643,6 +674,7 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
         feePayerPrivateKey,
         collectionVerifierPrivateKey,
         externalFeePayer,
+        freezeAuthority,
       ),
 
     /**
@@ -669,6 +701,7 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
      * @param feePayerPrivateKey optional private key of the account which will cover fees
      * @param collectionVerifierPrivateKey private key of the collectionVerifier authority
      * @param externalFeePayer if this is set to true, feePayer and feePayerPrivateKey are ignored and fee is paid externally using <a href="https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress">https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress</a>
+     * @param freezeAuthority optional address of the account, which can freeze token accounts
      */
     createCollection: async (
       body: CreateSolanaNftCollection,
@@ -677,6 +710,7 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
       feePayerPrivateKey?: string,
       collectionVerifierPrivateKey?: string,
       externalFeePayer = false,
+      freezeAuthority?: string,
     ) =>
       mintNft(
         body,
@@ -686,6 +720,7 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
         feePayerPrivateKey,
         collectionVerifierPrivateKey,
         externalFeePayer,
+        freezeAuthority,
       ),
 
     /**

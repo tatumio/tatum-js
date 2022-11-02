@@ -40,6 +40,10 @@ export type VC = {
      */
     erc20Address?: string;
     /**
+     * In case of TRON based virtual currency, identifies a type of a token.
+     */
+    trcType?: 'TRC10' | 'TRC20';
+    /**
      * Blockchain account for XLM or XRP based virtual currencies, which is marked as the issuer of the custom blockchain asset.
      */
     issuerAccount?: string;

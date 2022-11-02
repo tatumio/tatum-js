@@ -22,13 +22,13 @@ export async function solanaVirtualAccountExample() {
 
   // We need to assign deposit address to virtual account to enable automatic synchronization of all incoming transactions
   // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/assignAddress
-  const assignedAddress = await solanaSdk.offchain.depositAddress.assign(account.id, address)
+  const assignedAddress = await solanaSdk.virtualAccount.depositAddress.assign(account.id, address)
   console.log(`Assigned address: ${JSON.stringify(assignedAddress)}`)
 
   // Let's fund our virtual account from faucet and list all incoming transactions
   // https://apidoc.tatum.io/tag/Transaction#operation/getTransactionsByAccountId
   // https://solfaucet.com/
-  const transactions = await solanaSdk.ledger.transaction.getAllByAccount({ id: account.id })
+  const transactions = await solanaSdk.ledger.transaction.getAllByAccount({ id: account.id }, 50)
   console.log(`My transactions are ${JSON.stringify(transactions)}`)
 
   // Lets send some SOL from virtual account to another blockchain address

@@ -5,9 +5,9 @@ import {
   NotificationSubscriptionsService,
   ServiceUtilsService,
   TatumApi,
-  TatumUrl,
+  TatumUrlArg,
 } from '@tatumio/api-client'
-import { abstractSdkOffChain } from './services/offchain.abstract'
+import { abstractSdkVirtualAccount } from './services/virtualAccount.abstract'
 import { abstractSdkKms } from './services/kms.abstract'
 import { abstractSdkNftService } from './services/nft.abstract'
 import { abstractSdkLedgerService } from './services/ledger.abstract'
@@ -15,7 +15,7 @@ import { abstractSdkCustodialManagedWallets } from './services/custodial.abstrac
 
 export interface SDKArguments {
   apiKey: string
-  url?: TatumUrl
+  url?: TatumUrlArg
   provider?: string
 }
 
@@ -38,7 +38,7 @@ export const abstractSdk = (args: SDKArguments) => {
       unfreezeApiKey: ServiceUtilsService.unfreezeApiKey,
     },
     custodialManagedWallet: abstractSdkCustodialManagedWallets(),
-    offchain: abstractSdkOffChain(),
+    virtualAccount: abstractSdkVirtualAccount(),
     nft: abstractSdkNftService(),
     kms: abstractSdkKms(),
     getExchangeRate: ExchangeRateService.getExchangeRate,

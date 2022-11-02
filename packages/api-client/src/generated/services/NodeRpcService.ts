@@ -97,7 +97,7 @@ export class NodeRpcService {
                      * @throws ApiError
                      */
                     public static nodeJsonPostRpcDriver(
-                        chain: 'ADA' | 'ALGO' | 'ARB' | 'AURORA' | 'AVAX' | 'BCH' | 'BSC' | 'BTC' | 'CELO' | 'CRO' | 'DOGE' | 'DOT' | 'EGLD' | 'EOS' | 'ETH' | 'FTM' | 'GNO' | 'KCS' | 'KSM' | 'KLAY' | 'LISK' | 'LTC' | 'NEAR' | 'NEO' | 'MATIC' | 'OASIS' | 'ONE' | 'OPTIMISM' | 'PALM' | 'RSK' | 'SOL' | 'TEZOS' | 'TRON' | 'VET' | 'XDC' | 'XLM' | 'XRP' | 'ZCASH' | 'ZIL',
+                        chain: 'ADA' | 'ALGO' | 'ARB' | 'AURORA' | 'AVAX' | 'BCH' | 'BSC' | 'BTC' | 'CELO' | 'CRO' | 'DOGE' | 'DOT' | 'EGLD' | 'EOS' | 'ETH' | 'FTM' | 'GNO' | 'KCS' | 'KSM' | 'KLAY' | 'LISK' | 'LTC' | 'NEAR' | 'NEO' | 'MATIC' | 'OASIS' | 'ONE' | 'OPTIMISM' | 'PALM' | 'RSK' | 'SOL' | 'TEZOS' | 'TRON' | 'VET' | 'XDC' | 'XLM' | 'ZCASH' | 'ZIL',
                         requestBody: any,
                         xApiKey?: string,
                         nodeType?: 'ALGOD' | 'INDEXER',
