@@ -19,7 +19,7 @@ type Config = {
 }
 
 export const OpenAPI: Config = {
-  BASE: /*'http://localhost:3000',*/ 'https://api-eu1.tatum.io',
+  BASE: 'https://api-eu1.tatum.io',
   VERSION: '3.9.0',
   WITH_CREDENTIALS: false,
   CREDENTIALS: 'include',

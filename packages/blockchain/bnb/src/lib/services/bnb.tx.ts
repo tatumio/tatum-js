@@ -1,13 +1,13 @@
 import { BnbApiCallsType } from '../../index'
-import { ApiServices, Currency, TransferBnb } from '@tatumio/api-client'
+import { ApiServices, Currency, OpenAPI, TransferBnb } from '@tatumio/api-client'
 import { BncClient } from '@binance-chain/javascript-sdk'
 import { BigNumber } from 'bignumber.js'
-import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { SDKArguments, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { decodeAddress, getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/crypto'
 import { AminoPrefix } from '@binance-chain/javascript-sdk/lib/types'
 import { BnbSdkError } from '../bnb.sdk.errors'
 
-export const bnbTxService = (apiCalls: BnbApiCallsType) => {
+export const bnbTxService = (args: SDKArguments, apiCalls: BnbApiCallsType) => {
   const getMsgData = (
     amount: string,
     key: string,
@@ -99,13 +99,8 @@ export const bnbTxService = (apiCalls: BnbApiCallsType) => {
     provider?: string,
   ) => {
     try {
-      const bnbClient = new BncClient(
-        provider
-          ? provider
-          : testnet
-          ? 'https://testnet-dex-atlantic.binance.org'
-          : 'https://dex-european.binance.org',
-      )
+      const bnbClient = new BncClient(OpenAPI.BASE + '/v3/blockchain/node/BNB/' + args.apiKey)
+
       bnbClient.chooseNetwork(testnet ? 'testnet' : 'mainnet')
       await bnbClient.setPrivateKey(key, true)
       await bnbClient.initChain()

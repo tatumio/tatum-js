@@ -14,7 +14,7 @@ export const TatumBnbSDK = (
   return {
     ...abstractBlockchainSdk({ apiKey: args.apiKey, blockchain: Blockchain.BNB }),
     wallet: bnbWallet,
-    transaction: bnbTxService(apiCalls),
+    transaction: bnbTxService(args, apiCalls),
     kms: bnbKmsService,
     blockchain: {
       generateWallet: BnbBeaconChainService.bnbGenerateWallet,
