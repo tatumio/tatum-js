@@ -81,6 +81,7 @@ export class NodeRpcService {
                      * <li><a href="https://developers.tron.network/reference/full-node-api-overview" target="_blank">TRON</a></li>
                      * <li><a href="https://www.vechain.org/" target="_blank">VeChain</a></li>
                      * <li><a href="https://apidocs.xinfin.network/docs/" target="_blank">XinFin</a></li>
+                     * <li><a href="https://xrpl.org/public-api-methods.html" target="_blank">XRP</a></li>
                      * <li><a href="https://zcash-rpc.github.io/" target="_blank">ZCash</a></li>
                      * <li><a href="https://dev.zilliqa.com/docs/apis/api-introduction" target="_blank">Zilliqa</a></li>
                      * </ul>
@@ -96,7 +97,7 @@ export class NodeRpcService {
                      * @throws ApiError
                      */
                     public static nodeJsonPostRpcDriver(
-                        chain: 'ADA' | 'ALGO' | 'ARB' | 'AURORA' | 'AVAX' | 'BCH' | 'BSC' | 'BTC' | 'CELO' | 'CRO' | 'DOGE' | 'DOT' | 'EGLD' | 'EOS' | 'ETH' | 'FTM' | 'GNO' | 'KCS' | 'KSM' | 'KLAY' | 'LISK' | 'LTC' | 'NEAR' | 'NEO' | 'MATIC' | 'OASIS' | 'ONE' | 'OPTIMISM' | 'PALM' | 'RSK' | 'SOL' | 'TEZOS' | 'TRON' | 'VET' | 'XDC' | 'XLM' | 'ZCASH' | 'ZIL',
+                        chain: 'ADA' | 'ALGO' | 'ARB' | 'AURORA' | 'AVAX' | 'BCH' | 'BSC' | 'BTC' | 'CELO' | 'CRO' | 'DOGE' | 'DOT' | 'EGLD' | 'EOS' | 'ETH' | 'FTM' | 'GNO' | 'KCS' | 'KSM' | 'KLAY' | 'LISK' | 'LTC' | 'NEAR' | 'NEO' | 'MATIC' | 'OASIS' | 'ONE' | 'OPTIMISM' | 'PALM' | 'RSK' | 'SOL' | 'TEZOS' | 'TRON' | 'VET' | 'XDC' | 'XLM' | 'XRP' | 'ZCASH' | 'ZIL',
                         requestBody: any,
                         xApiKey?: string,
                         nodeType?: 'ALGOD' | 'INDEXER',

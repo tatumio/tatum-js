@@ -5,7 +5,7 @@ import {
   NotificationSubscriptionsService,
   ServiceUtilsService,
   TatumApi,
-  TatumUrl,
+  TatumUrlArg,
 } from '@tatumio/api-client'
 import { abstractSdkVirtualAccount } from './services/virtualAccount.abstract'
 import { abstractSdkKms } from './services/kms.abstract'
@@ -15,7 +15,7 @@ import { abstractSdkCustodialManagedWallets } from './services/custodial.abstrac
 
 export interface SDKArguments {
   apiKey: string
-  url?: TatumUrl
+  url?: TatumUrlArg
   provider?: string
 }
 

@@ -14,7 +14,7 @@ export type MintMultipleNftKMSTron = {
     /**
      * Blockchain address to perform transaction from
      */
-    account: string;
+    from: string;
     /**
      * ID of token to be created.
      */

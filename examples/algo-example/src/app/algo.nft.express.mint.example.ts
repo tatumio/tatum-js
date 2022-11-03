@@ -1,10 +1,11 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
 import { Currency, TransactionHash } from '@tatumio/api-client'
 import { BigNumber } from 'bignumber.js'
-
-const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+import { sdkArguments } from '../index'
 
 export async function algoNftExpressExample() {
+  const algoSDK = TatumAlgoSDK(sdkArguments)
+
   // generate "from" and "to" addresses for wallets
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet
   const { address, secret } = algoSDK.wallet.generateWallet()

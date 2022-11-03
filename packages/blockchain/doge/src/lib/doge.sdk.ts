@@ -1,12 +1,13 @@
 import { Blockchain } from '@tatumio/shared-core'
 import { btcBasedSdk } from '@tatumio/shared-blockchain-btc-based'
-import { DogecoinService, TatumUrl } from '@tatumio/api-client'
+import { DogecoinService, TatumUrlArg } from '@tatumio/api-client'
 import { dogeTransactions } from './doge.sdk.tx'
 import { dogeWallet } from './doge.sdk.wallet'
+import { virtualAccountService } from './doge.virtualAccount'
 
 const blockchain = Blockchain.DOGE
 
-export const TatumDogeSDK = (args: { apiKey: string; url?: TatumUrl }) => {
+export const TatumDogeSDK = (args: { apiKey: string; url?: TatumUrlArg }) => {
   return {
     ...btcBasedSdk({ ...args, blockchain }),
     wallet: dogeWallet(),
@@ -19,7 +20,7 @@ export const TatumDogeSDK = (args: { apiKey: string; url?: TatumUrl }) => {
       getBlock: DogecoinService.dogeGetBlock,
       getUTXO: DogecoinService.dogeGetUtxo,
       getTransaction: DogecoinService.dogeGetRawTransaction,
-      sendTransaction: DogecoinService.dogeTransferBlockchain,
     },
+    virtualAccount: virtualAccountService({ blockchain }),
   }
 }

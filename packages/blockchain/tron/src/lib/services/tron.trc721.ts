@@ -51,7 +51,7 @@ const prepareDeploySignedTransaction = async (body: DeployTronNft, tronWeb: ITro
   }
 
   if (body.signatureId) {
-    const tx = await client.transactionBuilder.createSmartContract(params, body.account)
+    const tx = await client.transactionBuilder.createSmartContract(params, body.from)
 
     return JSON.stringify(tx)
   } else {
@@ -109,10 +109,10 @@ const prepareMintCashbackSignedTransaction = async (
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.account,
+        from: body.from,
       },
       params,
-      body.account,
+      body.from,
     )
 
     return JSON.stringify(transaction)
@@ -161,10 +161,10 @@ const prepareMintSignedTransaction = async (body: MintTronNft, tronWeb: ITronWeb
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.account,
+        from: body.from,
       },
       params,
-      body.account,
+      body.from,
     )
 
     return JSON.stringify(transaction)
@@ -209,11 +209,11 @@ const transferSignedTransaction = async (body: TransferTronNft, tronWeb: ITronWe
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.account,
+        from: body.from,
         callValue: value ? `0x${new BigNumber(value).multipliedBy(1e6).toString(16)}` : 0,
       },
       params,
-      body.account,
+      body.from,
     )
 
     return JSON.stringify(transaction)
@@ -257,10 +257,10 @@ const burnSignedTransaction = async (body: BurnTronNft, tronWeb: ITronWeb, provi
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.account,
+        from: body.from,
       },
       params,
-      body.account,
+      body.from,
     )
 
     return JSON.stringify(transaction)
@@ -315,10 +315,10 @@ const prepareMintMultipleSignedTransaction = async (
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.account,
+        from: body.from,
       },
       params,
-      body.account,
+      body.from,
     )
 
     return JSON.stringify(transaction)
@@ -369,10 +369,10 @@ const prepareUpdateCashbackValueForAuthorSignedTransaction = async (
       methodName,
       {
         feeLimit: client.toSun(feeLimit),
-        from: body.account,
+        from: body.from,
       },
       params,
-      body.account,
+      body.from,
     )
 
     return JSON.stringify(transaction)

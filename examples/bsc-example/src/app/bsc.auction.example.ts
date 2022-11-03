@@ -17,6 +17,7 @@ export const bscAuctionExample = async () => {
     auctionFee: 100,
     feeRecipient,
     fromPrivateKey,
+    chain: 'BSC',
   })) as TransactionHash
 
   console.log(`TransactionId: ${txId}`)
@@ -31,31 +32,34 @@ export const bscAuctionExample = async () => {
 
   console.log(`Auction from contract address ${contractAddress}: ${auction}`)
 
-  const { txId: bidTransactionHash } = await bscSDK.marketplace.auction.send.auctionBidSignedTransaction({
+  const { txId: bidTransactionHash } = (await bscSDK.marketplace.auction.send.auctionBidSignedTransaction({
     contractAddress,
     bidder,
     id: 'string',
     bidValue: '1',
     fromPrivateKey,
-  })
+    chain: 'BSC',
+  })) as TransactionHash
 
   console.log(`Auction bid transaction hash: ${bidTransactionHash}`)
 
   const { txId: cancelTransactionHash } =
-    await bscSDK.marketplace.auction.send.auctionCancelSignedTransaction({
+    (await bscSDK.marketplace.auction.send.auctionCancelSignedTransaction({
       contractAddress,
       id: 'string',
       fromPrivateKey,
-    })
+      chain: 'BSC',
+    })) as TransactionHash
 
   console.log(`Auction cancel transaction hash: ${cancelTransactionHash}`)
 
   const { txId: settleTransactionHash } =
-    await bscSDK.marketplace.auction.send.auctionSettleSignedTransaction({
+    (await bscSDK.marketplace.auction.send.auctionSettleSignedTransaction({
       contractAddress,
       id: 'string',
       fromPrivateKey,
-    })
+      chain: 'BSC',
+    })) as TransactionHash
 
   console.log(`Auction settle transaction hash: ${settleTransactionHash}`)
 }

@@ -42,7 +42,7 @@ export const dogeTransactions = (
       }
 
       if (fromUTXO && 'signatureId' in fromUTXO[0] && fromUTXO[0].signatureId) {
-        return JSON.stringify({ txData: JSON.stringify(tx), privateKeysToSign })
+        return JSON.stringify(tx)
       }
 
       for (const pk of privateKeysToSign) {
