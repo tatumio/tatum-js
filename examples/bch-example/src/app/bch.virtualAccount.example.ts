@@ -13,7 +13,7 @@ export async function bchVirtualAccountExample() {
 
   // Generate PrivateKey from Mnemonic with a given index
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddressPrivateKey
-  const fromPrivateKey = await bchSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const privateKey = await bchSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
 
   // Generate Address from xpub with a given index
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddress
@@ -34,6 +34,23 @@ export async function bchVirtualAccountExample() {
 
   // Fund your address here: https://faucet.fullstack.cash/
   console.log(`Fund me ${address.address} to send virtual account transaction!`)
+
+  // If you have funds on account - you can transfer it to another bch address
+  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/BchTransfer
+  const result = await bchSDK.virtualAccount.send({
+    senderAccountId: virtualAccount.id,
+    address: 'xxxxxxxxx',
+    amount: '1',
+    keyPair: [
+      {
+        address: address.address,
+        privateKey: privateKey,
+      },
+    ],
+    fee: '0.1',
+    attr: address.address,
+  })
+  console.log(result)
 
   // Create multiple deposit addresses for a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddressesBatch

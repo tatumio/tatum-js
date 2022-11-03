@@ -5,7 +5,7 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { bchTransactions } from './services/bch.sdk.tx'
 import { bchWallet } from './bch.sdk.wallet'
 import { BchApiCallsType } from '..'
-import { signKmsTransaction } from './services/bch.sdk.virtualAccount'
+import { virtualAccountService } from './services/bch.sdk.virtualAccount'
 import { signBitcoinCashKMSTransaction } from './services/bch.sdk.kms'
 
 const blockchain = Blockchain.BCH
@@ -26,6 +26,7 @@ export const TatumBchSDK = (
     transaction: bchTransactions(apiCalls),
     virtualAccount: {
       ...btcBasedSdk({ ...args, blockchain }).virtualAccount,
+      ...virtualAccountService({ blockchain })
     },
     blockchain: {
       info: BitcoinCashService.bchGetBlockChainInfo,
