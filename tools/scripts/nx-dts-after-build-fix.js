@@ -16,7 +16,7 @@ function fixDtsImportIssue() {
   let grepResult
 
   try {
-    grepResult = execSync(`grep -rl 'import("\\(../\\)*dist/packages' dist/packages/blockchain`, {
+    grepResult = execSync(`grep -rl 'import("\\(../\\)*dist/packages' dist/packages`, {
       encoding: 'utf-8',
     }).toString()
   } catch (e) {
