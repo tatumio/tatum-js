@@ -26,6 +26,7 @@
     "registry:enable": "nxpm registry:enable",
     "registry:disable": "nxpm registry:disable",
     "registry:status": "nxpm registry:status",
+    "nx:fix": "node tools/scripts/nx-dts-after-build-fix.js",
     "prepare": "husky install",
     "patch:dependencies": "patch-package --patch-dir=tools/patches",
     "postinstall": "yarn patch:dependencies"
