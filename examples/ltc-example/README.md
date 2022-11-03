@@ -1,7 +1,5 @@
 # How to use TatumSDK with LTC
 
-This is an example of a README.md file for a project.
-
 These examples should guide you through some basic operations of the LTC blockchain. You will be able to:
 
 - generate LTC wallet

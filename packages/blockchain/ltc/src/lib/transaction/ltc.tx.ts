@@ -15,11 +15,13 @@ export const ltcTransactions = (
     broadcast: typeof ApiServices.blockchain.ltc.ltcBroadcast
     getRawTransaction: typeof ApiServices.blockchain.ltc.ltcGetRawTransaction
     getUtxo: typeof ApiServices.blockchain.ltc.ltcGetUtxo
+    getBalanceOfAddress: typeof ApiServices.blockchain.bitcoin.btcGetBalanceOfAddress
   } = {
     getTxByAddress: ApiServices.blockchain.ltc.ltcGetTxByAddress,
     broadcast: ApiServices.blockchain.ltc.ltcBroadcast,
     getRawTransaction: ApiServices.blockchain.ltc.ltcGetRawTransaction,
     getUtxo: ApiServices.blockchain.ltc.ltcGetUtxo,
+    getBalanceOfAddress: ApiServices.blockchain.bitcoin.btcGetBalanceOfAddress,
   },
 ): BtcBasedTx<LtcTransactionTypes> => {
   return {
