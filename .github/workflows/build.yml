@@ -36,7 +36,7 @@ jobs:
           main-branch-name: 'master'
       - uses: actions/setup-node@v1
         with:
-          node-version: '14'
+          node-version: '16'
       - run: yarn --ignore-scripts --frozen-lockfile
       #      - run: npx nx-cloud start-ci-run
       - run: npx nx affected --target=build --parallel --max-parallel=3 --skip-nx-cache
