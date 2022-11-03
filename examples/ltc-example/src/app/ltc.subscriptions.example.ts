@@ -1,8 +1,7 @@
 import { TatumLtcSDK } from '@tatumio/ltc'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 export async function ltcSubscriptionsExample() {
-  const ltcSDK = TatumLtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+  const ltcSDK = TatumLtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   // Create subscription notification for receiving webhooks on all incoming/outgoing transactions on the address.
   // FREE plans are limited to 10 addresses monitoring per api key, this call will likely fail with the default api key.

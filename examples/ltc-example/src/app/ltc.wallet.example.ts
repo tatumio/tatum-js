@@ -1,8 +1,7 @@
 import { TatumLtcSDK } from '@tatumio/ltc'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 export async function ltcWalletExample() {
-  const ltcSDK = TatumLtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+  const ltcSDK = TatumLtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   // Generate a LTC wallet
   // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcGenerateWallet

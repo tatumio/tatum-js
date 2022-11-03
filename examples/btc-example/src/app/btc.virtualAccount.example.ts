@@ -1,12 +1,11 @@
 import { TatumBtcSDK } from '@tatumio/btc'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 export async function btcVirtualAccountExample() {
   // Virtual account example
   // We will receive assets on account and withdraw it
   // More info here: https://docs.tatum.io/guides/ledger-and-off-chain
 
-  const btcSDK = TatumBtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+  const btcSDK = TatumBtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   // if you don't already have a wallet, address and private key - generate them
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGenerateWallet

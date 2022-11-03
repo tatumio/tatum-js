@@ -7,7 +7,7 @@ These examples should guide you through some basic operations of the BTC blockch
 - check the balance of your wallet
 
 - generate virtual account for BTC
-- assign deposit address to virtual account
+- generate deposit address to virtual account
 
 ## How to start
 
@@ -36,7 +36,7 @@ const btcSDK = TatumBtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 Examples are written in TypeScript, but you can use them in JavaScript as well. We are following ES6 standard, so you
 need to have Node.js version 10 or higher.
 
-### How to generate BTC wallet
+### How to generate BTC wallet, privateKey and address
 
 ```typescript
 import { TatumBtcSDK } from '@tatumio/btc'
@@ -44,6 +44,10 @@ import { TatumBtcSDK } from '@tatumio/btc'
 const btcSDK = TatumBtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 const { mnemonic, xpub } = btcSDK.wallet.wallet()
 console.log(`Mnemonic: ${mnemonic} - xpub: ${xpub}`)
+const privateKey = await btcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+console.log('PrivateKey', privateKey)
+const address = btcSDK.wallet.generateAddressFromXPub(xpub, 1)
+console.log('Address', address)
 ```
 
 ### How to read information from the blockchain

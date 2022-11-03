@@ -105,8 +105,8 @@ export const btcBasedTransactions = (
     scriptFromAddress: Script.fromAddress,
   },
 ): BtcBasedTx<BtcBasedTransactionTypes> => {
-  const getChain = (type: string) => {
-    return type === 'BtcFromAddressTypes' ? 'BTC' : 'LTC'
+  const getChain = (type: string): Currency => {
+    return type === 'BtcFromAddressTypes' ? Currency.BTC : Currency.LTC
   }
 
   const getEstimateFee = async (
@@ -115,7 +115,7 @@ export const btcBasedTransactions = (
     return (
       (
         (await BlockchainFeesService.estimateFeeBlockchain({
-          chain: getChain(typeof body),
+          chain: getChain(typeof body).toString(),
           type: 'TRANSFER',
           fromAddress: 'fromAddress' in body ? body.fromAddress.map((a) => a.address) : undefined,
           fromUTXO:
@@ -131,12 +131,10 @@ export const btcBasedTransactions = (
   const validateBalanceFromAddress = async (
     body: BtcFromAddressTypes | LtcFromAddressTypes,
   ): Promise<boolean> => {
-    let totalBalance: BigNumber = new BigNumber(0)
-
     // get all addresses balances
     const balances = await Promise.all(body.fromAddress.map((a) => apiCalls.getBalanceOfAddress(a.address)))
 
-    totalBalance = balances.reduce(
+    const totalBalance = balances.reduce(
       (sum: BigNumber, balance: BtcBasedBalance) =>
         sum.plus(new BigNumber(balance.incoming || 0).minus(new BigNumber(balance.outgoing || 0))),
       new BigNumber(0),
