@@ -1,28 +1,29 @@
+/**
+ * This is example app, which shows how to use ONE SDK. For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/Harmony
+ */
+
 import { oneBlockchainExample } from './app/one.blockchain.example'
 import { oneKmsExample } from './app/one.kms.example'
-import { oneLogRecordExample } from './app/one.log.example'
-import { oneChangeRateExample } from './app/one.root.example'
-import { oneWalletExample } from './app/one.wallet.example'
-import { oneDriverExample, oneWeb3Example } from './app/one.web3.example'
-import { oneOffchainExample } from './app/one.offchain.example'
 import { oneSubscriptionsExample } from './app/one.subscriptions.example'
-import {
-  oneTxWithPrivateKeyExample,
-  oneTxWithSignatureIdExample,
-  oneTxFeesCovered,
-} from './app/one.tx.example'
+import { oneTxExample } from './app/one.tx.example'
 import { oneAuctionExample } from './app/one.auction.example'
+import { oneBalanceExample } from './app/one.balance.example'
+import { oneErc20Example } from './app/one.erc20.example'
+import { oneMultiTokenExample } from './app/one.multitoken.example'
+import { oneNftExample } from './app/one.nft.example'
+import { oneNftExpressExample } from './app/one.nft.express.mint.example'
+import { oneSmartContractExample } from './app/one.smartContract.example'
+import { oneVirtualAccountExample } from './app/one.virtualAccount.example'
 
-console.log(`Running ${oneWalletExample()}`)
 console.log(`Running ${oneBlockchainExample()}`)
 console.log(`Running ${oneKmsExample()}`)
-console.log(`Running ${oneLogRecordExample()}`)
-console.log(`Running ${oneChangeRateExample()}`)
-console.log(`Running ${oneDriverExample()}`)
-console.log(`Running ${oneWeb3Example()}`)
-console.log(`Running ${oneOffchainExample()}`)
 console.log(`Running ${oneSubscriptionsExample()}`)
-console.log(`Runninf ${oneTxWithPrivateKeyExample()}`)
-console.log(`Runninf ${oneTxWithSignatureIdExample()}`)
-console.log(`Runninf ${oneTxFeesCovered()}`)
+console.log(`Running ${oneTxExample()}`)
 console.log(`Running ${oneAuctionExample()}`)
+console.log(`Running ${oneBalanceExample()}`)
+console.log(`Running ${oneErc20Example()}`)
+console.log(`Running ${oneMultiTokenExample()}`)
+console.log(`Running ${oneNftExample()}`)
+console.log(`Running ${oneNftExpressExample()}`)
+console.log(`Running ${oneSmartContractExample()}`)
+console.log(`Running ${oneVirtualAccountExample()}`)

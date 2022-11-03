@@ -1,23 +1,34 @@
 import { TatumKcsSDK } from '@tatumio/kcs'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const kcsSDK = TatumKcsSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function kcsSubscriptionsExample() {
-  const id = await kcsSDK.subscriptions.createSubscription({
+  const account = await kcsSDK.ledger.account.create({ currency: 'KCS' })
+
+  // Create a new subscription
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/createSubscription
+  const { id } = await kcsSDK.subscriptions.createSubscription({
     type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
     attr: {
-      id: '5e6be8e9e6aa436299950c41',
-      url: 'https://webhook.tatum.io/account',
+      id: account.id,
+      url: 'https://dashboard.tatum.io/webhook-handler',
     },
   })
 
-  await kcsSDK.subscriptions.deleteSubscription('5e68c66581f2ee32bc354087')
-  await kcsSDK.subscriptions.disableWebHookHmac()
+  console.log(`Subscription id: ${id}`)
+
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getSubscriptions
+  const subscriptions = await kcsSDK.subscriptions.getSubscriptions(10)
+  console.log('Subscriptions: ', subscriptions)
+
+  //https://apidoc.tatum.io/tag/Notification-subscriptions#operation/enableWebHookHmac
   await kcsSDK.subscriptions.enableWebHookHmac({
     hmacSecret: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
   })
 
-  const subscriptionReport = await kcsSDK.subscriptions.getSubscriptionReport('5e68c66581f2ee32bc354087')
-  const subscriptions = await kcsSDK.subscriptions.getSubscriptions(10)
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/disableWebHookHmac
+  await kcsSDK.subscriptions.disableWebHookHmac()
+
+  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/deleteSubscription
+  await kcsSDK.subscriptions.deleteSubscription(id as string)
 }

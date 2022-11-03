@@ -1,9 +1,10 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
 import { Currency } from '@tatumio/api-client'
-
-const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+import { sdkArguments } from '../index'
 
 export async function algoSubscriptionsExample() {
+  const algoSDK = TatumAlgoSDK(sdkArguments)
+
   // generate wallet
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet
   const { address } = algoSDK.wallet.generateWallet()
@@ -37,11 +38,6 @@ export async function algoSubscriptionsExample() {
   console.log(`There is ${subscriptions.length} active subscriptions`)
 
   // FUND YOUR DEPOSIT ADDRESS WITH ALGOs FROM https://bank.testnet.algorand.network/
-
-  // Obtain report for subscription
-  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getSubscriptionReport
-  const subscriptionReport = await algoSDK.subscriptions.getSubscriptionReport(id)
-  console.log(`There is ${subscriptionReport.length} records in subscription ID ${id}`)
 
   // Enable HMAC webhook digest
   // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/enableWebHookHmac

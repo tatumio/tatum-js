@@ -20,6 +20,8 @@ export const celoAuctionExample = async () => {
   const deployAuctionTx = await celoSDK.marketplace.auction.prepare.deployAuctionSignedTransaction({
     auctionFee: 100,
     feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    chain: 'CELO',
+    feeCurrency: 'CELO',
   })
 
   const updateFeeRecipientTx =
@@ -32,9 +34,12 @@ export const celoAuctionExample = async () => {
         gasPrice: '20',
       },
       amount: '10000',
+      chain: 'CELO',
+      feeCurrency: 'CELO',
     })
 
   const createAuctionTx = await celoSDK.marketplace.auction.prepare.createAuctionSignedTransaction({
+    chain: 'CELO',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
@@ -50,10 +55,12 @@ export const celoAuctionExample = async () => {
       gasLimit: '40000',
       gasPrice: '20',
     },
+    feeCurrency: 'CELO',
   })
 
   const approveNftSpendingTx =
     await celoSDK.marketplace.auction.prepare.auctionApproveNftTransferSignedTransaction({
+      chain: 'CELO',
       spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       isErc721: true,
       tokenId: '100000',
@@ -65,10 +72,12 @@ export const celoAuctionExample = async () => {
         gasPrice: '20',
       },
       amount: '10000',
+      feeCurrency: 'CELO',
     })
 
   const approveErc20SpendingTx =
     await celoSDK.marketplace.auction.prepare.auctionApproveErc20TransferSignedTransaction({
+      chain: 'CELO',
       amount: '100000',
       spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -76,9 +85,11 @@ export const celoAuctionExample = async () => {
       nonce: 0,
       isErc721: true,
       tokenId: '1234',
+      feeCurrency: 'CELO',
     })
 
   const bidAuctionTx = await celoSDK.marketplace.auction.prepare.auctionBidSignedTransaction({
+    chain: 'CELO',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     bidder: '0x587422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
@@ -89,9 +100,11 @@ export const celoAuctionExample = async () => {
       gasLimit: '40000',
       gasPrice: '20',
     },
+    feeCurrency: 'CELO',
   })
 
   const cancelAuctionTx = await celoSDK.marketplace.auction.prepare.auctionCancelSignedTransaction({
+    chain: 'CELO',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -100,9 +113,11 @@ export const celoAuctionExample = async () => {
       gasLimit: '40000',
       gasPrice: '20',
     },
+    feeCurrency: 'CELO',
   })
 
   const settleAuctionTx = await celoSDK.marketplace.auction.prepare.auctionSettleSignedTransaction({
+    chain: 'CELO',
     contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     id: 'string',
     fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -111,5 +126,6 @@ export const celoAuctionExample = async () => {
       gasLimit: '40000',
       gasPrice: '20',
     },
+    feeCurrency: 'CELO',
   })
 }

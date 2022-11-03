@@ -2,11 +2,10 @@ import {
   AccountService,
   ApiServices,
   Currency,
-  ERC20_CURRENCIES,
-  TransferErc20,
   TransferEth,
   TransferEthKMS,
   VirtualCurrencyService,
+  Withdrawal,
   WithdrawalService,
 } from '@tatumio/api-client'
 import {
@@ -14,67 +13,61 @@ import {
   PrivateKeyOrSignatureId,
 } from '@tatumio/shared-blockchain-abstract'
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
-import { Blockchain, CONTRACT_ADDRESSES, CONTRACT_DECIMALS } from '@tatumio/shared-core'
+import { Blockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { ethTx } from '../services/eth.tx'
+import { oneTxService } from './one.tx'
 
-type TransferVirtualAccountEth = PrivateKeyOrSignatureId<TransferEth>
+type TransferVirtualAccountOne = PrivateKeyOrSignatureId<TransferEth>
 type VirtualAccountResponse = { id?: string; txId?: string; completed?: boolean } | void
 
-const sendEthVirtualAccountTransaction = async (
-  body: TransferVirtualAccountEth,
+const sendOneVirtualAccountTransaction = async (
+  body: TransferVirtualAccountOne,
   web3: EvmBasedWeb3,
 ): Promise<VirtualAccountResponse> => {
-  const txService = ethTx({ blockchain: Blockchain.ETH, web3 })
-  const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
+  const txService = oneTxService({ blockchain: Blockchain.HARMONY, web3 })
+  const { privateKey, gasLimit, gasPrice, nonce, mnemonic, index, ...w } = body
+  const withdrawal: Withdrawal = w as Withdrawal
   const { amount, address } = withdrawal
   let fromPrivKey: string
   let txData: any
 
-  if (body.mnemonic && body.index !== undefined) {
+  if (mnemonic && index !== undefined) {
     fromPrivKey = (await evmBasedUtils.generatePrivateKeyFromMnemonic(
-      Blockchain.ETH,
-      body.mnemonic,
-      body.index,
+      Blockchain.HARMONY,
+      mnemonic,
+      index,
     )) as string
   } else {
-    fromPrivKey = body.privateKey as string
+    fromPrivKey = privateKey as string
   }
 
-  const account = await AccountService.getAccountByAccountId(body.senderAccountId)
+  const account = await AccountService.getAccountByAccountId(withdrawal.senderAccountId)
+
+  // values from estimate fee for ERC_20 transfer call
   const fee = {
-    gasLimit: gasLimit || '21000',
-    gasPrice: gasPrice || '20',
+    gasLimit: gasLimit || '150000',
+    gasPrice: gasPrice || '100',
   }
 
-  if (account.currency === 'ETH') {
-    txData = txService.native.prepare.transferSignedTransaction({
-      amount,
+  if (account.currency === Currency.ONE) {
+    txData = await txService.native.prepare.transferSignedTransaction({
       fromPrivateKey: fromPrivKey,
-      fee,
-      nonce: body.nonce,
       to: address,
+      nonce,
+      amount,
+      fee,
     })
   } else {
     fee.gasLimit = '100000'
-    let contractAddress: string
-    let decimals: number
-    if (ERC20_CURRENCIES.includes(account.currency as Currency)) {
-      contractAddress = CONTRACT_ADDRESSES[account.currency]
-      decimals = CONTRACT_DECIMALS[account.currency]
-    } else {
-      const vc = await VirtualCurrencyService.getCurrency(account.currency)
-      contractAddress = vc.erc20Address as string
-      decimals = (vc.precision as number) || 18
-    }
+    const vc = await VirtualCurrencyService.getCurrency(account.currency)
     txData = await txService.erc20.prepare.transferSignedTransaction({
       amount,
       fee,
       fromPrivateKey: fromPrivKey,
       to: address,
-      digits: decimals,
+      digits: vc.precision as number,
       nonce: body.nonce,
-      contractAddress,
+      contractAddress: vc.erc20Address as string,
     })
   }
 
@@ -89,7 +82,6 @@ const sendEthVirtualAccountTransaction = async (
     ...withdrawal,
     fee: withdrawalFee,
   }
-
   const { id } = await WithdrawalService.storeWithdrawal(withdrawalBody)
 
   try {
@@ -97,11 +89,11 @@ const sendEthVirtualAccountTransaction = async (
       ...(await WithdrawalService.broadcastBlockchainTransaction({
         txData,
         withdrawalId: id,
-        currency: Currency.ETH,
+        currency: Currency.ONE,
       })),
-      id,
     }
   } catch (e) {
+    console.error(e)
     try {
       return await WithdrawalService.cancelInProgressWithdrawal(id!)
     } catch (e1) {
@@ -114,21 +106,16 @@ export const virtualAccountService = (args: { blockchain: Blockchain; web3: EvmB
   return {
     ...abstractBlockchainVirtualAccount(args),
     /**
-     * Send ETH transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
+     * Send ONE transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
      * This operation is irreversible.
      * @param body content of the transaction to broadcast
      * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
      */
-    send: async (body: TransferVirtualAccountEth) => {
+    send: async (body: TransferVirtualAccountOne) => {
       if (body.signatureId) {
-        const account = await AccountService.getAccountByAccountId(body.senderAccountId)
-        if (account.currency === 'ETH') {
-          return ApiServices.offChain.blockchain.ethTransfer(body as TransferEthKMS)
-        } else {
-          return ApiServices.offChain.blockchain.ethTransferErc20(body as TransferErc20)
-        }
+        return ApiServices.offChain.blockchain.oneTransfer(body as TransferEthKMS)
       } else {
-        return await sendEthVirtualAccountTransaction(body, args.web3)
+        return await sendOneVirtualAccountTransaction(body, args.web3)
       }
     },
   }
