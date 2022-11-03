@@ -46,7 +46,7 @@ const sendOneVirtualAccountTransaction = async (
   // values from estimate fee for ERC_20 transfer call
   const fee = {
     gasLimit: gasLimit || '150000',
-    gasPrice: gasPrice || '50',
+    gasPrice: gasPrice || '100',
   }
 
   if (account.currency === Currency.ONE) {
