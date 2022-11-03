@@ -1,7 +1,6 @@
 import { TatumBscSDK } from '@tatumio/bsc'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function bscTxExample(): Promise<void> {
   // if you don't already have a wallet, address and private key - generate them
