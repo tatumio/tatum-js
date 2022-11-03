@@ -1,10 +1,29 @@
 import {
   ApproveNftSpending,
+  ApproveNftSpendingCelo,
+  ApproveNftSpendingCeloKMS,
+  ApproveNftSpendingKMS,
   AuctionService,
   BidOnAuction,
+  BidOnAuctionCelo,
+  BidOnAuctionCeloKMS,
+  BidOnAuctionKMS,
   CancelOrSettleAuction,
+  CancelOrSettleAuctionCelo,
+  CancelOrSettleAuctionCeloKMS,
+  CancelOrSettleAuctionKMS,
+  CreateAuction,
+  CreateAuctionCelo,
+  CreateAuctionCeloKMS,
+  CreateAuctionKMS,
   GenerateAuction,
+  GenerateAuctionCelo,
+  GenerateAuctionCeloKMS,
+  GenerateAuctionKMS,
   UpdateFeeRecipient,
+  UpdateFeeRecipientCelo,
+  UpdateFeeRecipientCeloKMS,
+  UpdateFeeRecipientKMS,
 } from '@tatumio/api-client'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
@@ -75,7 +94,7 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
        */
-      createAuctionSignedTransaction: async (body: CreateAuction, provider?: string) =>
+      createAuctionSignedTransaction: async (body: CreateAuctionEvm, provider?: string) =>
         createAuctionSignedTransaction(body, web3, provider),
       /**
        * Approve NFT transfer for auction to perform listing of the asset.
@@ -133,11 +152,14 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      deployAuctionSignedTransaction: async (body: DeployNftAuction, provider?: string) =>
-        broadcastFunction({
-          txData: await deployAuctionSignedTransaction(body, web3, provider),
-          signatureId: body.signatureId,
-        }),
+      deployAuctionSignedTransaction: async (body: DeployNftAuction, provider?: string) => {
+        if (body.signatureId) {
+          return AuctionService.generateAuction(body as GenerateAuctionKMS | GenerateAuctionCeloKMS)
+        } else
+          return broadcastFunction({
+            txData: await deployAuctionSignedTransaction(body, web3, provider),
+          })
+      },
       /**
        * Update auction fee recipient.
        * @param body request data
@@ -147,11 +169,18 @@ export const evmBasedAuction = (args: {
       auctionUpdateFeeRecipientSignedTransaction: async (
         body: UpdateAuctionFeeRecipient,
         provider?: string,
-      ) =>
-        broadcastFunction({
-          txData: await auctionUpdateFeeRecipientSignedTransaction(body, web3, provider),
-          signatureId: body.signatureId,
-        }),
+      ) => {
+        if (body.signatureId) {
+          return AuctionService.updateAuctionFeeRecipient(
+            body as UpdateFeeRecipientKMS | UpdateFeeRecipientCeloKMS,
+          )
+        } else {
+          return broadcastFunction({
+            txData: await auctionUpdateFeeRecipientSignedTransaction(body, web3, provider),
+          })
+        }
+      },
+
       /**
        * Create new auction on the auction contract. Before auction, seller must approve spending of the NFT token for the Auction contract.
        * After auction is created, auction contract transfers the asset to the auction smart contract.
@@ -160,22 +189,32 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      createAuctionSignedTransaction: async (body: CreateAuction, provider?: string) =>
-        broadcastFunction({
-          txData: await createAuctionSignedTransaction(body, web3, provider),
-          signatureId: body.signatureId,
-        }),
+      createAuctionSignedTransaction: async (body: CreateAuctionEvm, provider?: string) => {
+        if (body.signatureId) {
+          return AuctionService.createAuction(body as CreateAuctionKMS | CreateAuctionCeloKMS)
+        } else {
+          return broadcastFunction({
+            txData: await createAuctionSignedTransaction(body, web3, provider),
+          })
+        }
+      },
       /**
        * Approve NFT transfer for auction to perform listing of the asset.
        * @param body request data
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      auctionApproveNftTransferSignedTransaction: async (body: ApproveNftTransfer, provider?: string) =>
-        broadcastFunction({
-          txData: await auctionApproveNftTransferSignedTransaction(body, web3, provider),
-          signatureId: body.signatureId,
-        }),
+      auctionApproveNftTransferSignedTransaction: async (body: ApproveNftTransfer, provider?: string) => {
+        if (body.signatureId) {
+          return AuctionService.approveNftAuctionSpending(
+            body as ApproveNftSpendingKMS | ApproveNftSpendingCeloKMS,
+          )
+        } else {
+          return broadcastFunction({
+            txData: await auctionApproveNftTransferSignedTransaction(body, web3, provider),
+          })
+        }
+      },
       /**
        * Approve ERC20 transfer for auction to perform bidding on the asset in the auction.
        * @param testnet use testnet or not
@@ -183,37 +222,57 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      auctionApproveErc20TransferSignedTransaction: async (body: ApproveNftTransfer, provider?: string) =>
-        broadcastFunction({
-          txData: await auctionApproveErc20TransferSignedTransaction(body, web3, provider),
-          signatureId: body.signatureId,
-        }),
-      auctionBidSignedTransaction: async (body: AuctionBid, provider?: string) =>
-        broadcastFunction({
-          txData: await auctionBidSignedTransaction(body, blockchain, broadcastFunction, web3, provider),
-          signatureId: body.signatureId,
-        }),
+      auctionApproveErc20TransferSignedTransaction: async (body: ApproveNftTransfer, provider?: string) => {
+        if (body.signatureId) {
+          return AuctionService.approveNftAuctionSpending(
+            body as ApproveNftSpendingKMS | ApproveNftSpendingCeloKMS,
+          )
+        } else {
+          return broadcastFunction({
+            txData: await auctionApproveErc20TransferSignedTransaction(body, web3, provider),
+          })
+        }
+      },
+      auctionBidSignedTransaction: async (body: AuctionBid, provider?: string) => {
+        if (body.signatureId) {
+          return AuctionService.bidOnAuction(body as BidOnAuctionKMS | BidOnAuctionCeloKMS)
+        } else {
+          return broadcastFunction({
+            txData: await auctionBidSignedTransaction(body, blockchain, broadcastFunction, web3, provider),
+          })
+        }
+      },
       /**
        * Cancel auction on the auction. Only possible for the seller or the operator. There must be no buyer present for that auction. NFT asset is sent back to the seller.
        * @param body request data
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      auctionCancelSignedTransaction: async (body: CancelAuction, provider?: string) =>
-        broadcastFunction({
-          txData: await auctionCancelSignedTransaction(body, web3, provider),
-          signatureId: body.signatureId,
-        }),
-      auctionSettleSignedTransaction: async (body: SettleAuction, provider?: string) =>
-        broadcastFunction({
-          txData: await auctionSettleSignedTransaction(body, web3, provider),
-          signatureId: body.signatureId,
-        }),
+      auctionCancelSignedTransaction: async (body: CancelAuction, provider?: string) => {
+        if (body.signatureId) {
+          return AuctionService.cancelAuction(body as CancelOrSettleAuctionKMS | CancelOrSettleAuctionCeloKMS)
+        } else {
+          return broadcastFunction({
+            txData: await auctionCancelSignedTransaction(body, web3, provider),
+          })
+        }
+      },
+      auctionSettleSignedTransaction: async (body: SettleAuction, provider?: string) => {
+        if (body.signatureId) {
+          return AuctionService.settleAuction(body as CancelOrSettleAuctionKMS)
+        } else {
+          return broadcastFunction({
+            txData: await auctionSettleSignedTransaction(body, web3, provider),
+          })
+        }
+      },
     },
   }
 }
 
-export type DeployNftAuction = FromPrivateKeyOrSignatureId<WithoutChain<GenerateAuction>>
+export type DeployNftAuction =
+  | FromPrivateKeyOrSignatureId<GenerateAuction>
+  | FromPrivateKeyOrSignatureId<GenerateAuctionCelo>
 
 const deployAuctionSignedTransaction = async (
   body: DeployNftAuction,
@@ -248,7 +307,11 @@ const deployAuctionSignedTransaction = async (
   )
 }
 
-export type UpdateAuctionFeeRecipient = FromPrivateKeyOrSignatureId<WithoutChain<UpdateFeeRecipient>> & Amount
+export type UpdateAuctionFeeRecipient = (
+  | FromPrivateKeyOrSignatureId<UpdateFeeRecipient>
+  | FromPrivateKeyOrSignatureId<UpdateFeeRecipientCelo>
+) &
+  Amount
 
 const auctionUpdateFeeRecipientSignedTransaction = (
   body: UpdateAuctionFeeRecipient,
@@ -284,7 +347,11 @@ const auctionUpdateFeeRecipientSignedTransaction = (
   )
 }
 
-export type ApproveNftTransfer = FromPrivateKeyOrSignatureId<WithoutChain<ApproveNftSpending>> & Amount
+export type ApproveNftTransfer = (
+  | FromPrivateKeyOrSignatureId<ApproveNftSpending>
+  | FromPrivateKeyOrSignatureId<ApproveNftSpendingCelo>
+) &
+  Amount
 
 const auctionApproveNftTransferSignedTransaction = async (
   body: ApproveNftTransfer,
@@ -367,7 +434,9 @@ const auctionApproveErc20TransferSignedTransaction = async (
   )
 }
 
-export type AuctionBid = FromPrivateKeyOrSignatureId<WithoutChain<BidOnAuction>>
+export type AuctionBid =
+  | FromPrivateKeyOrSignatureId<BidOnAuction>
+  | FromPrivateKeyOrSignatureId<BidOnAuctionCelo>
 
 const auctionBidSignedTransaction = async (
   body: AuctionBid,
@@ -428,7 +497,11 @@ const auctionBidSignedTransaction = async (
   )
 }
 
-export type SettleAuction = FromPrivateKeyOrSignatureId<WithoutChain<CancelOrSettleAuction>> & Partial<Amount>
+export type SettleAuction = (
+  | FromPrivateKeyOrSignatureId<CancelOrSettleAuction>
+  | FromPrivateKeyOrSignatureId<CancelOrSettleAuctionCelo>
+) &
+  Partial<Amount>
 
 export type CancelAuction = SettleAuction
 
@@ -491,23 +564,12 @@ const auctionSettleSignedTransaction = async (body: SettleAuction, web3: EvmBase
   )
 }
 
-export type CreateAuction = FromPrivateKeyOrSignatureId<
-  WithoutChain<Omit<GenerateAuction, 'feeRecipient' | 'auctionFee'>>
-> & {
-  contractAddress: string
-  id: string
-  nftAddress: string
-  seller: string
-  erc20Address?: string
-  endedAt: number
-  tokenId: string
-  amount?: string
-  isErc721: boolean
-  nonce?: number
-}
+export type CreateAuctionEvm =
+  | FromPrivateKeyOrSignatureId<CreateAuction>
+  | FromPrivateKeyOrSignatureId<CreateAuctionCelo>
 
 const createAuctionSignedTransaction = async (
-  body: CreateAuction,
+  body: CreateAuctionEvm,
   web3: EvmBasedWeb3,
   provider?: string,
 ): Promise<string> => {

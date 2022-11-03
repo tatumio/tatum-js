@@ -1,4 +1,5 @@
 import {
+  AddNftMinter,
   ApproveErc20,
   ApproveNftSpending,
   ApproveTransferCustodialWallet,
@@ -40,7 +41,7 @@ import {
   PendingTransaction,
   SellAssetOnMarketplace,
   SignatureId,
-  TatumUrl,
+  TatumUrlArg,
   TransactionHash,
   TransferCustodialWallet,
   TransferCustodialWalletBatch,
@@ -48,7 +49,6 @@ import {
   TransferCustodialWalletCelo,
   TransferCustodialWalletCeloKMS,
   TransferCustodialWalletKMS,
-  TransferEthBlockchain,
   TransferMultiToken,
   TransferMultiTokenBatch,
   TransferNft,
@@ -64,7 +64,11 @@ import { abstractSdk, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
 import { abstractBlockchainVirtualAccount } from './services/virtualAccount.abstract-blockchain'
 
-export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; blockchain: Blockchain }) => {
+export const abstractBlockchainSdk = (args: {
+  apiKey: string
+  url?: TatumUrlArg
+  blockchain: Blockchain
+}) => {
   return {
     ...abstractSdk(args),
     kms: abstractBlockchainKms(args),
@@ -72,7 +76,7 @@ export const abstractBlockchainSdk = (args: { apiKey: string; url?: TatumUrl; bl
     getExchangeRate(basePair?: Fiat): CancelablePromise<ExchangeRate> {
       return ExchangeRateService.getExchangeRate(
         // @ts-ignore @TODO OPENAPI fix
-        blockchainHelper.getDefaultCurrencyByBlockchain(blockchain),
+        blockchainHelper.getDefaultCurrencyByBlockchain(args.blockchain),
         basePair,
       )
     },
@@ -105,7 +109,7 @@ export type FromPrivateKeyOrSignatureIdTron<T extends { fromPrivateKey?: string 
   T,
   'fromPrivateKey'
 > &
-  Partial<SignatureId & { index: number; account: string; from: string }> &
+  Partial<SignatureId & { index: number; from: string }> &
   Partial<Pick<T, 'fromPrivateKey'>>
 
 export type ChainTransferErc20 = FromPrivateKeyOrSignatureId<Omit<ChainTransferEthErc20, 'chain'>>
@@ -131,6 +135,8 @@ export type ChainMintMultipleNft = FromPrivateKeyOrSignatureId<MintMultipleNft> 
 }
 
 export type ChainBurnErc721 = FromPrivateKeyOrSignatureId<BurnNft>
+
+export type ChainAddMinterErc721 = FromPrivateKeyOrSignatureId<AddNftMinter>
 
 export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<TransferNft>
 

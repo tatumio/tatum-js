@@ -25,6 +25,9 @@ export async function tronTrc20Example() {
 
   console.log(`Created trc20 token with transaction ID ${trc20Created.txId}`)
 
+  // Please note that tokens might not appear immediately on the blockchain so in order to execute
+  // all examples at once you should set some timeout between the calls or execute examples separately
+
   // transfer trc20 token
   // https://apidoc.tatum.io/tag/Tron#operation/TronTransferTrc20
   const trc20Transffered = (await tronSdk.trc20.send.signedTransaction({

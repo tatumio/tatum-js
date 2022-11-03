@@ -1,156 +1,90 @@
 import { TatumPolygonSDK } from '@tatumio/polygon'
-import { Currency } from '@tatumio/api-client'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import { Currency, TransactionHash } from '@tatumio/api-client'
 
-const polygonSDK = TatumPolygonSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const polygonSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const testnet = true
 
 export async function polygonNftExample() {
-  const metadataURI = await polygonSDK.nft.getNFTMetadataURI(
-    Currency.MATIC,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const provenanceData = await polygonSDK.nft.getNFTProvenanceData(
-    Currency.MATIC,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const royalty = await polygonSDK.nft.getNFTRoyalty(
-    Currency.MATIC,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const transaction = await polygonSDK.nft.getNFTTransaction(
-    Currency.MATIC,
-    '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
-  )
-  const transactionByAddress = await polygonSDK.nft.getNFTTransactionsByAddress(
-    Currency.MATIC,
-    '0x8ce4e40889a13971681391aad29e88efaf91f784',
-    '0x8ce4e40889a13971681391aad29e88efaf91f784',
-    10,
-  )
-  const transactionByToken = await polygonSDK.nft.getNFTTransactionsByToken(
-    Currency.MATIC,
-    1,
-    '0x1ce4e40889a13971681391aad29e88efaf91f784',
-    10,
-  )
-  const nftByAddress = await polygonSDK.nft.getNFTsByAddress(
-    Currency.MATIC,
-    'NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y',
-  )
+  // Generate wallet
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet
+  const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet(undefined, { testnet })
+  // Generate private keys
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
+  const fromPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet })
+  const destinationPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1, {
+    testnet,
+  })
+  // Generate source and destination addresses
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
+  const address = polygonSDK.wallet.generateAddressFromXPub(xpub, 0)
+  const to = polygonSDK.wallet.generateAddressFromXPub(xpub, 1)
 
+  // FUND YOUR ACCOUNT WITH MATIC FROM https://faucet.matic.network/
+
+  // Create NFTs on your own smart contract
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftDeployErc721
+  const nftCreated = (await polygonSDK.nft.deployNFTSmartContract({
+    chain: Currency.MATIC,
+    name: 'HELLO MATIC',
+    symbol: 'HELLO_NFT',
+    fromPrivateKey,
+  })) as TransactionHash
+  console.log(`Created nft with transaction ID: ${nftCreated.txId}`)
+
+  // fetch created contract address from transaction hash
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetContractAddress
+  const { contractAddress } = await polygonSDK.nft.getNFTContractAddress(Currency.MATIC, nftCreated.txId)
+  console.log(`Created NFT smart contract with contract address: ${contractAddress}`)
+
+  // upload your file to the ipfs following this tutorial:
+  // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
+
+  // Mint NFTs on your own smart contract
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftMintErc721
+  const tokenId = '123456'
+  const nftMinted = (await polygonSDK.nft.mintNFT({
+    chain: Currency.MATIC,
+    tokenId,
+    contractAddress: contractAddress as string,
+    to,
+    fromPrivateKey,
+    // uploaded metadata from ipfs
+    url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
+  })) as TransactionHash
+  console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
+
+  // Get all minted NFTs in the collection. Returns all NFTs this contract minted.
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetBalanceErc721
   const nftAccountBalance = await polygonSDK.nft.getNFTAccountBalance(
     Currency.MATIC,
-    '0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B',
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
+    address,
+    contractAddress as string,
   )
+  console.log(`Nfts on ${contractAddress}: ${nftAccountBalance}`)
 
-  const mintedHash = await polygonSDK.nft.mintNFT({
-    chain: 'MATIC',
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    url: 'https://my_token_data.com',
-  })
+  // Get NFT token metadata
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetMetadataErc721
+  const data = await polygonSDK.nft.getNFTMetadataURI(Currency.MATIC, contractAddress as string, tokenId)
+  console.log(`Token metadata: ${JSON.stringify(data)}`)
 
-  const mintedExpressHash = await polygonSDK.nft.mintNFT({
-    chain: 'MATIC',
-    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    url: 'https://my_token_data.com',
-  })
+  // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
+  const nftTransferred = (await polygonSDK.nft.transferNFT({
+    chain: Currency.MATIC,
+    to,
+    tokenId,
+    contractAddress: contractAddress as string,
+    fromPrivateKey,
+  })) as TransactionHash
+  console.log(`Transferred nft with transaction hash: ${nftTransferred.txId}`)
 
-  const mintedWithMinterHash = await polygonSDK.nft.mintNFT({
-    chain: 'MATIC',
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    url: 'https://my_token_data.com',
-    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-  })
-
-  const deployHash = await polygonSDK.nft.deployNFTSmartContract({
-    chain: 'MATIC',
-    name: 'My ERC721',
-    symbol: 'ERC_SYMBOL',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    provenance: true,
-    publicMint: true,
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
-
-  const transferHash = await polygonSDK.nft.transferNFT({
-    chain: 'MATIC',
-    value: '1',
-    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    tokenId: '1000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    provenance: true,
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
-
-  const mintMultipleHash = await polygonSDK.nft.mintMultipleNFTs({
-    chain: 'MATIC',
-    to: ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-    tokenId: ['100000'],
-    url: ['https://my_token_data.com'],
-    authorAddresses: [['0x687422eEA2cB73B5d3e242bA5456b782919AFc85']],
-    cashbackValues: [['0.5']],
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
-
-  const burnHash = await polygonSDK.nft.burnNFT({
-    chain: 'MATIC',
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
-
-  const addMinterHash = await polygonSDK.nft.addNFTMinter({
-    chain: 'MATIC',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
-
-  const updateRoyaltyHash = await polygonSDK.nft.updateNFTRoyalty({
-    chain: 'MATIC',
-    tokenId: '100000',
-    cashbackValue: '0.1',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
+  const nftBurned = (await polygonSDK.nft.burnNFT({
+    chain: Currency.MATIC,
+    tokenId,
+    contractAddress: contractAddress as string,
+    fromPrivateKey: destinationPrivateKey,
+  })) as TransactionHash
+  console.log(`NFT burn transaction sent with transaction ID: ${nftBurned.txId}`)
 }

@@ -1,4 +1,4 @@
-import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
+import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
   BlockchainFeesService,

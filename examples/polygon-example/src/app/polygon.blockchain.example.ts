@@ -1,36 +1,52 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumPolygonSDK } from '@tatumio/polygon'
 
-const polygonSDK = TatumPolygonSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const polygonSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const testnet = true
 
 export async function polygonBlockchainExample() {
-  const broadcastHash = await polygonSDK.blockchain.broadcast({
-    txData: '62BD544D1B9031EFC330A3E855CC3A0D51CA5131455C1AB3BCAC6D243F65460D',
-    signatureId: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
-  })
-
-  const gasInfo = await polygonSDK.blockchain.estimateGas({
-    from: '0xfb99f8ae9b70a0c8cd96ae665bbaf85a7e01a2ef',
-    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    amount: '100000',
-    data: 'My note to recipient.',
-  })
-
-  const transaction = await polygonSDK.blockchain.get(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
-  )
-  const accountTransactions = await polygonSDK.blockchain.getAccountTransactions(
-    '0x8ce4e40889a13971681391aad29e88efaf91f784',
-    10,
-  )
-  const balance = await polygonSDK.blockchain.getBlockchainAccountBalance(
-    '0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B',
-  )
-  const block = await polygonSDK.blockchain.getBlock(
-    '0x305c58c8c62399097f1ea702e337f13be6b3a3ed28867d530d8a03191f040b9c',
-  )
+  // Get current block
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGetCurrentBlock
   const currentBlock = await polygonSDK.blockchain.getCurrentBlock()
-  const transactionsCount = await polygonSDK.blockchain.getTransactionsCount(
-    '0xdac17f958d2ee523a2206206994597c13d831ec7',
-  )
+  console.log(`Current block in blockchain is ${currentBlock}.`)
+
+  // Get block by block number
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGetBlock
+  const blockNumber = `${currentBlock - 100}`
+  const block = await polygonSDK.blockchain.getBlock(blockNumber)
+  console.log(`Timestamp in block ${blockNumber} is ${block.timestamp}.`)
+
+  // Get transaction details by hash
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGetTransaction
+  const hash = '0xf5b40cf3f36a14c02df07a4d771eb63241d2fbb42b5e7d5549c718f8bf6f36d5'
+  const tx = await polygonSDK.blockchain.get(hash)
+  console.log(`Fee for transaction is ${tx.gasUsed}.`)
+
+  // Generate wallet
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet
+  const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet(undefined, { testnet })
+  console.log(`Mnemonic for wallet is ${mnemonic} and extended public key is ${xpub}.`)
+
+  // Generate account address from Extended public key
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddress
+  const address = polygonSDK.wallet.generateAddressFromXPub(xpub, 0)
+  console.log(`Public address is ${address}.`)
+
+  // Get count of outgoing transactions for address
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGetTransactionCount
+  const count = await polygonSDK.blockchain.getTransactionsCount(address)
+  console.log(`Transactions count for ${address} is ${count}`)
+
+  // Estimate transaction fees
+  // https://apidoc.tatum.io/tag/Blockchain-fees#operation/PolygonEstimateGas
+  const { gasLimit, gasPrice } = await polygonSDK.blockchain.estimateGas({
+    from: address,
+    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    amount: '1',
+  })
+  console.log(`Transaction fee: gasLimit: ${gasLimit}, gasPrice: ${gasPrice}`)
+
+  // Get transactions by address
+  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGetTransactionByAddress
+  const accountTransactions = await polygonSDK.blockchain.getAccountTransactions(address, 10)
+  console.log(`Transactions for ${address} are ${JSON.stringify(accountTransactions)}`)
 }
