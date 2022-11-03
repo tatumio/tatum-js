@@ -1,6 +1,6 @@
 import * as algosdk from 'algosdk'
 import Url from 'url-parse'
-import { Currency, TATUM_API_CONSTANTS } from "@tatumio/api-client";
+import { Currency, TATUM_API_CONSTANTS } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 
 export interface AlgoWeb {
