@@ -1,5 +1,6 @@
 import {
   BroadcastFunction,
+  ChainAddMinterErc721,
   ChainBurnErc721,
   ChainDeployErc721,
   ChainMintErc721,
@@ -200,6 +201,37 @@ const burnSignedTransaction = async (body: ChainBurnErc721, web3: EvmBasedWeb3, 
     from: 0,
     to: contractAddress.trim(),
     data: contract.methods.burn(tokenId).encodeABI(),
+    nonce,
+  }
+
+  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+    client,
+    tx,
+    web3,
+    signatureId,
+    fromPrivateKey,
+    fee?.gasLimit,
+    fee?.gasPrice,
+    provider,
+  )
+}
+
+const addMinterSignedTransaction = async (
+  body: ChainAddMinterErc721,
+  web3: EvmBasedWeb3,
+  provider?: string,
+) => {
+  const { fromPrivateKey, fee, contractAddress, nonce, signatureId, minter } = body
+
+  const client = web3.getClient(provider, fromPrivateKey)
+
+  const contract = new client.eth.Contract(Erc721Token_General.abi as any, contractAddress)
+  const tx: TransactionConfig = {
+    from: 0,
+    to: contractAddress.trim(),
+    data: contract.methods
+      .grantRole('0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', minter)
+      .encodeABI(),
     nonce,
   }
 
@@ -554,6 +586,14 @@ export const erc721 = (args: {
         body: ChainMintMultipleNft & { fixedValues: string[][] },
         provider?: string,
       ) => mintMultipleProvenanceSignedTransaction(body, args.web3, provider),
+      /**
+       * Sign add minter to ERC 721 with private keys locally. Nothing is broadcast to the blockchain.
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Server to connect to. If not set, default public server will be used.
+       * @returns transaction data to be broadcast to blockchain.
+       */
+      addMinterSignedTransaction: (body: ChainAddMinterErc721, provider: string) =>
+        addMinterSignedTransaction(body, args.web3, provider),
     },
     send: {
       /**

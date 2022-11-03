@@ -15,7 +15,7 @@ export const TatumAlgoSDK = (
     getBlockchainAccountBalance: ApiServices.blockchain.algo.algorandGetBalance,
   },
 ) => {
-  const web = algoWeb()
+  const web = algoWeb(args)
   const txService = algoTxService({ algoWeb: web }, apiCalls)
   const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
 

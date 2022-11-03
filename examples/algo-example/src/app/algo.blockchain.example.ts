@@ -1,7 +1,8 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
+import { sdkArguments } from '../index'
 
 export async function algoBlockchainExample() {
-  const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  const algoSDK = TatumAlgoSDK(sdkArguments)
 
   // Get current block
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGetCurrentBlock
@@ -20,10 +21,11 @@ export async function algoBlockchainExample() {
   const tx = await algoSDK.blockchain.getTransaction(txid)
   console.log(`Fee for transaction is ${tx.fee}.`)
 
-  // Get transactions between from and to
-  // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGetPayTransactionsByFromTo
-  const from = '2021-05-01T20:44:39Z'
-  const to = '2021-06-01T20:44:39Z'
-  const response = await algoSDK.blockchain.getPayTransactionByFromTo(from, to)
-  console.log(`Found ${response.transactions.length} transactions.`)
+  // // skip this - took too long
+  // // Get transactions between from and to
+  // // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGetPayTransactionsByFromTo
+  // const from = '2021-05-01T20:44:39Z'
+  // const to = '2021-06-01T20:44:39Z'
+  // const response = await algoSDK.blockchain.getPayTransactionByFromTo(from, to)
+  // console.log(`Found ${response.transactions.length} transactions.`)
 }

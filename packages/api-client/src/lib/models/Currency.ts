@@ -90,6 +90,7 @@ export enum Currency {
   EURTENT = 'EURTENT',
   GOLDAX = 'GOLDAX',
   ZCASH = 'ZCASH',
+  ZIL = 'ZIL',
 }
 
 export const ERC20_CURRENCIES = [

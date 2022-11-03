@@ -94,6 +94,7 @@ describe('KcsSDK - blockchain', () => {
         id: 2,
       } as Web3Request,
     ],
+    smartContractGetAddress: [mockedApi.blockchain.util.scGetContractAddress, 'KCS', testData.TX_HASH],
   }
 
   describe('API methods mapping', () => {
