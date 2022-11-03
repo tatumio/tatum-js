@@ -1,6 +1,6 @@
 import * as algosdk from 'algosdk'
 import Url from 'url-parse'
-import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { Currency, TATUM_API_CONSTANTS } from "@tatumio/api-client";
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 
 export interface AlgoWeb {
@@ -28,7 +28,7 @@ export const algoWeb = (args: SDKArguments): AlgoWeb => {
       } else {
         const endpoint = `${args.url || TATUM_API_CONSTANTS.URL}/${
           TATUM_API_CONSTANTS.API_VERSION
-        }/blockchain/node/algorand/`
+        }/blockchain/node/${Currency.ALGO}/`
         return new algosdk.Algodv2({ nodeType: 'ALGOD' }, endpoint)
       }
     },
@@ -38,7 +38,7 @@ export const algoWeb = (args: SDKArguments): AlgoWeb => {
       } else {
         const endpoint = `${args.url || TATUM_API_CONSTANTS.URL}/${
           TATUM_API_CONSTANTS.API_VERSION
-        }/blockchain/node/algorand/`
+        }/blockchain/node/${Currency.ALGO}/`
         return new algosdk.Indexer({ nodeType: 'INDEXER' }, endpoint)
       }
     },
