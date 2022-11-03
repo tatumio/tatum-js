@@ -57,7 +57,7 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
         amountToSign.push(amountUtils.toSatoshis(vout.value))
       }
 
-      body.to.forEach((item) => {
+      for (const item of body.to) {
         const value = amountUtils.toSatoshis(item.value)
         try {
           const address = bcashAddressHelper.getAddress(item.address)
@@ -68,7 +68,7 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
           transactionBuilder.addOutput(address.toLegacyAddress(), value)
           outputs.push(value)
         }
-      })
+      }
 
       // send the change to change address
       if (body.changeAddress) {

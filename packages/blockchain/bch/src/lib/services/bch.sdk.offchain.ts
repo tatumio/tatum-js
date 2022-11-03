@@ -13,7 +13,7 @@ import { Transaction, TransactionBuilder, ECPair, ECSignature } from '@tatumio/b
  * @param testnet mainnet or testnet version
  * @returns transaction data to be broadcast to blockchain.
  */
-export const signKmsTransaction = async (tx: PendingTransaction, mnemonic: string, testnet: boolean) => {
+export const signKmsTransactionFromVirtualAccount = async (tx: PendingTransaction, mnemonic: string, testnet: boolean) => {
   if (tx.chain !== Currency.BCH || !tx.withdrawalResponses) {
     throw Error('Unsupported chain.')
   }
