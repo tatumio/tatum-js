@@ -8,26 +8,66 @@ export async function btcVirtualAccountExample() {
 
   const btcSDK = TatumBtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
-  // Check whether a blockchain address is assigned to a virtual account
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/addressExists
-  const account = await btcSDK.virtualAccount.depositAddress.checkExists('1N4U6RidG5XScvBoSNgq5EmHiPxU4MAyEv')
-  console.log(account)
+  // if you don't already have a wallet, address and private key - generate them
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGenerateWallet
+  const { mnemonic, xpub } = await btcSDK.wallet.generateWallet()
+
+  // Generate PrivateKey from Mnemonic with a given index
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGenerateAddressPrivateKey
+  const privateKey = await btcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+
+  // Generate Address from xpub with a given index
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGenerateAddress
+  const to = btcSDK.wallet.generateAddressFromXPub(xpub, 1)
+
+  // Generate new virtual account for BTC with specific blockchain address
+  // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccount
+  const virtualAccount = await btcSDK.ledger.account.create({
+    currency: 'BTC',
+    xpub: xpub,
+  })
+  console.log(JSON.stringify(virtualAccount))
 
   // Create a deposit address for a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
-  const address = await btcSDK.virtualAccount.depositAddress.create('5e68c66581f2ee32bc354087', 1)
+  const address = await btcSDK.virtualAccount.depositAddress.create(virtualAccount.id, 1)
   console.log(address)
+
+  // Fund your address here: https://testnet-faucet.mempool.co/
+  console.log(`Fund me ${address.address} to send virtual account transaction!`)
+
+  // If you have funds on account - you can transfer it to another bch address
+  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/BtcTransfer
+  const result = await btcSDK.virtualAccount.send({
+    senderAccountId: virtualAccount.id,
+    address: 'xxxxxxxxx',
+    amount: '1',
+    keyPair: [
+      {
+        address: address.address,
+        privateKey: privateKey,
+      },
+    ],
+    fee: '0.1',
+    attr: address.address,
+  })
+  console.log(result)
+
+  // Check whether a blockchain address is assigned to a virtual account
+  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/addressExists
+  const account = await btcSDK.virtualAccount.depositAddress.checkExists(address.address)
+  console.log(account)
 
   //Create multiple deposit addresses for a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddressesBatch
   const addresses = await btcSDK.virtualAccount.depositAddress.createMultiple({
     addresses: [
       {
-        accountId: '5e6be8e9e6aa436299950c41',
+        accountId: virtualAccount.id,
         derivationKey: 0,
       },
       {
-        accountId: '5e6be8e9e6aa436299951n35',
+        accountId: virtualAccount.id,
         derivationKey: 1,
       },
     ],
@@ -44,7 +84,7 @@ export async function btcVirtualAccountExample() {
 
   // Get all deposit addresses for a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/getAllDepositAddresses
-  const addressByAccount = await btcSDK.virtualAccount.depositAddress.getByAccount('5e6be8e9e6aa436299950c41')
+  const addressByAccount = await btcSDK.virtualAccount.depositAddress.getByAccount(virtualAccount.id)
   console.log(addressByAccount)
 
   // Remove a deposit address from a virtual account
@@ -53,13 +93,4 @@ export async function btcVirtualAccountExample() {
     '5e6be8e9e6aa436299950c41',
     '7c21ed165e294db78b95f0f181086d6f',
   )
-
-  // Set the contact address of an ERC-20 or ERC-20-equivalent token
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/storeTokenAddress
-  await btcSDK.virtualAccount.storeTokenAddress('7c21ed165e294db78b95f0f181086d6f', 'MY_TOKEN')
-
-  // Get withdrawals
-  // You can find more details in https://apidoc.tatum.io/tag/Withdrawal#operation/GetWithdrawals
-  const withdrawals = await btcSDK.virtualAccount.withdrawal.getAll('Done')
-  console.log(withdrawals)
 }

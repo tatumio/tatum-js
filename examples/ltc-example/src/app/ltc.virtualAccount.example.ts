@@ -5,11 +5,15 @@ export async function ltcVirtualAccountExample() {
   const ltcSDK = TatumLtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   // Create an extended public key
-  const { xpub } = await ltcSDK.wallet.generateWallet(undefined, { testnet: true })
+  const { mnemonic, xpub } = await ltcSDK.wallet.generateWallet(undefined, { testnet: true })
   const { xpub: plainXpub } = await ltcSDK.wallet.generateWallet(undefined, { testnet: true })
 
   // Generate a blockchain address from xpub (for the plainAccount)
   const plainAccountAddress = ltcSDK.wallet.generateAddressFromXPub(plainXpub, 1, { testnet: true })
+
+  // Generate PrivateKey from Mnemonic with a given index
+  // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcGenerateAddressPrivateKey
+  const privateKey = await ltcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
 
   // Create an account with xpub and without xpub
   // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccount
@@ -35,6 +39,26 @@ export async function ltcVirtualAccountExample() {
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
   const address = await ltcSDK.virtualAccount.depositAddress.create(xpubAccount.id, 1)
   console.log(`Deposit address: ${JSON.stringify(address)}`)
+
+  // Fund your address here: http://testnet.litecointools.com/
+  console.log(`Fund me ${address.address} to send virtual account transaction!`)
+
+  // If you have funds on account - you can transfer it to another bch address
+  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/LtcTransfer
+  const result = await ltcSDK.virtualAccount.send({
+    senderAccountId: xpubAccount.id,
+    address: 'xxxxxxxxx',
+    amount: '1',
+    keyPair: [
+      {
+        address: address.address,
+        privateKey: privateKey,
+      },
+    ],
+    fee: '0.1',
+    attr: address.address,
+  })
+  console.log(result)
 
   // Create multiple deposit addresses for an account and derivation index
   // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccountBatch
@@ -69,9 +93,4 @@ export async function ltcVirtualAccountExample() {
   // Remove a deposit address from an account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/removeAddress
   await ltcSDK.virtualAccount.depositAddress.remove(plainAccount.id, plainAccountAddress)
-
-  // Get withdrawals for a given status (Done)
-  // You can find more details in https://apidoc.tatum.io/tag/Withdrawal#operation/GetWithdrawals
-  const withdrawals = await ltcSDK.virtualAccount.withdrawal.getAll('Done')
-  console.log(`Withdrawals: ${JSON.stringify(withdrawals)}`)
 }

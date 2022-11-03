@@ -4,6 +4,7 @@ import { btcTransactions } from './transaction/btc.tx'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { btcWallet } from './btc.sdk.wallet'
 import { btcBasedSdk } from '@tatumio/shared-blockchain-btc-based'
+import { virtualAccountService } from './services/btc.sdk.virtualAccount'
 
 const blockchain = Blockchain.BTC
 
@@ -23,6 +24,13 @@ export const TatumBtcSDK = (args: SDKArguments) => {
       getTransaction: BitcoinService.btcGetRawTransaction,
       getTransactionsByAddress: BitcoinService.btcGetTxByAddress,
       sendTransaction: BitcoinService.btcTransferBlockchain,
+    },
+    virtualAccount: {
+      ...btcBasedSdk({ ...args, blockchain }).virtualAccount,
+      ...virtualAccountService({ blockchain }),
+    },
+    kms: {
+      ...btcBasedSdk({ ...args, blockchain }).kms,
     },
   }
 }
