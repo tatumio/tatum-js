@@ -17,6 +17,7 @@ export const ethAuctionExample = async () => {
     auctionFee: 100,
     feeRecipient,
     fromPrivateKey,
+    chain: 'ETH',
   })) as TransactionHash
 
   console.log(`TransactionId: ${txId}`)
@@ -31,31 +32,34 @@ export const ethAuctionExample = async () => {
 
   console.log(`Auction from contract address ${contractAddress}: ${auction}`)
 
-  const { txId: bidTransactionHash } = await ethSDK.marketplace.auction.send.auctionBidSignedTransaction({
+  const { txId: bidTransactionHash } = (await ethSDK.marketplace.auction.send.auctionBidSignedTransaction({
     contractAddress,
     bidder,
     id: 'string',
     bidValue: '1',
     fromPrivateKey,
-  })
+    chain: 'ETH',
+  })) as TransactionHash
 
   console.log(`Auction bid transaction hash: ${bidTransactionHash}`)
 
   const { txId: cancelTransactionHash } =
-    await ethSDK.marketplace.auction.send.auctionCancelSignedTransaction({
+    (await ethSDK.marketplace.auction.send.auctionCancelSignedTransaction({
       contractAddress,
       id: 'string',
       fromPrivateKey,
-    })
+      chain: 'ETH',
+    })) as TransactionHash
 
   console.log(`Auction cancel transaction hash: ${cancelTransactionHash}`)
 
   const { txId: settleTransactionHash } =
-    await ethSDK.marketplace.auction.send.auctionSettleSignedTransaction({
+    (await ethSDK.marketplace.auction.send.auctionSettleSignedTransaction({
       contractAddress,
       id: 'string',
       fromPrivateKey,
-    })
+      chain: 'ETH',
+    })) as TransactionHash
 
   console.log(`Auction settle transaction hash: ${settleTransactionHash}`)
 }

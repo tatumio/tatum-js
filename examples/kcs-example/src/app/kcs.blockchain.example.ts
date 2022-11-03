@@ -1,32 +1,41 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumKcsSDK } from '@tatumio/kcs'
 
-const kcsSDK = TatumKcsSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function kcsBlockchainExample() {
-  const broadcastHash = await kcsSDK.blockchain.broadcast({
-    txData: '62BD544D1B9031EFC330A3E855CC3A0D51CA5131455C1AB3BCAC6D243F65460D',
-    signatureId: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
-  })
-
+  // Get gasLimit and gasPrice for a transaction
+  // https://apidoc.tatum.io/tag/Blockchain-fees#operation/KcsEstimateGas
   const gasInfo = await kcsSDK.blockchain.estimateGas({
     from: '0xfb99f8ae9b70a0c8cd96ae665bbaf85a7e01a2ef',
     to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
     amount: '100000',
-    data: 'My note to recipient.',
+    data: '62BD544D1B9031EFC330A3E855CC3A0D51CA5131455C1AB3BCAC6D243F65460D',
   })
+  console.log(`Gas estimate`, gasInfo)
 
+  // Get transaction details by hash
+  // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGetTransaction
   const transaction = await kcsSDK.blockchain.get(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
+    '0xfae9494fee7c168ccbb79bc6785bb343c6108f2aac38a64f0a25b5efae51d4f1',
   )
-  const balance = await kcsSDK.blockchain.getBlockchainAccountBalance(
+  console.log(`Transaction: ${transaction}`)
+
+  // Get block by hash
+  // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGetBlock
+  const block = await kcsSDK.blockchain.getBlock(
+    '0x30454a103e3a0c94fa715eff8f73fafc19928ab7c5b3056f5fa3d667a9fb3669',
+  )
+  console.log(`Block: ${block}`)
+
+  // Get current block
+  // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGetCurrentBlock
+  const currentBlock = await kcsSDK.blockchain.getCurrentBlock()
+  console.log(`Current block: ${currentBlock}`)
+
+  // Get transaction count of an address
+  // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGetTransactionCount
+  const transactionsCount = await kcsSDK.blockchain.getTransactionsCount(
     '0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B',
   )
-  const block = await kcsSDK.blockchain.getBlock(
-    '0x4e0f0ac033ef1fa2cb4b9e045979384695afdb18c313a2284426a64d89316c3e',
-  )
-  const currentBlock = await kcsSDK.blockchain.getCurrentBlock()
-  const transactionsCount = await kcsSDK.blockchain.getTransactionsCount(
-    '0xdac17f958d2ee523a2206206994597c13d831ec7',
-  )
+  console.log(`Transactions count: ${transactionsCount}`)
 }

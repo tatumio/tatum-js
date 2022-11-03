@@ -10,6 +10,7 @@ import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm
 import { oneKmsService } from './services/one.kms'
 import { oneTxService } from './services/one.tx'
 import { oneAuctionService } from './services/one.auction'
+import { virtualAccountService } from './services/one.virtualAccount'
 
 const blockchain: EvmBasedBlockchain = Blockchain.HARMONY
 
@@ -17,6 +18,7 @@ export const TatumOneSDK = (args: SDKArguments) => {
   const web3 = oneWeb3({ blockchain })
   const api = HarmonyService
   const txService = oneTxService({ blockchain, web3 })
+  const virtualAccount = virtualAccountService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   const {
@@ -88,5 +90,6 @@ export const TatumOneSDK = (args: SDKArguments) => {
       web3Driver: HarmonyService.oneWeb3Driver,
       blockchainTransfer: HarmonyService.oneBlockchainTransfer,
     },
+    virtualAccount,
   }
 }
