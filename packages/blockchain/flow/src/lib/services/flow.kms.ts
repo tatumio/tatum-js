@@ -31,19 +31,19 @@ export const flowKmsService = (args: { apiKey: string; blockchain: Blockchain })
         case FlowTxType.TRANSFER:
           return txService.sendTransaction(testnet, { ...body, privateKey: fromPrivateKeys[0] })
         case FlowTxType.TRANSFER_NFT:
-          return txService.sendNftTransferToken(testnet, {
+          return txService.nft.sendNftTransferToken(testnet, {
             ...body,
             privateKey: fromPrivateKeys[0],
           })
         case FlowTxType.MINT_NFT:
-          return txService.sendNftMintToken(testnet, { ...body, privateKey: fromPrivateKeys[0] })
+          return txService.nft.sendNftMintToken(testnet, { ...body, privateKey: fromPrivateKeys[0] })
         case FlowTxType.MINT_MULTIPLE_NFT:
-          return txService.sendNftMintMultipleToken(testnet, {
+          return txService.nft.sendNftMintMultipleToken(testnet, {
             ...body,
             privateKey: fromPrivateKeys[0],
           })
         case FlowTxType.BURN_NFT:
-          return txService.sendNftBurnToken(testnet, { ...body, privateKey: fromPrivateKeys[0] })
+          return txService.nft.sendNftBurnToken(testnet, { ...body, privateKey: fromPrivateKeys[0] })
         default:
           return txService.sendCustomTransaction(testnet, {
             ...body,

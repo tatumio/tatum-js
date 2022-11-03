@@ -1,5 +1,5 @@
 import dedent from 'dedent-js'
-import { FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES } from './flow.tx'
+import { FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES } from '../flow.constants'
 
 export const flowTxTemplates = () => {
   return {
