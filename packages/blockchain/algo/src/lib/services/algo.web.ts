@@ -1,5 +1,7 @@
 import * as algosdk from 'algosdk'
 import Url from 'url-parse'
+import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 
 export interface AlgoWeb {
   /**
@@ -18,54 +20,26 @@ export interface AlgoWeb {
   getIndexerClient(testnet: boolean, provider?: string): algosdk.Indexer
 }
 
-export const algoWeb = (): AlgoWeb => {
+export const algoWeb = (args: SDKArguments): AlgoWeb => {
   return {
-    getClient: (testnet, provider?: string) => {
-      const tokenValue = testnet
-        ? process.env['TATUM_ALGORAND_TESTNET_TOKEN']
-        : process.env['TATUM_ALGORAND_MAINNET_TOKEN']
-
-      if (!tokenValue) {
-        throw new Error('No ALGORAND token specified')
-      }
-
+    getClient: (testnet: boolean, provider?: string) => {
       if (provider) {
-        return new algosdk.Algodv2(tokenValue ?? 'DUMMYTOKEN', provider, Url(provider).port)
+        return new algosdk.Algodv2('', provider, Url(provider).port)
       } else {
-        const server = testnet
-          ? process.env['TATUM_ALGORAND_TESTNET_THIRD_API_ALGOD_URL']
-          : process.env['TATUM_ALGORAND_MAINNET_THIRD_API_ALGOD_URL']
-
-        return new algosdk.Algodv2(
-          {
-            'X-API-Key': tokenValue,
-          },
-          server,
-        )
+        const endpoint = `${args.url || TATUM_API_CONSTANTS.URL}/${
+          TATUM_API_CONSTANTS.API_VERSION
+        }/blockchain/node/algorand/`
+        return new algosdk.Algodv2({ nodeType: 'ALGOD' }, endpoint)
       }
     },
     getIndexerClient: (testnet: boolean, provider?: string) => {
-      const tokenValue = testnet
-        ? process.env['TATUM_ALGORAND_TESTNET_TOKEN']
-        : process.env['TATUM_ALGORAND_MAINNET_TOKEN']
-
-      if (!tokenValue) {
-        throw new Error('No ALGORAND token specified')
-      }
-
       if (provider) {
-        return new algosdk.Indexer(tokenValue ?? 'DUMMYTOKEN', provider, Url(provider).port)
+        return new algosdk.Indexer('', provider, Url(provider).port)
       } else {
-        const server = testnet
-          ? process.env['TATUM_ALGORAND_TESTNET_THIRD_API_ALGOD_URL']
-          : process.env['TATUM_ALGORAND_MAINNET_THIRD_API_ALGOD_URL']
-
-        return new algosdk.Indexer(
-          {
-            'X-API-Key': tokenValue,
-          },
-          server,
-        )
+        const endpoint = `${args.url || TATUM_API_CONSTANTS.URL}/${
+          TATUM_API_CONSTANTS.API_VERSION
+        }/blockchain/node/algorand/`
+        return new algosdk.Indexer({ nodeType: 'INDEXER' }, endpoint)
       }
     },
   }

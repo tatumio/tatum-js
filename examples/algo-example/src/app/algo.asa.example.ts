@@ -1,11 +1,12 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
 import { Currency, TransactionHash } from '@tatumio/api-client'
-
-const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+import { sdkArguments } from '../index'
 
 // @TODO: remove ALGO from openApi - MINT ERC20 section
 
 export async function algoAsaExample() {
+  const algoSDK = TatumAlgoSDK(sdkArguments)
+
   // generate "from" and "to" addresses for wallets
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet
   const { address, secret } = algoSDK.wallet.generateWallet()
