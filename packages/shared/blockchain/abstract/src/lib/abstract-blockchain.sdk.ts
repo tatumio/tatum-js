@@ -1,4 +1,5 @@
 import {
+  AddNftMinter,
   ApproveErc20,
   ApproveNftSpending,
   ApproveTransferCustodialWallet,
@@ -108,7 +109,7 @@ export type FromPrivateKeyOrSignatureIdTron<T extends { fromPrivateKey?: string 
   T,
   'fromPrivateKey'
 > &
-  Partial<SignatureId & { index: number; account: string; from: string }> &
+  Partial<SignatureId & { index: number; from: string }> &
   Partial<Pick<T, 'fromPrivateKey'>>
 
 export type ChainTransferErc20 = FromPrivateKeyOrSignatureId<Omit<ChainTransferEthErc20, 'chain'>>
@@ -134,6 +135,8 @@ export type ChainMintMultipleNft = FromPrivateKeyOrSignatureId<MintMultipleNft> 
 }
 
 export type ChainBurnErc721 = FromPrivateKeyOrSignatureId<BurnNft>
+
+export type ChainAddMinterErc721 = FromPrivateKeyOrSignatureId<AddNftMinter>
 
 export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<TransferNft>
 

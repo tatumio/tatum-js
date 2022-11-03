@@ -83,7 +83,7 @@ const prepareSmartContractInvocation = async (
 
   const contractAddressHex = client.address.toHex(contractAddress)
   const sender = body.signatureId
-    ? body?.account || body?.from
+    ? body?.from
     : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
 
   const { transaction } = await client.transactionBuilder.triggerSmartContract(
@@ -154,7 +154,7 @@ const prepareCustodialTransferBatch = async (
 
   const contractAddressHex = client.address.toHex(contractAddress)
   const sender = body.signatureId
-    ? body?.from || body?.account
+    ? body?.from
     : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
   const methodName = 'transferBatch(address[],uint256[],address[],uint256[],uint256[])'
 

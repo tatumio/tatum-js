@@ -1,44 +1,43 @@
 import {
   AccountService,
   ApiServices,
+  BEP20_CURRENCIES,
   Currency,
-  ERC20_CURRENCIES,
-  TransferErc20,
-  TransferEth,
-  TransferEthKMS,
+  TransferBscKMS,
+  TransferKCS,
   VirtualCurrencyService,
   WithdrawalService,
 } from '@tatumio/api-client'
 import {
   abstractBlockchainVirtualAccount,
-  PrivateKeyOrSignatureId,
+  FromPrivateKeyOrSignatureId,
 } from '@tatumio/shared-blockchain-abstract'
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, CONTRACT_ADDRESSES, CONTRACT_DECIMALS } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { ethTx } from '../services/eth.tx'
+import { kcsTxService } from './kcs.tx'
 
-type TransferVirtualAccountEth = PrivateKeyOrSignatureId<TransferEth>
+type TransferVirtualAccountKcs = FromPrivateKeyOrSignatureId<TransferKCS>
 type VirtualAccountResponse = { id?: string; txId?: string; completed?: boolean } | void
 
-const sendEthVirtualAccountTransaction = async (
-  body: TransferVirtualAccountEth,
+const sendKcsVirtualAccountTransaction = async (
+  body: TransferVirtualAccountKcs,
   web3: EvmBasedWeb3,
 ): Promise<VirtualAccountResponse> => {
-  const txService = ethTx({ blockchain: Blockchain.ETH, web3 })
-  const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
+  const txService = kcsTxService({ blockchain: Blockchain.KCS, web3 })
+  const { mnemonic, index, fromPrivateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
   const { amount, address } = withdrawal
   let fromPrivKey: string
   let txData: any
 
   if (body.mnemonic && body.index !== undefined) {
     fromPrivKey = (await evmBasedUtils.generatePrivateKeyFromMnemonic(
-      Blockchain.ETH,
+      Blockchain.KCS,
       body.mnemonic,
       body.index,
     )) as string
   } else {
-    fromPrivKey = body.privateKey as string
+    fromPrivKey = body.fromPrivateKey as string
   }
 
   const account = await AccountService.getAccountByAccountId(body.senderAccountId)
@@ -47,7 +46,7 @@ const sendEthVirtualAccountTransaction = async (
     gasPrice: gasPrice || '20',
   }
 
-  if (account.currency === 'ETH') {
+  if (account.currency === 'KCS') {
     txData = txService.native.prepare.transferSignedTransaction({
       amount,
       fromPrivateKey: fromPrivKey,
@@ -59,7 +58,7 @@ const sendEthVirtualAccountTransaction = async (
     fee.gasLimit = '100000'
     let contractAddress: string
     let decimals: number
-    if (ERC20_CURRENCIES.includes(account.currency as Currency)) {
+    if (BEP20_CURRENCIES.includes(account.currency as Currency)) {
       contractAddress = CONTRACT_ADDRESSES[account.currency]
       decimals = CONTRACT_DECIMALS[account.currency]
     } else {
@@ -97,7 +96,7 @@ const sendEthVirtualAccountTransaction = async (
       ...(await WithdrawalService.broadcastBlockchainTransaction({
         txData,
         withdrawalId: id,
-        currency: Currency.ETH,
+        currency: Currency.KCS,
       })),
       id,
     }
@@ -114,21 +113,16 @@ export const virtualAccountService = (args: { blockchain: Blockchain; web3: EvmB
   return {
     ...abstractBlockchainVirtualAccount(args),
     /**
-     * Send ETH transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
+     * Send KCS transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
      * This operation is irreversible.
      * @param body content of the transaction to broadcast
      * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
      */
-    send: async (body: TransferVirtualAccountEth) => {
+    send: async (body: TransferVirtualAccountKcs) => {
       if (body.signatureId) {
-        const account = await AccountService.getAccountByAccountId(body.senderAccountId)
-        if (account.currency === 'ETH') {
-          return ApiServices.offChain.blockchain.ethTransfer(body as TransferEthKMS)
-        } else {
-          return ApiServices.offChain.blockchain.ethTransferErc20(body as TransferErc20)
-        }
+        return ApiServices.offChain.blockchain.kcsTransfer(body as TransferBscKMS)
       } else {
-        return await sendEthVirtualAccountTransaction(body, args.web3)
+        return await sendKcsVirtualAccountTransaction(body, args.web3)
       }
     },
   }

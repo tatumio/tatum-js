@@ -10,7 +10,7 @@ export type BurnNftKMSTron = {
     /**
      * Blockchain address to perform transaction from
      */
-    account: string;
+    from: string;
     /**
      * ID of token to be destroyed.
      */
