@@ -3,7 +3,7 @@ import { TatumPolygonSDK } from '@tatumio/polygon'
 const polygonSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 const testnet = true
 
-export async function algoBalanceExample() {
+export async function polygonBalanceExample() {
   // Generate wallet
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet
   const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet(undefined, { testnet })

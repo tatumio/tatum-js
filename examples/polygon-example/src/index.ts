@@ -8,13 +8,13 @@ import { polygonVirtualAccountExample } from './app/polygon.virtualAccount.examp
 import { polygonNftExample } from './app/polygon.nft.example'
 import { polygonSubscriptionsExample } from './app/polygon.subscriptions.example'
 import { polygonAuctionExample } from './app/polygon.auction.example'
-import { algoBalanceExample } from './app/polygon.balance.example'
+import { polygonBalanceExample } from './app/polygon.balance.example'
 import { polygonErc20Example } from './app/polygon.erc20.example'
 import { polygonNftExpressExample } from './app/polygon.nft.mint.express.example'
 import { polygonTransactionExample } from './app/polygon.tx.example'
 import { polygonMultitokenExample } from './app/polygon.multitoken.example'
 
-console.log(`Running ${algoBalanceExample()}`)
+console.log(`Running ${polygonBalanceExample()}`)
 console.log(`Running ${polygonBlockchainExample()}`)
 console.log(`Running ${polygonTransactionExample()}`)
 console.log(`Running ${polygonNftExample()}`)
