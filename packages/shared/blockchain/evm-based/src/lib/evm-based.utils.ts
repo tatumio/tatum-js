@@ -1,7 +1,7 @@
 import ethWallet, { hdkey as ethHdKey } from 'ethereumjs-wallet'
 import { ADDRESS_PREFIX, EvmBasedBlockchain, getDerivationPath } from '@tatumio/shared-core'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
-import { CreateRecord, Currency, TronWallet } from '@tatumio/api-client'
+import { CreateRecord, TronWallet } from '@tatumio/api-client'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
 import { isHex, stringToHex, toHex, toWei, Unit } from 'web3-utils'
@@ -13,10 +13,10 @@ import { EvmBasedWeb3 } from './services/evm-based.web3'
 import { EvmBasedSdkError } from './evm-based.sdk.errors'
 
 export const evmBasedUtils = {
-  generateAddressFromXPub: (xpub: string, i: number): string => {
+  generateAddressFromXPub: (xpub: string, i: number, prefix = ADDRESS_PREFIX.EVM): string => {
     const w = ethHdKey.fromExtendedKey(xpub)
     const wallet = w.deriveChild(i).getWallet()
-    return ADDRESS_PREFIX.EVM + wallet.getAddress().toString('hex').toLowerCase()
+    return prefix + wallet.getAddress().toString('hex').toLowerCase()
   },
   generatePrivateKeyFromMnemonic: async (
     blockchain: EvmBasedBlockchain,
@@ -29,8 +29,12 @@ export const evmBasedUtils = {
     const derivePath = hdwallet.derivePath(derivationPath).deriveChild(i)
     return derivePath.getWallet().getPrivateKeyString()
   },
-  generateAddressFromPrivateKey: (blockchain: EvmBasedBlockchain, privateKey: string): string => {
-    const wallet = ethWallet.fromPrivateKey(Buffer.from(privateKey.replace(ADDRESS_PREFIX.EVM, ''), 'hex'))
+  generateAddressFromPrivateKey: (
+    blockchain: EvmBasedBlockchain,
+    privateKey: string,
+    prefix = ADDRESS_PREFIX.EVM,
+  ): string => {
+    const wallet = ethWallet.fromPrivateKey(Buffer.from(privateKey.replace(prefix, ''), 'hex'))
     return wallet.getAddressString() as string
   },
   generateBlockchainWallet: async (
