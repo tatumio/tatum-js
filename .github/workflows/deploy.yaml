@@ -56,6 +56,7 @@ jobs:
 
       #      - run: npx nx-cloud start-ci-run
       - run: yarn build:libs:prod
+      - run: yarn nx:fix
       #      - run: npx nx-cloud stop-all-agents
 
       - run: echo "//registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}" > ~/.npmrc
