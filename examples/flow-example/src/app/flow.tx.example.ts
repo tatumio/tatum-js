@@ -9,12 +9,14 @@ export const flowTxExample = async () => {
     amount: '10000',
     to: 'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H',
     currency: 'FLOW',
+    privateKey: '123',
   })
 
   await flowSDK.transaction.sendCustomTransaction(true, {
     transaction: '3b4351560d3b454a4c1ae2485074b0786093058bfe2b28d436584311b1e433a4',
-    args: [{ value: '', type: '' }],
+    args: [{ value: '', type: 'UFix64' }],
     account: 'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H',
+    privateKey: '123',
   })
 
   const signed = flowSDK.transaction.sign(
@@ -43,34 +45,42 @@ export const flowTxExample = async () => {
     'cTmS2jBWXgFaXZ2xG9jhn67TiyTshnMp3UedamzEhGm6BZV1vLgQ',
   )
 
-  const tx3 = await flowSDK.transaction.getNftMetadata(false, '0x955cd3f17b2fd8ad', 'id', 'tokenType')
+  const tx3 = await flowSDK.transaction.nft.getNftMetadata(false, '0x955cd3f17b2fd8ad', 'id', 'tokenType')
 
-  const tx4 = flowSDK.transaction.getNftTokenByAddress(false, '0x955cd3f17b2fd8ad', 'tokenType')
+  const tx4 = flowSDK.transaction.nft.getNftTokenByAddress(false, '0x955cd3f17b2fd8ad', 'tokenType')
 
-  const tx5 = flowSDK.transaction.sendNftMintToken(false, {
+  const tx5 = flowSDK.transaction.nft.sendNftMintToken(false, {
     account: '0xc1b45bc27b9c61c3',
     to: '0xc1b45bc27b9c61c3',
     url: 'https://my_token_data.com',
     contractAddress: '17a50dad-bcb1-4f3d-ae2c-ea2bfb04419f',
+    privateKey: '123',
+    chain: 'FLOW',
   })
 
-  const tx6 = flowSDK.transaction.sendNftMintMultipleToken(false, {
+  const tx6 = flowSDK.transaction.nft.sendNftMintMultipleToken(false, {
     account: '0xc1b45bc27b9c61c3',
     to: ['0xc1b45bc27b9c61c3', '0xc1b45bc27b9c61c4'],
     url: ['https://my_token_data.com', 'https://my_token_data2.com'],
     contractAddress: '17a50dad-bcb1-4f3d-ae2c-ea2bfb04419f',
+    privateKey: '123',
+    chain: 'FLOW',
   })
 
-  const tx7 = flowSDK.transaction.sendNftTransferToken(false, {
+  const tx7 = flowSDK.transaction.nft.sendNftTransferToken(false, {
     account: '0xc1b45bc27b9c61c3',
     contractAddress: '17a50dad-bcb1-4f3d-ae2c-ea2bfb04419f',
     to: '0xc1b45bc27b9c61c3',
     tokenId: '100000',
+    privateKey: '123',
+    chain: 'FLOW',
   })
 
-  const tx8 = flowSDK.transaction.sendNftBurnToken(false, {
+  const tx8 = flowSDK.transaction.nft.sendNftBurnToken(false, {
     account: '0xc1b45bc27b9c61c3',
     contractAddress: '17a50dad-bcb1-4f3d-ae2c-ea2bfb04419f',
     tokenId: '100000',
+    privateKey: '123',
+    chain: 'FLOW',
   })
 }
