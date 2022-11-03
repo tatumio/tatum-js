@@ -5,7 +5,7 @@ import { Blockchain } from '@tatumio/shared-core'
 export const virtualAccountService = (args: { blockchain: Blockchain }) => {
   return {
     ...abstractBlockchainVirtualAccount(args),
-    send: async (body: (TransferBchMnemonic | TransferBchKeyPair | TransferBchKMS)) => 
-      ApiServices.offChain.blockchain.bchTransfer(body)
+    send: async (body: TransferBchMnemonic | TransferBchKeyPair | TransferBchKMS) =>
+      ApiServices.offChain.blockchain.bchTransfer(body),
   }
 }
