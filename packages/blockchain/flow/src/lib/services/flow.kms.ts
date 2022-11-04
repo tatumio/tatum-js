@@ -5,7 +5,7 @@ import { FlowTxType } from '../flow.constants'
 import { PendingTransaction, TransactionHash } from '@tatumio/api-client'
 import { flowBlockchain } from './flow.blockchain'
 import { flowProvider } from './flow.provider'
-import { FlowSDKArguments } from '@tatumio/flow'
+import { FlowSDKArguments } from '../flow.sdk'
 
 type TransactionHashPromise = Promise<{ txId: string; address: string } | { txId: string }>
 

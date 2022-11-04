@@ -28,15 +28,18 @@ export async function celoVirtualAccountExample() {
   // Fund your address here: https://testnet.binance.org/faucet-smart
   console.log(`Fund me ${depositAddress.address} to send offchain transaction!`)
 
-  // TODO: implement virtual account transfer fn
-  // // I wanna send assets from virtualAccount to blockchain address
-  // // https://apidoc.tatum.io/tag/Blockchain-operations#operation/CeloOrErc20Transfer
-  // const result = await celoSDK.virtualAccount.send({
-  //   senderAccountId: virtualAccount.id,
-  //   amount: '1',
-  //   fromPrivateKey,
-  //   address: to,
-  // })
+  // I wanna send assets from virtualAccount to blockchain address
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/CeloOrErc20Transfer
+  const result = await celoSDK.virtualAccount.send(
+    {
+      senderAccountId: virtualAccount.id,
+      amount: '1',
+      fromPrivateKey,
+      address: to,
+      feeCurrency: 'CELO',
+    },
+    true,
+  )
 
-  // console.log(JSON.stringify(result))
+  console.log(JSON.stringify(result))
 }

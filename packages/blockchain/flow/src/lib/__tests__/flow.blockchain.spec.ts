@@ -5,7 +5,7 @@ import {
   TEST_DATA,
   TestCasesApiCallMapping,
 } from '@tatumio/shared-testing-common'
-import { TatumFlowSDK } from '@tatumio/flow'
+import { TatumFlowSDK } from '../flow.sdk'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)

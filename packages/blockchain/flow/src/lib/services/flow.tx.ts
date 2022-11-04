@@ -610,7 +610,9 @@ export const flowTxService = (
 
     try {
       result = await sendScript(balanceTx, balanceArgs)
-    } catch (_e) {}
+    } catch (_e) {
+      console.log(_e)
+    }
 
     if (result) {
       if (new BigNumber(result).lt(new BigNumber(amount))) {

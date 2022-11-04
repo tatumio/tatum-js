@@ -10,6 +10,7 @@ import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { celoKmsService } from './services/celo.kms'
 import { celoTxService } from './services/celo.tx'
 import { celoAuctionService } from './services/celo.auction'
+import { virtualAccountService } from './services/celo.virtualAccount'
 
 const blockchain = Blockchain.CELO
 
@@ -18,6 +19,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
   const api = CeloService
   const txService = celoTxService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
+  const virtualAccount = virtualAccountService({ blockchain, web3 })
 
   return {
     ...evmSdk,
@@ -54,5 +56,6 @@ export const TatumCeloSDK = (args: SDKArguments) => {
       getAccountTransactions: CeloService.celoGetTransactionByAddress,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
     },
+    virtualAccount,
   }
 }

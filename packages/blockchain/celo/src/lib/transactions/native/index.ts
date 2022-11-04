@@ -274,7 +274,6 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: await prepareCeloOrCUsdSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
     },
