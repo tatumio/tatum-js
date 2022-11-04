@@ -2,7 +2,7 @@
 
 This is an example of a README.md file for a project.
 
-These examples should guide you through some basic operations of the KCS blockchain. You will be able to:
+These examples should guide you through some basic operations of the FLOW blockchain. You will be able to:
 
 - generate FLOW wallet
 - read information from blockchain
