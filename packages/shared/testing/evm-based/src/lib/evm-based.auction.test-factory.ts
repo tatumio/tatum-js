@@ -13,6 +13,7 @@ import { GanacheAccount } from './ganacheHelper'
 import { invalidProvidedAddressWeb3ErrorMessage } from './evm-based.utils'
 
 type AuctionChains = 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY'
+const nonce = 1
 
 export const auctionTestFactory = {
   prepare: {
@@ -27,17 +28,11 @@ export const auctionTestFactory = {
           feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           auctionFee: 150,
           fromPrivateKey: accounts[0].privateKey,
-          nonce: 1,
-          fee: {
-            gasLimit: '300000',
-            gasPrice: '1',
-          },
         })
 
         expectHexString(tx)
       })
       it('valid from signatureId', async () => {
-        const nonce = 1
         const tx = await sdk.prepare.deployAuctionSignedTransaction({
           chain,
           feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -62,7 +57,7 @@ export const auctionTestFactory = {
             feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             auctionFee: 150,
             fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-            nonce: 1,
+            nonce: nonce,
             fee: {
               gasLimit: '300000',
               gasPrice: '20',
@@ -84,10 +79,6 @@ export const auctionTestFactory = {
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           fromPrivateKey: accounts[0].privateKey,
-          fee: {
-            gasLimit: '40000',
-            gasPrice: '20',
-          },
           amount: '1',
         })
 
@@ -104,6 +95,7 @@ export const auctionTestFactory = {
             gasPrice: '20',
           },
           amount: '10000',
+          nonce,
         })
 
         const json = JSON.parse(tx)
@@ -146,18 +138,11 @@ export const auctionTestFactory = {
           endedAt: 100000,
           isErc721: true,
           fromPrivateKey: accounts[0].privateKey,
-          nonce: 1,
-          fee: {
-            gasLimit: '40000',
-            gasPrice: '20',
-          },
         })
 
         expectHexString(tx)
       })
       it('valid from signatureId', async () => {
-        const nonce = 1
-
         const tx = await sdk.prepare.createAuctionSignedTransaction({
           chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -170,7 +155,7 @@ export const auctionTestFactory = {
           endedAt: 100000,
           isErc721: true,
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          nonce: 1,
+          nonce,
           fee: {
             gasLimit: '40000',
             gasPrice: '20',
@@ -196,7 +181,7 @@ export const auctionTestFactory = {
             endedAt: 100000,
             isErc721: true,
             fromPrivateKey: accounts[0].privateKey,
-            nonce: 1,
+            nonce,
             fee: {
               gasLimit: '40000',
               gasPrice: '20',
@@ -220,17 +205,11 @@ export const auctionTestFactory = {
           tokenId: '100000',
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           fromPrivateKey: accounts[0].privateKey,
-          nonce: 1,
-          fee: {
-            gasLimit: '40000',
-            gasPrice: '20',
-          },
         })
 
         expectHexString(tx)
       })
       it('valid from signatureId', async () => {
-        const nonce = 1
         const tx = await sdk.prepare.auctionApproveNftTransferSignedTransaction({
           chain,
           spender: accounts[0].address,
@@ -238,6 +217,11 @@ export const auctionTestFactory = {
           tokenId: '100000',
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+          nonce,
         })
 
         const json = JSON.parse(tx)
@@ -277,14 +261,17 @@ export const auctionTestFactory = {
         expectHexString(tx)
       })
       it('valid from signatureId', async () => {
-        const nonce = 1
-
         const tx = await sdk.prepare.auctionApproveErc20TransferSignedTransaction({
           chain,
           spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           amount: '100',
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+          nonce,
         })
 
         const json = JSON.parse(tx)
@@ -323,8 +310,6 @@ export const auctionTestFactory = {
         expectHexString(tx)
       })
       it('valid from signatureId', async () => {
-        const nonce = 1
-
         const tx = await sdk.prepare.auctionBidSignedTransaction({
           chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -332,6 +317,11 @@ export const auctionTestFactory = {
           id: 'string',
           bidValue: '1',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+          nonce,
         })
 
         const json = JSON.parse(tx)
@@ -371,14 +361,17 @@ export const auctionTestFactory = {
         expectHexString(tx)
       })
       it('valid from signatureId', async () => {
-        const nonce = 1
-
         const tx = await sdk.prepare.auctionCancelSignedTransaction({
           chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           id: 'string',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           amount: '1',
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
+          nonce,
         })
 
         const json = JSON.parse(tx)
@@ -417,14 +410,17 @@ export const auctionTestFactory = {
         expectHexString(tx)
       })
       it('valid from signatureId', async () => {
-        const nonce = 1
-
         const tx = await sdk.prepare.auctionSettleSignedTransaction({
           chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           id: 'string',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
           amount: '10000',
+          nonce,
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
         })
 
         const json = JSON.parse(tx)

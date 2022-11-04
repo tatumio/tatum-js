@@ -86,7 +86,7 @@ describe('OneSDK - tx', () => {
       })
 
       describe('approveSpending', () => {
-        marketplaceTestFactory.prepare.approveSpending(sdk.marketplace, inmemoryBlockchain.accounts)
+        marketplaceTestFactory.prepare.approveSpending(sdk.marketplace, inmemoryBlockchain.accounts, 'ONE')
       })
 
       describe('sellMarketplaceListing', () => {
