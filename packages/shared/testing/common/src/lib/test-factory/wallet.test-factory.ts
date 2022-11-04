@@ -144,7 +144,11 @@ export const walletTestFactory = {
       })
     })
   },
-  generateAddressFromPrivateKey: (sdk: SdkWithWalletFunctions, testData: BlockchainTestData) => {
+  generateAddressFromPrivateKey: (
+    sdk: SdkWithWalletFunctions,
+    testData: BlockchainTestData,
+    options?: { skipInvalid?: boolean },
+  ) => {
     describe('mainnet', () => {
       it('valid', async () => {
         const address0 = sdk.generateAddressFromPrivateKey(testData.MAINNET.PRIVATE_KEY_0)
@@ -154,11 +158,13 @@ export const walletTestFactory = {
         expect(address100).toBe(testData.MAINNET.ADDRESS_100)
       })
 
-      it('invalid private key', () => {
-        expect(() => {
-          sdk.generateAddressFromPrivateKey('invalidKey')
-        }).toThrow(testData.INVALID_PRIVATE_KEY_ERROR)
-      })
+      if (!options?.skipInvalid) {
+        it('invalid private key', () => {
+          expect(() => {
+            sdk.generateAddressFromPrivateKey('invalidKey')
+          }).toThrow(testData.INVALID_PRIVATE_KEY_ERROR)
+        })
+      }
     })
 
     describe('testnet', () => {
@@ -172,11 +178,13 @@ export const walletTestFactory = {
         expect(address100).toBe(testData.TESTNET.ADDRESS_100)
       })
 
-      it('invalid private key', () => {
-        expect(() => {
-          sdk.generateAddressFromPrivateKey('invalidKey', { testnet: true })
-        }).toThrow(testData.INVALID_PRIVATE_KEY_ERROR)
-      })
+      if (!options?.skipInvalid) {
+        it('invalid private key', () => {
+          expect(() => {
+            sdk.generateAddressFromPrivateKey('invalidKey', { testnet: true })
+          }).toThrow(testData.INVALID_PRIVATE_KEY_ERROR)
+        })
+      }
     })
   },
 }

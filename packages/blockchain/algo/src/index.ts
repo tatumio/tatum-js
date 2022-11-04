@@ -3,3 +3,4 @@ export type AlgoApiCallsType = {
 }
 
 export * from './lib/algo.sdk'
+export * from './lib/services'

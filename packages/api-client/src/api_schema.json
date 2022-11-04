@@ -21100,7 +21100,7 @@
                   "chain": {
                     "type": "string",
                     "example": "SOL",
-                    "enum": ["BSC", "ETH", "KLAY", "ONE", "CELO", "MATIC", "SOL", "LTC", "BTC", "TRON"]
+                    "enum": ["BSC", "ETH", "KLAY", "ONE", "CELO", "MATIC", "SOL", "LTC", "BTC"]
                   }
                 },
                 "required": ["chain"]
@@ -21363,8 +21363,7 @@
                   { "$ref": "#/components/schemas/DeployNftCeloKMS" },
                   { "$ref": "#/components/schemas/DeployNftTronKMS" },
                   { "$ref": "#/components/schemas/DeployNftFlowPK" },
-                  { "$ref": "#/components/schemas/DeployNftFlowMnemonic" },
-                  { "$ref": "#/components/schemas/DeployNftFlowKMS" }
+                  { "$ref": "#/components/schemas/DeployNftFlowMnemonic" }
                 ]
               }
             }
@@ -21705,6 +21704,7 @@
                   { "$ref": "#/components/schemas/BurnNftTron" },
                   { "$ref": "#/components/schemas/BurnNftKMSTron" },
                   { "$ref": "#/components/schemas/BurnNftKMS" },
+                  { "$ref": "#/components/schemas/BurnNftAlgoKMS" },
                   { "$ref": "#/components/schemas/BurnNftFlowPK" },
                   { "$ref": "#/components/schemas/BurnNftFlowMnemonic" },
                   { "$ref": "#/components/schemas/BurnNftFlowKMS" }
@@ -36238,6 +36238,12 @@
             "format": "uuid",
             "example": "1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6",
             "type": "string"
+          },
+          "index": {
+            "description": "(Only if the signature ID is mnemonic-based and you run KMS v6.2 or later) The index of the address to send the assets from that was generated from the mnemonic",
+            "type": "number",
+            "minimum": 0,
+            "maximum": 2147483647
           }
         },
         "required": ["txData"],
@@ -61057,7 +61063,7 @@
             "type": "string"
           }
         },
-        "required": ["account", "address", "privateKey", "currency", "amount"]
+        "required": ["account", "address", "to", "privateKey", "currency", "amount"]
       },
       "FlowTransactionKMS": {
         "type": "object",
@@ -61096,7 +61102,7 @@
             "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
           }
         },
-        "required": ["account", "currency", "address", "amount", "signatureId"]
+        "required": ["account", "currency", "address", "to", "amount", "signatureId"]
       },
       "FlowTransactionMnemonic": {
         "type": "object",
@@ -61136,7 +61142,7 @@
             "description": "Index to the specific address from mnemonic."
           }
         },
-        "required": ["account", "currency", "address", "amount", "mnemonic", "index"]
+        "required": ["account", "currency", "address", "amount", "to", "mnemonic", "index"]
       },
       "FlowCustomTransactionPK": {
         "type": "object",
@@ -61530,6 +61536,13 @@
             "description": "Secret for account. Secret, or signature Id must be present.",
             "example": "37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8",
             "type": "string"
+          },
+          "weight": {
+            "description": "Weight of the key. If not set, default 1000 will be used.",
+            "example": 1000,
+            "minimum": 0,
+            "maximum": 1000,
+            "type": "number"
           }
         },
         "required": ["account", "privateKey", "publicKey"]
@@ -61561,6 +61574,13 @@
             "type": "number",
             "minimum": 0,
             "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
+          },
+          "weight": {
+            "description": "Weight of the key. If not set, default 1000 will be used.",
+            "example": 1000,
+            "minimum": 0,
+            "maximum": 1000,
+            "type": "number"
           }
         },
         "required": ["account", "publicKey", "signatureId"]
@@ -64355,12 +64375,6 @@
             "example": 6,
             "description": "Number of decimal places of this virtual currency."
           },
-          "trcType": {
-            "type": "string",
-            "example": "TRC20",
-            "description": "Type of Tron token.",
-            "enum": ["TRC10", "TRC20"]
-          },
           "basePair": {
             "description": "Base pair for virtual currency. Transaction value will be calculated according to this base pair. e.g. 1 VC_VIRTUAL is equal to 1 BTC, if basePair is set to BTC.",
             "enum": [
@@ -67009,7 +67023,7 @@
             "description": "Chain to work with.",
             "enum": ["TRON"]
           },
-          "from": {
+          "account": {
             "maxLength": 34,
             "minLength": 34,
             "description": "Blockchain address to perform transaction from",
@@ -67047,7 +67061,7 @@
             "example": 600
           }
         },
-        "required": ["chain", "name", "from", "symbol", "feeLimit", "signatureId"]
+        "required": ["chain", "name", "account", "symbol", "feeLimit", "signatureId"]
       },
       "MintMultipleNftKMSCelo": {
         "type": "object",
@@ -67148,7 +67162,7 @@
             "example": ["TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ"],
             "items": { "maxLength": 34, "minLength": 34, "type": "string" }
           },
-          "from": {
+          "account": {
             "maxLength": 34,
             "minLength": 34,
             "description": "Blockchain address to perform transaction from",
@@ -67191,7 +67205,7 @@
             "example": 600
           }
         },
-        "required": ["chain", "to", "from", "contractAddress", "feeLimit", "tokenId", "url", "signatureId"]
+        "required": ["chain", "to", "account", "contractAddress", "feeLimit", "tokenId", "url", "signatureId"]
       },
       "BurnNftCelo": {
         "type": "object",
@@ -67260,6 +67274,42 @@
           }
         },
         "required": ["chain", "contractAddress", "fromPrivateKey"]
+      },
+      "BurnNftAlgoKMS": {
+        "type": "object",
+        "properties": {
+          "chain": {
+            "type": "string",
+            "example": "ALGO",
+            "description": "The blockchain to work with",
+            "enum": ["ALGO"]
+          },
+          "contractAddress": {
+            "maxLength": 265,
+            "description": "The ID of the NFT to burn; this is the ID from the <code>assetIndex</code> parameter returned in the response body of the <a href=\"#operation/NftMintErc721\">minting call</a>",
+            "example": "116363571",
+            "type": "string"
+          },
+          "from": {
+            "maxLength": 58,
+            "minLength": 58,
+            "description": "Blockchain address to burn NFT token from",
+            "example": "TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4",
+            "type": "string"
+          },
+          "signatureId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
+            "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+          },
+          "index": {
+            "type": "number",
+            "minimum": 0,
+            "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
+          }
+        },
+        "required": ["chain", "contractAddress", "signatureId"]
       },
       "BurnNftTron": {
         "type": "object",
@@ -67353,7 +67403,7 @@
             "description": "Chain to work with.",
             "enum": ["TRON"]
           },
-          "from": {
+          "account": {
             "maxLength": 34,
             "minLength": 34,
             "description": "Blockchain address to perform transaction from",
@@ -67390,7 +67440,7 @@
             "example": 600
           }
         },
-        "required": ["chain", "feeLimit", "contractAddress", "tokenId", "signatureId", "from"]
+        "required": ["chain", "feeLimit", "contractAddress", "tokenId", "signatureId", "account"]
       },
       "BurnNftFlowPK": {
         "type": "object",
@@ -67876,37 +67926,6 @@
         },
         "required": ["chain", "account", "mnemonic", "index"]
       },
-      "DeployNftFlowKMS": {
-        "type": "object",
-        "properties": {
-          "chain": {
-            "type": "string",
-            "example": "FLOW",
-            "description": "Chain to work with.",
-            "enum": ["FLOW"]
-          },
-          "account": {
-            "type": "string",
-            "maxLength": 18,
-            "example": "0xc1b45bc27b9c61c3",
-            "minLength": 18,
-            "description": "Blockchain address of the sender account."
-          },
-          "signatureId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
-            "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
-          },
-          "index": {
-            "description": "Derivation index of sender address.",
-            "example": 0,
-            "type": "integer",
-            "maximum": 2147483647
-          }
-        },
-        "required": ["chain", "account", "signatureId"]
-      },
       "TransferNftFlowPK": {
         "type": "object",
         "properties": {
@@ -68233,7 +68252,7 @@
             "description": "Chain to work with.",
             "enum": ["TRON"]
           },
-          "from": {
+          "account": {
             "maxLength": 34,
             "minLength": 34,
             "description": "Blockchain address to perform transaction from",
@@ -68279,7 +68298,7 @@
           "chain",
           "feeLimit",
           "contractAddress",
-          "from",
+          "account",
           "tokenId",
           "signatureId",
           "cashbackValue"
@@ -68373,7 +68392,7 @@
             "description": "Chain to work with.",
             "enum": ["TRON"]
           },
-          "from": {
+          "account": {
             "maxLength": 34,
             "minLength": 34,
             "description": "Blockchain address to perform transaction from",
@@ -68417,7 +68436,7 @@
             "example": 600
           }
         },
-        "required": ["chain", "to", "contractAddress", "feeLimit", "signatureId", "tokenId", "from"]
+        "required": ["chain", "to", "contractAddress", "feeLimit", "signatureId", "tokenId", "account"]
       },
       "MintNftCelo": {
         "description": "<p>The <code>MintNftCelo</code> schema lets you mint NFTs natively on Celo and sign the transaction with your private key.<br/>For more information, see \"Minting NFTs natively on a blockchain\" in <a href=\"#operation/NftMintErc721\">Mint an NFT</a>.</p><br/>",
@@ -68704,7 +68723,7 @@
             "description": "The maximum amount to be paid as the transaction fee (in TRX)",
             "example": 600
           },
-          "from": {
+          "account": {
             "maxLength": 34,
             "minLength": 34,
             "description": "The blockchain address that will pay the fee for the transaction",
@@ -68738,7 +68757,7 @@
             "items": { "type": "string", "example": "0.5" }
           }
         },
-        "required": ["chain", "from", "to", "url", "feeLimit", "contractAddress", "signatureId", "tokenId"]
+        "required": ["chain", "account", "to", "url", "feeLimit", "contractAddress", "signatureId", "tokenId"]
       },
       "TransferNft": {
         "type": "object",
@@ -68833,6 +68852,7 @@
             "description": "Chain to work with.",
             "enum": ["ALGO"]
           },
+          "value": { "type": "string", "description": "Value to be sent.", "example": "1" },
           "to": {
             "maxLength": 58,
             "minLength": 58,
@@ -68865,6 +68885,7 @@
             "description": "Chain to work with.",
             "enum": ["ALGO"]
           },
+          "value": { "type": "string", "description": "Value to be sent.", "example": "1" },
           "to": {
             "maxLength": 58,
             "minLength": 58,
@@ -68930,6 +68951,7 @@
             "description": "Chain to work with.",
             "enum": ["ALGO"]
           },
+          "value": { "type": "string", "description": "Value to be sent.", "example": "1" },
           "from": {
             "maxLength": 58,
             "minLength": 58,
@@ -68955,6 +68977,11 @@
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+          },
+          "index": {
+            "type": "number",
+            "minimum": 0,
+            "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
           }
         },
         "required": ["to", "chain", "contractAddress", "from", "signatureId"]
@@ -69582,6 +69609,11 @@
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "The KMS identifier of the private key of the minting account; the transaction fee will be paid from this account"
+          },
+          "index": {
+            "type": "number",
+            "minimum": 0,
+            "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
           },
           "attr": {
             "type": "object",
@@ -71245,6 +71277,12 @@
             "example": "52NRXAHUDA5RKC7Q6YYJHBINGTJB7NXLUVY3CSKOBLLNLTKCN2NGPRGTN0",
             "type": "string"
           },
+          "url": {
+            "description": "The URL pointing to the metadata",
+            "example": "https://my_token_data.com",
+            "type": "string",
+            "maxLength": 256
+          },
           "fromPrivateKey": {
             "description": "Private key of Ethereum account address, from which the fee for the deployment of ERC20 will be paid. Private key, or signature Id must be present.",
             "type": "string",
@@ -71257,27 +71295,9 @@
             "minimum": 0,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
-        "required": ["chain", "name", "symbol", "address", "supply", "fromPrivateKey", "digits"]
+        "required": ["chain", "name", "symbol", "address", "supply", "fromPrivateKey", "digits", "url"]
       },
       "ChainDeployAlgoErc20KMS": {
         "type": "object",
@@ -71325,11 +71345,24 @@
             "type": "number"
           },
           "address": {
-            "description": "Address on Ethereum blockchain, where all created ERC20 tokens will be transferred.",
+            "description": "Address on the blockchain, where all created ERC20 tokens will be transferred.",
             "maxLength": 58,
-            "minLength": 42,
+            "minLength": 58,
             "example": "52NRXAHUDA5RKC7Q6YYJHBINGTJB7NXLUVY3CSKOBLLNLTKCN2NGPRGTN0",
             "type": "string"
+          },
+          "from": {
+            "maxLength": 58,
+            "minLength": 58,
+            "description": "Blockchain address to create token from",
+            "example": "TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4",
+            "type": "string"
+          },
+          "url": {
+            "description": "The URL pointing to the metadata",
+            "example": "https://my_token_data.com",
+            "type": "string",
+            "maxLength": 256
           },
           "signatureId": {
             "type": "string",
@@ -71337,32 +71370,19 @@
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
           },
+          "index": {
+            "type": "number",
+            "minimum": 0,
+            "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
+          },
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "Nonce to be set to the transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
-        "required": ["chain", "name", "symbol", "address", "supply", "signatureId", "digits"]
+        "required": ["chain", "name", "symbol", "address", "supply", "signatureId", "digits", "url"]
       },
       "ChainDeployCeloErc20": {
         "type": "object",
@@ -72054,7 +72074,7 @@
             "type": "string",
             "example": "ETH",
             "description": "Chain to work with.",
-            "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE", "ALGO"]
+            "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "amount": {
             "description": "Amount of tokens to be destroyed.",
@@ -72110,7 +72130,7 @@
             "type": "string",
             "example": "ETH",
             "description": "Chain to work with.",
-            "enum": ["ETH", "BSC", "XDC", "ALGO"]
+            "enum": ["ETH", "BSC", "XDC"]
           },
           "amount": {
             "description": "Amount of tokens to be destroyed.",
@@ -72445,6 +72465,13 @@
             "example": "TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4",
             "type": "string"
           },
+          "from": {
+            "maxLength": 58,
+            "minLength": 58,
+            "description": "Blockchain address to send ERC20 token from",
+            "example": "NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y",
+            "type": "string"
+          },
           "amount": {
             "description": "Amount to be sent.",
             "example": "100000",
@@ -72464,12 +72491,10 @@
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
           },
-          "from": {
-            "maxLength": 58,
-            "minLength": 42,
-            "description": "Blockchain address to send ERC20 token to",
-            "example": "NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y",
-            "type": "string"
+          "index": {
+            "type": "number",
+            "minimum": 0,
+            "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
           }
         },
         "required": ["chain", "currency", "to", "contractAddress", "signatureId", "amount", "from"]

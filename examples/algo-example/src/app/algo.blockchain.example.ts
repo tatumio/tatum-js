@@ -11,7 +11,7 @@ export async function algoBlockchainExample() {
 
   // Get block by block round number
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGetBlock
-  const roundNumber = 16775567
+  const roundNumber = currentBlock - 100
   const block = await algoSDK.blockchain.getBlock(roundNumber)
   console.log(`Timestamp in block ${roundNumber} is ${block.timestamp}.`)
 

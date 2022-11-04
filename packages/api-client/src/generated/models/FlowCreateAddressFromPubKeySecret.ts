@@ -15,4 +15,8 @@ export type FlowCreateAddressFromPubKeySecret = {
      * Secret for account. Secret, or signature Id must be present.
      */
     privateKey: string;
+    /**
+     * Weight of the key. If not set, default 1000 will be used.
+     */
+    weight?: number;
 }

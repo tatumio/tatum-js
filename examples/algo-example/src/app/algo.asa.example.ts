@@ -15,7 +15,8 @@ export async function algoAsaExample() {
   const to = recipientAddress.address
 
   // FUND YOUR ACCOUNT WITH ALGOs FROM https://bank.testnet.algorand.network/
-
+  // @TODO: allow after release new version
+  /*
   // create ASA (erc20 fungible token) transaction
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy
   const mintedAsa = (await algoSDK.token.fungible.send.createFTSignedTransaction({
@@ -53,4 +54,6 @@ export async function algoAsaExample() {
     fromPrivateKey,
   })) as TransactionHash
   console.log(`Burned ASA token/s with transaction ID ${burnedAsa.txId}`)
+
+// */
 }
