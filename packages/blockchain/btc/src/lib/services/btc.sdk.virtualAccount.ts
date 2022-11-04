@@ -2,9 +2,9 @@ import { ApiServices, TransferBtcKeyPair, TransferBtcKMS, TransferBtcMnemonic } 
 import { abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain } from '@tatumio/shared-core'
 
-export const virtualAccountService = (args: { blockchain: Blockchain }) => {
+export const btcVirtualAccountService = () => {
   return {
-    ...abstractBlockchainVirtualAccount(args),
+    ...abstractBlockchainVirtualAccount({ blockchain: Blockchain.BTC }),
     send: async (body: TransferBtcMnemonic | TransferBtcKeyPair | TransferBtcKMS) =>
       ApiServices.offChain.blockchain.btcTransfer(body),
   }

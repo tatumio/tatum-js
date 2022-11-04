@@ -2,9 +2,9 @@ import { ApiServices, TransferLtcKeyPair, TransferLtcKMS, TransferLtcMnemonic } 
 import { abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain } from '@tatumio/shared-core'
 
-export const virtualAccountService = (args: { blockchain: Blockchain }) => {
+export const ltcVirtualAccountService = () => {
   return {
-    ...abstractBlockchainVirtualAccount(args),
+    ...abstractBlockchainVirtualAccount({ blockchain: Blockchain.LTC }),
     send: async (body: TransferLtcMnemonic | TransferLtcKeyPair | TransferLtcKMS) =>
       ApiServices.offChain.blockchain.ltcTransfer(body),
   }
