@@ -10,10 +10,6 @@ export async function ltcVirtualAccountExample() {
   // Generate a blockchain address from xpub (for the plainAccount)
   const plainAccountAddress = ltcSDK.wallet.generateAddressFromXPub(plainXpub, 1, { testnet: true })
 
-  // Generate PrivateKey from Mnemonic with a given index
-  // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcGenerateAddressPrivateKey
-  const privateKey = await ltcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
-
   // Create an account with xpub and without xpub
   // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccount
   const xpubAccount = await ltcSDK.ledger.account.create({
@@ -38,26 +34,6 @@ export async function ltcVirtualAccountExample() {
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
   const address = await ltcSDK.virtualAccount.depositAddress.create(xpubAccount.id, 1)
   console.log(`Deposit address: ${JSON.stringify(address)}`)
-
-  // Fund your address here: http://testnet.litecointools.com/
-  console.log(`Fund me ${address.address} to send virtual account transaction!`)
-
-  // If you have funds on account - you can transfer it to another bch address
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/LtcTransfer
-  const result = await ltcSDK.virtualAccount.send({
-    senderAccountId: xpubAccount.id,
-    address: 'xxxxxxxxx',
-    amount: '1',
-    keyPair: [
-      {
-        address: address.address,
-        privateKey: privateKey,
-      },
-    ],
-    fee: '0.1',
-    attr: address.address,
-  })
-  console.log(result)
 
   // Create multiple deposit addresses for an account and derivation index
   // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccountBatch
@@ -92,6 +68,9 @@ export async function ltcVirtualAccountExample() {
   // Remove a deposit address from an account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/removeAddress
   await ltcSDK.virtualAccount.depositAddress.remove(plainAccount.id, plainAccountAddress)
+
+  // Fund your address here: http://testnet.litecointools.com/
+  console.log(`Fund me ${address.address} to send virtual account transaction!`)
 
   // Send assets from virtualAccount to blockchain address
   // This example requires a funded blockchain address, you can top up your testnet balance with https://testnet-faucet.com/ltc-testnet/
