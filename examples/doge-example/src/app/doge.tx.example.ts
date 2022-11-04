@@ -1,8 +1,7 @@
 import { DogeTransactionUTXO } from '@tatumio/api-client'
 import { TatumDogeSDK } from '@tatumio/doge'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const dogeSDK = TatumDogeSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const dogeSDK = TatumDogeSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function dogeTransactionsExample() {
   // Prepare unspent output information first.
@@ -23,6 +22,8 @@ export async function dogeTransactionsExample() {
 
   const fee = '0.00001'
   const changeAddress = address // we expect to receive change from transaction to sender address back
+
+  const options = { testnet: true }
 
   // Transaction - prepare tx to be sent and get compiled and signed transaction that can be broadcast
   const txData = await dogeSDK.transaction.prepareSignedTransaction(
@@ -45,7 +46,7 @@ export async function dogeTransactionsExample() {
       fee: fee,
       changeAddress: changeAddress,
     } as DogeTransactionUTXO,
-    { testnet: true },
+    options,
   )
 
   // Transaction - send to blockchain
@@ -71,6 +72,6 @@ export async function dogeTransactionsExample() {
       fee: fee,
       changeAddress: changeAddress,
     } as DogeTransactionUTXO,
-    { testnet: true },
+    options,
   )
 }
