@@ -207,13 +207,14 @@ export const btcBasedTransactions = (
 
   const validateBalanceFromAddress = async (body: BtcFromAddressTypes | LtcFromAddressTypes) => {
     // get all addresses balances
-    const balances = await Promise.all(body.fromAddress.map((a) => apiCalls.getBalanceOfAddress(a.address))) //TODO concurrent req
+    const balances: BtcBasedBalance[] = []
+    for (const fromAddress of body.fromAddress) {
+      balances.push(await apiCalls.getBalanceOfAddress(fromAddress.address))
+    }
 
-    const totalBalance = balances.reduce(
-      (sum: BigNumber, balance: BtcBasedBalance) =>
-        sum.plus(new BigNumber(balance.incoming || 0).minus(new BigNumber(balance.outgoing || 0))),
-      new BigNumber(0),
-    )
+    const totalBalance = balances.reduce((sum: BigNumber, balance: BtcBasedBalance) => {
+      return sum.plus(new BigNumber(balance.incoming || 0).minus(new BigNumber(balance.outgoing || 0)))
+    }, new BigNumber(0))
 
     // get total (slower) fee
     const totalFee = body.fee ? new BigNumber(body.fee) : await getEstimateFeeFromAddress(body)
