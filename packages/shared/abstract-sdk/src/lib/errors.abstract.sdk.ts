@@ -100,7 +100,6 @@ export enum SdkErrorCode {
   TX_NOT_FOUND = 'tx.not.found',
   BTC_BASED_AMOUNT = 'btc-based.validation.amount',
   BTC_BASED_MISSING_PRIVATE_KEY = 'btc-based.validation.private-key.missing',
-  BTC_BASED_INSUFFICIENT_FEE = 'btc-based.validation.insufficient-fee',
 
   VALIDATION_AMOUNT = 'validation.amount',
   SECRET_CHECKSUM = 'validation.secret.checksum',

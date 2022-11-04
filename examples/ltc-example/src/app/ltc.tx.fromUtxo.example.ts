@@ -24,6 +24,8 @@ export async function ltcFromUtxoTransactionsExample() {
   const fee = '0.00001'
   const changeAddress = address // we expect to receive change from transaction to sender address back
 
+  const options = { testnet: true }
+
   // Transaction - prepare tx to be sent and get compiled and signed transaction that can be broadcast
   const txData = await ltcSDK.transaction.prepareSignedTransaction(
     {
@@ -43,7 +45,7 @@ export async function ltcFromUtxoTransactionsExample() {
       fee: fee,
       changeAddress: changeAddress,
     } as LtcTransactionUTXO,
-    { testnet: true },
+    options,
   )
 
   // Transaction - send to blockchain
@@ -67,6 +69,6 @@ export async function ltcFromUtxoTransactionsExample() {
       fee: fee,
       changeAddress: changeAddress,
     } as LtcTransactionUTXO,
-    { testnet: true },
+    options,
   )
 }

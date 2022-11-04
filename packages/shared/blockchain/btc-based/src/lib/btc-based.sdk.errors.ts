@@ -17,7 +17,6 @@ export type BtcBasedSdkErrorCode =
   | SdkErrorCode.BTC_FEE_IS_TOO_LARGE
   | SdkErrorCode.BTC_BASED_AMOUNT
   | SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY
-  | SdkErrorCode.BTC_BASED_INSUFFICIENT_FEE
 
 export class BtcBasedSdkError extends SdkError {
   constructor(error: Error | BtcBasedSdkErrorCode, messageArgs?: SdkMessageArgs) {

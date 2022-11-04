@@ -7,13 +7,11 @@ export const btcTransactions = (
     getTxByAddress: typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
     getUtxo: typeof ApiServices.blockchain.bitcoin.btcGetUtxo
     broadcast: typeof ApiServices.blockchain.bitcoin.btcBroadcast
-    getBalanceOfAddress: typeof ApiServices.blockchain.bitcoin.btcGetBalanceOfAddress
     estimateFee: typeof BlockchainFeesService.estimateFeeBlockchain
   } = {
     getTxByAddress: ApiServices.blockchain.bitcoin.btcGetTxByAddress,
     getUtxo: ApiServices.blockchain.bitcoin.btcGetUtxo,
     broadcast: ApiServices.blockchain.bitcoin.btcBroadcast,
-    getBalanceOfAddress: ApiServices.blockchain.bitcoin.btcGetBalanceOfAddress,
     estimateFee: BlockchainFeesService.estimateFeeBlockchain,
   },
 ): BtcBasedTx<BtcTransactionTypes> => {
