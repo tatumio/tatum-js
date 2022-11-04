@@ -11,13 +11,18 @@ const headers = (xApiKey: string) => ({
   },
 })
 
-const post = async <T extends object, U, V>(xApiKey: string, url: string, body?: U): Promise<V> => {
-  const { data } = await httpHelper.post(`${baseUrl()}${url}`, body, headers(xApiKey))
+const post = async <T extends object, U, V>(
+  xApiKey: string,
+  url: string,
+  targetUrl?: string,
+  body?: U,
+): Promise<V> => {
+  const { data } = await httpHelper.post(`${targetUrl ?? baseUrl()}${url}`, body, headers(xApiKey))
   return data
 }
 
-const get = async <T>(xApiKey: string, url: string): Promise<T> => {
-  const { data } = await httpHelper.get(`${baseUrl()}${url}`, headers(xApiKey))
+const get = async <T>(xApiKey: string, url: string, targetUrl?: string): Promise<T> => {
+  const { data } = await httpHelper.get(`${targetUrl ?? baseUrl()}${url}`, headers(xApiKey))
   return data
 }
 
@@ -25,14 +30,14 @@ const get = async <T>(xApiKey: string, url: string): Promise<T> => {
 export const flowBlockchain = (args: SDKArguments) => {
   return {
     getSignKey: async (isPayer: boolean): Promise<{ keyId: number; address: string }> =>
-      get(args.apiKey, `/v3/flow/proposal/${isPayer}`),
+      get(args.apiKey, `/v3/flow/proposal/${isPayer}`, args.url),
     signWithKey: async (data: string, isPayer: boolean): Promise<{ signature: string }> =>
-      post(args.apiKey, '/v3/flow/sign', { data, isPayer }),
+      post(args.apiKey, '/v3/flow/sign', args.url, { data, isPayer }),
     broadcast: async (
       txData: string,
       signatureId?: string,
       proposalKey?: number,
     ): Promise<{ txId: string; failed?: boolean }> =>
-      post(args.apiKey, '/v3/flow/broadcast', { txData, signatureId, proposalKey }),
+      post(args.apiKey, '/v3/flow/broadcast', args.url, { txData, signatureId, proposalKey }),
   }
 }
