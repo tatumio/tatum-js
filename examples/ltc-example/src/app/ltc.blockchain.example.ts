@@ -36,10 +36,13 @@ export async function ltcBlockchainExample() {
 
   // Get LTC transactions by address. Returns a list of transactions assigned to an address.
   // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcGetTxByAddress
-  const txByAddress = await ltcSDK.blockchain.getTxForAccount('2MsM67NLa71fHvTUBqNENW15P68nHB2vVXb', 50)
+  const txByAddress = await ltcSDK.blockchain.getTransactionsByAddress(
+    '2MsM67NLa71fHvTUBqNENW15P68nHB2vVXb',
+    50,
+  )
   console.log(`TX By Address: ${JSON.stringify(txByAddress)}`)
 
-  // Get LTC account balance. Returns incomign and outgoing balance of an LTC address.
+  // Get LTC account balance. Returns incoming and outgoing balance of an LTC address.
   // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcGetBalanceOfAddress
   const balance = await ltcSDK.blockchain.getBlockchainAccountBalance('2MsM67NLa71fHvTUBqNENW15P68nHB2vVXb')
   console.log(`Account balance: ${JSON.stringify(balance)}`)

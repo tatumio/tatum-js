@@ -1,95 +1,88 @@
 import { TatumBtcSDK } from '@tatumio/btc'
 
 export async function btcVirtualAccountExample() {
-  // Virtual account example
-  // We will receive assets on account and withdraw it
-  // More info here: https://docs.tatum.io/guides/ledger-and-off-chain
-
   const btcSDK = TatumBtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-  // if you don't already have a wallet, address and private key - generate them
-  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGenerateWallet
-  const { mnemonic, xpub } = await btcSDK.wallet.generateWallet()
+  // Create an extended public key
+  const { mnemonic, xpub } = await btcSDK.wallet.generateWallet(undefined, { testnet: true })
+  const { xpub: plainXpub } = await btcSDK.wallet.generateWallet(undefined, { testnet: true })
 
-  // Generate PrivateKey from Mnemonic with a given index
-  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGenerateAddressPrivateKey
-  const privateKey = await btcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  // Generate a blockchain address from xpub (for the plainAccount)
+  const plainAccountAddress = btcSDK.wallet.generateAddressFromXPub(plainXpub, 1, { testnet: true })
 
-  // Generate Address from xpub with a given index
-  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGenerateAddress
-  const to = btcSDK.wallet.generateAddressFromXPub(xpub, 1)
-
-  // Generate new virtual account for BTC with specific blockchain address
+  // Create an account with xpub and without xpub
   // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccount
-  const virtualAccount = await btcSDK.ledger.account.create({
+  const xpubAccount = await btcSDK.ledger.account.create({
     currency: 'BTC',
-    xpub: xpub,
+    xpub,
   })
-  console.log(JSON.stringify(virtualAccount))
+  console.log(`Created xpub account: ${JSON.stringify(xpubAccount)}`)
+  const plainAccount = await btcSDK.ledger.account.create({
+    currency: 'BTC',
+  })
+  console.log(`Created account: ${JSON.stringify(plainAccount)}`)
 
-  // Create a deposit address for a virtual account
+  // Check if an account exists
+  try {
+    const account = await btcSDK.virtualAccount.depositAddress.checkExists(xpubAccount.id)
+    console.log(`Account: ${JSON.stringify(account)}`)
+  } catch (e) {
+    console.log(`Account: ${e.message}`)
+  }
+
+  // Create a deposit address for an account and derivation index
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
-  const address = await btcSDK.virtualAccount.depositAddress.create(virtualAccount.id, 1)
-  console.log(address)
+  const address = await btcSDK.virtualAccount.depositAddress.create(xpubAccount.id, 1)
+  console.log(`Deposit address: ${JSON.stringify(address)}`)
 
-  // Fund your address here: https://testnet-faucet.mempool.co/
-  console.log(`Fund me ${address.address} to send virtual account transaction!`)
-
-  // If you have funds on account - you can transfer it to another bch address
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/BtcTransfer
-  const result = await btcSDK.virtualAccount.send({
-    senderAccountId: virtualAccount.id,
-    address: 'xxxxxxxxx',
-    amount: '1',
-    keyPair: [
-      {
-        address: address.address,
-        privateKey: privateKey,
-      },
-    ],
-    fee: '0.1',
-    attr: address.address,
-  })
-  console.log(result)
-
-  // Check whether a blockchain address is assigned to a virtual account
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/addressExists
-  const account = await btcSDK.virtualAccount.depositAddress.checkExists(address.address)
-  console.log(account)
-
-  //Create multiple deposit addresses for a virtual account
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddressesBatch
+  // Create multiple deposit addresses for an account and derivation index
+  // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccountBatch
   const addresses = await btcSDK.virtualAccount.depositAddress.createMultiple({
     addresses: [
       {
-        accountId: virtualAccount.id,
-        derivationKey: 0,
+        accountId: xpubAccount.id,
+        derivationKey: 2,
       },
       {
-        accountId: virtualAccount.id,
-        derivationKey: 1,
+        accountId: xpubAccount.id,
+        derivationKey: 3,
       },
     ],
   })
-  console.log(addresses)
+  console.log(`Deposit addresses: ${JSON.stringify(addresses)}`)
 
-  // Assign a blockchain address to a virtual account
+  // Assign a given deposit address to a given account (non-xpub account is mandatory)
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/assignAddress
   const assignedAddress = await btcSDK.virtualAccount.depositAddress.assign(
-    '5e6be8e9e6aa436299950c41',
-    '7c21ed165e294db78b95f0f181086d6f',
+    plainAccount.id,
+    plainAccountAddress,
+    1,
   )
-  console.log(assignedAddress)
+  console.log(`Assign address: ${JSON.stringify(assignedAddress)}`)
 
-  // Get all deposit addresses for a virtual account
+  // Get all deposit addresses for an account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/getAllDepositAddresses
-  const addressByAccount = await btcSDK.virtualAccount.depositAddress.getByAccount(virtualAccount.id)
-  console.log(addressByAccount)
+  const addressByAccount = await btcSDK.virtualAccount.depositAddress.getByAccount(xpubAccount.id)
+  console.log(`Account addresses: ${JSON.stringify(addressByAccount)}`)
 
-  // Remove a deposit address from a virtual account
+  // Remove a deposit address from an account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/removeAddress
-  await btcSDK.virtualAccount.depositAddress.remove(
-    '5e6be8e9e6aa436299950c41',
-    '7c21ed165e294db78b95f0f181086d6f',
-  )
+  await btcSDK.virtualAccount.depositAddress.remove(plainAccount.id, plainAccountAddress)
+
+  // Fund your address here: http://testnet.litecointools.com/
+  console.log(`Fund me ${address.address} to send virtual account transaction!`)
+
+  // Send assets from virtualAccount to blockchain address
+  // This example requires a funded blockchain address, you can top up your testnet balance with https://testnet-faucet.com/BTC-testnet/
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/BTCTransfer
+  const transfer = await btcSDK.virtualAccount.send({
+    senderAccountId: xpubAccount.id,
+    amount: '0.0001',
+    mnemonic: mnemonic,
+    xpub: xpub,
+    address: plainAccountAddress,
+    fee: '0.00001',
+  })
+
+  console.log(JSON.stringify(transfer))
 }
