@@ -101,6 +101,11 @@ export enum SdkErrorCode {
   BTC_BASED_AMOUNT = 'btc-based.validation.amount',
   BTC_BASED_MISSING_PRIVATE_KEY = 'btc-based.validation.private-key.missing',
   BTC_BASED_WRONG_BODY = 'btc-based.validation.body.wrong-body',
+  BTC_BASED_TX_PREPARATION_UTXO = 'transaction.preparation.failed.utxo',
+  BTC_BASED_DESTINATION_LESS_THAN_ZERO = 'transaction.preparation.destination.less.than.zero',
+  BTC_BASED_MNEMONIC_OR_KEYPAIR_EXPECTED = 'transaction.preparation.mnemonic.or.keypair.not.present',
+  BTC_BASED_TX_FAILED = 'transaction.preparation.failed',
+  BTC_BASED_BLOCKCHAIN_ERROR = 'transaction.preparation.blockchain.error',
 
   VALIDATION_AMOUNT = 'validation.amount',
   SECRET_CHECKSUM = 'validation.secret.checksum',

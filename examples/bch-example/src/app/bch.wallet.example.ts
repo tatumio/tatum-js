@@ -5,7 +5,7 @@ export async function bchWalletExample() {
 
   // Generate wallet
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateWallet
-  const { mnemonic, xpub } = await bchSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await bchSDK.wallet.generateWallet(null, { testnet: true })
   console.log(`Mnemonic: ${mnemonic} - xpub: ${xpub}`)
 
   // Generate Address from xpub with a given index

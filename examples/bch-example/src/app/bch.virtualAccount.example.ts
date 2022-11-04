@@ -9,15 +9,18 @@ export async function bchVirtualAccountExample() {
 
   // if you don't already have a wallet, address and private key - generate them
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateWallet
-  const { mnemonic, xpub } = await bchSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await bchSDK.wallet.generateWallet(null, { testnet: true })
+  console.log(`Mnemonic: ${mnemonic} - xpub: ${xpub}`)
 
   // Generate PrivateKey from Mnemonic with a given index
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddressPrivateKey
-  const privateKey = await bchSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const privateKey = await bchSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
+  console.log('privateKey: ', privateKey)
 
   // Generate Address from xpub with a given index
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddress
-  const to = bchSDK.wallet.generateAddressFromXPub(xpub, 1)
+  const to = bchSDK.wallet.generateAddressFromXPub(xpub, 0, { testnet: true })
+  console.log('address:', to)
 
   // Generate new virtual account for BCH with specific blockchain address
   // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccount
@@ -25,30 +28,45 @@ export async function bchVirtualAccountExample() {
     currency: 'BCH',
     xpub: xpub,
   })
-  console.log(JSON.stringify(virtualAccount))
+  console.log('account', JSON.stringify(virtualAccount))
 
   // Create a deposit address for a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
   const address = await bchSDK.virtualAccount.depositAddress.create(virtualAccount.id)
-  console.log(address)
+  console.log('account address', address)
 
   // Fund your address here: https://faucet.fullstack.cash/
-  console.log(`Fund me ${address.address} to send virtual account transaction!`)
+  console.log(
+    `Fund me here (https://faucet.fullstack.cash/) for address: ${address.address} to send virtual account transaction!`,
+  )
 
   // If you have funds on account - you can transfer it to another bch address
+  // Using keyPair - addresses which are used as a source of the transaction are entered manually
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/BchTransfer
-  const result = await bchSDK.virtualAccount.send({
+  const resultKeyPair = await bchSDK.virtualAccount.send(true, {
     senderAccountId: virtualAccount.id,
     address: 'xxxxxxxxx',
-    amount: '1',
+    amount: '0.001',
     keyPair: [
       {
         address: address.address,
         privateKey: privateKey,
       },
     ],
-    fee: '0.1',
+    fee: '0.0005',
     attr: address.address,
+  })
+  console.log(resultKeyPair)
+
+  // If you have funds on account - you can transfer it to another bch address
+  // Using mnemonic - all of the addresses, that are generated from the mnemonic are scanned for the incoming deposits which are used as a source of the transaction.
+  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/BchTransfer
+  const result = await bchSDK.virtualAccount.send(true, {
+    senderAccountId: virtualAccount.id,
+    address: 'xxxxxxx',
+    amount: '0.001',
+    mnemonic: mnemonic,
+    xpub: xpub,
   })
   console.log(result)
 
@@ -76,7 +94,7 @@ export async function bchVirtualAccountExample() {
   // Assign a blockchain address to a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/assignAddress
   const assignedAddress = await bchSDK.virtualAccount.depositAddress.assign(
-    '5e6be8e9e6aa436299950c41',
+    virtualAccount.id,
     '7c21ed165e294db78b95f0f181086d6f',
   )
   console.log(assignedAddress)
@@ -88,8 +106,5 @@ export async function bchVirtualAccountExample() {
 
   // Remove a deposit address from a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/removeAddress
-  await bchSDK.virtualAccount.depositAddress.remove(
-    '5e6be8e9e6aa436299950c41',
-    '7c21ed165e294db78b95f0f181086d6f',
-  )
+  await bchSDK.virtualAccount.depositAddress.remove(virtualAccount.id, '7c21ed165e294db78b95f0f181086d6f')
 }

@@ -18,19 +18,22 @@ export async function bchBlockchainExample() {
 
   // Get Bitcoin Cash Block hash. Returns hash of the block to get the block detail.
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGetBlockHash
-  const hash = await bchSDK.blockchain.getBlockHash(1580117)
+  const hash = await bchSDK.blockchain.getBlockHash(1525101)
   console.log(hash)
 
   // Get Bitcoin Cash Transaction by transaction hash.
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGetRawTransaction
   const tx = await bchSDK.blockchain.getTransaction(
-    '1451692ebbfbea1a2d2ec6fe6782596b6aa2e46c0589d04c406f491b5b46bc6a',
+    '30956fb1c4a9e45996a22e2b98c31baffd75f896c53c2945302e85801d4cf889',
   )
   console.log(tx)
 
   // Get Bitcoin Cash Transactions by address
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGetTxByAddress
-  const txByAddress = await bchSDK.blockchain.getTxForAccount('2MsM67NLa71fHvTUBqNENW15P68nHB2vVXb', 50)
+  const txByAddress = await bchSDK.blockchain.getTxForAccount(
+    'bchtest:qr5rrwc8nw59awgpxaemwq37arzg9f303u9fp2ws65',
+    50,
+  )
   console.log(txByAddress)
 
   // Send BCH to blockchain addresses.
