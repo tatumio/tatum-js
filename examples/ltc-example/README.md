@@ -55,9 +55,13 @@ You can find examples [here](./src/app/ltc.balance.example.ts).
 
 You can find examples [here](./src/app/ltc.blockchain.example.ts).
 
-### How to send native transactions to another wallet
+### How to send native transactions using address to another wallet
 
-You can find examples [here](./src/app/ltc.tx.example.ts).
+You can find examples [here](./src/app/ltc.tx.fromAddress.example.ts).
+
+### How to send native transactions using utxo to another wallet
+
+You can find examples [here](./src/app/ltc.tx.fromUtxo.example.ts).
 
 ### How to setup webhooks
 

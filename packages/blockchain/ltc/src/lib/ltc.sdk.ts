@@ -23,7 +23,6 @@ export const TatumLtcSDK = (args: SDKArguments) => {
       getBlockchainAccountBalance: LitecoinService.ltcGetBalanceOfAddress,
       getTxForAccount: LitecoinService.ltcGetTxByAddress,
       getTransaction: LitecoinService.ltcGetRawTransaction,
-      send: LitecoinService.ltcTransferBlockchain,
       estimateFee: BlockchainFeesService.estimateFeeBlockchain,
     },
     virtualAccount: ltcVirtualAccountService(),

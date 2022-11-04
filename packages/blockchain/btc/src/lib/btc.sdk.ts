@@ -23,7 +23,6 @@ export const TatumBtcSDK = (args: SDKArguments) => {
       getBlockchainAccountBalance: BitcoinService.btcGetBalanceOfAddress,
       getTransaction: BitcoinService.btcGetRawTransaction,
       getTransactionsByAddress: BitcoinService.btcGetTxByAddress,
-      sendTransaction: BitcoinService.btcTransferBlockchain,
       estimateFee: BlockchainFeesService.estimateFeeBlockchain,
     },
     virtualAccount: btcVirtualAccountService(),
