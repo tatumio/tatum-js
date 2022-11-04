@@ -22,6 +22,9 @@ export async function bscNftExpressExample() {
 
   console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
 
+  // Please note that minted tokens might not appear immediately on the blockchain so in order to execute
+  // all examples at once you should set some timeout between the calls or execute examples separately
+
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
   const deployedTransaction = await bscSDK.blockchain.smartContractGetAddress('BSC', nftMinted.txId)

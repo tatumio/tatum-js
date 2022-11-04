@@ -32,6 +32,9 @@ export async function bscMultiTokenExample(): Promise<void> {
   const contractAddress = transaction.contractAddress as string
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 
+  // Please note that minted tokens might not appear immediately on the blockchain so in order to execute
+  // all examples at once you should set some timeout between the calls or execute examples separately
+
   const multiTokenMinted = (await bscSDK.multiToken.send.mintMultiTokenTransaction({
     chain: 'BSC',
     to,

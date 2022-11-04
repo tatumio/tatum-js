@@ -8,6 +8,7 @@ export async function bscNftExample() {
   const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
   const address = bscSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
+  const tokenId = '1000'
 
   // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
   // Fund your address here: https://testnet.binance.org/faucet-smart
@@ -30,13 +31,17 @@ export async function bscNftExample() {
   // upload your file to the ipfs:
   // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
 
+  // Please note that minted tokens might not appear immediately on the blockchain so in order to execute
+  // all examples at once you should set some timeout between the calls or execute examples separately
+
   // Mint NFTs on your own smart contract
   const nftMinted = (await bscSDK.nft.mintNFT({
     chain: 'BSC',
-    tokenId: '100000',
+    tokenId,
     contractAddress,
     fromPrivateKey,
-    to,
+    // address where minted tokens will be sent
+    to: address,
     // uploaded metadata from ipfs
     url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
   })) as TransactionHash
@@ -44,7 +49,7 @@ export async function bscNftExample() {
   console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
 
   // Get NFT token metadata
-  const { data } = await bscSDK.nft.getNFTMetadataURI(Currency.BSC, contractAddress, '100000')
+  const { data } = await bscSDK.nft.getNFTMetadataURI(Currency.BSC, contractAddress, tokenId)
 
   console.log(`Token metadata: ${data}`)
 
@@ -58,7 +63,7 @@ export async function bscNftExample() {
     chain: 'BSC',
     value: '1',
     to,
-    tokenId: '1000',
+    tokenId,
     contractAddress,
     fromPrivateKey,
   })) as TransactionHash
@@ -68,7 +73,7 @@ export async function bscNftExample() {
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
   const nftBurned = (await bscSDK.nft.burnNFT({
     chain: 'BSC',
-    tokenId: '100000',
+    tokenId,
     contractAddress,
     fromPrivateKey,
   })) as TransactionHash
