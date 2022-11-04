@@ -385,7 +385,7 @@ describe('CeloSDK - tx', () => {
               tokenId: new Date().getTime().toString(),
               cashbackValue: '0.8',
               feeCurrency,
-              chain: 'CELO'
+              chain: 'CELO',
             },
             TEST_DATA.CELO?.PROVIDER,
             true,
