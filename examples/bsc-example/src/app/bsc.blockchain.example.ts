@@ -11,21 +11,21 @@ export async function bscBlockchainExample() {
     amount: '100000',
     data: '0xd983010110846765746889676f312e31372e3133856c696e7578000059afa6a38d80c35c8aa4db9aae6c8a737f8d134e5fbc896269700a2cbf50587f712aef3b3fd2527fd5cef57154ef4fe1d7ddbb3c307e981d8325f376091c1aa7264823b401',
   })
-  console.log(`Gas estimate: ${gasInfo}`)
+  console.log(`Gas estimate: ${JSON.stringify(gasInfo)}`)
 
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetTransaction
   const transaction = await bscSDK.blockchain.get(
     '0xfae9494fee7c168ccbb79bc6785bb343c6108f2aac38a64f0a25b5efae51d4f1',
   )
-  console.log(`Transaction: ${transaction}`)
+  console.log(`Transaction: ${JSON.stringify(transaction)}`)
 
   // Get block by hash
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetBlock
   const block = await bscSDK.blockchain.getBlock(
     '0x30454a103e3a0c94fa715eff8f73fafc19928ab7c5b3056f5fa3d667a9fb3669',
   )
-  console.log(`Block: ${block}`)
+  console.log(`Block: ${JSON.stringify(block)}`)
 
   // Get current block
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetCurrentBlock
