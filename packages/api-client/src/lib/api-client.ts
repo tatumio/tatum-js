@@ -49,15 +49,10 @@ import { OpenAPI } from '../generated/core/OpenAPI'
 
 export type TatumApiType = ReturnType<typeof TatumApi>
 
-export enum TatumUrl {
-  EU = 'https://api-eu1.tatum.io',
-  US_WEST = 'https://api-us-west1.tatum.io',
-}
-
-export type TatumUrlArg = TatumUrl | string
+export type TatumUrlArg = string
 
 export const TATUM_API_CONSTANTS = {
-  URL: TatumUrl.EU,
+  URL: 'https://api.tatum.io',
   HEADER_API_KEY: 'x-api-key',
   API_VERSION: 'v3',
   API_KEY: '',

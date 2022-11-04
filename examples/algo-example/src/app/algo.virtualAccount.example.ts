@@ -1,9 +1,10 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
 import { Currency } from '@tatumio/api-client'
-
-const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+import { sdkArguments } from '../index'
 
 export async function algoVirtualAccountExample() {
+  const algoSDK = TatumAlgoSDK(sdkArguments)
+
   // generate "from" and "to" addresses for wallets
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet
   const { address, secret } = algoSDK.wallet.generateWallet()
@@ -30,7 +31,7 @@ export async function algoVirtualAccountExample() {
 
   // Get list of all incoming transactions from virtual account
   // https://apidoc.tatum.io/tag/Transaction#operation/getTransactionsByAccountId
-  const transactions = await algoSDK.ledger.transaction.getAllByAccount({ id: virtualAccount.id })
+  const transactions = await algoSDK.ledger.transaction.getAllByAccount({ id: virtualAccount.id }, 10)
   console.log(`Transactions are ${JSON.stringify(transactions)}`)
 
   // I will send assets from virtualAccount to blockchain address

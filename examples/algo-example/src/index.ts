@@ -11,12 +11,30 @@ import { algoTxExample } from './app/algo.tx.example'
 import { algoAsaExample } from './app/algo.asa.example'
 import { algoBalanceExample } from './app/algo.balance.example'
 import { algoSubscriptionsExample } from './app/algo.subscriptions.example'
+import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 
-console.log(`Running ${algoBalanceExample()}`)
-console.log(`Running ${algoBlockchainExample()}`)
-console.log(`Running ${algoNftExample()}`)
-console.log(`Running ${algoNftExpressExample()}`)
-console.log(`Running ${algoAsaExample()}`)
-console.log(`Running ${algoVirtualAccountExample()}`)
-console.log(`Runninf ${algoTxExample()}`)
-console.log(`Running ${algoSubscriptionsExample()}`)
+export const sdkArguments: SDKArguments = {
+  apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab',
+  // url: 'https://api.tatum.io',
+}
+
+const examples = async () => {
+  console.log(`\nRunning algoBalanceExample`)
+  await algoBalanceExample()
+  console.log(`\nRunning algoBlockchainExample`)
+  await algoBlockchainExample()
+  console.log(`\nRunning algoNftExample`)
+  await algoNftExample()
+  console.log(`\nRunning algoNftExpressExample`)
+  await algoNftExpressExample()
+  console.log(`\nRunning algoAsaExample`)
+  await algoAsaExample()
+  console.log(`\nRunning algoVirtualAccountExample`)
+  await algoVirtualAccountExample()
+  console.log(`\nRunning algoTxExample`)
+  await algoTxExample()
+  console.log(`\nRunning algoSubscriptionsExample`)
+  await algoSubscriptionsExample()
+}
+
+examples()
