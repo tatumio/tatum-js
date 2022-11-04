@@ -101,7 +101,7 @@ export async function ltcVirtualAccountExample() {
     amount: '0.0001',
     mnemonic: mnemonic,
     xpub: xpub,
-    address: plainAccountAddress
+    address: plainAccountAddress,
   })
 
   console.log(JSON.stringify(transfer))
