@@ -1,24 +1,28 @@
 import { evmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import Web3 from 'web3'
-import { EvmBasedBlockchain } from '@tatumio/shared-core'
+import { EvmBasedBlockchain, httpHelper } from '@tatumio/shared-core'
+import { hexToNumber } from 'web3-utils'
 
 export const xdcWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
 
   return {
     ...evmBasedWeb3Result,
-    getClient(provider?: string, fromPrivateKey?: string): Web3 {
-      const web3 = args.client ?? evmBasedWeb3Result.getClient(provider)
-
-      if (fromPrivateKey) {
-        web3.eth.accounts.wallet.add(fromPrivateKey)
-        web3.eth.defaultAccount = web3.eth.accounts.wallet[0].address
-      }
-
-      return web3
-    },
     async getGasPriceInWei(): Promise<string> {
-      return Web3.utils.toWei('10', 'gwei')
+      const gasStationUrl = 'https://rpc.xinfin.network/'
+
+      try {
+        const { data } = await httpHelper.post(`${gasStationUrl}gasPrice`, {
+          jsonrpc: '2.0',
+          method: 'eth_gasPrice',
+          params: [],
+          id: 1,
+        })
+        const asNumber = hexToNumber(data.result)
+        return (data ? Web3.utils.toWei(`${asNumber}`, 'wei') : Web3.utils.toWei('0.25', 'gwei')).toString()
+      } catch (e) {
+        return Web3.utils.toWei('0.25', 'gwei')
+      }
     },
   }
 }

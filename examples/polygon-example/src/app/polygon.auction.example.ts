@@ -24,6 +24,7 @@ export async function polygonAuctionExample() {
     auctionFee: 100,
     feeRecipient,
     fromPrivateKey,
+    chain: 'MATIC',
   })) as TransactionHash
   console.log(`TransactionId: ${txId}`)
 
@@ -43,32 +44,37 @@ export async function polygonAuctionExample() {
 
   // Bid for asset on auction
   // https://apidoc.tatum.io/tag/Auction#operation/BidOnAuction
-  const { txId: bidTransactionHash } = await polygonSDK.marketplace.auction.send.auctionBidSignedTransaction({
-    contractAddress,
-    bidder,
-    id: auctionId,
-    bidValue: '1',
-    fromPrivateKey,
-  })
+  const { txId: bidTransactionHash } = (await polygonSDK.marketplace.auction.send.auctionBidSignedTransaction(
+    {
+      contractAddress,
+      bidder,
+      id: auctionId,
+      bidValue: '1',
+      fromPrivateKey,
+      chain: 'MATIC',
+    },
+  )) as TransactionHash
   console.log(`Auction bid transaction hash: ${bidTransactionHash}`)
 
   // Cancel auction
   // https://apidoc.tatum.io/tag/Auction#operation/CancelAuction
   const { txId: cancelTransactionHash } =
-    await polygonSDK.marketplace.auction.send.auctionCancelSignedTransaction({
+    (await polygonSDK.marketplace.auction.send.auctionCancelSignedTransaction({
       contractAddress,
       id: auctionId,
       fromPrivateKey,
-    })
+      chain: 'MATIC',
+    })) as TransactionHash
   console.log(`Auction cancel transaction hash: ${cancelTransactionHash}`)
 
   // Settle auction. There must be buyer present for that auction.
   // https://apidoc.tatum.io/tag/Auction#operation/SettleAuction
   const { txId: settleTransactionHash } =
-    await polygonSDK.marketplace.auction.send.auctionSettleSignedTransaction({
+    (await polygonSDK.marketplace.auction.send.auctionSettleSignedTransaction({
       contractAddress,
       id: auctionId,
       fromPrivateKey,
-    })
+      chain: 'MATIC',
+    })) as TransactionHash
   console.log(`Auction settle transaction hash: ${settleTransactionHash}`)
 }

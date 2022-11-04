@@ -1,140 +1,80 @@
 import { TatumOneSDK } from '@tatumio/one'
-import { Currency } from '@tatumio/api-client'
+import { Currency, TransactionHash } from '@tatumio/api-client'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function oneNftExample() {
-  const metadataURI = await oneSDK.nft.getNFTMetadataURI(
-    Currency.ONE,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const provenanceData = await oneSDK.nft.getNFTProvenanceData(
-    Currency.ONE,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const royalty = await oneSDK.nft.getNFTRoyalty(
-    Currency.ONE,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const transaction = await oneSDK.nft.getNFTTransaction(
-    Currency.ONE,
-    '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
-  )
+  const { mnemonic, xpub } = await oneSDK.wallet.generateWallet()
+  const fromPrivateKey = await oneSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const account = oneSDK.wallet.generateAddressFromXPub(xpub, 0)
+  const to = oneSDK.wallet.generateAddressFromXPub(xpub, 1)
+  const tokenId = '100000'
 
-  const nftAccountBalance = await oneSDK.nft.getNFTAccountBalance(
-    Currency.ONE,
-    '0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B',
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-  )
+  // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+  // You can fund your address here: https://faucet.pops.one/
 
-  const mintedHash = await oneSDK.nft.mintNFT({
-    chain: 'ONE',
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    url: 'https://my_token_data.com',
-  })
-
-  const mintedExpressHash = await oneSDK.nft.mintNFT({
-    chain: 'ONE',
-    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    url: 'https://my_token_data.com',
-  })
-
-  const mintedWithMinterHash = await oneSDK.nft.mintNFT({
-    chain: 'ONE',
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    url: 'https://my_token_data.com',
-    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-  })
-
-  const deployHash = await oneSDK.nft.deployNFTSmartContract({
+  // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
+  const { txId } = (await oneSDK.nft.deployNFTSmartContract({
     chain: 'ONE',
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    provenance: true,
-    publicMint: true,
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+    // your private key of the address that has coins
+    fromPrivateKey,
+  })) as TransactionHash
 
-  const transferHash = await oneSDK.nft.transferNFT({
-    chain: 'ONE',
-    value: '1',
-    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    tokenId: '1000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    provenance: true,
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  console.log('Deployed nft contract with tx hash: ', txId)
 
-  const mintMultipleHash = await oneSDK.nft.mintMultipleNFTs({
-    chain: 'ONE',
-    to: ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-    tokenId: ['100000'],
-    url: ['https://my_token_data.com'],
-    authorAddresses: [['0x687422eEA2cB73B5d3e242bA5456b782919AFc85']],
-    cashbackValues: [['0.5']],
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  // find deployed contract address from transaction hash
+  // https://apidoc.tatum.io/tag/Harmony#operation/OneGetTransaction
+  const transactionData = await oneSDK.blockchain.get(txId)
+  const contractAddress = transactionData.contractAddress as string
+  console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 
-  const burnHash = await oneSDK.nft.burnNFT({
-    chain: 'ONE',
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+  // upload your file to the ipfs:
+  // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
 
-  const addMinterHash = await oneSDK.nft.addNFTMinter({
+  // Mint NFTs on your own smart contract
+  const nftMinted = (await oneSDK.nft.mintNFT({
     chain: 'ONE',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+    tokenId,
+    contractAddress,
+    fromPrivateKey,
+    to: account,
+    // uploaded metadata from ipfs
+    url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
+  })) as TransactionHash
 
-  const updateRoyaltyHash = await oneSDK.nft.updateNFTRoyalty({
+  console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
+
+  // Get NFT token metadata
+  const { data } = await oneSDK.nft.getNFTMetadataURI(Currency.ONE, contractAddress, '100000')
+
+  console.log(`Token metadata: ${data}`)
+
+  // Get all minted NFTs in the collection. Returns all NFTs this contract minted.
+  const nftAccountBalance = await oneSDK.nft.getNFTAccountBalance(Currency.ONE, account, contractAddress)
+
+  console.log(`Nfts on ${contractAddress}: ${nftAccountBalance}`)
+
+  // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
+  const nftTransferred = (await oneSDK.nft.transferNFT({
     chain: 'ONE',
-    tokenId: '100000',
-    cashbackValue: '0.1',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-  })
+    to,
+    tokenId,
+    contractAddress,
+    fromPrivateKey,
+  })) as TransactionHash
+
+  console.log(`Transfered nft with transacion hash: ${nftTransferred.txId}`)
+
+  // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
+  const nftBurned = (await oneSDK.nft.burnNFT({
+    chain: 'ONE',
+    tokenId,
+    contractAddress,
+    fromPrivateKey,
+  })) as TransactionHash
+
+  console.log(`NFT burn transaction sent with transaction ID: ${nftBurned.txId}`)
 }

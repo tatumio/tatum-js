@@ -57,53 +57,6 @@ type SendOffchainResponse =
   | { id?: string }
   | void
 
-export const prepareSignedTransaction = async (
-  body: TransferAlgo | TransferAlgoKMS | ApiTransferAlgo | ApiTransferAlgoKMS,
-  testnet = false,
-  algoWeb: AlgoWeb,
-  provider?: string,
-): Promise<string> => {
-  const algodClient = algoWeb.getClient(testnet, provider)
-  const params = await algodClient.getTransactionParams().do()
-
-  const decoder = new base32.Decoder({ type: 'rfc4648' })
-  const enc = new TextEncoder()
-  const note = enc.encode(body.senderNote ?? '')
-  const bodyn = algosdk.makePaymentTxnWithSuggestedParams(
-    body.account,
-    body.address,
-    Number(body.amount) * 1000000,
-    undefined,
-    note,
-    {
-      ...params,
-      fee: Number(body.fee || '0.001') * 1000000,
-      flatFee: true,
-    },
-  )
-
-  if (isTransferAlgoKMS(body)) {
-    return JSON.stringify(bodyn)
-  }
-
-  const secretKey = new Uint8Array(decoder.write((body as TransferAlgo).privateKey).buf)
-  const signedTxn = bodyn.signTxn(secretKey)
-
-  return Buffer.from(signedTxn).toString('hex')
-}
-
-function isTransferAlgoKMS(
-  input:
-    | TransferAlgo
-    | TransferAlgoKMS
-    | ApiTransferAlgo
-    | ApiTransferAlgoKMS
-    | ChainTransferAlgoErc20
-    | ChainTransferAlgoErc20KMS,
-): input is TransferAlgoKMS {
-  return (input as TransferAlgoKMS).signatureId !== undefined
-}
-
 export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCallsType) => {
   const prepareSignedTransaction = async (
     body: TransferAlgo | TransferAlgoKMS | ApiTransferAlgo | ApiTransferAlgoKMS,

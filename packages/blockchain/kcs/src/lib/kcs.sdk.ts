@@ -1,4 +1,4 @@
-import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
+import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
   BlockchainFeesService,
@@ -10,7 +10,6 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { kcsWeb3 } from './services/kcs.web3'
 import { kcsKmsService } from './services/kcs.kms'
 import { kcsTxService } from './services/kcs.tx'
-import { kcsAuctionService } from './services/kcs.auction'
 import { virtualAccountService } from './services/kcs.virtualAccount'
 
 const blockchain = Blockchain.KCS
@@ -63,14 +62,15 @@ export const TatumKcsSDK = (args: SDKArguments) => {
     },
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
-    marketplace: {
-      ...evmBasedMarketplace({
-        blockchain,
-        web3,
-        broadcastFunction: KuCoinService.kcsBroadcast,
-      }),
-      auction: kcsAuctionService({ blockchain, web3 }),
-    },
+    // TODO: marketplace and auctions not surpported yet
+    // marketplace: {
+    //   ...evmBasedMarketplace({
+    //     blockchain,
+    //     web3,
+    //     broadcastFunction: KuCoinService.kcsBroadcast,
+    //   }),
+    //   auction: kcsAuctionService({ blockchain, web3 }),
+    // },
     httpDriver: async (request: Web3Request): Promise<Web3Response> => {
       return api.kcsWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },
