@@ -39,8 +39,6 @@ export type BtcTransactionTypes =
   | BtcTransactionFromUTXO
   | BtcTransactionFromUTXOKMS
 
-export type FeeChange = { fee?: number; change?: string }
-
 export type LtcTransactionTypes =
   | LtcTransactionAddress
   | LtcTransactionAddressKMS
@@ -49,12 +47,12 @@ export type LtcTransactionTypes =
 
 type BtcBasedTransactionTypes = BtcTransactionTypes | LtcTransactionTypes
 
-type BtcFromAddressTypes = BtcTransactionFromAddress | BtcTransactionFromAddressKMS
+export type BtcFromAddressTypes = BtcTransactionFromAddress | BtcTransactionFromAddressKMS
 
-type LtcFromAddressTypes = LtcTransactionAddress | LtcTransactionAddressKMS
+export type LtcFromAddressTypes = LtcTransactionAddress | LtcTransactionAddressKMS
 
-type BtcFromUtxoTypes = BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS
-type LtcFromUtxoTypes = LtcTransactionUTXO | LtcTransactionUTXOKMS
+export type BtcFromUtxoTypes = BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS
+export type LtcFromUtxoTypes = LtcTransactionUTXO | LtcTransactionUTXOKMS
 
 export type BtcBasedFromWithChange = BtcTransactionFromAddress | LtcTransactionAddress
 export type BtcBasedFromWithKmsChange = BtcTransactionFromAddressKMS | LtcTransactionAddressKMS
@@ -80,13 +78,14 @@ type GetBalanceOfAddress =
 type BtcBasedTxOptions = { testnet: boolean; skipAllChecks?: boolean }
 
 export const btcBasedTransactions = (
-  currency: Currency,
+  currency: Currency.BTC | Currency.LTC,
   utils: BtcBasedWalletUtils,
   apiCalls: {
     getTxByAddress: GetTxByAddressType
     getUtxo: GetUtxoType
     broadcast: BroadcastType
     getBalanceOfAddress: GetBalanceOfAddress
+    estimateFee: typeof BlockchainFeesService.estimateFeeBlockchain
   },
   {
     createTransaction,
@@ -105,54 +104,6 @@ export const btcBasedTransactions = (
     scriptFromAddress: Script.fromAddress,
   },
 ): BtcBasedTx<BtcBasedTransactionTypes> => {
-  const getChain = (type: string): Currency => {
-    return type === 'BtcFromAddressTypes' ? Currency.BTC : Currency.LTC
-  }
-
-  const getEstimateFee = async (
-    body: BtcFromAddressTypes | LtcFromAddressTypes | BtcFromUtxoTypes | LtcFromUtxoTypes,
-  ): Promise<string> => {
-    return (
-      (
-        (await BlockchainFeesService.estimateFeeBlockchain({
-          chain: getChain(typeof body).toString(),
-          type: 'TRANSFER',
-          fromAddress: 'fromAddress' in body ? body.fromAddress.map((a) => a.address) : undefined,
-          fromUTXO:
-            'fromUTXO' in body
-              ? body.fromUTXO.map((utxo) => ({ txHash: utxo.txHash, index: utxo.index }))
-              : undefined,
-          to: body.to,
-        } as EstimateFeeFromAddress | EstimateFeeFromUTXO)) as FeeBtc
-      ).slow || ''
-    )
-  }
-
-  const validateBalanceFromAddress = async (
-    body: BtcFromAddressTypes | LtcFromAddressTypes,
-  ): Promise<boolean> => {
-    // get all addresses balances
-    const balances = await Promise.all(body.fromAddress.map((a) => apiCalls.getBalanceOfAddress(a.address)))
-
-    const totalBalance = balances.reduce(
-      (sum: BigNumber, balance: BtcBasedBalance) =>
-        sum.plus(new BigNumber(balance.incoming || 0).minus(new BigNumber(balance.outgoing || 0))),
-      new BigNumber(0),
-    )
-
-    // get total amout to transfer
-    const totalValue = body.to.reduce((sum, t) => sum.plus(new BigNumber(t.value)), new BigNumber(0))
-
-    // get total (slower) fee
-    const totalFee = new BigNumber(body.fee || (await getEstimateFee(body)))
-
-    if (totalBalance.isLessThan(totalValue.plus(totalFee))) {
-      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_INSUFFICIENT_FEE)
-    }
-
-    return true
-  }
-
   const privateKeysFromAddress = async (
     transaction: BtcBasedTransaction,
     body: BtcFromAddressTypes | LtcFromAddressTypes,
@@ -208,26 +159,6 @@ export const btcBasedTransactions = (
     }
   }
 
-  const validateBalanceFromUTXO = async (
-    body: BtcFromUtxoTypes | LtcFromUtxoTypes,
-    utxos: BtcUTXO[] | LtcUTXO[],
-  ): Promise<boolean> => {
-    // get all UTXOs balances
-    const totalBalance = utxos.reduce((sum, u) => sum.plus(new BigNumber(u.value || 0)), new BigNumber(0))
-
-    // get total (slower) fee
-    const totalFee = new BigNumber(body.fee || (await getEstimateFee(body)))
-
-    // get total amout to transfer
-    const totalValue = body.to.reduce((sum, t) => sum.plus(new BigNumber(t.value)), new BigNumber(0))
-
-    if (totalBalance.isLessThan(totalValue.plus(totalFee))) {
-      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_INSUFFICIENT_FEE)
-    }
-
-    return true
-  }
-
   const privateKeysFromUTXO = async (
     transaction: Transaction,
     body: BtcFromUtxoTypes | LtcFromUtxoTypes,
@@ -257,13 +188,13 @@ export const btcBasedTransactions = (
         else if ('privateKey' in utxoItem) privateKeysToSign.push(utxoItem.privateKey)
       }
 
-      // Validate if balance is sufficient
-      await validateBalanceFromUTXO(body, utxos)
-
       if (transaction.inputs.length === 0 && !options.skipAllChecks) {
         const utxos = body.fromUTXO.map((value) => `[${value.txHash} ${value.index}]`).join(', ')
         throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NO_INPUTS, [utxos])
       }
+
+      // Validate if balance is sufficient
+      await validateBalanceFromUTXO(body, utxos)
 
       return privateKeysToSign
     } catch (e: any) {
@@ -274,11 +205,67 @@ export const btcBasedTransactions = (
     }
   }
 
-  // TODO off for now, different address types break logic, offchain tx conflicts
-  const verifyPrivateKey = (privateKey: string, address: string, options: BtcBasedTxOptions): void => {
-    if (utils.generateAddressFromPrivateKey(privateKey, options) !== address && !options.skipAllChecks) {
-      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY)
+  const validateBalanceFromAddress = async (body: BtcFromAddressTypes | LtcFromAddressTypes) => {
+    // get all addresses balances
+    const balances = await Promise.all(body.fromAddress.map((a) => apiCalls.getBalanceOfAddress(a.address))) //TODO concurrent req
+
+    const totalBalance = balances.reduce(
+      (sum: BigNumber, balance: BtcBasedBalance) =>
+        sum.plus(new BigNumber(balance.incoming || 0).minus(new BigNumber(balance.outgoing || 0))),
+      new BigNumber(0),
+    )
+
+    // get total (slower) fee
+    const totalFee = body.fee ? new BigNumber(body.fee) : await getEstimateFeeFromAddress(body)
+
+    // get total amount to transfer
+    const totalValue = body.to.reduce((sum, t) => sum.plus(new BigNumber(t.value)), new BigNumber(0))
+
+    if (totalBalance.isLessThan(totalValue.plus(totalFee))) {
+      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_INSUFFICIENT_FEE)
     }
+  }
+
+  const validateBalanceFromUTXO = async (
+    body: BtcFromUtxoTypes | LtcFromUtxoTypes,
+    utxos: BtcUTXO[] | LtcUTXO[],
+  ) => {
+    // get all UTXOs balances
+    const totalBalance = utxos.reduce((sum, u) => sum.plus(new BigNumber(u.value ?? 0)), new BigNumber(0))
+
+    // get total (slower) fee
+    const totalFee = body.fee ? new BigNumber(body.fee) : await getEstimateFeeFromUtxo(body)
+
+    // get total amount to transfer
+    const totalValue = body.to.reduce((sum, t) => sum.plus(new BigNumber(t.value)), new BigNumber(0))
+
+    if (totalBalance.isLessThan(totalValue.plus(totalFee))) {
+      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_INSUFFICIENT_FEE)
+    }
+  }
+
+  const getEstimateFeeFromUtxo = async (body: BtcFromUtxoTypes | LtcFromUtxoTypes): Promise<BigNumber> => {
+    const fromUTXO = body.fromUTXO.map((utxo) => ({ txHash: utxo.txHash, index: utxo.index }))
+    const fee = (await apiCalls.estimateFee({
+      chain: currency,
+      type: 'TRANSFER',
+      fromUTXO,
+      to: body.to,
+    } as EstimateFeeFromUTXO)) as FeeBtc
+    return new BigNumber(fee.slow ?? 0)
+  }
+
+  const getEstimateFeeFromAddress = async (
+    body: BtcFromAddressTypes | LtcFromAddressTypes,
+  ): Promise<BigNumber> => {
+    const fromAddress = body.fromAddress.map((a) => a.address)
+    const fee = (await apiCalls.estimateFee({
+      chain: currency,
+      type: 'TRANSFER',
+      fromAddress,
+      to: body.to,
+    } as EstimateFeeFromAddress)) as FeeBtc
+    return new BigNumber(fee.slow ?? 0)
   }
 
   async function getUtxoSilent(hash: string, i: number): Promise<BtcUTXO | LtcUTXO | null> {

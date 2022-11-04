@@ -1,5 +1,5 @@
 import { Blockchain } from '@tatumio/shared-core'
-import { BitcoinService } from '@tatumio/api-client'
+import { BitcoinService, BlockchainFeesService } from '@tatumio/api-client'
 import { btcTransactions } from './transaction/btc.tx'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { btcWallet } from './btc.sdk.wallet'
@@ -24,6 +24,7 @@ export const TatumBtcSDK = (args: SDKArguments) => {
       getTransaction: BitcoinService.btcGetRawTransaction,
       getTransactionsByAddress: BitcoinService.btcGetTxByAddress,
       sendTransaction: BitcoinService.btcTransferBlockchain,
+      estimateFee: BlockchainFeesService.estimateFeeBlockchain,
     },
     virtualAccount: btcVirtualAccountService(),
   }

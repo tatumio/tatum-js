@@ -1,4 +1,4 @@
-import { ApiServices, Currency } from '@tatumio/api-client'
+import { ApiServices, BlockchainFeesService, Currency } from '@tatumio/api-client'
 import {
   btcBasedTransactions,
   BtcBasedTx,
@@ -16,12 +16,14 @@ export const ltcTransactions = (
     getRawTransaction: typeof ApiServices.blockchain.ltc.ltcGetRawTransaction
     getUtxo: typeof ApiServices.blockchain.ltc.ltcGetUtxo
     getBalanceOfAddress: typeof ApiServices.blockchain.bitcoin.btcGetBalanceOfAddress
+    estimateFee: typeof BlockchainFeesService.estimateFeeBlockchain
   } = {
     getTxByAddress: ApiServices.blockchain.ltc.ltcGetTxByAddress,
     broadcast: ApiServices.blockchain.ltc.ltcBroadcast,
     getRawTransaction: ApiServices.blockchain.ltc.ltcGetRawTransaction,
     getUtxo: ApiServices.blockchain.ltc.ltcGetUtxo,
     getBalanceOfAddress: ApiServices.blockchain.bitcoin.btcGetBalanceOfAddress,
+    estimateFee: BlockchainFeesService.estimateFeeBlockchain,
   },
 ): BtcBasedTx<LtcTransactionTypes> => {
   return {
