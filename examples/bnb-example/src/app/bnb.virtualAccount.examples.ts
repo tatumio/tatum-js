@@ -2,7 +2,7 @@ import { TatumBnbSDK } from '@tatumio/bnb'
 import { Currency } from '@tatumio/api-client'
 
 export async function bnbVirtualAccountExample() {
-  const bnbSDK = TatumBnbSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  const bnbSDK = TatumBnbSDK({ apiKey: 'PLACE-YOUR-API-KEY-HERE' })
   const wallet = bnbSDK.wallet
 
   const { address, privateKey } = await wallet().generateWallet(true)
@@ -34,7 +34,7 @@ export async function bnbVirtualAccountExample() {
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/BnbTransfer
   const result = await bnbSDK.virtualAccount.sendTransactionFromVirtualAccountToBlockchain(true, {
     senderAccountId: virtualAccount.id,
-    amount: '1',
+    amount: '0.001',
     address: to,
     attr: 'OPTIONAL_RECIPIENT_MEMO',
     fromPrivateKey: privateKey,

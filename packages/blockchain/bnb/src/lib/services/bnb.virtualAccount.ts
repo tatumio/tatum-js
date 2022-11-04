@@ -8,7 +8,7 @@ import { BnbApiCallsType } from '@tatumio/bnb'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { Blockchain } from '@tatumio/shared-core'
 
-type TransferBnbQ = FromPrivateKeyOrSignatureId<TransferBnb>
+type TransferBnbPkOrSignature = FromPrivateKeyOrSignatureId<TransferBnb>
 
 export const bnbVirtualAccountService = (args: SDKArguments, apiCalls: BnbApiCallsType) => {
   /**
@@ -17,7 +17,10 @@ export const bnbVirtualAccountService = (args: SDKArguments, apiCalls: BnbApiCal
    * @param tesnet chain to work with
    * @returns transaction id of the transaction in the blockchain or id of the withdrawal
    */
-  const sendTransactionFromVirtualAccountToBlockchain = async (testnet: boolean, body: TransferBnbQ) => {
+  const sendTransactionFromVirtualAccountToBlockchain = async (
+    testnet: boolean,
+    body: TransferBnbPkOrSignature,
+  ) => {
     const fee = '0.000075'
 
     const { id: withdrawalId } = await ApiServices.offChain.withdrawal.storeWithdrawal({ ...body, fee })
