@@ -1,5 +1,5 @@
-import { Blockchain } from '@tatumio/shared-core'
-import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
+import { PrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
+import { FlowCustomTransactionPK, TransactionHash } from '@tatumio/api-client'
 
 export interface Account {
   addr?: string
@@ -37,11 +37,18 @@ export type TransactionResult = {
   events: { data: any }[]
 }
 
-export type AccountAuthorizer = (account?: Account) => Promise<AccountAuthorization>
+export type TransactionHashWithAddress = TransactionHash & {
+  address: string
+}
 
-export type FlowFromPrivateKeyOrSignatureId<T> = FromPrivateKeyOrSignatureId<T> & {
+export type AccountAuthorizer = (account: Account) => Promise<AccountAuthorization>
+
+export type FlowPrivateKeyOrSignatureId<T extends { privateKey?: string }> = PrivateKeyOrSignatureId<T> & {
   account: string
 }
+
+// @TODO - openapi bug
+export type FixedFlowCustomTransactionPK = Omit<FlowCustomTransactionPK, 'args'> & { args: FlowArgs[] }
 
 const types = [
   'Identity',

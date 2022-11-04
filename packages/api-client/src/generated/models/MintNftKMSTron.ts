@@ -33,7 +33,7 @@ export type MintNftKMSTron = {
     /**
      * The blockchain address that will pay the fee for the transaction
      */
-    from: string;
+    account: string;
     /**
      * The KMS identifier of the private key of the blockchain address that will pay the fee for the transaction
      */

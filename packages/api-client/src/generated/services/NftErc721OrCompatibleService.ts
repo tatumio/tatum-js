@@ -18,7 +18,6 @@ import type { CeloTx } from '../models/CeloTx';
 import type { DeployNft } from '../models/DeployNft';
 import type { DeployNftCelo } from '../models/DeployNftCelo';
 import type { DeployNftCeloKMS } from '../models/DeployNftCeloKMS';
-import type { DeployNftFlowKMS } from '../models/DeployNftFlowKMS';
 import type { DeployNftFlowMnemonic } from '../models/DeployNftFlowMnemonic';
 import type { DeployNftFlowPK } from '../models/DeployNftFlowPK';
 import type { DeployNftKMS } from '../models/DeployNftKMS';
@@ -127,7 +126,7 @@ export class NftErc721OrCompatibleService {
      * @throws ApiError
      */
     public static nftDeployErc721(
-        requestBody: (DeployNft | DeployNftCelo | DeployNftTron | DeployNftKMS | DeployNftCeloKMS | DeployNftTronKMS | DeployNftFlowPK | DeployNftFlowMnemonic | DeployNftFlowKMS),
+        requestBody: (DeployNft | DeployNftCelo | DeployNftTron | DeployNftKMS | DeployNftCeloKMS | DeployNftTronKMS | DeployNftFlowPK | DeployNftFlowMnemonic),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({

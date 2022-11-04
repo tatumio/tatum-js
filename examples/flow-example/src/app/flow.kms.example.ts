@@ -1,23 +1,29 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumFlowSDK } from '@tatumio/flow'
+import { TransactionHash } from '@tatumio/api-client'
 
-const flowSDK = TatumFlowSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const flowSDK = TatumFlowSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab', testnet: true })
 
 export async function flowKmsExample() {
-  const [pendingSignatureIds] = await flowSDK.kms.getAllPending()
-  const tx = await flowSDK.kms.get(pendingSignatureIds.id)
+  // Get All pending KMS
+  // https://apidoc.tatum.io/tag/Key-Management-System#operation/GetPendingTransactionsToSign
+  const pendingSignatureIds = await flowSDK.kms.getAllPending()
+  console.log(`Pending kms transaction ${JSON.stringify(pendingSignatureIds)}`)
 
-  await flowSDK.kms.complete(pendingSignatureIds.id, pendingSignatureIds.txId!)
-  await flowSDK.kms.delete(pendingSignatureIds.id)
+  const privateKey = 'PUT YOUR PRIVATE KEY HERE'
 
-  const transaction = await flowSDK.kms.sign(
-    {
-      id: 'e11ca8f92f2d5dea7406e64ab8cb1780a8a19185d9ac670b16ca8c4f09f05add',
-      hashes: ['26d3883e-4e17-48b3-a0ee-09a3e484ac83'],
-      serializedTransaction: '3b4351560d3b454a4c1ae2485074b0786093058bfe2b28d436584311b1e433a4',
-      chain: 'FLOW',
-    },
-    ['cTmS2jBWXgFaXZ2xG9jhn67TiyTshnMp3UedamzEhGm6BZV1vLgQ'],
-    false,
-  )
+  // Get transaction by signature id
+  // https://apidoc.tatum.io/tag/Key-Management-System#operation/GetPendingTransactionsToSign
+  if (pendingSignatureIds.length > 0) {
+    const tx = await flowSDK.kms.get(pendingSignatureIds[0].id)
+    // Sign
+    const { txId } = (await flowSDK.kms.sign(tx, [privateKey])) as TransactionHash
+
+    // Complete pending transaction to sign
+    // https://apidoc.tatum.io/tag/Key-Management-System#operation/CompletePendingSignature
+    await flowSDK.kms.complete(tx.id, txId)
+
+    // Delete KMS transaction
+    // https://apidoc.tatum.io/tag/Key-Management-System#operation/DeletePendingTransactionToSign
+    await flowSDK.kms.delete(tx.id)
+  }
 }

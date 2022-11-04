@@ -10,7 +10,7 @@ export type UpdateCashbackValueForAuthorNftKMSTron = {
     /**
      * Blockchain address to perform transaction from
      */
-    from: string;
+    account: string;
     /**
      * ID of token to be updated.
      */

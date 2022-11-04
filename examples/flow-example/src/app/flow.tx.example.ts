@@ -1,86 +1,81 @@
-import { TatumFlowSDK } from '@tatumio/flow'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import { TatumFlowSDK, TransactionHashWithAddress } from '@tatumio/flow'
+import { SignatureId, TransactionHash } from '@tatumio/api-client'
 
-const flowSDK = TatumFlowSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const flowSDK = TatumFlowSDK({
+  apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab',
+  testnet: true,
+})
 
 export const flowTxExample = async () => {
-  const { txId } = await flowSDK.transaction.sendTransaction(true, {
-    account: 'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H',
-    amount: '10000',
-    to: 'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H',
+  // if you don't already have a wallet, address and private key - generate them
+  // https://apidoc.tatum.io/tag/Flow#operation/FlowGenerateWallet
+  const { xpub } = await flowSDK.wallet.generateWallet()
+
+  // Generate public key
+  // https://apidoc.tatum.io/tag/Flow#operation/FlowGeneratePubKey
+  const receiverPublicKey = flowSDK.wallet.generateAddressFromXPub(xpub, 0)
+  console.log(`RECEIVER Public Key: ${receiverPublicKey}`)
+
+  // Create SENDER account using Faucet to fund you address - https://testnet-faucet.onflow.org/
+
+  const senderAccount = '<PUT SENDER ACCOUNT HERE>'
+  const senderPrivateKey = '<PUT SENDER PRIVATE KEY HERE>'
+
+  // Create receiver account on the blockchain using SENDER funds
+  //https://apidoc.tatum.io/tag/Flow#operation/FlowCreateAddressFromPubKey
+  const { address: receiverAccount } = (await flowSDK.transaction.createAccountFromPublicKey({
+    account: senderAccount,
+    privateKey: senderPrivateKey,
+    publicKey: receiverPublicKey,
+  })) as TransactionHashWithAddress
+  console.log(`RECEIVER Account: ${receiverAccount}`)
+
+  // Send FLOW transaction using private key
+  // https://apidoc.tatum.io/tag/Flow#operation/FlowTransferBlockchain
+  const { txId } = (await flowSDK.transaction.sendTransaction({
+    account: senderAccount,
+    privateKey: senderPrivateKey,
+    to: receiverAccount,
     currency: 'FLOW',
-    privateKey: '123',
-  })
+    amount: '1',
+  })) as TransactionHash
+  console.log(`Transaction using private key with ID ${txId} was sent`)
 
-  await flowSDK.transaction.sendCustomTransaction(true, {
-    transaction: '3b4351560d3b454a4c1ae2485074b0786093058bfe2b28d436584311b1e433a4',
-    args: [{ value: '', type: 'UFix64' }],
-    account: 'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H',
-    privateKey: '123',
-  })
+  // Send FLOW transaction using signatureId
+  // signatureId from Tatum KMS - https://docs.tatum.io/private-key-management/tatum-key-management-system-kms
+  const signatureId = 'cac88687-33ed-4ca1-b1fc-b02986a90975'
+  const { signatureId: txSignatureId } = (await flowSDK.transaction.sendTransaction({
+    account: senderAccount,
+    signatureId,
+    to: receiverAccount,
+    currency: 'FLOW',
+    amount: '1',
+  })) as SignatureId
+  console.log(`Transaction with signature id ${txSignatureId} was sent`)
+}
 
-  const signed = flowSDK.transaction.sign(
-    'cTmS2jBWXgFaXZ2xG9jhn67TiyTshnMp3UedamzEhGm6BZV1vLgQ',
-    Buffer.from('some message'),
-  )
+export const flowCustomTxExample = async () => {
+  const senderAccount = '<PUT SENDER ACCOUNT HERE>'
+  const senderPrivateKey = '<PUT SENDER PRIVATE KEY HERE>'
 
-  const signer = flowSDK.transaction.getSigner(
-    'cTmS2jBWXgFaXZ2xG9jhn67TiyTshnMp3UedamzEhGm6BZV1vLgQ',
-    'GBRPYHIL2CI3FNQ4BXLFMNDLFJUNPU2HY3ZMFSHONUCEOASW7QC7OX2H',
-  )
+  // Send custom transaction using private key
+  // https://apidoc.tatum.io/tag/Flow#operation/FlowTransferCustomBlockchain
+  const { txId } = (await flowSDK.transaction.sendCustomTransaction({
+    account: senderAccount,
+    privateKey: senderPrivateKey,
+    transaction: 'transaction() {prepare(acct: AuthAccount) {}execute { log("Hello")}}',
+    args: [],
+  })) as TransactionHash
+  console.log(`Transaction using private key with ID ${txId} was sent`)
 
-  const apiSigner = flowSDK.transaction.getApiSigner(true)
-
-  const tx = await flowSDK.transaction.createAccountFromPublicKey(
-    true,
-    '968c3ce11e871cb2b7161b282655ee5fcb051f3c04894705d771bf11c6fbebfc6556ab8a0c04f45ea56281312336d0668529077c9d66891a6cad3db877acbe90',
-    '0x955cd3f17b2fd8ad',
-    'cTmS2jBWXgFaXZ2xG9jhn67TiyTshnMp3UedamzEhGm6BZV1vLgQ',
-  )
-
-  const tx2 = await flowSDK.transaction.addPublicKeyToAccount(
-    true,
-    '968c3ce11e871cb2b7161b282655ee5fcb051f3c04894705d771bf11c6fbebfc6556ab8a0c04f45ea56281312336d0668529077c9d66891a6cad3db877acbe90',
-    '0x955cd3f17b2fd8ad',
-    'cTmS2jBWXgFaXZ2xG9jhn67TiyTshnMp3UedamzEhGm6BZV1vLgQ',
-  )
-
-  const tx3 = await flowSDK.transaction.nft.getNftMetadata(false, '0x955cd3f17b2fd8ad', 'id', 'tokenType')
-
-  const tx4 = flowSDK.transaction.nft.getNftTokenByAddress(false, '0x955cd3f17b2fd8ad', 'tokenType')
-
-  const tx5 = flowSDK.transaction.nft.sendNftMintToken(false, {
-    account: '0xc1b45bc27b9c61c3',
-    to: '0xc1b45bc27b9c61c3',
-    url: 'https://my_token_data.com',
-    contractAddress: '17a50dad-bcb1-4f3d-ae2c-ea2bfb04419f',
-    privateKey: '123',
-    chain: 'FLOW',
-  })
-
-  const tx6 = flowSDK.transaction.nft.sendNftMintMultipleToken(false, {
-    account: '0xc1b45bc27b9c61c3',
-    to: ['0xc1b45bc27b9c61c3', '0xc1b45bc27b9c61c4'],
-    url: ['https://my_token_data.com', 'https://my_token_data2.com'],
-    contractAddress: '17a50dad-bcb1-4f3d-ae2c-ea2bfb04419f',
-    privateKey: '123',
-    chain: 'FLOW',
-  })
-
-  const tx7 = flowSDK.transaction.nft.sendNftTransferToken(false, {
-    account: '0xc1b45bc27b9c61c3',
-    contractAddress: '17a50dad-bcb1-4f3d-ae2c-ea2bfb04419f',
-    to: '0xc1b45bc27b9c61c3',
-    tokenId: '100000',
-    privateKey: '123',
-    chain: 'FLOW',
-  })
-
-  const tx8 = flowSDK.transaction.nft.sendNftBurnToken(false, {
-    account: '0xc1b45bc27b9c61c3',
-    contractAddress: '17a50dad-bcb1-4f3d-ae2c-ea2bfb04419f',
-    tokenId: '100000',
-    privateKey: '123',
-    chain: 'FLOW',
-  })
+  // Send custom transaction using signatureId
+  // signatureId from Tatum KMS - https://docs.tatum.io/private-key-management/tatum-key-management-system-kms
+  const signatureId = 'cac88687-33ed-4ca1-b1fc-b02986a90975'
+  const { signatureId: txSignatureId } = (await flowSDK.transaction.sendCustomTransaction({
+    account: senderAccount,
+    signatureId,
+    transaction: 'transaction() {prepare(acct: AuthAccount) {}execute { log("Hello")}}',
+    args: [],
+  })) as SignatureId
+  console.log(`Transaction with signature id ${txSignatureId} was sent`)
 }

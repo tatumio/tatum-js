@@ -177,6 +177,25 @@ transaction(amount: UFix64, recipient: Address) {
     receiverRef.deposit(from: <-self.sentVault)
   }
 }`,
+    prepareBalanceTxTemplate: (
+      testnet: boolean,
+      tokenAddress: string,
+      tokenName: string,
+      tokenStorage: string,
+    ) =>
+      dedent`import FungibleToken from ${
+        testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken
+      }
+  import ${tokenName} from ${tokenAddress}
+pub fun main(address: Address): UFix64 {
+    let account = getAccount(address)
+
+    let vaultRef = account.getCapability(/public/${tokenStorage}Balance)!
+        .borrow<&${tokenName}.Vault{FungibleToken.Balance}>()
+        ?? panic("Could not borrow Balance reference to the Vault")
+
+    return vaultRef.balance
+}`,
     prepareCreateAccountWithFUSDFromPublicKeyTxTemplate: (testnet: boolean) =>
       dedent`import FungibleToken from ${
         testnet ? FLOW_TESTNET_ADDRESSES.FungibleToken : FLOW_MAINNET_ADDRESSES.FungibleToken

@@ -14,7 +14,7 @@ export type TransferNftKMSTron = {
     /**
      * Blockchain address to perform transaction from
      */
-    from: string;
+    account: string;
     /**
      * Blockchain address to send NFT token to
      */

@@ -10,7 +10,7 @@ export type DeployNftTronKMS = {
     /**
      * Blockchain address to perform transaction from
      */
-    from: string;
+    account: string;
     /**
      * Name of the NFT token
      */
