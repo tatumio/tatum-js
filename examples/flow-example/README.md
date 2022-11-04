@@ -8,7 +8,6 @@ These examples should guide you through some basic operations of the FLOW blockc
 - read information from blockchain
 - send FLOW to another wallet
 - send custom FLOW transaction
-- How to send transaction using kms
 - generate virtual account for FLOW
 - assign deposit address to virtual account
 - deploy/mint/transfer/burn NFT
@@ -51,10 +50,6 @@ You can find examples [here](./src/app/flow.blockchain.example.ts).
 ### How to send native transactions to another wallet or execute custom transactions
 
 You can find examples [here](./src/app/flow.tx.example.ts).
-
-### How to work with KMS
-
-You can find examples [here](./src/app/flow.kms.example.ts)
 
 ### How to work with NFTs (ERC721)
 

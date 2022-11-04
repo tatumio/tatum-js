@@ -4,14 +4,26 @@ import { TatumFlowSDK } from '@tatumio/flow'
 const flowSDK = TatumFlowSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab', testnet: true })
 
 export async function flowNftExample() {
-  // BOTH ACCOUNTS SHOULD BE CREATED USING TATUM API/SDK
+  // Generate FLOW wallet
+  // https://apidoc.tatum.io/tag/Flow#operation/FlowGenerateWallet
+  const { mnemonic, xpub } = await flowSDK.wallet.generateWallet()
 
-  const account = '<PUT ACCOUNT HERE>'
-  const privateKey = '<PUT PRIVATE KEY HERE>'
+  // Generate address from xpub
+  // https://apidoc.tatum.io/tag/Flow#operation/FlowGenerateAddress
+  const { address: firstAddress } = await flowSDK.blockchain.generateAddress(xpub, 0)
+  const { address: secondAddress } = await flowSDK.blockchain.generateAddress(xpub, 1)
 
+  const account = firstAddress as string
   // This account will receive NFT and burn it
-  const secondAccount = '<PUT ACCOUNT HERE>'
-  const secondPrivateKey = '<PUT PRIVATE KEY HERE>'
+  const secondAccount = secondAddress as string
+
+  console.log(`First account is ${account}`)
+  console.log(`Second account is ${secondAccount}`)
+
+  // Generate private key from mnemonic
+  // https://apidoc.tatum.io/tag/Flow#operation/FlowGeneratePubKeyPrivateKey
+  const privateKey = await flowSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const secondPrivateKey = await flowSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1)
 
   // Deploy an NFT smart contract on the blockchain.
   // In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
