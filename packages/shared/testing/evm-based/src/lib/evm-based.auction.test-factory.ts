@@ -1,5 +1,6 @@
 import { expectHexString } from '@tatumio/shared-testing-common'
 import {
+  ApproveErc20Spending,
   ApproveNftTransfer,
   AuctionBid,
   CancelAuction,
@@ -11,12 +12,18 @@ import {
 import { GanacheAccount } from './ganacheHelper'
 import { invalidProvidedAddressWeb3ErrorMessage } from './evm-based.utils'
 
+type AuctionChains = 'ETH' | 'MATIC' | 'ONE' | 'BSC' | 'KLAY'
+
 export const auctionTestFactory = {
   prepare: {
-    deployAuctionSignedTransaction: (sdk: SdkWithAuctionFunctions, accounts: GanacheAccount[]) => {
+    deployAuctionSignedTransaction: (
+      sdk: SdkWithAuctionFunctions,
+      accounts: GanacheAccount[],
+      chain: AuctionChains,
+    ) => {
       it('valid from privateKey', async () => {
         const tx = await sdk.prepare.deployAuctionSignedTransaction({
-          chain: 'ETH',
+          chain,
           feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           auctionFee: 150,
           fromPrivateKey: accounts[0].privateKey,
@@ -32,7 +39,7 @@ export const auctionTestFactory = {
       it('valid from signatureId', async () => {
         const nonce = 1
         const tx = await sdk.prepare.deployAuctionSignedTransaction({
-          chain: 'ETH',
+          chain,
           feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           auctionFee: 150,
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -51,7 +58,7 @@ export const auctionTestFactory = {
       it('invalid address', async () => {
         await expect(async () =>
           sdk.prepare.deployAuctionSignedTransaction({
-            chain: 'ETH',
+            chain,
             feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             auctionFee: 150,
             fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
@@ -69,10 +76,11 @@ export const auctionTestFactory = {
     auctionUpdateFeeRecipientSignedTransaction: (
       sdk: SdkWithAuctionFunctions,
       accounts: GanacheAccount[],
+      chain: AuctionChains,
     ) => {
       it('valid from privateKey', async () => {
         const tx = await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction({
-          chain: 'ETH',
+          chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           fromPrivateKey: accounts[0].privateKey,
@@ -87,7 +95,7 @@ export const auctionTestFactory = {
       })
       it('valid from signatureId', async () => {
         const tx = await sdk.prepare.auctionUpdateFeeRecipientSignedTransaction({
-          chain: 'ETH',
+          chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -105,7 +113,7 @@ export const auctionTestFactory = {
       it('invalid address', async () => {
         await expect(async () =>
           sdk.prepare.auctionUpdateFeeRecipientSignedTransaction({
-            chain: 'ETH',
+            chain,
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
             fromPrivateKey: accounts[0].privateKey,
@@ -120,10 +128,14 @@ export const auctionTestFactory = {
         )
       })
     },
-    createAuctionSignedTransaction: (sdk: SdkWithAuctionFunctions, accounts: GanacheAccount[]) => {
+    createAuctionSignedTransaction: (
+      sdk: SdkWithAuctionFunctions,
+      accounts: GanacheAccount[],
+      chain: AuctionChains,
+    ) => {
       it('valid from privateKey', async () => {
         const tx = await sdk.prepare.createAuctionSignedTransaction({
-          chain: 'ETH',
+          chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -147,7 +159,7 @@ export const auctionTestFactory = {
         const nonce = 1
 
         const tx = await sdk.prepare.createAuctionSignedTransaction({
-          chain: 'ETH',
+          chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -173,7 +185,7 @@ export const auctionTestFactory = {
       it('invalid address', async () => {
         await expect(async () =>
           sdk.prepare.createAuctionSignedTransaction({
-            chain: 'ETH',
+            chain,
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
             seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
@@ -198,10 +210,11 @@ export const auctionTestFactory = {
     auctionApproveNftTransferSignedTransaction: (
       sdk: SdkWithAuctionFunctions,
       accounts: GanacheAccount[],
+      chain: AuctionChains,
     ) => {
       it('valid from privateKey', async () => {
         const tx = await sdk.prepare.auctionApproveNftTransferSignedTransaction({
-          chain: 'ETH',
+          chain,
           spender: accounts[0].address,
           isErc721: true,
           tokenId: '100000',
@@ -212,7 +225,6 @@ export const auctionTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          amount: '0.001',
         })
 
         expectHexString(tx)
@@ -220,18 +232,12 @@ export const auctionTestFactory = {
       it('valid from signatureId', async () => {
         const nonce = 1
         const tx = await sdk.prepare.auctionApproveNftTransferSignedTransaction({
-          chain: 'ETH',
+          chain,
           spender: accounts[0].address,
           isErc721: true,
           tokenId: '100000',
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          nonce,
-          fee: {
-            gasLimit: '40000',
-            gasPrice: '20',
-          },
-          amount: '10000',
         })
 
         const json = JSON.parse(tx)
@@ -242,18 +248,12 @@ export const auctionTestFactory = {
       it('invalid address', async () => {
         await expect(async () =>
           sdk.prepare.auctionApproveNftTransferSignedTransaction({
-            chain: 'ETH',
+            chain,
             spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
             isErc721: true,
             tokenId: '100000',
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             fromPrivateKey: accounts[0].privateKey,
-            nonce: 1,
-            fee: {
-              gasLimit: '40000',
-              gasPrice: '20',
-            },
-            amount: '0.001',
           }),
         ).rejects.toThrowErrorWithMessageThatIncludes(
           invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
@@ -263,17 +263,15 @@ export const auctionTestFactory = {
     auctionApproveErc20TransferSignedTransaction: (
       sdk: SdkWithAuctionFunctions,
       accounts: GanacheAccount[],
+      chain: AuctionChains,
     ) => {
       it('valid from privateKey', async () => {
         const tx = await sdk.prepare.auctionApproveErc20TransferSignedTransaction({
-          chain: 'ETH',
-          amount: '100000',
+          chain,
           spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           fromPrivateKey: accounts[0].privateKey,
-          nonce: 0,
-          isErc721: false,
-          tokenId: '1',
+          amount: '100',
         })
 
         expectHexString(tx)
@@ -282,14 +280,11 @@ export const auctionTestFactory = {
         const nonce = 1
 
         const tx = await sdk.prepare.auctionApproveErc20TransferSignedTransaction({
-          chain: 'ETH',
-          amount: '100000',
+          chain,
           spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          nonce: 0,
-          isErc721: false,
-          tokenId: '1',
+          amount: '100',
         })
 
         const json = JSON.parse(tx)
@@ -300,34 +295,30 @@ export const auctionTestFactory = {
       it('invalid address', async () => {
         await expect(async () =>
           sdk.prepare.auctionApproveErc20TransferSignedTransaction({
-            chain: 'ETH',
-            amount: '100000',
+            chain,
             spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-            nonce: 0,
-            isErc721: false,
-            tokenId: '1',
+            amount: '100',
           }),
         ).rejects.toThrowErrorWithMessageThatIncludes(
           invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
         )
       })
     },
-    auctionBidSignedTransaction: (sdk: SdkWithAuctionFunctions, accounts: GanacheAccount[]) => {
+    auctionBidSignedTransaction: (
+      sdk: SdkWithAuctionFunctions,
+      accounts: GanacheAccount[],
+      chain: AuctionChains,
+    ) => {
       it('valid from privateKey', async () => {
         const tx = await sdk.prepare.auctionBidSignedTransaction({
-          chain: 'ETH',
+          chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           bidder: accounts[0].address,
           id: 'string',
           bidValue: '1',
           fromPrivateKey: accounts[0].privateKey,
-          nonce: 1,
-          fee: {
-            gasLimit: '40000',
-            gasPrice: '20',
-          },
         })
         expectHexString(tx)
       })
@@ -335,17 +326,12 @@ export const auctionTestFactory = {
         const nonce = 1
 
         const tx = await sdk.prepare.auctionBidSignedTransaction({
-          chain: 'ETH',
+          chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           bidder: accounts[0].address,
           id: 'string',
           bidValue: '1',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          nonce: 1,
-          fee: {
-            gasLimit: '40000',
-            gasPrice: '20',
-          },
         })
 
         const json = JSON.parse(tx)
@@ -356,35 +342,29 @@ export const auctionTestFactory = {
       it('invalid address', async () => {
         await expect(async () =>
           sdk.prepare.auctionBidSignedTransaction({
-            chain: 'ETH',
+            chain,
             contractAddress: '0x487422eEA2cB73B5d3e242bA5456b782919AFc85',
             bidder: '0x587422eEA2cB73B5d3e242bA5456b782919AFc85',
             id: 'string',
             bidValue: '1',
             fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-            nonce: 1,
-            fee: {
-              gasLimit: '40000',
-              gasPrice: '20',
-            },
           }),
         ).rejects.toThrowErrorWithMessageThatIncludes(
           invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),
         )
       })
     },
-    auctionCancelSignedTransaction: (sdk: SdkWithAuctionFunctions, accounts: GanacheAccount[]) => {
+    auctionCancelSignedTransaction: (
+      sdk: SdkWithAuctionFunctions,
+      accounts: GanacheAccount[],
+      chain: AuctionChains,
+    ) => {
       it('valid from privateKey', async () => {
         const tx = await sdk.prepare.auctionCancelSignedTransaction({
-          chain: 'ETH',
+          chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           id: 'string',
           fromPrivateKey: accounts[0].privateKey,
-          nonce: 1,
-          fee: {
-            gasLimit: '40000',
-            gasPrice: '20',
-          },
           amount: '1',
         })
 
@@ -394,15 +374,10 @@ export const auctionTestFactory = {
         const nonce = 1
 
         const tx = await sdk.prepare.auctionCancelSignedTransaction({
-          chain: 'ETH',
+          chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           id: 'string',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          nonce: 1,
-          fee: {
-            gasLimit: '40000',
-            gasPrice: '20',
-          },
           amount: '1',
         })
 
@@ -414,15 +389,10 @@ export const auctionTestFactory = {
       it('invalid address', async () => {
         await expect(async () =>
           sdk.prepare.auctionCancelSignedTransaction({
-            chain: 'ETH',
+            chain,
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             id: 'string',
             fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-            nonce: 1,
-            fee: {
-              gasLimit: '40000',
-              gasPrice: '20',
-            },
             amount: '1',
           }),
         ).rejects.toThrowErrorWithMessageThatIncludes(
@@ -430,18 +400,17 @@ export const auctionTestFactory = {
         )
       })
     },
-    auctionSettleSignedTransaction: (sdk: SdkWithAuctionFunctions, accounts: GanacheAccount[]) => {
+    auctionSettleSignedTransaction: (
+      sdk: SdkWithAuctionFunctions,
+      accounts: GanacheAccount[],
+      chain: AuctionChains,
+    ) => {
       it('valid from privateKey', async () => {
         const tx = await sdk.prepare.auctionSettleSignedTransaction({
-          chain: 'ETH',
+          chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           id: 'string',
           fromPrivateKey: accounts[0].privateKey,
-          nonce: 1,
-          fee: {
-            gasLimit: '40000',
-            gasPrice: '20',
-          },
           amount: '1',
         })
 
@@ -451,15 +420,10 @@ export const auctionTestFactory = {
         const nonce = 1
 
         const tx = await sdk.prepare.auctionSettleSignedTransaction({
-          chain: 'ETH',
+          chain,
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           id: 'string',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-          nonce: 1,
-          fee: {
-            gasLimit: '40000',
-            gasPrice: '20',
-          },
           amount: '10000',
         })
 
@@ -471,15 +435,10 @@ export const auctionTestFactory = {
       it('invalid address', async () => {
         await expect(async () =>
           sdk.prepare.auctionSettleSignedTransaction({
-            chain: 'ETH',
+            chain,
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             id: 'string',
             fromPrivateKey: accounts[0].privateKey,
-            nonce: 1,
-            fee: {
-              gasLimit: '40000',
-              gasPrice: '20',
-            },
             amount: '0.001',
           }),
         ).rejects.toThrowErrorWithMessageThatIncludes(
@@ -496,7 +455,7 @@ export interface SdkWithAuctionFunctions {
     auctionUpdateFeeRecipientSignedTransaction(body: UpdateAuctionFeeRecipient, provider?): Promise<string>
     createAuctionSignedTransaction(body: CreateAuctionEvm, provider?): Promise<string>
     auctionApproveNftTransferSignedTransaction(body: ApproveNftTransfer, provider?): Promise<string>
-    auctionApproveErc20TransferSignedTransaction(body: ApproveNftTransfer, provider?): Promise<string>
+    auctionApproveErc20TransferSignedTransaction(body: ApproveErc20Spending, provider?): Promise<string>
     auctionBidSignedTransaction(body: AuctionBid, provider?): Promise<string>
     auctionCancelSignedTransaction(body: CancelAuction, provider?): Promise<string>
     auctionSettleSignedTransaction(body: SettleAuction, provider?): Promise<string>

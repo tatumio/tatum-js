@@ -60,7 +60,7 @@ import {
   XrpWallet,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
-import { abstractSdk, WithoutChain } from '@tatumio/shared-abstract-sdk'
+import { abstractSdk } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
 import { abstractBlockchainVirtualAccount } from './services/virtualAccount.abstract-blockchain'
 
@@ -109,7 +109,7 @@ export type FromPrivateKeyOrSignatureIdTron<T extends { fromPrivateKey?: string 
   T,
   'fromPrivateKey'
 > &
-  Partial<SignatureId & { index: number; from: string }> &
+  Partial<SignatureId & { index: number; account: string; from: string }> &
   Partial<Pick<T, 'fromPrivateKey'>>
 
 export type ChainTransferErc20 = FromPrivateKeyOrSignatureId<Omit<ChainTransferEthErc20, 'chain'>>
@@ -313,11 +313,8 @@ export interface SdkWithCustodialFunctions {
 
 export interface SdkWithMarketplaceFunctions {
   prepare: {
-    approveErc20Spending(body: ApproveErc20, provider?: string): Promise<string>
-    approveSpending(
-      body: FromPrivateKeyOrSignatureId<WithoutChain<ApproveNftSpending>> & { amount: string },
-      provider?: string,
-    ): Promise<string>
+    approveErc20Spending(body: FromPrivateKeyOrSignatureId<ApproveErc20>, provider?: string): Promise<string>
+    approveSpending(body: FromPrivateKeyOrSignatureId<ApproveNftSpending>, provider?: string): Promise<string>
     generateMarketplace(body: ChainGenerateMarketplace, provider?: string): Promise<string>
     updateFee(body: ChainUpdateFee, provider?: string): Promise<string>
     updateFeeRecipient(body: ChainUpdateFeeRecipient, provider?: string): Promise<string>
