@@ -21363,8 +21363,7 @@
                   { "$ref": "#/components/schemas/DeployNftCeloKMS" },
                   { "$ref": "#/components/schemas/DeployNftTronKMS" },
                   { "$ref": "#/components/schemas/DeployNftFlowPK" },
-                  { "$ref": "#/components/schemas/DeployNftFlowMnemonic" },
-                  { "$ref": "#/components/schemas/DeployNftFlowKMS" }
+                  { "$ref": "#/components/schemas/DeployNftFlowMnemonic" }
                 ]
               }
             }
@@ -61050,7 +61049,7 @@
             "type": "string"
           }
         },
-        "required": ["account", "address", "privateKey", "currency", "amount"]
+        "required": ["account", "address", "to", "privateKey", "currency", "amount"]
       },
       "FlowTransactionKMS": {
         "type": "object",
@@ -61089,7 +61088,7 @@
             "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
           }
         },
-        "required": ["account", "currency", "address", "amount", "signatureId"]
+        "required": ["account", "currency", "address", "to", "amount", "signatureId"]
       },
       "FlowTransactionMnemonic": {
         "type": "object",
@@ -61129,7 +61128,7 @@
             "description": "Index to the specific address from mnemonic."
           }
         },
-        "required": ["account", "currency", "address", "amount", "mnemonic", "index"]
+        "required": ["account", "currency", "address", "amount", "to", "mnemonic", "index"]
       },
       "FlowCustomTransactionPK": {
         "type": "object",
@@ -61523,6 +61522,13 @@
             "description": "Secret for account. Secret, or signature Id must be present.",
             "example": "37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8",
             "type": "string"
+          },
+          "weight": {
+            "description": "Weight of the key. If not set, default 1000 will be used.",
+            "example": 1000,
+            "minimum": 0,
+            "maximum": 1000,
+            "type": "number"
           }
         },
         "required": ["account", "privateKey", "publicKey"]
@@ -61554,6 +61560,13 @@
             "type": "number",
             "minimum": 0,
             "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
+          },
+          "weight": {
+            "description": "Weight of the key. If not set, default 1000 will be used.",
+            "example": 1000,
+            "minimum": 0,
+            "maximum": 1000,
+            "type": "number"
           }
         },
         "required": ["account", "publicKey", "signatureId"]
@@ -67868,37 +67881,6 @@
           }
         },
         "required": ["chain", "account", "mnemonic", "index"]
-      },
-      "DeployNftFlowKMS": {
-        "type": "object",
-        "properties": {
-          "chain": {
-            "type": "string",
-            "example": "FLOW",
-            "description": "Chain to work with.",
-            "enum": ["FLOW"]
-          },
-          "account": {
-            "type": "string",
-            "maxLength": 18,
-            "example": "0xc1b45bc27b9c61c3",
-            "minLength": 18,
-            "description": "Blockchain address of the sender account."
-          },
-          "signatureId": {
-            "type": "string",
-            "format": "uuid",
-            "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
-            "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
-          },
-          "index": {
-            "description": "Derivation index of sender address.",
-            "example": 0,
-            "type": "integer",
-            "maximum": 2147483647
-          }
-        },
-        "required": ["chain", "account", "signatureId"]
       },
       "TransferNftFlowPK": {
         "type": "object",
