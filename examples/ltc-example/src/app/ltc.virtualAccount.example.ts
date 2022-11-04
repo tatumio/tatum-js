@@ -92,4 +92,17 @@ export async function ltcVirtualAccountExample() {
   // Remove a deposit address from an account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/removeAddress
   await ltcSDK.virtualAccount.depositAddress.remove(plainAccount.id, plainAccountAddress)
+
+  // Send assets from virtualAccount to blockchain address
+  // This example requires a funded blockchain address, you can top up your testnet balance with https://testnet-faucet.com/ltc-testnet/
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/LtcTransfer
+  const transfer = await ltcSDK.virtualAccount.send({
+    senderAccountId: xpubAccount.id,
+    amount: '0.0001',
+    mnemonic: mnemonic,
+    xpub: xpub,
+    address: plainAccountAddress
+  })
+
+  console.log(JSON.stringify(transfer))
 }
