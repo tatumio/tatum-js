@@ -59,3 +59,7 @@ You can find examples [here](./src/app/doge.tx.example.ts).
 ### How to execute virtual account methods for DOGE
 
 You can find examples [here](./src/app/doge.virtualAccount.example.ts).
+
+### How to subscribe for incoming transactions for DOGE
+
+You can find examples [here](./src/app/doge.subscriptions.example.ts).

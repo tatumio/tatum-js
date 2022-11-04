@@ -1,9 +1,12 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumDogeSDK } from '@tatumio/doge'
 
-const dogeSDK = TatumDogeSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const dogeSDK = TatumDogeSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function dogeBlockchainExample() {
+  // Get blockchain info
+  // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGetBlockChainInfo
+  const blockchainInfo = await dogeSDK.blockchain.info()
+
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGetRawTransaction
   const transaction = await dogeSDK.blockchain.getTransaction(
@@ -24,7 +27,7 @@ export async function dogeBlockchainExample() {
   // Get utxo information
   // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGetUTXO
   const utxo = await dogeSDK.blockchain.getUTXO(
-    '53faa103e8217e1520f5149a4e8c84aeb58e55bdab11164a95e69a8ca50f8fcc',
+    '838af2711e974c1fd02b26bb1185fe891fc70f1292dd708d79080f98c6efd293',
     0,
   )
 
@@ -37,8 +40,4 @@ export async function dogeBlockchainExample() {
   const brodcastedTxHash = await dogeSDK.blockchain.broadcast({
     txData: '62BD544D1B9031EFC330A3E855CC3A0D51CA5131455C1AB3BCAC6D243F65460D',
   })
-
-  // Get blockchain info
-  // https://apidoc.tatum.io/tag/Dogecoin#operation/DogeGetBlockChainInfo
-  const blockchainInfo = await dogeSDK.blockchain.info()
 }

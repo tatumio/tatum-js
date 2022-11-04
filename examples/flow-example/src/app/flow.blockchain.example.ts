@@ -1,20 +1,27 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumFlowSDK } from '@tatumio/flow'
 
-const flowSDK = TatumFlowSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const flowSDK = TatumFlowSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab', testnet: true })
 
 export const flowBlockchainExample = async () => {
-  // Get block detail
-  const block = await flowSDK.blockchain.getBlock('1234314')
-
   // Get Flow current block number
-  const currentBlock = await flowSDK.blockchain.getCurrentBlock()
+  // https://apidoc.tatum.io/tag/Flow#operation/FlowGetBlockChainInfo
+  const currentBlockNumber = await flowSDK.blockchain.getCurrentBlock()
+  console.log(`Current block: ${currentBlockNumber}`)
+
+  // Get block details
+  // https://apidoc.tatum.io/tag/Flow#operation/FlowGetBlock
+  const block = await flowSDK.blockchain.getBlock('84488302')
+  console.log(`Block Details: ${JSON.stringify(block)}`)
+
+  // Get Flow Transaction details by hash
+  // https://apidoc.tatum.io/tag/Flow#operation/FlowGetRawTransaction
+  const transaction = await flowSDK.blockchain.getTransaction(
+    '89212c5e5d35171385a4e49ec00e1a0b9466ebd31f766ca04f0e7b8bdf9a3691',
+  )
+  console.log(`Transaction Details: ${JSON.stringify(transaction)}`)
 
   // Get account info
+  // https://apidoc.tatum.io/tag/Flow#operation/FlowGetAccount
   const account = await flowSDK.blockchain.getAccount('0x955cd3f17b2fd8ad')
-
-  // Get Flow Transaction by hash
-  const transactions = await flowSDK.blockchain.getTransaction(
-    'd60631d8e5c8b6eb0557b5181cf28564d771c628a08abc414e87ad7c05ff2fc2',
-  )
+  console.log(`Account Info: ${JSON.stringify(account)}`)
 }

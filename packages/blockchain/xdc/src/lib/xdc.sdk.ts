@@ -10,6 +10,7 @@ import { abstractSdkLedgerService, SDKArguments } from '@tatumio/shared-abstract
 import { xdcWeb3 } from './services/xdc.web3'
 import { xdcKmsService } from './services/xdc.kms'
 import { xdcTxService } from './services/xdc.tx'
+import { xdcWallet } from './services/xdc.wallet'
 import { virtualAccountService } from './services/xdc.virtualAccount'
 
 const blockchain = Blockchain.XDC
@@ -19,10 +20,12 @@ export const TatumXdcSDK = (args: SDKArguments) => {
   const api = XinFinService
   const txService = xdcTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
+  const wallet = xdcWallet()
   const { ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
     ...evmSdk,
+    wallet,
     kms: xdcKmsService({ blockchain, web3 }),
     ledger: abstractSdkLedgerService(),
     transaction: txService.native,

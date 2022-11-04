@@ -1,17 +1,19 @@
 import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
-
-export type FlowSdkErrorCode = SdkErrorCode.FLOW_MISSING_PRIVATE_KEY | SdkErrorCode.FLOW_MISSING_MNEMONIC
+import { flowUtils } from './utils/flow.utils'
 
 export class FlowSdkError extends SdkError {
-  constructor(error: Error | FlowSdkErrorCode) {
-    if (typeof error === 'string') {
+  constructor({ error, code }: { error?: Error | string; code?: SdkErrorCode }) {
+    if (error) {
+      const wrapped = flowUtils.wrapFlowErrorIfNeeded(error)
+
       super({
-        code: error,
+        originalError: wrapped,
+        originalErrorAsString: wrapped?.name,
+        code,
       })
     } else {
       super({
-        originalError: error,
-        originalErrorAsString: error.name,
+        code: code ?? SdkErrorCode.COMMON_ERROR,
       })
     }
   }
