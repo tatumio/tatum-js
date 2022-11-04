@@ -1,30 +1,35 @@
-import { celoApiExample } from './app/celo.api.example'
 import { celoBlockchainExample } from './app/celo.blockchain.example'
-import { celoKmsExample } from './app/celo.kms.example'
-import { celoLogRecordExample } from './app/celo.log.example'
-import { celoChangeRateExample } from './app/celo.root.example'
-import { celoWalletExample } from './app/celo.wallet.example'
-import { celoDriverExample, celoWeb3Example } from './app/celo.web3.example'
-import { celoOffchainExample } from './app/celo.offchain.example'
+import { celoVirtualAccountExample } from './app/celo.virtualAccount.example'
 import { celoNftExample } from './app/celo.nft.example'
+import { celoNftExpressExample } from './app/celo.nft.express.mint.example'
 import { celoSubscriptionsExample } from './app/celo.subscriptions.example'
-import {
-  celoTxWithPrivateKeyExample,
-  celoTxWithSignatureIdExample,
-  celoTxFeesCovered,
-} from './app/celo.tx.example'
+import { celoBalanceExample } from './app/celo.balance.example'
+import { celoTxExample } from './app/celo.tx.example'
+import { celoMultiTokenExample } from './app/celo.multitoken.example'
+import { celoErc20Example } from './app/celo.erc20.example'
+import { celoSmartContractExample } from './app/celo.smartContract.example'
 
-console.log(`Running ${celoApiExample()}`)
-console.log(`Running ${celoWalletExample()}`)
-console.log(`Running ${celoBlockchainExample()}`)
-console.log(`Running ${celoKmsExample()}`)
-console.log(`Running ${celoLogRecordExample()}`)
-console.log(`Running ${celoChangeRateExample()}`)
-console.log(`Running ${celoDriverExample()}`)
-console.log(`Running ${celoWeb3Example()}`)
-console.log(`Running ${celoOffchainExample()}`)
-console.log(`Running ${celoNftExample()}`)
-console.log(`Running ${celoSubscriptionsExample()}`)
-console.log(`Running ${celoTxWithPrivateKeyExample()}`)
-console.log(`Running ${celoTxWithSignatureIdExample()}`)
-console.log(`Running ${celoTxFeesCovered()}`)
+const examples = async () => {
+  console.log(`\nRunning celoBlockchainExample`)
+  await celoBlockchainExample()
+  console.log(`\nRunning celoVirtualAccountExample`)
+  await celoVirtualAccountExample()
+  console.log(`\nRunning celoNftExample`)
+  await celoNftExample()
+  console.log(`\nRunning celoNftExpressExample`)
+  await celoNftExpressExample()
+  console.log(`\nRunning celoSubscriptionsExample`)
+  await celoSubscriptionsExample()
+  console.log(`\nRunning celoTxExample`)
+  await celoTxExample()
+  console.log(`\nRunning celoMultiTokenExample`)
+  await celoMultiTokenExample()
+  console.log(`\nRunning celoErc20Example`)
+  await celoErc20Example()
+  console.log(`\nRunning celoBalanceExample`)
+  await celoBalanceExample()
+  console.log(`\nRunning celoSmartContractExample`)
+  await celoSmartContractExample()
+}
+
+void examples()

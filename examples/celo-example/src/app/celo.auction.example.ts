@@ -1,131 +1,69 @@
+import { TransactionHash } from '@tatumio/api-client'
 import { TatumCeloSDK } from '@tatumio/celo'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const celoSDK = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
-
+const celoSDK = TatumCeloSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+// TODO: change examples after evm auction fix
 export const celoAuctionExample = async () => {
-  const auction = await celoSDK.marketplace.auction.getAuction(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-    '1',
-  )
+  const { mnemonic, xpub } = await celoSDK.wallet.generateWallet()
+  // https://apidoc.tatum.io/tag/Celo#operation/CeloGenerateAddressPrivateKey
+  const fromPrivateKey = await celoSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  // https://apidoc.tatum.io/tag/Celo#operation/CeloGenerateAddress
+  const feeRecipient = celoSDK.wallet.generateAddressFromXPub(xpub, 0)
+  const bidder = celoSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  const auctionFee = await celoSDK.marketplace.auction.getAuctionFee(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-  )
-
-  const auctionFeeRecipient = await celoSDK.marketplace.auction.getAuctionFeeRecipient(
-    '0xe6e7340394958674cdf8606936d292f565e4ecc4',
-  )
-
-  const deployAuctionTx = await celoSDK.marketplace.auction.prepare.deployAuctionSignedTransaction({
+  // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+  // Fund your address here: https://celo.org/developers/faucet
+  const { txId } = (await celoSDK.marketplace.auction.send.deployAuctionSignedTransaction({
     auctionFee: 100,
-    feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    feeRecipient,
+    fromPrivateKey,
     chain: 'CELO',
     feeCurrency: 'CELO',
-  })
+  })) as TransactionHash
 
-  const updateFeeRecipientTx =
-    await celoSDK.marketplace.auction.prepare.auctionUpdateFeeRecipientSignedTransaction({
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      feeRecipient: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      fee: {
-        gasLimit: '40000',
-        gasPrice: '20',
-      },
-      amount: '10000',
-      chain: 'CELO',
-      feeCurrency: 'CELO',
-    })
+  console.log(`TransactionId: ${txId}`)
 
-  const createAuctionTx = await celoSDK.marketplace.auction.prepare.createAuctionSignedTransaction({
-    chain: 'CELO',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    nftAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    seller: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    erc20Address: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    amount: '1',
-    endedAt: 100000,
-    tokenId: '100000',
-    isErc721: true,
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-    feeCurrency: 'CELO',
-  })
+  // https://apidoc.tatum.io/tag/Celo#operation/CeloGetTransaction
+  const transaction = await celoSDK.blockchain.get(txId)
+  const contractAddress = transaction.contractAddress as string
 
-  const approveNftSpendingTx =
-    await celoSDK.marketplace.auction.prepare.auctionApproveNftTransferSignedTransaction({
-      chain: 'CELO',
-      spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      isErc721: true,
-      tokenId: '100000',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      nonce: 1,
-      fee: {
-        gasLimit: '40000',
-        gasPrice: '20',
-      },
-      amount: '10000',
-      feeCurrency: 'CELO',
-    })
+  console.log(`Deployed smart contract for NFT auction with transaction ID ${txId}`)
 
-  const approveErc20SpendingTx =
-    await celoSDK.marketplace.auction.prepare.auctionApproveErc20TransferSignedTransaction({
-      chain: 'CELO',
-      amount: '100000',
-      spender: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-      fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-      nonce: 0,
-      isErc721: true,
-      tokenId: '1234',
-      feeCurrency: 'CELO',
-    })
+  const auction = await celoSDK.marketplace.auction.getAuction(contractAddress, '1')
 
-  const bidAuctionTx = await celoSDK.marketplace.auction.prepare.auctionBidSignedTransaction({
-    chain: 'CELO',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    bidder: '0x587422eEA2cB73B5d3e242bA5456b782919AFc85',
+  console.log(`Auction from contract address ${contractAddress}: ${auction}`)
+
+  const { txId: bidTransactionHash } = (await celoSDK.marketplace.auction.send.auctionBidSignedTransaction({
+    contractAddress,
+    bidder,
     id: 'string',
     bidValue: '1',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-    feeCurrency: 'CELO',
-  })
-
-  const cancelAuctionTx = await celoSDK.marketplace.auction.prepare.auctionCancelSignedTransaction({
+    fromPrivateKey,
     chain: 'CELO',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
     feeCurrency: 'CELO',
-  })
+  })) as TransactionHash
 
-  const settleAuctionTx = await celoSDK.marketplace.auction.prepare.auctionSettleSignedTransaction({
-    chain: 'CELO',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    id: 'string',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 1,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
-    feeCurrency: 'CELO',
-  })
+  console.log(`Auction bid transaction hash: ${bidTransactionHash}`)
+
+  const { txId: cancelTransactionHash } =
+    (await celoSDK.marketplace.auction.send.auctionCancelSignedTransaction({
+      contractAddress,
+      id: 'string',
+      fromPrivateKey,
+      chain: 'CELO',
+      feeCurrency: 'CELO',
+    })) as TransactionHash
+
+  console.log(`Auction cancel transaction hash: ${cancelTransactionHash}`)
+
+  const { txId: settleTransactionHash } =
+    (await celoSDK.marketplace.auction.send.auctionSettleSignedTransaction({
+      contractAddress,
+      id: 'string',
+      fromPrivateKey,
+      chain: 'CELO',
+      feeCurrency: 'CELO',
+    })) as TransactionHash
+
+  console.log(`Auction settle transaction hash: ${settleTransactionHash}`)
 }
