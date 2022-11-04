@@ -5,6 +5,13 @@ import { getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/cryp
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { BnbSdkError } from '../bnb.sdk.errors'
 
+/**
+ * @param tx pending transaction data
+ * @param fromPrivateKey private key to be signed with
+ * @param testnet mainnet or testnet version
+ * @param provider
+ * @returns signed transaction to be sent to the blockchain
+ */
 const signBnbKMSTransaction = async (
   tx: PendingTransaction,
   fromPrivateKey: string,

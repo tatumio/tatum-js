@@ -6,6 +6,7 @@ import { bnbTxService } from './services/bnb.tx'
 import { bnbKmsService } from './services/bnb.kms'
 import { bnbWallet } from './services/bnb.wallet'
 import { Blockchain } from '@tatumio/shared-core'
+import { bnbVirtualAccountService } from './services/bnb.virtualAccount'
 
 export const TatumBnbSDK = (
   args: SDKArguments,
@@ -16,6 +17,7 @@ export const TatumBnbSDK = (
     wallet: bnbWallet,
     transaction: bnbTxService(args, apiCalls),
     kms: bnbKmsService,
+    virtualAccount: bnbVirtualAccountService({ ...args }, apiCalls),
     blockchain: {
       generateWallet: BnbBeaconChainService.bnbGenerateWallet,
       getCurrentBlock: BnbBeaconChainService.bnbGetCurrentBlock,

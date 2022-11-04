@@ -51,3 +51,7 @@ You can find examples [here](./src/app/bnb.tx.example.ts).
 ### How to read information from the blockchain
 
 You can find examples [here](./src/app/bnb.blockchain.example.ts).
+
+### How to generate virtual account for BNB and transfer from it to a blockchain address
+
+You can find examples [here](./src/app/bnb.virtualAccount.example.ts).
