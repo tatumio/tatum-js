@@ -1,4 +1,4 @@
-import { xdcUtil } from '@tatumio/xdc'
+import { xdcUtil } from '../xdc.util'
 
 describe('XDC util', () => {
   const CASES = [

@@ -106,7 +106,7 @@ export const smartContract = (args: {
       smartContractReadMethodInvocationTransaction: async (
         body: CallReadSmartContractMethod,
         provider?: string,
-      ) => smartContractReadMethodInvocation(body, args.web3, provider),
+      ) => smartContractReadMethodInvocation({ body, web3: args.web3, provider }),
 
       /**
        * Send Celo smart contract method invocation transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -124,7 +124,7 @@ export const smartContract = (args: {
         if (body.signatureId) {
           return args.smartContractApiMethod(body)
         } else if (body.methodABI.stateMutability === 'view') {
-          return smartContractReadMethodInvocation(body, args.web3, provider)
+          return smartContractReadMethodInvocation({ body, web3: args.web3, provider })
         } else {
           return args.broadcastFunction({
             txData: await smartContractWriteMethodInvocation(body, provider, testnet),

@@ -14,7 +14,7 @@ import {
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { xdcTxService } from '@tatumio/xdc'
+import { xdcTxService } from './xdc.tx'
 
 type TransferVirtualAccountXdc = PrivateKeyOrSignatureId<TransferEth>
 type VirtualAccountResponse = { id?: string; txId?: string; completed?: boolean } | void

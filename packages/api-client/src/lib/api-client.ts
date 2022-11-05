@@ -61,7 +61,7 @@ export const TATUM_API_CONSTANTS = {
 
 export function TatumApi(apiKey: string, url: string = TATUM_API_CONSTANTS.URL) {
   OpenAPI.HEADERS = { [TATUM_API_CONSTANTS.HEADER_API_KEY]: apiKey }
-  OpenAPI.BASE = url
+  OpenAPI.BASE = process.env['TATUM_API_URL'] ?? url
 
   // @TODO
   TATUM_API_CONSTANTS.API_KEY = apiKey

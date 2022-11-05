@@ -5,18 +5,17 @@ import {
   ChainGenerateCustodialWalletBatch,
   ChainTransferCustodialWallet,
 } from '@tatumio/shared-blockchain-abstract'
-import { CUSTODIAL_PROXY_ABI, EvmBasedBlockchain } from '@tatumio/shared-core'
+import { CUSTODIAL_PROXY_ABI } from '@tatumio/shared-core'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedCustodial } from '../../services/evm-based.custodial'
 import { smartContractWriteMethodInvocation } from '../smartContract'
 import BigNumber from 'bignumber.js'
 import { CustodialFullTokenWallet } from '../../contracts'
 import { evmBasedSmartContract } from '../../services/evm-based.smartContract'
-import { evmBasedUtils } from '../../evm-based.utils'
+import { AddressTransformer, AddressTransformerDefault, evmBasedUtils } from '../../evm-based.utils'
 import {
   ApiServices,
   ApproveTransferCustodialWalletKMS,
-  CustodialManagedWalletsService,
   GasPumpService,
   GenerateCustodialWalletBatchPayer,
   TransactionHash,
@@ -25,14 +24,27 @@ import {
 } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
-const transferFromCustodialWallet = async (
-  body: ChainTransferCustodialWallet,
-  web3: EvmBasedWeb3,
-  testnet?: boolean,
-  provider?: string,
-) => {
+const transferFromCustodialWallet = async ({
+  body,
+  web3,
+  testnet,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainTransferCustodialWallet
+  web3: EvmBasedWeb3
+  testnet?: boolean
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
+  const normalizedBody = {
+    ...body,
+    custodialAddress: addressTransformer(body.custodialAddress?.trim()),
+    recipient: addressTransformer(body.recipient?.trim()),
+    tokenAddress: addressTransformer(body.tokenAddress?.trim()),
+  }
   return evmBasedCustodial().prepareTransferFromCustodialWalletAbstract(
-    body,
+    normalizedBody,
     web3,
     evmBasedUtils.decimals,
     smartContractWriteMethodInvocation,
@@ -42,14 +54,27 @@ const transferFromCustodialWallet = async (
   )
 }
 
-const batchTransferFromCustodialWallet = async (
-  body: ChainBatchTransferCustodialWallet,
-  web3: EvmBasedWeb3,
-  testnet?: boolean,
-  provider?: string,
-) => {
+const batchTransferFromCustodialWallet = async ({
+  body,
+  web3,
+  testnet,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainBatchTransferCustodialWallet
+  web3: EvmBasedWeb3
+  testnet?: boolean
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
+  const normalizedBody = {
+    ...body,
+    custodialAddress: addressTransformer(body.custodialAddress?.trim()),
+    recipient: body.recipient.map((r) => addressTransformer(r?.trim())),
+    tokenAddress: body.tokenAddress?.map((t) => addressTransformer(t?.trim())),
+  }
   return evmBasedCustodial().prepareBatchTransferFromCustodialWalletAbstract(
-    body,
+    normalizedBody,
     web3,
     evmBasedUtils.decimals,
     smartContractWriteMethodInvocation,
@@ -59,16 +84,24 @@ const batchTransferFromCustodialWallet = async (
   )
 }
 
-const approveFromCustodialWallet = async (
-  body: ChainApproveCustodialTransfer,
-  web3: EvmBasedWeb3,
-  provider?: string,
-) => {
+const approveFromCustodialWallet = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainApproveCustodialTransfer
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
+  const custodialAddress = addressTransformer(body.custodialAddress?.trim())
+  const tokenAddress = addressTransformer(body.tokenAddress?.trim())
+
   // ContractType FUNGIBLE_TOKEN = 0
-  const decimals =
-    body.contractType === 0 ? await evmBasedUtils.decimals(body.tokenAddress!, web3, provider) : 0
+  const decimals = body.contractType === 0 ? await evmBasedUtils.decimals(tokenAddress, web3, provider) : 0
   const params = [
-    body.tokenAddress!.trim(),
+    tokenAddress,
     body.contractType,
     body.spender,
     `0x${new BigNumber(body.amount || 0).multipliedBy(new BigNumber(10).pow(decimals)).toString(16)}`,
@@ -79,7 +112,7 @@ const approveFromCustodialWallet = async (
   return await evmBasedSmartContract(web3).helperPrepareSCCall(
     {
       ...body,
-      contractAddress: body.custodialAddress,
+      contractAddress: custodialAddress,
     } as ChainApproveCustodialTransfer & { contractAddress: string },
     'approve',
     params,
@@ -94,14 +127,22 @@ const generateCustodialBatch = async (body: GenerateCustodialWalletBatchPayer) =
   else throw new Error('Unable to generate custodial wallet address.')
 }
 
-const custodialWalletBatch = async (
-  body: ChainGenerateCustodialWalletBatch,
-  web3: EvmBasedWeb3,
-  testnet?: boolean,
-  provider?: string,
-) => {
+const custodialWalletBatch = async ({
+  body,
+  web3,
+  testnet,
+  provider,
+  addressTransformer = AddressTransformerDefault,
+}: {
+  body: ChainGenerateCustodialWalletBatch
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer?: AddressTransformer
+  testnet?: boolean
+}) => {
   const { params, methodName, bodyWithContractAddress } =
-    await evmBasedCustodial().prepareCustodialWalletBatchAbstract(body, web3, testnet)
+    await evmBasedCustodial().prepareCustodialWalletBatchAbstract({ body, testnet, addressTransformer })
+
   return await evmBasedSmartContract(web3).helperPrepareSCCall(
     bodyWithContractAddress,
     methodName,
@@ -111,10 +152,14 @@ const custodialWalletBatch = async (
   )
 }
 
-export const custodial = (args: {
-  blockchain: EvmBasedBlockchain
+export const custodial = ({
+  web3,
+  broadcastFunction,
+  addressTransformer = AddressTransformerDefault,
+}: {
   web3: EvmBasedWeb3
   broadcastFunction: BroadcastFunction
+  addressTransformer?: AddressTransformer // to automatically transform address to blockchain specific (e.g. 0x -> xdc, one)
 }) => {
   return {
     prepare: {
@@ -131,7 +176,7 @@ export const custodial = (args: {
         testnet?: boolean,
       ) =>
         evmBasedUtils.tryCatch(
-          () => transferFromCustodialWallet(body, args.web3, testnet, provider),
+          () => transferFromCustodialWallet({ body, web3, testnet, provider, addressTransformer }),
           SdkErrorCode.EVM_CUSTODIAL_CANNOT_PREPARE_TRANSFER_TX,
         ),
       /**
@@ -147,7 +192,7 @@ export const custodial = (args: {
         testnet?: boolean,
       ) =>
         evmBasedUtils.tryCatch(
-          () => batchTransferFromCustodialWallet(body, args.web3, testnet, provider),
+          () => batchTransferFromCustodialWallet({ body, web3, testnet, provider, addressTransformer }),
           SdkErrorCode.EVM_CUSTODIAL_CANNOT_PREPARE_TRANSFER_BATCH_TX,
         ),
       /**
@@ -158,7 +203,7 @@ export const custodial = (args: {
        */
       approveFromCustodialWallet: async (body: ChainApproveCustodialTransfer, provider?: string) =>
         evmBasedUtils.tryCatch(
-          () => approveFromCustodialWallet(body, args.web3, provider),
+          () => approveFromCustodialWallet({ body, web3, provider, addressTransformer }),
           SdkErrorCode.EVM_CUSTODIAL_CANNOT_PREPARE_APPROVE_TX,
         ),
       /**
@@ -175,7 +220,7 @@ export const custodial = (args: {
         testnet?: boolean,
       ) =>
         evmBasedUtils.tryCatch(
-          () => custodialWalletBatch(body, args.web3, testnet, provider),
+          () => custodialWalletBatch({ body, web3, testnet, provider, addressTransformer }),
           SdkErrorCode.EVM_CUSTODIAL_CANNOT_PREPARE_DEPLOY_TX,
         ),
     },
@@ -195,8 +240,8 @@ export const custodial = (args: {
         if (body.signatureId) {
           return GasPumpService.transferCustodialWallet(body as TransferCustodialWalletKMS)
         } else {
-          return args.broadcastFunction({
-            txData: await transferFromCustodialWallet(body, args.web3, testnet, provider),
+          return broadcastFunction({
+            txData: await transferFromCustodialWallet({ body, web3, testnet, provider, addressTransformer }),
           })
         }
       },
@@ -215,8 +260,14 @@ export const custodial = (args: {
         if (body.signatureId) {
           return GasPumpService.transferCustodialWalletBatch(body as TransferCustodialWalletBatchKMS)
         } else {
-          return args.broadcastFunction({
-            txData: await batchTransferFromCustodialWallet(body, args.web3, testnet, provider),
+          return broadcastFunction({
+            txData: await batchTransferFromCustodialWallet({
+              body,
+              web3,
+              testnet,
+              provider,
+              addressTransformer,
+            }),
           })
         }
       },
@@ -230,8 +281,8 @@ export const custodial = (args: {
         if (body.signatureId) {
           return GasPumpService.approveTransferCustodialWallet(body as ApproveTransferCustodialWalletKMS)
         } else {
-          return args.broadcastFunction({
-            txData: await approveFromCustodialWallet(body, args.web3, provider),
+          return broadcastFunction({
+            txData: await approveFromCustodialWallet({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -253,8 +304,8 @@ export const custodial = (args: {
         } else if ('signatureId' in body) {
           return GasPumpService.generateCustodialWalletBatch(body)
         } else {
-          return args.broadcastFunction({
-            txData: await custodialWalletBatch(body, args.web3, testnet, provider),
+          return broadcastFunction({
+            txData: await custodialWalletBatch({ body, web3, testnet, provider, addressTransformer }),
           })
         }
       },

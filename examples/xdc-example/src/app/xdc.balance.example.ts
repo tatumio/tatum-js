@@ -1,5 +1,4 @@
 import { TatumXdcSDK } from '@tatumio/xdc'
-import Web3 from 'web3'
 
 export async function xdcBalanceExample() {
   const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
@@ -12,5 +11,6 @@ export async function xdcBalanceExample() {
 
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGetBalance
   const { balance } = await xdcSDK.blockchain.getBlockchainAccountBalance(address)
+
   console.log(`My account has ${balance} xdc.`)
 }

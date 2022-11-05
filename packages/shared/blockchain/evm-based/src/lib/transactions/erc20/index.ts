@@ -13,30 +13,41 @@ import {
   ChainMintErc20,
   ChainTransferErc20,
 } from '@tatumio/shared-blockchain-abstract'
-import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { TransactionConfig } from 'web3-core'
 import { Erc20Token } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
-import { evmBasedUtils } from '../../evm-based.utils'
+import { AddressTransformer, AddressTransformerDefault, evmBasedUtils } from '../../evm-based.utils'
 
-const mintSignedTransaction = async (body: ChainMintErc20, web3: EvmBasedWeb3, provider?: string) => {
+const mintSignedTransaction = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainMintErc20
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
   // TODO: validation
   // await validateBody(body, MintErc20)
 
   const client = web3.getClient(provider, body.fromPrivateKey)
 
-  // TODO: any type
-  const contract = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim())
+  const contractAddress = addressTransformer(body.contractAddress.trim())
+  const to = addressTransformer(body.to.trim())
+
+  const contract = new client.eth.Contract(Erc20Token.abi as any, contractAddress)
 
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
   const data = contract.methods
-    .mint(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`)
+    .mint(to, `0x${new BigNumber(body.amount).multipliedBy(digits).toString(16)}`)
     .encodeABI()
 
   const tx: TransactionConfig = {
     from: 0,
-    to: body.contractAddress.trim(),
+    to: contractAddress,
     data,
     nonce: body.nonce,
   }
@@ -53,14 +64,26 @@ const mintSignedTransaction = async (body: ChainMintErc20, web3: EvmBasedWeb3, p
   )
 }
 
-const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, provider?: string) => {
+const burnSignedTransaction = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainBurnErc20
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
   // TODO: validation
   // await validateBody(body, BurnErc20)
 
   const client = web3.getClient(provider, body.fromPrivateKey)
 
+  const contractAddress = addressTransformer(body.contractAddress.trim())
+
   // TODO: any type
-  const contract = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim())
+  const contract = new client.eth.Contract(Erc20Token.abi as any, contractAddress)
 
   const digits = new BigNumber(10).pow(await contract.methods.decimals().call())
 
@@ -70,7 +93,7 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
 
   const tx: TransactionConfig = {
     from: 0,
-    to: body.contractAddress,
+    to: contractAddress,
     data,
     nonce: body.nonce,
   }
@@ -87,21 +110,34 @@ const burnSignedTransaction = async (body: ChainBurnErc20, web3: EvmBasedWeb3, p
   )
 }
 
-const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBasedWeb3, provider?: string) => {
+const transferSignedTransaction = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainTransferErc20
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
   // TODO
   // await validateBody(body, TransferErc20)
 
   const client = web3.getClient(provider, body.fromPrivateKey)
 
+  const contractAddress = addressTransformer(body.contractAddress.trim())
+  const to = addressTransformer(body.to.trim())
+
   const decimals = new BigNumber(10).pow(body.digits as number)
   // TODO
-  const data = new client.eth.Contract(Erc20Token.abi as any, body.contractAddress.trim().trim()).methods
-    .transfer(body.to.trim(), `0x${new BigNumber(body.amount).multipliedBy(decimals).toString(16)}`)
+  const data = new client.eth.Contract(Erc20Token.abi as any, contractAddress).methods
+    .transfer(to, `0x${new BigNumber(body.amount).multipliedBy(decimals).toString(16)}`)
     .encodeABI()
 
   const tx: TransactionConfig = {
     from: 0,
-    to: body.contractAddress,
+    to: contractAddress,
     data,
     nonce: body.nonce,
   }
@@ -118,12 +154,25 @@ const transferSignedTransaction = async (body: ChainTransferErc20, web3: EvmBase
   )
 }
 
-const deploySignedTransaction = async (body: ChainDeployErc20, web3: EvmBasedWeb3, provider?: string) => {
+const deploySignedTransaction = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainDeployErc20
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
   // TODO: validation
   // await validateBody(body, DeployErc20)
-  const { name, address, symbol, supply, digits, fromPrivateKey, nonce, signatureId, totalCap } = body
+  const { name, symbol, supply, digits, fromPrivateKey, nonce, signatureId, totalCap } = body
 
   const client = web3.getClient(provider, fromPrivateKey)
+
+  const address = addressTransformer(body.address.trim())
+
   // TODO
   const contract = new client.eth.Contract(Erc20Token.abi as any)
   const deploy = contract.deploy({
@@ -162,12 +211,25 @@ const decimals = async (contractAddress: string, web3: EvmBasedWeb3, provider?: 
   return new client.eth.Contract(Erc20Token.abi as any, contractAddress).methods.decimals().call()
 }
 
-const approveSignedTransaction = async (body: ChainApproveErc20, web3: EvmBasedWeb3, provider?: string) => {
+const approveSignedTransaction = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainApproveErc20
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
   const amount = new BigNumber(body.amount)
     .multipliedBy(new BigNumber(10).pow(await decimals(body.contractAddress, web3, provider)))
     .toString(16)
 
-  const params = [body.spender.trim(), `0x${amount}`]
+  const contractAddress = addressTransformer(body.contractAddress.trim())
+  const spender = addressTransformer(body.spender.trim())
+
+  const params = [spender, `0x${amount}`]
 
   const client = web3.getClient(provider, body.fromPrivateKey)
 
@@ -181,7 +243,7 @@ const approveSignedTransaction = async (body: ChainApproveErc20, web3: EvmBasedW
   const tx: TransactionConfig = {
     from: 0,
     data,
-    to: body.contractAddress,
+    to: contractAddress,
     nonce: body.nonce,
   }
 
@@ -197,10 +259,14 @@ const approveSignedTransaction = async (body: ChainApproveErc20, web3: EvmBasedW
   )
 }
 
-export const erc20 = (args: {
-  blockchain: EvmBasedBlockchain
+export const erc20 = ({
+  web3,
+  broadcastFunction,
+  addressTransformer = AddressTransformerDefault,
+}: {
   web3: EvmBasedWeb3
   broadcastFunction: BroadcastFunction
+  addressTransformer?: AddressTransformer // to automatically transform address to blockchain specific (e.g. 0x -> xdc, one)
 }) => {
   return {
     /**
@@ -209,10 +275,12 @@ export const erc20 = (args: {
      * @param provider optional provider
      */
     decimals: async (contractAddress: string, provider?: string) => {
-      const web3 = args.web3.getClient(provider)
+      const web3Client = web3.getClient(provider)
 
       // TODO: any type
-      return new web3.eth.Contract(Erc20Token.abi as any, contractAddress).methods.decimals().call()
+      return new web3Client.eth.Contract(Erc20Token.abi as any, addressTransformer(contractAddress)).methods
+        .decimals()
+        .call()
     },
     prepare: {
       /**
@@ -222,7 +290,7 @@ export const erc20 = (args: {
        * @returns transaction data to be broadcast to blockchain.
        */
       deploySignedTransaction: async (body: ChainDeployErc20, provider?: string) =>
-        deploySignedTransaction(body, args.web3, provider),
+        deploySignedTransaction({ body, web3, provider, addressTransformer }),
       /**
        * Sign transfer erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -230,7 +298,7 @@ export const erc20 = (args: {
        * @returns transaction data to be broadcast to blockchain.
        */
       transferSignedTransaction: async (body: ChainTransferErc20, provider?: string) =>
-        transferSignedTransaction(body, args.web3, provider),
+        transferSignedTransaction({ body, web3, provider, addressTransformer }),
       /**
        * Sign mint erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -238,7 +306,7 @@ export const erc20 = (args: {
        * @returns transaction data to be broadcast to blockchain.
        */
       mintSignedTransaction: async (body: ChainMintErc20, provider?: string) =>
-        mintSignedTransaction(body, args.web3, provider),
+        mintSignedTransaction({ body, web3, provider, addressTransformer }),
       /**
        * Sign burn erc20 transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -246,14 +314,14 @@ export const erc20 = (args: {
        * @returns transaction data to be broadcast to blockchain.
        */
       burnSignedTransaction: async (body: ChainBurnErc20, provider?: string) =>
-        burnSignedTransaction(body, args.web3, provider),
+        burnSignedTransaction({ body, web3, provider, addressTransformer }),
       /**
        * Prepare approve ERC20 signed transaction.
        * @param body body of the approve operation
        * @param provider optional Web3 provider
        */
       approveSignedTransaction: async (body: ChainApproveErc20, provider?: string) =>
-        approveSignedTransaction(body, args.web3, provider),
+        approveSignedTransaction({ body, web3, provider, addressTransformer }),
     },
     send: {
       /**
@@ -267,8 +335,8 @@ export const erc20 = (args: {
         if (body.signatureId) {
           return await FungibleTokensErc20OrCompatibleService.erc20Deploy(body as ChainDeployErc20KMS)
         } else {
-          return args.broadcastFunction({
-            txData: await deploySignedTransaction(body, args.web3, provider),
+          return broadcastFunction({
+            txData: await deploySignedTransaction({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -283,8 +351,8 @@ export const erc20 = (args: {
         if (body.signatureId) {
           return await FungibleTokensErc20OrCompatibleService.erc20Transfer(body as ChainTransferEthErc20KMS)
         } else {
-          return args.broadcastFunction({
-            txData: await transferSignedTransaction(body, args.web3, provider),
+          return broadcastFunction({
+            txData: await transferSignedTransaction({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -300,8 +368,8 @@ export const erc20 = (args: {
         if (body.signatureId) {
           return FungibleTokensErc20OrCompatibleService.erc20Mint(body as ChainMintErc20KMS)
         } else {
-          return args.broadcastFunction({
-            txData: await mintSignedTransaction(body, args.web3, provider),
+          return broadcastFunction({
+            txData: await mintSignedTransaction({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -316,8 +384,8 @@ export const erc20 = (args: {
         if (body.signatureId) {
           return FungibleTokensErc20OrCompatibleService.erc20Burn(body as ChainBurnErc20KMS)
         } else {
-          return args.broadcastFunction({
-            txData: await burnSignedTransaction(body, args.web3, provider),
+          return broadcastFunction({
+            txData: await burnSignedTransaction({ body, web3, provider, addressTransformer }),
           })
         }
       },

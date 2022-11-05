@@ -185,3 +185,7 @@ export type StoreDataTransactionBody = WithoutChain<CreateRecord> & {
   gasLimit?: string
   gasPrice?: string
 }
+
+// @TODO fix typing issue
+export type AddressTransformer = (address: any) => any
+export const AddressTransformerDefault = (address: any) => address

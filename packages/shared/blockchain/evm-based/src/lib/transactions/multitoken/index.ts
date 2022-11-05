@@ -9,23 +9,35 @@ import {
   ChainTransferMultiTokenBatch,
 } from '@tatumio/shared-blockchain-abstract'
 import { MultiTokensErc1155OrCompatibleService } from '@tatumio/api-client'
-import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
 import { Erc1155 } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
-import { evmBasedUtils } from '../../evm-based.utils'
+import { AddressTransformer, evmBasedUtils } from '../../evm-based.utils'
 import BigNumber from 'bignumber.js'
 
-const mintMultiToken = async (body: ChainMintMultiToken, web3: EvmBasedWeb3, provider?: string) => {
-  const { contractAddress, nonce, signatureId, fee, to, tokenId, fromPrivateKey, data, amount } = body
+const mintMultiToken = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainMintMultiToken
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
+  const { nonce, signatureId, fee, tokenId, fromPrivateKey, data, amount } = body
+  const contractAddress = addressTransformer(body.contractAddress.trim())
+  const to = addressTransformer(body.to.trim())
+
   const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
     from: 0,
-    to: contractAddress.trim(),
+    to: contractAddress,
     data: contract.methods
-      .mint(to.trim(), tokenId, `0x${new BigNumber(amount).toString(16)}`, data ? data : '0x0')
+      .mint(to, tokenId, `0x${new BigNumber(amount).toString(16)}`, data ? data : '0x0')
       .encodeABI(),
     nonce,
   }
@@ -42,8 +54,20 @@ const mintMultiToken = async (body: ChainMintMultiToken, web3: EvmBasedWeb3, pro
   )
 }
 
-const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, web3: EvmBasedWeb3, provider?: string) => {
-  const { fromPrivateKey, to, tokenId, contractAddress, nonce, data, fee, amounts, signatureId } = body
+const mintMultiTokenBatch = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainMintMultiTokenBatch
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
+  const { fromPrivateKey, tokenId, nonce, data, fee, amounts, signatureId } = body
+  const contractAddress = addressTransformer(body.contractAddress.trim())
+  const to = body.to?.map((a) => addressTransformer(a.trim()))
 
   const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
@@ -51,7 +75,7 @@ const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, web3: EvmBase
   const amts = amounts.map((amts) => amts.map((amt) => `0x${new BigNumber(amt).toString(16)}`))
   const tx: TransactionConfig = {
     from: 0,
-    to: contractAddress.trim(),
+    to: contractAddress,
     data: contract.methods.mintBatch(to, tokenId, amts, data ? data : '0x0').encodeABI(),
     nonce,
   }
@@ -68,7 +92,17 @@ const mintMultiTokenBatch = async (body: ChainMintMultiTokenBatch, web3: EvmBase
   )
 }
 
-const deployMultiToken = async (body: ChainDeployMultiToken, web3: EvmBasedWeb3, provider?: string) => {
+const deployMultiToken = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainDeployMultiToken
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
   const { fromPrivateKey, fee, uri, nonce, signatureId } = body
 
   const client = web3.getClient(provider, fromPrivateKey)
@@ -97,18 +131,30 @@ const deployMultiToken = async (body: ChainDeployMultiToken, web3: EvmBasedWeb3,
   )
 }
 
-const transferMultiToken = async (body: ChainTransferMultiToken, web3: EvmBasedWeb3, provider?: string) => {
-  const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, amount, data } = body
+const transferMultiToken = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainTransferMultiToken
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
+  const { fromPrivateKey, tokenId, fee, nonce, signatureId, amount, data } = body
+  const contractAddress = addressTransformer(body.contractAddress.trim())
+  const to = addressTransformer(body.to.trim())
 
   const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
     from: 0,
-    to: contractAddress.trim(),
+    to: contractAddress,
     data: contract.methods
       .safeTransfer(
-        to.trim(),
+        to,
         tokenId,
         // TODO: remove ! when type will be fixed
         `0x${new BigNumber(amount!).toString(16)}`,
@@ -130,12 +176,20 @@ const transferMultiToken = async (body: ChainTransferMultiToken, web3: EvmBasedW
   )
 }
 
-const transferMultiTokenBatch = async (
-  body: ChainTransferMultiTokenBatch,
-  web3: EvmBasedWeb3,
-  provider?: string,
-) => {
-  const { fromPrivateKey, to, tokenId, fee, contractAddress, nonce, signatureId, amounts, data } = body
+const transferMultiTokenBatch = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainTransferMultiTokenBatch
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
+  const { fromPrivateKey, tokenId, fee, nonce, signatureId, amounts, data } = body
+  const contractAddress = addressTransformer(body.contractAddress.trim())
+  const to = addressTransformer(body.to.trim())
 
   const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
@@ -143,10 +197,10 @@ const transferMultiTokenBatch = async (
 
   const tx: TransactionConfig = {
     from: 0,
-    to: contractAddress.trim(),
+    to: contractAddress,
     data: contract.methods
       .safeBatchTransfer(
-        to.trim(),
+        to,
         tokenId.map((token) => token.trim()),
         amts,
         data ? data : '0x0',
@@ -167,15 +221,27 @@ const transferMultiTokenBatch = async (
   )
 }
 
-const burnMultiToken = async (body: ChainBurnMultiToken, web3: EvmBasedWeb3, provider?: string) => {
-  const { fromPrivateKey, account, tokenId, amount, fee, contractAddress, nonce, signatureId } = body
+const burnMultiToken = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainBurnMultiToken
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
+  const { fromPrivateKey, tokenId, amount, fee, nonce, signatureId } = body
+  const contractAddress = addressTransformer(body.contractAddress.trim())
+  const account = addressTransformer(body.account.trim())
 
   const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
     from: 0,
-    to: contractAddress.trim(),
+    to: contractAddress,
     data: contract.methods.burn(account, tokenId, amount).encodeABI(),
     nonce,
   }
@@ -192,15 +258,27 @@ const burnMultiToken = async (body: ChainBurnMultiToken, web3: EvmBasedWeb3, pro
   )
 }
 
-const burnMultiTokenBatch = async (body: ChainBurnMultiTokenBatch, web3: EvmBasedWeb3, provider?: string) => {
-  const { fromPrivateKey, account, tokenId, amounts, fee, contractAddress, nonce, signatureId } = body
+const burnMultiTokenBatch = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainBurnMultiTokenBatch
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
+  const { fromPrivateKey, tokenId, amounts, fee, nonce, signatureId } = body
+  const contractAddress = addressTransformer(body.contractAddress.trim())
+  const account = addressTransformer(body.account.trim())
 
   const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(Erc1155.abi as any, contractAddress)
 
   const tx: TransactionConfig = {
     from: 0,
-    to: contractAddress.trim(),
+    to: contractAddress,
     data: contract.methods.burnBatch(account, tokenId, amounts).encodeABI(),
     nonce,
   }
@@ -217,10 +295,14 @@ const burnMultiTokenBatch = async (body: ChainBurnMultiTokenBatch, web3: EvmBase
   )
 }
 
-export const multiToken = (args: {
-  blockchain: EvmBasedBlockchain
+export const multiToken = ({
+  web3,
+  broadcastFunction,
+  addressTransformer = (address: string) => address,
+}: {
   web3: EvmBasedWeb3
   broadcastFunction: BroadcastFunction
+  addressTransformer?: AddressTransformer // to automatically transform address to blockchain specific (e.g. 0x -> xdc, one)
 }) => {
   return {
     prepare: {
@@ -231,7 +313,7 @@ export const multiToken = (args: {
        * @returns transaction data to be broadcast to blockchain.
        */
       mintMultiTokenTransaction: async (body: ChainMintMultiToken, provider?: string) =>
-        mintMultiToken(body, args.web3, provider),
+        mintMultiToken({ body, web3, provider, addressTransformer }),
       /**
        * Sign mint MultiToken batch transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -239,7 +321,7 @@ export const multiToken = (args: {
        * @returns transaction data to be broadcast to blockchain.
        */
       mintMultiTokenBatchTransaction: async (body: ChainMintMultiTokenBatch, provider?: string) =>
-        mintMultiTokenBatch(body, args.web3, provider),
+        mintMultiTokenBatch({ body, web3, provider, addressTransformer }),
       /**
        * Send MultiToken transaction with private keys locally. Nothing is broadcast to the blockchain.
        * This operation is irreversible.
@@ -248,7 +330,7 @@ export const multiToken = (args: {
        * @returns transaction id of the transaction in the blockchain
        */
       transferMultiTokenTransaction: async (body: ChainTransferMultiToken, provider?: string) =>
-        transferMultiToken(body, args.web3, provider),
+        transferMultiToken({ body, web3, provider, addressTransformer }),
       /**
        * Send MultiToken batch transaction with private keys locally. Nothing is broadcast to the blockchain.
        * This operation is irreversible.
@@ -257,7 +339,7 @@ export const multiToken = (args: {
        * @returns transaction id of the transaction in the blockchain
        */
       transferMultiTokenBatchTransaction: async (body: ChainTransferMultiTokenBatch, provider?: string) =>
-        transferMultiTokenBatch(body, args.web3, provider),
+        transferMultiTokenBatch({ body, web3, provider, addressTransformer }),
       /**
        * Sign deploy MultiToken transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -265,7 +347,7 @@ export const multiToken = (args: {
        * @returns transaction data to be broadcast to blockchain.
        */
       deployMultiTokenTransaction: async (body: ChainDeployMultiToken, provider?: string) =>
-        deployMultiToken(body, args.web3, provider),
+        deployMultiToken({ body, web3, provider, addressTransformer }),
       /**
        * Sign burn MultiToken transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -273,7 +355,7 @@ export const multiToken = (args: {
        * @returns transaction data to be broadcast to blockchain.
        */
       burnMultiTokenTransaction: async (body: ChainBurnMultiToken, provider?: string) =>
-        burnMultiToken(body, args.web3, provider),
+        burnMultiToken({ body, web3, provider, addressTransformer }),
       /**
        * Sign burn MultiToken batch transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -281,7 +363,7 @@ export const multiToken = (args: {
        * @returns transaction data to be broadcast to blockchain.
        */
       burnMultiTokenBatchTransaction: async (body: ChainBurnMultiTokenBatch, provider?: string) =>
-        burnMultiTokenBatch(body, args.web3, provider),
+        burnMultiTokenBatch({ body, web3, provider, addressTransformer }),
     },
     send: {
       /**
@@ -295,8 +377,8 @@ export const multiToken = (args: {
           // TODO: find better type
           return MultiTokensErc1155OrCompatibleService.mintMultiToken(body as any)
         } else {
-          return args.broadcastFunction({
-            txData: (await mintMultiToken(body, args.web3, provider)) as string,
+          return broadcastFunction({
+            txData: (await mintMultiToken({ body, web3, provider, addressTransformer })) as string,
           })
         }
       },
@@ -311,8 +393,8 @@ export const multiToken = (args: {
           // TODO: find better type
           return MultiTokensErc1155OrCompatibleService.mintMultiTokenBatch(body as any)
         } else {
-          return args.broadcastFunction({
-            txData: (await mintMultiTokenBatch(body, args.web3, provider)) as string,
+          return broadcastFunction({
+            txData: (await mintMultiTokenBatch({ body, web3, provider, addressTransformer })) as string,
           })
         }
       },
@@ -328,8 +410,8 @@ export const multiToken = (args: {
           // TODO: find better type
           return MultiTokensErc1155OrCompatibleService.transferMultiToken(body as any)
         } else {
-          return args.broadcastFunction({
-            txData: (await transferMultiToken(body, args.web3, provider)) as string,
+          return broadcastFunction({
+            txData: (await transferMultiToken({ body, web3, provider, addressTransformer })) as string,
           })
         }
       },
@@ -345,8 +427,8 @@ export const multiToken = (args: {
           // TODO: find better type
           return MultiTokensErc1155OrCompatibleService.transferMultiTokenBatch(body as any)
         } else {
-          return args.broadcastFunction({
-            txData: (await transferMultiTokenBatch(body, args.web3, provider)) as string,
+          return broadcastFunction({
+            txData: (await transferMultiTokenBatch({ body, web3, provider, addressTransformer })) as string,
           })
         }
       },
@@ -361,8 +443,8 @@ export const multiToken = (args: {
           // TODO: find better type
           return MultiTokensErc1155OrCompatibleService.deployMultiToken(body as any)
         } else {
-          return args.broadcastFunction({
-            txData: (await deployMultiToken(body, args.web3, provider)) as string,
+          return broadcastFunction({
+            txData: (await deployMultiToken({ body, web3, provider, addressTransformer })) as string,
           })
         }
       },
@@ -377,8 +459,8 @@ export const multiToken = (args: {
           // TODO: find better type
           return MultiTokensErc1155OrCompatibleService.burnMultiToken(body as any)
         } else {
-          return args.broadcastFunction({
-            txData: (await burnMultiToken(body, args.web3, provider)) as string,
+          return broadcastFunction({
+            txData: (await burnMultiToken({ body, web3, provider, addressTransformer })) as string,
           })
         }
       },
@@ -393,8 +475,8 @@ export const multiToken = (args: {
           // TODO: find better type
           return MultiTokensErc1155OrCompatibleService.burnMultiTokenBatch(body as any)
         } else {
-          return args.broadcastFunction({
-            txData: (await burnMultiTokenBatch(body, args.web3, provider)) as string,
+          return broadcastFunction({
+            txData: (await burnMultiTokenBatch({ body, web3, provider, addressTransformer })) as string,
           })
         }
       },

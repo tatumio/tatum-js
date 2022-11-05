@@ -1,5 +1,5 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing-common'
-import { TatumXdcSDK } from '@tatumio/xdc'
+import { TatumXdcSDK } from '../xdc.sdk'
 
 describe('XDC wallet', () => {
   const sdk = TatumXdcSDK({
