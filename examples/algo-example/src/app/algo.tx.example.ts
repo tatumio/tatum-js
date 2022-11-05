@@ -1,40 +1,33 @@
-import { TatumAlgoSDK } from '@tatumio/algo'
+import { TatumAlgoSDK, TransferAlgoBlockchain } from "@tatumio/algo";
 import { TransactionHash } from '@tatumio/api-client'
-import { sdkArguments } from '../index'
+import { algoAddress, algoSecret, isTestnet, sdkArguments } from "../index";
 
 export async function algoTxExample() {
   const algoSDK = TatumAlgoSDK(sdkArguments)
 
   // generate "from" and "to" addresses for wallets
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet
-  const { address, secret } = algoSDK.wallet.generateWallet()
+  // const { address, secret } = algoSDK.wallet.generateWallet()
+  const address = algoAddress
+  const secret = algoSecret
   const privateKey = secret
   const recipientAddress = algoSDK.wallet.generateWallet()
   const to = recipientAddress.address
+
+  // @TODO: remove
+  // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGetBalance
+  const { balance } = await algoSDK.blockchain.getBlockchainAccountBalance(address)
+  console.log(`Account ${address} has ${balance} ALGOs.`)
 
   // FUND YOUR ACCOUNT WITH ALGOs FROM https://bank.testnet.algorand.network/
 
   // Send Algos to an Algorand account using private key
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainTransfer
-  const sentAlgoTransaction = (await algoSDK.transaction.send.signedTransaction({
-    amount: '1',
-    privateKey,
-    address: to,
-    account: address,
-    fee: '0.001',
-  })) as TransactionHash
-  console.log(`Transaction using private key with ID ${sentAlgoTransaction.txId} was sent`)
-
-  const signatureId = '26d3883e-4e17-48b3-a0ee-09a3e484ac83'
-  // Send Algos to an Algorand account using signatureId
-  // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainTransfer
-  const sentAlgoSignedTransactionKms = (await algoSDK.transaction.send.signedTransaction({
-    amount: '10',
-    signatureId,
-    address: to,
-    account: address,
-    from: address,
-    fee: '0.001',
-  })) as TransactionHash
-  console.log(`Transaction with ID ${sentAlgoSignedTransactionKms.txId} was sent`)
+  const txData = (await algoSDK.transaction.signedTransaction({
+    amount: '0.1',
+    fromPrivateKey: privateKey,
+    to,
+    // fee: '0.001',
+  } as TransferAlgoBlockchain, isTestnet)) as TransactionHash
+  console.log(`Transaction using private key with ID ${txData.txId} is prepared to send`)
 }
