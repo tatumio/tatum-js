@@ -50,7 +50,7 @@ export async function ltcBlockchainExample() {
   // Get information about UTXO in a LTC transaction.
   // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcGetUTXO
   const utxo = await ltcSDK.blockchain.getUTXO(
-    '4bf8135258bc96ef240078add0cbfdeebde9b5e60b9019dcfe4c413354bbca27',
+    '05c6f6f58567737296e2f93f4b4be607e199e20be5c13f7d3affdde3174a94db',
     0,
   )
   console.log(`UTXO: ${JSON.stringify(utxo)}`)

@@ -1,6 +1,7 @@
 import { TatumBtcSDK } from '@tatumio/btc'
+import { BtcTransactionFromAddress } from '@tatumio/api-client'
 
-export async function btcFromAddressTransactionsExample() {
+export async function btcBroadcastTransactionsExample() {
   const btcSDK = TatumBtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
   const REPLACE_ME_WITH_PRIVATE_KEY = ''
 
@@ -21,10 +22,11 @@ export async function btcFromAddressTransactionsExample() {
 
   const options = { testnet: true }
 
-  // Send BTC to a blockchain address
-  // This example requires a funded blockchain address, you can top up your testnet balance with https://testnet-faucet.com/BTC-testnet/
-  // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/BTCTransferBlockchain
-  const txData = await btcSDK.transaction.sendTransaction(
+  // Prepare and broadcast BTC transaction to the blockchain.
+  // First we prepare the signed TX data to be used for the broadcast.
+  // Account balance is needed for the transfer to work, you can top up your testnet BTC balance with https://testnet-faucet.com/BTC-testnet/
+  // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/BTCBroadcast
+  const signedTxData = await btcSDK.transaction.prepareSignedTransaction(
     {
       fromAddress: [
         {
@@ -40,8 +42,11 @@ export async function btcFromAddressTransactionsExample() {
       ],
       fee: fee,
       changeAddress: changeAddress,
-    },
+    } as BtcTransactionFromAddress,
     options,
   )
-  console.log(`TX: ${JSON.stringify(txData)}`)
+  const broadcastTx = await btcSDK.blockchain.broadcast({
+    txData: signedTxData,
+  })
+  console.log(`Broadcast TX: ${JSON.stringify(broadcastTx)}`)
 }
