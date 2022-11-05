@@ -1,7 +1,7 @@
-import { MintNftAlgorand, TatumAlgoSDK } from "@tatumio/algo";
+import { MintNftAlgorand, TatumAlgoSDK } from '@tatumio/algo'
 import { Currency, TransactionHash } from '@tatumio/api-client'
 import { BigNumber } from 'bignumber.js'
-import { algoAddress, algoSecret, isTestnet, sdkArguments } from "../index";
+import { algoAddress, algoSecret, isTestnet, sdkArguments } from '../index'
 
 export async function algoNftExpressExample() {
   const algoSDK = TatumAlgoSDK(sdkArguments)
@@ -22,15 +22,18 @@ export async function algoNftExpressExample() {
 
   // Mint NFTs on the pre-built smart contract provided by Tatum
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftMintErc721
-  const nftMinted = (await algoSDK.token.nft.createNFTSignedTransaction({
-    // chain: Currency.ALGO,
-    name: 'HELLO-ALGO',
-    // uploaded metadata from ipfs from tutorial above
-    url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
-    attr: {
-      manager: address,
-    },
-  } as MintNftAlgorand, isTestnet)) as TransactionHash
+  const nftMinted = (await algoSDK.token.nft.createNFTSignedTransaction(
+    {
+      // chain: Currency.ALGO,
+      name: 'HELLO-ALGO',
+      // uploaded metadata from ipfs from tutorial above
+      url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
+      attr: {
+        manager: address,
+      },
+    } as MintNftAlgorand,
+    isTestnet,
+  )) as TransactionHash
   console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
 
   // fetch deployed contract address from transaction hash
@@ -41,20 +44,26 @@ export async function algoNftExpressExample() {
   // Enable receiving asset on account
   // https://docs.tatum.io/nft-express/use-nft-express-to-mint-nfts-on-algorand
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset
-  const assetEnabled = (await algoSDK.token.receiveAsset({
-    assetId: new BigNumber(contractAddress).toNumber(),
-    fromPrivateKey: recipientAddress.secret,
-  }, isTestnet)) as TransactionHash
+  const assetEnabled = (await algoSDK.token.receiveAsset(
+    {
+      assetId: new BigNumber(contractAddress).toNumber(),
+      fromPrivateKey: recipientAddress.secret,
+    },
+    isTestnet,
+  )) as TransactionHash
   console.log(`Enabled nft with transaction hash: ${assetEnabled.txId}`)
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
-  const nftTransferred = (await algoSDK.token.nft.transferNFTSignedTransaction({
-    to,
-    value: '1',
-    contractAddress,
-    fromPrivateKey,
-  }, isTestnet)) as TransactionHash
+  const nftTransferred = (await algoSDK.token.nft.transferNFTSignedTransaction(
+    {
+      to,
+      value: '1',
+      contractAddress,
+      fromPrivateKey,
+    },
+    isTestnet,
+  )) as TransactionHash
   console.log(`Transferred nft with transaction hash: ${nftTransferred.txId}`)
 
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.

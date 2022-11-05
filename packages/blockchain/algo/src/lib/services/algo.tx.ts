@@ -23,8 +23,8 @@ import {
   TransferAlgorandBlockchainKMS as ApiTransferAlgorandBlockchainKMS,
   TransferNftAlgoExpress as ApiTransferNftAlgoExpress,
   ChainBurnErc20KMS as ApiChainBurnErc20KMS,
-  ChainBurnErc20 as ApiChainBurnErc20
-} from "@tatumio/api-client";
+  ChainBurnErc20 as ApiChainBurnErc20,
+} from '@tatumio/api-client'
 import { AlgoWeb } from './algo.web'
 import * as algosdk from 'algosdk'
 // No types for base32.js
@@ -89,14 +89,14 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
         code: SdkErrorCode.INSUFFICIENT_FUNDS,
         originalError: {
           name: SdkErrorCode.INSUFFICIENT_FUNDS,
-          message: `Insufficient funds to create transaction from sender account ${
-            from
-          } -> available balance is ${accountBalance.toString()}, required balance is ${requiredBalance.toString()}.`,
+          message: `Insufficient funds to create transaction from sender account ${from} -> available balance is ${accountBalance.toString()}, required balance is ${requiredBalance.toString()}.`,
         },
       })
     }
 
-    console.log(`balance: ${balance} testnet: ${testnet} provider: ${provider} algoWeb: ${JSON.stringify(algoWeb)}`)
+    console.log(
+      `balance: ${balance} testnet: ${testnet} provider: ${provider} algoWeb: ${JSON.stringify(algoWeb)}`,
+    )
 
     const algodClient = algoWeb.getClient(testnet, provider)
     const params = await algodClient.getTransactionParams().do()
@@ -202,7 +202,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       undefined,
     )
 
-    if (isWithSignatureId((body as any))) {
+    if (isWithSignatureId(body as any)) {
       return JSON.stringify(txn)
     }
 
@@ -697,7 +697,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
               to: body.address,
               amount: new BigNumber(body.amount).multipliedBy(10 ** (vc.precision || 0)).toString(),
               contractAddress: vc.erc20Address as string,
-              fee: body.fee
+              fee: body.fee,
             } as ChainTransferAlgoErc20,
             testnet,
             args.algoWeb,

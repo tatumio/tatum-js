@@ -2,8 +2,8 @@ import * as algosdk from 'algosdk'
 import Url from 'url-parse'
 import { Currency, TATUM_API_CONSTANTS } from '@tatumio/api-client'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
-import AlgodClient from "algosdk/dist/types/src/client/v2/algod/algod";
-import IndexerClient from "algosdk/dist/types/src/client/v2/indexer/indexer";
+import AlgodClient from 'algosdk/dist/types/src/client/v2/algod/algod'
+import IndexerClient from 'algosdk/dist/types/src/client/v2/indexer/indexer'
 
 export interface AlgoWeb {
   /**
@@ -32,9 +32,14 @@ export const algoWeb = (args: SDKArguments): AlgoWeb => {
         const endpoint = `${args.url || TATUM_API_CONSTANTS.URL}/${
           TATUM_API_CONSTANTS.API_VERSION
         }/blockchain/node/${Currency.ALGO}/${args.apiKey}`
-        return new algosdk.Algodv2({
-          nodeType: 'ALGOD', [TATUM_API_CONSTANTS.HEADER_API_KEY]: args.apiKey,
-        }, endpoint, '')
+        return new algosdk.Algodv2(
+          {
+            nodeType: 'ALGOD',
+            [TATUM_API_CONSTANTS.HEADER_API_KEY]: args.apiKey,
+          },
+          endpoint,
+          '',
+        )
       }
     },
     getIndexerClient: (testnet: boolean, provider?: string): IndexerClient => {
@@ -44,9 +49,14 @@ export const algoWeb = (args: SDKArguments): AlgoWeb => {
         const endpoint = `${args.url || TATUM_API_CONSTANTS.URL}/${
           TATUM_API_CONSTANTS.API_VERSION
         }/blockchain/node/${Currency.ALGO}/${args.apiKey}`
-        return new algosdk.Indexer({
-          nodeType: 'INDEXER', [TATUM_API_CONSTANTS.HEADER_API_KEY]: args.apiKey,
-        }, endpoint, '')
+        return new algosdk.Indexer(
+          {
+            nodeType: 'INDEXER',
+            [TATUM_API_CONSTANTS.HEADER_API_KEY]: args.apiKey,
+          },
+          endpoint,
+          '',
+        )
       }
     },
   }

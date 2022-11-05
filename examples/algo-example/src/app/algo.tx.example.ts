@@ -1,6 +1,6 @@
-import { TatumAlgoSDK, TransferAlgoBlockchain } from "@tatumio/algo";
+import { TatumAlgoSDK, TransferAlgoBlockchain } from '@tatumio/algo'
 import { TransactionHash } from '@tatumio/api-client'
-import { algoAddress, algoSecret, isTestnet, sdkArguments } from "../index";
+import { algoAddress, algoSecret, isTestnet, sdkArguments } from '../index'
 
 export async function algoTxExample() {
   const algoSDK = TatumAlgoSDK(sdkArguments)
@@ -23,11 +23,14 @@ export async function algoTxExample() {
 
   // Send Algos to an Algorand account using private key
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainTransfer
-  const txData = (await algoSDK.transaction.signedTransaction({
-    amount: '0.1',
-    fromPrivateKey: privateKey,
-    to,
-    // fee: '0.001',
-  } as TransferAlgoBlockchain, isTestnet)) as TransactionHash
+  const txData = (await algoSDK.transaction.signedTransaction(
+    {
+      amount: '0.1',
+      fromPrivateKey: privateKey,
+      to,
+      // fee: '0.001',
+    } as TransferAlgoBlockchain,
+    isTestnet,
+  )) as TransactionHash
   console.log(`Transaction using private key with ID ${txData.txId} is prepared to send`)
 }

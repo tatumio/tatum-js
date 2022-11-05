@@ -17,13 +17,14 @@ export const sdkArguments: SDKArguments = {
   apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab',
   url: 'http://127.0.0.1:3000',
   // url: 'https://api.tatum.io',
-  provider: ''
+  provider: '',
 }
 
 export const isTestnet = true
 
 export const algoAddress = '52NRXAHUDA5RKC7Q6YYJHBINGTJB7NXLUVY3CSKOBLLNLTKCN2NGPRGTN4'
-export const algoSecret = 'GDNQECUM2JDPTA4KXNSXHQBAYL56FDZ73NXCQ2OLB32PN2G5BLNO5GY3QD2BQOYVBPYPMMETQUGTJUQ7W3V2K4NRJFHAVVWVZVBG5GQ'
+export const algoSecret =
+  'GDNQECUM2JDPTA4KXNSXHQBAYL56FDZ73NXCQ2OLB32PN2G5BLNO5GY3QD2BQOYVBPYPMMETQUGTJUQ7W3V2K4NRJFHAVVWVZVBG5GQ'
 
 const examples = async () => {
   console.log(`\nRunning algoBalanceExample`)
