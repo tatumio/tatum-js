@@ -38,7 +38,7 @@ export const algoWeb = (args: SDKArguments): AlgoWeb => {
         }/blockchain/node/${Currency.ALGO}/${args.apiKey}`
         return new algosdk.Algodv2(
           {
-            nodeType: AlgoNodeType.ALGOD,
+            [TATUM_API_CONSTANTS.NODE_TYPE_KEY]: AlgoNodeType.ALGOD,
             [TATUM_API_CONSTANTS.HEADER_API_KEY]: args.apiKey,
           },
           endpoint,
@@ -55,7 +55,7 @@ export const algoWeb = (args: SDKArguments): AlgoWeb => {
         }/blockchain/node/${Currency.ALGO}/${args.apiKey}`
         return new algosdk.Indexer(
           {
-            nodeType: AlgoNodeType.INDEXER,
+            [TATUM_API_CONSTANTS.NODE_TYPE_KEY]: AlgoNodeType.INDEXER,
             [TATUM_API_CONSTANTS.HEADER_API_KEY]: args.apiKey,
           },
           endpoint,

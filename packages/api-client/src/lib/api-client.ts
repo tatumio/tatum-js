@@ -55,6 +55,7 @@ export type TatumUrlArg = string
 export const TATUM_API_CONSTANTS = {
   URL: 'https://api.tatum.io',
   HEADER_API_KEY: 'x-api-key',
+  NODE_TYPE_KEY: 'x-node-type',
   API_VERSION: 'v3',
   API_KEY: '',
   TRON_PRO_API_KEY: '',
