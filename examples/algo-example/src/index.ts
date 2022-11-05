@@ -15,9 +15,10 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 
 export const sdkArguments: SDKArguments = {
   apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab',
-  url: 'http://127.0.0.1:3000',
-  // url: 'https://api.tatum.io',
-  provider: '',
+  // // url: 'http://127.0.0.1:3000',
+  // // url: 'https://api.tatum.io',
+  // url: 'https://api.tatum.io/v3/blockchain/node/ALGO',
+  // provider: 'https://api.tatum.io/v3/blockchain/node/ALGO',
 }
 
 export const isTestnet = true

@@ -5,6 +5,11 @@ import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import AlgodClient from 'algosdk/dist/types/src/client/v2/algod/algod'
 import IndexerClient from 'algosdk/dist/types/src/client/v2/indexer/indexer'
 
+export enum AlgoNodeType {
+  ALGOD = 'ALGOD',
+  INDEXER = 'INDEXER',
+}
+
 export interface AlgoWeb {
   /**
    * Algod V2 Client
@@ -25,7 +30,6 @@ export interface AlgoWeb {
 export const algoWeb = (args: SDKArguments): AlgoWeb => {
   return {
     getClient: (testnet: boolean, provider?: string): AlgodClient => {
-      console.log(`getClient ${testnet} ${provider}`)
       if (provider) {
         return new algosdk.Algodv2('', provider, Url(provider).port)
       } else {
@@ -34,7 +38,7 @@ export const algoWeb = (args: SDKArguments): AlgoWeb => {
         }/blockchain/node/${Currency.ALGO}/${args.apiKey}`
         return new algosdk.Algodv2(
           {
-            nodeType: 'ALGOD',
+            nodeType: AlgoNodeType.ALGOD,
             [TATUM_API_CONSTANTS.HEADER_API_KEY]: args.apiKey,
           },
           endpoint,
@@ -51,7 +55,7 @@ export const algoWeb = (args: SDKArguments): AlgoWeb => {
         }/blockchain/node/${Currency.ALGO}/${args.apiKey}`
         return new algosdk.Indexer(
           {
-            nodeType: 'INDEXER',
+            nodeType: AlgoNodeType.INDEXER,
             [TATUM_API_CONSTANTS.HEADER_API_KEY]: args.apiKey,
           },
           endpoint,

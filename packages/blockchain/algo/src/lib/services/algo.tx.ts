@@ -94,13 +94,8 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       })
     }
 
-    console.log(
-      `balance: ${balance} testnet: ${testnet} provider: ${provider} algoWeb: ${JSON.stringify(algoWeb)}`,
-    )
-
     const algodClient = algoWeb.getClient(testnet, provider)
     const params = await algodClient.getTransactionParams().do()
-    console.log(`client: ${algodClient} params: ${params}`)
 
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const enc = new TextEncoder()
@@ -117,7 +112,6 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
         flatFee: true,
       },
     )
-    console.log(`bodyn: ${JSON.stringify(bodyn)}`)
 
     if (isWithSignatureId(body as any)) {
       return JSON.stringify(bodyn)

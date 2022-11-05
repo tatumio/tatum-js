@@ -27,7 +27,6 @@ export const TatumAlgoSDK = (
     wallet: algoWallet(),
     transaction: txService.native.send,
     token: {
-      // asset: txService.asset,
       receiveAsset: txService.asset.send.receive,
       fungible: {
         ...txService.fungible,
@@ -37,9 +36,6 @@ export const TatumAlgoSDK = (
       },
       nft: {
         ...txService.nft.send,
-        // mintNFT,
-        // transferNFT,
-        // burnNFT,
         getNFTAccountBalance,
         getNFTContractAddress,
       },
