@@ -9,7 +9,7 @@ These examples should guide you through some basic operations of the KLAYTN bloc
 - check the balance of your wallet
 
 - generate virtual account for KLAYTN
-- assign deposit address to virtual account
+- generate deposit address for virtual account
 
 ## How to start
 
@@ -67,7 +67,7 @@ const gasPriceInWei = await klaytnSDK.getGasPriceInWei()
 const web3 = klaytnSDK.web3Client()
 
 const blockNumber = web3.eth.getBlockNumber()
-const balance = web3.eth.getTransactionFromBlock(blockNumber)
+const { balance } = await klaytnSDK.blockchain.getBlockchainAccountBalance('0xec0797cc5d3ba8e4e8f2019f6e56fad103f8c7c9')
 ```
 
 ### How to check balance of the address

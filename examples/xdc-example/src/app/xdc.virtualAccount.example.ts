@@ -8,7 +8,7 @@ export async function xdcVirtualAccountExample() {
   const { mnemonic, xpub } = await xdcSDK.wallet.generateWallet()
 
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateAddressPrivateKey
-  const privateKey = await xdcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const privateKey = await xdcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1)
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateAddress
   const to = xdcSDK.wallet.generateAddressFromXPub(xpub, 1)
 
@@ -27,7 +27,7 @@ export async function xdcVirtualAccountExample() {
   console.log(`Deposit address`, depositAddress.address)
 
   // FUND YOUR ACCOUNT WITH XDC FROM https://faucet.apothem.network/
-  console.log(`Fund me ${depositAddress.address} to send offchain transaction!`)
+  console.log(`Fund me ${depositAddress.address} to send blockchain assets from virtual account`)
 
   // I wanna send assets from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/XdcTransfer

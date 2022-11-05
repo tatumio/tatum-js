@@ -2,10 +2,11 @@ import { TatumXdcSDK } from '@tatumio/xdc'
 
 const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-export async function xdcTxWithSignatureIdExample(): Promise<void> {
+export async function xdcTxExample(): Promise<void> {
   // if you don't already have a wallet, address and private key - generate them
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateWallet
   const { mnemonic, xpub } = await xdcSDK.wallet.generateWallet()
+
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateAddressPrivateKey
   const fromPrivateKey = await xdcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
 

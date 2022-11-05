@@ -8,7 +8,7 @@ These examples should guide you through some basic operations of the Algorand bl
 - send ALGO to another wallet
 - check the balance of your wallet
 - generate virtual account
-- assign deposit address to virtual account
+- generate deposit address for virtual account
 - create subscription for virtual account to be notified about transactions
 - mint, transfer and burn NFT and ASA (ERC20) tokens
 

@@ -9,7 +9,7 @@ These examples should guide you through some basic operations of the XLM blockch
 - check the balance of your wallet
 
 - generate virtual account for XLM
-- assign deposit address to virtual account
+- generate deposit address for virtual account
 
 ## How to start
 

@@ -9,7 +9,7 @@ These examples should guide you through some basic operations of the XDC blockch
 - check the balance of your wallet
 - How to send transaction using kms
 - generate virtual account for XDC
-- assign deposit address to virtual account
+- generate deposit address for virtual account
 
 ## How to start
 
@@ -62,7 +62,7 @@ const web3response = await xdcSDK.httpDriver({
 const gasPriceInWei = await xdcSDK.getGasPriceInWei()
 const web3 = xdcSDK.web3Client()
 const blockNumber = web3.eth.getBlockNumber()
-const balance = web3.eth.getTransactionFromBlock(blockNumber)
+const { balance } = await xdcSDK.blockchain.getBlockchainAccountBalance('xdce73f05a8b3b28e1afec4ab759101e79b28542440')
 ```
 
 ### How to check balance of the address

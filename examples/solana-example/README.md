@@ -14,7 +14,7 @@ These examples should guide you through some basic operations of the Solana bloc
 - deploy SPL
 
 - generate virtual account for Solana
-- assign deposit address to virtual account
+- generate deposit address for virtual account
 - subscribe to webhook notifications
 
 - build transaction
