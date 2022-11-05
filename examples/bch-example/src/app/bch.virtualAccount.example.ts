@@ -91,14 +91,6 @@ export async function bchVirtualAccountExample() {
   const account = await bchSDK.virtualAccount.depositAddress.checkExists(address.address)
   console.log(account)
 
-  // Assign a blockchain address to a virtual account
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/assignAddress
-  const assignedAddress = await bchSDK.virtualAccount.depositAddress.assign(
-    virtualAccount.id,
-    '7c21ed165e294db78b95f0f181086d6f',
-  )
-  console.log(assignedAddress)
-
   // Get all deposit addresses for a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/getAllDepositAddresses
   const addressByAccount = await bchSDK.virtualAccount.depositAddress.getByAccount(virtualAccount.id)
