@@ -5,9 +5,9 @@ These examples should guide you through some basic operations of the LTC blockch
 - generate LTC wallet
 - send LTC to another wallet
 - check the balance of your wallet
-
+- subscribe for events
 - generate virtual account for LTC
-- assign deposit address to virtual account
+- generate deposit addresses for virtual account
 
 ## How to start
 
@@ -63,7 +63,7 @@ You can find examples [here](./src/app/ltc.tx.fromAddress.example.ts).
 
 You can find examples [here](./src/app/ltc.tx.fromUtxo.example.ts).
 
-### How to setup webhooks
+### How to setup subscriptions for events
 
 You can find examples [here](./src/app/ltc.subscriptions.example.ts).
 
