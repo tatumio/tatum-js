@@ -1,7 +1,5 @@
 # How to use TatumSDK with Polygon
 
-This is an example of a README.md file for a project.
-
 These examples should guide you through some basic operations of the Polygon blockchain. You will be able to:
 
 - generate wallet

@@ -34969,6 +34969,13 @@
                   "format": "uuid",
                   "example": "1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6",
                   "description": "The KMS identifier of the private key of the blockchain address that holds the UTXO to be spent"
+                },
+                "signatureIdIndex": {
+                  "description": "(Only if the signature ID is mnemonic-based) The index of the address that holds the UTXO to be spent that was generated from the mnemonic",
+                  "type": "number",
+                  "example": 0,
+                  "minimum": 0,
+                  "maximum": 2147483647
                 }
               }
             }
@@ -35052,7 +35059,7 @@
             "items": {
               "type": "object",
               "properties": {
-                "value": { "type": "string", "example": "50.00000000" },
+                "value": { "type": "number", "example": 50 },
                 "n": { "type": "number", "example": 0 },
                 "scriptPubKey": {
                   "properties": {
