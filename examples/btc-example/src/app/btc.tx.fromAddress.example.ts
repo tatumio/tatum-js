@@ -22,8 +22,8 @@ export async function btcFromAddressTransactionsExample() {
   const options = { testnet: true }
 
   // Send BTC to a blockchain address
-  // This example requires a funded blockchain address, you can top up your testnet balance with https://testnet-faucet.com/BTC-testnet/
-  // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/BTCTransferBlockchain
+  // This example requires a funded blockchain address, you can top up your testnet balance with https://testnet-faucet.com/btc-testnet/
+  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/BtcTransfer
   const txData = await btcSDK.transaction.sendTransaction(
     {
       fromAddress: [

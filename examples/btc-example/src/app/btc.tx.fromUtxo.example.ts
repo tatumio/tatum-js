@@ -48,7 +48,7 @@ export async function btcFromUtxoTransactionsExample() {
 
   // Transaction - send to blockchain
   // This method will prepare and broadcast transaction immediately
-  // https://apidoc.tatum.io/tag/Litecoin#operation/BTCTransferBlockchain
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/BtcTransfer
   const { txId } = await btcSDK.transaction.sendTransaction(
     {
       fromUTXO: [

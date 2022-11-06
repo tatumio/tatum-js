@@ -24,8 +24,8 @@ export async function btcBroadcastTransactionsExample() {
 
   // Prepare and broadcast BTC transaction to the blockchain.
   // First we prepare the signed TX data to be used for the broadcast.
-  // Account balance is needed for the transfer to work, you can top up your testnet BTC balance with https://testnet-faucet.com/BTC-testnet/
-  // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/BTCBroadcast
+  // Account balance is needed for the transfer to work, you can top up your testnet BTC balance with https://testnet-faucet.com/btc-testnet/
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcBroadcast
   const signedTxData = await btcSDK.transaction.prepareSignedTransaction(
     {
       fromAddress: [
