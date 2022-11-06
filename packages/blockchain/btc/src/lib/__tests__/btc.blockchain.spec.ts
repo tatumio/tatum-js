@@ -32,13 +32,7 @@ describe('BtcSDK - blockchain', () => {
     getBlockchainAccountBalance: [api.btcGetBalanceOfAddress, testData.TESTNET.ADDRESS_0],
     getTransaction: [api.btcGetRawTransaction, testData.TX_HASH],
     getTransactionsByAddress: [api.btcGetTxByAddress, testData.TESTNET.ADDRESS_0, 50],
-    sendTransaction: [
-      api.btcTransferBlockchain,
-      {
-        fromAddress: [{ address: testData.TESTNET.ADDRESS_0, privateKey: testData.TESTNET.PRIVATE_KEY_0 }],
-        to: [{ address: testData.TESTNET.ADDRESS_100, value: 1 }],
-      } as BtcTransactionFromAddress,
-    ],
+    estimateFee: [sdk.blockchain.estimateFee, {}],
   }
 
   describe('API methods mapping', () => {

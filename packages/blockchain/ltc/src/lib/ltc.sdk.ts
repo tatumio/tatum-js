@@ -1,9 +1,10 @@
 import { Blockchain } from '@tatumio/shared-core'
-import { LitecoinService } from '@tatumio/api-client'
+import { BlockchainFeesService, LitecoinService } from '@tatumio/api-client'
 import { ltcTransactions } from './transaction/ltc.tx'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { ltcWallet } from './ltc.sdk.wallet'
 import { btcBasedSdk } from '@tatumio/shared-blockchain-btc-based'
+import { ltcVirtualAccountService } from './services/ltc.sdk.virtualAccount'
 
 const blockchain = Blockchain.LTC
 
@@ -20,9 +21,10 @@ export const TatumLtcSDK = (args: SDKArguments) => {
       getBlock: LitecoinService.ltcGetBlock,
       getUTXO: LitecoinService.ltcGetUtxo,
       getBlockchainAccountBalance: LitecoinService.ltcGetBalanceOfAddress,
-      getTxForAccount: LitecoinService.ltcGetTxByAddress,
+      getTransactionsByAddress: LitecoinService.ltcGetTxByAddress,
       getTransaction: LitecoinService.ltcGetRawTransaction,
-      send: LitecoinService.ltcTransferBlockchain,
+      estimateFee: BlockchainFeesService.estimateFeeBlockchain,
     },
+    virtualAccount: ltcVirtualAccountService(),
   }
 }

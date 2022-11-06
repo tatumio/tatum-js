@@ -1,11 +1,21 @@
 import { TatumBtcSDK } from '@tatumio/btc'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
-
-const btcSDK = TatumBtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function btcWalletExample() {
-  const { mnemonic, xpub } = await btcSDK.wallet.generateWallet()
-  const address = btcSDK.wallet.generateAddressFromXPub(mnemonic, 0, { testnet: true })
+  const btcSDK = TatumBtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+
+  // Generate a BTC wallet
+  // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/BTCGenerateWallet
+  const { mnemonic, xpub } = await btcSDK.wallet.generateWallet(undefined, { testnet: true })
+  console.log(`Mnemonic: ${mnemonic}`)
+  console.log(`Xpub: ${xpub}`)
+
+  // Generate an BTC private key
+  // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/BTCGenerateAddressPrivateKey
   const privateKey = await btcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
+  console.log(`Private key: ${privateKey}`)
+
+  // Generate BTC deposit address from xpub
+  // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/BTCGenerateAddress
   const addressFromXpub = btcSDK.wallet.generateAddressFromXPub(xpub, 0, { testnet: true })
+  console.log(`Address from xpub: ${addressFromXpub}`)
 }
