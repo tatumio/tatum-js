@@ -1,12 +1,11 @@
 import { TatumBnbSDK } from '@tatumio/bnb'
 import { Currency } from '@tatumio/api-client'
 
-export async function bnbVirtualAccountExample() {
-  const bnbSDK = TatumBnbSDK({ apiKey: 'PLACE-YOUR-API-KEY-HERE' })
-  const wallet = bnbSDK.wallet
+const bnbSDK = TatumBnbSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-  const { address, privateKey } = await wallet().generateWallet(true)
-  const { address: to } = await wallet().generateWallet(true)
+export async function bnbVirtualAccountExample() {
+  const { address, privateKey } = await bnbSDK.wallet.generateWallet(true)
+  const { address: to } = await bnbSDK.wallet.generateWallet(true)
 
   console.log(`My public address is ${address}, with private key ${privateKey}.`)
 

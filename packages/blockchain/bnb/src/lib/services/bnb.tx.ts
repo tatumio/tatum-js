@@ -1,16 +1,16 @@
 import { BnbApiCallsType } from '../../index'
-import { ApiServices, Currency, OpenAPI, TransferBnbBlockchain } from '@tatumio/api-client'
-import { BncClient } from '@binance-chain/javascript-sdk'
+import { ApiServices, Currency, TransferBnbBlockchain, TransferBnbBlockchainKMS } from '@tatumio/api-client'
 import { BigNumber } from 'bignumber.js'
-import { SDKArguments, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { isSdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { decodeAddress, getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/crypto'
 import { AminoPrefix } from '@binance-chain/javascript-sdk/lib/types'
 import { BnbSdkError } from '../bnb.sdk.errors'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
+import { BnbWeb3 } from './bnb.web3'
 
 type TransferBnb = FromPrivateKeyOrSignatureId<TransferBnbBlockchain>
 
-export const bnbTxService = (args: SDKArguments, apiCalls: BnbApiCallsType) => {
+export const bnbTxService = (args: { web3: BnbWeb3 }, apiCalls: BnbApiCallsType) => {
   /**
    * Parses data which will be used in the transaction
    * @param amount amount to send
@@ -79,7 +79,7 @@ export const bnbTxService = (args: SDKArguments, apiCalls: BnbApiCallsType) => {
    */
   const sendTransaction = async (body: TransferBnb, options: { testnet: boolean }) => {
     if (body.signatureId) {
-      return ApiServices.blockchain.bnb.bnbBlockchainTransfer(body as any)
+      return ApiServices.blockchain.bnb.bnbBlockchainTransfer(body as TransferBnbBlockchainKMS)
     } else {
       return ApiServices.blockchain.bnb.bnbBroadcast({
         txData: await prepareTransaction(
@@ -144,11 +144,7 @@ export const bnbTxService = (args: SDKArguments, apiCalls: BnbApiCallsType) => {
     provider?: string,
   ) => {
     try {
-      const bnbClient = new BncClient(OpenAPI.BASE + '/v3/blockchain/node/BNB/' + args.apiKey)
-
-      bnbClient.chooseNetwork(testnet ? 'testnet' : 'mainnet')
-      await bnbClient.setPrivateKey(key, true)
-      await bnbClient.initChain()
+      const bnbClient = await args.web3.getClient(testnet, key, provider)
       const account = await apiCalls.getAccountInfo(fromAddress)
       const balance = account.balances?.find((b) => b.symbol && b.symbol.toUpperCase() === 'BNB')
       const accountBalance = new BigNumber(balance?.free || 0)
@@ -165,7 +161,7 @@ export const bnbTxService = (args: SDKArguments, apiCalls: BnbApiCallsType) => {
       const signedTx = await bnbClient._prepareTransaction(msg, signMsg, fromAddress, account.sequence, memo)
       return signedTx.serialize()
     } catch (e) {
-      if ((e as any).code === SdkErrorCode.INSUFFICIENT_FUNDS) {
+      if (isSdkError(e)) {
         throw e
       }
       throw new BnbSdkError(SdkErrorCode.TX_PREPARATION_FAILED)

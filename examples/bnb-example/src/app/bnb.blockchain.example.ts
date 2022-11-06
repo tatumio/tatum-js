@@ -1,16 +1,22 @@
 import { TatumBnbSDK } from '@tatumio/bnb'
 
+const bnbSDK = TatumBnbSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+
 export async function bnbBlockchainExample() {
-  const bnbSDK = TatumBnbSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  // Get BNB current block number
+  // https://apidoc.tatum.io/tag/BNB-Beacon-Chain#operation/BnbGetCurrentBlock
+  const currentBlockNumber = await bnbSDK.blockchain.getCurrentBlock()
+  console.log(`Current block: ${currentBlockNumber}`)
 
-  const curBlock = await bnbSDK.blockchain.getCurrentBlock()
-  console.log('curBlock: ' + curBlock)
+  // Get block details
+  // https://apidoc.tatum.io/tag/BNB-Beacon-Chain#operation/BnbGetBlock
+  const block = await bnbSDK.blockchain.getBlock(currentBlockNumber - 1)
+  console.log(`Block Details: ${JSON.stringify(block)}`)
 
-  const transactions = await bnbSDK.blockchain.getBlock(curBlock)
-  console.log('block content: ' + JSON.stringify(transactions))
-
-  const tx = await bnbSDK.blockchain.getTransaction(
-    '0601AE0E11B65414DCDE47F6C3992B572AB4C7033930A3827A001B8BC1F543A8',
+  // Get BNB Transaction details by hash
+  // https://apidoc.tatum.io/tag/BNB-Beacon-Chain#operation/BnbGetTransaction
+  const transaction = await bnbSDK.blockchain.getTransaction(
+    '356BEBE84893CD8F3B130B0B2798FA3E3B199344981CF1C776A37D903F1D150F',
   )
-  console.log('tx: ' + JSON.stringify(tx))
+  console.log(`Transaction Details: ${JSON.stringify(transaction)}`)
 }

@@ -5,16 +5,18 @@ import {
 import { ApiServices, Currency, TransferBnb } from '@tatumio/api-client'
 import { bnbTxService } from './bnb.tx'
 import { BnbApiCallsType } from '@tatumio/bnb'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { Blockchain } from '@tatumio/shared-core'
+import { BnbWeb3 } from './bnb.web3'
 
 type TransferBnbPkOrSignature = FromPrivateKeyOrSignatureId<TransferBnb>
 
-export const bnbVirtualAccountService = (args: SDKArguments, apiCalls: BnbApiCallsType) => {
+export const bnbVirtualAccountService = (args: { web3: BnbWeb3 }, apiCalls: BnbApiCallsType) => {
+  const txService = bnbTxService(args, apiCalls)
+
   /**
    * Send BNB transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
    * @param body content of the transaction to broadcast
-   * @param tesnet chain to work with
+   * @param testnet chain to work with
    * @returns transaction id of the transaction in the blockchain or id of the withdrawal
    */
   const sendTransactionFromVirtualAccountToBlockchain = async (
@@ -27,7 +29,7 @@ export const bnbVirtualAccountService = (args: SDKArguments, apiCalls: BnbApiCal
 
     try {
       const prepareTx = () =>
-        bnbTxService(args, apiCalls).prepareTransaction(
+        txService.prepareTransaction(
           body.amount,
           body.address,
           Currency.BNB,

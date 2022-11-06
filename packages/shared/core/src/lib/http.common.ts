@@ -28,10 +28,19 @@ const EndpointsMapping: Record<Blockchain, string> = {
   BNB: 'bnb',
 }
 
+const RpcEndpointMapping: Record<Blockchain, string> = {
+  ...Blockchain,
+  HARMONY: 'ONE',
+  POLYGON: 'MATIC',
+}
+
 export const httpHelper = {
   get: axios.get,
   post: axios.post,
   web3Endpoint: (blockchain: EvmBasedBlockchain, url: string, apiKey: string) => {
     return `${url}/${TATUM_API_CONSTANTS.API_VERSION}/${EndpointsMapping[blockchain]}/web3/${apiKey}`
+  },
+  rpcEndpoint: (blockchain: Blockchain, url: string, apiKey: string) => {
+    return `${url}/${TATUM_API_CONSTANTS.API_VERSION}/blockchain/node/${RpcEndpointMapping[blockchain]}/${apiKey}`
   },
 }

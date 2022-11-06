@@ -29,6 +29,10 @@ function isApiError(args: SdkOriginalError) {
   return args.originalError && 'name' in args.originalError && args.originalError?.name === 'ApiError' // bypassing jest mock
 }
 
+export function isSdkError(error: Error | unknown): error is SdkError {
+  return error instanceof SdkError
+}
+
 export class SdkError extends Error {
   readonly errorCode?: SdkErrorCode
   readonly errorMessage?: string

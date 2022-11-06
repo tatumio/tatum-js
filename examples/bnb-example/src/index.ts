@@ -1,10 +1,10 @@
 /**
- * This is example app, which shows how to use XLM SDK. For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/BNB-Beacon-Chain
+ * This is example app, which shows how to use BNB SDK. For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/BNB-Beacon-Chain
  */
 
 import { bnbWalletExample } from './app/bnb.wallet.example'
-import { bnbTxExample } from './app/bnb.tx.example'
 import { bnbBlockchainExample } from './app/bnb.blockchain.example'
+import { bnbTxExample } from './app/bnb.tx.example'
 import { bnbVirtualAccountExample } from './app/bnb.virtualAccount.examples'
 
 console.log(`Running ${bnbWalletExample()}`)

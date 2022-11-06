@@ -7,17 +7,20 @@ import { bnbKmsService } from './services/bnb.kms'
 import { bnbWallet } from './services/bnb.wallet'
 import { Blockchain } from '@tatumio/shared-core'
 import { bnbVirtualAccountService } from './services/bnb.virtualAccount'
+import { bnbWeb3, BnbWeb3 } from './services/bnb.web3'
 
 export const TatumBnbSDK = (
   args: SDKArguments,
   apiCalls: BnbApiCallsType = { getAccountInfo: ApiServices.blockchain.bnb.bnbGetAccount },
 ) => {
+  const web3: BnbWeb3 = bnbWeb3(args.provider)
+
   return {
     ...abstractBlockchainSdk({ apiKey: args.apiKey, blockchain: Blockchain.BNB }),
-    wallet: bnbWallet,
-    transaction: bnbTxService(args, apiCalls),
-    kms: bnbKmsService,
-    virtualAccount: bnbVirtualAccountService({ ...args }, apiCalls),
+    wallet: bnbWallet(),
+    transaction: bnbTxService({ web3 }, apiCalls),
+    kms: bnbKmsService({ web3 }),
+    virtualAccount: bnbVirtualAccountService({ web3 }, apiCalls),
     blockchain: {
       generateWallet: BnbBeaconChainService.bnbGenerateWallet,
       getCurrentBlock: BnbBeaconChainService.bnbGetCurrentBlock,
