@@ -31,14 +31,8 @@ describe('TatumLtcSDK - blockchain', () => {
     getUTXO: [api.ltcGetUtxo, testData.TX_HASH, 0],
     getBlockchainAccountBalance: [api.ltcGetBalanceOfAddress, testData.TESTNET.ADDRESS_0],
     getTransaction: [api.ltcGetRawTransaction, testData.TX_HASH],
-    getTxForAccount: [api.ltcGetTxByAddress, testData.TESTNET.ADDRESS_0, 50],
-    send: [
-      api.ltcTransferBlockchain,
-      {
-        fromAddress: [{ address: testData.TESTNET.ADDRESS_0, privateKey: testData.TESTNET.PRIVATE_KEY_0 }],
-        to: [{ address: testData.TESTNET.ADDRESS_100, value: 1 }],
-      } as LtcTransactionAddress,
-    ],
+    getTransactionsByAddress: [api.ltcGetTxByAddress, testData.TESTNET.ADDRESS_0, 50],
+    estimateFee: [sdk.blockchain.estimateFee, {}],
   }
 
   describe('API methods mapping', () => {

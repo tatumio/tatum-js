@@ -1,46 +1,58 @@
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumBtcSDK } from '@tatumio/btc'
-import { BtcTransactionFromAddress } from '@tatumio/api-client'
-
-const btcSDK = TatumBtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function btcBlockchainExample() {
-  const mempoolTransactionIds = await btcSDK.blockchain.mempool()
-  const block = await btcSDK.blockchain.getBlock(
-    '0000000000000000000067de34da54c96ff76e6ba172f82c4ed8a25afb112a9e',
-  )
-  const txHash = await btcSDK.blockchain.broadcast({
-    txData: '62BD544D1B9031EFC330A3E855CC3A0D51CA5131455C1AB3BCAC6D243F65460D',
-    signatureId: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
-  })
-  const balance = await btcSDK.blockchain.getBlockchainAccountBalance('2MsM67NLa71fHvTUBqNENW15P68nHB2vVXb')
+  const btcSDK = TatumBtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  const REPLACE_ME_WITH_PRIVATE_KEY = ''
+
+  // Get BTC Blockchain Information. Obtain basic info like testnet / mainnet version of the chain, current block number and it's hash.
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGetBlockChainInfo
   const blockchainInfo = await btcSDK.blockchain.info()
-  const hash = await btcSDK.blockchain.getBlockHash(1580117)
-  const tx = await btcSDK.blockchain.getTransaction(
-    '1451692ebbfbea1a2d2ec6fe6782596b6aa2e46c0589d04c406f491b5b46bc6a',
+  console.log(`Blockchain info: ${JSON.stringify(blockchainInfo)}`)
+
+  // Get BTC Block detail by block hash or height.
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGetBlock
+  const block = await btcSDK.blockchain.getBlock(
+    '00000000000000c97a747dec7d222fa7a79c1b404f9eacd69671316872e02e9e',
   )
+  console.log(`Block: ${JSON.stringify(block)}`)
+
+  // Get BTC block hash. Returns hash of the block to get the block detail.
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGetBlockHash
+  const hash = await btcSDK.blockchain.getBlockHash(2404196)
+  console.log(`Block hash: ${JSON.stringify(hash)}`)
+
+  // Get BTC transaction by its hash. Returns the transaction detail.
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGetRawTransaction
+  const transaction = await btcSDK.blockchain.getTransaction(
+    '293ab7fd4f6516333c4af7eb8944674220b70f7cb8239998109ed313606617f4',
+  )
+  console.log(`Transaction: ${JSON.stringify(transaction)}`)
+
+  // Get BTC transaction in mempool. Returns the list of transaction ids.
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGetMempool
+  const mempool = await btcSDK.blockchain.mempool()
+  console.log(`Mempool: ${JSON.stringify(mempool)}`)
+
+  // Get BTC transactions by address. Returns a list of transactions assigned to an address.
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGetTxByAddress
   const txByAddress = await btcSDK.blockchain.getTransactionsByAddress(
-    '2MsM67NLa71fHvTUBqNENW15P68nHB2vVXb',
+    'tb1qs37qvm6n405r592kswuugpf0jg3ypzarutfwk9',
     50,
   )
-  const utxo = await btcSDK.blockchain.getUTXO(
-    '53faa103e8217e1520f5149a4e8c84aeb58e55bdab11164a95e69a8ca50f8fcc',
-    0,
+  console.log(`TX By Address: ${JSON.stringify(txByAddress)}`)
+
+  // Get BTC account balance. Returns incoming and outgoing balance of an BTC address.
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGetBalanceOfAddress
+  const balance = await btcSDK.blockchain.getBlockchainAccountBalance(
+    'tb1qs37qvm6n405r592kswuugpf0jg3ypzarutfwk9',
   )
-  const transfer = await btcSDK.blockchain.sendTransaction({
-    fromAddress: [
-      {
-        address: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
-        privateKey: 'cVX7YtgL5muLTPncHFhP95oitV1mqUUA5VeSn8HeCRJbP',
-      },
-    ],
-    to: [
-      {
-        address: '2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7',
-        value: 0.02969944,
-      },
-    ],
-    fee: '0.001',
-    changeAddress: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
-  } as BtcTransactionFromAddress)
+  console.log(`Account balance: ${JSON.stringify(balance)}`)
+
+  // Get information about UTXO in a BTC transaction.
+  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGetUTXO
+  const utxo = await btcSDK.blockchain.getUTXO(
+    '5a54cb3c7841bccbb4fb1f6e9ee4d097f3798602a2caa6f8289c669a8ba1cdbc',
+    1,
+  )
+  console.log(`UTXO: ${JSON.stringify(utxo)}`)
 }

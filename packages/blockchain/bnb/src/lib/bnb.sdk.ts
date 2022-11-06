@@ -16,7 +16,7 @@ export const TatumBnbSDK = (
   const web3: BnbWeb3 = bnbWeb3(args.provider)
 
   return {
-    ...abstractBlockchainSdk({ apiKey: args.apiKey, blockchain: Blockchain.BNB }),
+    ...abstractBlockchainSdk({ ...args, blockchain: Blockchain.BNB }),
     wallet: bnbWallet(),
     transaction: bnbTxService({ web3 }, apiCalls),
     kms: bnbKmsService({ web3 }),

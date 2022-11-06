@@ -8,7 +8,7 @@ import {
 } from '@tatumio/shared-blockchain-btc-based'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { testHelper } from '@tatumio/shared-testing-common'
-import { BroadcastKMS, CancelablePromise, TransactionHash } from '@tatumio/api-client'
+import { BroadcastKMS, CancelablePromise, FeeBtc, TransactionHash } from '@tatumio/api-client'
 
 export type BtcBasedTestParams = {
   fromAmount: number
@@ -34,6 +34,7 @@ export type BtcBasedMocks = {
   requestGetTxByAddress: (obj?: { outputs: [] }) => void
   requestGetUtxoNotFound: () => void
   requestGetTransactionsNotFound: () => void
+  requestEstimateFee: (obj?: unknown) => void
   broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHash>) & jest.Mock
 }
 
@@ -191,12 +192,14 @@ const EXPECTED_TX_ID = '1111111111111111111111111111111'
 const mockRequestsFromAddress = (mock: BtcBasedMocks) => {
   mock.requestGetTxByAddress()
   mock.requestGetUtxo()
+  mock.requestEstimateFee()
   mock.broadcast.mockReturnValue(Promise.resolve({ txId: EXPECTED_TX_ID }))
 }
 
 const mockRequestsUtxo = (mock: BtcBasedMocks) => {
   mock.requestGetRawTx()
   mock.requestGetUtxo()
+  mock.requestEstimateFee()
   mock.broadcast.mockReturnValue(Promise.resolve({ txId: EXPECTED_TX_ID }))
 }
 

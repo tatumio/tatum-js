@@ -38,4 +38,4 @@ const examples = async () => {
   // await algoSubscriptionsExample()
 }
 
-examples()
+void examples()
