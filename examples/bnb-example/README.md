@@ -38,10 +38,9 @@ need to have Node.js version 10 or higher.
 
 ```typescript
 const bnbSDK = TatumBnbSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-const wallet = bnbSDK.wallet
 
-const { address, privateKey } = await wallet().generateWallet(true)
-console.log(` My public address is ${address}, with private key ${privateKey}.`)
+const { address, privateKey } = await bnbSDK.wallet.generateWallet(true)
+console.log(`My public address is ${address}, with private key ${privateKey}.`)
 ```
 
 ### How to send transaction to another wallet
