@@ -65,7 +65,9 @@ const gasPriceInWei = await bscSDK.getGasPriceInWei()
 const web3 = bscSDK.web3Client()
 
 const blockNumber = web3.eth.getBlockNumber()
-const { balance } = await bscSDK.blockchain.getBlockchainAccountBalance('0xec0797cc5d3ba8e4e8f2019f6e56fad103f8c7c9')
+const { balance } = await bscSDK.blockchain.getBlockchainAccountBalance(
+  '0xec0797cc5d3ba8e4e8f2019f6e56fad103f8c7c9',
+)
 ```
 
 ### How to check balance of the address

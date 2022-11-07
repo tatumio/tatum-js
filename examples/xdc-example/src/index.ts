@@ -7,11 +7,36 @@ import { xdcErc20Example } from './app/xdc.erc20.example'
 import { xdcSmartContractExample } from './app/xdc.smartContract.example'
 import { xdcTxExample } from './app/xdc.tx.example'
 
-// console.log(`Running ${xdcBalanceExample()}`)
-// console.log(`Running ${xdcBlockchainExample()}`)
-// console.log(`Running ${xdcErc20Example()}`)
-// console.log(`Running ${xdcWalletExample()}`)
-console.log(`Running ${xdcTxExample()}`)
-// console.log(`Running ${xdcVirtualAccountExample()} `)
-// console.log(`Running ${xdcSubscriptionsExample()}`)
-// console.log(`Running ${xdcSmartContractExample()}`)
+const examples = async () => {
+  console.log(`Running xdcBlockchainExample`)
+  await xdcBlockchainExample()
+
+  console.log(`Running xdcBalanceExample`)
+  await xdcBalanceExample()
+
+  console.log(`Running xdcErc20Example`)
+  await xdcErc20Example()
+
+  console.log(`Running xdcWalletExample`)
+  await xdcWalletExample()
+
+  console.log(`Running xdcVirtualAccountExample`)
+  await xdcVirtualAccountExample()
+
+  console.log(`Running xdcTxExample`)
+  await xdcTxExample()
+
+  console.log(`Running xdcSubscriptionsExample`)
+  await xdcSubscriptionsExample()
+
+  console.log(`Running xdcSmartContractExample`)
+  await xdcSmartContractExample()
+
+  console.log(`Running xdcVirtualAccountExample`)
+  await xdcVirtualAccountExample()
+
+  console.log(`Running xdcWalletExample`)
+  await xdcWalletExample()
+}
+
+void examples()

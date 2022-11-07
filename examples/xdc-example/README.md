@@ -60,7 +60,9 @@ const web3response = await xdcSDK.httpDriver({
 const gasPriceInWei = await xdcSDK.getGasPriceInWei()
 const web3 = xdcSDK.web3Client()
 const blockNumber = web3.eth.getBlockNumber()
-const { balance } = await xdcSDK.blockchain.getBlockchainAccountBalance('xdce73f05a8b3b28e1afec4ab759101e79b28542440')
+const { balance } = await xdcSDK.blockchain.getBlockchainAccountBalance(
+  'xdce73f05a8b3b28e1afec4ab759101e79b28542440',
+)
 ```
 
 ### How to check balance of the address
