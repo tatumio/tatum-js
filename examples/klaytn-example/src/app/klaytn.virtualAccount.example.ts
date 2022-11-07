@@ -1,6 +1,7 @@
 import { TatumKlaytnSDK } from '@tatumio/klaytn'
 
 const klaytnSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+
 export async function klaytnVirtualAccountExample() {
   // if you don't already have a wallet, address and private key - generate them
   // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGenerateWallet

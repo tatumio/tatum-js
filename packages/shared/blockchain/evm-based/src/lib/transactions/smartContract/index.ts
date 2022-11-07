@@ -1,29 +1,35 @@
 import { BroadcastFunction, ChainSmartContractMethodInvocation } from '@tatumio/shared-blockchain-abstract'
-import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { TransactionConfig } from 'web3-core'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
-import { evmBasedUtils } from '../../evm-based.utils'
+import { AddressTransformer, evmBasedUtils } from '../../evm-based.utils'
 import { CallReadSmartContractMethod, Currency } from '@tatumio/api-client'
 import { GasPumpChain } from '../../services/evm-based.gas.pump'
 
 export type TransactionConfigWithFeeCurrency = TransactionConfig & { feeCurrency?: string }
 
-export const smartContractWriteMethodInvocation = async (
-  body: ChainSmartContractMethodInvocation,
-  web3: EvmBasedWeb3,
-  provider?: string,
-  chain?: GasPumpChain,
-) => {
-  const { fromPrivateKey, fee, params, methodName, methodABI, contractAddress, nonce, amount, signatureId } =
-    body
+export const smartContractWriteMethodInvocation = async ({
+  body,
+  web3,
+  provider,
+  chain,
+  addressTransformer = (address: string) => address,
+}: {
+  body: ChainSmartContractMethodInvocation
+  web3: EvmBasedWeb3
+  provider?: string
+  chain?: GasPumpChain
+  addressTransformer?: AddressTransformer
+}) => {
+  const { fromPrivateKey, fee, params, methodName, methodABI, nonce, amount, signatureId } = body
+  const contractAddress = addressTransformer(body.contractAddress?.trim())
   const client = web3.getClient(provider, fromPrivateKey)
 
   const contract = new client.eth.Contract([methodABI])
 
   const tx: TransactionConfig = {
     from: 0,
-    to: contractAddress.trim(),
+    to: contractAddress,
     value: amount ? `0x${new BigNumber(client.utils.toWei(amount, 'ether')).toString(16)}` : undefined,
     data: contract.methods[methodName as string](...params).encodeABI(),
     gas: chain === Currency.KLAY ? fee?.gasPrice : undefined,
@@ -41,22 +47,34 @@ export const smartContractWriteMethodInvocation = async (
   )
 }
 
-export const smartContractReadMethodInvocation = async (
-  body: CallReadSmartContractMethod,
-  web3: EvmBasedWeb3,
-  provider?: string,
-) => {
-  const { params, methodName, methodABI, contractAddress } = body
+export const smartContractReadMethodInvocation = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer = (address: string) => address,
+}: {
+  body: CallReadSmartContractMethod
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer?: AddressTransformer
+}) => {
+  const { params, methodName, methodABI } = body
+  const contractAddress = addressTransformer(body.contractAddress?.trim())
   const client = web3.getClient(provider)
   const contract = new client.eth.Contract([methodABI], contractAddress)
   return { data: await contract.methods[methodName as string](...params).call() }
 }
 
-export const smartContract = (args: {
-  blockchain: EvmBasedBlockchain
+export const smartContract = ({
+  web3,
+  broadcastFunction,
+  smartContractApiMethod,
+  addressTransformer = (address: string) => address,
+}: {
   web3: EvmBasedWeb3
   broadcastFunction: BroadcastFunction
   smartContractApiMethod: any
+  addressTransformer?: AddressTransformer // to automatically transform address to blockchain specific (e.g. 0x -> xdc, one)
 }) => {
   return {
     prepare: {
@@ -70,7 +88,7 @@ export const smartContract = (args: {
       smartContractWriteMethodInvocationTransaction: async (
         body: ChainSmartContractMethodInvocation,
         provider?: string,
-      ) => smartContractWriteMethodInvocation(body, args.web3, provider),
+      ) => smartContractWriteMethodInvocation({ body, web3, provider }),
     },
     send: {
       /**
@@ -82,7 +100,7 @@ export const smartContract = (args: {
       smartContractReadMethodInvocationTransaction: async (
         body: CallReadSmartContractMethod,
         provider?: string,
-      ) => smartContractReadMethodInvocation(body, args.web3, provider),
+      ) => smartContractReadMethodInvocation({ body, web3, provider, addressTransformer }),
 
       /**
        * Send invoke smart contract transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -96,12 +114,12 @@ export const smartContract = (args: {
         provider?: string,
       ) => {
         if (body.signatureId) {
-          return args.smartContractApiMethod(body)
+          return smartContractApiMethod(body)
         } else if (body.methodABI.stateMutability === 'view') {
-          return smartContractReadMethodInvocation(body, args.web3, provider)
+          return smartContractReadMethodInvocation({ body, web3, provider, addressTransformer })
         } else {
-          return args.broadcastFunction({
-            txData: await smartContractWriteMethodInvocation(body, args.web3, provider),
+          return broadcastFunction({
+            txData: await smartContractWriteMethodInvocation({ body, web3, provider, addressTransformer }),
           })
         }
       },

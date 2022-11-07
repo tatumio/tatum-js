@@ -1,4 +1,4 @@
-import { xdcWeb3 } from '@tatumio/xdc'
+import { xdcWeb3 } from '../services/xdc.web3'
 import { Blockchain } from '@tatumio/shared-core'
 
 describe('XDC web3', () => {

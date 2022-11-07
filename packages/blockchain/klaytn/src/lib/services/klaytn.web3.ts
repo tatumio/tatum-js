@@ -4,7 +4,7 @@ import { EvmBasedBlockchain, httpHelper } from '@tatumio/shared-core'
 import Caver from 'caver-js'
 
 export const klaytnWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Caver }) => {
-  const evmBasedWeb3Result = evmBasedWeb3(args)
+  const evmBasedWeb3Result = evmBasedWeb3(args as any)
   const getKlaytnClient = (provider?: string, fromPrivateKey?: string): any => {
     const endpoint = httpHelper.web3Endpoint(args.blockchain, OpenAPI.BASE, TATUM_API_CONSTANTS.API_KEY)
     const client = args.client ?? new Caver(provider || endpoint)

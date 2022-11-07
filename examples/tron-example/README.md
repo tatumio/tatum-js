@@ -7,7 +7,7 @@ These examples should guide you through some basic operations of the TRON blockc
 - check the balance of your wallet
 
 - generate virtual account for TRON
-- assign deposit address to virtual account
+- generate deposit address for virtual account
 
 ## How to start
 

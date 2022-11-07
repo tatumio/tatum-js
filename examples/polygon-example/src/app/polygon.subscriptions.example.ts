@@ -28,13 +28,6 @@ export async function polygonSubscriptionsExample() {
   const subscriptions = await polygonSDK.subscriptions.getSubscriptions(10)
   console.log('Subscriptions: ', JSON.stringify(subscriptions))
 
-  // FUND YOUR ACCOUNT WITH MATIC FROM https://faucet.matic.network/
-
-  // Obtain report for subscription
-  // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/getSubscriptionReport
-  const subscriptionReport = await polygonSDK.subscriptions.getSubscriptionReport(id as string)
-  console.log(`There is ${subscriptionReport.length} records in subscription ID ${id}`)
-
   // Enable HMAC webhook digest
   //https://apidoc.tatum.io/tag/Notification-subscriptions#operation/enableWebHookHmac
   await polygonSDK.subscriptions.enableWebHookHmac({

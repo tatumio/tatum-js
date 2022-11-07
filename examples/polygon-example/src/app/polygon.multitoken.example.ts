@@ -1,75 +1,98 @@
-import { TatumPolygonSDK } from '@tatumio/polygon'
 import { Currency, TransactionHash } from '@tatumio/api-client'
+import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
+import { TatumPolygonSDK } from '@tatumio/polygon'
 
+const SLEEP_SECONDS = 25
 const polygonSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-const testnet = true
 
-export async function polygonMultitokenExample() {
-  // Generate wallet
-  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet
-  const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet(undefined, { testnet })
-  // Generate private key
-  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
-  const fromPrivateKey = await polygonSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet })
-  // Generate source and destination address
-  // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateAddressPrivateKey
-  const to = polygonSDK.wallet.generateAddressFromXPub(xpub, 1)
+/**
+ * In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+ * Fund your address here: https://faucet.polygon.technology
+ */
+export async function polygonMultiTokenExample(): Promise<void> {
+  // This address wil DEPLOY, MINT and TRANSFER multi token to Receiver Address
+  const senderAddress = '<PUT SENDER ADDRESS HERE>'
+  const senderPrivateKey = '<PUT SENDER PRIVATE KEY HERE>'
 
-  // FUND YOUR ACCOUNT WITH MATIC FROM https://faucet.matic.network/
+  // This address will RECEIVE multi token and BURN it
+  const receiverAddress = '<PUT RECEIVER ADDRESS HERE>'
+  const receiverPrivateKey = '<PUT RECEIVER PRIVATE KEY HERE>'
 
-  // upload your file to the ipfs following this tutorial:
+  const tokenId = '123'
+  // upload your file to the ipfs:
   // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
 
-  // deploy multitoken (ERC1155) smart contract
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/DeployMultiToken
-  const deployed = (await polygonSDK.multiToken.send.deployMultiTokenTransaction({
+  const multiTokenDeployed = (await polygonSDK.multiToken.send.deployMultiTokenTransaction({
     chain: Currency.MATIC,
-    fromPrivateKey,
+    // your private key of the address that has coins
+    fromPrivateKey: senderPrivateKey,
     // uploaded metadata from ipfs
     uri: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
   })) as TransactionHash
-  console.log(`Deployed 1155 token with transaction ID ${deployed.txId}`)
+
+  console.log(`Deployed multi token with txID ${multiTokenDeployed.txId}`)
+
+  // If during this time the transaction is not confirmed, then the waiting time should be increased.
+  // In a real application, the wait mechanism must be implemented properly without using this
+  console.log(
+    `Waiting ${SLEEP_SECONDS} seconds for the transaction [${multiTokenDeployed.txId}] to appear in a block`,
+  )
+  await sleepSeconds(SLEEP_SECONDS)
 
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
-  const transaction = await polygonSDK.blockchain.smartContractGetAddress(Currency.MATIC, deployed.txId)
+  const transaction = await polygonSDK.blockchain.smartContractGetAddress(
+    Currency.MATIC,
+    // replace with your deployed transaction hash
+    multiTokenDeployed.txId,
+  )
   const contractAddress = transaction.contractAddress as string
+  console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 
-  const tokenId = '123'
-
-  // mint multitoken (ERC1155) token
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/MintMultiToken
-  const minted = (await polygonSDK.multiToken.send.mintMultiTokenTransaction({
+  const multiTokenMinted = (await polygonSDK.multiToken.send.mintMultiTokenTransaction({
     chain: Currency.MATIC,
+    to: senderAddress,
     tokenId,
-    to,
-    amount: '10',
+    amount: '1000',
+    fromPrivateKey: senderPrivateKey,
     contractAddress,
-    fromPrivateKey,
   })) as TransactionHash
-  console.log(`Minted 1155 token with transaction ID ${minted.txId}`)
 
-  // send multitoken (ERC1155) token
+  console.log(`Multi Token mint transaction sent with txID: ${multiTokenMinted.txId}`)
+
+  console.log(
+    `Waiting ${SLEEP_SECONDS} seconds for the transaction [${multiTokenMinted.txId}] to appear in a block`,
+  )
+  await sleepSeconds(SLEEP_SECONDS)
+
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/TransferMultiToken
-  const transferred = (await polygonSDK.multiToken.send.transferMultiTokenTransaction({
+  const multiTokenTransferred = (await polygonSDK.multiToken.send.transferMultiTokenTransaction({
     chain: Currency.MATIC,
-    to,
+    to: receiverAddress,
     tokenId,
     amount: '10',
+    fromPrivateKey: senderPrivateKey,
     contractAddress,
-    fromPrivateKey,
   })) as TransactionHash
-  console.log(`Transfer 1155 token with transaction ID ${transferred.txId} was sent.`)
 
-  // burn multitoken (ERC1155) token
+  console.log(`Sent Multi Token with txID: ${multiTokenTransferred.txId}`)
+
+  console.log(
+    `Waiting ${SLEEP_SECONDS} seconds for the transaction [${multiTokenTransferred.txId}] to appear in a block`,
+  )
+  await sleepSeconds(SLEEP_SECONDS)
+
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/BurnMultiToken
-  const burned = (await polygonSDK.multiToken.send.burnMultiTokenTransaction({
+  const multiTokenBurned = (await polygonSDK.multiToken.send.burnMultiTokenTransaction({
     chain: Currency.MATIC,
     tokenId,
-    account: to,
-    amount: '10',
+    amount: '1',
+    fromPrivateKey: receiverPrivateKey,
     contractAddress,
-    fromPrivateKey,
+    account: receiverAddress,
   })) as TransactionHash
-  console.log(`Burned 1155 token with transaction ID ${burned.txId}`)
+
+  console.log(`Burned Multi Token/s with txID: ${multiTokenBurned.txId}`)
 }

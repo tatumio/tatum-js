@@ -1,23 +1,68 @@
-import { EvmBasedWeb3, gasPump } from '@tatumio/shared-blockchain-evm-based'
+import {
+  custodial,
+  erc20,
+  erc721,
+  EvmBasedWeb3,
+  gasPump,
+  multiToken,
+  native,
+  smartContract,
+} from '@tatumio/shared-blockchain-evm-based'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
-import { oneCustodial } from './one.custodial'
-import { oneErc20 } from './one.erc20'
-import { oneErc721 } from './one.erc721'
-import { oneMarketplace } from './one.marketplace'
-import { oneMultiToken } from './one.multitoken'
-import { oneNative } from './one.native'
-import { oneSmartContract } from './one.smartContract'
-import { oneGasPump } from './one.gasPump'
+import { HarmonyService } from '@tatumio/api-client'
+import { oneUtils } from '../one.utils'
 
 export const oneTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {
-    native: oneNative(args),
-    erc20: oneErc20(args),
-    erc721: oneErc721(args),
-    marketplace: oneMarketplace(args),
-    multiToken: oneMultiToken(args),
-    custodial: oneCustodial(args),
-    gasPump: oneGasPump(args),
-    smartContract: oneSmartContract(args),
+    native: {
+      ...native({
+        ...args,
+        broadcastFunction: HarmonyService.oneBroadcast,
+        transferApiMethod: HarmonyService.oneBlockchainTransfer,
+        addressTransformer: oneUtils.transformAddress,
+      }),
+    },
+    erc20: {
+      ...erc20({
+        ...args,
+        broadcastFunction: HarmonyService.oneBroadcast,
+        addressTransformer: oneUtils.transformAddress,
+      }),
+    },
+    erc721: {
+      ...erc721({
+        ...args,
+        broadcastFunction: HarmonyService.oneBroadcast,
+        addressTransformer: oneUtils.transformAddress,
+      }),
+    },
+    multiToken: {
+      ...multiToken({
+        ...args,
+        broadcastFunction: HarmonyService.oneBroadcast,
+        addressTransformer: oneUtils.transformAddress,
+      }),
+    },
+    custodial: {
+      ...custodial({
+        ...args,
+        broadcastFunction: HarmonyService.oneBroadcast,
+        addressTransformer: oneUtils.transformAddress,
+      }),
+    },
+    gasPump: {
+      ...gasPump({
+        ...args,
+        broadcastFunction: HarmonyService.oneBroadcast,
+      }),
+    },
+    smartContract: {
+      ...smartContract({
+        ...args,
+        broadcastFunction: HarmonyService.oneBroadcast,
+        smartContractApiMethod: HarmonyService.oneBlockchainSmartContractInvocation,
+        addressTransformer: oneUtils.transformAddress,
+      }),
+    },
   }
 }

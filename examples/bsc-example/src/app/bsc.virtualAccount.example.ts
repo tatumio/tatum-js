@@ -27,7 +27,7 @@ export async function bscVirtualAccountExample() {
   console.log(`Deposit address is ${depositAddress.address}`)
 
   // Fund your address here: https://testnet.binance.org/faucet-smart
-  console.log(`Fund me ${depositAddress.address} to send offchain transaction!`)
+  console.log(`Fund me ${depositAddress.address} to send blockchain assets from virtual account`)
 
   // I wanna send assets from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/BscOrBepTransfer

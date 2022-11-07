@@ -1,15 +1,15 @@
 import { TransactionHash } from '@tatumio/api-client'
-import { TatumKcsSDK } from '@tatumio/kcs'
+import { TatumXdcSDK } from '@tatumio/xdc'
 import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
 const SLEEP_SECONDS = 20
-const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 /**
  * In order for these examples to work you need to fund your address and use the address & private key combination that has coins
- * Fund your address here: https://faucet-testnet.kcc.network
+ * Fund your address here: https://faucet.apothem.network/
  */
-export async function kcsErc20Example() {
+export async function xdcErc20Example() {
   // This address wil DEPLOY, MINT and TRANSFER ERC20 to Receiver Address
   const senderAddress = '<PUT SENDER ADDRESS HERE>'
   const senderPrivateKey = '<PUT SENDER PRIVATE KEY HERE>'
@@ -19,8 +19,7 @@ export async function kcsErc20Example() {
   const receiverPrivateKey = '<PUT RECEIVER PRIVATE KEY HERE>'
 
   // deploy erc20 (fungible token) transaction
-  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy
-  const erc20Deployed = (await kcsSDK.erc20.send.deploySignedTransaction({
+  const erc20Deployed = (await xdcSDK.erc20.send.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
     address: senderAddress,
@@ -41,15 +40,12 @@ export async function kcsErc20Example() {
 
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
-  const transaction = await kcsSDK.blockchain.smartContractGetAddress('KCS' as any, erc20Deployed.txId)
+  const transaction = await xdcSDK.blockchain.smartContractGetAddress('XDC', erc20Deployed.txId)
   const contractAddress = transaction.contractAddress as string
 
-  console.log(`Contract address`, contractAddress)
-
-  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Mint
-  const erc20Minted = (await kcsSDK.erc20.send.mintSignedTransaction({
+  const erc20Minted = (await xdcSDK.erc20.send.mintSignedTransaction({
     to: senderAddress,
-    amount: '1',
+    amount: '10',
     contractAddress,
     fromPrivateKey: senderPrivateKey,
   })) as TransactionHash
@@ -62,8 +58,7 @@ export async function kcsErc20Example() {
   await sleepSeconds(SLEEP_SECONDS)
 
   // send erc20 (fungible token) transaction
-  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Transfer
-  const erc20Transferred = (await kcsSDK.erc20.send.transferSignedTransaction({
+  const erc20Transferred = (await xdcSDK.erc20.send.transferSignedTransaction({
     to: receiverAddress,
     amount: '1',
     contractAddress,
@@ -78,12 +73,11 @@ export async function kcsErc20Example() {
   await sleepSeconds(SLEEP_SECONDS)
 
   // burn erc20 (fungible token) transaction
-  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Burn
-  const erc20Burned = (await kcsSDK.erc20.send.burnSignedTransaction({
+  const erc20Burned = (await xdcSDK.erc20.send.burnSignedTransaction({
     amount: '1',
     contractAddress,
     fromPrivateKey: receiverPrivateKey,
   })) as TransactionHash
 
-  console.log(`Burned erc20 token/s with txID ${erc20Burned.txId}`)
+  console.log(`Burned erc20 token/s with transaction ID ${erc20Burned.txId}`)
 }
