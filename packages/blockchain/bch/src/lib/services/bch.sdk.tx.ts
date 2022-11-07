@@ -92,12 +92,7 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
       }
 
       if ('signatureId' in body.fromUTXO[0]) {
-        return JSON.stringify({
-          txData: `${transactionBuilder.buildIncomplete().toHex()}:${JSON.stringify(amountToSign)}`,
-          privateKeysToSign,
-          signaturesToSign,
-          amountToSign,
-        })
+        return `${transactionBuilder.buildIncomplete().toHex()}:${JSON.stringify(amountToSign)}`
       }
 
       for (let i = 0; i < privateKeysToSign.length; i++) {
