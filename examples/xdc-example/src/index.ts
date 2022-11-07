@@ -17,9 +17,6 @@ const examples = async () => {
   console.log(`Running xdcErc20Example`)
   await xdcErc20Example()
 
-  console.log(`Running xdcWalletExample`)
-  await xdcWalletExample()
-
   console.log(`Running xdcVirtualAccountExample`)
   await xdcVirtualAccountExample()
 

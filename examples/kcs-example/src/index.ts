@@ -22,9 +22,6 @@ const examples = async () => {
   console.log(`Running kcsNftExample`)
   await kcsNftExample()
 
-  console.log(`Running kcsWalletExample`)
-  await kcsWalletExample()
-
   console.log(`Running kcsVirtualAccountExample`)
   await kcsVirtualAccountExample()
 

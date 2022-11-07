@@ -85,10 +85,6 @@ You can find examples [here](./src/app/xdc.kms.example.ts).
 
 You can find examples [here](./src/app/xdc.virtualAccount.example.ts).
 
-### How to send transaction using Gas pump
-
-You can find examples [here](./src/app/xdc.gasPump.example.ts).
-
 # How to work with smart contracts
 
 You can find examples [here](./src/app/xdc.smartContract.example.ts).
