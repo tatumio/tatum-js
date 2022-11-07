@@ -186,7 +186,6 @@ export enum SdkErrorCode {
   INSUFFICIENT_FUNDS = 'insufficient.funds.on.sender.account',
   EVM_TRANSACTION_ERROR = 'evm-based.smart-contract.transaction.error',
   PARAMETER_MISMATCH = 'parameter.mismatch',
-  UNSUPPORTED_CHAIN = 'unsupported.chain',
 }
 
 // @TODO pass params?

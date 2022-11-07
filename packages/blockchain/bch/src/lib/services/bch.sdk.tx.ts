@@ -23,7 +23,6 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
     })
   }
 
-  // @TODO add support - by address
   const prepareSignedTransaction = async (
     body: BchTransactionTypes,
     args: { testnet?: boolean },
