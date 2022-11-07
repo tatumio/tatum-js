@@ -6,6 +6,8 @@
     "api-client": "packages/api-client",
     "bch": "packages/blockchain/bch",
     "bch-example": "examples/bch-example",
+    "bnb": "packages/blockchain/bnb",
+    "bnb-example": "examples/bnb-example",
     "bsc": "packages/blockchain/bsc",
     "bsc-example": "examples/bsc-example",
     "btc": "packages/blockchain/btc",
