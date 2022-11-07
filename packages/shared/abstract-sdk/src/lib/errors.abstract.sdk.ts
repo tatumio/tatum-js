@@ -117,6 +117,7 @@ export enum SdkErrorCode {
   // FLOW
   FLOW_MISSING_PRIVATE_KEY = 'flow.private-key.missing',
   FLOW_MISSING_MNEMONIC = 'flow.mnemonic.missing',
+  FLOW_MISSING_NETWORK = 'flow.network.missing',
 
   // CELO
   CELO_MISSING_CURRENCY = 'celo.missing.currency',
@@ -217,6 +218,7 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
   // FLOW
   [SdkErrorCode.FLOW_MISSING_PRIVATE_KEY, `No private key available`],
   [SdkErrorCode.FLOW_MISSING_MNEMONIC, `Mnemonic required`],
+  [SdkErrorCode.FLOW_MISSING_NETWORK, `Network [testnet/mainnet] required`],
 
   // CELO
   [

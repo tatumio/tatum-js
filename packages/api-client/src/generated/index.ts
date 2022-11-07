@@ -110,6 +110,7 @@ export type { BurnMultiTokenKMS } from './models/BurnMultiTokenKMS';
 export type { BurnMultiTokenKMSCelo } from './models/BurnMultiTokenKMSCelo';
 export type { BurnNft } from './models/BurnNft';
 export type { BurnNftAlgo } from './models/BurnNftAlgo';
+export type { BurnNftAlgoKMS } from './models/BurnNftAlgoKMS';
 export type { BurnNftCelo } from './models/BurnNftCelo';
 export type { BurnNftFlowKMS } from './models/BurnNftFlowKMS';
 export type { BurnNftFlowMnemonic } from './models/BurnNftFlowMnemonic';

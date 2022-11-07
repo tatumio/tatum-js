@@ -6,6 +6,7 @@ import type { AddNftMinterKMS } from '../models/AddNftMinterKMS';
 import type { AlgorandMintedResult } from '../models/AlgorandMintedResult';
 import type { BurnNft } from '../models/BurnNft';
 import type { BurnNftAlgo } from '../models/BurnNftAlgo';
+import type { BurnNftAlgoKMS } from '../models/BurnNftAlgoKMS';
 import type { BurnNftCelo } from '../models/BurnNftCelo';
 import type { BurnNftFlowKMS } from '../models/BurnNftFlowKMS';
 import type { BurnNftFlowMnemonic } from '../models/BurnNftFlowMnemonic';
@@ -546,7 +547,7 @@ export class NftErc721OrCompatibleService {
                  * @throws ApiError
                  */
                 public static nftBurnErc721(
-                    requestBody: (BurnNft | BurnNftCelo | BurnNftAlgo | BurnNftKMSCelo | BurnNftTron | BurnNftKMSTron | BurnNftKMS | BurnNftFlowPK | BurnNftFlowMnemonic | BurnNftFlowKMS),
+                    requestBody: (BurnNft | BurnNftCelo | BurnNftAlgo | BurnNftKMSCelo | BurnNftTron | BurnNftKMSTron | BurnNftKMS | BurnNftAlgoKMS | BurnNftFlowPK | BurnNftFlowMnemonic | BurnNftFlowKMS),
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<(TransactionHash | SignatureId)> {
                     return __request({

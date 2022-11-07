@@ -8,7 +8,7 @@ export type ChainMintCeloErc20KMS = {
      */
     chain: 'CELO';
     /**
-     * Amount to be minted and transfered to the recipient.
+     * Amount to be minted and transferred to the recipient.
      */
     amount: string;
     /**
