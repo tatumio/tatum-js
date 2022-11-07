@@ -7,8 +7,7 @@ import { tx1 } from './mocked.tx'
 jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)
 
-// TODO: add/fix tests
-describe.skip('BchSDK - tx', () => {
+describe('BchSDK - tx', () => {
   const txService = bchTransactions({
     bchGetRawTransaction: ApiServices.blockchain.bcash.bchGetRawTransaction,
   })
@@ -19,7 +18,8 @@ describe.skip('BchSDK - tx', () => {
   const FROM_ADDRESS = 'bchtest:qzk6zxdyjgma9y2uq5untflqpa6wfpn99gxh5sdrtl'
   const SIGNATURE_ID = 'f3c7234a4-e2bb-4e66-9g08-fef9b45ce772'
   const SIGNATURE_ID_INDEX = 0
-  const VALID_DATA = 'AAAAAgAAAAA0EqaLPO0bvBPvzGz4wucBtxmNXs'
+  const VALID_DATA =
+    '0200000001be829233856ef71e0a5f2953b0147bf54e91ff2c249c26a5b9adfd4c4de4f9c20100000000ffffffff0240420f00000000001976a914ada119a49237d2915c053935a7e00f74e486652a88ac009f2400000000001976a914e831bb079ba85eb9013773b7023ee8c482a62f8f88ac00000000:[3500000]'
 
   afterEach(() => {
     jest.clearAllMocks()
@@ -47,7 +47,7 @@ describe.skip('BchSDK - tx', () => {
             },
             {
               address: TO_ADDRESS,
-              value: 0.035,
+              value: 0.024,
             },
           ],
         },
@@ -78,14 +78,14 @@ describe.skip('BchSDK - tx', () => {
             },
             {
               address: TO_ADDRESS,
-              value: 0.035,
+              value: 0.024,
             },
           ],
         },
         { testnet: true },
       )
 
-      expect(result).toContain(VALID_DATA)
+      expect(result).toBe(VALID_DATA)
     })
   })
 })
