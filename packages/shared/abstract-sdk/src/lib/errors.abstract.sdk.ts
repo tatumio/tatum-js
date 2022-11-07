@@ -100,6 +100,12 @@ export enum SdkErrorCode {
   TX_NOT_FOUND = 'tx.not.found',
   BTC_BASED_AMOUNT = 'btc-based.validation.amount',
   BTC_BASED_MISSING_PRIVATE_KEY = 'btc-based.validation.private-key.missing',
+  BTC_BASED_WRONG_BODY = 'btc-based.validation.body.wrong-body',
+  BTC_BASED_TX_PREPARATION_UTXO = 'transaction.preparation.failed.utxo',
+  BTC_BASED_DESTINATION_LESS_THAN_ZERO = 'transaction.preparation.destination.less.than.zero',
+  BTC_BASED_MNEMONIC_OR_KEYPAIR_EXPECTED = 'transaction.preparation.mnemonic.or.keypair.not.present',
+  BTC_BASED_TX_FAILED = 'transaction.preparation.failed',
+  BTC_BASED_BLOCKCHAIN_ERROR = 'transaction.preparation.blockchain.error',
 
   VALIDATION_AMOUNT = 'validation.amount',
   SECRET_CHECKSUM = 'validation.secret.checksum',
@@ -111,6 +117,7 @@ export enum SdkErrorCode {
   // FLOW
   FLOW_MISSING_PRIVATE_KEY = 'flow.private-key.missing',
   FLOW_MISSING_MNEMONIC = 'flow.mnemonic.missing',
+  FLOW_MISSING_NETWORK = 'flow.network.missing',
 
   // CELO
   CELO_MISSING_CURRENCY = 'celo.missing.currency',
@@ -173,6 +180,7 @@ export enum SdkErrorCode {
   INSUFFICIENT_FUNDS = 'insufficient.funds.on.sender.account',
   EVM_TRANSACTION_ERROR = 'evm-based.smart-contract.transaction.error',
   PARAMETER_MISMATCH = 'parameter.mismatch',
+  UNSUPPORTED_CHAIN = 'unsupported.chain',
 }
 
 // @TODO pass params?
@@ -210,6 +218,7 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
   // FLOW
   [SdkErrorCode.FLOW_MISSING_PRIVATE_KEY, `No private key available`],
   [SdkErrorCode.FLOW_MISSING_MNEMONIC, `Mnemonic required`],
+  [SdkErrorCode.FLOW_MISSING_NETWORK, `Network [testnet/mainnet] required`],
 
   // CELO
   [

@@ -1,9 +1,8 @@
 import { TatumLtcSDK } from '@tatumio/ltc'
 import { LtcTransactionAddress } from '@tatumio/api-client'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 export async function ltcBlockchainExample() {
-  const ltcSDK = TatumLtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+  const ltcSDK = TatumLtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
   const REPLACE_ME_WITH_PRIVATE_KEY = ''
 
   // Get LTC Blockchain Information. Obtain basic info like testnet / mainnet version of the chain, current block number and it's hash.
@@ -37,10 +36,13 @@ export async function ltcBlockchainExample() {
 
   // Get LTC transactions by address. Returns a list of transactions assigned to an address.
   // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcGetTxByAddress
-  const txByAddress = await ltcSDK.blockchain.getTxForAccount('2MsM67NLa71fHvTUBqNENW15P68nHB2vVXb', 50)
+  const txByAddress = await ltcSDK.blockchain.getTransactionsByAddress(
+    '2MsM67NLa71fHvTUBqNENW15P68nHB2vVXb',
+    50,
+  )
   console.log(`TX By Address: ${JSON.stringify(txByAddress)}`)
 
-  // Get LTC account balance. Returns incomign and outgoing balance of an LTC address.
+  // Get LTC account balance. Returns incoming and outgoing balance of an LTC address.
   // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcGetBalanceOfAddress
   const balance = await ltcSDK.blockchain.getBlockchainAccountBalance('2MsM67NLa71fHvTUBqNENW15P68nHB2vVXb')
   console.log(`Account balance: ${JSON.stringify(balance)}`)
@@ -48,57 +50,8 @@ export async function ltcBlockchainExample() {
   // Get information about UTXO in a LTC transaction.
   // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcGetUTXO
   const utxo = await ltcSDK.blockchain.getUTXO(
-    '4bf8135258bc96ef240078add0cbfdeebde9b5e60b9019dcfe4c413354bbca27',
+    '05c6f6f58567737296e2f93f4b4be607e199e20be5c13f7d3affdde3174a94db',
     0,
   )
   console.log(`UTXO: ${JSON.stringify(utxo)}`)
-
-  // Broadcast LTC transaction to the blockchain.
-  // First we prepare the signed TX data to be used for the broadcast.
-  // Account balance is needed for the transfer to work, you can top up your testnet LTC balance with https://testnet-faucet.com/ltc-testnet/
-  // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcBroadcast
-  const signedTxData = await ltcSDK.transaction.prepareSignedTransaction(
-    {
-      fromAddress: [
-        {
-          address: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
-          privateKey: REPLACE_ME_WITH_PRIVATE_KEY,
-        },
-      ],
-      to: [
-        {
-          address: '2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7',
-          value: 0.02969944,
-        },
-      ],
-      fee: '0.001',
-      changeAddress: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
-    },
-    { testnet: true },
-  )
-  const broadcastTx = await ltcSDK.blockchain.broadcast({
-    txData: signedTxData,
-  })
-  console.log(`Broadcast TX: ${JSON.stringify(broadcastTx)}`)
-
-  // Send LTC to a blockchain address.
-  // Account balance is needed for the transfer to work, you can top up your testnet LTC balance with https://testnet-faucet.com/ltc-testnet/
-  // You can find more details in https://apidoc.tatum.io/tag/Litecoin#operation/LtcTransferBlockchain
-  const transfer = await ltcSDK.blockchain.send({
-    fromAddress: [
-      {
-        address: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
-        privateKey: REPLACE_ME_WITH_PRIVATE_KEY,
-      },
-    ],
-    to: [
-      {
-        address: '2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7',
-        value: 0.02969944,
-      },
-    ],
-    fee: '0.001',
-    changeAddress: '2N9bBiH2qrTDrPCzrNhaFGdkNKS86PJAAAS',
-  } as LtcTransactionAddress)
-  console.log(`Transfer: ${JSON.stringify(transfer)}`)
 }

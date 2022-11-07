@@ -8,6 +8,13 @@ export type BchSdkErrorCode =
   | SdkErrorCode.BTC_BASED_FEE_TOO_SMALL
   | SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND
   | SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE
+  | SdkErrorCode.BTC_BASED_WRONG_BODY
+  | SdkErrorCode.UNSUPPORTED_CHAIN
+  | SdkErrorCode.BTC_BASED_TX_PREPARATION_UTXO
+  | SdkErrorCode.BTC_BASED_DESTINATION_LESS_THAN_ZERO
+  | SdkErrorCode.BTC_BASED_MNEMONIC_OR_KEYPAIR_EXPECTED
+  | SdkErrorCode.BTC_BASED_TX_FAILED
+  | SdkErrorCode.BTC_BASED_BLOCKCHAIN_ERROR
 
 export class BchSdkError extends SdkError {
   constructor(error: Error | BchSdkErrorCode) {

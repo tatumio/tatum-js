@@ -1,7 +1,5 @@
 # How to use TatumSDK with Ripple
 
-This is an example of a README.md file for a project.
-
 These examples should guide you through some basic operations of the XRP blockchain. You will be able to:
 
 - generate XRP wallet

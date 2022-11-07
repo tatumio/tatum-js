@@ -12,7 +12,7 @@ export type TransferCustodialWalletTronKMS = {
      */
     custodialAddress: string;
     /**
-     * The gas pump address that transfers the assets in the Base58 format
+     * The blockchain address that owns the gas pump address ("master address") in the Base58 format
      */
     from: string;
     /**

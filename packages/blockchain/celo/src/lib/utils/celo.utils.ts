@@ -16,6 +16,7 @@ import {
   MintMultiTokenBatchCelo,
   MintMultiTokenCelo,
   MintNftCelo,
+  OpenAPI,
   TATUM_API_CONSTANTS,
   TransferCeloBlockchain,
   TransferMultiTokenBatchCelo,
@@ -130,14 +131,7 @@ export const celoUtils = {
   getProvider: (provider?: string) => new CeloProvider(celoUtils.getProviderUrl(provider)),
 
   getProviderUrl: (provider?: string) => {
-    return (
-      provider ||
-      httpHelper.web3Endpoint(
-        Blockchain.CELO,
-        process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL,
-        TATUM_API_CONSTANTS.API_KEY,
-      )
-    )
+    return provider || httpHelper.web3Endpoint(Blockchain.CELO, OpenAPI.BASE, TATUM_API_CONSTANTS.API_KEY)
   },
 
   obtainWalletInformation: async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {

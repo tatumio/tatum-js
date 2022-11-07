@@ -30,6 +30,18 @@ export async function bscErc20Example() {
   const transaction = await bscSDK.blockchain.smartContractGetAddress('BSC', erc20Deployed.txId)
   const contractAddress = transaction.contractAddress as string
 
+  // Please note that tokens might not appear immediately on the blockchain so in order to execute
+  // all examples at once you should set some timeout between the calls or execute examples separately
+
+  // burn erc20 (fungible token) transaction
+  const erc20Burned = (await bscSDK.erc20.send.burnSignedTransaction({
+    amount: '10',
+    contractAddress,
+    fromPrivateKey,
+  })) as TransactionHash
+
+  console.log(`Burned erc20 token/s with transaction ID ${erc20Burned.txId}`)
+
   const erc20Minted = (await bscSDK.erc20.send.mintSignedTransaction({
     to,
     amount: '10',
@@ -49,13 +61,4 @@ export async function bscErc20Example() {
   })) as TransactionHash
 
   console.log(`Erc20 transaction with transaction ID ${erc20Transffered.txId} was sent.`)
-
-  // burn erc20 (fungible token) transaction
-  const erc20Burned = (await bscSDK.erc20.send.burnSignedTransaction({
-    amount: '10',
-    contractAddress,
-    fromPrivateKey,
-  })) as TransactionHash
-
-  console.log(`Burned erc20 token/s with transaction ID ${erc20Burned.txId}`)
 }

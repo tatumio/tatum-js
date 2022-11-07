@@ -45,3 +45,5 @@ export const placeArgsToString = (message?: string, args?: SdkMessageArgs): stri
 }
 
 export const toHexString = (value: BigNumber) => `0x${value.toString(16)}`
+
+export const sleep = async (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))

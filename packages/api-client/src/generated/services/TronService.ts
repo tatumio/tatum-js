@@ -9,6 +9,7 @@ import type { FreezeTron } from '../models/FreezeTron';
 import type { FreezeTronKMS } from '../models/FreezeTronKMS';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
+import type { SignatureId } from '../models/SignatureId';
 import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferTronBlockchain } from '../models/TransferTronBlockchain';
 import type { TransferTronBlockchainKMS } from '../models/TransferTronBlockchainKMS';
@@ -205,12 +206,12 @@ export class TronService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @returns TransactionHash OK
+     * @returns any OK
      * @throws ApiError
      */
     public static tronFreeze(
         requestBody: (FreezeTron | FreezeTronKMS),
-    ): CancelablePromise<TransactionHash> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/tron/freezeBalance`,
@@ -317,12 +318,12 @@ export class TronService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @returns TransactionHash OK
+     * @returns any OK
      * @throws ApiError
      */
     public static tronTransfer(
         requestBody: (TransferTronBlockchain | TransferTronBlockchainKMS),
-    ): CancelablePromise<TransactionHash> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/tron/transaction`,
@@ -347,12 +348,12 @@ export class TronService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @returns TransactionHash OK
+     * @returns any OK
      * @throws ApiError
      */
     public static tronTransferTrc10(
         requestBody: (TransferTronTrc10Blockchain | TransferTronTrc10BlockchainKMS),
-    ): CancelablePromise<TransactionHash> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/tron/trc10/transaction`,
@@ -377,12 +378,12 @@ export class TronService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @returns TransactionHash OK
+     * @returns any OK
      * @throws ApiError
      */
     public static tronTransferTrc20(
         requestBody: (TransferTronTrc20Blockchain | TransferTronTrc20BlockchainKMS),
-    ): CancelablePromise<TransactionHash> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/tron/trc20/transaction`,
@@ -407,12 +408,12 @@ export class TronService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @returns TransactionHash OK
+     * @returns any OK
      * @throws ApiError
      */
     public static tronCreateTrc10(
         requestBody: (CreateTronTrc10Blockchain | CreateTronTrc10BlockchainKMS),
-    ): CancelablePromise<TransactionHash> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/tron/trc10/deploy`,
@@ -461,12 +462,12 @@ export class TronService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @returns TransactionHash OK
+     * @returns any OK
      * @throws ApiError
      */
     public static tronCreateTrc20(
         requestBody: (CreateTronTrc20Blockchain | CreateTronTrc20BlockchainKMS),
-    ): CancelablePromise<TransactionHash> {
+    ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/tron/trc20/deploy`,

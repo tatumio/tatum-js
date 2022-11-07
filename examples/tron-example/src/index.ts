@@ -6,7 +6,9 @@ import { tronTrc10Example } from './app/tron.trc10.example'
 import { tronTrc20Example } from './app/tron.trc20.example'
 import { tronBlockchainExample } from './app/tron.blockchain.example'
 import { tronTxExample } from './app/tron.tx.example'
+import { tronWalletExample } from './app/tron.wallet.example'
 
+console.log(`Running ${tronWalletExample()}`)
 console.log(`Running ${tronVirtualAccountExample()}`)
 console.log(`Running ${tronSubscriptionsExample()}`)
 console.log(`Running ${tronBalanceExample()}`)

@@ -8,6 +8,10 @@ export type TransferNftAlgoExpress = {
      */
     chain: 'ALGO';
     /**
+     * Value to be sent.
+     */
+    value?: string;
+    /**
      * Blockchain address to send NFT token to
      */
     to: string;

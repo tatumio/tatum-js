@@ -12,6 +12,10 @@ export type ChainTransferAlgoErc20KMS = {
      */
     to: string;
     /**
+     * Blockchain address to send ERC20 token from
+     */
+    from: string;
+    /**
      * Amount to be sent.
      */
     amount: string;
@@ -24,7 +28,7 @@ export type ChainTransferAlgoErc20KMS = {
      */
     signatureId: string;
     /**
-     * Blockchain address to send ERC20 token to
+     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
      */
-    from: string;
+    index?: number;
 }

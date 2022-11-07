@@ -28,12 +28,12 @@ or
 yarn add @tatumio/flow
 ```
 
-At the end, you need to initialize new SDK with your API Key.
+At the end, you need to initialize new SDK with your API Key and network flag (it's required).
 
 ```typescript
 import { TatumFlowSDK } from '@tatumio/flow'
 
-const flowSDK = TatumFlowSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const flowSDK = TatumFlowSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab', testnet: true })
 ```
 
 Examples are written in TypeScript, but you can use them in JavaScript as well. We are following ES6 standard, so you

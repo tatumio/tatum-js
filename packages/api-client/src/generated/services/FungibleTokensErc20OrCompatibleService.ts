@@ -103,7 +103,6 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>Create new fungible tokens in the smart contract (the <code>contractAddress</code> parameter in the request body) and transfer them to the specified blockchain address (the <code>to</code> parameter in the request body). You can mint new fungible tokens only if the current supply of tokens in the smart contract is lower than the total supply set for this contract.</p>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
-     * <li>Algorand</li>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
      * <li>Ethereum</li>
