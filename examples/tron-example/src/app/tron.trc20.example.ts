@@ -1,16 +1,17 @@
 import { TatumTronSDK } from '@tatumio/tron'
-import { TransactionHash } from '@tatumio/api-client'
+import { Currency, TransactionHash } from '@tatumio/api-client'
+import { sleep } from '@tatumio/shared-abstract-sdk'
 
 const tronSdk = TatumTronSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function tronTrc20Example() {
-  const { mnemonic, xpub } = await tronSdk.wallet.generateWallet()
-  const fromPrivateKey = await tronSdk.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
-  const address = tronSdk.wallet.generateAddressFromXPub(xpub, 0)
-  const to = tronSdk.wallet.generateAddressFromXPub(xpub, 1)
-
   // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
   // You can fund your address here: https://twitter.com/TronTest2
+  const address = '<PUT YOUR ADDRESS HERE>'
+  const fromPrivateKey = '<PUT YOUR PRIVATE KEY HERE>'
+
+  const { xpub } = await tronSdk.wallet.generateWallet()
+  const to = tronSdk.wallet.generateAddressFromXPub(xpub, 0)
 
   // create trc20 token
   // https://apidoc.tatum.io/tag/Tron#operation/TronCreateTrc20
@@ -24,6 +25,16 @@ export async function tronTrc20Example() {
   })) as TransactionHash
 
   console.log(`Created trc20 token with transaction ID ${trc20Created.txId}`)
+  console.log(`Waiting 120 seconds for the transaction [${trc20Created.txId}] to appear in a block`)
+  // If during this time the transaction is not confirmed, then the waiting time should be increased.
+  // In a real application, the wait mechanism must be implemented properly without using this
+  await sleep(120_000)
+
+  // find deployed contract address from transaction hash
+  // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
+  const transactionData = await tronSdk.blockchain.smartContractGetAddress(Currency.TRON, trc20Created.txId)
+  const tokenAddress = transactionData.contractAddress as string
+  console.log(`Deployed TRC20 smart contract address: ${tokenAddress}`)
 
   // Please note that tokens might not appear immediately on the blockchain so in order to execute
   // all examples at once you should set some timeout between the calls or execute examples separately
@@ -34,15 +45,18 @@ export async function tronTrc20Example() {
     to,
     amount: '10',
     fromPrivateKey,
-    tokenAddress: address,
+    tokenAddress,
     feeLimit: 600,
   })) as TransactionHash
 
   console.log(`Trc20 transaction with transaction ID ${trc20Transffered.txId} was sent.`)
+  console.log(`Waiting 120 seconds for the transaction [${trc20Transffered.txId}] to appear in a block`)
+  await sleep(120_000)
 
   // Get TRC-20 transactions for a TRON account.
   // https://apidoc.tatum.io/tag/Tron#operation/TronAccountTx20
   const trc20Transactions = await tronSdk.blockchain.getTrc20Transactions(address)
 
-  console.log(`Trc20 transactions for ${address}: ${trc20Transactions}`)
+  console.log(`Trc20 transactions for ${address}`)
+  console.log(JSON.stringify(trc20Transactions))
 }

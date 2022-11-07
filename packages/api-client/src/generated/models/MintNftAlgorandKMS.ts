@@ -26,6 +26,10 @@ export type MintNftAlgorandKMS = {
      * The KMS identifier of the private key of the minting account; the transaction fee will be paid from this account
      */
     signatureId: string;
+    /**
+     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
+     */
+    index?: number;
     attr?: {
         /**
          * The unit name of the NFT

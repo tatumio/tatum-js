@@ -10,6 +10,7 @@ export class NodeRpcService {
      * Connect to the blockchain node through an RPC driver
      * <p><b>The number of credits consumed depends on the number of methods submitted in an API call:<br/>
      * * 50 credits per debug*_/trace* method (for EVM-based blockchains)<br/>
+     * * 50 credits per EOS <a href="https://developers.eos.io/manuals/eos/v2.0/nodeos/plugins/trace_api_plugin/api-reference/index" target="_blank">Trace API</a> methods <br/>
      * * 5 credits per eth_call method (for EVM-based blockchains)<br/>
      * * 2 credits per any other RPC method</b></p>
      * <p>Connect directly to the blockchain node provided by Tatum.</p>
@@ -52,6 +53,7 @@ export class NodeRpcService {
                      * <li><a href="https://developer.bitcoin.org/reference/rpc/index.html" target="_blank">Bitcoin</a></li>
                      * <li><a href="https://docs.bitcoincashnode.org/doc/json-rpc/" target="_blank">Bitcoin Cash</a></li>
                      * <li><a href="https://docs.bnbchain.org/docs/rpc" target="_blank">BNB Smart Chain</a></li>
+                     * <li><a href="https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list" target="_blank">BNB Beacon chain</a></li>
                      * <li><a href="https://docs.cardano.org/cardano-components/cardano-rosetta" target="_blank">Cardano</a></li>
                      * <li><a href="https://explorer.celo.org/api-docs" target="_blank">Celo</a></li>
                      * <li><a href="https://cronos.org/docs/resources/chain-integration.html" target="_blank">Cronos</a></li>
@@ -67,6 +69,7 @@ export class NodeRpcService {
                      * <li><a href="https://guide.kusama.network/docs/build-node-interaction/" target="_blank">Kusama</a></li>
                      * <li><a href="https://lisk.com/documentation/lisk-service/references/api.html" target="_blank">Lisk</a></li>
                      * <li><a href="https://litecoin.org/" target="_blank">Litecoin</a></li>
+                     * <li><a href="https://developers.flow.com/http-api" target="_blank">Flow</a></li>
                      * <li><a href="https://docs.near.org/api/rpc/introduction" target="_blank">NEAR</a></li>
                      * <li><a href="https://docs.neo.org/docs/en-us/reference/rpc/latest-version/api.html" target="_blank">Neo</a></li>
                      * <li><a href="https://docs.oasis.dev/oasis-core/oasis-node/rpc/" target="_blank">Oasis Network</a></li>
@@ -97,7 +100,7 @@ export class NodeRpcService {
                      * @throws ApiError
                      */
                     public static nodeJsonPostRpcDriver(
-                        chain: 'ADA' | 'ALGO' | 'ARB' | 'AURORA' | 'AVAX' | 'BCH' | 'BSC' | 'BTC' | 'CELO' | 'CRO' | 'DOGE' | 'DOT' | 'EGLD' | 'EOS' | 'ETH' | 'FTM' | 'GNO' | 'KCS' | 'KSM' | 'KLAY' | 'LISK' | 'LTC' | 'NEAR' | 'NEO' | 'MATIC' | 'OASIS' | 'ONE' | 'OPTIMISM' | 'PALM' | 'RSK' | 'SOL' | 'TEZOS' | 'TRON' | 'VET' | 'XDC' | 'XLM' | 'XRP' | 'ZCASH' | 'ZIL',
+                        chain: 'ADA' | 'ALGO' | 'ARB' | 'AURORA' | 'AVAX' | 'BCH' | 'BNB' | 'BSC' | 'BTC' | 'CELO' | 'CRO' | 'DOGE' | 'DOT' | 'EGLD' | 'EOS' | 'ETH' | 'FLOW' | 'FTM' | 'GNO' | 'KCS' | 'KSM' | 'KLAY' | 'LISK' | 'LTC' | 'NEAR' | 'NEO' | 'MATIC' | 'OASIS' | 'ONE' | 'OPTIMISM' | 'PALM' | 'RSK' | 'SOL' | 'TEZOS' | 'TRON' | 'VET' | 'XDC' | 'XLM' | 'XRP' | 'ZCASH' | 'ZIL',
                         requestBody: any,
                         xApiKey?: string,
                         nodeType?: 'ALGOD' | 'INDEXER',
@@ -160,6 +163,7 @@ export class NodeRpcService {
                                      * <li><a href="https://developer.algorand.org/docs/rest-apis/restendpoints/" target="_blank">Algorand</a></li>
                                      * <li><a href="https://docs.elrond.com/sdk-and-tools/rest-api/nodes/" target="_blank">Elrond</a></li>
                                      * <li><a href="https://developers.stellar.org/api" target="_blank">Stellar</a></li>
+                                     * <li><a href="https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list" target="_blank">BNB Beacon chain</a></li>
                                      * </ul>
                                      *
                                      * @param chain Blockchain to communicate with.
@@ -171,7 +175,7 @@ export class NodeRpcService {
                                      * @throws ApiError
                                      */
                                     public static nodeJsonRpcPutDriver(
-                                        chain: 'ALGO' | 'EGLD' | 'XLM',
+                                        chain: 'ALGO' | 'BNB' | 'EGLD' | 'XLM',
                                         requestBody: any,
                                         xApiKey?: string,
                                         nodeType?: 'ALGOD' | 'INDEXER',
@@ -201,9 +205,11 @@ export class NodeRpcService {
                                      * <p>This API is supported for the following blockchains:</p>
                                      * <ul>
                                      * <li><a href="https://developer.algorand.org/docs/rest-apis/restendpoints/" target="_blank">Algorand</a></li>
+                                     * <li><a href="https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list" target="_blank">BNB Beacon chain</a></li>
                                      * <li><a href="https://docs.elrond.com/sdk-and-tools/rest-api/nodes/" target="_blank">Elrond</a></li>
                                      * <li><a href="https://lisk.com/documentation/lisk-service/references/api.html" target="_blank">Lisk</a></li>
                                      * <li><a href="https://developers.stellar.org/api" target="_blank">Stellar</a></li>
+                                     * <li><a href="https://developers.flow.com/http-api" target="_blank">Flow</a></li>
                                      * <li><a href="https://opentezos.com/tezos-basics/cli-and-rpc/" target="_blank">Tezos</a></li>
                                      * <li><a href="https://developers.tron.network/reference/full-node-api-overview" target="_blank">TRON</a></li>
                                      * </ul>
@@ -216,7 +222,7 @@ export class NodeRpcService {
                                      * @throws ApiError
                                      */
                                     public static nodeJsonRpcGetDriver(
-                                        chain: 'ALGO' | 'EGLD' | 'LISK' | 'XLM' | 'TEZOS' | 'TRON',
+                                        chain: 'ALGO' | 'EGLD' | 'LISK' | 'XLM' | 'TEZOS' | 'TRON' | 'FLOW' | 'BNB',
                                         xApiKey?: string,
                                         nodeType?: 'ALGOD' | 'INDEXER',
                                         rpcPath?: string,

@@ -32,6 +32,10 @@ export type ChainDeployAlgoErc20 = {
      */
     address: string;
     /**
+     * The URL pointing to the metadata
+     */
+    url: string;
+    /**
      * Private key of Ethereum account address, from which the fee for the deployment of ERC20 will be paid. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
@@ -40,16 +44,7 @@ export type ChainDeployAlgoErc20 = {
      */
     nonce?: number;
     /**
-     * Custom defined fee. If not present, it will be calculated automatically.
+     * The transaction fee in Algos
      */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: string;
 }
