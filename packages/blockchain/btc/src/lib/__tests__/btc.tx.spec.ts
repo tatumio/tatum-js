@@ -1,7 +1,7 @@
 import '@tatumio/shared-testing-common'
 import { mockHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
-import { BtcTx, BtcUTXO } from '@tatumio/api-client'
+import { BtcTx, BtcUTXO, FeeBtc } from '@tatumio/api-client'
 import {
   BtcBasedMocks,
   BtcBasedTestParams,
@@ -75,6 +75,7 @@ describe('BTC transactions', () => {
     requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
     requestGetTransactionsNotFound: mockRequestGetTransactionsNotFound,
     requestGetTxByAddress: mockRequestGetTxByAddress,
+    requestEstimateFee: mockRequestEstimateFee,
     broadcast: mockedApi.blockchain.bitcoin.btcBroadcast,
   }
 
@@ -160,5 +161,15 @@ describe('BTC transactions', () => {
     },
   ) {
     mockedApi.blockchain.bitcoin.btcGetTxByAddress.mockResolvedValue([obj])
+  }
+
+  function mockRequestEstimateFee(
+    obj: FeeBtc = {
+      slow: '0.000001',
+      medium: '0.000002',
+      fast: '0.000003',
+    },
+  ) {
+    mockedApi.fee.estimateFeeBlockchain.mockResolvedValue(obj)
   }
 })

@@ -4600,7 +4600,7 @@
     },
     "/v3/blockchain/marketplace/listing": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Deploy an NFT marketplace smart contract on the blockchain. With a deployed marketplace smart contract, you and your customers can create new  listings for assets such as non-fungible tokens and combinations of token types as described by the ERC-721 and ERC-1155 standards on the Ethereum blockchain or by the equivalent standards on the other blockchains. As the marketplace operator, you can set a fee as a percentage of the asset price that will be paid on top of the asset price.</p>\n<p>The purchase process looks like the following:</p>\n<ol>\n<li>The seller <a href=\"#operation/SellAssetOnMarketplace\">creates a listing for an asset on the NFT marketplace</a>. The listing can be offered for the native blockchain assets (for example, ETH, BSC, and so on) or for the fungible tokens of the blockchain.</li>\n<li>The seller <a href=\"https://apidoc.tatum.io/tag/Auction#operation/ApproveNftAuctionSpending\" target=\"_blank\">allows the marketplace smart contract to transfer the asset that they are selling</a>.</li>\n<li>A buyer buys the asset.\n<ul><li>If the buyer wants to pay with the <b>native blockchain assets</b>, they <a href=\"#operation/BuyAssetOnMarketplace\">make the purchase</a> (the <code>buyAssetFromListing()</code> method is called against the marketplace smart contract) and send the required amount of the native assets to the marketplace smart contract.</li>\n<li>If the buyer wants to pay with the <b>fungible tokens</b>:\n<ol><li>The buyer <a href=\"https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Approve\" target=\"_blank\">allows the marketplace smart contract to access their tokens</a> and makes the purchase (the <code>buyAssetFromListing()</code> method is called against the marketplace smart contract).</li>\n<li>The marketplace smart contract deducts the required amount of tokens from the smart contract where the buyer holds the tokens.</li></ol></li></ul></li>\n<li>The marketplace smart contract transfers the asset to the buyer, transfers the asset price to the seller, and sends the fee to the marketplace fee recepient.</li>\n</ol>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When deploying an NFT marketplace smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Deploy an NFT marketplace smart contract on the blockchain. With a deployed marketplace smart contract, you and your customers can create new  listings for assets such as non-fungible tokens and combinations of token types as described by the ERC-721 and ERC-1155 standards on the Ethereum blockchain or by the equivalent standards on the other blockchains. As the marketplace operator, you can set a fee as a percentage of the asset price that will be paid on top of the asset price.</p>\n<p>The purchase process looks like the following:</p>\n<ol>\n<li>The seller <a href=\"#operation/SellAssetOnMarketplace\">creates a listing for an asset on the NFT marketplace</a>. The listing can be offered for the native blockchain assets (for example, ETH, BSC, and so on) or for the fungible tokens of the blockchain.</li>\n<li>The seller <a href=\"https://apidoc.tatum.io/tag/Auction#operation/ApproveNftAuctionSpending\" target=\"_blank\">allows the marketplace smart contract to transfer the asset that they are selling</a>.</li>\n<li>A buyer buys the asset.\n<ul><li>If the buyer wants to pay with the <b>native blockchain assets</b>, they <a href=\"#operation/BuyAssetOnMarketplace\">make the purchase</a> (the <code>buyAssetFromListing()</code> method is called against the marketplace smart contract) and send the required amount of the native assets to the marketplace smart contract.</li>\n<li>If the buyer wants to pay with the <b>fungible tokens</b>:\n<ol><li>The buyer <a href=\"https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Approve\" target=\"_blank\">allows the marketplace smart contract to access their tokens</a> and makes the purchase (the <code>buyAssetFromListing()</code> method is called against the marketplace smart contract).</li>\n<li>The marketplace smart contract deducts the required amount of tokens from the smart contract where the buyer holds the tokens.</li></ol></li></ul></li>\n<li>The marketplace smart contract transfers the asset to the buyer, transfers the asset price to the seller, and sends the fee to the marketplace fee recipient.</li>\n</ol>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When deploying an NFT marketplace smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "operationId": "GenerateMarketplace",
         "requestBody": {
           "content": {
@@ -5198,13 +5198,13 @@
         },
         "security": [{ "X-API-Key": [] }],
         "x-codeSamples": [],
-        "summary": "Get the recepient of the NFT marketplace fee",
+        "summary": "Get the recipient of the NFT marketplace fee",
         "tags": ["Marketplace"]
       }
     },
     "/v3/blockchain/marketplace/listing/recipient": {
       "put": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Update the recepient of the NFT marketplace fee.</p>\n<p>You can update the fee recepient only if you are the marketplace operator.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When updating the recepient of the NFT marketplace fee, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Update the recipient of the NFT marketplace fee.</p>\n<p>You can update the fee recipient only if you are the marketplace operator.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When updating the recipient of the NFT marketplace fee, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "operationId": "UpdateFeeRecipient",
         "requestBody": {
           "content": {
@@ -5265,7 +5265,7 @@
         },
         "security": [{ "X-API-Key": [] }],
         "x-codeSamples": [],
-        "summary": "Update the recepient of the NFT marketplace fee",
+        "summary": "Update the recipient of the NFT marketplace fee",
         "tags": ["Marketplace"]
       }
     },
@@ -6206,7 +6206,7 @@
     },
     "/v3/blockchain/node/{chain}/{xApiKey}/{rpcPath}": {
       "post": {
-        "description": "<p><b>The number of credits consumed depends on the number of methods submitted in an API call:<br/>\n* 50 credits per debug*/trace* method (for EVM-based blockchains)<br/>\n* 5 credits per eth_call method (for EVM-based blockchains)<br/>\n* 2 credits per any other RPC method</b></p>\n<p>Connect directly to the blockchain node provided by Tatum.</p>\n<p>The <code>POST</code> method is used. The API endpoint URL acts as an HTTP-based RPC driver.</p>\n<p>In the request body, provide valid Web3 RPC method content, for example:</p>\n<pre>\n{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"method_name\",\n  \"params\": []\n}\n</pre>\n<p>For the blockchains using the JSON-RPC 2.0 specification, you can submit multiple RPC methods in one API call:</p>\n<pre>\n[\n  {\n    \"jsonrpc\": \"2.0\",\n    \"id\": 1,\n    \"method\": \"method_1_name\",\n    \"params\": []\n  },\n  {\n    \"jsonrpc\": \"2.0\",\n    \"id\": 2,\n    \"method\": \"method_2_name\",\n    \"params\": []\n  },\n  ...\n]\n</pre>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n  <li><a href=\"https://developer.algorand.org/docs/rest-apis/restendpoints/\" target=\"_blank\">Algorand</a></li>\n  <li><a href=\"https://ethereum.org/en/developers/docs/apis/json-rpc/\" target=\"_blank\">Arbitrum</a></li>\n  <li><a href=\"https://doc.aurora.dev/compat/rpc/\" target=\"_blank\">Aurora</a></li>\n  <li><a href=\"https://docs.avax.network/apis/avalanchego/apis/c-chain\" target=\"_blank\">Avalanche C-Chain</a></li>\n  <li><a href=\"https://docs.avax.network/apis/avalanchego/apis/p-chain\" target=\"_blank\">Avalanche P-Chain</a></li>\n  <li><a href=\"https://docs.avax.network/apis/avalanchego/apis/x-chain\" target=\"_blank\">Avalanche X-Chain</a></li>\n  <li><a href=\"https://developer.bitcoin.org/reference/rpc/index.html\" target=\"_blank\">Bitcoin</a></li>\n  <li><a href=\"https://docs.bitcoincashnode.org/doc/json-rpc/\" target=\"_blank\">Bitcoin Cash</a></li>\n  <li><a href=\"https://docs.bnbchain.org/docs/rpc\" target=\"_blank\">BNB Smart Chain</a></li>\n  <li><a href=\"https://docs.cardano.org/cardano-components/cardano-rosetta\" target=\"_blank\">Cardano</a></li>\n  <li><a href=\"https://explorer.celo.org/api-docs\" target=\"_blank\">Celo</a></li>\n  <li><a href=\"https://cronos.org/docs/resources/chain-integration.html\" target=\"_blank\">Cronos</a></li>\n  <li><a href=\"https://dogecoin.com/\" target=\"_blank\">Dogecoin</a></li>\n  <li><a href=\"https://docs.elrond.com/sdk-and-tools/rest-api/nodes/\" target=\"_blank\">Elrond</a></li>\n  <li><a href=\"https://developers.eos.io/welcome/latest/reference/nodeos-rpc-api-reference\" target=\"_blank\">EOSIO</a></li>\n  <li><a href=\"https://ethereum.org/en/developers/docs/apis/json-rpc/\" target=\"_blank\">Ethereum</a></li>\n  <li><a href=\"https://docs.fantom.foundation/api/public-api-endpoints\" target=\"_blank\">Fantom</a></li>\n  <li><a href=\"https://developers.gnosischain.com/for-developers/developer-resources\" target=\"_blank\">Gnosis</a></li>\n  <li><a href=\"https://docs.harmony.one/home/developers/api\" target=\"_blank\">Harmony</a></li>\n  <li><a href=\"https://docs.klaytn.foundation/dapp/json-rpc\" target=\"_blank\">Klaytn</a></li>\n  <li><a href=\"https://docs.kcc.io/\" target=\"_blank\">KuCoin Community Chain</a></li>\n  <li><a href=\"https://guide.kusama.network/docs/build-node-interaction/\" target=\"_blank\">Kusama</a></li>\n  <li><a href=\"https://lisk.com/documentation/lisk-service/references/api.html\" target=\"_blank\">Lisk</a></li>\n  <li><a href=\"https://litecoin.org/\" target=\"_blank\">Litecoin</a></li>\n  <li><a href=\"https://docs.near.org/api/rpc/introduction\" target=\"_blank\">NEAR</a></li>\n  <li><a href=\"https://docs.neo.org/docs/en-us/reference/rpc/latest-version/api.html\" target=\"_blank\">Neo</a></li>\n  <li><a href=\"https://docs.oasis.dev/oasis-core/oasis-node/rpc/\" target=\"_blank\">Oasis Network</a></li>\n  <li><a href=\"https://community.optimism.io/docs/developers/build/json-rpc/\" target=\"_blank\">Optimism</a></li>\n  <li><a href=\"https://docs.palm.io/Get-Started/Connect/Overview/\" target=\"_blank\">Palm</a></li>\n  <li><a href=\"https://wiki.polkadot.network/docs/build-node-interaction\" target=\"_blank\">Polkadot</a></li>\n  <li><a href=\"https://polygon.technology/developers\" target=\"_blank\">Polygon</a></li>\n  <li><a href=\"https://developers.rsk.co/rsk/node/architecture/json-rpc/\" target=\"_blank\">RSK</a></li>\n  <li><a href=\"https://docs.solana.com/developing/clients/jsonrpc-api\" target=\"_blank\">Solana</a></li>\n  <li><a href=\"https://developers.stellar.org/api\" target=\"_blank\">Stellar</a></li>\n  <li><a href=\"https://opentezos.com/tezos-basics/cli-and-rpc/\" target=\"_blank\">Tezos</a></li>\n  <li><a href=\"https://developers.tron.network/reference/full-node-api-overview\" target=\"_blank\">TRON</a></li>\n  <li><a href=\"https://www.vechain.org/\" target=\"_blank\">VeChain</a></li>\n  <li><a href=\"https://apidocs.xinfin.network/docs/\" target=\"_blank\">XinFin</a></li>\n  <li><a href=\"https://xrpl.org/public-api-methods.html\" target=\"_blank\">XRP</a></li>\n  <li><a href=\"https://zcash-rpc.github.io/\" target=\"_blank\">ZCash</a></li>\n  <li><a href=\"https://dev.zilliqa.com/docs/apis/api-introduction\" target=\"_blank\">Zilliqa</a></li>\n</ul>\n",
+        "description": "<p><b>The number of credits consumed depends on the number of methods submitted in an API call:<br/>\n* 50 credits per debug*/trace* method (for EVM-based blockchains)<br/>\n* 50 credits per EOS <a href=\"https://developers.eos.io/manuals/eos/v2.0/nodeos/plugins/trace_api_plugin/api-reference/index\" target=\"_blank\">Trace API</a> methods <br/>\n* 5 credits per eth_call method (for EVM-based blockchains)<br/>\n* 2 credits per any other RPC method</b></p>\n<p>Connect directly to the blockchain node provided by Tatum.</p>\n<p>The <code>POST</code> method is used. The API endpoint URL acts as an HTTP-based RPC driver.</p>\n<p>In the request body, provide valid Web3 RPC method content, for example:</p>\n<pre>\n{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"method_name\",\n  \"params\": []\n}\n</pre>\n<p>For the blockchains using the JSON-RPC 2.0 specification, you can submit multiple RPC methods in one API call:</p>\n<pre>\n[\n  {\n    \"jsonrpc\": \"2.0\",\n    \"id\": 1,\n    \"method\": \"method_1_name\",\n    \"params\": []\n  },\n  {\n    \"jsonrpc\": \"2.0\",\n    \"id\": 2,\n    \"method\": \"method_2_name\",\n    \"params\": []\n  },\n  ...\n]\n</pre>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n  <li><a href=\"https://developer.algorand.org/docs/rest-apis/restendpoints/\" target=\"_blank\">Algorand</a></li>\n  <li><a href=\"https://ethereum.org/en/developers/docs/apis/json-rpc/\" target=\"_blank\">Arbitrum</a></li>\n  <li><a href=\"https://doc.aurora.dev/compat/rpc/\" target=\"_blank\">Aurora</a></li>\n  <li><a href=\"https://docs.avax.network/apis/avalanchego/apis/c-chain\" target=\"_blank\">Avalanche C-Chain</a></li>\n  <li><a href=\"https://docs.avax.network/apis/avalanchego/apis/p-chain\" target=\"_blank\">Avalanche P-Chain</a></li>\n  <li><a href=\"https://docs.avax.network/apis/avalanchego/apis/x-chain\" target=\"_blank\">Avalanche X-Chain</a></li>\n  <li><a href=\"https://developer.bitcoin.org/reference/rpc/index.html\" target=\"_blank\">Bitcoin</a></li>\n  <li><a href=\"https://docs.bitcoincashnode.org/doc/json-rpc/\" target=\"_blank\">Bitcoin Cash</a></li>\n  <li><a href=\"https://docs.bnbchain.org/docs/rpc\" target=\"_blank\">BNB Smart Chain</a></li>\n  <li><a href=\"https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list\" target=\"_blank\">BNB Beacon chain</a></li>\n  <li><a href=\"https://docs.cardano.org/cardano-components/cardano-rosetta\" target=\"_blank\">Cardano</a></li>\n  <li><a href=\"https://explorer.celo.org/api-docs\" target=\"_blank\">Celo</a></li>\n  <li><a href=\"https://cronos.org/docs/resources/chain-integration.html\" target=\"_blank\">Cronos</a></li>\n  <li><a href=\"https://dogecoin.com/\" target=\"_blank\">Dogecoin</a></li>\n  <li><a href=\"https://docs.elrond.com/sdk-and-tools/rest-api/nodes/\" target=\"_blank\">Elrond</a></li>\n  <li><a href=\"https://developers.eos.io/welcome/latest/reference/nodeos-rpc-api-reference\" target=\"_blank\">EOSIO</a></li>\n  <li><a href=\"https://ethereum.org/en/developers/docs/apis/json-rpc/\" target=\"_blank\">Ethereum</a></li>\n  <li><a href=\"https://docs.fantom.foundation/api/public-api-endpoints\" target=\"_blank\">Fantom</a></li>\n  <li><a href=\"https://developers.gnosischain.com/for-developers/developer-resources\" target=\"_blank\">Gnosis</a></li>\n  <li><a href=\"https://docs.harmony.one/home/developers/api\" target=\"_blank\">Harmony</a></li>\n  <li><a href=\"https://docs.klaytn.foundation/dapp/json-rpc\" target=\"_blank\">Klaytn</a></li>\n  <li><a href=\"https://docs.kcc.io/\" target=\"_blank\">KuCoin Community Chain</a></li>\n  <li><a href=\"https://guide.kusama.network/docs/build-node-interaction/\" target=\"_blank\">Kusama</a></li>\n  <li><a href=\"https://lisk.com/documentation/lisk-service/references/api.html\" target=\"_blank\">Lisk</a></li>\n  <li><a href=\"https://litecoin.org/\" target=\"_blank\">Litecoin</a></li>\n  <li><a href=\"https://developers.flow.com/http-api\" target=\"_blank\">Flow</a></li>\n  <li><a href=\"https://docs.near.org/api/rpc/introduction\" target=\"_blank\">NEAR</a></li>\n  <li><a href=\"https://docs.neo.org/docs/en-us/reference/rpc/latest-version/api.html\" target=\"_blank\">Neo</a></li>\n  <li><a href=\"https://docs.oasis.dev/oasis-core/oasis-node/rpc/\" target=\"_blank\">Oasis Network</a></li>\n  <li><a href=\"https://community.optimism.io/docs/developers/build/json-rpc/\" target=\"_blank\">Optimism</a></li>\n  <li><a href=\"https://docs.palm.io/Get-Started/Connect/Overview/\" target=\"_blank\">Palm</a></li>\n  <li><a href=\"https://wiki.polkadot.network/docs/build-node-interaction\" target=\"_blank\">Polkadot</a></li>\n  <li><a href=\"https://polygon.technology/developers\" target=\"_blank\">Polygon</a></li>\n  <li><a href=\"https://developers.rsk.co/rsk/node/architecture/json-rpc/\" target=\"_blank\">RSK</a></li>\n  <li><a href=\"https://docs.solana.com/developing/clients/jsonrpc-api\" target=\"_blank\">Solana</a></li>\n  <li><a href=\"https://developers.stellar.org/api\" target=\"_blank\">Stellar</a></li>\n  <li><a href=\"https://opentezos.com/tezos-basics/cli-and-rpc/\" target=\"_blank\">Tezos</a></li>\n  <li><a href=\"https://developers.tron.network/reference/full-node-api-overview\" target=\"_blank\">TRON</a></li>\n  <li><a href=\"https://www.vechain.org/\" target=\"_blank\">VeChain</a></li>\n  <li><a href=\"https://apidocs.xinfin.network/docs/\" target=\"_blank\">XinFin</a></li>\n  <li><a href=\"https://xrpl.org/public-api-methods.html\" target=\"_blank\">XRP</a></li>\n  <li><a href=\"https://zcash-rpc.github.io/\" target=\"_blank\">ZCash</a></li>\n  <li><a href=\"https://dev.zilliqa.com/docs/apis/api-introduction\" target=\"_blank\">Zilliqa</a></li>\n</ul>\n",
         "operationId": "NodeJsonPostRpcDriver",
         "parameters": [
           {
@@ -6231,6 +6231,7 @@
                 "AURORA",
                 "AVAX",
                 "BCH",
+                "BNB",
                 "BSC",
                 "BTC",
                 "CELO",
@@ -6240,6 +6241,7 @@
                 "EGLD",
                 "EOS",
                 "ETH",
+                "FLOW",
                 "FTM",
                 "GNO",
                 "KCS",
@@ -6360,7 +6362,7 @@
         "tags": ["Node RPC"]
       },
       "put": {
-        "description": "<p><b>2 credits per RPC method in an API call</b></p>\n<p>Connect directly to the blockchain node provided by Tatum.</p>\n<p>The <code>PUT</code> method is used. The API endpoint URL acts as an HTTP-based RPC driver.</p>\n<p>In the request body, provide valid Web3 RPC method content, for example:</p>\n<pre>\n{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"method_name\",\n  \"params\": []\n}\n</pre>\n<p>For the blockchains using the JSON-RPC 2.0 specification, you can submit multiple RPC methods in one API call:</p>\n<pre>\n[\n  {\n    \"jsonrpc\": \"2.0\",\n    \"id\": 1,\n    \"method\": \"method_1_name\",\n    \"params\": []\n  },\n  {\n    \"jsonrpc\": \"2.0\",\n    \"id\": 2,\n    \"method\": \"method_2_name\",\n    \"params\": []\n  },\n  ...\n]\n</pre>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n  <li><a href=\"https://developer.algorand.org/docs/rest-apis/restendpoints/\" target=\"_blank\">Algorand</a></li>\n  <li><a href=\"https://docs.elrond.com/sdk-and-tools/rest-api/nodes/\" target=\"_blank\">Elrond</a></li>\n  <li><a href=\"https://developers.stellar.org/api\" target=\"_blank\">Stellar</a></li>\n</ul>\n",
+        "description": "<p><b>2 credits per RPC method in an API call</b></p>\n<p>Connect directly to the blockchain node provided by Tatum.</p>\n<p>The <code>PUT</code> method is used. The API endpoint URL acts as an HTTP-based RPC driver.</p>\n<p>In the request body, provide valid Web3 RPC method content, for example:</p>\n<pre>\n{\n  \"jsonrpc\": \"2.0\",\n  \"id\": 1,\n  \"method\": \"method_name\",\n  \"params\": []\n}\n</pre>\n<p>For the blockchains using the JSON-RPC 2.0 specification, you can submit multiple RPC methods in one API call:</p>\n<pre>\n[\n  {\n    \"jsonrpc\": \"2.0\",\n    \"id\": 1,\n    \"method\": \"method_1_name\",\n    \"params\": []\n  },\n  {\n    \"jsonrpc\": \"2.0\",\n    \"id\": 2,\n    \"method\": \"method_2_name\",\n    \"params\": []\n  },\n  ...\n]\n</pre>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n  <li><a href=\"https://developer.algorand.org/docs/rest-apis/restendpoints/\" target=\"_blank\">Algorand</a></li>\n  <li><a href=\"https://docs.elrond.com/sdk-and-tools/rest-api/nodes/\" target=\"_blank\">Elrond</a></li>\n  <li><a href=\"https://developers.stellar.org/api\" target=\"_blank\">Stellar</a></li>\n  <li><a href=\"https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list\" target=\"_blank\">BNB Beacon chain</a></li>\n</ul>\n",
         "operationId": "NodeJsonRpcPutDriver",
         "parameters": [
           {
@@ -6375,7 +6377,7 @@
             "in": "path",
             "name": "chain",
             "required": true,
-            "schema": { "type": "string", "example": "ALGO", "enum": ["ALGO", "EGLD", "XLM"] }
+            "schema": { "type": "string", "example": "ALGO", "enum": ["ALGO", "BNB", "EGLD", "XLM"] }
           },
           {
             "description": "Type of the node to access for Algorand.",
@@ -6456,7 +6458,7 @@
         "tags": ["Node RPC"]
       },
       "get": {
-        "description": "<p><b>2 credits per RPC method in an API call</b></p>\n<p>Connect directly to the blockchain node provided by Tatum.</p>\n<p>The <code>GET</code> method is used. The API endpoint URL acts as an HTTP-based RPC driver.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n  <li><a href=\"https://developer.algorand.org/docs/rest-apis/restendpoints/\" target=\"_blank\">Algorand</a></li>\n  <li><a href=\"https://docs.elrond.com/sdk-and-tools/rest-api/nodes/\" target=\"_blank\">Elrond</a></li>\n  <li><a href=\"https://lisk.com/documentation/lisk-service/references/api.html\" target=\"_blank\">Lisk</a></li>\n  <li><a href=\"https://developers.stellar.org/api\" target=\"_blank\">Stellar</a></li>\n  <li><a href=\"https://opentezos.com/tezos-basics/cli-and-rpc/\" target=\"_blank\">Tezos</a></li>\n  <li><a href=\"https://developers.tron.network/reference/full-node-api-overview\" target=\"_blank\">TRON</a></li>\n</ul>\n",
+        "description": "<p><b>2 credits per RPC method in an API call</b></p>\n<p>Connect directly to the blockchain node provided by Tatum.</p>\n<p>The <code>GET</code> method is used. The API endpoint URL acts as an HTTP-based RPC driver.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n  <li><a href=\"https://developer.algorand.org/docs/rest-apis/restendpoints/\" target=\"_blank\">Algorand</a></li>\n  <li><a href=\"https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list\" target=\"_blank\">BNB Beacon chain</a></li>\n  <li><a href=\"https://docs.elrond.com/sdk-and-tools/rest-api/nodes/\" target=\"_blank\">Elrond</a></li>\n  <li><a href=\"https://lisk.com/documentation/lisk-service/references/api.html\" target=\"_blank\">Lisk</a></li>\n  <li><a href=\"https://developers.stellar.org/api\" target=\"_blank\">Stellar</a></li>\n  <li><a href=\"https://developers.flow.com/http-api\" target=\"_blank\">Flow</a></li>\n  <li><a href=\"https://opentezos.com/tezos-basics/cli-and-rpc/\" target=\"_blank\">Tezos</a></li>\n  <li><a href=\"https://developers.tron.network/reference/full-node-api-overview\" target=\"_blank\">TRON</a></li>\n</ul>\n",
         "operationId": "NodeJsonRpcGetDriver",
         "parameters": [
           {
@@ -6474,7 +6476,7 @@
             "schema": {
               "type": "string",
               "example": "ALGO",
-              "enum": ["ALGO", "EGLD", "LISK", "XLM", "TEZOS", "TRON"]
+              "enum": ["ALGO", "EGLD", "LISK", "XLM", "TEZOS", "TRON", "FLOW", "BNB"]
             }
           },
           {
@@ -21100,7 +21102,7 @@
                   "chain": {
                     "type": "string",
                     "example": "SOL",
-                    "enum": ["BSC", "ETH", "KLAY", "ONE", "CELO", "MATIC", "SOL", "LTC", "BTC"]
+                    "enum": ["BSC", "ETH", "KLAY", "ONE", "CELO", "MATIC", "SOL", "LTC", "BTC", "TRON"]
                   }
                 },
                 "required": ["chain"]
@@ -23009,7 +23011,7 @@
     },
     "/v3/blockchain/token/mint": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Create new fungible tokens in the smart contract (the <code>contractAddress</code> parameter in the request body) and transfer them to the specified blockchain address (the <code>to</code> parameter in the request body). You can mint new fungible tokens only if the current supply of tokens in the smart contract is lower than the total supply set for this contract.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>XinFin</li>\n</ul>\n<p><b>Signing a transaction</b><br/>\nWhen minting fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Create new fungible tokens in the smart contract (the <code>contractAddress</code> parameter in the request body) and transfer them to the specified blockchain address (the <code>to</code> parameter in the request body). You can mint new fungible tokens only if the current supply of tokens in the smart contract is lower than the total supply set for this contract.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>XinFin</li>\n</ul>\n<p><b>Signing a transaction</b><br/>\nWhen minting fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "parameters": [
           {
             "description": "Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.",
@@ -29321,7 +29323,14 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/TransactionHash" } }
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/TransactionHash" },
+                    { "$ref": "#/components/schemas/SignatureId" }
+                  ]
+                }
+              }
             },
             "description": "OK"
           },
@@ -29535,7 +29544,14 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/TransactionHash" } }
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/TransactionHash" },
+                    { "$ref": "#/components/schemas/SignatureId" }
+                  ]
+                }
+              }
             },
             "description": "OK"
           },
@@ -29591,7 +29607,14 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/TransactionHash" } }
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/TransactionHash" },
+                    { "$ref": "#/components/schemas/SignatureId" }
+                  ]
+                }
+              }
             },
             "description": "OK"
           },
@@ -29647,7 +29670,14 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/TransactionHash" } }
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/TransactionHash" },
+                    { "$ref": "#/components/schemas/SignatureId" }
+                  ]
+                }
+              }
             },
             "description": "OK"
           },
@@ -29703,7 +29733,14 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/TransactionHash" } }
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/TransactionHash" },
+                    { "$ref": "#/components/schemas/SignatureId" }
+                  ]
+                }
+              }
             },
             "description": "OK"
           },
@@ -29811,7 +29848,14 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/TransactionHash" } }
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/TransactionHash" },
+                    { "$ref": "#/components/schemas/SignatureId" }
+                  ]
+                }
+              }
             },
             "description": "OK"
           },
@@ -35052,7 +35096,7 @@
             "items": {
               "type": "object",
               "properties": {
-                "value": { "type": "string", "example": "50.00000000" },
+                "value": { "type": "number", "example": 50 },
                 "n": { "type": "number", "example": 0 },
                 "scriptPubKey": {
                   "properties": {
@@ -56358,8 +56402,8 @@
             "type": "string",
             "minLength": 34,
             "maxLength": 34,
-            "description": "The gas pump address that transfers the assets in the Base58 format",
-            "example": "TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh"
+            "description": "The blockchain address that owns the gas pump address (\"master address\") in the Base58 format",
+            "example": "TBAYy8ykFZqdzxMwaqacHvUvUzUTp6ZR5U"
           },
           "recipient": {
             "maxLength": 34,
@@ -56408,7 +56452,7 @@
             "type": "number",
             "minimum": 0,
             "description": "The maximum amount to be paid as the gas fee (in TRX)",
-            "example": 0.01
+            "example": 10
           }
         },
         "required": [
@@ -56480,7 +56524,7 @@
             "type": "number",
             "minimum": 0,
             "description": "The maximum amount to be paid as the gas fee (in TRX)",
-            "example": 0.01
+            "example": 10
           }
         },
         "required": ["custodialAddress", "chain", "contractType", "feeLimit", "recipient", "fromPrivateKey"]
@@ -56753,7 +56797,7 @@
             "type": "number",
             "minimum": 0,
             "description": "The maximum amount to be paid as the gas fee (in TRX)",
-            "example": 0.01
+            "example": 10
           }
         },
         "required": [
@@ -56896,8 +56940,8 @@
             "type": "string",
             "minLength": 34,
             "maxLength": 34,
-            "description": "The gas pump address that transfers the assets in the Base58 format",
-            "example": "TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh"
+            "description": "The blockchain address that owns the gas pump address (\"master address\") in the Base58 format",
+            "example": "TBAYy8ykFZqdzxMwaqacHvUvUzUTp6ZR5U"
           },
           "recipient": {
             "type": "array",
@@ -56953,7 +56997,7 @@
             "type": "number",
             "minimum": 0,
             "description": "The maximum amount to be paid as the gas fee (in TRX)",
-            "example": 0.01
+            "example": 10
           }
         },
         "required": [
@@ -64368,6 +64412,12 @@
             "example": 6,
             "description": "Number of decimal places of this virtual currency."
           },
+          "trcType": {
+            "type": "string",
+            "example": "TRC20",
+            "description": "Type of Tron token.",
+            "enum": ["TRC10", "TRC20"]
+          },
           "basePair": {
             "description": "Base pair for virtual currency. Transaction value will be calculated according to this base pair. e.g. 1 VC_VIRTUAL is equal to 1 BTC, if basePair is set to BTC.",
             "enum": [
@@ -67016,7 +67066,7 @@
             "description": "Chain to work with.",
             "enum": ["TRON"]
           },
-          "account": {
+          "from": {
             "maxLength": 34,
             "minLength": 34,
             "description": "Blockchain address to perform transaction from",
@@ -67054,7 +67104,7 @@
             "example": 600
           }
         },
-        "required": ["chain", "name", "account", "symbol", "feeLimit", "signatureId"]
+        "required": ["chain", "name", "from", "symbol", "feeLimit", "signatureId"]
       },
       "MintMultipleNftKMSCelo": {
         "type": "object",
@@ -67155,7 +67205,7 @@
             "example": ["TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ"],
             "items": { "maxLength": 34, "minLength": 34, "type": "string" }
           },
-          "account": {
+          "from": {
             "maxLength": 34,
             "minLength": 34,
             "description": "Blockchain address to perform transaction from",
@@ -67198,7 +67248,7 @@
             "example": 600
           }
         },
-        "required": ["chain", "to", "account", "contractAddress", "feeLimit", "tokenId", "url", "signatureId"]
+        "required": ["chain", "to", "from", "contractAddress", "feeLimit", "tokenId", "url", "signatureId"]
       },
       "BurnNftCelo": {
         "type": "object",
@@ -67396,7 +67446,7 @@
             "description": "Chain to work with.",
             "enum": ["TRON"]
           },
-          "account": {
+          "from": {
             "maxLength": 34,
             "minLength": 34,
             "description": "Blockchain address to perform transaction from",
@@ -67433,7 +67483,7 @@
             "example": 600
           }
         },
-        "required": ["chain", "feeLimit", "contractAddress", "tokenId", "signatureId", "account"]
+        "required": ["chain", "feeLimit", "contractAddress", "tokenId", "signatureId", "from"]
       },
       "BurnNftFlowPK": {
         "type": "object",
@@ -68245,7 +68295,7 @@
             "description": "Chain to work with.",
             "enum": ["TRON"]
           },
-          "account": {
+          "from": {
             "maxLength": 34,
             "minLength": 34,
             "description": "Blockchain address to perform transaction from",
@@ -68291,7 +68341,7 @@
           "chain",
           "feeLimit",
           "contractAddress",
-          "account",
+          "from",
           "tokenId",
           "signatureId",
           "cashbackValue"
@@ -68385,7 +68435,7 @@
             "description": "Chain to work with.",
             "enum": ["TRON"]
           },
-          "account": {
+          "from": {
             "maxLength": 34,
             "minLength": 34,
             "description": "Blockchain address to perform transaction from",
@@ -68429,7 +68479,7 @@
             "example": 600
           }
         },
-        "required": ["chain", "to", "contractAddress", "feeLimit", "signatureId", "tokenId", "account"]
+        "required": ["chain", "to", "contractAddress", "feeLimit", "signatureId", "tokenId", "from"]
       },
       "MintNftCelo": {
         "description": "<p>The <code>MintNftCelo</code> schema lets you mint NFTs natively on Celo and sign the transaction with your private key.<br/>For more information, see \"Minting NFTs natively on a blockchain\" in <a href=\"#operation/NftMintErc721\">Mint an NFT</a>.</p><br/>",
@@ -68716,7 +68766,7 @@
             "description": "The maximum amount to be paid as the transaction fee (in TRX)",
             "example": 600
           },
-          "account": {
+          "from": {
             "maxLength": 34,
             "minLength": 34,
             "description": "The blockchain address that will pay the fee for the transaction",
@@ -68750,7 +68800,7 @@
             "items": { "type": "string", "example": "0.5" }
           }
         },
-        "required": ["chain", "account", "to", "url", "feeLimit", "contractAddress", "signatureId", "tokenId"]
+        "required": ["chain", "from", "to", "url", "feeLimit", "contractAddress", "signatureId", "tokenId"]
       },
       "TransferNft": {
         "type": "object",
@@ -71539,7 +71589,7 @@
             "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "amount": {
-            "description": "Amount to be minted and transfered to the recipient.",
+            "description": "Amount to be minted and transferred to the recipient.",
             "example": "100000",
             "type": "string",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
@@ -71583,7 +71633,7 @@
             "enum": ["KCS"]
           },
           "amount": {
-            "description": "Amount to be minted and transfered to the recipient.",
+            "description": "Amount to be minted and transferred to the recipient.",
             "example": "100000",
             "type": "string",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
@@ -71624,10 +71674,10 @@
             "type": "string",
             "example": "ETH",
             "description": "Chain to work with.",
-            "enum": ["ETH", "BSC", "XDC"]
+            "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "amount": {
-            "description": "Amount to be minted and transfered to the recipient.",
+            "description": "Amount to be minted and transferred to the recipient.",
             "example": "100000",
             "type": "string",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
@@ -71670,7 +71720,7 @@
             "enum": ["KCS"]
           },
           "amount": {
-            "description": "Amount to be minted and transfered to the recipient.",
+            "description": "Amount to be minted and transferred to the recipient.",
             "example": "100000",
             "type": "string",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
@@ -71713,7 +71763,7 @@
             "enum": ["CELO"]
           },
           "amount": {
-            "description": "Amount to be minted and transfered to the recipient.",
+            "description": "Amount to be minted and transferred to the recipient.",
             "example": "100000",
             "type": "string",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
@@ -71762,7 +71812,7 @@
             "enum": ["CELO"]
           },
           "amount": {
-            "description": "Amount to be minted and transfered to the recipient.",
+            "description": "Amount to be minted and transferred to the recipient.",
             "example": "100000",
             "type": "string",
             "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
@@ -72123,7 +72173,7 @@
             "type": "string",
             "example": "ETH",
             "description": "Chain to work with.",
-            "enum": ["ETH", "BSC", "XDC"]
+            "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE", "ALGO"]
           },
           "amount": {
             "description": "Amount of tokens to be destroyed.",

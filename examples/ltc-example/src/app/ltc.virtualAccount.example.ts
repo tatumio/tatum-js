@@ -1,77 +1,88 @@
 import { TatumLtcSDK } from '@tatumio/ltc'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import { Currency } from '@tatumio/api-client'
 
 export async function ltcVirtualAccountExample() {
-  const ltcSDK = TatumLtcSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+  const ltcSDK = TatumLtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  const options = { testnet: true }
 
-  // Create an extended public key
-  const { xpub } = await ltcSDK.wallet.generateWallet(undefined, { testnet: true })
-  const { xpub: plainXpub } = await ltcSDK.wallet.generateWallet(undefined, { testnet: true })
+  // Create an extended public key for virtual accounts
+  const { mnemonic, xpub } = await ltcSDK.wallet.generateWallet(undefined, options)
+  console.log(`Mnemonic: ${mnemonic}`)
+  console.log(`Xpub: ${xpub}`)
 
-  // Generate a blockchain address from xpub (for the plainAccount)
-  const plainAccountAddress = ltcSDK.wallet.generateAddressFromXPub(plainXpub, 1, { testnet: true })
+  // Generate a recipient blockchain address
+  const { xpub: recipientXpub } = await ltcSDK.wallet.generateWallet(undefined, options)
+  const recipientAddress = ltcSDK.wallet.generateAddressFromXPub(recipientXpub, 1, options)
+  console.log(`Recipient Xpub: ${recipientXpub}`)
+  console.log(`Recipient address: ${recipientAddress}`)
 
-  // Create an account with xpub and without xpub
+  // Create an account with xpub
   // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccount
-  const xpubAccount = await ltcSDK.ledger.account.create({
-    currency: 'LTC',
+  const account = await ltcSDK.ledger.account.create({
+    currency: Currency.LTC,
     xpub,
   })
-  console.log(`Created xpub account: ${JSON.stringify(xpubAccount)}`)
-  const plainAccount = await ltcSDK.ledger.account.create({
-    currency: 'LTC',
-  })
-  console.log(`Created account: ${JSON.stringify(plainAccount)}`)
+  console.log(`Created xpub account: ${JSON.stringify(account)}`)
 
   // Check if an account exists
+  const accountId = account.id
+
   try {
-    const account = await ltcSDK.virtualAccount.depositAddress.checkExists(xpubAccount.id)
-    console.log(`Account: ${JSON.stringify(account)}`)
+    const existingAccount = await ltcSDK.virtualAccount.depositAddress.checkExists(accountId)
+    console.log(`Account: ${JSON.stringify(existingAccount)}`)
   } catch (e) {
     console.log(`Account: ${e.message}`)
   }
 
   // Create a deposit address for an account and derivation index
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
-  const address = await ltcSDK.virtualAccount.depositAddress.create(xpubAccount.id, 1)
+  const address = await ltcSDK.virtualAccount.depositAddress.create(accountId)
   console.log(`Deposit address: ${JSON.stringify(address)}`)
 
   // Create multiple deposit addresses for an account and derivation index
   // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccountBatch
-  const addresses = await ltcSDK.virtualAccount.depositAddress.createMultiple({
-    addresses: [
-      {
-        accountId: xpubAccount.id,
-        derivationKey: 2,
-      },
-      {
-        accountId: xpubAccount.id,
-        derivationKey: 3,
-      },
-    ],
-  })
-  console.log(`Deposit addresses: ${JSON.stringify(addresses)}`)
-
-  // Assign a given deposit address to a given account (non-xpub account is mandatory)
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/assignAddress
-  const assignedAddress = await ltcSDK.virtualAccount.depositAddress.assign(
-    plainAccount.id,
-    plainAccountAddress,
-    1,
-  )
-  console.log(`Assign address: ${JSON.stringify(assignedAddress)}`)
+  try {
+    const addresses = await ltcSDK.virtualAccount.depositAddress.createMultiple({
+      addresses: [
+        {
+          accountId: accountId,
+          derivationKey: 2,
+        },
+        {
+          accountId: accountId,
+          derivationKey: 3,
+        },
+      ],
+    })
+    console.log(`Deposit addresses: ${JSON.stringify(addresses)}`)
+  } catch (e) {
+    console.log('Deposit addresses exists', e.message)
+  }
 
   // Get all deposit addresses for an account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/getAllDepositAddresses
-  const addressByAccount = await ltcSDK.virtualAccount.depositAddress.getByAccount(xpubAccount.id)
+  const addressByAccount = await ltcSDK.virtualAccount.depositAddress.getByAccount(accountId)
   console.log(`Account addresses: ${JSON.stringify(addressByAccount)}`)
 
-  // Remove a deposit address from an account
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/removeAddress
-  await ltcSDK.virtualAccount.depositAddress.remove(plainAccount.id, plainAccountAddress)
+  // Fund your address here: https://testnet-faucet.com/ltc-testnet/
+  console.log(`Fund me ${address.address} to send virtual account transaction!`)
 
-  // Get withdrawals for a given status (Done)
-  // You can find more details in https://apidoc.tatum.io/tag/Withdrawal#operation/GetWithdrawals
-  const withdrawals = await ltcSDK.virtualAccount.withdrawal.getAll('Done')
-  console.log(`Withdrawals: ${JSON.stringify(withdrawals)}`)
+  // Get account info
+  // You can find more details in https://apidoc.tatum.io/tag/Account#operation/getAccountByAccountId
+  const accountById = await ltcSDK.ledger.account.get(accountId)
+  console.log(`Account info: ${JSON.stringify(accountById)}`)
+
+  // Send assets from virtualAccount to blockchain address
+  // This example requires a funded blockchain address, you can top up your testnet balance with https://testnet-faucet.com/ltc-testnet/
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/LtcTransfer
+  const transfer = await ltcSDK.virtualAccount.send({
+    senderAccountId: accountId,
+    amount: '0.0001',
+    mnemonic: mnemonic,
+    xpub: xpub,
+    address: recipientAddress,
+    fee: '0.00001',
+  })
+
+  console.log(JSON.stringify(transfer))
 }

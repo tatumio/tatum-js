@@ -94,8 +94,7 @@ export const flowTxService = (
   }
 
   const getApiSigner = (isPayer: boolean) => {
-    const hash = Date.now()
-    const keyHash = `FLOW_PROPOSAL_KEY_${hash}`
+    const keyHash = _.uniqueId(`FLOW_PROPOSAL_KEY_`)
 
     const signer = async (account: Account): Promise<AccountAuthorization> => {
       const { address, keyId } = await getProposalKeyOrFetch(keyHash, isPayer)

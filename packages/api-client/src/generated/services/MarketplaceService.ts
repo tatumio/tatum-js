@@ -45,7 +45,7 @@ export class MarketplaceService {
      * <li>If the buyer wants to pay with the <b>fungible tokens</b>:
      * <ol><li>The buyer <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Approve" target="_blank">allows the marketplace smart contract to access their tokens</a> and makes the purchase (the <code>buyAssetFromListing()</code> method is called against the marketplace smart contract).</li>
      * <li>The marketplace smart contract deducts the required amount of tokens from the smart contract where the buyer holds the tokens.</li></ol></li></ul></li>
-     * <li>The marketplace smart contract transfers the asset to the buyer, transfers the asset price to the seller, and sends the fee to the marketplace fee recepient.</li>
+     * <li>The marketplace smart contract transfers the asset to the buyer, transfers the asset price to the seller, and sends the fee to the marketplace fee recipient.</li>
      * </ol>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
@@ -361,7 +361,7 @@ export class MarketplaceService {
     }
 
     /**
-     * Get the recepient of the NFT marketplace fee
+     * Get the recipient of the NFT marketplace fee
      * <p><b>1 credit per API call</b></p>
      * <p>Get the recipient of the NFT marketplace fee.</p>
      * <p>This API is supported for the following blockchains:</p>
@@ -401,10 +401,10 @@ export class MarketplaceService {
     }
 
     /**
-     * Update the recepient of the NFT marketplace fee
+     * Update the recipient of the NFT marketplace fee
      * <p><b>2 credits per API call</b></p>
-     * <p>Update the recepient of the NFT marketplace fee.</p>
-     * <p>You can update the fee recepient only if you are the marketplace operator.</p>
+     * <p>Update the recipient of the NFT marketplace fee.</p>
+     * <p>You can update the fee recipient only if you are the marketplace operator.</p>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
@@ -415,7 +415,7 @@ export class MarketplaceService {
      * <li>Polygon</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
-     * <p>When updating the recepient of the NFT marketplace fee, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>When updating the recipient of the NFT marketplace fee, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *

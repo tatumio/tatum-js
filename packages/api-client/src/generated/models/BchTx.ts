@@ -17,7 +17,7 @@ export type BchTx = {
         sequence?: number;
     }>;
     vout?: Array<{
-        value?: string;
+        value?: number;
         'n'?: number;
         scriptPubKey?: {
             hex?: string;

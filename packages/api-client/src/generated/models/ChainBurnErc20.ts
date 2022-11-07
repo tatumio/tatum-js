@@ -6,7 +6,7 @@ export type ChainBurnErc20 = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'ALGO';
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE';
     /**
      * Amount of tokens to be destroyed.
      */
