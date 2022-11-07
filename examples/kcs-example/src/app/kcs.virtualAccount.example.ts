@@ -33,7 +33,7 @@ export async function kcsVirtualAccountExample() {
   // https://apidoc.tatum.io/tag/KuCoin#operation/KcsBlockchainTransfer
   const result = await kcsSdk.virtualAccount.send({
     senderAccountId: virtualAccount.id,
-    amount: '1',
+    amount: '0.001',
     fromPrivateKey,
     address: to,
   })

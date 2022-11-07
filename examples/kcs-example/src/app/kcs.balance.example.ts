@@ -5,7 +5,7 @@ export async function kcsBalanceExample() {
   const { xpub } = await kcsSDK.wallet.generateWallet()
 
   const address = kcsSDK.wallet.generateAddressFromXPub(xpub, 0)
-  console.log(`My public address is ${address}.`)
+  console.log(`My public address is `, address)
 
   // FUND YOUR ACCOUNT WITH KCS FROM https://faucet-testnet.kcc.network
 

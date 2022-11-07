@@ -4,13 +4,11 @@ import { TatumXdcSDK } from '@tatumio/xdc'
 const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function xdcErc20Example() {
-  console.log(1)
   const { mnemonic, xpub } = await xdcSDK.wallet.generateWallet()
   const fromPrivateKey = await xdcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
   const address = xdcSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = xdcSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  console.log(2)
   // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
   // FUND YOUR ACCOUNT WITH XDC FROM https://faucet.apothem.network/
 
@@ -24,7 +22,7 @@ export async function xdcErc20Example() {
     digits: 18,
     totalCap: '10000000',
   })) as TransactionHash
-  console.log(3)
+
   console.log(`Deployed erc20 token with transaction ID ${erc20Deployed.txId}`)
 
   // fetch deployed contract address from transaction hash

@@ -58,8 +58,10 @@ const mintSignedTransaction = async ({
     web3,
     body.signatureId,
     body.fromPrivateKey,
-    undefined,
-    undefined,
+    // @ts-ignore
+    body.fee?.gasLimit, // @TODO openapi bug
+    // @ts-ignore
+    body.fee?.gasPrice, // @TODO openapi bug
     provider,
   )
 }

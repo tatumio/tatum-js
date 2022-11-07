@@ -1,7 +1,3 @@
-/**
- * This is example app, which shows how to use BSC SDK. For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/BNB-Smart-Chain
- */
-
 import { bscBlockchainExample } from './app/bsc.blockchain.example'
 import { bscVirtualAccountExample } from './app/bsc.virtualAccount.example'
 import { bscNftExample } from './app/bsc.nft.example'
@@ -14,6 +10,9 @@ import { bscMultiTokenExample } from './app/bsc.multitoken.example'
 import { bscErc20Example } from './app/bsc.erc20.example'
 import { bscSmartContractExample } from './app/bsc.smartContract.example'
 
+/**
+ * This is example app, which shows how to use BSC SDK. For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/BNB-Smart-Chain
+ */
 const examples = async () => {
   console.log(`\nRunning bscBlockchainExample`)
   await bscBlockchainExample()

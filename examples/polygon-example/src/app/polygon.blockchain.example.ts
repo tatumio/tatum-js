@@ -11,15 +11,16 @@ export async function polygonBlockchainExample() {
 
   // Get block by block number
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGetBlock
-  const blockNumber = `${currentBlock - 100}`
-  const block = await polygonSDK.blockchain.getBlock(blockNumber)
-  console.log(`Timestamp in block ${blockNumber} is ${block.timestamp}.`)
+  const block = await polygonSDK.blockchain.getBlock(
+    '0x81cdc6b1ee8534aae34ba134292777f64acf163a6b5f6db35509b7799e4bd660',
+  )
+  console.log(`Block`, block)
 
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGetTransaction
-  const hash = '0xf5b40cf3f36a14c02df07a4d771eb63241d2fbb42b5e7d5549c718f8bf6f36d5'
-  const tx = await polygonSDK.blockchain.get(hash)
-  console.log(`Fee for transaction is ${tx.gasUsed}.`)
+  const hash = '0x56c5ea1b1cc9317dc2427b4d373b1a255eb2bad63eab9505a53c4f6d236eba73'
+  const transaction = await polygonSDK.blockchain.get(hash)
+  console.log('Transaction: ', transaction)
 
   // Generate wallet
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGenerateWallet
@@ -40,7 +41,7 @@ export async function polygonBlockchainExample() {
   // https://apidoc.tatum.io/tag/Blockchain-fees#operation/PolygonEstimateGas
   const { gasLimit, gasPrice } = await polygonSDK.blockchain.estimateGas({
     from: address,
-    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
+    to: '0x5f70408c785184fa55bd06a26e25c34574805b36',
     amount: '1',
   })
   console.log(`Transaction fee: gasLimit: ${gasLimit}, gasPrice: ${gasPrice}`)

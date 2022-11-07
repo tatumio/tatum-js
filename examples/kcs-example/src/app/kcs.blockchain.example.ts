@@ -16,26 +16,26 @@ export async function kcsBlockchainExample() {
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGetTransaction
   const transaction = await kcsSDK.blockchain.get(
-    '0xfae9494fee7c168ccbb79bc6785bb343c6108f2aac38a64f0a25b5efae51d4f1',
+    '0xc8fd5133bbf2b81a39066b33a9864cc6848756bf6a39f909cc92d60204c5c349',
   )
-  console.log(`Transaction: ${transaction}`)
+  console.log(`Transaction: `, transaction)
 
   // Get block by hash
   // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGetBlock
   const block = await kcsSDK.blockchain.getBlock(
-    '0x30454a103e3a0c94fa715eff8f73fafc19928ab7c5b3056f5fa3d667a9fb3669',
+    '0x1573faea4d682be5e1adee63497a55b39aaa6dd1b3645aab99b2fe4d562ab8ac',
   )
-  console.log(`Block: ${block}`)
+  console.log(`Block: `, block)
 
   // Get current block
   // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGetCurrentBlock
   const currentBlock = await kcsSDK.blockchain.getCurrentBlock()
-  console.log(`Current block: ${currentBlock}`)
+  console.log(`Current block: `, currentBlock)
 
   // Get transaction count of an address
   // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGetTransactionCount
   const transactionsCount = await kcsSDK.blockchain.getTransactionsCount(
-    '0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B',
+    '0xab90f4f1f9716cc60fa16d02abc3272d09de415c',
   )
-  console.log(`Transactions count: ${transactionsCount}`)
+  console.log(`Transactions count: `, transactionsCount)
 }
