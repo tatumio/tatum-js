@@ -30,7 +30,7 @@ import {
   UpdateFeeRecipientCeloKMS,
   UpdateFeeRecipientKMS,
 } from '@tatumio/api-client'
-import { EvmBasedBlockchain } from '@tatumio/shared-core'
+import { Blockchain, EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
 import { BroadcastFunction, FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import BigNumber from 'bignumber.js'
@@ -39,6 +39,14 @@ import { Erc1155, Erc20Token, Erc721Token_Cashback, MarketplaceSmartContract } f
 import { AbiItem, toWei } from 'web3-utils'
 import { evmBasedUtils } from '../evm-based.utils'
 import { erc20 } from '../transactions/erc20'
+
+export type AuctionBlockchainNames = 'ETH' | 'ONE' | 'CELO' | 'MATIC' | 'BSC'
+
+export const AUCTION_BLOCKCHAINS_CONSTANTS: Record<Blockchain, string> = {
+  ...Blockchain,
+  HARMONY: 'ONE',
+  POLYGON: 'MATIC',
+}
 
 export const evmBasedAuction = (args: {
   blockchain: EvmBasedBlockchain
@@ -52,7 +60,7 @@ export const evmBasedAuction = (args: {
      */
     getAuction: async (contractAddress: string, auctionId: string) => {
       return AuctionService.getAuction(
-        blockchain as 'ETH' | 'ONE' | 'CELO' | 'MATIC' | 'BSC',
+        AUCTION_BLOCKCHAINS_CONSTANTS[blockchain] as AuctionBlockchainNames,
         contractAddress,
         auctionId,
       )
@@ -62,7 +70,7 @@ export const evmBasedAuction = (args: {
      */
     getAuctionFee: async (contractAddress: string) => {
       return AuctionService.getAuctionFee(
-        blockchain as 'ETH' | 'ONE' | 'CELO' | 'MATIC' | 'BSC',
+        AUCTION_BLOCKCHAINS_CONSTANTS[blockchain] as AuctionBlockchainNames,
         contractAddress,
       )
     },
@@ -71,7 +79,7 @@ export const evmBasedAuction = (args: {
      */
     getAuctionFeeRecipient: async (contractAddress: string): Promise<{ address?: string }> => {
       return AuctionService.getAuctionFeeRecipient(
-        blockchain as 'ETH' | 'ONE' | 'CELO' | 'MATIC' | 'BSC',
+        AUCTION_BLOCKCHAINS_CONSTANTS[blockchain] as AuctionBlockchainNames,
         contractAddress,
       )
     },
@@ -221,7 +229,6 @@ export const evmBasedAuction = (args: {
       },
       /**
        * Approve ERC20 transfer for auction to perform bidding on the asset in the auction.
-       * @param testnet use testnet or not
        * @param body request data
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
@@ -298,7 +305,7 @@ const deployAuctionSignedTransaction = async (
     nonce: body.nonce,
   }
 
-  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
     web3,
@@ -478,8 +485,10 @@ const auctionBidSignedTransaction = async (
     params.push(body.bidder.trim())
   }
 
+  const methodAbi = MarketplaceSmartContract.abi.find((a) => a.name === methodName)
+
   // TODO any type
-  const contract = new client.eth.Contract([MarketplaceSmartContract.abi as any])
+  const contract = new client.eth.Contract([methodAbi as any])
   const tx: TransactionConfig = {
     from: 0,
     to: body.contractAddress.trim(),
@@ -509,19 +518,20 @@ export type CancelAuction = SettleAuction
 
 const auctionCancelSignedTransaction = async (body: CancelAuction, web3: EvmBasedWeb3, provider?: string) => {
   const client = web3.getClient(provider, body?.fromPrivateKey)
+  const methodName = 'cancelAuction'
+
+  const methodAbi = MarketplaceSmartContract.abi.find((a) => a.name === methodName)
 
   const params = [body.id]
   // TODO any type
-  const contract = new client.eth.Contract(MarketplaceSmartContract.abi as any, body.contractAddress.trim())
-  const data = contract.methods['cancelAuction']({ arguments: params }).encodeABI()
-
+  const contract = new client.eth.Contract([methodAbi as any])
   const tx: TransactionConfig = {
     from: 0,
     to: body.contractAddress.trim(),
     value: body.amount
       ? `0x${new BigNumber(client.utils.toWei(body.amount, 'ether')).toString(16)}`
       : undefined,
-    data,
+    data: contract.methods[methodName as string](...params).encodeABI(),
     nonce: body.nonce,
   }
 

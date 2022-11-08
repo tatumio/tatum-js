@@ -1,5 +1,5 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { ApiServices, TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { ApiServices, OpenAPI, TATUM_API_CONSTANTS } from '@tatumio/api-client'
 import { amountUtils, SdkErrorCode, toHexString } from '@tatumio/shared-abstract-sdk'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { Erc20Token, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
@@ -22,12 +22,7 @@ const initialize = async (
 ) => {
   const celoProvider = celoUtils.getProvider(provider)
 
-  const web3 = new Web3(
-    provider ||
-      `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/celo/web3/${
-        TATUM_API_CONSTANTS.API_KEY
-      }`,
-  )
+  const web3 = new Web3(provider || `${OpenAPI.BASE}/v3/celo/web3/${TATUM_API_CONSTANTS.API_KEY}`)
   return {
     celoProvider,
     network: await celoProvider.ready,
