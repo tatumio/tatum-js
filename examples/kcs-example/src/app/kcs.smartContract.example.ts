@@ -8,10 +8,10 @@ const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
  * https://apidoc.tatum.io/tag/KuCoin#operation/KcsBlockchainSmartContractInvocation
  */
 export async function kcsSmartContractExample(): Promise<void> {
-  const address = 'xdcfd46a9707ed1f6eb7d7cfe0c6a2bac72d6aa57d4'
+  const address = '0xab90f4f1f9716cc60fa16d02abc3272d09de415c'
 
   // your previously deployed contract address
-  const contractAddress = 'xdc2F8C49490E5662f1b4957c0BC46e8B25b2787cd8'
+  const contractAddress = '0xC9c8ba8C7e2EAF43e84330Db08915A8106d7bD74'
 
   // smart contract read method
   const { data } = await kcsSDK.smartContract.send.smartContractReadMethodInvocationTransaction({
