@@ -26,9 +26,9 @@ export const virtualAccountExample = async () => {
   // Result of the operation is combination of deposit address and MEMO
   console.log(`Deposit address is ${depositAddress.address} with MEMO ${depositAddress.derivationKey}`)
 
-  // FUND YOUR ACCOUNT WITH XRP FROM https://xrpl.org/tx-sender.html
+  // FUND YOUR ACCOUNT WITH XRP FROM https://yusufsahinhamza.github.io/xrp-testnet-faucet/
 
-  // I wanna send assets from virtualAccount to blockchain address
+  // I want to send assets from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/XrpTransfer
   const result = await xrpSDK.virtualAccount.sendTransactionFromVirtualAccountToBlockchain({
     senderAccountId: virtualAccount.id,

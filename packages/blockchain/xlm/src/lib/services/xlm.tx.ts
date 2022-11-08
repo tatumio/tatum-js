@@ -152,7 +152,7 @@ export const xlmTxService = (apiCalls: XlmApiCallsType) => {
       const builder = new TransactionBuilder(new Account(fromAccount, account.sequence), {
         fee: '100',
         networkPassphrase: options?.testnet ? Networks.TESTNET : Networks.PUBLIC,
-      }).setTimeout(300)
+      })
 
       const tx = builder
         .addOperation(

@@ -1,17 +1,12 @@
 import { TatumXlmSDK } from '@tatumio/xlm'
+import { isValueSet, REPLACE } from './xlm.utils'
 
 const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-
-export const REPLACE = 'REPLACE'
-
-export const isAddressSet = (address: string) => {
-  return address === REPLACE
-}
 
 export async function xlmBalanceExample() {
   const fundedAddress = REPLACE
 
-  if (isAddressSet(fundedAddress)) {
+  if (isValueSet(fundedAddress)) {
     // Generate XLM address and secret
     // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
     const { address, secret } = xlmSDK.wallet.wallet()

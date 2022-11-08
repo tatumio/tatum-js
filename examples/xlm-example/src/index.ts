@@ -3,9 +3,10 @@
  */
 
 import { xlmBalanceExample } from './app/xlm.balance.example'
-import { xlmTrustlineTxExample, xlmTxExample } from './app/xlm.tx.example'
+import { xlmTxExample } from './app/xlm.tx.example'
 import { xlmBlockchainExample } from './app/xlm.blockchain.example'
 import { xlmVirtualAccountExample } from './app/xlm.virtualAccount.example'
+import { xlmTrustlineTxExample } from './app/xlm.tx.trustline.example'
 
 const examples = async () => {
   console.log(`Running xlmBalanceExample`)

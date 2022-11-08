@@ -7,7 +7,7 @@ export const txExample = async () => {
   console.log(`My public address is ${address}, with private key ${secret}.`)
 
   const { address: to } = xrpSDK.wallet.wallet()
-  // FUND YOUR ACCOUNT WITH XRP FROM https://xrpl.org/tx-sender.html
+  // FUND YOUR ACCOUNT WITH XRP FROM https://yusufsahinhamza.github.io/xrp-testnet-faucet/
 
   const accountDetails = await xrpSDK.blockchain.getAccountInfo(address)
   // We need to divide the balance by 1_000_000, because the balance is in drops.
@@ -28,7 +28,7 @@ export const txTrustlineExample = async () => {
   const { address, secret } = xrpSDK.wallet.wallet()
   console.log(`My public address is ${address}, with private key ${secret}.`)
 
-  // FUND YOUR ACCOUNT WITH XRP FROM https://xrpl.org/tx-sender.html
+  // FUND YOUR ACCOUNT WITH XRP FROM https://yusufsahinhamza.github.io/xrp-testnet-faucet/
 
   const accountDetails = await xrpSDK.blockchain.getAccountInfo(address)
   // We need to divide the balance by 1_000_000, because the balance is in drops.
