@@ -1,10 +1,11 @@
-import { PendingTransaction } from '@tatumio/api-client'
+import { PendingTransaction, Currency } from '@tatumio/api-client'
 // @ts-ignore
 import * as coininfo from 'coininfo'
-import { Currency } from '@tatumio/api-client'
 import { bchWallet } from '../bch.sdk.wallet'
 // @ts-ignore
 import { Transaction, TransactionBuilder, ECPair, ECSignature } from '@tatumio/bitcoincashjs2-lib'
+import { BchSdkError } from '../bch.sdk.errors'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 /**
  * Sign Bitcoin Cash pending transaction from Tatum KMS
@@ -19,7 +20,7 @@ export const signKmsTransactionFromVirtualAccount = async (
   testnet: boolean,
 ) => {
   if (tx.chain !== Currency.BCH || !tx.withdrawalResponses) {
-    throw Error('Unsupported chain.')
+    throw new BchSdkError(SdkErrorCode.KMS_CHAIN_MISMATCH)
   }
   const [data, amountsToDecode] = tx.serializedTransaction.split(':')
   const transaction = Transaction.fromHex(data)

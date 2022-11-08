@@ -6,6 +6,7 @@ export async function xdcWalletExample() {
   // Generate XDC wallet
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateWallet
   const { mnemonic, xpub } = await xdcSDK.wallet.generateWallet()
+  console.log(`Generated wallet with: \nmnemonic ${mnemonic}\nxpub ${xpub}`)
 
   // Generate XDC private key
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateAddressPrivateKey

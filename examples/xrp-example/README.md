@@ -7,7 +7,7 @@ These examples should guide you through some basic operations of the XRP blockch
 - check the balance of your wallet
 
 - generate virtual account for XRP
-- assign deposit address to virtual account
+- generate deposit address for virtual account
 
 ## How to start
 

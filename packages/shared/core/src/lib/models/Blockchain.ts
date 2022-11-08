@@ -1,4 +1,5 @@
 export enum Blockchain {
+  BNB = 'BNB',
   BTC = 'BTC',
   BCH = 'BCH',
   LTC = 'LTC',

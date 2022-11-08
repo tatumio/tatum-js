@@ -3,9 +3,7 @@ import Web3 from 'web3'
 import { EvmBasedBlockchain, httpHelper, THIRD_PARTY_API } from '@tatumio/shared-core'
 
 export const polygonWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }) => {
-  const evmBasedWeb3Result = evmBasedWeb3({
-    blockchain: args.blockchain,
-  })
+  const evmBasedWeb3Result = evmBasedWeb3(args)
 
   return {
     ...evmBasedWeb3Result,

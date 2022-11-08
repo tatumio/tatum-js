@@ -1,43 +1,42 @@
 import { TatumXdcSDK } from '@tatumio/xdc'
 
-const xdcSdk = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function xdcVirtualAccountExample() {
-  // Check whether a blockchain address is assigned to a virtual account
-  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/addressExists
-  const account = await xdcSdk.virtualAccount.depositAddress.checkExists(
-    'xdcae14761e5db0ef472848cc4e4a4480311cb7caec',
-  )
-  console.log(`Account information ${JSON.stringify(account)}`)
+  // if you don't already have a wallet, address and private key - generate them
+  // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateWallet
+  const { mnemonic, xpub } = await xdcSDK.wallet.generateWallet()
 
-  // Create a deposit address for a virtual account
-  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
-  const address = await xdcSdk.virtualAccount.depositAddress.create('635b92d6f9aeb823db30c43f', 9)
-  console.log(`Address information ${JSON.stringify(address)}`)
+  // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateAddressPrivateKey
+  const privateKey = await xdcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1)
+  // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateAddress
+  const to = xdcSDK.wallet.generateAddressFromXPub(xpub, 1)
 
-  // Create multiple deposit addresses for a virtual account
-  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/getAllDepositAddresses
-  const addresses = await xdcSdk.virtualAccount.depositAddress.createMultiple({
-    addresses: [
-      {
-        accountId: '635b92d6f9aeb823db30c43f',
-        derivationKey: 10,
-      },
-      {
-        accountId: '635b92d6f9aeb823db30c43f',
-        derivationKey: 11,
-      },
-    ],
+  // Generate new virtual account for XDC with specific blockchain address
+  // https://apidoc.tatum.io/tag/Account#operation/createAccount
+  const virtualAccount = await xdcSDK.ledger.account.create({
+    currency: 'XDC',
+    xpub: xpub,
   })
-  console.log(`Information for all addresses ${JSON.stringify(addresses)}`)
+  console.log(`Virtual account`, virtualAccount)
 
-  // Get all deposit addresses for a virtual account
-  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/getAllDepositAddresses
-  const addressByAccount = await xdcSdk.virtualAccount.depositAddress.getByAccount('635b92d6f9aeb823db30c43f')
-  console.log(`Information for all addresses ${JSON.stringify(addressByAccount)}`)
+  // create deposit address for a virtual account
+  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
+  const depositAddress = await xdcSDK.virtualAccount.depositAddress.create(virtualAccount.id)
 
-  // Get Withdrawals
-  // https://apidoc.tatum.io/tag/Withdrawal#operation/GetWithdrawals
-  const withdrawals = await xdcSdk.virtualAccount.withdrawal.getAll('Done')
-  console.log(`Get all withdrawals ${JSON.stringify(withdrawals)}`)
+  console.log(`Deposit address`, depositAddress.address)
+
+  // FUND YOUR ACCOUNT WITH XDC FROM https://faucet.apothem.network/
+  console.log(`Fund me ${depositAddress.address} to send blockchain assets from virtual account`)
+
+  // I wanna send assets from virtualAccount to blockchain address
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/XdcTransfer
+  const result = await xdcSDK.virtualAccount.send({
+    senderAccountId: virtualAccount.id,
+    amount: '1',
+    privateKey,
+    address: to,
+  })
+
+  console.log(JSON.stringify(result))
 }

@@ -1,22 +1,28 @@
 import { BroadcastFunction, ChainTransferNative } from '@tatumio/shared-blockchain-abstract'
-import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { TransactionConfig } from 'web3-core'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
-import { evmBasedUtils } from '../../evm-based.utils'
+import { AddressTransformer, AddressTransformerDefault, evmBasedUtils } from '../../evm-based.utils'
 
-const transferSignedTransaction = async (
-  body: ChainTransferNative,
-  web3: EvmBasedWeb3,
-  provider?: string,
-) => {
+const transferSignedTransaction = async ({
+  body,
+  web3,
+  provider,
+  addressTransformer,
+}: {
+  body: ChainTransferNative
+  web3: EvmBasedWeb3
+  provider?: string
+  addressTransformer: AddressTransformer
+}) => {
   // TODO
   // await validateBody(body, ChainTransferNative)
 
   const client = web3.getClient(provider, body.fromPrivateKey)
+  const to = addressTransformer(body.to.trim())
 
   const tx: TransactionConfig = {
     from: 0,
-    to: body.to,
+    to: to,
     data: body.data,
     value: evmBasedUtils.transformToWei(body.amount),
     gas: (body.data?.length || 0) * 68 + 21000,
@@ -35,11 +41,16 @@ const transferSignedTransaction = async (
   )
 }
 
-export const native = (args: {
-  blockchain: EvmBasedBlockchain
+export const native = ({
+  web3,
+  broadcastFunction,
+  transferApiMethod,
+  addressTransformer = AddressTransformerDefault,
+}: {
   web3: EvmBasedWeb3
   broadcastFunction: BroadcastFunction
   transferApiMethod: any
+  addressTransformer?: AddressTransformer // to automatically transform address to blockchain specific (e.g. 0x -> xdc, one)
 }) => {
   return {
     prepare: {
@@ -50,7 +61,7 @@ export const native = (args: {
        * @returns transaction data to be broadcast to blockchain.
        */
       transferSignedTransaction: async (body: ChainTransferNative, provider?: string) =>
-        transferSignedTransaction(body, args.web3, provider),
+        transferSignedTransaction({ body, web3, provider, addressTransformer }),
     },
     send: {
       /**
@@ -62,10 +73,10 @@ export const native = (args: {
        */
       transferSignedTransaction: async (body: ChainTransferNative, provider?: string) => {
         if (body.signatureId) {
-          return args.transferApiMethod(body)
+          return transferApiMethod(body)
         } else {
-          return args.broadcastFunction({
-            txData: await transferSignedTransaction(body, args.web3, provider),
+          return broadcastFunction({
+            txData: await transferSignedTransaction({ body, web3, provider, addressTransformer }),
           })
         }
       },

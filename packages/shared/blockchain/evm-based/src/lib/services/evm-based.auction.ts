@@ -456,7 +456,7 @@ const auctionBidSignedTransaction = async (
   let methodName = 'bid'
   let amount: string | undefined = undefined
   if (a[6] !== '0x0000000000000000000000000000000000000000') {
-    decimals = await erc20({ blockchain, web3, broadcastFunction }).decimals(a[6], provider)
+    decimals = await erc20({ web3, broadcastFunction }).decimals(a[6], provider)
     if (body.bidder) {
       methodName = 'bidForExternalBidder'
     }

@@ -29,6 +29,10 @@ function isApiError(args: SdkOriginalError) {
   return args.originalError && 'name' in args.originalError && args.originalError?.name === 'ApiError' // bypassing jest mock
 }
 
+export function isSdkError(error: Error | unknown): error is SdkError {
+  return error instanceof SdkError
+}
+
 export class SdkError extends Error {
   readonly errorCode?: SdkErrorCode
   readonly errorMessage?: string
@@ -111,6 +115,8 @@ export enum SdkErrorCode {
   SECRET_CHECKSUM = 'validation.secret.checksum',
   VALIDATION_TO_ADDRESS = 'validation.to-address',
 
+  TX_PREPARATION_FAILED = 'tx.preparation',
+
   // XLM
   XLM_NO_SEQUENCE = 'xlm.account.no-sequence',
 
@@ -180,7 +186,6 @@ export enum SdkErrorCode {
   INSUFFICIENT_FUNDS = 'insufficient.funds.on.sender.account',
   EVM_TRANSACTION_ERROR = 'evm-based.smart-contract.transaction.error',
   PARAMETER_MISMATCH = 'parameter.mismatch',
-  UNSUPPORTED_CHAIN = 'unsupported.chain',
 }
 
 // @TODO pass params?

@@ -1,26 +1,17 @@
-import { TransactionHash } from '@tatumio/api-client'
 import { TatumKcsSDK } from '@tatumio/kcs'
 
 const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 /**
+ * In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+ * Fund your address here: https://faucet-testnet.kcc.network
  * https://apidoc.tatum.io/tag/KuCoin#operation/KcsBlockchainSmartContractInvocation
  */
 export async function kcsSmartContractExample(): Promise<void> {
-  // if you don't already have a wallet, address and private key - generate them
-  // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGenerateWallet
-  const { mnemonic, xpub } = await kcsSDK.wallet.generateWallet()
-  // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGenerateAddressPrivateKey
-  const fromPrivateKey = await kcsSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
-  const address = kcsSDK.wallet.generateAddressFromPrivateKey(fromPrivateKey)
-  const to = kcsSDK.wallet.generateAddressFromXPub(xpub, 1)
-
-  // Fund your address here: https://faucet-testnet.kcc.network
-  console.log(`Fund address: ${address}`)
-  console.log(`Private key for ${address}: ${fromPrivateKey}`)
+  const address = 'xdcfd46a9707ed1f6eb7d7cfe0c6a2bac72d6aa57d4'
 
   // your previously deployed contract address
-  const contractAddress = '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd'
+  const contractAddress = 'xdc2F8C49490E5662f1b4957c0BC46e8B25b2787cd8'
 
   // smart contract read method
   const { data } = await kcsSDK.smartContract.send.smartContractReadMethodInvocationTransaction({
@@ -46,30 +37,8 @@ export async function kcsSmartContractExample(): Promise<void> {
       type: 'function',
     },
     // address we want the balance of
-    params: ['0x352a7a5277eC7619500b06fA051974621C1acd12'],
+    params: [address],
   })
+
   console.log(`Smart contract data: ${data}`)
-
-  // smart contract write method
-  // make sure your address is funded
-  const { txId } = (await kcsSDK.smartContract.send.smartContractMethodInvocationTransaction({
-    contractAddress,
-    methodName: 'transfer',
-    methodABI: {
-      constant: false,
-      inputs: [
-        { name: '_value', type: 'uint256' },
-        { name: '_to', type: 'address' },
-      ],
-      name: 'transfer',
-      outputs: [{ name: '', type: 'bool' }],
-      payable: false,
-      stateMutability: 'nonpayable',
-      type: 'function',
-    },
-    params: [100000000, to],
-    fromPrivateKey,
-  })) as TransactionHash
-
-  console.log(`Transaction successfully sent with ID ${txId}`)
 }

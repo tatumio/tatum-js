@@ -1,9 +1,10 @@
-import { PendingTransaction } from '@tatumio/api-client'
+import { PendingTransaction, Currency } from '@tatumio/api-client'
 // @ts-ignore
 import * as coininfo from 'coininfo'
 // @ts-ignore
 import * as BitcoinCashJS from '@tatumio/bitcoincashjs2-lib'
-import { Currency } from '@tatumio/api-client'
+import { BchSdkError } from '../bch.sdk.errors'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 /**
  * Sign Bitcoin Cash pending transaction from Tatum KMS
@@ -18,7 +19,7 @@ export const signBitcoinCashKMSTransaction = async (
   testnet: boolean,
 ) => {
   if (tx.chain !== Currency.BCH) {
-    throw Error('Unsupported chain.')
+    throw new BchSdkError(SdkErrorCode.KMS_CHAIN_MISMATCH)
   }
   const [data, amountsToDecode] = tx.serializedTransaction.split(':')
   const transaction = BitcoinCashJS.Transaction.fromHex(data)

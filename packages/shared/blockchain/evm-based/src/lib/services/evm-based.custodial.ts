@@ -4,6 +4,7 @@ import {
   ChainCallSmartContractMethod,
   ChainGenerateCustodialAddress,
   ChainGenerateCustodialWalletBatch,
+  ChainSmartContractMethodInvocation,
   ChainTransferCustodialWallet,
   ChainTransferCustodialWalletCelo,
 } from '@tatumio/shared-blockchain-abstract'
@@ -27,6 +28,8 @@ import {
 } from '../contracts'
 import { ContractAbi } from '../contracts/common.contracts'
 import { EvmBasedWeb3 } from './evm-based.web3'
+import { GasPumpChain } from './evm-based.gas.pump'
+import { AddressTransformer, AddressTransformerDefault } from '../evm-based.utils'
 
 const FUNGIBLE = 1
 const NON_FUNGIBLE = 2
@@ -94,11 +97,19 @@ export const evmBasedCustodial = () => {
         provider?: string,
         testnet?: boolean,
       ) => Promise<any>,
-      prepareSmartContractWriteMethodInvocation: (
-        r: SCBody,
-        web3: EvmBasedWeb3,
-        provider?: string,
-      ) => Promise<string>,
+      prepareSmartContractWriteMethodInvocation: ({
+        body,
+        web3,
+        provider,
+        chain,
+        addressTransformer = AddressTransformerDefault,
+      }: {
+        body: ChainSmartContractMethodInvocation
+        web3: EvmBasedWeb3
+        provider?: string
+        chain?: GasPumpChain
+        addressTransformer?: AddressTransformer
+      }) => Promise<string>,
       decimals: number,
       testnet?: boolean,
       provider?: string,
@@ -135,11 +146,13 @@ export const evmBasedCustodial = () => {
         )
       }
 
-      return await prepareSmartContractWriteMethodInvocation(
-        (body.chain === 'CELO' ? { ...r, feeCurrency: body.feeCurrency || Currency.CELO } : r) as SCBody,
+      return await prepareSmartContractWriteMethodInvocation({
+        body: (body.chain === 'CELO'
+          ? { ...r, feeCurrency: body.feeCurrency || Currency.CELO }
+          : r) as SCBody,
         web3,
         provider,
-      )
+      })
     },
 
     prepareBatchTransferFromCustodialWalletAbstract: async <SCBody extends CallSmartContractMethod>(
@@ -151,11 +164,19 @@ export const evmBasedCustodial = () => {
         provider?: string,
         testnet?: boolean,
       ) => Promise<any>,
-      prepareSmartContractWriteMethodInvocation: (
-        r: SCBody,
-        web3: EvmBasedWeb3,
-        provider?: string,
-      ) => Promise<string>,
+      prepareSmartContractWriteMethodInvocation: ({
+        body,
+        web3,
+        provider,
+        chain,
+        addressTransformer = AddressTransformerDefault,
+      }: {
+        body: ChainSmartContractMethodInvocation
+        web3: EvmBasedWeb3
+        provider?: string
+        chain?: GasPumpChain
+        addressTransformer?: AddressTransformer
+      }) => Promise<string>,
       decimals: number,
       testnet?: boolean,
       provider?: string,
@@ -203,19 +224,26 @@ export const evmBasedCustodial = () => {
         methodABI: CustodialFullTokenWalletWithBatch.abi.find((a) => a.name === 'transferBatch'),
       }
 
-      return await prepareSmartContractWriteMethodInvocation(
-        (body.chain === 'CELO' ? { ...r, feeCurrency: body.feeCurrency || Currency.CELO } : r) as SCBody,
+      return await prepareSmartContractWriteMethodInvocation({
+        body: (body.chain === 'CELO'
+          ? { ...r, feeCurrency: body.feeCurrency || Currency.CELO }
+          : r) as SCBody,
         web3,
         provider,
-      )
+      })
     },
 
-    prepareCustodialWalletBatchAbstract: async (
-      body: ChainGenerateCustodialWalletBatch,
-      web3: EvmBasedWeb3,
-      testnet?: boolean,
-    ) => {
-      const params = [body.owner.trim(), `0x${new BigNumber(body.batchCount).toString(16)}`]
+    prepareCustodialWalletBatchAbstract: async ({
+      body,
+      testnet,
+      addressTransformer = AddressTransformerDefault,
+    }: {
+      body: ChainGenerateCustodialWalletBatch
+      addressTransformer?: AddressTransformer
+      testnet?: boolean
+    }) => {
+      const owner = addressTransformer(body.owner?.trim())
+      const params = [owner, `0x${new BigNumber(body.batchCount).toString(16)}`]
 
       const methodName = 'cloneNewWallet'
       const methodSig = undefined
