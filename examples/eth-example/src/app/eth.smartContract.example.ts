@@ -7,9 +7,9 @@ const ethSDK = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function ethSmartContractExample(): Promise<void> {
   // if you don't already have a wallet, address and private key - generate them
   // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateWallet
-  const { mnemonic, xpub } = await ethSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await ethSDK.wallet.generateWallet(undefined, { testnet: true })
   // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateAddressPrivateKey
-  const fromPrivateKey = await ethSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const fromPrivateKey = await ethSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
   const address = ethSDK.wallet.generateAddressFromPrivateKey(fromPrivateKey)
   const to = ethSDK.wallet.generateAddressFromXPub(xpub, 1)
 

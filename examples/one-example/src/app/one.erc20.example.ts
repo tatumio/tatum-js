@@ -5,8 +5,8 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
 export async function oneErc20Example() {
-  const { mnemonic, xpub } = await oneSDK.wallet.generateWallet()
-  const fromPrivateKey = await oneSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const { mnemonic, xpub } = await oneSDK.wallet.generateWallet(undefined, { testnet: true })
+  const fromPrivateKey = await oneSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
   const address = oneSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = oneSDK.wallet.generateAddressFromXPub(xpub, 1)
 

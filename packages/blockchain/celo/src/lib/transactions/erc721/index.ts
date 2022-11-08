@@ -1,6 +1,14 @@
-import { EvmBasedBlockchain } from '@tatumio/shared-core'
+import { Blockchain, EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { ApiServices, MintNftCelo } from '@tatumio/api-client'
+import {
+  ApiServices,
+  BurnNftKMSCelo,
+  DeployNftCeloKMS,
+  MintMultipleNftKMSCelo,
+  MintNftKMSCelo,
+  TransferNftKMSCelo,
+  UpdateCashbackValueForAuthorNftKMSCelo,
+} from '@tatumio/api-client'
 import {
   Erc721_Provenance,
   Erc721Token_Cashback,
@@ -183,7 +191,7 @@ const mintMultipleSignedTransaction = async (
 }
 
 const mintCashbackSignedTransaction = async (
-  body: MintNftCelo & { signatureId?: string },
+  body: ChainMintNftCelo,
   provider?: string,
   testnet?: boolean,
 ) => {
@@ -801,7 +809,10 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        */
       mintSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftMintErc721(body)
+          return ApiServices.nft.nftMintErc721({
+            ...body,
+            chain: Blockchain.CELO,
+          })
         }
         return args.broadcastFunction({
           txData: await mintSignedTransaction(body, provider, testnet),
@@ -818,10 +829,13 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        */
       mintCashbackSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftMintErc721(body)
+          return ApiServices.nft.nftMintErc721({
+            ...body,
+            chain: Blockchain.CELO,
+          })
         }
         return args.broadcastFunction({
-          txData: (await mintCashbackSignedTransaction(body as any, provider, testnet)) as string,
+          txData: (await mintCashbackSignedTransaction(body, provider, testnet)) as string,
           signatureId: body.signatureId,
         })
       },
@@ -839,7 +853,10 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         testnet?: boolean,
       ) {
         if (body.signatureId) {
-          return ApiServices.nft.nftMintMultipleErc721(body as any)
+          return ApiServices.nft.nftMintMultipleErc721({
+            ...body,
+            chain: Blockchain.CELO,
+          } as MintMultipleNftKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await mintMultipleCashbackSignedTransaction(body, provider, testnet)) as string,
@@ -860,7 +877,10 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftMintMultipleErc721(body as any)
+          return ApiServices.nft.nftMintMultipleErc721({
+            ...body,
+            chain: Blockchain.CELO,
+          } as MintMultipleNftKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await mintMultipleSignedTransaction(body, provider, testnet)) as string,
@@ -877,7 +897,10 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        */
       burnSignedTransaction: async (body: ChainBurnErc721Celo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftBurnErc721(body as any)
+          return ApiServices.nft.nftBurnErc721({
+            ...body,
+            chain: Blockchain.CELO,
+          } as BurnNftKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await burnSignedTransaction(body, provider, testnet)) as string,
@@ -898,7 +921,10 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftTransferErc721(body as any)
+          return ApiServices.nft.nftTransferErc721({
+            ...body,
+            chain: Blockchain.CELO,
+          } as TransferNftKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await transferSignedTransaction(body, provider, testnet)) as string,
@@ -919,7 +945,10 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftUpdateCashbackErc721(body as any)
+          return ApiServices.nft.nftUpdateCashbackErc721({
+            ...body,
+            chain: Blockchain.CELO,
+          } as UpdateCashbackValueForAuthorNftKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await updateCashbackForAuthorSignedTransaction(body, provider, testnet)) as string,
@@ -936,7 +965,10 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        */
       deploySignedTransaction: async (body: ChainDeployErc721Celo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftDeployErc721(body as any)
+          return ApiServices.nft.nftDeployErc721({
+            ...body,
+            chain: Blockchain.CELO,
+          } as DeployNftCeloKMS)
         }
         return args.broadcastFunction({
           txData: (await deploySignedTransaction(body, provider, testnet)) as string,
@@ -957,7 +989,10 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftMintMultipleErc721(body as any)
+          return ApiServices.nft.nftMintErc721({
+            ...body,
+            chain: Blockchain.CELO,
+          } as MintNftKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await mintProvenanceSignedTransaction(body, provider, testnet)) as string,
@@ -978,7 +1013,10 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.nft.nftMintMultipleErc721(body as any)
+          return ApiServices.nft.nftMintMultipleErc721({
+            ...body,
+            chain: Blockchain.CELO,
+          } as MintMultipleNftKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await mintMultipleProvenanceSignedTransaction(body, provider, testnet)) as string,

@@ -2,7 +2,7 @@ import { TatumKcsSDK } from '@tatumio/kcs'
 
 export async function kcsBalanceExample() {
   const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-  const { xpub } = await kcsSDK.wallet.generateWallet()
+  const { xpub } = await kcsSDK.wallet.generateWallet(undefined, { testnet: true })
 
   const address = kcsSDK.wallet.generateAddressFromXPub(xpub, 0)
   console.log(`My public address is `, address)

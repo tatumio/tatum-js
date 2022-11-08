@@ -1,4 +1,4 @@
-import { EvmBasedBlockchain } from '@tatumio/shared-core'
+import { Blockchain, EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { Erc1155, EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
@@ -16,7 +16,16 @@ import {
   ChainTransferMultiTokenCelo,
 } from '../../utils/celo.utils'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
-import { ApiServices } from '@tatumio/api-client'
+import {
+  ApiServices,
+  BurnMultiTokenBatchKMSCelo,
+  BurnMultiTokenKMSCelo,
+  DeployMultiTokenCeloKMS,
+  MintMultiTokenBatchKMSCelo,
+  MintMultiTokenKMSCelo,
+  TransferMultiTokenBatchKMSCelo,
+  TransferMultiTokenKMSCelo,
+} from '@tatumio/api-client'
 
 const deployMultiTokenTransaction = async (
   body: ChainDeployMultiTokenCelo,
@@ -488,7 +497,10 @@ export const multiToken = (args: {
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.multiToken.mintMultiToken(body as any)
+          return ApiServices.multiToken.mintMultiToken({
+            ...body,
+            chain: Blockchain.CELO,
+          } as MintMultiTokenKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await mintMultiTokenTransaction(body, provider, testnet)) as string,
@@ -509,7 +521,10 @@ export const multiToken = (args: {
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.multiToken.mintMultiTokenBatch(body as any)
+          return ApiServices.multiToken.mintMultiTokenBatch({
+            ...body,
+            chain: Blockchain.CELO,
+          } as MintMultiTokenBatchKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await mintMultiTokenBatchTransaction(body, provider, testnet)) as string,
@@ -530,7 +545,10 @@ export const multiToken = (args: {
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.multiToken.transferMultiToken(body as any)
+          return ApiServices.multiToken.transferMultiToken({
+            ...body,
+            chain: Blockchain.CELO,
+          } as TransferMultiTokenKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await transferMultiTokenTransaction(body, provider, testnet)) as string,
@@ -551,7 +569,10 @@ export const multiToken = (args: {
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.multiToken.transferMultiTokenBatch(body as any)
+          return ApiServices.multiToken.transferMultiTokenBatch({
+            ...body,
+            chain: Blockchain.CELO,
+          } as TransferMultiTokenBatchKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await transferMultiTokenBatchTransaction(body, provider, testnet)) as string,
@@ -572,7 +593,10 @@ export const multiToken = (args: {
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.multiToken.burnMultiToken(body as any)
+          return ApiServices.multiToken.burnMultiToken({
+            ...body,
+            chain: Blockchain.CELO,
+          } as BurnMultiTokenKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await burnMultiTokenTransaction(body, provider, testnet)) as string,
@@ -593,7 +617,10 @@ export const multiToken = (args: {
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.multiToken.burnMultiTokenBatch(body as any)
+          return ApiServices.multiToken.burnMultiTokenBatch({
+            ...body,
+            chain: Blockchain.CELO,
+          } as BurnMultiTokenBatchKMSCelo)
         }
         return args.broadcastFunction({
           txData: (await burnMultiTokenBatchTransaction(body, provider, testnet)) as string,
@@ -615,7 +642,10 @@ export const multiToken = (args: {
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.multiToken.deployMultiToken(body as any)
+          return ApiServices.multiToken.deployMultiToken({
+            ...body,
+            chain: Blockchain.CELO,
+          } as DeployMultiTokenCeloKMS)
         }
         return args.broadcastFunction({
           txData: (await deployMultiTokenTransaction(body, provider, testnet)) as string,

@@ -2,7 +2,7 @@ import { TatumXdcSDK } from '@tatumio/xdc'
 
 export async function xdcBalanceExample() {
   const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-  const { xpub } = await xdcSDK.wallet.generateWallet()
+  const { xpub } = await xdcSDK.wallet.generateWallet(undefined, { testnet: true })
 
   const address = xdcSDK.wallet.generateAddressFromXPub(xpub, 0)
   console.log(`My public address is ${address}.`)
