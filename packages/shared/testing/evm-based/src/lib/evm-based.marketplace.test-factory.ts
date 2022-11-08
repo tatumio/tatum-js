@@ -296,6 +296,11 @@ export const marketplaceTestFactory = {
           tokenId: '100000',
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+          nonce,
+          fee: {
+            gasLimit: '40000',
+            gasPrice: '20',
+          },
           chain,
         })
 
