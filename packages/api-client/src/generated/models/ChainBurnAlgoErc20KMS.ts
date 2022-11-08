@@ -2,23 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type ChainTransferAlgoErc20KMS = {
+export type ChainBurnAlgoErc20KMS = {
     /**
      * Chain to work with.
      */
     chain: 'ALGO';
     /**
-     * Blockchain address to send ERC20 token to
-     */
-    to: string;
-    /**
      * Blockchain address to send ERC20 token from
      */
     from: string;
-    /**
-     * Amount to be sent.
-     */
-    amount: string;
     /**
      * assetIndex - asset index uniquely specifying the asset
      */
