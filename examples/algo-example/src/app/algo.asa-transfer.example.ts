@@ -22,7 +22,7 @@ export async function algoAsaTransferExample() {
 
   // Send Algos to a recipient account using private key, to be able accept token
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainTransfer
-  const txData = (await algoSDK.transaction.signedTransaction(
+  const txData = (await algoSDK.transaction.send.signedTransaction(
     {
       amount: '2',
       fromPrivateKey,
