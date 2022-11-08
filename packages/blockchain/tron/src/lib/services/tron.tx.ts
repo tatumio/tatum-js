@@ -16,11 +16,12 @@ import { tronTrc10 } from './tron.trc10'
 import { tronTrc20 } from './tron.trc20'
 import { tronTrc721 } from './tron.trc721'
 import { ITronWeb } from './tron.web'
+import { Blockchain } from '@tatumio/shared-core'
 
 export type CallSmartContract = FromPrivateKeyOrSignatureIdTron<CallSmartContractMethod>
 export type TronGenerateCustodialWallet = WithoutChain<
   FromPrivateKeyOrSignatureIdTron<GenerateCustodialWalletTron>
-> & { chain: Currency.TRON }
+>
 type TronTransfer = FromPrivateKeyOrSignatureIdTron<TransferTronBlockchain>
 type TronFreeze = FromPrivateKeyOrSignatureIdTron<FreezeTron>
 
@@ -317,7 +318,10 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
           provider?: string,
         ) => {
           if (body.signatureId) {
-            return ApiServices.custodial.custodialCreateWallet(body as any)
+            return ApiServices.custodial.custodialCreateWallet({
+              ...body,
+              chain: Blockchain.TRON,
+            })
           } else {
             return TronService.tronBroadcast({
               txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),

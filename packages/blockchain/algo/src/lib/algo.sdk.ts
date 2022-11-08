@@ -19,7 +19,7 @@ export const TatumAlgoSDK = (
   const txService = algoTxService({ algoWeb: web }, apiCalls)
   const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
 
-  const { mintNFT, transferNFT, burnNFT, getNFTAccountBalance, getNFTContractAddress } = nft
+  const { getNFTAccountBalance, getNFTContractAddress } = nft
 
   return {
     ...abstractSdk,
@@ -27,7 +27,6 @@ export const TatumAlgoSDK = (
     wallet: algoWallet(),
     transaction: txService.native,
     token: {
-      asset: txService.asset,
       receiveAsset: txService.asset.send.receive,
       fungible: {
         ...txService.fungible,
@@ -37,9 +36,6 @@ export const TatumAlgoSDK = (
       },
       nft: {
         ...txService.nft,
-        mintNFT,
-        transferNFT,
-        burnNFT,
         getNFTAccountBalance,
         getNFTContractAddress,
       },

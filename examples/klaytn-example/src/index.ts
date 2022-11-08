@@ -1,4 +1,3 @@
-import { klaytnAuctionExample } from './app/klaytn.auction.example'
 import { klaytnBalanceExample } from './app/klaytn.balance.example'
 import { klaytnBlockchainExample } from './app/klaytn.blockchain.example'
 import { klaytnErc20Example } from './app/klaytn.erc20.example'
@@ -16,6 +15,5 @@ console.log(`Running ${klaytnSubscriptionsExample()}`)
 console.log(`Running ${klaytnTxExample()}`)
 console.log(`Running ${klaytnMultiTokenExample()}`)
 console.log(`Running ${klaytnErc20Example()}`)
-console.log(`Running ${klaytnAuctionExample()}`)
 console.log(`Running ${klaytnBalanceExample()}`)
 console.log(`Running ${klaytnSmartContractExample()}`)

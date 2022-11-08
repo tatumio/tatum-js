@@ -19,6 +19,7 @@ export async function oneErc20Example() {
   const receiverPrivateKey = '<PUT RECEIVER PRIVATE KEY HERE>'
 
   // deploy erc20 (fungible token) transaction
+  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy
   const erc20Deployed = (await oneSDK.erc20.send.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',

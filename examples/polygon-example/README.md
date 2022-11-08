@@ -9,7 +9,6 @@ These examples should guide you through some basic operations of the Polygon blo
 - create deposit address to virtual account
 - create subscription for wallet address to be notified about transactions
 - mint, transfer and burn NFT and ERC20 tokens
-- auction operations
 
 ## How to start
 
@@ -83,7 +82,3 @@ You can find examples [here](./src/app/polygon.erc20.example.ts).
 ### How to create, transfer and burn multi token (1155)
 
 You can find examples [here](./src/app/polygon.multitoken.example.ts).
-
-### How to work with auctions
-
-You can find examples [here](./src/app/polygon.auction.example.ts).

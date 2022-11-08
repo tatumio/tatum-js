@@ -94,10 +94,6 @@ You can find examples [here](./src/app/bsc.nft.example.ts) and [here](./src/app/
 
 You can find examples [here](./src/app/bsc.multitoken.example.ts).
 
-### How to work with auctions
-
-You can find examples [here](./src/app/bsc.auction.example.ts).
-
 ### How to setup webhooks
 
 You can find examples [here](./src/app/bsc.subscriptions.example.ts).

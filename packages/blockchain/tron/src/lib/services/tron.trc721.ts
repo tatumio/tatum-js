@@ -13,26 +13,22 @@ import {
   UpdateCashbackValueForAuthorNftKMSTron,
   UpdateCashbackValueForAuthorNftTron,
   NftErc721OrCompatibleService,
-  Currency,
 } from '@tatumio/api-client'
 import { WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
 import { Trc721Token } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
 import { ITronWeb } from './tron.web'
+import { Blockchain } from '@tatumio/shared-core'
 
-type DeployTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<DeployNftTron>> & { chain: Currency.TRON }
-type MintTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<MintNftTron>> & { chain: Currency.TRON }
-type TransferTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<TransferNftTron>> & {
-  chain: Currency.TRON
-}
-type BurnTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<BurnNftTron>> & { chain: Currency.TRON }
-type MintTronMultipleNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<MintMultipleNftTron>> & {
-  chain: Currency.TRON
-}
+type DeployTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<DeployNftTron>>
+type MintTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<MintNftTron>>
+type TransferTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<TransferNftTron>>
+type BurnTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<BurnNftTron>>
+type MintTronMultipleNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<MintMultipleNftTron>>
 type UpdateTronCashbackValues = WithoutChain<
   FromPrivateKeyOrSignatureIdTron<UpdateCashbackValueForAuthorNftTron>
-> & { chain: Currency.TRON }
+>
 
 const prepareDeploySignedTransaction = async (body: DeployTronNft, tronWeb: ITronWeb, provider?: string) => {
   const client = tronWeb.getClient(provider)
@@ -465,7 +461,10 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        */
       deploySignedTransaction: async (body: DeployTronNft, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftDeployErc721(body as DeployNftTronKMS)
+          return NftErc721OrCompatibleService.nftDeployErc721({
+            ...body,
+            chain: Blockchain.TRON,
+          } as DeployNftTronKMS)
         } else {
           return TronService.tronBroadcast({
             txData: await prepareDeploySignedTransaction(body, args.tronWeb, provider),
@@ -481,7 +480,10 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        */
       mintCashbackSignedTransaction: async (body: MintTronNft, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftMintErc721(body as MintNftKMSTron)
+          return NftErc721OrCompatibleService.nftMintErc721({
+            ...body,
+            chain: Blockchain.TRON,
+          } as MintNftKMSTron)
         } else {
           return TronService.tronBroadcast({
             txData: await prepareMintCashbackSignedTransaction(body, args.tronWeb, provider),
@@ -497,7 +499,10 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        */
       mintSignedTransaction: async (body: MintTronNft, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftMintErc721(body as MintNftKMSTron)
+          return NftErc721OrCompatibleService.nftMintErc721({
+            ...body,
+            chain: Blockchain.TRON,
+          } as MintNftKMSTron)
         } else {
           return TronService.tronBroadcast({
             txData: await prepareMintSignedTransaction(body, args.tronWeb, provider),
@@ -513,7 +518,10 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        */
       transferSignedTransaction: async (body: TransferTronNft, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftTransferErc721(body as TransferNftKMSTron)
+          return NftErc721OrCompatibleService.nftTransferErc721({
+            ...body,
+            chain: Blockchain.TRON,
+          } as TransferNftKMSTron)
         } else {
           return TronService.tronBroadcast({
             txData: await transferSignedTransaction(body, args.tronWeb, provider),
@@ -528,7 +536,10 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        */
       burnSignedTransaction: async (body: BurnTronNft, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftBurnErc721(body as BurnNftKMSTron)
+          return NftErc721OrCompatibleService.nftBurnErc721({
+            ...body,
+            chain: Blockchain.TRON,
+          } as BurnNftKMSTron)
         } else {
           return TronService.tronBroadcast({
             txData: await burnSignedTransaction(body, args.tronWeb, provider),
@@ -543,7 +554,10 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        */
       mintMultipleSignedTransaction: async (body: MintTronMultipleNft, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftMintMultipleErc721(body as MintMultipleNftKMSTron)
+          return NftErc721OrCompatibleService.nftMintMultipleErc721({
+            ...body,
+            chain: Blockchain.TRON,
+          } as MintMultipleNftKMSTron)
         } else {
           return TronService.tronBroadcast({
             txData: await prepareMintMultipleSignedTransaction(body, args.tronWeb, provider),
@@ -561,9 +575,10 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
         provider?: string,
       ) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftUpdateCashbackErc721(
-            body as UpdateCashbackValueForAuthorNftKMSTron,
-          )
+          return NftErc721OrCompatibleService.nftUpdateCashbackErc721({
+            ...body,
+            chain: Blockchain.TRON,
+          } as UpdateCashbackValueForAuthorNftKMSTron)
         } else {
           return TronService.tronBroadcast({
             txData: await prepareUpdateCashbackValueForAuthorSignedTransaction(body, args.tronWeb, provider),

@@ -94,10 +94,6 @@ You can find examples [here](./src/app/one.nft.example.ts) and [here](./src/app/
 
 You can find examples [here](./src/app/one.multitoken.example.ts).
 
-### How to work with auctions
-
-You can find examples [here](./src/app/one.auction.example.ts).
-
 ### How to setup webhooks
 
 You can find examples [here](./src/app/one.subscriptions.example.ts).

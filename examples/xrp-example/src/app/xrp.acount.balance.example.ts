@@ -5,7 +5,7 @@ export const accountBalanceExample = async () => {
   const { address, secret } = xrpSDK.wallet.wallet()
   console.log(`My public address is ${address}, with private key ${secret}.`)
 
-  // FUND YOUR ACCOUNT WITH XRP FROM https://xrpl.org/tx-sender.html
+  // FUND YOUR ACCOUNT WITH XRP FROM https://yusufsahinhamza.github.io/xrp-testnet-faucet/
 
   // https://apidoc.tatum.io/tag/XRP#operation/XrpGetAccountInfo
   const accountDetails = await xrpSDK.blockchain.getAccountInfo(address)

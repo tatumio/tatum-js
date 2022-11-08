@@ -77,7 +77,3 @@ You can find examples [here](./src/app/eth.nft.example.ts) and [here](./src/app/
 ### How to work with multitokens (ERC1155)
 
 You can find examples [here](./src/app/eth.multitoken.example.ts).
-
-### How to work with auctions
-
-You can find examples [here](./src/app/eth.auction.example.ts).

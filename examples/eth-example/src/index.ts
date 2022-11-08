@@ -7,7 +7,6 @@ import { ethMultiTokenExample } from './app/eth.multitoken.example'
 import { ethNftExample } from './app/eth.nft.example'
 import { ethSmartContractExample } from './app/eth.smartContract.example'
 import { ethNftExpressExample } from './app/eth.nft.express.mint.example'
-import { ethAuctionExample } from './app/eth.auction.example'
 import { ethBlockchainExample } from './app/eth.blockchain.example'
 import { ethTxExample } from './app/eth.tx.example'
 
@@ -20,9 +19,6 @@ const examples = async () => {
 
   console.log(`Running ethBalanceExample`)
   await ethBalanceExample()
-
-  console.log(`Running ethAuctionExample`)
-  await ethAuctionExample()
 
   console.log(`Running ethErc20Example`)
   await ethErc20Example()

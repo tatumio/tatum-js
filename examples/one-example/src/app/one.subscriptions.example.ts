@@ -4,7 +4,7 @@ import { TatumOneSDK } from '@tatumio/one'
 const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function oneSubscriptionsExample() {
-  const { xpub } = await oneSDK.wallet.generateWallet()
+  const { xpub } = await oneSDK.wallet.generateWallet(undefined, { testnet: true })
 
   // https://apidoc.tatum.io/tag/Account#operation/createAccount
   const account = await oneSDK.ledger.account.create({

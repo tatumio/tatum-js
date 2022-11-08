@@ -4,8 +4,9 @@ import { Currency, TransactionHash } from '@tatumio/api-client'
 const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function bscNftExample() {
-  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
-  const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet(undefined, { testnet: true })
+  const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
+  const fromPrivateKeyTo = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1, { testnet: true })
   const address = bscSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
   const tokenId = '1000'
@@ -21,6 +22,8 @@ export async function bscNftExample() {
     // your private key of the address that has coins
     fromPrivateKey,
   })) as TransactionHash
+
+  console.log(`Deployed nft smart contract with id: ${txId}`)
 
   // find deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
@@ -61,7 +64,6 @@ export async function bscNftExample() {
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   const nftTransferred = (await bscSDK.nft.transferNFT({
     chain: 'BSC',
-    value: '1',
     to,
     tokenId,
     contractAddress,
@@ -75,7 +77,7 @@ export async function bscNftExample() {
     chain: 'BSC',
     tokenId,
     contractAddress,
-    fromPrivateKey,
+    fromPrivateKey: fromPrivateKeyTo,
   })) as TransactionHash
 
   console.log(`NFT burn transaction sent with transaction ID: ${nftBurned.txId}`)

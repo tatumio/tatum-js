@@ -94,10 +94,6 @@ You can find examples [here](./src/app/klaytn.nft.example.ts) and [here](./src/a
 
 You can find examples [here](./src/app/klaytn.multitoken.example.ts).
 
-### How to work with auctions
-
-You can find examples [here](./src/app/klaytn.auction.example.ts).
-
 ### How to setup webhooks
 
 You can find examples [here](./src/app/klaytn.subscriptions.example.ts).

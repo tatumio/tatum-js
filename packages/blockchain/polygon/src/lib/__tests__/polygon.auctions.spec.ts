@@ -1,19 +1,20 @@
 import { auctionTestFactory, ganacheHelper } from '@tatumio/shared-testing-evm-based'
 import { Blockchain } from '@tatumio/shared-core'
 import { polygonAuctionService } from '../services/polygon.auction'
+import { TatumPolygonSDK } from '../polygon.sdk'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const blockchain = Blockchain.POLYGON
 
 describe('PolygonSDK - auctions', () => {
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
+  const sdk = TatumPolygonSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   const auctionService = polygonAuctionService({
     blockchain,
     web3: {
       getClient: () => inmemoryBlockchain.web3,
-      async getGasPriceInWei(): Promise<string> {
-        return '@TODO'
-      },
+      getGasPriceInWei: sdk.getGasPriceInWei,
     },
   })
 
@@ -23,21 +24,31 @@ describe('PolygonSDK - auctions', () => {
     })
 
     describe('deploy auction', () => {
-      auctionTestFactory.prepare.deployAuctionSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.deployAuctionSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        'MATIC',
+      )
     })
     describe('create auction', () => {
-      auctionTestFactory.prepare.createAuctionSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.createAuctionSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        'MATIC',
+      )
     })
     describe('update auction fee recipient', () => {
       auctionTestFactory.prepare.auctionUpdateFeeRecipientSignedTransaction(
         auctionService,
         inmemoryBlockchain.accounts,
+        'MATIC',
       )
     })
     describe('approve nft spending', () => {
       auctionTestFactory.prepare.auctionApproveNftTransferSignedTransaction(
         auctionService,
         inmemoryBlockchain.accounts,
+        'MATIC',
       )
     })
     /**
@@ -48,6 +59,7 @@ describe('PolygonSDK - auctions', () => {
       auctionTestFactory.prepare.auctionApproveErc20TransferSignedTransaction(
         auctionService,
         inmemoryBlockchain.accounts,
+        'MATIC',
       )
     })
     /**
@@ -55,13 +67,25 @@ describe('PolygonSDK - auctions', () => {
      * after decimal mpolygonod call
      */
     xdescribe('bid auction', () => {
-      auctionTestFactory.prepare.auctionBidSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.auctionBidSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        'MATIC',
+      )
     })
     describe('cancel auction', () => {
-      auctionTestFactory.prepare.auctionCancelSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.auctionCancelSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        'MATIC',
+      )
     })
     describe('settle auction', () => {
-      auctionTestFactory.prepare.auctionSettleSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.auctionSettleSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        'MATIC',
+      )
     })
   })
 })

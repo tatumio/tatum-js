@@ -1,19 +1,20 @@
 import { auctionTestFactory, ganacheHelper } from '@tatumio/shared-testing-evm-based'
 import { Blockchain } from '@tatumio/shared-core'
 import { ethAuctionService } from '../services/eth.auction'
+import { TatumEthSDK } from '../eth.sdk'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const blockchain = Blockchain.ETH
 
 describe('EthSDK - auctions', () => {
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain, { defaultBalance: 1000 })
+  const sdk = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   const auctionService = ethAuctionService({
     blockchain,
     web3: {
       getClient: () => inmemoryBlockchain.web3,
-      async getGasPriceInWei(): Promise<string> {
-        return '@TODO'
-      },
+      getGasPriceInWei: sdk.getGasPriceInWei,
     },
   })
 
@@ -25,21 +26,31 @@ describe('EthSDK - auctions', () => {
     })
 
     describe('deploy auction', () => {
-      auctionTestFactory.prepare.deployAuctionSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.deployAuctionSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        blockchain,
+      )
     })
     describe('create auction', () => {
-      auctionTestFactory.prepare.createAuctionSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.createAuctionSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        blockchain,
+      )
     })
     describe('update auction fee recipient', () => {
       auctionTestFactory.prepare.auctionUpdateFeeRecipientSignedTransaction(
         auctionService,
         inmemoryBlockchain.accounts,
+        blockchain,
       )
     })
     describe('approve nft spending', () => {
       auctionTestFactory.prepare.auctionApproveNftTransferSignedTransaction(
         auctionService,
         inmemoryBlockchain.accounts,
+        blockchain,
       )
     })
     /**
@@ -50,6 +61,7 @@ describe('EthSDK - auctions', () => {
       auctionTestFactory.prepare.auctionApproveErc20TransferSignedTransaction(
         auctionService,
         inmemoryBlockchain.accounts,
+        blockchain,
       )
     })
     /**
@@ -57,13 +69,25 @@ describe('EthSDK - auctions', () => {
      * after decimal method call
      */
     xdescribe('bid auction', () => {
-      auctionTestFactory.prepare.auctionBidSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.auctionBidSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        blockchain,
+      )
     })
     describe('cancel auction', () => {
-      auctionTestFactory.prepare.auctionCancelSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.auctionCancelSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        blockchain,
+      )
     })
     describe('settle auction', () => {
-      auctionTestFactory.prepare.auctionSettleSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.auctionSettleSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        blockchain,
+      )
     })
   })
 })

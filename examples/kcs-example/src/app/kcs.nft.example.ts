@@ -80,7 +80,7 @@ export async function kcsNftExample() {
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
-  const nftTransferred = (await kcsSDK.nft.transferNFT({
+  const nftTransferred = (await kcsSDK.nft.send.transferSignedTransaction({
     chain: Currency.KCS,
     to: receiverAddress,
     tokenId,

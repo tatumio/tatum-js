@@ -5,7 +5,7 @@ const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function xdcSubscriptionsExample() {
   // if you don't already have a wallet, address and private key - generate them
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateWallet
-  const { mnemonic, xpub } = await xdcSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await xdcSDK.wallet.generateWallet(undefined, { testnet: true })
 
   // Generate new virtual account for XDC with specific blockchain address
   // https://apidoc.tatum.io/tag/Account#operation/createAccount

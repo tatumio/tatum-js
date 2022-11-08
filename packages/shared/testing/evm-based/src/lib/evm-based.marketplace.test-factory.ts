@@ -275,7 +275,7 @@ export const marketplaceTestFactory = {
       })
     },
 
-    approveSpending: (sdk: SdkWithMarketplaceFunctions, accounts: GanacheAccount[]) => {
+    approveSpending: (sdk: SdkWithMarketplaceFunctions, accounts: GanacheAccount[], chain) => {
       it('valid from privateKey', async () => {
         const tx = await sdk.prepare.approveSpending({
           spender: accounts[0].address,
@@ -283,12 +283,7 @@ export const marketplaceTestFactory = {
           tokenId: '100000',
           contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
           fromPrivateKey: accounts[0].privateKey,
-          nonce: 1,
-          fee: {
-            gasLimit: '40000',
-            gasPrice: '2',
-          },
-          amount: '0.001',
+          chain,
         })
 
         expectHexString(tx)
@@ -306,7 +301,7 @@ export const marketplaceTestFactory = {
             gasLimit: '40000',
             gasPrice: '20',
           },
-          amount: '10000',
+          chain,
         })
 
         const json = JSON.parse(tx)
@@ -322,12 +317,7 @@ export const marketplaceTestFactory = {
             tokenId: '100000',
             contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc86',
             fromPrivateKey: accounts[0].privateKey,
-            nonce: 1,
-            fee: {
-              gasLimit: '40000',
-              gasPrice: '20',
-            },
-            amount: '0.001',
+            chain,
           }),
         ).rejects.toThrowErrorWithMessageThatIncludes(
           invalidProvidedAddressWeb3ErrorMessage('0x687422eEA2cB73B5d3e242bA5456b782919AFc86'),

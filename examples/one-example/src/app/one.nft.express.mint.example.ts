@@ -4,8 +4,8 @@ import { TransactionHash } from '@tatumio/api-client'
 const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function oneNftExpressExample() {
-  const { mnemonic, xpub } = await oneSDK.wallet.generateWallet()
-  const fromPrivateKey = await oneSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const { mnemonic, xpub } = await oneSDK.wallet.generateWallet(undefined, { testnet: true })
+  const fromPrivateKey = await oneSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
   const address = oneSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = oneSDK.wallet.generateAddressFromXPub(xpub, 1)
   const tokenId = '1000'
