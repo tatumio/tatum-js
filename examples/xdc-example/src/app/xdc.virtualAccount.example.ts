@@ -5,10 +5,10 @@ const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function xdcVirtualAccountExample() {
   // if you don't already have a wallet, address and private key - generate them
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateWallet
-  const { mnemonic, xpub } = await xdcSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await xdcSDK.wallet.generateWallet(undefined, { testnet: true })
 
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateAddressPrivateKey
-  const privateKey = await xdcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1)
+  const privateKey = await xdcSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1, { testnet: true })
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGenerateAddress
   const to = xdcSDK.wallet.generateAddressFromXPub(xpub, 1)
 

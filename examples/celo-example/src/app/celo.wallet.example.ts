@@ -1,12 +1,20 @@
 import { TatumCeloSDK } from '@tatumio/celo'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const celoSDK = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const celoSDK = TatumCeloSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function celoWalletExample() {
-  const { mnemonic, xpub } = await celoSDK.wallet.generateWallet()
+  // Generate CELO wallet
+  // https://apidoc.tatum.io/tag/Celo#operation/CeloGenerateWallet
+  const { mnemonic, xpub } = await celoSDK.wallet.generateWallet(undefined, { testnet: true })
+  console.log(`Generated wallet with: \nmnemonic ${mnemonic}\nxpub ${xpub}`)
 
-  const address = celoSDK.wallet.generateAddressFromXPub(mnemonic, 0)
+  // Generate public address from xpub
+  // https://apidoc.tatum.io/tag/Celo#operation/CeloGenerateAddress
+  const address = celoSDK.wallet.generateAddressFromXPub(xpub, 0)
+  console.log(`Public address is ${address}`)
+
+  // Generate private key from mnemonic
+  // https://apidoc.tatum.io/tag/Celo#operation/CeloGenerateAddressPrivateKey
   const privateKey = await celoSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
-  const addressFromXpub = celoSDK.wallet.generateAddressFromXPub(xpub, 0)
+  console.log(`private key is ${privateKey}`)
 }

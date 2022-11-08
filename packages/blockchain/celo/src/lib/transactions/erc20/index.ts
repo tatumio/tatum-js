@@ -1,5 +1,13 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { ApiServices, OpenAPI, TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import {
+  ApiServices,
+  ChainBurnCeloErc20KMS,
+  ChainDeployCeloErc20KMS,
+  ChainMintCeloErc20KMS,
+  ChainTransferCeloErc20TokenKMS,
+  OpenAPI,
+  TATUM_API_CONSTANTS,
+} from '@tatumio/api-client'
 import { amountUtils, SdkErrorCode, toHexString } from '@tatumio/shared-abstract-sdk'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { Erc20Token, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
@@ -13,6 +21,7 @@ import {
   ChainMintErc20Celo,
   ChainTransferErc20Celo,
 } from '../../utils/celo.utils'
+import { Blockchain } from '@tatumio/shared-core'
 
 const initialize = async (
   args: Pick<ChainDeployErc20Celo, 'feeCurrency'>,
@@ -271,7 +280,10 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        */
       deploySignedTransaction: async (body: ChainDeployErc20Celo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.fungibleToken.erc20Deploy(body as any)
+          return ApiServices.fungibleToken.erc20Deploy({
+            ...body,
+            chain: Blockchain.CELO,
+          } as ChainDeployCeloErc20KMS)
         }
         return args.broadcastFunction({
           txData: await prepareDeploySignedTransaction(body, provider, testnet),
@@ -288,7 +300,10 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        */
       mintSignedTransaction: async (body: ChainMintErc20Celo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.fungibleToken.erc20Mint(body as any)
+          return ApiServices.fungibleToken.erc20Mint({
+            ...body,
+            chain: Blockchain.CELO,
+          } as ChainMintCeloErc20KMS)
         }
         return args.broadcastFunction({
           txData: await prepareMintSignedTransaction(body, provider, testnet),
@@ -309,7 +324,10 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.fungibleToken.erc20Transfer(body as any)
+          return ApiServices.fungibleToken.erc20Transfer({
+            ...body,
+            chain: Blockchain.CELO,
+          } as ChainTransferCeloErc20TokenKMS)
         }
         return args.broadcastFunction({
           txData: await prepareTransferSignedTransaction(body, provider, testnet),
@@ -326,7 +344,10 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        */
       burnSignedTransaction: async (body: ChainBurnErc20Celo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.fungibleToken.erc20Burn(body as any)
+          return ApiServices.fungibleToken.erc20Burn({
+            ...body,
+            chain: Blockchain.CELO,
+          } as ChainBurnCeloErc20KMS)
         }
         return args.broadcastFunction({
           txData: await prepareBurnSignedTransaction(body, provider, testnet),

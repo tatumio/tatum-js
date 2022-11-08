@@ -1,4 +1,4 @@
-import { TransactionHash } from '@tatumio/api-client'
+import { Currency, TransactionHash } from '@tatumio/api-client'
 import { TatumKcsSDK } from '@tatumio/kcs'
 import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
@@ -41,7 +41,7 @@ export async function kcsErc20Example() {
 
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
-  const transaction = await kcsSDK.blockchain.smartContractGetAddress('KCS' as any, erc20Deployed.txId)
+  const transaction = await kcsSDK.blockchain.smartContractGetAddress(Currency.KCS as any, erc20Deployed.txId)
   const contractAddress = transaction.contractAddress as string
 
   console.log(`Contract address`, contractAddress)

@@ -1,145 +1,107 @@
 import { TatumCeloSDK } from '@tatumio/celo'
-import { Currency } from '@tatumio/api-client'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import { Currency, TransactionHash } from '@tatumio/api-client'
+import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
-const celoSDK = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const SLEEP_SECONDS = 20
+const celoSDK = TatumCeloSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
+/**
+ * In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+ * Fund your address here: https://celo.org/developers/faucet
+ */
 export async function celoNftExample() {
-  const metadataURI = await celoSDK.nft.getNFTMetadataURI(
-    Currency.CELO,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const provenanceData = await celoSDK.nft.getNFTProvenanceData(
-    Currency.CELO,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const royalty = await celoSDK.nft.getNFTRoyalty(
-    Currency.CELO,
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-    '1',
-  )
-  const transaction = await celoSDK.nft.getNFTTransaction(
-    Currency.CELO,
-    '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
-  )
-  const transactionByAddress = await celoSDK.nft.getNFTTransactionsByAddress(
-    Currency.CELO,
-    '0x8ce4e40889a13971681391aad29e88efaf91f784',
-    '0x8ce4e40889a13971681391aad29e88efaf91f784',
-    10,
-  )
-  const transactionByToken = await celoSDK.nft.getNFTTransactionsByToken(
-    Currency.CELO,
-    1,
-    '0x1ce4e40889a13971681391aad29e88efaf91f784',
-    10,
-  )
-  const nftByAddress = await celoSDK.nft.getNFTsByAddress(
-    Currency.CELO,
-    'NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y',
-  )
+  // This address wil DEPLOY, MINT and TRANSFER NFT to Receiver Address
+  const senderAddress = '<PUT SENDER ADDRESS HERE>'
+  const senderPrivateKey = '<PUT SENDER PRIVATE KEY HERE>'
 
-  const nftAccountBalance = await celoSDK.nft.getNFTAccountBalance(
-    Currency.CELO,
-    '0x3223AEB8404C7525FcAA6C512f91e287AE9FfE7B',
-    '0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326',
-  )
+  // This address will RECEIVE NFT and BURN it
+  const receiverAddress = '<PUT RECEIVER ADDRESS HERE>'
+  const receiverPrivateKey = '<PUT RECEIVER PRIVATE KEY HERE>'
 
-  const mintedHash = await celoSDK.nft.mintNFT({
-    chain: 'CELO',
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    url: 'https://my_token_data.com',
-    feeCurrency: 'CELO',
-  })
+  const tokenId = '1000'
 
-  const mintedExpress = await celoSDK.nft.mintNFT({
-    chain: 'CELO',
-    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    url: 'https://my_token_data.com',
-  })
-
-  const mintedWithMinterHash = await celoSDK.nft.mintNFT({
-    chain: 'CELO',
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-    url: 'https://my_token_data.com',
-    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    feeCurrency: 'CELO',
-  })
-
-  const deployHash = await celoSDK.nft.deployNFTSmartContract({
-    chain: 'CELO',
+  // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftDeployErc721
+  const nftDeploy = (await celoSDK.nft.send.deploySignedTransaction({
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    provenance: true,
-    publicMint: true,
-    nonce: 0,
-    feeCurrency: 'CUSD',
-  })
-
-  const transferHash = await celoSDK.nft.transferNFT({
-    chain: 'CELO',
-    value: '1',
-    to: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    tokenId: '1000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    provenance: true,
-    nonce: 1,
-    tokenPrice: '1',
+    // your private key of the address that has coins
+    fromPrivateKey: senderPrivateKey,
     feeCurrency: 'CELO',
-  })
+  })) as TransactionHash
 
-  const mintMultipleHash = await celoSDK.nft.mintMultipleNFTs({
-    chain: 'CELO',
-    to: ['0x687422eEA2cB73B5d3e242bA5456b782919AFc85'],
-    tokenId: ['100000'],
-    url: ['https://my_token_data.com'],
-    authorAddresses: [['0x687422eEA2cB73B5d3e242bA5456b782919AFc85']],
-    cashbackValues: [['0.5']],
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
+  // If during this time the transaction is not confirmed, then the waiting time should be increased.
+  // In a real application, the wait mechanism must be implemented properly without using this
+  console.log(`Waiting ${SLEEP_SECONDS} seconds for the transaction [${nftDeploy.txId}] to appear in a block`)
+  await sleepSeconds(SLEEP_SECONDS)
+
+  // find deployed contract address from transaction hash
+  // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
+  const transactionData = await celoSDK.blockchain.smartContractGetAddress(Currency.CELO, nftDeploy.txId)
+  const contractAddress = transactionData.contractAddress as string
+  console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
+
+  // upload your file to the ipfs:
+  // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
+
+  // Please note that minted tokens might not appear immediately on the blockchain so in order to execute
+  // all examples at once you should set some timeout between the calls or execute examples separately
+
+  // Mint NFTs on your own smart contract
+  const nftMinted = (await celoSDK.nft.send.mintSignedTransaction({
+    tokenId,
+    contractAddress,
+    fromPrivateKey: senderPrivateKey,
     feeCurrency: 'CELO',
-  })
+    to: senderAddress,
+    // uploaded metadata from ipfs
+    url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
+  })) as TransactionHash
 
-  const burnHash = await celoSDK.nft.burnNFT({
-    chain: 'CELO',
-    tokenId: '100000',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    feeCurrency: 'CUSD',
-  })
+  console.log(`Minted nft with txID: ${nftMinted.txId}`)
+  console.log(`Waiting ${SLEEP_SECONDS} seconds for the transaction [${nftMinted.txId}] to appear in a block`)
+  await sleepSeconds(SLEEP_SECONDS)
 
-  const addMinterHash = await celoSDK.nft.addNFTMinter({
-    chain: 'CELO',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    minter: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    fee: {
-      gasLimit: '40000',
-      gasPrice: '20',
-    },
+  // Get NFT token metadata
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetMetadataErc721
+  const { data } = await celoSDK.nft.getNFTMetadataURI(Currency.CELO, contractAddress, tokenId)
+
+  console.log(`Token metadata: ${data}`)
+
+  // Get all minted NFTs in the collection. Returns all NFTs this contract minted.
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetBalanceErc721
+  const nftAccountBalance = await celoSDK.nft.getNFTAccountBalance(
+    Currency.CELO,
+    senderAddress,
+    contractAddress,
+  )
+
+  console.log(`Nfts on ${contractAddress}:`, nftAccountBalance)
+
+  // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
+  const nftTransferred = (await celoSDK.nft.send.transferSignedTransaction({
+    to: receiverAddress,
+    tokenId,
+    contractAddress,
+    fromPrivateKey: senderPrivateKey,
     feeCurrency: 'CELO',
-  })
+  })) as TransactionHash
 
-  const updateRoyaltyHash = await celoSDK.nft.updateNFTRoyalty({
-    chain: 'CELO',
-    tokenId: '100000',
-    cashbackValue: '0.1',
-    contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
-    fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
-    nonce: 0,
-    feeCurrency: 'CUSD',
-  })
+  console.log(`Transferred nft with transaction hash: ${nftTransferred.txId}`)
+  console.log(
+    `Waiting ${SLEEP_SECONDS} seconds for the transaction [${nftTransferred.txId}] to appear in a block`,
+  )
+  await sleepSeconds(SLEEP_SECONDS)
+
+  // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
+  const nftBurned = (await celoSDK.nft.send.burnSignedTransaction({
+    tokenId,
+    contractAddress,
+    fromPrivateKey: receiverPrivateKey,
+    feeCurrency: 'CELO',
+  })) as TransactionHash
+
+  console.log(`NFT burn transaction sent with txID: ${nftBurned.txId}`)
 }

@@ -4,8 +4,8 @@ import { TransactionHash } from '@tatumio/api-client'
 const klaytnSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function klaytnErc20Example() {
-  const { mnemonic, xpub } = await klaytnSDK.wallet.generateWallet()
-  const fromPrivateKey = await klaytnSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const { mnemonic, xpub } = await klaytnSDK.wallet.generateWallet(undefined, { testnet: true })
+  const fromPrivateKey = await klaytnSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
   const address = klaytnSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = klaytnSDK.wallet.generateAddressFromXPub(xpub, 1)
 

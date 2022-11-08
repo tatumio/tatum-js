@@ -17,11 +17,11 @@ export async function algoBlockchainExample() {
 
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGetTransaction
-  const txid = 'LXEBXIBDAIF72NRI76SU252QSOGFCKEHTG7AI4P6W25V35PETU3Q'
+  const txid = block?.txns[0]?.id || 'LXEBXIBDAIF72NRI76SU252QSOGFCKEHTG7AI4P6W25V35PETU3Q'
   const tx = await algoSDK.blockchain.getTransaction(txid)
-  console.log(`Fee for transaction is ${tx.fee}.`)
+  console.log(`Fee for transaction ${txid} is ${tx.fee}.`)
 
-  // // skip this - took too long
+  // // skip this - take too long
   // // Get transactions between from and to
   // // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGetPayTransactionsByFromTo
   // const from = '2021-05-01T20:44:39Z'

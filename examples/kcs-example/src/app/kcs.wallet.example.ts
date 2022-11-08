@@ -5,7 +5,7 @@ const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function kcsWalletExample() {
   // Generate KCS wallet
   // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGenerateWallet
-  const { mnemonic, xpub } = await kcsSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await kcsSDK.wallet.generateWallet(undefined, { testnet: true })
   console.log(`Generated wallet with: \nmnemonic ${mnemonic}\nxpub ${xpub}`)
 
   // Generate public address from xpub

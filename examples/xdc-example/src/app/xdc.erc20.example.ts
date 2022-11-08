@@ -1,4 +1,4 @@
-import { TransactionHash } from '@tatumio/api-client'
+import { Currency, TransactionHash } from '@tatumio/api-client'
 import { TatumXdcSDK } from '@tatumio/xdc'
 import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
@@ -40,7 +40,7 @@ export async function xdcErc20Example() {
 
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
-  const transaction = await xdcSDK.blockchain.smartContractGetAddress('XDC', erc20Deployed.txId)
+  const transaction = await xdcSDK.blockchain.smartContractGetAddress(Currency.XDC, erc20Deployed.txId)
   const contractAddress = transaction.contractAddress as string
 
   const erc20Minted = (await xdcSDK.erc20.send.mintSignedTransaction({

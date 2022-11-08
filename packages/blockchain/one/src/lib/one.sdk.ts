@@ -11,6 +11,7 @@ import { oneKmsService } from './services/one.kms'
 import { oneTxService } from './services/one.tx'
 import { oneAuctionService } from './services/one.auction'
 import { virtualAccountService } from './services/one.virtualAccount'
+import { oneWallet } from './services/one.wallet'
 
 const blockchain: EvmBasedBlockchain = Blockchain.HARMONY
 
@@ -19,6 +20,7 @@ export const TatumOneSDK = (args: SDKArguments) => {
   const api = HarmonyService
   const txService = oneTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
+  const walletService = oneWallet({ blockchain })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   const {
@@ -38,6 +40,7 @@ export const TatumOneSDK = (args: SDKArguments) => {
 
   return {
     ...evmSdk,
+    wallet: walletService,
     kms: oneKmsService({ blockchain, web3 }),
     transaction: txService.native,
     erc20: {

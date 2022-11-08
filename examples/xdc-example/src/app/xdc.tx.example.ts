@@ -1,4 +1,5 @@
 import { TatumXdcSDK } from '@tatumio/xdc'
+import { Currency } from '@tatumio/api-client'
 
 const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
@@ -24,7 +25,7 @@ export async function xdcTxExample(): Promise<void> {
   // send native transaction using signatureId
   // signatureId from Tatum KMS - https://docs.tatum.io/private-key-management/tatum-key-management-system-kms
   const { signatureId } = await xdcSDK.transaction.send.transferSignedTransaction({
-    currency: 'XDC' as any,
+    currency: Currency.XDC,
     to: receiverAddress,
     amount: '0.0001',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',

@@ -1,16 +1,15 @@
 import { TransactionHash } from '@tatumio/api-client'
 import { TatumOneSDK } from '@tatumio/one'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 // https://apidoc.tatum.io/tag/Harmony#operation/OneBlockchainSmartContractInvocation
 export async function oneSmartContractExample(): Promise<void> {
   // if you don't already have a wallet, address and private key - generate them
   // https://apidoc.tatum.io/tag/Harmony#operation/OneGenerateWallet
-  const { mnemonic, xpub } = await oneSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await oneSDK.wallet.generateWallet(undefined, { testnet: true })
   // https://apidoc.tatum.io/tag/Harmony#operation/OneGenerateAddressPrivateKey
-  const fromPrivateKey = await oneSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const fromPrivateKey = await oneSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
   const address = oneSDK.wallet.generateAddressFromPrivateKey(fromPrivateKey)
   const to = oneSDK.wallet.generateAddressFromXPub(xpub, 1)
 

@@ -13,7 +13,7 @@ import {
 } from '../../utils/celo.utils'
 import { EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import { isHex, stringToHex, toHex } from 'web3-utils'
-import { ApiServices, Currency } from '@tatumio/api-client'
+import { ApiServices, CreateRecordCelo, Currency, TransferCeloBlockchainKMS } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const transferSignedTransaction = async (
@@ -232,7 +232,10 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.blockchain.celo.celoBlockchainTransfer(body as any)
+          return ApiServices.blockchain.celo.celoBlockchainTransfer({
+            ...body,
+            currency: 'CELO',
+          } as TransferCeloBlockchainKMS)
         }
         return args.broadcastFunction({
           txData: await transferSignedTransaction(body, provider, testnet),
@@ -249,7 +252,7 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        */
       storeDataTransaction: async (body: ChainStoreDataCelo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.record.storeLog(body as any)
+          return ApiServices.record.storeLog(body as CreateRecordCelo)
         }
         return args.broadcastFunction({
           txData: await prepareStoreDataTransaction(body, provider, testnet),
@@ -270,7 +273,7 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.blockchain.celo.celoBlockchainTransfer(body as any)
+          return ApiServices.blockchain.celo.celoBlockchainTransfer(body as TransferCeloBlockchainKMS)
         }
         return args.broadcastFunction({
           txData: await prepareCeloOrCUsdSignedTransaction(body, provider, testnet),
