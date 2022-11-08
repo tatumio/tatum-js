@@ -21,7 +21,7 @@ export async function algoBlockchainExample() {
   const tx = await algoSDK.blockchain.getTransaction(txid)
   console.log(`Fee for transaction ${txid} is ${tx.fee}.`)
 
-  // // skip this - took too long
+  // // skip this - take too long
   // // Get transactions between from and to
   // // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGetPayTransactionsByFromTo
   // const from = '2021-05-01T20:44:39Z'

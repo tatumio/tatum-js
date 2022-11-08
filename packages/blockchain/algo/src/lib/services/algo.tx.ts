@@ -2,8 +2,8 @@ import {
   AccountService,
   AlgorandService,
   ApiServices,
-  BurnNftAlgo as ApiBurnNft,
-  BurnNftKMS as ApiBurnNftKMS, // @TODO: set to BurnNftAlgoKMS
+  BurnNftAlgo as ApiBurnNftAlgo,
+  BurnNftAlgoKMS as ApiBurnNftAlgoKMS,
   ChainTransferAlgoErc20 as ApiChainTransferAlgoErc20,
   ChainTransferAlgoErc20KMS as ApiChainTransferAlgoErc20KMS,
   Currency,
@@ -11,19 +11,20 @@ import {
   ChainDeployAlgoErc20KMS as ApiDeployErc20KMS,
   MintNftAlgorand as ApiMintNftAlgorand,
   MintNftAlgorandKMS as ApiMintNftAlgorandKMS,
+  MintNftExpressAlgorand as ApiMintNftExpressAlgorand,
   OffchainTransactionResult,
   OffchainTransactionSignatureResult,
   ReceiveAlgorandAsset,
   ReceiveAlgorandAssetKMS,
   TransferAlgo as ApiTransferAlgo,
   TransferAlgoKMS as ApiTransferAlgoKMS,
-  TransferNftAlgo as ApiTransferNft,
-  TransferNftAlgoKMS as ApiTransferNftKMS,
+  TransferNftAlgo as ApiTransferNftAlgo,
+  TransferNftAlgoKMS as ApiTransferNftAlgoKMS,
   TransferAlgorandBlockchain as ApiTransferAlgorandBlockchain,
   TransferAlgorandBlockchainKMS as ApiTransferAlgorandBlockchainKMS,
   TransferNftAlgoExpress as ApiTransferNftAlgoExpress,
-  ChainBurnErc20KMS as ApiChainBurnErc20KMS,
-  ChainBurnErc20 as ApiChainBurnErc20,
+  ChainBurnAlgoErc20KMS as ApiChainBurnAlgoErc20KMS,
+  ChainBurnAlgoErc20 as ApiChainBurnAlgoErc20,
 } from '@tatumio/api-client'
 import { AlgoWeb } from './algo.web'
 import * as algosdk from 'algosdk'
@@ -36,29 +37,30 @@ import { AlgoApiCallsType } from '../../index'
 import { BigNumber } from 'bignumber.js'
 
 export type TransferAlgo = ApiTransferAlgo
-export type TransferAlgoKMS = ApiTransferAlgoKMS & { from: string }
+export type TransferAlgoKMS = ApiTransferAlgoKMS
 
 export type TransferAlgoBlockchain = ApiTransferAlgorandBlockchain
 export type TransferAlgoBlockchainKMS = ApiTransferAlgorandBlockchainKMS
 
-export type MintNftAlgorandKMS = WithoutChain<ApiMintNftAlgorandKMS>
-export type MintNftAlgorand = WithoutChain<ApiMintNftAlgorand>
+export type MintNftAlgoKMS = WithoutChain<ApiMintNftAlgorandKMS>
+export type MintNftAlgo = WithoutChain<ApiMintNftAlgorand>
+export type MintNftExpressAlgo = WithoutChain<ApiMintNftExpressAlgorand>
 
-export type TransferNftAlgoKMS = WithoutChain<ApiTransferNftKMS> & { value: string }
-export type TransferNftAlgo = WithoutChain<ApiTransferNft> & { value: string }
-export type TransferNftAlgoExpress = WithoutChain<ApiTransferNftAlgoExpress> & { value: string }
+export type TransferNftAlgoKMS = WithoutChain<ApiTransferNftAlgoKMS>
+export type TransferNftAlgo = WithoutChain<ApiTransferNftAlgo>
+export type TransferNftAlgoExpress = WithoutChain<ApiTransferNftAlgoExpress>
 
-export type BurnNftAlgoKMS = WithoutChain<ApiBurnNftKMS> & { from: string; fee?: string }
-export type BurnNftAlgo = WithoutChain<ApiBurnNft>
+export type BurnNftAlgoKMS = WithoutChain<ApiBurnNftAlgoKMS>
+export type BurnNftAlgo = WithoutChain<ApiBurnNftAlgo>
 
-export type DeployAlgoErc20KMS = WithoutChain<ApiDeployErc20KMS> & { from: string; url: string }
-export type DeployAlgoErc20 = WithoutChain<ApiDeployErc20> & { url: string; fee?: string }
+export type DeployAlgoErc20KMS = WithoutChain<ApiDeployErc20KMS>
+export type DeployAlgoErc20 = WithoutChain<ApiDeployErc20>
 
-export type ChainTransferAlgoErc20 = WithoutChain<ApiChainTransferAlgoErc20> & { fee?: string }
-export type ChainTransferAlgoErc20KMS = WithoutChain<ApiChainTransferAlgoErc20KMS> & { fee?: string }
+export type ChainTransferAlgoErc20 = WithoutChain<ApiChainTransferAlgoErc20>
+export type ChainTransferAlgoErc20KMS = WithoutChain<ApiChainTransferAlgoErc20KMS>
 
-export type ChainBurnErc20 = WithoutChain<ApiChainBurnErc20> & { fee?: string }
-export type ChainBurnErc20KMS = WithoutChain<ApiChainBurnErc20KMS> & { from: string; fee?: string }
+export type ChainBurnAlgoErc20 = WithoutChain<ApiChainBurnAlgoErc20>
+export type ChainBurnAlgoErc20KMS = WithoutChain<ApiChainBurnAlgoErc20KMS>
 
 type SendOffchainResponse =
   | OffchainTransactionResult
@@ -73,25 +75,27 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
     algoWeb: AlgoWeb,
     provider?: string,
   ): Promise<string> => {
-    const account = (body as any).from || (body as any).account
-    const to = (body as any).to || (body as any).address
-    const privateKey = (body as any).fromPrivateKey || (body as any).privateKey
+    const account = (body as TransferAlgoBlockchain).from || (body as TransferAlgo).account
+    const to = (body as TransferAlgoBlockchain).to || (body as TransferAlgo).address
+    const privateKey = (body as TransferAlgoBlockchain).fromPrivateKey || (body as TransferAlgo).privateKey
 
-    const from = isWithSignatureId(body as any)
+    const from = isWithSignatureId(body as TransferAlgoKMS | TransferAlgoBlockchainKMS)
       ? account
       : algoWallet().generateAddressFromPrivatetKey(privateKey)
 
-    const { balance } = await apiCalls.getBlockchainAccountBalance(from)
-    const requiredBalance = new BigNumber(body.amount).plus(body.fee || 0.001)
-    const accountBalance = new BigNumber(balance || 0)
-    if (accountBalance.isLessThan(requiredBalance)) {
-      throw new SdkError({
-        code: SdkErrorCode.INSUFFICIENT_FUNDS,
-        originalError: {
-          name: SdkErrorCode.INSUFFICIENT_FUNDS,
-          message: `Insufficient funds to create transaction from sender account ${from} -> available balance is ${accountBalance.toString()}, required balance is ${requiredBalance.toString()}.`,
-        },
-      })
+    if ((body as TransferAlgoBlockchain).to) {
+      const { balance } = await apiCalls.getBlockchainAccountBalance(from)
+      const requiredBalance = new BigNumber(body.amount).plus(body.fee || 0.001)
+      const accountBalance = new BigNumber(balance || 0)
+      if (accountBalance.isLessThan(requiredBalance)) {
+        throw new SdkError({
+          code: SdkErrorCode.INSUFFICIENT_FUNDS,
+          originalError: {
+            name: SdkErrorCode.INSUFFICIENT_FUNDS,
+            message: `Insufficient funds to create transaction from address ${from} -> available balance is ${accountBalance.toString()}, required balance is ${requiredBalance.toString()}.`,
+          },
+        })
+      }
     }
 
     const algodClient = algoWeb.getClient(testnet, provider)
@@ -99,7 +103,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
 
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const enc = new TextEncoder()
-    const note = enc.encode((body as any).senderNote ?? '')
+    const note = enc.encode((body as TransferAlgo).senderNote ?? '')
     const bodyn = algosdk.makePaymentTxnWithSuggestedParams(
       from,
       to,
@@ -113,7 +117,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       },
     )
 
-    if (isWithSignatureId(body as any)) {
+    if (isWithSignatureId(body as TransferAlgoKMS | TransferAlgoBlockchainKMS)) {
       return JSON.stringify(bodyn)
     }
 
@@ -124,7 +128,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
   }
 
   const prepareCreateNFTSignedTransaction = async (
-    body: MintNftAlgorand | MintNftAlgorandKMS,
+    body: MintNftAlgo | MintNftAlgoKMS,
     testnet = false,
     algoWeb: AlgoWeb,
     provider?: string,
@@ -176,31 +180,31 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
 
     const decoder = new base32.Decoder({ type: 'rfc4648' })
 
-    const from = isWithSignatureId(body as any)
-      ? (body as any).from
-      : algoWallet().generateAddressFromPrivatetKey((body as any).fromPrivateKey)
+    const from = isWithSignatureId(body as TransferNftAlgoKMS)
+      ? (body as TransferNftAlgoKMS).from
+      : algoWallet().generateAddressFromPrivatetKey((body as TransferNftAlgo).fromPrivateKey)
 
-    // if (!body.value) {
-    //   throw new Error('No value specified')
-    // }
+    if (!body.value) {
+      throw new Error('No value specified')
+    }
 
     const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
       from,
       body.to,
       undefined,
       undefined,
-      Number.parseInt((body as any).value || '1'),
+      Number.parseInt((body as TransferNftAlgo).value || '1'),
       undefined,
       Number(body.contractAddress),
       params,
       undefined,
     )
 
-    if (isWithSignatureId(body as any)) {
+    if (isWithSignatureId(body as TransferNftAlgoKMS)) {
       return JSON.stringify(txn)
     }
 
-    const secretKey = new Uint8Array(decoder.write((body as any).fromPrivateKey).buf)
+    const secretKey = new Uint8Array(decoder.write((body as TransferNftAlgo).fromPrivateKey).buf)
     const signedTxn = txn.signTxn(secretKey)
 
     return Buffer.from(signedTxn).toString('hex')
@@ -218,8 +222,8 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
     const decoder = new base32.Decoder({ type: 'rfc4648' })
 
     const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
-      isWithSignatureId(body as any)
-        ? (body as any).from
+      isWithSignatureId(body as BurnNftAlgoKMS)
+        ? (body as BurnNftAlgoKMS).from
         : algoWallet().generateAddressFromPrivatetKey((body as BurnNftAlgo).fromPrivateKey),
       undefined,
       Number(body.contractAddress),
@@ -227,7 +231,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       undefined,
     )
 
-    if (isWithSignatureId(body as any)) {
+    if (isWithSignatureId(body as BurnNftAlgoKMS)) {
       return JSON.stringify(txn)
     }
 
@@ -277,7 +281,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
 
     const decoder = new base32.Decoder({ type: 'rfc4648' })
 
-    const from = isWithSignatureId(body)
+    const from = isWithSignatureId(body as DeployAlgoErc20KMS)
       ? (body as DeployAlgoErc20KMS).from
       : algoWallet().generateAddressFromPrivatetKey((body as DeployAlgoErc20).fromPrivateKey)
 
@@ -293,7 +297,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       undefined,
       body.symbol,
       body.name,
-      (body as any).url,
+      (body as DeployAlgoErc20).url,
       undefined,
       params,
     )
@@ -302,7 +306,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       return JSON.stringify(txn)
     }
 
-    const secretKey = new Uint8Array(decoder.write((body as any).fromPrivateKey).buf)
+    const secretKey = new Uint8Array(decoder.write((body as DeployAlgoErc20).fromPrivateKey).buf)
     const signedTxn = txn.signTxn(secretKey)
 
     return Buffer.from(signedTxn).toString('hex')
@@ -328,7 +332,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       body.to,
       undefined,
       undefined,
-      Number.parseInt(body.amount),
+      Number(body.amount),
       undefined,
       Number(body.contractAddress),
       params,
@@ -346,7 +350,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
   }
 
   const prepareBurnFTSignedTransaction = async (
-    body: ChainBurnErc20 | ChainBurnErc20KMS,
+    body: ChainBurnAlgoErc20 | ChainBurnAlgoErc20KMS,
     testnet = false,
     algoWeb: AlgoWeb,
     provider?: string,
@@ -450,7 +454,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
          * @returns transaction data to be broadcast to blockchain.
          */
         burnFTSignedTransaction: async (
-          body: ChainBurnErc20 | ChainBurnErc20KMS,
+          body: ChainBurnAlgoErc20 | ChainBurnAlgoErc20KMS,
           testnet = false,
           provider?: string,
         ) => prepareBurnFTSignedTransaction(body, testnet, args.algoWeb, provider),
@@ -469,7 +473,10 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           provider?: string,
         ) => {
           if (isWithSignatureId(body)) {
-            return ApiServices.fungibleToken.erc20Deploy(body as any)
+            return ApiServices.fungibleToken.erc20Deploy({
+              chain: Currency.ALGO,
+              ...body,
+            } as ApiDeployErc20KMS)
           }
           const txData = await prepareCreateFTSignedTransaction(body, testnet, args.algoWeb, provider)
           return AlgorandService.algorandBroadcast({
@@ -489,7 +496,10 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           provider?: string,
         ) => {
           if (isWithSignatureId(body)) {
-            return ApiServices.fungibleToken.erc20Transfer(body as any)
+            return ApiServices.fungibleToken.erc20Transfer({
+              chain: Currency.ALGO,
+              ...body,
+            } as ApiChainTransferAlgoErc20KMS)
           }
           const txData = await prepareTransferFTSignedTransaction(body, testnet, args.algoWeb, provider)
           return AlgorandService.algorandBroadcast({
@@ -504,12 +514,15 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
          * @returns transaction id of the transaction in the blockchain.
          */
         burnFTSignedTransaction: async (
-          body: ChainBurnErc20 | ChainBurnErc20KMS,
+          body: ChainBurnAlgoErc20 | ChainBurnAlgoErc20KMS,
           testnet = false,
           provider?: string,
         ) => {
           if (isWithSignatureId(body)) {
-            return ApiServices.fungibleToken.erc20Burn(body as any)
+            return ApiServices.fungibleToken.erc20Burn({
+              chain: Currency.ALGO,
+              ...body,
+            } as ApiChainBurnAlgoErc20KMS)
           }
           const txData = await prepareBurnFTSignedTransaction(body, testnet, args.algoWeb, provider)
           return AlgorandService.algorandBroadcast({
@@ -528,10 +541,10 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
          * @returns transaction data to be broadcast to blockchain
          */
         createNFTSignedTransaction: async (
-          body: MintNftAlgorand | MintNftAlgorandKMS,
+          body: MintNftAlgo | MintNftAlgoKMS | MintNftExpressAlgo,
           testnet = false,
           provider?: string,
-        ) => prepareCreateNFTSignedTransaction(body, testnet, args.algoWeb, provider),
+        ) => prepareCreateNFTSignedTransaction(body as MintNftAlgo, testnet, args.algoWeb, provider),
         /**
          * Sign Algorand transfer NFT transaction with private key locally. Nothing is broadcast to the blockchain.
          * @param body content of the transaction to broadcast
@@ -566,14 +579,22 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
          * @returns transaction id of the transaction in the blockchain
          */
         createNFTSignedTransaction: async (
-          body: MintNftAlgorand | MintNftAlgorandKMS,
+          body: MintNftAlgo | MintNftAlgoKMS | MintNftExpressAlgo,
           testnet = false,
           provider?: string,
         ) => {
-          if (isWithSignatureId(body)) {
-            return ApiServices.nft.nftMintErc721(body as any)
+          if (isWithSignatureId(body as MintNftAlgoKMS) || !(body as MintNftAlgo).fromPrivateKey) {
+            return ApiServices.nft.nftMintErc721({
+              chain: Currency.ALGO,
+              ...body,
+            } as ApiMintNftAlgorandKMS | ApiMintNftExpressAlgorand)
           }
-          const txData = await prepareCreateNFTSignedTransaction(body, testnet, args.algoWeb, provider)
+          const txData = await prepareCreateNFTSignedTransaction(
+            body as MintNftAlgo,
+            testnet,
+            args.algoWeb,
+            provider,
+          )
           return AlgorandService.algorandBroadcast({
             txData,
           })
@@ -591,7 +612,10 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           provider?: string,
         ) => {
           if (isWithSignatureId(body)) {
-            return ApiServices.nft.nftTransferErc721(body as any)
+            return ApiServices.nft.nftTransferErc721({
+              chain: Currency.ALGO,
+              ...body,
+            } as ApiTransferNftAlgoKMS)
           }
           const txData = await prepareTransferNFTSignedTransaction(body, testnet, args.algoWeb, provider)
           return AlgorandService.algorandBroadcast({
@@ -610,8 +634,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           testnet = false,
           provider?: string,
         ) => {
-          if (isWithSignatureId(body as any)) {
-            return ApiServices.nft.nftBurnErc721(body as any)
+          if (isWithSignatureId(body as BurnNftAlgoKMS)) {
+            return ApiServices.nft.nftBurnErc721({
+              chain: Currency.ALGO,
+              ...body,
+            } as ApiBurnNftAlgoKMS)
           }
           const txData = await prepareBurnNFTSignedTransaction(body, testnet, args.algoWeb, provider)
           return AlgorandService.algorandBroadcast({
@@ -646,8 +673,12 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           testnet = false,
           provider?: string,
         ) => {
-          if (isWithSignatureId(body as any)) {
-            return ApiServices.blockchain.algo.algorandBlockchainTransfer(body as any)
+          if (isWithSignatureId(body as TransferAlgoKMS | TransferAlgoBlockchainKMS)) {
+            if ((body as TransferAlgoKMS).senderAccountId) {
+              return ApiServices.offChain.blockchain.algoTransfer(body as TransferAlgoKMS)
+            } else {
+              return ApiServices.blockchain.algo.algorandBlockchainTransfer(body as TransferAlgoBlockchainKMS)
+            }
           }
           const txData = await prepareSignedTransaction(body, testnet, args.algoWeb, provider)
           return AlgorandService.algorandBroadcast({

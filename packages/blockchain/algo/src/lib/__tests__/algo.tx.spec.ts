@@ -1,9 +1,9 @@
-import { TEST_DATA } from '@tatumio/shared-testing-common'
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumAlgoSDK } from '../algo.sdk'
 import { TransactionHash, TransferAlgorandBlockchain } from '@tatumio/api-client'
 
 describe('AlgoSDK - tx', () => {
-  const sdk = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  const sdk = TatumAlgoSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   describe('ALGO', () => {
     const testData = TEST_DATA.ALGO.TESTNET
@@ -15,7 +15,7 @@ describe('AlgoSDK - tx', () => {
           from: testData.ADDRESS_0,
           fromPrivateKey: testData.PRIVATE_KEY_0,
           to: testData.ADDRESS_100,
-          amount: '0.001',
+          amount: '0.1',
           fee: '0.001',
         } as TransferAlgorandBlockchain,
         true,
