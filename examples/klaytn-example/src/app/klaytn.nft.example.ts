@@ -8,10 +8,13 @@ export async function klaytnNftExample() {
   const fromPrivateKey = await tatumSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
   const address = tatumSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = tatumSDK.wallet.generateAddressFromXPub(xpub, 1)
+  const fromPrivateKeyTo = await tatumSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1)
   const tokenId = '100000'
 
   // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
   // Fund your address here: https://baobab.wallet.klaytn.foundation/faucet
+  console.log(`Address: ${address} with private key: ${fromPrivateKey}`)
+  console.log(`Another address: ${to} with private key: ${fromPrivateKeyTo}`)
 
   // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
   const { txId } = (await tatumSDK.nft.deployNFTSmartContract({
@@ -21,6 +24,8 @@ export async function klaytnNftExample() {
     // your private key of the address that has coins
     fromPrivateKey,
   })) as TransactionHash
+
+  console.log(`Deployed nft smart contract with transaction id: ${txId}`)
 
   // find deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
@@ -37,7 +42,7 @@ export async function klaytnNftExample() {
     tokenId,
     contractAddress,
     fromPrivateKey,
-    to,
+    to: address,
     // uploaded metadata from ipfs
     url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
   })) as TransactionHash
@@ -57,21 +62,21 @@ export async function klaytnNftExample() {
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   const nftTransferred = (await tatumSDK.nft.transferNFT({
     chain: 'KLAY',
-    value: '1',
     to,
     tokenId,
     contractAddress,
     fromPrivateKey,
   })) as TransactionHash
 
-  console.log(`Transfered nft with transacion hash: ${nftTransferred.txId}`)
+  console.log(`Transfered nft with transaction hash: ${nftTransferred.txId}`)
 
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
+  // Since we previously transferred token to new address we now use private key of that address to burn the token
   const nftBurned = (await tatumSDK.nft.burnNFT({
     chain: 'KLAY',
     tokenId,
     contractAddress,
-    fromPrivateKey,
+    fromPrivateKey: fromPrivateKeyTo,
   })) as TransactionHash
 
   console.log(`NFT burn transaction sent with transaction ID: ${nftBurned.txId}`)
