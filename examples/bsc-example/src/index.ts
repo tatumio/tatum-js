@@ -5,7 +5,6 @@ import { bscNftExpressExample } from './app/bsc.nft.express.mint.example'
 import { bscSubscriptionsExample } from './app/bsc.subscriptions.example'
 import { bscBalanceExample } from './app/bsc.balance.example'
 import { bscTxExample } from './app/bsc.tx.example'
-import { bscAuctionExample } from './app/bsc.auction.example'
 import { bscMultiTokenExample } from './app/bsc.multitoken.example'
 import { bscErc20Example } from './app/bsc.erc20.example'
 import { bscSmartContractExample } from './app/bsc.smartContract.example'
@@ -30,8 +29,6 @@ const examples = async () => {
   await bscMultiTokenExample()
   console.log(`\nRunning bscErc20Example`)
   await bscErc20Example()
-  console.log(`\nRunning bscAuctionExample`)
-  await bscAuctionExample()
   console.log(`\nRunning bscBalanceExample`)
   await bscBalanceExample()
   console.log(`\nRunning bscSmartContractExample`)

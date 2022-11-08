@@ -13,12 +13,8 @@ import { polygonNftExample } from './app/polygon.nft.example'
 import { polygonTxExample } from './app/polygon.tx.example'
 import { polygonSubscriptionsExample } from './app/polygon.subscriptions.example'
 import { polygonSmartContractExample } from './app/polygon.smartContract.example'
-import { polygonAuctionExample } from './app/polygon.auction.example'
 
 const examples = async () => {
-  console.log(`Running polygonAuctionExample`)
-  await polygonAuctionExample()
-
   console.log(`Running polygonBlockchainExample`)
   await polygonBlockchainExample()
 

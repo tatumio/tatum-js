@@ -72,10 +72,6 @@ You can find examples [here](./src/app/kcs.nft.example.ts)
 
 You can find examples [here](./src/app/kcs.multitoken.example.ts).
 
-### How to work with auctions
-
-You can find examples [here](./src/app/kcs.auction.example.ts).
-
 ### How to setup webhooks
 
 You can find examples [here](./src/app/kcs.subscriptions.example.ts).
