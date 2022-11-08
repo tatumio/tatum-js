@@ -13,8 +13,8 @@ export const blockchainOperationsExample = async () => {
   const txByAccount = await xrpSDK.blockchain.getAccountTx('rDA3DJBUBjA1X3PtLLFAEXxX31oA5nL3QF')
   console.log(`Account has ${txByAccount.transactions?.length || 0} transactions.`)
 
-  const ledger = await xrpSDK.blockchain.getLedger(5)
-  console.log(`Ledger with index 5 has these details ${ledger}`)
+  const ledger = await xrpSDK.blockchain.getLedger(32683000)
+  console.log(`Ledger with index 32683000 has these details ${ledger}`)
 
   const tx = await xrpSDK.blockchain.getTx('1A32A054B04AC9D6814710DDCA416E72C4CD2D78D6C3DFC06CC9369CC4F6B250')
   console.log(
