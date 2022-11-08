@@ -19,13 +19,13 @@ export const TatumAlgoSDK = (
   const txService = algoTxService({ algoWeb: web }, apiCalls)
   const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
 
-  const { mintNFT, transferNFT, burnNFT, getNFTAccountBalance, getNFTContractAddress } = nft
+  const { getNFTAccountBalance, getNFTContractAddress } = nft
 
   return {
     ...abstractSdk,
     algoWeb: web,
     wallet: algoWallet(),
-    transaction: txService.native.send,
+    transaction: txService.native,
     token: {
       receiveAsset: txService.asset.send.receive,
       fungible: {

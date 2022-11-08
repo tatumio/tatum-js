@@ -10,7 +10,7 @@ describe('AlgoSDK - tx', () => {
 
     // @TODO missing assets
     it.skip('should prepare ALGO signed transaction', async () => {
-      const { txId } = (await sdk.transaction.signedTransaction(
+      const { txId } = (await sdk.transaction.send.signedTransaction(
         {
           from: testData.ADDRESS_0,
           fromPrivateKey: testData.PRIVATE_KEY_0,

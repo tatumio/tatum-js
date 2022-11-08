@@ -16,7 +16,7 @@ export async function algoTxExample() {
 
   // Send Algos to an Algorand account using private key
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainTransfer
-  const txData = (await algoSDK.transaction.signedTransaction(
+  const txData = (await algoSDK.transaction.send.signedTransaction(
     {
       amount: '0.1',
       fromPrivateKey,
