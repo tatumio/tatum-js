@@ -2,14 +2,14 @@ import { TatumXlmSDK } from '@tatumio/xlm'
 
 const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-const REPLACE = 'REPLACE'
+export const REPLACE = 'REPLACE'
 
-const isAddressSet = (address: string) => {
+export const isAddressSet = (address: string) => {
   return address === REPLACE
 }
 
 export async function xlmBalanceExample() {
-  const fundedAddress = 'REPLACE'
+  const fundedAddress = REPLACE
 
   if (isAddressSet(fundedAddress)) {
     // Generate XLM address and secret
@@ -25,6 +25,7 @@ export async function xlmBalanceExample() {
 
   console.log(`Address to check balance: ${fundedAddress}`)
 
+  // Get information of XLM account address
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmGetAccountInfo
   const accountDetails = await xlmSDK.blockchain.getAccountInfo(fundedAddress)
 
