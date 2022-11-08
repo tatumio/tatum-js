@@ -3,7 +3,7 @@ import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 export async function oneBalanceExample() {
   const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
-  const { xpub } = await oneSDK.wallet.generateWallet()
+  const { xpub } = await oneSDK.wallet.generateWallet(undefined, { testnet: true })
   const address = oneSDK.wallet.generateAddressFromXPub(xpub, 0)
 
   console.log(`My public address is ${address}.`)

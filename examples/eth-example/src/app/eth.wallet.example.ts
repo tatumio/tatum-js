@@ -6,7 +6,7 @@ const ethSDK = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function ethWalletExample() {
   // Generate ethereum wallet
   // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateWallet
-  const { mnemonic, xpub } = await ethSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await ethSDK.wallet.generateWallet(undefined, { testnet: true })
 
   // Generate public address from xpub
   // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateAddress

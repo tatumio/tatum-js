@@ -17,18 +17,7 @@ export const TatumTronSDK = (args: SDKArguments) => {
   const virtualAccount = virtualAccountService({ blockchain, tronWeb: web })
   const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
 
-  const {
-    deployNFTSmartContract,
-    mintNFT,
-    transferNFT,
-    mintMultipleNFTs,
-    burnNFT,
-    updateNFTRoyalty,
-    getNFTTransaction,
-    getNFTAccountBalance,
-    getNFTMetadataURI,
-    getNFTRoyalty,
-  } = nft
+  const { getNFTTransaction, getNFTAccountBalance, getNFTMetadataURI, getNFTRoyalty } = nft
 
   return {
     ...abstractSdk,
@@ -38,12 +27,6 @@ export const TatumTronSDK = (args: SDKArguments) => {
     kms: tronKmsService({ blockchain }),
     nft: {
       ...txService.trc721,
-      deployNFTSmartContract,
-      mintNFT,
-      transferNFT,
-      mintMultipleNFTs,
-      burnNFT,
-      updateNFTRoyalty,
       getNFTTransaction,
       getNFTAccountBalance,
       getNFTMetadataURI,

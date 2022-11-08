@@ -4,8 +4,8 @@ import { TatumEthSDK } from '@tatumio/eth'
 const ethSDK = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function ethMultiTokenExample(): Promise<void> {
-  const { mnemonic, xpub } = await ethSDK.wallet.generateWallet()
-  const fromPrivateKey = await ethSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const { mnemonic, xpub } = await ethSDK.wallet.generateWallet(undefined, { testnet: true })
+  const fromPrivateKey = await ethSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
   const to = ethSDK.wallet.generateAddressFromXPub(xpub, 1)
 
   // In order for these examples to work you need to fund your address and use the address & private key combination that has coins

@@ -4,8 +4,8 @@ import { Currency, TransactionHash } from '@tatumio/api-client'
 const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function bscNftExample() {
-  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
-  const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet(undefined, { testnet: true })
+  const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
   const address = bscSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = bscSDK.wallet.generateAddressFromXPub(xpub, 1)
   const tokenId = '1000'

@@ -5,9 +5,9 @@ const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function bscTxExample(): Promise<void> {
   // if you don't already have a wallet, address and private key - generate them
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateWallet
-  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await bscSDK.wallet.generateWallet(undefined, { testnet: true })
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddressPrivateKey
-  const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const fromPrivateKey = await bscSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
 
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGenerateAddress
   const address = bscSDK.wallet.generateAddressFromXPub(xpub, 0)
