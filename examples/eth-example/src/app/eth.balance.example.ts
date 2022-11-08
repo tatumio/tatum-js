@@ -1,7 +1,8 @@
 import { TatumEthSDK } from '@tatumio/eth'
 
+const ethSDK = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+
 export async function ethBalanceExample() {
-  const ethSDK = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
   // https://apidoc.tatum.io/tag/Ethereum#operation/EthGenerateWallet
   const { xpub } = await ethSDK.wallet.generateWallet(undefined, { testnet: true })
 
