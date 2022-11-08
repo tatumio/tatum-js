@@ -1,19 +1,20 @@
 import { auctionTestFactory, ganacheHelper } from '@tatumio/shared-testing-evm-based'
 import { Blockchain } from '@tatumio/shared-core'
 import { klaytnAuctionService } from '../services/klaytn.auction'
+import { TatumKlaytnSDK } from '../sdk-klaytn'
+import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
 const blockchain = Blockchain.KLAY
 
 describe('KlaytnSDK - auctions', () => {
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
+  const sdk = TatumKlaytnSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   const auctionService = klaytnAuctionService({
     blockchain,
     web3: {
       getClient: () => inmemoryBlockchain.web3,
-      async getGasPriceInWei(): Promise<string> {
-        return '@TODO'
-      },
+      getGasPriceInWei: sdk.getGasPriceInWei,
     },
   })
 
@@ -23,21 +24,31 @@ describe('KlaytnSDK - auctions', () => {
     })
 
     describe('deploy auction', () => {
-      auctionTestFactory.prepare.deployAuctionSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.deployAuctionSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        'KLAY',
+      )
     })
     describe('create auction', () => {
-      auctionTestFactory.prepare.createAuctionSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.createAuctionSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        'KLAY',
+      )
     })
     describe('update auction fee recipient', () => {
       auctionTestFactory.prepare.auctionUpdateFeeRecipientSignedTransaction(
         auctionService,
         inmemoryBlockchain.accounts,
+        'KLAY',
       )
     })
     describe('approve nft spending', () => {
       auctionTestFactory.prepare.auctionApproveNftTransferSignedTransaction(
         auctionService,
         inmemoryBlockchain.accounts,
+        'KLAY',
       )
     })
     /**
@@ -48,6 +59,7 @@ describe('KlaytnSDK - auctions', () => {
       auctionTestFactory.prepare.auctionApproveErc20TransferSignedTransaction(
         auctionService,
         inmemoryBlockchain.accounts,
+        'KLAY',
       )
     })
     /**
@@ -55,13 +67,25 @@ describe('KlaytnSDK - auctions', () => {
      * after decimal mklaytnod call
      */
     xdescribe('bid auction', () => {
-      auctionTestFactory.prepare.auctionBidSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.auctionBidSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        'KLAY',
+      )
     })
     describe('cancel auction', () => {
-      auctionTestFactory.prepare.auctionCancelSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.auctionCancelSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        'KLAY',
+      )
     })
     describe('settle auction', () => {
-      auctionTestFactory.prepare.auctionSettleSignedTransaction(auctionService, inmemoryBlockchain.accounts)
+      auctionTestFactory.prepare.auctionSettleSignedTransaction(
+        auctionService,
+        inmemoryBlockchain.accounts,
+        'KLAY',
+      )
     })
   })
 })

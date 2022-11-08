@@ -71,7 +71,6 @@ export const celoAuctionExample = async () => {
         gasLimit: '40000',
         gasPrice: '20',
       },
-      amount: '10000',
       feeCurrency: 'CELO',
     })
 
@@ -83,8 +82,6 @@ export const celoAuctionExample = async () => {
       contractAddress: '0x687422eEA2cB73B5d3e242bA5456b782919AFc85',
       fromPrivateKey: '0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2',
       nonce: 0,
-      isErc721: true,
-      tokenId: '1234',
       feeCurrency: 'CELO',
     })
 

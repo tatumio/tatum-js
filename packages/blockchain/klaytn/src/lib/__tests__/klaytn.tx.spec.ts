@@ -124,7 +124,7 @@ describe('KlaytnSDK - tx', () => {
       })
 
       describe('approveSpending', () => {
-        marketplaceTestFactory.prepare.approveSpending(sdk.marketplace, inmemoryBlockchain.accounts)
+        marketplaceTestFactory.prepare.approveSpending(sdk.marketplace, inmemoryBlockchain.accounts, 'KLAY')
       })
 
       describe('sellMarketplaceListing', () => {
