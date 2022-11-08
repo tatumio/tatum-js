@@ -1,8 +1,9 @@
 import { TatumXlmSDK } from '@tatumio/xlm'
 import { TransactionHash } from '@tatumio/api-client'
 import { isValueSet, REPLACE } from './xlm.utils'
+import { sleep } from '@tatumio/shared-abstract-sdk'
 
-export async function xlmTxExample() {
+export async function xlmTrustlineTxExample() {
   const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   const fromAddress = REPLACE
@@ -22,10 +23,6 @@ export async function xlmTxExample() {
     return
   }
 
-  // Generate recipient address
-  // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
-  const { address: recipientAddress } = xlmSDK.wallet.wallet()
-
   // Get information of XLM account address
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmGetAccountInfo
   const accountDetails = await xlmSDK.blockchain.getAccountInfo(fromAddress)
@@ -37,9 +34,13 @@ export async function xlmTxExample() {
     } XLM.`,
   )
 
-  // Send transaction
+  // Generate recipient address
+  // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
+  const { address: recipientAddress } = xlmSDK.wallet.wallet()
+
+  // Send transaction to activate account
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
-  const { txId } = (await xlmSDK.transaction.sendTransaction(
+  const { txId: activateTxId } = (await xlmSDK.transaction.sendTransaction(
     {
       fromAccount: fromAddress,
       fromSecret: fromSecret,
@@ -49,6 +50,19 @@ export async function xlmTxExample() {
     },
     { testnet: true },
   )) as TransactionHash
+  console.log(`Waiting for activation tx ${activateTxId}...`)
+  await sleep(10000)
 
+  // https://apidoc.tatum.io/tag/Stellar#operation/XlmTrustLineBlockchain
+  const { txId } = (await xlmSDK.transaction.sendTrustlineTransaction(
+    {
+      fromAccount: fromAddress,
+      fromSecret: fromSecret,
+      limit: '100',
+      issuerAccount: recipientAddress,
+      token: 'MYTOKEN',
+    },
+    { testnet: true },
+  )) as TransactionHash
   console.log(`Transaction with ID ${txId} was sent.`)
 }

@@ -3,12 +3,26 @@
  */
 
 import { xlmBalanceExample } from './app/xlm.balance.example'
-import { xlmTrustlineTxExample, xlmTxExample } from './app/xlm.tx.example'
+import { xlmTxExample } from './app/xlm.tx.example'
 import { xlmBlockchainExample } from './app/xlm.blockchain.example'
 import { xlmVirtualAccountExample } from './app/xlm.virtualAccount.example'
+import { xlmTrustlineTxExample } from './app/xlm.tx.trustline.example'
 
-console.log(`Running ${xlmBalanceExample()}`)
-console.log(`Running ${xlmBlockchainExample()}`)
-console.log(`Running ${xlmTxExample()}`)
-console.log(`Running ${xlmTrustlineTxExample()}`)
-console.log(`Running ${xlmVirtualAccountExample()}`)
+const examples = async () => {
+  console.log(`Running xlmBalanceExample`)
+  await xlmBalanceExample()
+
+  console.log(`Running xlmBlockchainExample`)
+  await xlmBlockchainExample()
+
+  console.log(`Running xlmTxExample`)
+  await xlmTxExample()
+
+  console.log(`Running xlmTrustlineTxExample`)
+  await xlmTrustlineTxExample()
+
+  console.log(`Running xlmVirtualAccountExample`)
+  await xlmVirtualAccountExample()
+}
+
+void examples()
