@@ -1,7 +1,6 @@
 import { TatumOneSDK } from '@tatumio/one'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function oneBlockchainExample() {
   // Get transaction details by hash
