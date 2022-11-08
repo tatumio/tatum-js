@@ -35,7 +35,7 @@ export const TatumAlgoSDK = (
         getFTAccountBalances: FungibleTokensErc20OrCompatibleService.erc20GetBalanceAddress,
       },
       nft: {
-        ...txService.nft.send,
+        ...txService.nft,
         getNFTAccountBalance,
         getNFTContractAddress,
       },

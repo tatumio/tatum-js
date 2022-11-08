@@ -32,7 +32,7 @@ export async function algoNftTransferExample() {
 
   // Mint NFTs on your own smart contract
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftMintErc721
-  const nftMinted = (await algoSDK.token.nft.createNFTSignedTransaction(
+  const nftMinted = (await algoSDK.token.nft.send.createNFTSignedTransaction(
     {
       name: 'HELLO-ALGO',
       fromPrivateKey,
@@ -74,7 +74,7 @@ export async function algoNftTransferExample() {
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
-  const nftTransferred = (await algoSDK.token.nft.transferNFTSignedTransaction(
+  const nftTransferred = (await algoSDK.token.nft.send.transferNFTSignedTransaction(
     {
       to,
       contractAddress,
@@ -88,7 +88,7 @@ export async function algoNftTransferExample() {
   // commented due to "manager" doesnt own asset - it was transferred to another address
   // // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
   // // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
-  // const nftBurned = (await algoSDK.token.nft.burnNFTSignedTransaction(
+  // const nftBurned = (await algoSDK.token.nft.send.burnNFTSignedTransaction(
   //   {
   //     contractAddress,
   //     fromPrivateKey,
