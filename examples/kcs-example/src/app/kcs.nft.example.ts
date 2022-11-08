@@ -2,7 +2,7 @@ import { TatumKcsSDK } from '@tatumio/kcs'
 import { Currency, TransactionHash } from '@tatumio/api-client'
 import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
-const SLEEP_SECONDS = 20
+const SLEEP_SECONDS = 30
 const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 /**

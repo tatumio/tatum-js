@@ -1,16 +1,19 @@
 import { TatumEthSDK } from '@tatumio/eth'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const ethSDK = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const ethSDK = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function ethSubscriptionsExample() {
+  const { xpub } = await ethSDK.wallet.generateWallet(undefined, { testnet: true })
+  const address = ethSDK.wallet.generateAddressFromXPub(xpub, 0)
+
   // Create a new subscription
   // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/createSubscription
   const id = await ethSDK.subscriptions.createSubscription({
-    type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
+    type: 'ADDRESS_TRANSACTION',
     attr: {
-      id: '5e6be8e9e6aa436299950c41',
-      url: 'dashboard.tatum.io/webhook-handler',
+      address,
+      chain: 'ETH',
+      url: 'https://dashboard.tatum.io/webhook-handler',
     },
   })
 
