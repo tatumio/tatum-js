@@ -21,32 +21,27 @@ export const sdkArguments: SDKArguments = {
 
 export const isTestnet = true
 
-// address + secret for account with faucet to work with examples easier
-export const algoAddress = '52NRXAHUDA5RKC7Q6YYJHBINGTJB7NXLUVY3CSKOBLLNLTKCN2NGPRGTN4'
-export const algoSecret =
-  'GDNQECUM2JDPTA4KXNSXHQBAYL56FDZ73NXCQ2OLB32PN2G5BLNO5GY3QD2BQOYVBPYPMMETQUGTJUQ7W3V2K4NRJFHAVVWVZVBG5GQ'
-
 const examples = async () => {
   console.log(`\nRunning algoBalanceExample`)
   await algoBalanceExample()
-  // console.log(`\nRunning algoBlockchainExample`)
-  // await algoBlockchainExample()
-  // console.log(`\nRunning algoTxExample`)
-  // await algoTxExample()
-  // console.log(`\nRunning algoNftTransferExample`)
-  // await algoNftTransferExample()
-  // console.log(`\nRunning algoNftBurnExample`)
-  // await algoNftBurnExample()
-  // console.log(`\nRunning algoNftExpressExample`)
-  // await algoNftExpressExample()
-  // console.log(`\nRunning algoAsaBurnExample`)
-  // await algoAsaBurnExample()
-  // console.log(`\nRunning algoAsaTransferExample`)
-  // await algoAsaTransferExample()
-  // console.log(`\nRunning algoVirtualAccountExample`)
-  // await algoVirtualAccountExample()
-  // console.log(`\nRunning algoSubscriptionsExample`)
-  // await algoSubscriptionsExample()
+  console.log(`\nRunning algoBlockchainExample`)
+  await algoBlockchainExample()
+  console.log(`\nRunning algoTxExample`)
+  await algoTxExample()
+  console.log(`\nRunning algoNftTransferExample`)
+  await algoNftTransferExample()
+  console.log(`\nRunning algoNftBurnExample`)
+  await algoNftBurnExample()
+  console.log(`\nRunning algoNftExpressExample`)
+  await algoNftExpressExample()
+  console.log(`\nRunning algoAsaBurnExample`)
+  await algoAsaBurnExample()
+  console.log(`\nRunning algoAsaTransferExample`)
+  await algoAsaTransferExample()
+  console.log(`\nRunning algoVirtualAccountExample`)
+  await algoVirtualAccountExample()
+  console.log(`\nRunning algoSubscriptionsExample`)
+  await algoSubscriptionsExample()
   console.log(`\nFinish`)
 }
 
