@@ -31,7 +31,7 @@ export class BlockchainUtilsService {
      * @throws ApiError
      */
     public static scGetContractAddress(
-        chain: 'ALGO' | 'BSC' | 'CELO' | 'EGLD' | 'ETH' | 'FLOW' | 'KLAY' | 'MATIC' | 'ONE' | 'TRON' | 'XDC',
+        chain: 'ALGO' | 'BSC' | 'CELO' | 'EGLD' | 'ETH' | 'FLOW' | 'KLAY' | 'KCS' | 'MATIC' | 'ONE' | 'TRON' | 'XDC',
         hash: string,
     ): CancelablePromise<{
         /**

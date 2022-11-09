@@ -14,7 +14,7 @@ export type TransferAlgorandBlockchain = {
     /**
      * The transaction fee in Algos
      */
-    fee: string;
+    fee?: string;
     /**
      * The amount to send in Algos
      */
