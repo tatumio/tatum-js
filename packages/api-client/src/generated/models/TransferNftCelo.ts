@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type TransferNftCelo = {
     /**
      * If token to be transferred is Royalty NFT token, this is a value to be paid as a cashback to the authors of the token.
@@ -47,4 +49,5 @@ export type TransferNftCelo = {
      * Currency to pay for transaction gas
      */
     feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
+    fee?: CustomFee;
 }

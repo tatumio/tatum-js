@@ -1,7 +1,9 @@
 import { TatumCeloSDK } from '@tatumio/celo'
 import { SignatureId, TransactionHash } from '@tatumio/api-client'
+import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
 const testnet = true
+const SLEEP_SECONDS = 10
 const celoSDK = TatumCeloSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 /**
@@ -9,15 +11,13 @@ const celoSDK = TatumCeloSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
  * Fund your address here: https://celo.org/developers/faucet
  */
 export async function celoTxExample(): Promise<void> {
-  const senderAddress = '0xf2298860db19b65e3f4047c463d7646e390534cc'
-  const senderPrivateKey = '0xbc37600d75bd7f3aee0846f156c97bdf4be80ea1346de6c646bc01843b968fc9'
-
-  const receiverAddress = '0x4ddc7558029d0bca58078ed761d114dc7c7d3ab8'
+  const senderPrivateKey = '<PUT SENDER PRIVATE KEY HERE>'
+  const receiverAddress = '<PUT RECEIVER ADDRESS HERE>'
 
   // send native transaction using private key
   // https://apidoc.tatum.io/tag/Celo#operation/CeloBlockchainTransfer
   const { txId } = (await celoSDK.transaction.send.transferSignedTransaction({
-    to: senderAddress,
+    to: receiverAddress,
     amount: '0.0001',
     feeCurrency: 'CELO',
     fromPrivateKey: senderPrivateKey,
@@ -25,11 +25,16 @@ export async function celoTxExample(): Promise<void> {
 
   console.log(`Native Transaction using private key was sent txID =`, txId)
 
+  // If during this time the transaction is not confirmed, then the waiting time should be increased.
+  // In a real application, the wait mechanism must be implemented properly without using this
+  console.log(`Waiting ${SLEEP_SECONDS} seconds for the transaction [${txId}] to appear in a block`)
+  await sleepSeconds(SLEEP_SECONDS)
+
   // send CUSD transaction using private key
   // https://apidoc.tatum.io/tag/Celo#operation/CeloBlockchainTransfer
   const { txId: cusdTxId } = (await celoSDK.transaction.send.celoOrCUsdSignedTransaction(
     {
-      to: senderAddress,
+      to: receiverAddress,
       amount: '0.0001',
       currency: 'CUSD',
       feeCurrency: 'CELO',

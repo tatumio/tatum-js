@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type TransferCeloBlockchainKMS = {
     /**
      * Additional data, that can be passed to blockchain transaction as data property.
@@ -23,6 +25,7 @@ export type TransferCeloBlockchainKMS = {
      * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    fee?: CustomFee;
     /**
      * Amount to be sent.
      */

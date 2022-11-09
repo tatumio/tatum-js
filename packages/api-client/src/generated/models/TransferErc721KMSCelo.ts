@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type TransferErc721KMSCelo = {
     /**
      * Blockchain address to send ERC721 token to
@@ -31,4 +33,5 @@ export type TransferErc721KMSCelo = {
      * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    fee?: CustomFee;
 }

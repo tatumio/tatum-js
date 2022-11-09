@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type DeployErc20Celo = {
     /**
      * Symbol of the ERC20 token
@@ -39,4 +41,5 @@ export type DeployErc20Celo = {
      * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    fee?: CustomFee;
 }
