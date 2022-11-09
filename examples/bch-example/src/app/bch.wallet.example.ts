@@ -11,14 +11,14 @@ export async function bchWalletExample() {
   // Generate Address from xpub with a given index
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddress
   const address = bchSDK.wallet.generateAddressFromXPub(xpub, 0, { testnet: true })
-  console.log(address)
+  console.log('Address: ', address)
 
   // Generate PrivateKey from Mnemonic with a given index
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddressPrivateKey
   const privateKey = await bchSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
-  console.log(privateKey)
+  console.log('Private key: ', privateKey)
 
   // Generate address from privateKey
   const addressFromPrivateKey = bchSDK.wallet.generateAddressFromPrivateKey(privateKey, { testnet: true })
-  console.log(addressFromPrivateKey)
+  console.log('Address (from privateKey): ', addressFromPrivateKey)
 }

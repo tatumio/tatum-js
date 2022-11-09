@@ -9,21 +9,21 @@ export async function bchTransactionsExample() {
     {
       fromUTXO: [
         {
-          txHash: 'fcdc23f5c8bd811195921cd113f5724f3cf8b3fa0287a04366c51b9e8545c4c7',
+          txHash: '1ad94a0c8aee8ee0f1273a551486254fb09b9cce3ed56294c8a72b15e89ee11c',
           index: 0,
-          privateKey: 'L3Jf3gvX1YaCJJTejTfghZ4Sst8GSui6UQctERksAimYCskVH7iG',
+          privateKey: 'cU39Ur7xeb2rhty3QxYtuUxZj2UgKCoJtMPEqvLqsY7a4CpTyCU4',
         },
       ],
       to: [
         {
-          address: 'qps4cv6gtxh7473qxzcwe6nk90canlt57cd57gpy08',
+          address: 'bchtest:qzk6zxdyjgma9y2uq5untflqpa6wfpn99gxh5sdrtl',
           value: 0.00015,
         },
       ],
       fee: '0.00001',
-      changeAddress: '2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc3lo6',
+      changeAddress: 'bchtest:qr5rrwc8nw59awgpxaemwq37arzg9f303u9fp2ws65',
     },
     { testnet: true },
   )
-  console.log(tx)
+  console.log('Transaction using private key was sent txID: ', tx)
 }

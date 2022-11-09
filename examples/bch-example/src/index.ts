@@ -4,8 +4,21 @@ import { bchVirtualAccountExample } from './app/bch.virtualAccount.example'
 import { exchangeRateExample } from './app/bch.root.example'
 import { bchTransactionsExample } from './app/bch.tx.example'
 
-console.log(`Running ${bchWalletExample()}`)
-console.log(`Running ${bchBlockchainExample()}`)
-console.log(`Running ${bchVirtualAccountExample()}`)
-console.log(`Running ${exchangeRateExample()}`)
-console.log(`Running ${bchTransactionsExample()}`)
+const examples = async () => {
+    console.log(`Running bchWalletExample`)
+    await bchWalletExample()
+
+    console.log(`Running bchBlockchainExample`)
+    await bchBlockchainExample()
+
+    console.log(`Running bchVirtualAccountExample`)
+    await bchVirtualAccountExample()
+
+    console.log(`Running exchangeRateExample`)
+    await exchangeRateExample()
+
+    console.log(`Running bchTransactionsExample`)
+    await bchTransactionsExample()
+}
+
+void examples()
