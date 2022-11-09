@@ -29,6 +29,7 @@ export async function dogeVirtualAccountExample() {
   const depositAddressPrivateKey = await dogeSDK.wallet.generatePrivateKeyFromMnemonic(
     mnemonic,
     depositAddress.derivationKey,
+    { testnet: true },
   )
   console.log(`Deposit address is ${depositAddress.address}`)
 

@@ -1,5 +1,13 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import { ApiServices, OpenAPI, TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import {
+  ApiServices,
+  ChainBurnCeloErc20KMS,
+  ChainDeployCeloErc20KMS,
+  ChainMintCeloErc20KMS,
+  ChainTransferCeloErc20TokenKMS,
+  OpenAPI,
+  TATUM_API_CONSTANTS,
+} from '@tatumio/api-client'
 import { amountUtils, SdkErrorCode, toHexString } from '@tatumio/shared-abstract-sdk'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import { Erc20Token, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
@@ -13,6 +21,7 @@ import {
   ChainMintErc20Celo,
   ChainTransferErc20Celo,
 } from '../../utils/celo.utils'
+import { Blockchain } from '@tatumio/shared-core'
 
 const initialize = async (
   args: Pick<ChainDeployErc20Celo, 'feeCurrency'>,
@@ -36,7 +45,7 @@ const prepareDeploySignedTransaction = async (
   provider?: string,
   testnet?: boolean,
 ) => {
-  const { fromPrivateKey, name, symbol, supply, address, digits, nonce, signatureId, totalCap } = body
+  const { fromPrivateKey, name, symbol, supply, address, digits, nonce, fee, signatureId, totalCap } = body
 
   const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
     body,
@@ -60,7 +69,8 @@ const prepareDeploySignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       data: deploy.encodeABI(),
     })
   }
@@ -75,8 +85,8 @@ const prepareDeploySignedTransaction = async (
     chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
-    gasLimit: '0',
-    gasPrice,
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
     data: deploy.encodeABI(),
     from,
   }
@@ -89,7 +99,7 @@ const prepareMintSignedTransaction = async (
   provider?: string,
   testnet?: boolean,
 ) => {
-  const { fromPrivateKey, amount, to, contractAddress, nonce, signatureId } = body
+  const { fromPrivateKey, amount, to, contractAddress, nonce, fee, signatureId } = body
 
   const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
     body,
@@ -105,7 +115,8 @@ const prepareMintSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       to: contractAddress.trim(),
       data: contract.methods.mint(to.trim(), amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     })
@@ -120,9 +131,9 @@ const prepareMintSignedTransaction = async (
     chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
-    gasLimit: '0',
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
     to: contractAddress.trim(),
-    gasPrice,
     data: contract.methods.mint(to.trim(), amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     from,
   }
@@ -180,7 +191,7 @@ const prepareBurnSignedTransaction = async (
   provider?: string,
   testnet?: boolean,
 ) => {
-  const { fromPrivateKey, amount, contractAddress, nonce, signatureId } = body
+  const { fromPrivateKey, amount, contractAddress, nonce, fee, signatureId } = body
 
   const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
     body,
@@ -195,7 +206,8 @@ const prepareBurnSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       to: contractAddress.trim(),
       data: contract.methods.burn(amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     })
@@ -211,9 +223,9 @@ const prepareBurnSignedTransaction = async (
     chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
-    gasLimit: '0',
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
     to: contractAddress.trim(),
-    gasPrice,
     data: contract.methods.burn(amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     from,
   }
@@ -271,11 +283,13 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        */
       deploySignedTransaction: async (body: ChainDeployErc20Celo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.fungibleToken.erc20Deploy(body as any)
+          return ApiServices.fungibleToken.erc20Deploy({
+            ...body,
+            chain: Blockchain.CELO,
+          } as ChainDeployCeloErc20KMS)
         }
         return args.broadcastFunction({
           txData: await prepareDeploySignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -288,11 +302,13 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        */
       mintSignedTransaction: async (body: ChainMintErc20Celo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.fungibleToken.erc20Mint(body as any)
+          return ApiServices.fungibleToken.erc20Mint({
+            ...body,
+            chain: Blockchain.CELO,
+          } as ChainMintCeloErc20KMS)
         }
         return args.broadcastFunction({
           txData: await prepareMintSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -309,11 +325,13 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.fungibleToken.erc20Transfer(body as any)
+          return ApiServices.fungibleToken.erc20Transfer({
+            ...body,
+            chain: Blockchain.CELO,
+          } as ChainTransferCeloErc20TokenKMS)
         }
         return args.broadcastFunction({
           txData: await prepareTransferSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -326,11 +344,13 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
        */
       burnSignedTransaction: async (body: ChainBurnErc20Celo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.fungibleToken.erc20Burn(body as any)
+          return ApiServices.fungibleToken.erc20Burn({
+            ...body,
+            chain: Blockchain.CELO,
+          } as ChainBurnCeloErc20KMS)
         }
         return args.broadcastFunction({
           txData: await prepareBurnSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
     },

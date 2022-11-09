@@ -22,6 +22,10 @@ export type MintNftAlgorand = {
      * The private key of the minting account; the transaction fee will be paid from this account
      */
     fromPrivateKey: string;
+    /**
+     * The transaction fee in Algos
+     */
+    fee?: string;
     attr?: {
         /**
          * The unit name of the NFT

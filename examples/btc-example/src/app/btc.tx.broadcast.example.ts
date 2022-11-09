@@ -48,5 +48,5 @@ export async function btcBroadcastTransactionsExample() {
   const broadcastTx = await btcSDK.blockchain.broadcast({
     txData: signedTxData,
   })
-  console.log(`Broadcast TX: ${JSON.stringify(broadcastTx)}`)
+  console.log(`Broadcast transaction: ${JSON.stringify(broadcastTx)}`)
 }

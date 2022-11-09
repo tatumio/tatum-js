@@ -20,8 +20,7 @@ export async function tronNftExample() {
 
   // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftDeployErc721
-  const { txId } = (await tronSdk.nft.deployNFTSmartContract({
-    chain: 'TRON',
+  const { txId } = (await tronSdk.nft.send.deploySignedTransaction({
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
     fromPrivateKey: senderPrivateKey,
@@ -48,8 +47,7 @@ export async function tronNftExample() {
   // all examples at once you should set some timeout between the calls or execute examples separately
 
   // Mint NFTs on your own smart contract
-  const nftMinted = (await tronSdk.nft.mintNFT({
-    chain: 'TRON',
+  const nftMinted = (await tronSdk.nft.send.mintSignedTransaction({
     contractAddress,
     fromPrivateKey: senderPrivateKey,
     to: senderAddress,
@@ -82,8 +80,7 @@ export async function tronNftExample() {
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
-  const nftTransferred = (await tronSdk.nft.transferNFT({
-    chain: 'TRON',
+  const nftTransferred = (await tronSdk.nft.send.transferSignedTransaction({
     value: '1',
     to: receiverAddress,
     tokenId,
@@ -98,8 +95,7 @@ export async function tronNftExample() {
 
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
-  const nftBurned = (await tronSdk.nft.burnNFT({
-    chain: 'TRON',
+  const nftBurned = (await tronSdk.nft.send.burnSignedTransaction({
     tokenId,
     contractAddress,
     fromPrivateKey: receiverPrivateKey,

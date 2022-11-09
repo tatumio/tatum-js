@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type UpdateCashbackValueForAuthorNftCelo = {
     /**
      * Chain to work with.
@@ -31,4 +33,5 @@ export type UpdateCashbackValueForAuthorNftCelo = {
      * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    fee?: CustomFee;
 }

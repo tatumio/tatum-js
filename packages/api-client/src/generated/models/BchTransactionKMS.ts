@@ -20,7 +20,7 @@ export type BchTransactionKMS = {
          */
         signatureId: string;
         /**
-         * (Only if the signature ID is mnemonic-based) The index of the address that holds the UTXO to be spent that was generated from the mnemonic
+         * Index of the address in the wallet. Required when signatureId represents the mnenomic.
          */
         signatureIdIndex?: number;
     }>;

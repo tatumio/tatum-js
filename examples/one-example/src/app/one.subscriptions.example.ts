@@ -1,11 +1,10 @@
 import { Currency } from '@tatumio/api-client'
 import { TatumOneSDK } from '@tatumio/one'
-import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 
-const oneSDK = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function oneSubscriptionsExample() {
-  const { xpub } = await oneSDK.wallet.generateWallet()
+  const { xpub } = await oneSDK.wallet.generateWallet(undefined, { testnet: true })
 
   // https://apidoc.tatum.io/tag/Account#operation/createAccount
   const account = await oneSDK.ledger.account.create({

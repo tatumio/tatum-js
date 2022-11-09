@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type GenerateMarketplaceCelo = {
     /**
      * Blockchain to work with.
@@ -27,17 +29,5 @@ export type GenerateMarketplaceCelo = {
      * Nonce to be set to transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-    /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

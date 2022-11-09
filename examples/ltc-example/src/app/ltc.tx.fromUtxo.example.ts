@@ -47,6 +47,7 @@ export async function ltcFromUtxoTransactionsExample() {
     } as LtcTransactionUTXO,
     options,
   )
+  console.log(`Transaction prepared: ${txData}`)
 
   // Transaction - send to blockchain
   // This method will prepare and broadcast transaction immediately
@@ -71,4 +72,5 @@ export async function ltcFromUtxoTransactionsExample() {
     } as LtcTransactionUTXO,
     options,
   )
+  console.log(`Transaction sent: ${txId}`)
 }

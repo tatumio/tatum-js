@@ -163,6 +163,8 @@ export type { CancelSellAssetOnMarketplaceTronKMS } from './models/CancelSellAss
 export type { CeloBlock } from './models/CeloBlock';
 export type { CeloEstimateGas } from './models/CeloEstimateGas';
 export type { CeloTx } from './models/CeloTx';
+export type { ChainBurnAlgoErc20 } from './models/ChainBurnAlgoErc20';
+export type { ChainBurnAlgoErc20KMS } from './models/ChainBurnAlgoErc20KMS';
 export type { ChainBurnCeloErc20 } from './models/ChainBurnCeloErc20';
 export type { ChainBurnCeloErc20KMS } from './models/ChainBurnCeloErc20KMS';
 export type { ChainBurnErc20 } from './models/ChainBurnErc20';

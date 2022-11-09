@@ -25,6 +25,7 @@ export class LitecoinService {
      * Generate Litecoin wallet
      * <h4>5 credits per API call.</h4><br/><p>Tatum supports BIP44 HD wallets. It is very convenient and secure, since it can generate 2^31 addresses from 1 mnemonic phrase. Mnemonic phrase consists of 24 special words in defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for Litecoin wallet with derivation path m'/44'/2'/0'/0. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/litecoin/bips/blob/master/bip-0044.mediawiki">https://github.com/litecoin/bips/blob/master/bip-0044.mediawiki</a>.
      * Generate BIP44 compatible Litecoin wallet.</p>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.wallet.example.ts" target="_blank">Tatum LTC SDK</a>.
      *
      * @param mnemonic Mnemonic to use for generation of extended public and private keys.
      * @returns Wallet OK
@@ -94,7 +95,10 @@ export class LitecoinService {
 
     /**
      * Get Litecoin Blockchain Information
-     * <h4>5 credits per API call.</h4><br/><p>Get Litecoin Blockchain Information. Obtain basic info like testnet / mainnet version of the chain, current block number and it's hash.</p>
+     * <h4>5 credits per API call.</h4>
+     * <br/><p>Get Litecoin Blockchain Information. Obtain basic info like testnet / mainnet version of the chain, current block number and it's hash.</p>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.blockchain.example.ts" target="_blank">Tatum LTC SDK</a>.
+     *
      * @returns LtcInfo OK
      * @throws ApiError
      */
@@ -112,7 +116,7 @@ export class LitecoinService {
 
     /**
      * Get Litecoin Block hash
-     * <h4>5 credits per API call.</h4><br/><p>Get Litecoin Block hash. Returns hash of the block to get the block detail.</p>
+     * <h4>5 credits per API call.</h4><br/><p>Get Litecoin Block hash. Returns hash of the block to get the block detail.</p><br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.blockchain.example.ts" target="_blank">Tatum LTC SDK</a>.
      * @param i The number of blocks preceding a particular block on a block chain.
      * @returns any OK
      * @throws ApiError
@@ -139,7 +143,10 @@ export class LitecoinService {
 
     /**
      * Get Litecoin Block by hash or height
-     * <h4>5 credits per API call.</h4><br/><p>Get Litecoin Block detail by block hash or height.</p>
+     * <h4>5 credits per API call.</h4>
+     * <br/><p>Get Litecoin Block detail by block hash or height.</p>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.blockchain.example.ts" target="_blank">Tatum LTC SDK</a>.
+     *
      * @param hash Block hash or height.
      * @returns LtcBlock OK
      * @throws ApiError
@@ -161,7 +168,10 @@ export class LitecoinService {
 
     /**
      * Get Litecoin Transaction by hash
-     * <h4>5 credits per API call.</h4><br/><p>Get Litecoin Transaction detail by transaction hash.</p>
+     * <h4>5 credits per API call.</h4>
+     * <br/><p>Get Litecoin Transaction detail by transaction hash.</p>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.blockchain.example.ts" target="_blank">Tatum LTC SDK</a>.'
+     *
      * @param hash Transaction hash
      * @returns LtcTx OK
      * @throws ApiError
@@ -183,7 +193,10 @@ export class LitecoinService {
 
     /**
      * Get Mempool Transactions
-     * <h4>1 credit per API call.</h4><br/><p>Get Litecoin Transaction ids in the mempool.</p>
+     * <h4>1 credit per API call.</h4>
+     * <br/><p>Get Litecoin Transaction ids in the mempool.</p>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.blockchain.example.ts" target="_blank">Tatum LTC SDK</a>.'
+     *
      * @returns string OK
      * @throws ApiError
      */
@@ -202,7 +215,10 @@ export class LitecoinService {
 
     /**
      * Get Litecoin Transactions by address
-     * <h4>5 credits per API call.</h4><br/><p>Get Litecoin Transaction by address.</p>
+     * <h4>5 credits per API call.</h4>
+     * <br/><p>Get Litecoin Transaction by address.</p>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.blockchain.example.ts" target="_blank">Tatum LTC SDK</a>.'
+     *
      * @param address Address
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
@@ -232,7 +248,10 @@ export class LitecoinService {
 
     /**
      * Get Litecoin Balance of the address
-     * <h4>5 credits per API call.</h4><br/><p>Get Litecoin Balance of the address.</p>
+     * <h4>5 credits per API call.</h4>
+     * <br/><p>Get Litecoin Balance of the address.</p>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.blockchain.example.ts" target="_blank">Tatum LTC SDK</a>.'
+     *
      * @param address Address
      * @returns BtcBasedBalance OK
      * @throws ApiError
@@ -261,6 +280,7 @@ export class LitecoinService {
      * <li>If the transaction output is an UTXO, the API returns data about it.</li>
      * <li>If the transaction output has been spent and there is no UTXO to return, the API returns an error with the <code>404</code> response code.</li>
      * </ul>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.blockchain.example.ts" target="_blank">Tatum LTC SDK</a>.
      *
      * @param hash The transaction hash
      * @param index The index of the transaction output that you want to check for the UTXO
@@ -288,6 +308,7 @@ export class LitecoinService {
      * <h4>5 credits per API call.</h4><br/>
      * <p>Generate Litecoin deposit address from Extended public key. Deposit address is generated for the specific index - each extended public key can generate
      * up to 2^31 addresses starting from index 0 until 2^31 - 1.</p>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.wallet.example.ts" target="_blank">Tatum LTC SDK</a>.
      *
      * @param xpub Extended public key of wallet.
      * @param index Derivation index of desired address to be generated.
@@ -320,6 +341,7 @@ export class LitecoinService {
      * <h4>5 credits per API call.</h4><br/>
      * <p>Generate private key for address from mnemonic for given derivation path index. Private key is generated for the specific index - each mnemonic
      * can generate up to 2^32 private keys starting from index 0 until 2^31 - 1.</p>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.wallet.example.ts" target="_blank">Tatum LTC SDK</a>.
      *
      * @param requestBody
      * @returns PrivKey OK
@@ -360,6 +382,7 @@ export class LitecoinService {
      * When sending LTC, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.blockchain.example.ts" target="_blank">Tatum LTC SDK</a>.
      *
      * @param requestBody
      * @returns any OK
@@ -387,6 +410,7 @@ export class LitecoinService {
      * <h4>5 credits per API call.</h4><br/>
      * <p>Broadcast signed transaction to Litecoin blockchain. This method is used internally from Tatum KMS or Tatum client libraries.
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
+     * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.blockchain.example.ts" target="_blank">Tatum LTC SDK</a>.
      *
      * @param requestBody
      * @returns TransactionHash OK

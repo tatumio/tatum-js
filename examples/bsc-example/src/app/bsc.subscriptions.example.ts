@@ -3,7 +3,7 @@ import { TatumBscSDK } from '@tatumio/bsc'
 const bscSDK = TatumBscSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function bscSubscriptionsExample() {
-  const { xpub } = await bscSDK.wallet.generateWallet()
+  const { xpub } = await bscSDK.wallet.generateWallet(undefined, { testnet: true })
   const address = bscSDK.wallet.generateAddressFromXPub(xpub, 0)
 
   // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/createSubscription

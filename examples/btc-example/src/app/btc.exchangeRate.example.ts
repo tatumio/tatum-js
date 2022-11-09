@@ -1,7 +1,7 @@
 import { Fiat } from '@tatumio/api-client'
 import { TatumBtcSDK } from '@tatumio/btc'
 
-export async function exchangeRateExample() {
+export async function btcExchangeRateExample() {
   const btcSDK = TatumBtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   // Get currenct exchange rate

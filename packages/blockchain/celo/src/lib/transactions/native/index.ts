@@ -13,7 +13,7 @@ import {
 } from '../../utils/celo.utils'
 import { EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import { isHex, stringToHex, toHex } from 'web3-utils'
-import { ApiServices, Currency } from '@tatumio/api-client'
+import { ApiServices, CreateRecordCelo, Currency, TransferCeloBlockchainKMS } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const transferSignedTransaction = async (
@@ -24,7 +24,7 @@ const transferSignedTransaction = async (
   // TODO
   // await validateBody(body, ChainTransferCeloBlockchain)
 
-  const { fromPrivateKey, signatureId, to, feeCurrency, amount, nonce, data } = body
+  const { fromPrivateKey, signatureId, to, fee, feeCurrency, amount, nonce, data } = body
   const celoProvider = celoUtils.getProvider(provider)
 
   if (to && feeCurrency && amount) {
@@ -36,6 +36,8 @@ const transferSignedTransaction = async (
       feeCurrency: feeCurrencyContractAddress,
       data,
       to: to.trim(),
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       value: evmBasedUtils.amountToWeiHex(amount),
     }
 
@@ -47,11 +49,16 @@ const transferSignedTransaction = async (
     }
 
     const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
-    const { txCount, from } = await celoUtils.obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
+      wallet,
+      feeCurrencyContractAddress,
+    )
 
     const tx: CeloTransactionConfig = {
       ...txBody,
       from: from,
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
       nonce: nonce || txCount,
     }
 
@@ -232,11 +239,13 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.blockchain.celo.celoBlockchainTransfer(body as any)
+          return ApiServices.blockchain.celo.celoBlockchainTransfer({
+            ...body,
+            currency: 'CELO',
+          } as TransferCeloBlockchainKMS)
         }
         return args.broadcastFunction({
           txData: await transferSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -249,11 +258,10 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        */
       storeDataTransaction: async (body: ChainStoreDataCelo, provider?: string, testnet?: boolean) => {
         if (body.signatureId) {
-          return ApiServices.record.storeLog(body as any)
+          return ApiServices.record.storeLog(body as CreateRecordCelo)
         }
         return args.broadcastFunction({
           txData: await prepareStoreDataTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -270,11 +278,10 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         testnet?: boolean,
       ) => {
         if (body.signatureId) {
-          return ApiServices.blockchain.celo.celoBlockchainTransfer(body as any)
+          return ApiServices.blockchain.celo.celoBlockchainTransfer(body as TransferCeloBlockchainKMS)
         }
         return args.broadcastFunction({
           txData: await prepareCeloOrCUsdSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
     },

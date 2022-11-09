@@ -4,8 +4,8 @@ import { Currency, TransactionHash } from '@tatumio/api-client'
 const tatumSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function klaytnNftExample() {
-  const { mnemonic, xpub } = await tatumSDK.wallet.generateWallet()
-  const fromPrivateKey = await tatumSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const { mnemonic, xpub } = await tatumSDK.wallet.generateWallet(undefined, { testnet: true })
+  const fromPrivateKey = await tatumSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
   const address = tatumSDK.wallet.generateAddressFromXPub(xpub, 0)
   const to = tatumSDK.wallet.generateAddressFromXPub(xpub, 1)
   const tokenId = '100000'

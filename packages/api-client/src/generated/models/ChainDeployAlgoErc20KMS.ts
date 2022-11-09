@@ -34,7 +34,7 @@ export type ChainDeployAlgoErc20KMS = {
     /**
      * Blockchain address to create token from
      */
-    from?: string;
+    from: string;
     /**
      * The URL pointing to the metadata
      */

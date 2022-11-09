@@ -31,5 +31,5 @@ export async function dogeSubscriptionsExample() {
   await dogeSDK.subscriptions.disableWebHookHmac()
 
   // https://apidoc.tatum.io/tag/Notification-subscriptions#operation/deleteSubscription
-  await dogeSDK.subscriptions.deleteSubscription(subscription.id as string)
+  await dogeSDK.subscriptions.deleteSubscription(subscription.id)
 }

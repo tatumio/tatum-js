@@ -14,17 +14,16 @@ import BigNumber from 'bignumber.js'
 import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
 import { CallSmartContract, TronGenerateCustodialWallet } from './tron.tx'
 import { WithoutChain } from '@tatumio/shared-abstract-sdk'
+import { Blockchain } from '@tatumio/shared-core'
 
 const NATIVE_ASSET_CONTRACT_TYPE = 3
 const NON_FUNGIBLE_TOKEN_CONTRACT_TYPE = 1
 const FUNGIBLE_TOKEN_CONTRACT_TYPE = 0
 
-type TronTransferCustodial = WithoutChain<FromPrivateKeyOrSignatureIdTron<TransferCustodialWalletTron>> & {
-  chain: Currency.TRON
-}
+type TronTransferCustodial = WithoutChain<FromPrivateKeyOrSignatureIdTron<TransferCustodialWalletTron>>
 type TronTransferBatchCustodial = WithoutChain<
   FromPrivateKeyOrSignatureIdTron<TransferCustodialWalletBatchTron>
-> & { chain: Currency.TRON }
+>
 
 const prepareTransferFromCustodialWallet = async (
   body: TronTransferCustodial,
@@ -213,7 +212,10 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
         testnet = false,
       ) => {
         if (body.signatureId) {
-          return GasPumpService.transferCustodialWallet(body as TransferCustodialWalletTronKMS)
+          return GasPumpService.transferCustodialWallet({
+            ...body,
+            chain: Blockchain.TRON,
+          } as TransferCustodialWalletTronKMS)
         } else {
           return TronService.tronBroadcast({
             txData: await prepareTransferFromCustodialWallet(
@@ -247,7 +249,10 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
         testnet = false,
       ) => {
         if (body.signatureId) {
-          return GasPumpService.transferCustodialWalletBatch(body as TransferCustodialWalletBatchTronKMS)
+          return GasPumpService.transferCustodialWalletBatch({
+            ...body,
+            chain: Blockchain.TRON,
+          } as TransferCustodialWalletBatchTronKMS)
         } else {
           return TronService.tronBroadcast({
             txData: await prepareBatchTransferFromCustodialWallet(

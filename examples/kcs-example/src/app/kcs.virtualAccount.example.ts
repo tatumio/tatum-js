@@ -5,9 +5,9 @@ const kcsSdk = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function kcsVirtualAccountExample() {
   // if you don't already have a wallet, address and private key - generate them
   // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGenerateWallet
-  const { mnemonic, xpub } = await kcsSdk.wallet.generateWallet()
+  const { mnemonic, xpub } = await kcsSdk.wallet.generateWallet(undefined, { testnet: true })
   // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGenerateAddressPrivateKey
-  const fromPrivateKey = await kcsSdk.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const fromPrivateKey = await kcsSdk.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
 
   // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGenerateAddress
   const to = kcsSdk.wallet.generateAddressFromXPub(xpub, 1)

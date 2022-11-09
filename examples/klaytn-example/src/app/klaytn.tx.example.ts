@@ -5,9 +5,9 @@ const klaytnSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab
 export async function klaytnTxExample(): Promise<void> {
   // if you don't already have a wallet, address and private key - generate them
   // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGenerateWallet
-  const { mnemonic, xpub } = await klaytnSDK.wallet.generateWallet()
+  const { mnemonic, xpub } = await klaytnSDK.wallet.generateWallet(undefined, { testnet: true })
   // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGenerateAddressPrivateKey
-  const fromPrivateKey = await klaytnSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0)
+  const fromPrivateKey = await klaytnSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
 
   // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGenerateAddress
   const address = klaytnSDK.wallet.generateAddressFromXPub(xpub, 0)

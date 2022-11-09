@@ -3,7 +3,7 @@ import { TatumDogeSDK } from '@tatumio/doge'
 
 const dogeSDK = TatumDogeSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-export async function dogeTransactionsExample() {
+export async function dogeTransactionExample() {
   // Prepare unspent output information first.
   // It is unspent transaction information for address, that will be used as an input for next DOGE tx
   // It is possible to have more than one
@@ -24,30 +24,6 @@ export async function dogeTransactionsExample() {
   const changeAddress = address // we expect to receive change from transaction to sender address back
 
   const options = { testnet: true }
-
-  // Transaction - prepare tx to be sent and get compiled and signed transaction that can be broadcast
-  const txData = await dogeSDK.transaction.prepareSignedTransaction(
-    {
-      fromUTXO: [
-        {
-          txHash: txHash,
-          index: index,
-          privateKey: privateKey,
-          address: address,
-          value: value,
-        },
-      ],
-      to: [
-        {
-          address: recipientAddress,
-          value: valueToSend,
-        },
-      ],
-      fee: fee,
-      changeAddress: changeAddress,
-    } as DogeTransactionUTXO,
-    options,
-  )
 
   // Transaction - send to blockchain
   // This method will prepare and broadcast transaction immediately
@@ -74,4 +50,5 @@ export async function dogeTransactionsExample() {
     } as DogeTransactionUTXO,
     options,
   )
+  console.log(`Sent tx with hash ${txId}`)
 }

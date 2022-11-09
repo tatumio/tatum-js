@@ -14,7 +14,11 @@ export type BurnNftAlgoKMS = {
     /**
      * Blockchain address to burn NFT token from
      */
-    from?: string;
+    from: string;
+    /**
+     * The transaction fee in Algos
+     */
+    fee?: string;
     /**
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */

@@ -23,4 +23,8 @@ export type ChainTransferAlgoErc20 = {
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
+    /**
+     * The transaction fee in Algos
+     */
+    fee?: string;
 }

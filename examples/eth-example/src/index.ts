@@ -6,7 +6,6 @@ import { ethErc20Example } from './app/eth.erc20.example'
 import { ethMultiTokenExample } from './app/eth.multitoken.example'
 import { ethNftExample } from './app/eth.nft.example'
 import { ethSmartContractExample } from './app/eth.smartContract.example'
-import { ethNftExpressExample } from './app/eth.nft.express.mint.example'
 import { ethBlockchainExample } from './app/eth.blockchain.example'
 import { ethTxExample } from './app/eth.tx.example'
 
@@ -20,32 +19,28 @@ const examples = async () => {
   console.log(`Running ethBalanceExample`)
   await ethBalanceExample()
 
+  console.log(`Running ethTxExample`)
+  await ethTxExample()
   console.log(`Running ethErc20Example`)
   await ethErc20Example()
 
   console.log(`Running ethNftExample`)
   await ethNftExample()
 
-  console.log(`Running ethNftExpressExample`)
-  await ethNftExpressExample()
-
-  console.log(`Running ethTxExample`)
-  await ethTxExample()
+  console.log(`Running ethMultiTokenExample`)
+  await ethMultiTokenExample()
 
   console.log(`Running ethSubscriptionsExample`)
   await ethSubscriptionsExample()
 
-  console.log(`Running ethSmartContractExample`)
-  await ethSmartContractExample()
-
-  console.log(`Running ethMultiTokenExample`)
-  await ethMultiTokenExample()
+  console.log(`Running ethWalletExample`)
+  await ethWalletExample()
 
   console.log(`Running ethVirtualAccountExample`)
   await ethVirtualAccountExample()
 
-  console.log(`Running ethWalletExample`)
-  await ethWalletExample()
+  console.log(`Running ethSmartContractExample`)
+  await ethSmartContractExample()
 }
 
 void examples()

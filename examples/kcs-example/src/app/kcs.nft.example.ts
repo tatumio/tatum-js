@@ -2,7 +2,7 @@ import { TatumKcsSDK } from '@tatumio/kcs'
 import { Currency, TransactionHash } from '@tatumio/api-client'
 import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
-const SLEEP_SECONDS = 20
+const SLEEP_SECONDS = 30
 const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 /**
@@ -23,7 +23,7 @@ export async function kcsNftExample() {
   // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftDeployErc721
   const nftDeploy = (await kcsSDK.nft.deployNFTSmartContract({
-    chain: 'KCS',
+    chain: Currency.KCS,
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
     // your private key of the address that has coins
@@ -49,7 +49,7 @@ export async function kcsNftExample() {
 
   // Mint NFTs on your own smart contract
   const nftMinted = (await kcsSDK.nft.mintNFT({
-    chain: 'KCS',
+    chain: Currency.KCS,
     tokenId,
     contractAddress,
     fromPrivateKey: senderPrivateKey,
@@ -80,8 +80,8 @@ export async function kcsNftExample() {
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
-  const nftTransferred = (await kcsSDK.nft.transferNFT({
-    chain: 'KCS',
+  const nftTransferred = (await kcsSDK.nft.send.transferSignedTransaction({
+    chain: Currency.KCS,
     to: receiverAddress,
     tokenId,
     contractAddress,
@@ -97,7 +97,7 @@ export async function kcsNftExample() {
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
   const nftBurned = (await kcsSDK.nft.burnNFT({
-    chain: 'KCS',
+    chain: Currency.KCS,
     tokenId,
     contractAddress,
     fromPrivateKey: receiverPrivateKey,
