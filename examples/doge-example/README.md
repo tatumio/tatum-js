@@ -56,7 +56,7 @@ You can find examples [here](./src/app/doge.wallet.example.ts).
 
 You can find examples [here](./src/app/doge.tx.example.ts).
 
-### How to broadcast transaction 
+### How to broadcast transaction
 
 You can find examples [here](./src/app/doge.tx.broadcast.example.ts).
 

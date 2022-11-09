@@ -1,6 +1,6 @@
 import { btcWalletExample } from './app/btc.wallet.example'
 import { btcBlockchainExample } from './app/btc.blockchain.example'
-import { exchangeRateExample } from './app/btc.root.example'
+import { btcExchangeRateExample } from './app/btc.exchangeRate.example'
 import { btcFromAddressTransactionsExample } from './app/btc.tx.fromAddress.example'
 import { btcFromUtxoTransactionsExample } from './app/btc.tx.fromUtxo.example'
 import { btcBalanceExample } from './app/btc.balance.example'
@@ -19,8 +19,8 @@ const examples = async () => {
   console.log(`Running btcEstimateExample`)
   await btcEstimateExample()
 
-  console.log(`Running exchangeRateExample`)
-  await exchangeRateExample()
+  console.log(`Running btcExchangeRateExample`)
+  await btcExchangeRateExample()
 
   console.log(`Running btcSubscriptionsExample`)
   await btcSubscriptionsExample()
