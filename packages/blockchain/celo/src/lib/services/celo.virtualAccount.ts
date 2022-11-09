@@ -34,7 +34,7 @@ const sendCeloVirtualAccountTransaction = async (
   if (mnemonic && index !== undefined) {
     fromPrivKey = await evmBasedUtils.generatePrivateKeyFromMnemonic(Blockchain.CELO, mnemonic, index)
   } else {
-    fromPrivKey = privateKey
+    fromPrivKey = privateKey as string
   }
 
   const account = await AccountService.getAccountByAccountId(body.senderAccountId)
@@ -66,7 +66,7 @@ const sendCeloVirtualAccountTransaction = async (
       fromPrivateKey: fromPrivKey,
       to: address,
       nonce,
-      contractAddress: vc.erc20Address,
+      contractAddress: vc.erc20Address as string,
       feeCurrency,
       fee: { gasLimit: fee.gasLimit, gasPrice: fee.gasPrice },
     })
