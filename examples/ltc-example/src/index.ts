@@ -19,3 +19,37 @@ console.log(`Running ${ltcBroadcastTransactionsExample()}`)
 console.log(`Running ${ltcFromAddressTransactionsExample()}`)
 console.log(`Running ${ltcFromUtxoTransactionsExample()}`)
 console.log(`Running ${ltcVirtualAccountExample()}`)
+
+const examples = async () => {
+  console.log(`Running ltcWalletExample`)
+  await ltcWalletExample()
+
+  console.log(`Running ltcBlockchainExample`)
+  await ltcBlockchainExample()
+
+  console.log(`Running ltcBalanceExample`)
+  await ltcBalanceExample()
+
+  console.log(`Running ltcSubscriptionsExample`)
+  await ltcSubscriptionsExample()
+
+  console.log(`Running exchangeRateExample`)
+  await exchangeRateExample()
+
+  console.log(`Running ltcEstimateExample`)
+  await ltcEstimateExample()
+
+  console.log(`Running ltcBroadcastTransactionsExample`)
+  await ltcBroadcastTransactionsExample()
+
+  console.log(`Running ltcFromAddressTransactionsExample`)
+  await ltcFromAddressTransactionsExample()
+
+  console.log(`Running ltcFromUtxoTransactionsExample`)
+  await ltcFromUtxoTransactionsExample()
+
+  console.log(`Running ltcVirtualAccountExample`)
+  await ltcVirtualAccountExample()
+}
+
+void examples()

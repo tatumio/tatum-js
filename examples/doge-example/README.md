@@ -56,6 +56,10 @@ You can find examples [here](./src/app/doge.wallet.example.ts).
 
 You can find examples [here](./src/app/doge.tx.example.ts).
 
+### How to broadcast transaction 
+
+You can find examples [here](./src/app/doge.tx.broadcast.example.ts).
+
 ### How to execute virtual account methods for DOGE
 
 You can find examples [here](./src/app/doge.virtualAccount.example.ts).

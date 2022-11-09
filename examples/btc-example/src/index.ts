@@ -9,13 +9,36 @@ import { btcSubscriptionsExample } from './app/btc.subscriptions.example'
 import { btcVirtualAccountExample } from './app/btc.virtualAccount.example'
 import { btcBroadcastTransactionsExample } from './app/btc.tx.broadcast.example'
 
-console.log(`Running ${btcBalanceExample()}`)
-console.log(`Running ${btcBlockchainExample()}`)
-console.log(`Running ${btcEstimateExample()}`)
-console.log(`Running ${exchangeRateExample()}`)
-console.log(`Running ${btcSubscriptionsExample()}`)
-console.log(`Running ${btcWalletExample()}`)
-console.log(`Running ${btcBroadcastTransactionsExample()}`)
-console.log(`Running ${btcFromAddressTransactionsExample()}`)
-console.log(`Running ${btcFromUtxoTransactionsExample()}`)
-console.log(`Running ${btcVirtualAccountExample()}`)
+const examples = async () => {
+  console.log(`Running btcBalanceExample`)
+  await btcBalanceExample()
+
+  console.log(`Running btcBlockchainExample`)
+  await btcBlockchainExample()
+
+  console.log(`Running btcEstimateExample`)
+  await btcEstimateExample()
+
+  console.log(`Running exchangeRateExample`)
+  await exchangeRateExample()
+
+  console.log(`Running btcSubscriptionsExample`)
+  await btcSubscriptionsExample()
+
+  console.log(`Running btcWalletExample`)
+  await btcWalletExample()
+
+  console.log(`Running btcBroadcastTransactionsExample`)
+  await btcBroadcastTransactionsExample()
+
+  console.log(`Running btcFromAddressTransactionsExample`)
+  await btcFromAddressTransactionsExample()
+
+  console.log(`Running btcFromUtxoTransactionsExample`)
+  await btcFromUtxoTransactionsExample()
+
+  console.log(`Running btcVirtualAccountExample`)
+  await btcVirtualAccountExample()
+}
+
+void examples()

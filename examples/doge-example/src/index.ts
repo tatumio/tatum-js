@@ -1,11 +1,28 @@
 import { dogeWalletExample } from './app/doge.wallet.example'
 import { dogeBlockchainExample } from './app/doge.blockchain.example'
 import { dogeVirtualAccountExample } from './app/doge.virtualAccount.example'
-import { dogeTransactionsExample } from './app/doge.tx.example'
+import { dogeTransactionExample } from './app/doge.tx.example'
 import { dogeSubscriptionsExample } from './app/doge.subscriptions.example'
+import { dogeTransactionBroadcastExample } from './app/doge.tx.broadcast.example'
 
-console.log(`Running ${dogeWalletExample()}`)
-console.log(`Running ${dogeBlockchainExample()}`)
-console.log(`Running ${dogeVirtualAccountExample()}`)
-console.log(`Running ${dogeTransactionsExample()}`)
-console.log(`Running ${dogeSubscriptionsExample()}`)
+const examples = async () => {
+  console.log(`Running dogeWalletExample`)
+  await dogeWalletExample()
+
+  console.log(`Running dogeBlockchainExample`)
+  await dogeBlockchainExample()
+
+  console.log(`Running dogeVirtualAccountExample`)
+  await dogeVirtualAccountExample()
+
+  console.log(`Running dogeTransactionExample`)
+  await dogeTransactionExample()
+
+  console.log(`Running dogeTransactionBroadcastExample`)
+  await dogeTransactionBroadcastExample()
+
+  console.log(`Running dogeSubscriptionsExample`)
+  await dogeSubscriptionsExample()
+}
+
+void examples()
