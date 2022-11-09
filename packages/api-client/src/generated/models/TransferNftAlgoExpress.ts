@@ -19,4 +19,8 @@ export type TransferNftAlgoExpress = {
      * AssetID of token.
      */
     contractAddress: string;
+    /**
+     * The transaction fee in Algos
+     */
+    fee?: string;
 }
