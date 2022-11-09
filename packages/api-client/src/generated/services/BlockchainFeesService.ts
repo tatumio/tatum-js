@@ -17,6 +17,7 @@ import type { FeeBtc } from '../models/FeeBtc';
 import type { FeeETH } from '../models/FeeETH';
 import type { KcsEstimateGas } from '../models/KcsEstimateGas';
 import type { KlaytnEstimateGas } from '../models/KlaytnEstimateGas';
+import type { OneEstimateGas } from '../models/OneEstimateGas';
 import type { PolygonEstimateGas } from '../models/PolygonEstimateGas';
 import type { TransactionFeeEgldBlockchain } from '../models/TransactionFeeEgldBlockchain';
 import type { VetEstimateGas } from '../models/VetEstimateGas';
@@ -228,6 +229,42 @@ export class BlockchainFeesService {
         return __request({
             method: 'POST',
             path: `/v3/bsc/gas`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Estimate Harmony transaction fees
+     * <h4>2 credits per API call.</h4><br/>
+     * <p>Estimate gasLimit and gasPrice of the ONE transaction.
+     * </p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static oneEstimateGas(
+        requestBody: OneEstimateGas,
+    ): CancelablePromise<{
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in wei.
+         */
+        gasPrice: string;
+    }> {
+        return __request({
+            method: 'POST',
+            path: `/v3/one/gas`,
             body: requestBody,
             mediaType: 'application/json',
             errors: {

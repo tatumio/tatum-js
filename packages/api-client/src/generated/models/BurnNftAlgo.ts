@@ -12,6 +12,10 @@ export type BurnNftAlgo = {
      */
     contractAddress: string;
     /**
+     * The transaction fee in Algos
+     */
+    fee?: string;
+    /**
      * The private key of the blockchain address from which the fee will be deducted
      */
     fromPrivateKey: string;

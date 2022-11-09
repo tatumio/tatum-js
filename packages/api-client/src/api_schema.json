@@ -3512,6 +3512,75 @@
         "tags": ["Blockchain fees"]
       }
     },
+    "/v3/one/gas": {
+      "post": {
+        "description": "<h4>2 credits per API call.</h4><br/>\n<p>Estimate gasLimit and gasPrice of the ONE transaction.\n</p>\n",
+        "operationId": "OneEstimateGas",
+        "requestBody": {
+          "content": { "application/json": { "schema": { "$ref": "#/components/schemas/OneEstimateGas" } } },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["gasLimit", "gasPrice"],
+                  "properties": {
+                    "gasLimit": {
+                      "type": "string",
+                      "description": "Gas limit for transaction in gas price.",
+                      "example": "40000"
+                    },
+                    "gasPrice": { "type": "string", "description": "Gas price in wei.", "example": "20" }
+                  }
+                }
+              }
+            },
+            "description": "OK"
+          },
+          "400": {
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error400" } } },
+            "description": "Bad Request. Validation failed for the given object in the HTTP Body or Request parameters."
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/Error401NotActive" },
+                    { "$ref": "#/components/schemas/Error401Invalid" }
+                  ]
+                }
+              }
+            },
+            "description": "Unauthorized. Not valid or inactive subscription key present in the HTTP Header."
+          },
+          "403": {
+            "description": "Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/Error403BscTxBody" },
+                    { "$ref": "#/components/schemas/Error403BscGasCalculation" }
+                  ]
+                }
+              }
+            }
+          },
+          "500": {
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error500" } } },
+            "description": "Internal server error. There was an error on the server while processing the request."
+          }
+        },
+        "security": [{ "X-API-Key": [] }],
+        "x-codeSamples": [],
+        "summary": "Estimate Harmony transaction fees",
+        "tags": ["Blockchain fees"]
+      }
+    },
     "/v3/klaytn/gas": {
       "post": {
         "description": "<h4>2 credits per API call.</h4><br/>\n<p>Estimate gasLimit and gasPrice of the Klaytn transaction. Gas price is obtained from <a href=\"https://explorer.bitquery.io/klaytn/gas\" target=\"_blank\">https://explorer.bitquery.io/klaytn/gas</a>.\n</p>\n",
@@ -3841,7 +3910,20 @@
             "required": true,
             "schema": {
               "type": "string",
-              "enum": ["ALGO", "BSC", "CELO", "EGLD", "ETH", "FLOW", "KLAY", "MATIC", "ONE", "TRON", "XDC"]
+              "enum": [
+                "ALGO",
+                "BSC",
+                "CELO",
+                "EGLD",
+                "ETH",
+                "FLOW",
+                "KLAY",
+                "KCS",
+                "MATIC",
+                "ONE",
+                "TRON",
+                "XDC"
+              ]
             }
           },
           {
@@ -23110,7 +23192,9 @@
                   { "$ref": "#/components/schemas/ChainBurnKcsErc20" },
                   { "$ref": "#/components/schemas/ChainBurnKcsErc20KMS" },
                   { "$ref": "#/components/schemas/ChainBurnCeloErc20" },
-                  { "$ref": "#/components/schemas/ChainBurnCeloErc20KMS" }
+                  { "$ref": "#/components/schemas/ChainBurnCeloErc20KMS" },
+                  { "$ref": "#/components/schemas/ChainBurnAlgoErc20" },
+                  { "$ref": "#/components/schemas/ChainBurnAlgoErc20KMS" }
                 ]
               }
             }
@@ -67315,6 +67399,7 @@
             "example": "116363571",
             "type": "string"
           },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
           "fromPrivateKey": {
             "type": "string",
             "maxLength": 103,
@@ -67347,6 +67432,7 @@
             "example": "TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4",
             "type": "string"
           },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
           "signatureId": {
             "type": "string",
             "format": "uuid",
@@ -67359,7 +67445,7 @@
             "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
           }
         },
-        "required": ["chain", "contractAddress", "signatureId"]
+        "required": ["chain", "contractAddress", "signatureId", "from"]
       },
       "BurnNftTron": {
         "type": "object",
@@ -68922,7 +69008,8 @@
             "example": "72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI",
             "minLength": 106,
             "description": "Private key of sender address."
-          }
+          },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
         "required": ["to", "chain", "contractAddress", "fromPrivateKey"]
       },
@@ -68943,14 +69030,22 @@
             "example": "TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4",
             "type": "string"
           },
+          "from": {
+            "maxLength": 58,
+            "minLength": 58,
+            "description": "Blockchain address to send NFT token from",
+            "example": "TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4",
+            "type": "string"
+          },
           "contractAddress": {
             "description": "AssetID of token.",
             "example": "100000",
             "type": "string",
             "maxLength": 256
-          }
+          },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
-        "required": ["to", "chain", "contractAddress"]
+        "required": ["to", "from", "chain", "contractAddress"]
       },
       "TransferNftSolana": {
         "type": "object",
@@ -69022,6 +69117,7 @@
             "type": "string",
             "maxLength": 256
           },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
           "signatureId": {
             "type": "string",
             "format": "uuid",
@@ -69581,6 +69677,7 @@
             "minLength": 103,
             "description": "The private key of the minting account; the transaction fee will be paid from this account"
           },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
           "attr": {
             "type": "object",
             "properties": {
@@ -69665,6 +69762,7 @@
             "minimum": 0,
             "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
           },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
           "attr": {
             "type": "object",
             "properties": {
@@ -71432,7 +71530,7 @@
           },
           "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
-        "required": ["chain", "name", "symbol", "address", "supply", "signatureId", "digits", "url"]
+        "required": ["chain", "name", "symbol", "address", "supply", "signatureId", "digits", "url", "from"]
       },
       "ChainDeployCeloErc20": {
         "type": "object",
@@ -72180,7 +72278,7 @@
             "type": "string",
             "example": "ETH",
             "description": "Chain to work with.",
-            "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE", "ALGO"]
+            "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "amount": {
             "description": "Amount of tokens to be destroyed.",
@@ -72495,7 +72593,8 @@
             "example": "72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI",
             "minLength": 103,
             "description": "Private key of sender address. Private key, or signature Id must be present."
-          }
+          },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
         "required": ["chain", "currency", "to", "contractAddress", "fromPrivateKey", "amount"]
       },
@@ -72545,9 +72644,75 @@
             "type": "number",
             "minimum": 0,
             "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
-          }
+          },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
         "required": ["chain", "currency", "to", "contractAddress", "signatureId", "amount", "from"]
+      },
+      "ChainBurnAlgoErc20": {
+        "type": "object",
+        "properties": {
+          "chain": {
+            "type": "string",
+            "example": "ALGO",
+            "description": "Chain to work with.",
+            "enum": ["ALGO"]
+          },
+          "contractAddress": {
+            "maxLength": 43,
+            "minLength": 1,
+            "description": "assetIndex - asset index uniquely specifying the asset",
+            "example": "1",
+            "type": "string"
+          },
+          "fromPrivateKey": {
+            "type": "string",
+            "maxLength": 103,
+            "example": "72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI",
+            "minLength": 103,
+            "description": "Private key of sender address. Private key, or signature Id must be present."
+          },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
+        },
+        "required": ["chain", "contractAddress", "fromPrivateKey"]
+      },
+      "ChainBurnAlgoErc20KMS": {
+        "type": "object",
+        "properties": {
+          "chain": {
+            "type": "string",
+            "example": "ALGO",
+            "description": "Chain to work with.",
+            "enum": ["ALGO"]
+          },
+          "from": {
+            "maxLength": 58,
+            "minLength": 58,
+            "description": "Blockchain address to send ERC20 token from",
+            "example": "NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y",
+            "type": "string"
+          },
+          "contractAddress": {
+            "maxLength": 43,
+            "minLength": 1,
+            "description": "assetIndex - asset index uniquely specifying the asset",
+            "example": "1",
+            "type": "string"
+          },
+          "signatureId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
+            "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+          },
+          "index": {
+            "type": "number",
+            "minimum": 0,
+            "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
+          },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
+        },
+        "required": ["chain", "contractAddress", "signatureId", "from"]
       },
       "ChainTransferEthErc20": {
         "type": "object",
@@ -79446,7 +79611,7 @@
             "example": "72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI"
           }
         },
-        "required": ["from", "to", "amount", "fromPrivateKey", "fee"]
+        "required": ["from", "to", "amount", "fromPrivateKey"]
       },
       "ReceiveAlgorandAsset": {
         "type": "object",
@@ -79460,7 +79625,8 @@
             "description": "Private key of sender address. Private key, or signature Id must be present.",
             "type": "string",
             "example": "72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI"
-          }
+          },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
         "required": ["assetId", "fromPrivateKey"]
       },
@@ -79479,11 +79645,17 @@
             "type": "number",
             "example": 98745612
           },
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
           "signatureId": {
             "type": "string",
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+          },
+          "index": {
+            "type": "number",
+            "minimum": 0,
+            "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
           }
         },
         "required": ["assetId", "from", "signatureId"]
@@ -79547,7 +79719,7 @@
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
           }
         },
-        "required": ["from", "to", "amount", "signatureId", "fee"]
+        "required": ["from", "to", "amount", "signatureId"]
       },
       "TransferTronBlockchain": {
         "type": "object",
@@ -81460,7 +81632,12 @@
           "transactionHash": {
             "type": "string",
             "description": "Hash of the transaction.",
-            "example": "0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7"
+            "example": "0x4fb94db21613051e6241f456dcc7da5789faae6a434ecd59c7ac4162e591ce1d"
+          },
+          "ethHash": {
+            "type": "string",
+            "description": "Eth Hash representation of the transaction.",
+            "example": "0xb2a66a105f05304afc7194063b36cae2a8f14edf1e06fc1e185cfea635cf09bb"
           },
           "input": {
             "type": "string",
