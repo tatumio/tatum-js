@@ -1,10 +1,13 @@
 import { TatumXrpSDK } from '@tatumio/xrp'
 import { Currency, XrpWallet } from '@tatumio/api-client'
 
-export const virtualAccountExample = async () => {
+export const xrpVirtualAccountExample = async () => {
   const xrpSDK = TatumXrpSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
+  // Generate XRP address and secret
+  // https://apidoc.tatum.io/tag/XRP#operation/XrpWallet
   const { address, secret } = xrpSDK.wallet.wallet() as XrpWallet
+
   const { address: destinationAddress } = xrpSDK.wallet.wallet() as XrpWallet
   console.log(`My public address is ${address}, with private key ${secret}.`)
 
@@ -18,11 +21,12 @@ export const virtualAccountExample = async () => {
   })
   console.log(JSON.stringify(virtualAccount))
 
-  // we need to generate MEMO - which is a deposit address - for this virtual account
+  // We need to generate MEMO - which is a deposit address - for this virtual account
   // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
   const depositAddress = await xrpSDK.virtualAccount.depositAddress.create(virtualAccount.id)
 
-  console.log(JSON.stringify(depositAddress))
+  console.log('Deposit address', JSON.stringify(depositAddress))
+
   // Result of the operation is combination of deposit address and MEMO
   console.log(`Deposit address is ${depositAddress.address} with MEMO ${depositAddress.derivationKey}`)
 
