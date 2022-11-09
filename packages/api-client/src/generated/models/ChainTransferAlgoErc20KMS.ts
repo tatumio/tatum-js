@@ -31,8 +31,4 @@ export type ChainTransferAlgoErc20KMS = {
      * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
      */
     index?: number;
-    /**
-     * The transaction fee in Algos
-     */
-    fee?: string;
 }

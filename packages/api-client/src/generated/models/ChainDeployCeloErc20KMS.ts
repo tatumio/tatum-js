@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type ChainDeployCeloErc20KMS = {
     /**
      * Chain to work with.
@@ -43,4 +45,5 @@ export type ChainDeployCeloErc20KMS = {
      * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    fee?: CustomFee;
 }

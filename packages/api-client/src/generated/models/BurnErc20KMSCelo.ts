@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type BurnErc20KMSCelo = {
     /**
      * Amount of tokens to be destroyed.
@@ -27,4 +29,5 @@ export type BurnErc20KMSCelo = {
      * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    fee?: CustomFee;
 }

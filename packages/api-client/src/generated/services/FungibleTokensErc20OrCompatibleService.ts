@@ -5,8 +5,6 @@ import type { ApproveCeloErc20 } from '../models/ApproveCeloErc20';
 import type { ApproveCeloErc20KMS } from '../models/ApproveCeloErc20KMS';
 import type { ApproveErc20 } from '../models/ApproveErc20';
 import type { ApproveErc20KMS } from '../models/ApproveErc20KMS';
-import type { ChainBurnAlgoErc20 } from '../models/ChainBurnAlgoErc20';
-import type { ChainBurnAlgoErc20KMS } from '../models/ChainBurnAlgoErc20KMS';
 import type { ChainBurnCeloErc20 } from '../models/ChainBurnCeloErc20';
 import type { ChainBurnCeloErc20KMS } from '../models/ChainBurnCeloErc20KMS';
 import type { ChainBurnErc20 } from '../models/ChainBurnErc20';
@@ -172,7 +170,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * @throws ApiError
      */
     public static erc20Burn(
-        requestBody: (ChainBurnErc20 | ChainBurnErc20KMS | ChainBurnKcsErc20 | ChainBurnKcsErc20KMS | ChainBurnCeloErc20 | ChainBurnCeloErc20KMS | ChainBurnAlgoErc20 | ChainBurnAlgoErc20KMS),
+        requestBody: (ChainBurnErc20 | ChainBurnErc20KMS | ChainBurnKcsErc20 | ChainBurnKcsErc20KMS | ChainBurnCeloErc20 | ChainBurnCeloErc20KMS),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({

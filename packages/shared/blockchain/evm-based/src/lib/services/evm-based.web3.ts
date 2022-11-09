@@ -16,7 +16,7 @@ export const evmBasedWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: We
     if (args?.client) {
       web3 = args?.client
     } else {
-      const endpoint = httpHelper.web3Endpoint(args.blockchain, OpenAPI.BASE, TATUM_API_CONSTANTS.API_KEY)
+      const endpoint = httpHelper.rpcEndpoint(args.blockchain, OpenAPI.BASE, TATUM_API_CONSTANTS.API_KEY)
 
       web3 = new Web3(provider || endpoint)
     }

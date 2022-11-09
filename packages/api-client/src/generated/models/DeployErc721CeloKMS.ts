@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type DeployErc721CeloKMS = {
     /**
      * Name of the ERC721 token
@@ -24,4 +26,5 @@ export type DeployErc721CeloKMS = {
      * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    fee?: CustomFee;
 }

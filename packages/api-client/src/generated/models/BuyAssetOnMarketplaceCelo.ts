@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type BuyAssetOnMarketplaceCelo = {
     /**
      * Blockchain to work with.
@@ -39,17 +41,5 @@ export type BuyAssetOnMarketplaceCelo = {
      * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-    /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

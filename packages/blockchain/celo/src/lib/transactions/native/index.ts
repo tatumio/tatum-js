@@ -24,7 +24,7 @@ const transferSignedTransaction = async (
   // TODO
   // await validateBody(body, ChainTransferCeloBlockchain)
 
-  const { fromPrivateKey, signatureId, to, feeCurrency, amount, nonce, data } = body
+  const { fromPrivateKey, signatureId, to, fee, feeCurrency, amount, nonce, data } = body
   const celoProvider = celoUtils.getProvider(provider)
 
   if (to && feeCurrency && amount) {
@@ -36,6 +36,8 @@ const transferSignedTransaction = async (
       feeCurrency: feeCurrencyContractAddress,
       data,
       to: to.trim(),
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       value: evmBasedUtils.amountToWeiHex(amount),
     }
 
@@ -47,11 +49,16 @@ const transferSignedTransaction = async (
     }
 
     const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
-    const { txCount, from } = await celoUtils.obtainWalletInformation(wallet, feeCurrencyContractAddress)
+    const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
+      wallet,
+      feeCurrencyContractAddress,
+    )
 
     const tx: CeloTransactionConfig = {
       ...txBody,
       from: from,
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
       nonce: nonce || txCount,
     }
 
@@ -239,7 +246,6 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: await transferSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -256,7 +262,6 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: await prepareStoreDataTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -277,7 +282,6 @@ export const native = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: await prepareCeloOrCUsdSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
     },
