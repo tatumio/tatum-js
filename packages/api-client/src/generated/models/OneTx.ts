@@ -32,6 +32,10 @@ export type OneTx = {
      */
     transactionHash?: string;
     /**
+     * Eth Hash representation of the transaction.
+     */
+    ethHash?: string;
+    /**
      * The data sent along with the transaction.
      */
     input?: string;
