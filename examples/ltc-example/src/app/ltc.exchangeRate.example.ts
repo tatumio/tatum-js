@@ -1,7 +1,7 @@
 import { Fiat } from '@tatumio/api-client'
 import { TatumLtcSDK } from '@tatumio/ltc'
 
-export async function exchangeRateExample() {
+export async function ltcEexchangeRateExample() {
   const ltcSDK = TatumLtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   // Get currenct exchange rate

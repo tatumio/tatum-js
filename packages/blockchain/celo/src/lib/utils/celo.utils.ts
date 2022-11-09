@@ -7,7 +7,6 @@ import {
   ChainDeployCeloErc20,
   ChainMintCeloErc20,
   ChainTransferCeloErc20Token,
-  ChainTransferEthErc20,
   CreateRecordCelo,
   Currency,
   DeployMultiTokenCelo,
@@ -90,16 +89,13 @@ export type ChainMintErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainM
 export type ChainTransferErc20Celo = Omit<
   WithoutChain<FromPrivateKeyOrSignatureId<ChainTransferCeloErc20Token>>,
   'digits'
-> &
-  Pick<ChainTransferEthErc20, 'fee'>
+>
 
-export type ChainTransferCeloOrCUsd = FromPrivateKeyOrSignatureId<TransferCeloBlockchain> &
-  Pick<ChainTransferEthErc20, 'fee'>
+export type ChainTransferCeloOrCUsd = FromPrivateKeyOrSignatureId<TransferCeloBlockchain>
 
 export type ChainBurnErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainBurnCeloErc20>>
 
-export type ChainStoreDataCelo = WithoutChain<FromPrivateKeyOrSignatureId<CreateRecordCelo>> &
-  Pick<ChainTransferEthErc20, 'fee'>
+export type ChainStoreDataCelo = WithoutChain<FromPrivateKeyOrSignatureId<CreateRecordCelo>>
 
 export type SmartContractWriteMethodInvocationCelo = FromPrivateKeyOrSignatureId<CallCeloSmartContractMethod>
 
@@ -117,11 +113,30 @@ export const CELO_CONSTANTS = {
 export const celoUtils = {
   prepareSignedTransactionAbstraction: async (wallet: CeloWallet, transaction: CeloTransactionConfig) => {
     try {
-      transaction.gasLimit = (await wallet.estimateGas(transaction))
-        .add(transaction.feeCurrency === Currency.CELO ? 0 : 100000)
-        .toHexString()
+      transaction.gasLimit =
+        transaction.gasLimit ??
+        (await wallet.estimateGas(transaction))
+          .add(transaction.feeCurrency === Currency.CELO ? 0 : 100000)
+          .toHexString()
     } catch (e) {
       throw new EvmBasedSdkError({ error: e as Error, code: SdkErrorCode.EVM_CANNOT_ESTIMATE_GAS_LIMIT })
+    }
+
+    if (transaction.gasPrice) {
+      let threshold = BN.from(transaction.gasLimit).mul(BN.from(transaction.gasPrice as string))
+      if (transaction.value) {
+        threshold = threshold.add(transaction.value as string)
+      }
+      const address = await wallet.getAddress()
+      const balance = await wallet.getBalance()
+      if (!balance || balance.lt(threshold)) {
+        throw new EvmBasedSdkError({
+          code: SdkErrorCode.INSUFFICIENT_FUNDS,
+          error: new Error(
+            `Insufficient funds send transaction from account ${address} -> available balance is ${balance}, required balance is ${threshold}`,
+          ),
+        })
+      }
     }
 
     return evmBasedUtils.tryCatch(
@@ -133,7 +148,7 @@ export const celoUtils = {
   getProvider: (provider?: string) => new CeloProvider(celoUtils.getProviderUrl(provider)),
 
   getProviderUrl: (provider?: string) => {
-    return provider || httpHelper.web3Endpoint(Blockchain.CELO, OpenAPI.BASE, TATUM_API_CONSTANTS.API_KEY)
+    return provider || httpHelper.rpcEndpoint(Blockchain.CELO, OpenAPI.BASE, TATUM_API_CONSTANTS.API_KEY)
   },
 
   obtainWalletInformation: async (wallet: CeloWallet, feeCurrencyContractAddress?: string) => {

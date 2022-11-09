@@ -51801,25 +51801,7 @@
             "example": 1,
             "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["feeRecipient", "marketplaceFee", "chain", "feeCurrency", "fromPrivateKey"]
       },
@@ -51862,25 +51844,7 @@
             "example": 1,
             "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["feeRecipient", "chain", "marketplaceFee", "signatureId"]
       },
@@ -52047,25 +52011,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["feeRecipient", "auctionFee", "chain", "feeCurrency", "fromPrivateKey"]
       },
@@ -52174,25 +52120,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["feeRecipient", "auctionFee", "chain", "feeCurrency", "signatureId"]
       },
@@ -52478,25 +52406,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "nftAddress",
@@ -52712,25 +52622,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "nftAddress",
@@ -52938,25 +52830,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "nftAddress",
@@ -53172,25 +53046,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "nftAddress",
@@ -53545,25 +53401,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "listingId", "amount", "feeCurrency", "fromPrivateKey"]
       },
@@ -53710,25 +53548,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "listingId", "amount", "feeCurrency", "signatureId"]
       },
@@ -53851,25 +53671,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "chain",
@@ -54008,25 +53810,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "chain",
@@ -54163,25 +53947,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "id", "amount", "feeCurrency", "fromPrivateKey", "bidValue"]
       },
@@ -54318,25 +54084,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "id", "amount", "feeCurrency", "signatureId", "bidValue"]
       },
@@ -54439,25 +54187,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "id", "amount", "feeCurrency", "fromPrivateKey"]
       },
@@ -54568,25 +54298,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "id", "feeCurrency", "signatureId"]
       },
@@ -54821,25 +54533,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "feeRecipient", "feeCurrency", "fromPrivateKey"]
       },
@@ -54948,25 +54642,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "feeRecipient", "feeCurrency", "signatureId"]
       },
@@ -55163,25 +54839,7 @@
             "example": 1,
             "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "marketplaceFee", "feeCurrency", "fromPrivateKey"]
       },
@@ -55290,25 +54948,7 @@
             "example": 1,
             "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "marketplaceFee", "feeCurrency", "signatureId"]
       },
@@ -55517,25 +55157,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "listingId", "feeCurrency", "fromPrivateKey"]
       },
@@ -55656,25 +55278,7 @@
             "example": 1,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "listingId", "feeCurrency", "signatureId"]
       },
@@ -55921,25 +55525,7 @@
             "example": 1,
             "description": "The nonce to be set to the transfer transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["custodialAddress", "chain", "contractType", "feeCurrency", "spender", "fromPrivateKey"]
       },
@@ -56012,25 +55598,7 @@
             "example": 1,
             "description": "The nonce to be set to the transfer transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["custodialAddress", "chain", "contractType", "feeCurrency", "spender", "signatureId"]
       },
@@ -56267,25 +55835,7 @@
             "example": 1,
             "description": "The nonce to be set to the transfer transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "custodialAddress",
@@ -56365,25 +55915,7 @@
             "example": 1,
             "description": "The nonce to be set to the transfer transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["custodialAddress", "chain", "contractType", "feeCurrency", "recipient", "signatureId"]
       },
@@ -56790,25 +56322,7 @@
             "example": 1,
             "description": "The nonce to be set to the transfer transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "custodialAddress",
@@ -56979,25 +56493,7 @@
             "example": 1,
             "description": "The nonce to be set to the transfer transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "custodialAddress",
@@ -58048,6 +57544,7 @@
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
           },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "fromPrivateKey": {
             "type": "string",
             "maxLength": 66,
@@ -63374,25 +62871,7 @@
             "description": "Owner of the addresses.",
             "example": "0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea"
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "nonce": {
             "type": "number",
             "minimum": 0,
@@ -63439,25 +62918,7 @@
             "description": "Owner of the addresses.",
             "example": "0x8cb76aed9c5e336ef961265c6079c14e9cd3d2ea"
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "nonce": {
             "type": "number",
             "minimum": 0,
@@ -63655,25 +63116,7 @@
             "example": false,
             "description": "If address should support batch transfers of the assets, it should be marked as true."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "nonce": {
             "type": "number",
             "minimum": 0,
@@ -63879,25 +63322,7 @@
             "example": false,
             "description": "If address should support batch transfers of the assets, it should be marked as true."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "nonce": {
             "type": "number",
             "minimum": 0,
@@ -66751,7 +66176,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "contractAddress", "tokenId", "fromPrivateKey"]
       },
@@ -66941,7 +66367,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "contractAddress", "url", "fromPrivateKey", "feeCurrency", "tokenId"]
       },
@@ -67048,7 +66475,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "name", "symbol", "feeCurrency", "fromPrivateKey"]
       },
@@ -67144,7 +66572,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "name", "symbol", "feeCurrency", "signatureId"]
       },
@@ -67277,7 +66706,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "contractAddress", "feeCurrency", "tokenId", "url", "signatureId"]
       },
@@ -67379,7 +66809,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "feeCurrency", "fromPrivateKey", "tokenId"]
       },
@@ -67526,7 +66957,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "feeCurrency", "contractAddress", "tokenId", "signatureId"]
       },
@@ -68282,7 +67714,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "contractAddress", "feeCurrency", "fromPrivateKey", "tokenId", "cashbackValue"]
       },
@@ -68375,7 +67808,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "feeCurrency", "contractAddress", "tokenId", "signatureId", "cashbackValue"]
       },
@@ -68510,7 +67944,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "contractAddress", "feeCurrency", "signatureId", "tokenId"]
       },
@@ -68615,6 +68050,7 @@
             "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "fromPrivateKey": {
             "type": "string",
             "maxLength": 66,
@@ -68768,6 +68204,7 @@
             "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "signatureId": {
             "type": "string",
             "format": "uuid",
@@ -71600,7 +71037,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "chain",
@@ -71680,7 +71118,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "name", "symbol", "address", "supply", "signatureId", "digits", "feeCurrency"]
       },
@@ -71903,7 +71342,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "amount", "feeCurrency", "contractAddress", "fromPrivateKey"]
       },
@@ -71951,7 +71391,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "amount", "feeCurrency", "contractAddress", "signatureId"]
       },
@@ -72116,25 +71557,7 @@
             "minLength": 66,
             "description": "Private key of sender address. Private key, or signature Id must be present."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "nonce": {
             "type": "number",
             "minimum": 0,
@@ -72183,25 +71606,7 @@
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "nonce": {
             "type": "number",
             "minimum": 0,
@@ -72466,25 +71871,7 @@
             "minLength": 66,
             "description": "Private key of sender address. Private key, or signature Id must be present."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "nonce": {
             "type": "number",
             "minimum": 0,
@@ -72526,25 +71913,7 @@
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "nonce": {
             "type": "number",
             "minimum": 0,
@@ -73324,7 +72693,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "contractAddress", "digits", "feeCurrency", "fromPrivateKey", "amount"]
       },
@@ -73379,7 +72749,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "contractAddress", "digits", "feeCurrency", "signatureId", "amount"]
       },
@@ -73499,30 +72870,12 @@
             "minimum": 0,
             "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
           "feeCurrency": {
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["contractAddress", "params", "methodABI", "fromPrivateKey", "methodName", "feeCurrency"]
       },
@@ -73578,7 +72931,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "contractAddress", "tokenId", "fromPrivateKey", "amount", "feeCurrency"]
       },
@@ -73668,9 +73022,10 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
-        "required": ["chain", "to", "contractAddress", "tokenId", "amounts", "fromPrivateKey"]
+        "required": ["chain", "to", "contractAddress", "tokenId", "amounts", "fromPrivateKey", "feeCurrency"]
       },
       "DeployMultiTokenCelo": {
         "type": "object",
@@ -73709,7 +73064,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "uri", "feeCurrency", "fromPrivateKey"]
       },
@@ -73750,7 +73106,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "uri", "feeCurrency", "signatureId"]
       },
@@ -73809,7 +73166,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "contractAddress", "feeCurrency", "tokenId", "amounts", "signatureId"]
       },
@@ -73864,7 +73222,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "chain",
@@ -73927,7 +73286,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "chain",
@@ -73994,7 +73354,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "feeCurrency", "contractAddress", "tokenId", "amount", "signatureId", "account"]
       },
@@ -74037,25 +73398,7 @@
             "minimum": 0,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "feeCurrency": {
             "type": "string",
             "description": "Currency to pay for transaction gas, only valid for CELO chain.",
@@ -74099,25 +73442,7 @@
             "minimum": 0,
             "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "feeCurrency": {
             "type": "string",
             "description": "Currency to pay for transaction gas, only valid for CELO chain.",
@@ -74181,7 +73506,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": [
           "chain",
@@ -74249,7 +73575,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "contractAddress", "feeCurrency", "signatureId", "tokenId", "amount"]
       },
@@ -74309,7 +73636,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "contractAddress", "feeCurrency", "signatureId", "tokenId", "amounts"]
       },
@@ -74365,7 +73693,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "tokenId", "amount", "feeCurrency", "contractAddress", "fromPrivateKey"]
       },
@@ -74422,7 +73751,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "tokenId", "amounts", "feeCurrency", "contractAddress", "fromPrivateKey"]
       },
@@ -74482,7 +73812,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["chain", "to", "tokenId", "amount", "feeCurrency", "contractAddress", "signatureId"]
       },
@@ -77826,7 +77157,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "contractAddress", "tokenId", "fromPrivateKey"]
       },
@@ -77873,7 +77205,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "contractAddress", "feeCurrency", "signatureId", "tokenId"]
       },
@@ -77922,7 +77255,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "url", "feeCurrency", "contractAddress", "fromPrivateKey", "tokenId"]
       },
@@ -77975,7 +77309,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "url", "feeCurrency", "contractAddress", "signatureId", "tokenId"]
       },
@@ -78018,7 +77353,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "amount", "feeCurrency", "contractAddress", "fromPrivateKey"]
       },
@@ -78065,7 +77401,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "amount", "feeCurrency", "contractAddress", "signatureId"]
       },
@@ -78113,7 +77450,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "contractAddress", "url", "fromPrivateKey", "feeCurrency", "tokenId"]
       },
@@ -78165,7 +77503,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "contractAddress", "feeCurrency", "tokenId", "url", "signatureId"]
       },
@@ -78201,7 +77540,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["contractAddress", "feeCurrency", "fromPrivateKey", "tokenId"]
       },
@@ -78241,7 +77581,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["feeCurrency", "contractAddress", "tokenId", "signatureId"]
       },
@@ -78277,7 +77618,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["contractAddress", "feeCurrency", "fromPrivateKey", "amount"]
       },
@@ -78317,7 +77659,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["feeCurrency", "contractAddress", "tokenId", "amount"]
       },
@@ -78352,6 +77695,7 @@
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
           },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "amount": {
             "description": "Amount to be sent.",
             "example": "100000",
@@ -78399,6 +77743,7 @@
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
           },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "amount": {
             "description": "Amount to be sent.",
             "example": "100000",
@@ -78693,7 +78038,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["name", "symbol", "feeCurrency", "fromPrivateKey"]
       },
@@ -78730,7 +78076,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["name", "symbol", "feeCurrency", "signatureId"]
       },
@@ -78796,7 +78143,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["name", "symbol", "address", "supply", "fromPrivateKey", "digits", "feeCurrency"]
       },
@@ -78866,7 +78214,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["name", "symbol", "address", "supply", "signatureId", "digits", "feeCurrency"]
       },
@@ -78947,30 +78296,12 @@
             "minimum": 0,
             "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
           },
-          "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
           "feeCurrency": {
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["contractAddress", "params", "methodABI", "signatureId", "methodName", "feeCurrency"]
       },
@@ -79020,7 +78351,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "contractAddress", "digits", "feeCurrency", "fromPrivateKey", "amount"]
       },
@@ -79074,7 +78406,8 @@
             "type": "string",
             "description": "Currency to pay for transaction gas",
             "enum": ["CELO", "CUSD", "CEUR"]
-          }
+          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "contractAddress", "signatureId", "digits", "amount", "feeCurrency"]
       },

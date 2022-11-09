@@ -43,5 +43,5 @@ export async function ltcFromAddressTransactionsExample() {
     },
     options,
   )
-  console.log(`TX: ${JSON.stringify(txData)}`)
+  console.log(`Transaction sent: ${JSON.stringify(txData)}`)
 }

@@ -19,7 +19,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
   const api = CeloService
   const txService = celoTxService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
-  const virtualAccount = virtualAccountService({ blockchain })
+  const virtualAccount = virtualAccountService({ blockchain, web3 })
 
   const { getNFTTransaction, getNFTAccountBalance, getNFTProvenanceData, getNFTMetadataURI, getNFTRoyalty } =
     nft

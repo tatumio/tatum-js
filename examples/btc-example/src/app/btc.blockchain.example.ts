@@ -2,7 +2,6 @@ import { TatumBtcSDK } from '@tatumio/btc'
 
 export async function btcBlockchainExample() {
   const btcSDK = TatumBtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-  const REPLACE_ME_WITH_PRIVATE_KEY = ''
 
   // Get BTC Blockchain Information. Obtain basic info like testnet / mainnet version of the chain, current block number and it's hash.
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGetBlockChainInfo

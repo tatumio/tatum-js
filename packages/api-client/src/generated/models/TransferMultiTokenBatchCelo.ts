@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type TransferMultiTokenBatchCelo = {
     /**
      * Chain to work with.
@@ -38,5 +40,6 @@ export type TransferMultiTokenBatchCelo = {
     /**
      * Currency to pay for transaction gas
      */
-    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    fee?: CustomFee;
 }

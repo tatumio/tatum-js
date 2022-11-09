@@ -45,7 +45,7 @@ const prepareDeploySignedTransaction = async (
   provider?: string,
   testnet?: boolean,
 ) => {
-  const { fromPrivateKey, name, symbol, supply, address, digits, nonce, signatureId, totalCap } = body
+  const { fromPrivateKey, name, symbol, supply, address, digits, nonce, fee, signatureId, totalCap } = body
 
   const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
     body,
@@ -69,7 +69,8 @@ const prepareDeploySignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       data: deploy.encodeABI(),
     })
   }
@@ -84,8 +85,8 @@ const prepareDeploySignedTransaction = async (
     chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
-    gasLimit: '0',
-    gasPrice,
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
     data: deploy.encodeABI(),
     from,
   }
@@ -98,7 +99,7 @@ const prepareMintSignedTransaction = async (
   provider?: string,
   testnet?: boolean,
 ) => {
-  const { fromPrivateKey, amount, to, contractAddress, nonce, signatureId } = body
+  const { fromPrivateKey, amount, to, contractAddress, nonce, fee, signatureId } = body
 
   const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
     body,
@@ -114,7 +115,8 @@ const prepareMintSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       to: contractAddress.trim(),
       data: contract.methods.mint(to.trim(), amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     })
@@ -129,9 +131,9 @@ const prepareMintSignedTransaction = async (
     chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
-    gasLimit: '0',
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
     to: contractAddress.trim(),
-    gasPrice,
     data: contract.methods.mint(to.trim(), amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     from,
   }
@@ -189,7 +191,7 @@ const prepareBurnSignedTransaction = async (
   provider?: string,
   testnet?: boolean,
 ) => {
-  const { fromPrivateKey, amount, contractAddress, nonce, signatureId } = body
+  const { fromPrivateKey, amount, contractAddress, nonce, fee, signatureId } = body
 
   const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
     body,
@@ -204,7 +206,8 @@ const prepareBurnSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       to: contractAddress.trim(),
       data: contract.methods.burn(amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     })
@@ -220,9 +223,9 @@ const prepareBurnSignedTransaction = async (
     chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
-    gasLimit: '0',
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
     to: contractAddress.trim(),
-    gasPrice,
     data: contract.methods.burn(amountUtils.amountToHexString(amount, decimals)).encodeABI(),
     from,
   }
@@ -287,7 +290,6 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
         }
         return args.broadcastFunction({
           txData: await prepareDeploySignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -307,7 +309,6 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
         }
         return args.broadcastFunction({
           txData: await prepareMintSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -331,7 +332,6 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
         }
         return args.broadcastFunction({
           txData: await prepareTransferSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -351,7 +351,6 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
         }
         return args.broadcastFunction({
           txData: await prepareBurnSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
     },

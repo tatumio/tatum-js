@@ -32,8 +32,18 @@ import Web3 from 'web3'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: string, testnet?: boolean) => {
-  const { fromPrivateKey, name, symbol, feeCurrency, nonce, signatureId, cashback, provenance, publicMint } =
-    body
+  const {
+    fromPrivateKey,
+    name,
+    symbol,
+    feeCurrency,
+    fee,
+    nonce,
+    signatureId,
+    cashback,
+    provenance,
+    publicMint,
+  } = body
 
   if (provenance && cashback) {
     throw new Error('Only one of provenance or cashback must be present and true.')
@@ -64,7 +74,8 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       data: deploy.encodeABI(),
     })
   }
@@ -79,8 +90,8 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
     chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
-    gasLimit: '0',
-    gasPrice,
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
     data: deploy.encodeABI(),
     from,
   }
@@ -89,7 +100,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
 }
 
 const mintSignedTransaction = async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) => {
-  const { contractAddress, nonce, signatureId, feeCurrency, to, tokenId, url, fromPrivateKey } = body
+  const { contractAddress, nonce, signatureId, feeCurrency, to, tokenId, url, fee, fromPrivateKey } = body
 
   const celoProvider = celoUtils.getProvider(provider)
   const network = await celoProvider.ready
@@ -104,7 +115,8 @@ const mintSignedTransaction = async (body: ChainMintNftCelo, provider?: string, 
         feeCurrency: feeCurrencyContractAddress,
         nonce,
         to: contractAddress.trim(),
-        gasLimit: '0',
+        gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+        gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
         data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
       })
     }
@@ -121,8 +133,8 @@ const mintSignedTransaction = async (body: ChainMintNftCelo, provider?: string, 
       to: contractAddress.trim(),
       data: contract.methods.mintWithTokenURI(to.trim(), tokenId, url).encodeABI(),
       nonce: nonce || txCount,
-      gasLimit: '0',
-      gasPrice,
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
       from,
     }
 
@@ -136,7 +148,7 @@ const mintMultipleSignedTransaction = async (
   provider?: string,
   testnet?: boolean,
 ) => {
-  const { fromPrivateKey, to, tokenId, contractAddress, url, feeCurrency, nonce, signatureId } = body
+  const { fromPrivateKey, to, tokenId, contractAddress, url, feeCurrency, fee, nonce, signatureId } = body
 
   const celoProvider = celoUtils.getProvider(provider)
   const network = await celoProvider.ready
@@ -150,7 +162,8 @@ const mintMultipleSignedTransaction = async (
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
         nonce,
-        gasLimit: '0',
+        gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+        gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
         to: contractAddress.trim(),
         data: contract.methods
           .mintMultiple(
@@ -172,9 +185,9 @@ const mintMultipleSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce: nonce || txCount,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
       to: contractAddress.trim(),
-      gasPrice,
       data: contract.methods
         .mintMultiple(
           to.map((t) => t.trim()),
@@ -202,6 +215,7 @@ const mintCashbackSignedTransaction = async (
     tokenId,
     contractAddress,
     feeCurrency,
+    fee,
     nonce,
     signatureId,
     authorAddresses,
@@ -226,7 +240,8 @@ const mintCashbackSignedTransaction = async (
         feeCurrency: feeCurrencyContractAddress,
         nonce,
         to: contractAddress.trim(),
-        gasLimit: '0',
+        gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+        gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
         data: erc20
           ? contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb, erc20).encodeABI()
           : contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
@@ -243,9 +258,9 @@ const mintCashbackSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce: nonce || txCount,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
       to: contractAddress.trim(),
-      gasPrice,
       data: erc20
         ? contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb, erc20).encodeABI()
         : contract.methods.mintWithCashback(to.trim(), tokenId, url, authorAddresses, cb).encodeABI(),
@@ -269,6 +284,7 @@ export const mintMultipleCashbackSignedTransaction = async (
     contractAddress,
     url,
     feeCurrency,
+    fee,
     nonce,
     signatureId,
     authorAddresses,
@@ -297,7 +313,8 @@ export const mintMultipleCashbackSignedTransaction = async (
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
         nonce,
-        gasLimit: '0',
+        gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+        gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
         to: contractAddress.trim(),
         data: erc20
           ? contract.methods
@@ -332,9 +349,9 @@ export const mintMultipleCashbackSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce: nonce || txCount,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
       to: contractAddress.trim(),
-      gasPrice,
       data: erc20
         ? contract.methods
             .mintMultipleCashback(
@@ -374,6 +391,7 @@ const mintProvenanceSignedTransaction = async (
     tokenId,
     contractAddress,
     feeCurrency,
+    fee,
     nonce,
     signatureId,
     cashbackValues,
@@ -409,7 +427,8 @@ const mintProvenanceSignedTransaction = async (
         feeCurrency: feeCurrencyContractAddress,
         nonce,
         to: contractAddress.trim(),
-        gasLimit: '0',
+        gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+        gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
         data: data,
       })
     }
@@ -424,9 +443,9 @@ const mintProvenanceSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce: nonce || txCount,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
       to: contractAddress.trim(),
-      gasPrice,
       data: data,
       from,
     }
@@ -448,6 +467,7 @@ const mintMultipleProvenanceSignedTransaction = async (
     contractAddress,
     url,
     feeCurrency,
+    fee,
     nonce,
     signatureId,
     authorAddresses,
@@ -503,7 +523,8 @@ const mintMultipleProvenanceSignedTransaction = async (
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
         nonce,
-        gasLimit: '0',
+        gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+        gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
         to: contractAddress.trim(),
         data: data,
       })
@@ -519,9 +540,9 @@ const mintMultipleProvenanceSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce: nonce || txCount,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
       to: contractAddress.trim(),
-      gasPrice,
       data: data,
       from,
     }
@@ -541,6 +562,7 @@ const transferSignedTransaction = async (
     tokenId,
     contractAddress,
     feeCurrency,
+    fee,
     nonce,
     signatureId,
     value,
@@ -567,7 +589,8 @@ const transferSignedTransaction = async (
       return JSON.stringify({
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
-        gasLimit: '0',
+        gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+        gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
         nonce,
         to: contractAddress.trim(),
         data: tokenData,
@@ -585,9 +608,9 @@ const transferSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce: nonce || txCount,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
       to: contractAddress.trim(),
-      gasPrice,
       data: tokenData,
       from,
       value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
@@ -602,7 +625,8 @@ const updateCashbackForAuthorSignedTransaction = async (
   provider?: string,
   testnet?: boolean,
 ) => {
-  const { fromPrivateKey, cashbackValue, tokenId, contractAddress, feeCurrency, nonce, signatureId } = body
+  const { fromPrivateKey, cashbackValue, tokenId, contractAddress, feeCurrency, fee, nonce, signatureId } =
+    body
   if (feeCurrency && contractAddress) {
     const celoProvider = celoUtils.getProvider(provider)
     const network = await celoProvider.ready
@@ -614,7 +638,8 @@ const updateCashbackForAuthorSignedTransaction = async (
         chainId: network.chainId,
         feeCurrency: feeCurrencyContractAddress,
         nonce,
-        gasLimit: '0',
+        gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+        gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
         to: contractAddress.trim(),
         data: contract.methods
           .updateCashbackForAuthor(tokenId, evmBasedUtils.amountToWeiHex(cashbackValue))
@@ -632,9 +657,9 @@ const updateCashbackForAuthorSignedTransaction = async (
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce: nonce || txCount,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
       to: contractAddress.trim(),
-      gasPrice,
       data: contract.methods
         .updateCashbackForAuthor(tokenId, evmBasedUtils.amountToWeiHex(cashbackValue))
         .encodeABI(),
@@ -646,7 +671,7 @@ const updateCashbackForAuthorSignedTransaction = async (
 }
 
 const burnSignedTransaction = async (body: ChainBurnErc721Celo, provider?: string, testnet?: boolean) => {
-  const { fromPrivateKey, tokenId, contractAddress, feeCurrency, nonce, signatureId } = body
+  const { fromPrivateKey, tokenId, contractAddress, feeCurrency, fee, nonce, signatureId } = body
 
   const celoProvider = celoUtils.getProvider(provider)
   const network = await celoProvider.ready
@@ -658,7 +683,8 @@ const burnSignedTransaction = async (body: ChainBurnErc721Celo, provider?: strin
       chainId: network.chainId,
       feeCurrency: feeCurrencyContractAddress,
       nonce,
-      gasLimit: '0',
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
       to: contractAddress.trim(),
       data: contract.methods.burn(tokenId).encodeABI(),
     })
@@ -674,9 +700,9 @@ const burnSignedTransaction = async (body: ChainBurnErc721Celo, provider?: strin
     chainId: network.chainId,
     feeCurrency: feeCurrencyContractAddress,
     nonce: nonce || txCount,
-    gasLimit: '0',
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
     to: contractAddress.trim(),
-    gasPrice,
     data: contract.methods.burn(tokenId).encodeABI(),
     from,
   }
@@ -816,7 +842,6 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: await mintSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -836,7 +861,6 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: (await mintCashbackSignedTransaction(body, provider, testnet)) as string,
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -860,7 +884,6 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: (await mintMultipleCashbackSignedTransaction(body, provider, testnet)) as string,
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -884,7 +907,6 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: (await mintMultipleSignedTransaction(body, provider, testnet)) as string,
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -904,7 +926,6 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: (await burnSignedTransaction(body, provider, testnet)) as string,
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -928,7 +949,6 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: (await transferSignedTransaction(body, provider, testnet)) as string,
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -952,7 +972,6 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: (await updateCashbackForAuthorSignedTransaction(body, provider, testnet)) as string,
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -972,7 +991,6 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: (await deploySignedTransaction(body, provider, testnet)) as string,
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -996,7 +1014,6 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: (await mintProvenanceSignedTransaction(body, provider, testnet)) as string,
-          signatureId: body.signatureId,
         })
       },
       /**
@@ -1020,7 +1037,6 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         }
         return args.broadcastFunction({
           txData: (await mintMultipleProvenanceSignedTransaction(body, provider, testnet)) as string,
-          signatureId: body.signatureId,
         })
       },
     },

@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type GenerateCustodialWalletCeloKMS = {
     /**
      * Blockchain to work with.
@@ -35,19 +37,7 @@ export type GenerateCustodialWalletCeloKMS = {
      * If address should support batch transfers of the assets, it should be marked as true.
      */
     enableBatchTransactions: boolean;
-    /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
     /**
      * Nonce to be set to the transaction. If not present, last known nonce will be used.
      */

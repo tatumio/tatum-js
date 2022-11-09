@@ -48,7 +48,7 @@ console.log(`My public address is ${account}, with private key ${secret}.`)
 
 ### How to check balance of the address
 
-Check example [here](./src/app/xrp.acount.balance.example.ts).
+Check example [here](./src/app/xrp.balance.example.ts).
 
 ### How to read information from the blockchain
 
@@ -57,6 +57,14 @@ Check example [here](./src/app/xrp.blockchain.example.ts).
 ### How to send transaction to another wallet
 
 Check example [here](./src/app/xrp.tx.example.ts).
+
+### How to send trustline transaction to another wallet
+
+Check example [here](./src/app/xrp.tx.trustline.example.ts).
+
+### How to change account settings
+
+Check example [here](./src/app/xrp.tx.settings.example.ts).
 
 ### How to generate virtual account for XRP and transfer from it to a blockchain address
 
