@@ -62,5 +62,5 @@ export async function klaytnMultiTokenExample(): Promise<void> {
     account: to,
   })) as TransactionHash
 
-  console.log(`Sent Multi Token with transaction ID: ${multiTokenBurned.txId}`)
+  console.log(`Burned Multi Token with transaction ID: ${multiTokenBurned.txId}`)
 }

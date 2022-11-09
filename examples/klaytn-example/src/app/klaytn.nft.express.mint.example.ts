@@ -21,7 +21,7 @@ export async function klaytnNftExpressExample() {
   // Mint NFTs on the pre-built smart contract provided by Tatum
   const nftMinted = (await klaytnSDK.nft.mintNFT({
     chain: 'KLAY',
-    to,
+    to: address,
     // uploaded metadata from ipfs from tutorial above
     url: 'https://my_token_data.com',
   })) as TransactionHash
@@ -59,7 +59,7 @@ export async function klaytnNftExpressExample() {
   // Minting NFTs with NFT Express using your own smart contract
   const mintedWithMinter = (await klaytnSDK.nft.mintNFT({
     chain: 'KLAY',
-    to,
+    to: address,
     url: 'https://my_token_data.com',
     tokenId,
     contractAddress,

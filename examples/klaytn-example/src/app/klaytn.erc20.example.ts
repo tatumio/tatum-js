@@ -17,7 +17,7 @@ export async function klaytnErc20Example() {
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
     address,
-    supply: '10000000',
+    supply: '100',
     fromPrivateKey,
     digits: 18,
     totalCap: '10000000',
