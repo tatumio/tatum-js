@@ -2,23 +2,19 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type BurnNftAlgoKMS = {
+export type ChainBurnAlgoErc20KMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'ALGO';
     /**
-     * The ID of the NFT to burn; this is the ID from the <code>assetIndex</code> parameter returned in the response body of the <a href="#operation/NftMintErc721">minting call</a>
-     */
-    contractAddress: string;
-    /**
-     * Blockchain address to burn NFT token from
+     * Blockchain address to send ERC20 token from
      */
     from: string;
     /**
-     * The transaction fee in Algos
+     * assetIndex - asset index uniquely specifying the asset
      */
-    fee?: string;
+    contractAddress: string;
     /**
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
@@ -27,4 +23,8 @@ export type BurnNftAlgoKMS = {
      * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
      */
     index?: number;
+    /**
+     * The transaction fee in Algos
+     */
+    fee?: string;
 }

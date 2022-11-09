@@ -16,6 +16,10 @@ export type TransferNftAlgoExpress = {
      */
     to: string;
     /**
+     * Blockchain address to send NFT token from
+     */
+    from: string;
+    /**
      * AssetID of token.
      */
     contractAddress: string;
