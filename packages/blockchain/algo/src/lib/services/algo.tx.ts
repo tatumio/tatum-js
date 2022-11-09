@@ -156,7 +156,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       body.name,
       body.url,
       undefined,
-      params,
+      {
+        ...params,
+        fee: Number(body.fee || '0.001') * 1000000,
+        flatFee: true,
+      },
     )
 
     if (isWithSignatureId(body)) {
@@ -196,7 +200,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       Number.parseInt((body as TransferNftAlgo).value || '1'),
       undefined,
       Number(body.contractAddress),
-      params,
+      {
+        ...params,
+        fee: Number(body.fee || '0.001') * 1000000,
+        flatFee: true,
+      },
       undefined,
     )
 
@@ -227,7 +235,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
         : algoWallet().generateAddressFromPrivatetKey((body as BurnNftAlgo).fromPrivateKey),
       undefined,
       Number(body.contractAddress),
-      params,
+      {
+        ...params,
+        fee: Number(body.fee || '0.001') * 1000000,
+        flatFee: true,
+      },
       undefined,
     )
 
@@ -261,7 +273,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       0,
       undefined,
       body.assetId,
-      params,
+      {
+        ...params,
+        fee: Number(body.fee || '0.001') * 1000000,
+        flatFee: true,
+      },
     )
     if (isWithSignatureId(body)) {
       return JSON.stringify(txn)
@@ -299,7 +315,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       body.name,
       (body as DeployAlgoErc20).url,
       undefined,
-      params,
+      {
+        ...params,
+        fee: Number(body.fee || '0.001') * 1000000,
+        flatFee: true,
+      },
     )
 
     if (isWithSignatureId(body)) {
@@ -335,7 +355,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       Number(body.amount),
       undefined,
       Number(body.contractAddress),
-      params,
+      {
+        ...params,
+        fee: Number(body.fee || '0.001') * 1000000,
+        flatFee: true,
+      },
       undefined,
     )
 
@@ -368,7 +392,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       from,
       undefined,
       Number(body.contractAddress),
-      params,
+      {
+        ...params,
+        fee: Number(body.fee || '0.001') * 1000000,
+        flatFee: true,
+      },
       undefined,
     )
 

@@ -23,4 +23,8 @@ export type TransferNftAlgo = {
      * Private key of sender address.
      */
     fromPrivateKey: string;
+    /**
+     * The transaction fee in Algos
+     */
+    fee?: string;
 }
