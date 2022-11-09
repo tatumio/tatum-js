@@ -10,7 +10,8 @@ export const xrpTxAccountSettingsExample = async () => {
   console.log(`My public address: ${address}`)
   console.log(`My private key: ${secret}`)
 
-  // FUND YOUR ACCOUNT WITH XRP FROM https://yusufsahinhamza.github.io/xrp-testnet-faucet/ for 100 XRP
+  // FUND YOUR ACCOUNT WITH XRP FROM https://yusufsahinhamza.github.io/xrp-testnet-faucet/ for 50 XRP
+  // Set generated accounts and secrets to consts below
 
   const fundedAddress = '<PUT ADDRESS HERE>'
   const fundedSecret = '<PUT SECRET HERE>'

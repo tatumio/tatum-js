@@ -120,7 +120,7 @@ export const prepareTransactionFromVirtualAccountToBlockchain = async (
   }
 
   const rippleAPI = new RippleAPI()
-  const prepared = await rippleAPI.preparePayment(address, payment, {
+  const prepared = await rippleAPI.preparePayment(fromAccount, payment, {
     fee: `${fee}`,
     sequence: accountInfo?.account_data ? accountInfo.account_data.Sequence : undefined,
     maxLedgerVersion: accountInfo?.ledger_current_index ? accountInfo.ledger_current_index + 5 : undefined,

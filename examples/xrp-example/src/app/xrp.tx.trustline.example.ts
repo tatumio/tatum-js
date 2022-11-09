@@ -13,7 +13,8 @@ export const xrpTxTrustlineExample = async () => {
   const { address: recipientAddress } = xrpSDK.wallet.wallet()
   console.log(`Recipient address: ${recipientAddress}`)
 
-  // FUND YOUR AND RECIPIENT ACCOUNT WITH XRP FROM https://yusufsahinhamza.github.io/xrp-testnet-faucet/ for 100 XRP
+  // FUND YOUR AND RECIPIENT ACCOUNT WITH XRP FROM https://yusufsahinhamza.github.io/xrp-testnet-faucet/ for 50 XRP
+  // Set generated accounts and secrets to consts below
 
   const fundedAddress = 'rhFAJJmJZZ9pkMBCXVrsqri2C2azJm9G5A'
   const fundedSecret = 'ss82SYF2U74jAdPjSP78s77WirdPg'
