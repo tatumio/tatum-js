@@ -31,7 +31,7 @@ export async function bchBlockchainExample() {
   // Get Bitcoin Cash Transactions by address
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGetTxByAddress
   const txByAddress = await bchSDK.blockchain.getTxForAccount(
-    'bchtest:qr5rrwc8nw59awgpxaemwq37arzg9f303u9fp2ws65'
+    'bchtest:qr5rrwc8nw59awgpxaemwq37arzg9f303u9fp2ws65',
   )
   console.log('Transaction (by address): ', txByAddress)
 
