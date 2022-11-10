@@ -8,6 +8,7 @@ import { ethNftExample } from './app/eth.nft.example'
 import { ethSmartContractExample } from './app/eth.smartContract.example'
 import { ethBlockchainExample } from './app/eth.blockchain.example'
 import { ethTxExample } from './app/eth.tx.example'
+import { ethNftExpressExample } from './app/eth.nft.express.mint.example'
 
 /**
  * This is example app, which shows how to use ETH SDK. For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/Ethereum
@@ -21,6 +22,7 @@ const examples = async () => {
 
   console.log(`Running ethTxExample`)
   await ethTxExample()
+
   console.log(`Running ethErc20Example`)
   await ethErc20Example()
 
@@ -41,6 +43,9 @@ const examples = async () => {
 
   console.log(`Running ethSmartContractExample`)
   await ethSmartContractExample()
+
+  console.log(`Running ethNftExpressExample`)
+  await ethNftExpressExample()
 }
 
 void examples()
