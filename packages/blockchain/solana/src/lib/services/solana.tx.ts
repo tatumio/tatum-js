@@ -253,11 +253,10 @@ const createSplToken = async (
   web3: SolanaWeb3,
   provider?: string,
   externalFeePayer = false,
-  freezeAuthority?: string,
 ) => {
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from)
-  const freezeAuthorityKey = freezeAuthority ? new PublicKey(freezeAuthority) : from
+  const freezeAuthorityKey = body.freezeAuthority ? new PublicKey(body.freezeAuthority) : from
   const feePayerKey = getFeePayer(externalFeePayer, from, body.feePayer)
   const transaction = new Transaction({ feePayer: feePayerKey })
   const lamports = await getMinimumBalanceForRentExemptMint(connection)
