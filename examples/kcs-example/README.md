@@ -38,7 +38,7 @@ const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 Examples are written in TypeScript, but you can use them in JavaScript as well. We are following ES6 standard, so you
 need to have Node.js version 10 or higher.
 
-### How to generate XLM wallet
+### How to generate KCS wallet
 
 ```typescript
 import { TatumKcsSDK } from '@tatumio/kcs'
@@ -46,6 +46,24 @@ import { TatumKcsSDK } from '@tatumio/kcs'
 const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 const { account, secret } = kcsSDK.wallet.wallet()
 console.log(`My public address is ${account}, with private key ${secret}.`)
+```
+
+### How to use web3
+
+```typescript
+import { TatumKcsSDK } from '@tatumio/kcs'
+
+const kcsSDK = TatumKcsSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const web3response = await kcsSDK.httpDriver({
+  jsonrpc: '2.0',
+  method: 'web3_clientVersion',
+  params: [],
+  id: 2,
+})
+
+const gasPriceInWei = await kcsSDK.getGasPriceInWei()
+const web3 = kcsSDK.web3Client()
+const blockNumber = await web3.eth.getBlockNumber()
 ```
 
 ### How to check balance of the address

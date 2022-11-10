@@ -46,6 +46,24 @@ const { account, secret } = ethSDK.wallet.wallet()
 console.log(`My public address is ${account}, with private key ${secret}.`)
 ```
 
+```typescript
+import { TatumEthSDK } from '@tatumio/eth'
+
+const ethSDK = TatumEthSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+
+const web3response = await ethSDK.httpDriver({
+  jsonrpc: '2.0',
+  method: 'web3_clientVersion',
+  params: [],
+  id: 2,
+})
+
+const gasPriceInWei = await ethSDK.getGasPriceInWei()
+const web3 = ethSDK.web3Client()
+
+const blockNumber = await web3.eth.getBlockNumber()
+```
+
 ### How to check balance of the address
 
 You can find examples [here](./src/app/eth.balance.example.ts).
