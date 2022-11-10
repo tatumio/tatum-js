@@ -284,13 +284,28 @@ export const btcBasedTxTestFactory = {
         ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_FEE_TOO_SMALL)
       })
 
-      it('no inputs', async () => {
+      it('no inputs - values', async () => {
+        args.mock.requestGetTransactionsNotFound()
+        args.mock.requestGetUtxoNotFound()
+
+        await expect(
+          args.transactions.prepareSignedTransaction(
+            {
+              ...definedChangeAddressUTXOBody(args.data),
+              fromUTXO: [],
+            },
+            options,
+          ),
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_NO_INPUTS)
+      })
+
+      it('no inputs - balance', async () => {
         args.mock.requestGetTransactionsNotFound()
         args.mock.requestGetUtxoNotFound()
 
         await expect(
           args.transactions.prepareSignedTransaction(definedChangeAddressUTXOBody(args.data), options),
-        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_NO_INPUTS)
+        ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE)
       })
 
       describe('invalid amount', function () {
@@ -396,13 +411,27 @@ export const btcBasedTxTestFactory = {
       ).rejects.toThrow(SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY)
       testHelper.expectMockNotCalled(args.mock.broadcast)
     })
-    it('no inputs', async () => {
+    it('no inputs - values', async () => {
+      args.mock.requestGetTransactionsNotFound()
+      args.mock.requestGetUtxoNotFound()
+
+      await expect(
+        args.transactions.prepareSignedTransaction(
+          {
+            ...definedChangeAddressFromBody(args.data),
+            fromAddress: [],
+          },
+          options,
+        ),
+      ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_NO_INPUTS)
+    })
+    it('no inputs - balance', async () => {
       args.mock.requestGetTransactionsNotFound()
       args.mock.requestGetUtxoNotFound()
 
       await expect(
         args.transactions.prepareSignedTransaction(definedChangeAddressFromBody(args.data), options),
-      ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_NO_INPUTS)
+      ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE)
     })
   },
 }
