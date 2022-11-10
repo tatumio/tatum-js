@@ -35,7 +35,6 @@ export const TatumBchSDK = (
       getBlock: BitcoinCashService.bchGetBlock,
       getTxForAccount: BitcoinCashService.bchGetTxByAddress,
       getTransaction: BitcoinCashService.bchGetRawTransaction,
-      send: BitcoinCashService.bchTransferBlockchain,
     },
   }
 }
