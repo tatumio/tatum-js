@@ -15,12 +15,12 @@ export async function bchVirtualAccountExample() {
   // Generate PrivateKey from Mnemonic with a given index
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddressPrivateKey
   const privateKey = await bchSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
-  console.log('privateKey: ', privateKey)
+  console.log('PrivateKey: ', privateKey)
 
   // Generate Address from xpub with a given index
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddress
   const to = bchSDK.wallet.generateAddressFromXPub(xpub, 0, { testnet: true })
-  console.log('address:', to)
+  console.log('Address:', to)
 
   // Generate new virtual account for BCH with specific blockchain address
   // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccount
@@ -28,12 +28,12 @@ export async function bchVirtualAccountExample() {
     currency: 'BCH',
     xpub: xpub,
   })
-  console.log('account', JSON.stringify(virtualAccount))
+  console.log('Virtual Account', JSON.stringify(virtualAccount))
 
   // Create a deposit address for a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
   const address = await bchSDK.virtualAccount.depositAddress.create(virtualAccount.id)
-  console.log('account address', address)
+  console.log('Virtual Account address', address)
 
   // Fund your address here: https://faucet.fullstack.cash/
   console.log(
@@ -56,7 +56,7 @@ export async function bchVirtualAccountExample() {
     fee: '0.0005',
     attr: address.address,
   })
-  console.log(resultKeyPair)
+  console.log('Transaction using keypair: ', resultKeyPair)
 
   // If you have funds on account - you can transfer it to another bch address
   // Using mnemonic - all of the addresses, that are generated from the mnemonic are scanned for the incoming deposits which are used as a source of the transaction.
@@ -68,7 +68,7 @@ export async function bchVirtualAccountExample() {
     mnemonic: mnemonic,
     xpub: xpub,
   })
-  console.log(result)
+  console.log('Transaction using mnemonic: ', result)
 
   // Create multiple deposit addresses for a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddressesBatch
@@ -84,17 +84,17 @@ export async function bchVirtualAccountExample() {
       },
     ],
   })
-  console.log(addresses)
+  console.log('Addresses: ', addresses)
 
   // Check whether a blockchain address is assigned to a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/addressExists
   const account = await bchSDK.virtualAccount.depositAddress.checkExists(address.address)
-  console.log(account)
+  console.log('Virtual Account: ', account)
 
   // Get all deposit addresses for a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/getAllDepositAddresses
   const addressByAccount = await bchSDK.virtualAccount.depositAddress.getByAccount(virtualAccount.id)
-  console.log(addressByAccount)
+  console.log('Address: ', addressByAccount)
 
   // Remove a deposit address from a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/removeAddress

@@ -11,7 +11,7 @@ export const oneWallet = (args: { blockchain: EvmBasedBlockchain }) => {
      * Transform HEX address to Bech32 ONE address format
      */
     toBech32Address(address: string) {
-      return oneUtils.transformAddress(address)
+      return oneUtils.toHex(address)
     },
   }
 }

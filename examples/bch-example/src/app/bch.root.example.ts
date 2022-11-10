@@ -7,10 +7,10 @@ export async function exchangeRateExample() {
   // Get currenct exchange rate
   // You can find more details in https://apidoc.tatum.io/tag/Exchange-rate#operation/getExchangeRate
   const rate = await bchSDK.getExchangeRate()
-  console.log(rate)
+  console.log('Rate: ', rate)
 
   // Get currenct exchange rate of the supported FIAT / crypto asset
   // You can find more details in https://apidoc.tatum.io/tag/Exchange-rate#operation/getExchangeRate
   const rateWithBasePair = await bchSDK.getExchangeRate(Fiat.EUR)
-  console.log(rateWithBasePair)
+  console.log('Rate for EUR: ', rateWithBasePair)
 }

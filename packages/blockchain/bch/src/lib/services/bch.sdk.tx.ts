@@ -76,7 +76,12 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
         const defaultFee = 0.00001
         const txFee = amountUtils.toSatoshis(body.fee ?? defaultFee)
         const change = Number(new BigNumber(sumOfInputs).minus(sumOfOutputs).minus(txFee))
-        transactionBuilder.addOutput(bcashAddressHelper.getAddress(body.changeAddress), change)
+        try {
+          transactionBuilder.addOutput(bcashAddressHelper.getAddress(body.changeAddress), change)
+        } catch (e: any) {
+          const address = new bitcoreLibCash.Address.fromString(body.changeAddress)
+          transactionBuilder.addOutput(address.toLegacyAddress(), change)
+        }
       }
 
       verifyAmounts(amountToSign, body)
@@ -95,14 +100,15 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
       }
 
       for (let i = 0; i < privateKeysToSign.length; i++) {
-        const ecPair = BitcoinCashJS.ECPair.fromWIF(privateKeysToSign[i])
+        const ecPair = BitcoinCashJS.ECPair.fromWIF(privateKeysToSign[i], network)
         transactionBuilder.sign(
           i,
           ecPair,
           undefined,
-          transactionBuilder.hashTypes.SIGHASH_ALL,
+          BitcoinCashJS.Transaction.SIGHASH_ALL,
           amountToSign[i],
-          transactionBuilder.signatureAlgorithms.SCHNORR,
+          undefined,
+          BitcoinCashJS.ECSignature.SCHNORR,
         )
       }
 

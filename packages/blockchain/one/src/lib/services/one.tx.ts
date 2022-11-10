@@ -19,35 +19,35 @@ export const oneTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
         ...args,
         broadcastFunction: HarmonyService.oneBroadcast,
         transferApiMethod: HarmonyService.oneBlockchainTransfer,
-        addressTransformer: oneUtils.transformAddress,
+        addressTransformer: oneUtils.toHex,
       }),
     },
     erc20: {
       ...erc20({
         ...args,
         broadcastFunction: HarmonyService.oneBroadcast,
-        addressTransformer: oneUtils.transformAddress,
+        addressTransformer: oneUtils.toHex,
       }),
     },
     erc721: {
       ...erc721({
         ...args,
         broadcastFunction: HarmonyService.oneBroadcast,
-        addressTransformer: oneUtils.transformAddress,
+        addressTransformer: oneUtils.toHex,
       }),
     },
     multiToken: {
       ...multiToken({
         ...args,
         broadcastFunction: HarmonyService.oneBroadcast,
-        addressTransformer: oneUtils.transformAddress,
+        addressTransformer: oneUtils.toHex,
       }),
     },
     custodial: {
       ...custodial({
         ...args,
         broadcastFunction: HarmonyService.oneBroadcast,
-        addressTransformer: oneUtils.transformAddress,
+        addressTransformer: oneUtils.toHex,
       }),
     },
     gasPump: {
@@ -61,7 +61,7 @@ export const oneTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
         ...args,
         broadcastFunction: HarmonyService.oneBroadcast,
         smartContractApiMethod: HarmonyService.oneBlockchainSmartContractInvocation,
-        addressTransformer: oneUtils.transformAddress,
+        addressTransformer: oneUtils.toHex,
       }),
     },
   }
