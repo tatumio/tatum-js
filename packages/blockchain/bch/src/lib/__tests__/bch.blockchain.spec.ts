@@ -30,13 +30,6 @@ describe('TatumBchSDK - blockchain', () => {
     getBlock: [api.bchGetBlock, testData.BLOCK_HASH],
     getTransaction: [api.bchGetRawTransaction, testData.TX_HASH],
     getTxForAccount: [api.bchGetTxByAddress, testData.TESTNET.ADDRESS_0],
-    send: [
-      api.bchTransferBlockchain,
-      {
-        fromUTXO: [{ txHash: testData.TX_HASH, index: 0, privateKey: testData.TESTNET.PRIVATE_KEY_0 }],
-        to: [{ address: testData.TESTNET.ADDRESS_100, value: 1 }],
-      } as BchTransaction,
-    ],
   }
 
   describe('API methods mapping', () => {
