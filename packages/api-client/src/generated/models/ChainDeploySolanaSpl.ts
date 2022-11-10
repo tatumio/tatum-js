@@ -24,7 +24,19 @@ export type ChainDeploySolanaSpl = {
      */
     from: string;
     /**
+     * Address on Solana blockchain which which can freeze token accounts. Default to the 'from'
+     */
+    freezeAuthority?: string;
+    /**
      * Private key of Solana account address, from which the fee for the deployment of SPL will be paid. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
+    /**
+     * Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.
+     */
+    feePayer?: string;
+    /**
+     * Private key of the fee payer address.
+     */
+    feePayerPrivateKey?: string;
 }
