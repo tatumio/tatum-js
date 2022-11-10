@@ -21,6 +21,7 @@ const examples = async () => {
 
   console.log(`Running ethTxExample`)
   await ethTxExample()
+
   console.log(`Running ethErc20Example`)
   await ethErc20Example()
 
