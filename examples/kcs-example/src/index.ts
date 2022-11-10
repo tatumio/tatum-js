@@ -37,9 +37,6 @@ const examples = async () => {
   console.log(`Running kcsMultiTokenExample`)
   await kcsMultiTokenExample()
 
-  console.log(`Running kcsVirtualAccountExample`)
-  await kcsVirtualAccountExample()
-
   console.log(`Running kcsWalletExample`)
   await kcsWalletExample()
 }

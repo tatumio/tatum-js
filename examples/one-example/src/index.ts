@@ -1,7 +1,3 @@
-/**
- * This is example app, which shows how to use ONE SDK. For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/Harmony
- */
-
 import { oneBlockchainExample } from './app/one.blockchain.example'
 import { oneSubscriptionsExample } from './app/one.subscriptions.example'
 import { oneTxExample } from './app/one.tx.example'
@@ -12,7 +8,11 @@ import { oneNftExample } from './app/one.nft.example'
 import { oneSmartContractExample } from './app/one.smartContract.example'
 import { oneVirtualAccountExample } from './app/one.virtualAccount.example'
 import { oneWalletExample } from './app/one.wallet.example'
+import { oneNftExpressExample } from './app/one.nft.express.mint.example'
 
+/**
+ * This is example app, which shows how to use ONE SDK. For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/Harmony
+ */
 const examples = async () => {
   console.log(`Running oneBlockchainExample`)
   await oneBlockchainExample()
@@ -34,6 +34,9 @@ const examples = async () => {
 
   console.log(`Running oneNftExample`)
   await oneNftExample()
+
+  console.log(`Running oneNftExpressExample`)
+  await oneNftExpressExample()
 
   console.log(`Running oneMultiTokenExample`)
   await oneMultiTokenExample()
