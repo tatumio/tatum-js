@@ -14,6 +14,8 @@ import type { BurnNftFlowPK } from '../models/BurnNftFlowPK';
 import type { BurnNftKMS } from '../models/BurnNftKMS';
 import type { BurnNftKMSCelo } from '../models/BurnNftKMSCelo';
 import type { BurnNftKMSTron } from '../models/BurnNftKMSTron';
+import type { BurnNftSolana } from '../models/BurnNftSolana';
+import type { BurnNftSolanaKMS } from '../models/BurnNftSolanaKMS';
 import type { BurnNftTron } from '../models/BurnNftTron';
 import type { CeloTx } from '../models/CeloTx';
 import type { DeployNft } from '../models/DeployNft';
@@ -533,6 +535,7 @@ export class NftErc721OrCompatibleService {
                  * <li>KuCoin Community Chain</li>
                  * <li>Polygon</li>
                  * <li>TRON</li>
+                 * <li>Solana</li>
                  * </ul>
                  * <p><b>Burning NFTs on Algorand</b><br/>
                  * You can burn only the NFTs that were minted with the address of the manager account specified in the <code>manager</code> parameter in the <a href="#operation/NftMintErc721">minting call</a> (see the <code>MintNftExpressAlgorand</code>, <code>MintNftAlgorand</code>, and <code>MintNftAlgorandKMS</code> schemas of the request body).</p>
@@ -547,7 +550,7 @@ export class NftErc721OrCompatibleService {
                  * @throws ApiError
                  */
                 public static nftBurnErc721(
-                    requestBody: (BurnNft | BurnNftCelo | BurnNftAlgo | BurnNftKMSCelo | BurnNftTron | BurnNftKMSTron | BurnNftKMS | BurnNftAlgoKMS | BurnNftFlowPK | BurnNftFlowMnemonic | BurnNftFlowKMS),
+                    requestBody: (BurnNft | BurnNftCelo | BurnNftAlgo | BurnNftKMSCelo | BurnNftTron | BurnNftSolana | BurnNftSolanaKMS | BurnNftKMSTron | BurnNftKMS | BurnNftAlgoKMS | BurnNftFlowPK | BurnNftFlowMnemonic | BurnNftFlowKMS),
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<(TransactionHash | SignatureId)> {
                     return __request({

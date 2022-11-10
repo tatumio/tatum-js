@@ -34,7 +34,7 @@ const send = async (
 
   let transactionData: TransactionHash
   if (account.currency === Currency.SOL) {
-    transactionData = (await txService.send({
+    transactionData = (await txService.send.send({
       from: body.from,
       to: address,
       amount,
@@ -53,12 +53,11 @@ const send = async (
       decimals = vc.precision as number
     }
 
-    transactionData = (await txService.transferSplToken({
+    transactionData = (await txService.send.transferSplToken({
       from: body.from,
       fromPrivateKey: privateKey,
       to: address,
       amount,
-      chain: Currency.SOL,
       contractAddress: contractAddress,
       digits: decimals,
     })) as TransactionHash

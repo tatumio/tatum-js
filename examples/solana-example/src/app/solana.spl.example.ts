@@ -1,34 +1,46 @@
 import { TatumSolanaSDK } from '@tatumio/solana'
-import { Currency } from '@tatumio/api-client'
+import { TransactionHash } from '@tatumio/api-client'
+import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
+const SLEEP_SECONDS = 5
 const solanaSDK = TatumSolanaSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 /**
  * https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Mint
  */
 export async function solanaSplTokenExample() {
+  // This address wil CREATE and TRANSFER SPL to Receiver Address
+  const senderAddress = '<PUT SENDER ADDRESS HERE>'
+  const senderPrivateKey = '<PUT SENDER PRIVATE KEY HERE>'
+
+  // This address will RECEIVE SPL token
+  const receiverAddress = '<PUT RECEIVER ADDRESS HERE>'
+  const receiverPrivateKey = '<PUT RECEIVER PRIVATE KEY HERE>'
+
   // Lets create new SPL token
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy
-  const { txId, contractAddress } = (await solanaSDK.transaction.createSplToken({
+  const { txId, contractAddress } = (await solanaSDK.transaction.send.createSplToken({
     digits: 6,
     supply: '1000000',
-    chain: Currency.SOL,
-    address: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
-    from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
-    fromPrivateKey:
-      '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
+    address: senderAddress,
+    from: senderAddress,
+    fromPrivateKey: senderPrivateKey,
   })) as { txId: string; contractAddress: string }
   console.log(`Created SPL token: ${contractAddress} in tx: ${txId}`)
 
-  const { txId: transferTx } = (await solanaSDK.transaction.transferSplToken({
+  // If during this time the transaction is not confirmed, then the waiting time should be increased.
+  // In a real application, the wait mechanism must be implemented properly without using this
+  console.log(`Waiting ${SLEEP_SECONDS} seconds for the transaction [${txId}] to appear in a block`)
+  await sleepSeconds(SLEEP_SECONDS)
+
+  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Transfer
+  const { txId: transferTx } = (await solanaSDK.transaction.send.transferSplToken({
     digits: 6,
-    chain: Currency.SOL,
-    to: '2NeZDp7HD1BEZ1Hpgx8RYwVY5GneGruvkYzoBY5iGK3g',
-    from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
+    to: receiverAddress,
+    from: senderAddress,
     amount: '100',
-    fromPrivateKey:
-      '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
+    fromPrivateKey: senderPrivateKey,
     contractAddress,
-  })) as { txId: string }
-  console.log(`Transfered SPL tokens: ${contractAddress} in tx: ${transferTx}`)
+  })) as TransactionHash
+  console.log(`Transferred SPL tokens: ${contractAddress} in tx: ${transferTx}`)
 }

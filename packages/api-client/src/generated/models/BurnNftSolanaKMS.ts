@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type TransferNftSolanaKMS = {
+export type BurnNftSolanaKMS = {
     /**
      * The blockchain to work with
      */
@@ -12,15 +12,15 @@ export type TransferNftSolanaKMS = {
      */
     from: string;
     /**
-     * The blockchain address to send the NFT to
-     */
-    to: string;
-    /**
      * The blockchain address of the NFT; this is the address from the <code>nftAddress</code> parameter returned in the response body of the <a href="#operation/NftMintErc721">minting call</a>
      */
     contractAddress: string;
     /**
-     * The KMS identifier of the private key of the blockchain address that you are sending the NFT from (the address that you specified in the <code>from</code> parameter)
+     * The blockchain address of the NFT collection
+     */
+    collection?: string;
+    /**
+     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
     /**
