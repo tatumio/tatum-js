@@ -118,6 +118,8 @@ export type { BurnNftFlowPK } from './models/BurnNftFlowPK';
 export type { BurnNftKMS } from './models/BurnNftKMS';
 export type { BurnNftKMSCelo } from './models/BurnNftKMSCelo';
 export type { BurnNftKMSTron } from './models/BurnNftKMSTron';
+export type { BurnNftSolana } from './models/BurnNftSolana';
+export type { BurnNftSolanaKMS } from './models/BurnNftSolanaKMS';
 export type { BurnNftTron } from './models/BurnNftTron';
 export type { BuyAssetOnMarketplace } from './models/BuyAssetOnMarketplace';
 export type { BuyAssetOnMarketplaceCelo } from './models/BuyAssetOnMarketplaceCelo';

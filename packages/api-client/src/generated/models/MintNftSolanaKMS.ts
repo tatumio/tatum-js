@@ -21,8 +21,20 @@ export type MintNftSolanaKMS = {
      */
     from: string;
     /**
+     * Address on Solana blockchain which can freeze token accounts. Default to the 'from'
+     */
+    freezeAuthority?: string;
+    /**
      * The KMS identifier of the private key of the blockchain address that will pay the fee for the transaction
      */
     signatureId: string;
+    /**
+     * Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.
+     */
+    feePayer?: string;
+    /**
+     * Identifier of the private key used for paying the gas costs in signing application. Defaults to the signatureId.
+     */
+    feePayerSignatureId?: string;
     metadata: SolanaNftMetadataKMS;
 }

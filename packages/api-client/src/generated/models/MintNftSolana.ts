@@ -21,9 +21,21 @@ export type MintNftSolana = {
      */
     from: string;
     /**
+     * Address on Solana blockchain which can freeze token accounts. Default to the 'from'
+     */
+    freezeAuthority?: string;
+    /**
      * The private key of the blockchain address that will pay the fee for the transaction
      */
     fromPrivateKey: string;
+    /**
+     * Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.
+     */
+    feePayer?: string;
+    /**
+     * Private key of the fee payer address.
+     */
+    feePayerPrivateKey?: string;
     /**
      * The private key of the collection verifier (owner) who will verify the NFT in the NFT collection where the NFT is minted in. The blockchain address of this collection is specified in the <code>collection</code> parameter in the <code>metadata</code> section of the request body. To know more about Solana collections and verification, refer to the <a href="https://docs.metaplex.com/programs/token-metadata/certified-collections" target="_blank">Solana user documentation</a>.
      */

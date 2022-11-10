@@ -5,18 +5,20 @@ const solanaSdk = TatumSolanaSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab
 
 /**
  * https://docs.tatum.io/guides/ledger-and-off-chain/how-to-use-ledger-accounts
- * https://apidoc.tatum.io/tag/Account#operation/createAccount
  */
 export async function solanaVirtualAccountExample() {
   // Create new blockchain address
+  // https://apidoc.tatum.io/tag/Solana#operation/SolanaGenerateWallet
   const { address, privateKey } = solanaSdk.wallet.wallet()
   console.log(`My address is ${address} with private key is ${privateKey}`)
 
   // Create new blockchain address for recipient
+  // https://apidoc.tatum.io/tag/Solana#operation/SolanaGenerateWallet
   const { address: recipientAddress } = solanaSdk.wallet.wallet()
   console.log(`Recipient address is ${recipientAddress}`)
 
   // We need to create virtual account
+  // https://apidoc.tatum.io/tag/Account#operation/createAccount
   const account = await solanaSdk.ledger.account.create({ currency: Currency.SOL })
   console.log(`Virtual account created: ${JSON.stringify(account)}`)
 
@@ -27,7 +29,7 @@ export async function solanaVirtualAccountExample() {
 
   // Let's fund our virtual account from faucet and list all incoming transactions
   // https://apidoc.tatum.io/tag/Transaction#operation/getTransactionsByAccountId
-  // https://solfaucet.com/
+  // https://solfaucet.com/ (Tatum is using Devnet)
   const transactions = await solanaSdk.ledger.transaction.getAllByAccount({ id: account.id }, 50)
   console.log(`My transactions are ${JSON.stringify(transactions)}`)
 

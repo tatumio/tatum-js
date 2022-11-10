@@ -8,31 +8,44 @@ import { klaytnSmartContractExample } from './app/klaytn.smartContract.example'
 import { klaytnSubscriptionsExample } from './app/klaytn.subscriptions.example'
 import { klaytnTxExample } from './app/klaytn.tx.example'
 import { klaytnVirtualAccountExample } from './app/klaytn.virtualAccount.example'
+import { klaytnWalletExample } from './app/klaytn.wallet.example'
 
 /**
  * This is example app, which shows how to use BSC SDK. For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/BNB-Smart-Chain
  */
 const examples = async () => {
-  console.log(`\nRunning klaytnBlockchainExample`)
+  console.log(`Running klaytnBlockchainExample`)
   await klaytnBlockchainExample()
-  console.log(`\nRunning klaytnVirtualAccountExample`)
-  await klaytnVirtualAccountExample()
-  console.log(`\nRunning klaytnNftExample`)
-  await klaytnNftExample()
-  console.log(`\nRunning klaytnNftExpressExample`)
-  await klaytnNftExpressExample()
-  console.log(`\nRunning klaytnSubscriptionsExample`)
-  await klaytnSubscriptionsExample()
-  console.log(`\nRunning klaytnTxExample`)
-  await klaytnTxExample()
-  console.log(`\nRunning klaytnMultiTokenExample`)
-  await klaytnMultiTokenExample()
-  console.log(`\nRunning klaytnErc20Example`)
-  await klaytnErc20Example()
-  console.log(`\nRunning klaytnBalanceExample`)
+
+  console.log(`Running klaytnBalanceExample`)
   await klaytnBalanceExample()
-  console.log(`\nRunning klaytnSmartContractExample`)
+
+  console.log(`Running klaytnTxExample`)
+  await klaytnTxExample()
+
+  console.log(`Running klaytnErc20Example`)
+  await klaytnErc20Example()
+
+  console.log(`Running klaytnNftExample`)
+  await klaytnNftExample()
+
+  console.log(`Running klaytnMultiTokenExample`)
+  await klaytnMultiTokenExample()
+
+  console.log(`Running klaytnSubscriptionsExample`)
+  await klaytnSubscriptionsExample()
+
+  console.log(`Running klaytnSmartContractExample`)
   await klaytnSmartContractExample()
+
+  console.log(`Running klaytnNftExpressExample`)
+  await klaytnNftExpressExample()
+
+  console.log(`Running klaytnVirtualAccountExample`)
+  await klaytnVirtualAccountExample()
+
+  console.log(`Running klaytnWalletExample`)
+  await klaytnWalletExample()
 }
 
 void examples()

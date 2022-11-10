@@ -23,4 +23,12 @@ export type TransferNftSolana = {
      * The private key of the blockchain address that you are sending the NFT from (the address that you specified in the <code>from</code> parameter)
      */
     fromPrivateKey: string;
+    /**
+     * Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.
+     */
+    feePayer?: string;
+    /**
+     * Private key of the fee payer address.
+     */
+    feePayerPrivateKey?: string;
 }

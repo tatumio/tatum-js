@@ -23,4 +23,12 @@ export type VerifySolanaNFT = {
      * The private key of the collection verifier's address
      */
     fromPrivateKey: string;
+    /**
+     * Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.
+     */
+    feePayer?: string;
+    /**
+     * Private key of the fee payer address.
+     */
+    feePayerPrivateKey?: string;
 }

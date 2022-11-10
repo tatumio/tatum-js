@@ -7,7 +7,6 @@ import {
 import { TatumBscSDK } from '../bsc.sdk'
 import * as apiClient from '@tatumio/api-client'
 import {
-  BlockchainUtilsService,
   BscEstimateGas,
   CallSmartContractMethod,
   PrivKeyRequest,

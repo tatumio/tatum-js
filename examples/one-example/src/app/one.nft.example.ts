@@ -10,7 +10,7 @@ const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
  * Fund your address here: https://faucet.pops.one/
  */
 export async function oneNftExample() {
-  // // This address wil DEPLOY, MINT and TRANSFER ERC20 to Receiver Address
+  // This address wil DEPLOY, MINT and TRANSFER ERC20 to Receiver Address
   const senderAddress = '<PUT SENDER ADDRESS HERE>'
   const senderPrivateKey = '<PUT SENDER PRIVATE KEY HERE>'
 
@@ -22,7 +22,7 @@ export async function oneNftExample() {
 
   // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftDeployErc721
-  const nftDeploy = (await oneSDK.nft.deployNFTSmartContract({
+  const nftDeploy = (await oneSDK.nft.send.deploySignedTransaction({
     chain: Currency.ONE,
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
@@ -48,7 +48,7 @@ export async function oneNftExample() {
   // all examples at once you should set some timeout between the calls or execute examples separately
 
   // Mint NFTs on your own smart contract
-  const nftMinted = (await oneSDK.nft.mintNFT({
+  const nftMinted = (await oneSDK.nft.send.mintSignedTransaction({
     chain: Currency.ONE,
     tokenId,
     contractAddress,
@@ -80,7 +80,7 @@ export async function oneNftExample() {
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
-  const nftTransferred = (await oneSDK.nft.transferNFT({
+  const nftTransferred = (await oneSDK.nft.send.transferSignedTransaction({
     chain: Currency.ONE,
     to: receiverAddress,
     tokenId,
@@ -96,7 +96,7 @@ export async function oneNftExample() {
 
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
-  const nftBurned = (await oneSDK.nft.burnNFT({
+  const nftBurned = (await oneSDK.nft.send.burnSignedTransaction({
     chain: Currency.ONE,
     tokenId,
     contractAddress,

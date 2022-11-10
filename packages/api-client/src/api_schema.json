@@ -158,7 +158,7 @@
       "name": "Elrond"
     },
     {
-      "description": "<p>Algorand is a decentralized blockchain technology network. Algorand is enabling the simple creation of next generation financial products, protocols and exchange of value across defi, financial institutions and governments.<br/>\nTatum supports 2 chains:\n<ul><li>Mainnet - a regular live chain\n<li>Testnet - a chain used for testing purposes. Coins on the test chain have no value and can be obtained from\na faucet, e.g. <a target=\"_blank\" href=\"https://bank.testnet.algorand.network/\">https://bank.testnet.algorand.network/</a></li></ul></p>\n",
+      "description": "<p>Algorand is a decentralized blockchain technology network. Algorand is enabling the simple creation of next generation financial products, protocols and exchange of value across defi, financial institutions and governments.<br/>\nTatum supports 2 chains:\n<ul><li>Mainnet - a regular live chain\n<li>Testnet - a chain used for testing purposes. Coins on the test chain have no value and can be obtained from\na faucet, e.g. <a target=\"_blank\" href=\"https://bank.testnet.algorand.network/\">https://bank.testnet.algorand.network/</a></li></ul><br/>\nExamples of working with the Algorand blockchain can be found in <a href=\"https://github.com/tatumio/tatum-js/tree/master/examples/algo-example\" target=\"_blank\">Tatum ALGO SDK</a>.<br/>\n</p>\n",
       "name": "Algorand"
     },
     {
@@ -21765,7 +21765,7 @@
     },
     "/v3/nft/burn": {
       "post": {
-        "description": "<p><b>100 credits per API call on Flow<br/>\n2 credits per API call on the other blockchains</b></p>\n<p>Destroy an NFT. Burning the NFT transfers it to an un-spendable blockchain address that no one can access.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Flow</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>TRON</li>\n</ul>\n<p><b>Burning NFTs on Algorand</b><br/>\nYou can burn only the NFTs that were minted with the address of the manager account specified in the <code>manager</code> parameter in the <a href=\"#operation/NftMintErc721\">minting call</a> (see the <code>MintNftExpressAlgorand</code>, <code>MintNftAlgorand</code>, and <code>MintNftAlgorandKMS</code> schemas of the request body).</p>\n<p><b>Signing a transaction</b><br/>\nWhen burning an NFT, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>100 credits per API call on Flow<br/>\n2 credits per API call on the other blockchains</b></p>\n<p>Destroy an NFT. Burning the NFT transfers it to an un-spendable blockchain address that no one can access.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Flow</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>TRON</li>\n<li>Solana</li>\n</ul>\n<p><b>Burning NFTs on Algorand</b><br/>\nYou can burn only the NFTs that were minted with the address of the manager account specified in the <code>manager</code> parameter in the <a href=\"#operation/NftMintErc721\">minting call</a> (see the <code>MintNftExpressAlgorand</code>, <code>MintNftAlgorand</code>, and <code>MintNftAlgorandKMS</code> schemas of the request body).</p>\n<p><b>Signing a transaction</b><br/>\nWhen burning an NFT, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "operationId": "NftBurnErc721",
         "parameters": [
           {
@@ -21786,6 +21786,8 @@
                   { "$ref": "#/components/schemas/BurnNftAlgo" },
                   { "$ref": "#/components/schemas/BurnNftKMSCelo" },
                   { "$ref": "#/components/schemas/BurnNftTron" },
+                  { "$ref": "#/components/schemas/BurnNftSolana" },
+                  { "$ref": "#/components/schemas/BurnNftSolanaKMS" },
                   { "$ref": "#/components/schemas/BurnNftKMSTron" },
                   { "$ref": "#/components/schemas/BurnNftKMS" },
                   { "$ref": "#/components/schemas/BurnNftAlgoKMS" },
@@ -66915,6 +66917,112 @@
         },
         "required": ["chain", "contractAddress", "feeLimit", "fromPrivateKey", "tokenId"]
       },
+      "BurnNftSolana": {
+        "type": "object",
+        "properties": {
+          "chain": {
+            "type": "string",
+            "example": "SOL",
+            "description": "The blockchain to work with",
+            "enum": ["SOL"]
+          },
+          "from": {
+            "maxLength": 44,
+            "minLength": 44,
+            "description": "The blockchain address to send the NFT from; this is the address that you used in the <code>to</code> parameter in the request body of the <a href=\"#operation/NftMintErc721\">minting call</a>; from this address, the transaction fee will be paid",
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
+          "contractAddress": {
+            "maxLength": 44,
+            "minLength": 44,
+            "description": "The blockchain address of the NFT; this is the address from the <code>nftAddress</code> parameter returned in the response body of the <a href=\"#operation/NftMintErc721\">minting call</a>",
+            "example": "3tzudv5KaoqmieWiBUqzWokKEtTvx1wQMapVKeH7CHaq",
+            "type": "string"
+          },
+          "collection": {
+            "maxLength": 44,
+            "minLength": 43,
+            "description": "The blockchain address of the NFT collection",
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
+          "fromPrivateKey": {
+            "type": "string",
+            "maxLength": 128,
+            "example": "3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad",
+            "minLength": 128,
+            "description": "The private key of the blockchain address that you are sending the NFT from (the address that you specified in the <code>from</code> parameter)"
+          },
+          "feePayer": {
+            "description": "Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.",
+            "maxLength": 44,
+            "minLength": 43,
+            "example": "BL4Xgn1jkuU4Yr3SQ4HG8cD5SBrsSk7BihKzkb5zTUfs",
+            "type": "string"
+          },
+          "feePayerPrivateKey": {
+            "type": "string",
+            "maxLength": 87,
+            "example": "YdQ1iy2NYs93dtkHdz3ijDuhRJj6uXYAUZmixirCrgCsTMj42BN1Q1buYcGZaMxw5buk9VU5ogQ6zuzn8DMsGaf",
+            "minLength": 128,
+            "description": "Private key of the fee payer address."
+          }
+        },
+        "required": ["from", "chain", "contractAddress", "fromPrivateKey"]
+      },
+      "BurnNftSolanaKMS": {
+        "type": "object",
+        "properties": {
+          "chain": {
+            "type": "string",
+            "example": "SOL",
+            "description": "The blockchain to work with",
+            "enum": ["SOL"]
+          },
+          "from": {
+            "maxLength": 44,
+            "minLength": 44,
+            "description": "The blockchain address to send the NFT from; this is the address that you used in the <code>to</code> parameter in the request body of the <a href=\"#operation/NftMintErc721\">minting call</a>; from this address, the transaction fee will be paid",
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
+          "contractAddress": {
+            "maxLength": 44,
+            "minLength": 44,
+            "description": "The blockchain address of the NFT; this is the address from the <code>nftAddress</code> parameter returned in the response body of the <a href=\"#operation/NftMintErc721\">minting call</a>",
+            "example": "3tzudv5KaoqmieWiBUqzWokKEtTvx1wQMapVKeH7CHaq",
+            "type": "string"
+          },
+          "collection": {
+            "maxLength": 44,
+            "minLength": 43,
+            "description": "The blockchain address of the NFT collection",
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
+          "signatureId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
+            "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+          },
+          "feePayer": {
+            "description": "Blockchain address to pay the fee for the transaction from",
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "maxLength": 44,
+            "minLength": 43,
+            "type": "string"
+          },
+          "feePayerSignatureId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
+            "description": "Identifier of the private key used for paying the gas costs in signing application. Defaults to the signatureId."
+          }
+        },
+        "required": ["from", "chain", "contractAddress", "signatureId"]
+      },
       "BurnNftKMSCelo": {
         "type": "object",
         "properties": {
@@ -68520,6 +68628,20 @@
             "example": "3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad",
             "minLength": 128,
             "description": "The private key of the blockchain address that you are sending the NFT from (the address that you specified in the <code>from</code> parameter)"
+          },
+          "feePayer": {
+            "description": "Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.",
+            "maxLength": 44,
+            "minLength": 43,
+            "example": "BL4Xgn1jkuU4Yr3SQ4HG8cD5SBrsSk7BihKzkb5zTUfs",
+            "type": "string"
+          },
+          "feePayerPrivateKey": {
+            "type": "string",
+            "maxLength": 87,
+            "example": "YdQ1iy2NYs93dtkHdz3ijDuhRJj6uXYAUZmixirCrgCsTMj42BN1Q1buYcGZaMxw5buk9VU5ogQ6zuzn8DMsGaf",
+            "minLength": 128,
+            "description": "Private key of the fee payer address."
           }
         },
         "required": ["to", "from", "chain", "contractAddress", "fromPrivateKey"]
@@ -68604,6 +68726,19 @@
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "The KMS identifier of the private key of the blockchain address that you are sending the NFT from (the address that you specified in the <code>from</code> parameter)"
+          },
+          "feePayer": {
+            "description": "Blockchain address to pay the fee for the transaction from",
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "maxLength": 44,
+            "minLength": 43,
+            "type": "string"
+          },
+          "feePayerSignatureId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
+            "description": "Identifier of the private key used for paying the gas costs in signing application. Defaults to the signatureId."
           }
         },
         "required": ["to", "from", "chain", "contractAddress", "signatureId"]
@@ -69372,12 +69507,33 @@
             "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
             "type": "string"
           },
+          "freezeAuthority": {
+            "description": "Address on Solana blockchain which can freeze token accounts. Default to the 'from'",
+            "maxLength": 43,
+            "minLength": 44,
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
           "fromPrivateKey": {
             "type": "string",
             "maxLength": 128,
             "example": "3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad",
             "minLength": 64,
             "description": "The private key of the blockchain address that will pay the fee for the transaction"
+          },
+          "feePayer": {
+            "description": "Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.",
+            "maxLength": 44,
+            "minLength": 43,
+            "example": "BL4Xgn1jkuU4Yr3SQ4HG8cD5SBrsSk7BihKzkb5zTUfs",
+            "type": "string"
+          },
+          "feePayerPrivateKey": {
+            "type": "string",
+            "maxLength": 87,
+            "example": "YdQ1iy2NYs93dtkHdz3ijDuhRJj6uXYAUZmixirCrgCsTMj42BN1Q1buYcGZaMxw5buk9VU5ogQ6zuzn8DMsGaf",
+            "minLength": 128,
+            "description": "Private key of the fee payer address."
           },
           "collectionVerifierPrivateKey": {
             "type": "string",
@@ -69426,6 +69582,20 @@
             "example": "3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad",
             "minLength": 64,
             "description": "The private key of the collection verifier's address"
+          },
+          "feePayer": {
+            "description": "Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.",
+            "maxLength": 44,
+            "minLength": 43,
+            "example": "BL4Xgn1jkuU4Yr3SQ4HG8cD5SBrsSk7BihKzkb5zTUfs",
+            "type": "string"
+          },
+          "feePayerPrivateKey": {
+            "type": "string",
+            "maxLength": 87,
+            "example": "YdQ1iy2NYs93dtkHdz3ijDuhRJj6uXYAUZmixirCrgCsTMj42BN1Q1buYcGZaMxw5buk9VU5ogQ6zuzn8DMsGaf",
+            "minLength": 128,
+            "description": "Private key of the fee payer address."
           }
         },
         "required": ["collectionAddress", "chain", "fromPrivateKey", "from", "nftAddress"]
@@ -69465,6 +69635,19 @@
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+          },
+          "feePayer": {
+            "description": "Blockchain address to pay the fee for the transaction from",
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "maxLength": 44,
+            "minLength": 43,
+            "type": "string"
+          },
+          "feePayerSignatureId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
+            "description": "Identifier of the private key used for paying the gas costs in signing application. Defaults to the signatureId."
           }
         },
         "required": ["collectionAddress", "chain", "signatureId", "from", "nftAddress"]
@@ -69514,11 +69697,31 @@
             "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
             "type": "string"
           },
+          "freezeAuthority": {
+            "description": "Address on Solana blockchain which can freeze token accounts. Default to the 'from'",
+            "maxLength": 43,
+            "minLength": 44,
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
           "signatureId": {
             "type": "string",
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "The KMS identifier of the private key of the blockchain address that will pay the fee for the transaction"
+          },
+          "feePayer": {
+            "description": "Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.",
+            "maxLength": 44,
+            "minLength": 43,
+            "example": "BL4Xgn1jkuU4Yr3SQ4HG8cD5SBrsSk7BihKzkb5zTUfs",
+            "type": "string"
+          },
+          "feePayerSignatureId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
+            "description": "Identifier of the private key used for paying the gas costs in signing application. Defaults to the signatureId."
           },
           "metadata": { "$ref": "#/components/schemas/SolanaNftMetadataKMS" }
         },
@@ -70466,12 +70669,33 @@
             "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
             "type": "string"
           },
+          "freezeAuthority": {
+            "description": "Address on Solana blockchain which which can freeze token accounts. Default to the 'from'",
+            "maxLength": 43,
+            "minLength": 44,
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
           "fromPrivateKey": {
             "description": "Private key of Solana account address, from which the fee for the deployment of SPL will be paid. Private key, or signature Id must be present.",
             "type": "string",
             "example": "3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad",
             "maxLength": 103,
             "minLength": 128
+          },
+          "feePayer": {
+            "description": "Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.",
+            "maxLength": 44,
+            "minLength": 43,
+            "example": "BL4Xgn1jkuU4Yr3SQ4HG8cD5SBrsSk7BihKzkb5zTUfs",
+            "type": "string"
+          },
+          "feePayerPrivateKey": {
+            "type": "string",
+            "maxLength": 87,
+            "example": "YdQ1iy2NYs93dtkHdz3ijDuhRJj6uXYAUZmixirCrgCsTMj42BN1Q1buYcGZaMxw5buk9VU5ogQ6zuzn8DMsGaf",
+            "minLength": 128,
+            "description": "Private key of the fee payer address."
           }
         },
         "required": ["chain", "from", "address", "supply", "fromPrivateKey", "digits"]
@@ -70513,11 +70737,31 @@
             "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
             "type": "string"
           },
+          "freezeAuthority": {
+            "description": "Address on Solana blockchain which which can freeze token accounts. Default to the 'from'",
+            "maxLength": 43,
+            "minLength": 44,
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
           "signatureId": {
             "type": "string",
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+          },
+          "feePayer": {
+            "description": "Blockchain address to pay the fee for the transaction from",
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "maxLength": 44,
+            "minLength": 43,
+            "type": "string"
+          },
+          "feePayerSignatureId": {
+            "type": "string",
+            "format": "uuid",
+            "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
+            "description": "Identifier of the private key used for paying the gas costs in signing application. Defaults to the signatureId."
           }
         },
         "required": ["chain", "from", "address", "supply", "signatureId", "digits"]

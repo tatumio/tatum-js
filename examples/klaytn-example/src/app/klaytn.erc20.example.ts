@@ -1,61 +1,89 @@
 import { TatumKlaytnSDK } from '@tatumio/klaytn'
-import { TransactionHash } from '@tatumio/api-client'
+import { Currency, TransactionHash } from '@tatumio/api-client'
+import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
+const SLEEP_SECONDS = 25
 const klaytnSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
+/**
+ * In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+ * Fund your address here: https://baobab.wallet.klaytn.foundation/faucet
+ */
 export async function klaytnErc20Example() {
-  const { mnemonic, xpub } = await klaytnSDK.wallet.generateWallet(undefined, { testnet: true })
-  const fromPrivateKey = await klaytnSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
-  const address = klaytnSDK.wallet.generateAddressFromXPub(xpub, 0)
-  const to = klaytnSDK.wallet.generateAddressFromXPub(xpub, 1)
+  // This address wil DEPLOY, MINT and TRANSFER ERC20 to Receiver Address
+  const senderAddress = '<PUT SENDER ADDRESS HERE>'
+  const senderPrivateKey = '<PUT SENDER PRIVATE KEY HERE>'
 
-  // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
-  // Fund your address here: https://baobab.wallet.klaytn.foundation/faucet
+  // This address will RECEIVE ERC20 token and BURN it
+  const receiverAddress = '<PUT RECEIVER ADDRESS HERE>'
+  const receiverPrivateKey = '<PUT RECEIVER PRIVATE KEY HERE>'
 
   // deploy erc20 (fungible token) transaction
+  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy
   const erc20Deployed = (await klaytnSDK.erc20.send.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
-    address,
-    supply: '100',
-    fromPrivateKey,
+    address: senderAddress,
+    supply: '0',
+    fromPrivateKey: senderPrivateKey,
     digits: 18,
     totalCap: '10000000',
   })) as TransactionHash
 
-  console.log(`Deployed erc20 token with transaction ID ${erc20Deployed.txId}`)
+  console.log(`Deployed erc20 token with txID ${erc20Deployed.txId}`)
+
+  // If during this time the transaction is not confirmed, then the waiting time should be increased.
+  // In a real application, the wait mechanism must be implemented properly without using this
+  console.log(
+    `Waiting ${SLEEP_SECONDS} seconds for the transaction [${erc20Deployed.txId}] to appear in a block`,
+  )
+  await sleepSeconds(SLEEP_SECONDS)
 
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
-  const transaction = await klaytnSDK.blockchain.smartContractGetAddress('KLAY', erc20Deployed.txId)
+  const transaction = await klaytnSDK.blockchain.smartContractGetAddress(Currency.KLAY, erc20Deployed.txId)
   const contractAddress = transaction.contractAddress as string
 
+  console.log(`Contract address`, contractAddress)
+
+  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Mint
   const erc20Minted = (await klaytnSDK.erc20.send.mintSignedTransaction({
-    to,
-    amount: '10',
+    to: senderAddress,
+    amount: '1',
     contractAddress,
-    fromPrivateKey,
+    fromPrivateKey: senderPrivateKey,
   })) as TransactionHash
 
-  console.log(`Minted erc20 token/s with transaction ID ${erc20Minted.txId}`)
+  console.log(`Minted erc20 token/s with txID ${erc20Minted.txId}`)
+
+  console.log(
+    `Waiting ${SLEEP_SECONDS} seconds for the transaction [${erc20Minted.txId}] to appear in a block`,
+  )
+  await sleepSeconds(SLEEP_SECONDS)
 
   // send erc20 (fungible token) transaction
-  const erc20Transffered = (await klaytnSDK.erc20.send.transferSignedTransaction({
-    to,
-    amount: '10',
+  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Transfer
+  const erc20Transferred = (await klaytnSDK.erc20.send.transferSignedTransaction({
+    to: receiverAddress,
+    amount: '1',
     contractAddress,
-    fromPrivateKey,
+    fromPrivateKey: senderPrivateKey,
     digits: 18,
   })) as TransactionHash
 
-  console.log(`Erc20 transaction with transaction ID ${erc20Transffered.txId} was sent.`)
+  console.log(`Erc20 transaction with txID ${erc20Transferred.txId} was sent.`)
+  console.log(
+    `Waiting ${SLEEP_SECONDS} seconds for the transaction [${erc20Transferred.txId}] to appear in a block`,
+  )
+  await sleepSeconds(SLEEP_SECONDS)
 
   // burn erc20 (fungible token) transaction
+  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Burn
   const erc20Burned = (await klaytnSDK.erc20.send.burnSignedTransaction({
-    amount: '10',
+    amount: '1',
     contractAddress,
-    fromPrivateKey,
+    fromPrivateKey: receiverPrivateKey,
   })) as TransactionHash
 
-  console.log(`Burned erc20 token/s with transaction ID ${erc20Burned.txId}`)
+  console.log(`Burned erc20 token/s with txID ${erc20Burned.txId}`)
 }
