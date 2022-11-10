@@ -7,7 +7,8 @@ export async function xlmBalanceExample() {
   const fundedAddress = REPLACE
 
   if (isValueSet(fundedAddress)) {
-    // Generate XLM address and secret
+    // Generate a Stellar account.
+    // The account address and secret will be generated.
     // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
     const { address, secret } = xlmSDK.wallet.wallet()
     console.log(`=================`)
@@ -20,7 +21,7 @@ export async function xlmBalanceExample() {
 
   console.log(`Address to check balance: ${fundedAddress}`)
 
-  // Get information of XLM account address
+  // Get information about the account.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmGetAccountInfo
   const accountDetails = await xlmSDK.blockchain.getAccountInfo(fundedAddress)
 

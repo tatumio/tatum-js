@@ -10,7 +10,8 @@ export async function xlmTrustlineTxExample() {
   const fromSecret = REPLACE
 
   if (isValueSet(fromAddress)) {
-    // Generate XLM address and secret
+    // Generate a Stellar account.
+    // The account address and secret will be generated.
     // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
     const { address, secret } = xlmSDK.wallet.wallet()
     console.log(`=================`)
@@ -23,7 +24,7 @@ export async function xlmTrustlineTxExample() {
     return
   }
 
-  // Get information of XLM account address
+  // Get information about the account.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmGetAccountInfo
   const accountDetails = await xlmSDK.blockchain.getAccountInfo(fromAddress)
 
@@ -34,11 +35,12 @@ export async function xlmTrustlineTxExample() {
     } XLM.`,
   )
 
-  // Generate recipient address
+  // Generate another Stellar account.
+  // This is the recipient account where you are going to transfer funds to.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
   const { address: recipientAddress } = xlmSDK.wallet.wallet()
 
-  // Send transaction to activate account
+  // Send some amount of XLM from your account to the recipient account to activate the recipient account.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
   const { txId: activateTxId } = (await xlmSDK.transaction.sendTransaction(
     {
@@ -53,6 +55,7 @@ export async function xlmTrustlineTxExample() {
   console.log(`Waiting for activation tx ${activateTxId}...`)
   await sleep(10000)
 
+  // Create a trustline between your account and the recipient account.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmTrustLineBlockchain
   const { txId } = (await xlmSDK.transaction.sendTrustlineTransaction(
     {

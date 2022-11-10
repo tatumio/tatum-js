@@ -4,7 +4,7 @@ import { isValueSet, REPLACE } from './xlm.utils'
 import { sleep } from '@tatumio/shared-abstract-sdk'
 
 export async function xlmVirtualAccountExample() {
-  // Since it is allowed to have only one xpub for memo-based for api key, it is needed to use your own api key here
+  // Because one API key can have only one extended public key (xpub) on a memo-based blockchain, you have to use your own API key.
   const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   const fundingAddress = REPLACE
@@ -15,9 +15,10 @@ export async function xlmVirtualAccountExample() {
 
   const virtualAccountId = REPLACE
 
-  // To show usecase with virtual account let's prepare funding account. We will send transactions from it to our virtual account
+  // To demonstrate a use case for virtual accounts, let's first prepare a funding Stellar account. You will be transferring funds from this funding account to your virtual account.
   if (isValueSet(fundingAddress)) {
-    // Generate XLM address and secret
+    // Generate a Stellar account.
+    // The account address and secret will be generated.
     // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
     const { address, secret } = xlmSDK.wallet.wallet()
     console.log(`=================`)
@@ -30,9 +31,11 @@ export async function xlmVirtualAccountExample() {
     return
   }
 
-  // Now it is needed to generate address for virtual account, it will be created on its basis
+  // Generate another Stellar account.
+  // You will use the xpub of this account to generate a virtual account.
   if (isValueSet(virtualAccountAddress)) {
-    // Generate XLM address and secret
+    // Generate a Stellar account.
+    // The account address and secret will be generated.
     // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
     const { address, secret } = xlmSDK.wallet.wallet()
     console.log(`=================`)
@@ -44,12 +47,10 @@ export async function xlmVirtualAccountExample() {
     return
   }
 
-  // Generate new virtual account for XLM with specific blockchain address
-  // Each XLM virtual account must have MEMO field generated - take a look here for more details - https://docs.tatum.io/guides/ledger-and-off-chain/how-to-set-up-virtual-accounts-with-xrp-bnb-and-xlm
-  // No MEMO is created with this operation, only virtual account
-
+  // Generate a virtual account for XLM based on the xpub of the Stellar account that you created in the previous step.
+  // https://apidoc.tatum.io/tag/Account#operation/createAccount 
   if (isValueSet(virtualAccountId)) {
-    // https://apidoc.tatum.io/tag/Account#operation/createAccount
+  
     const virtualAccount = await xlmSDK.ledger.account.create({
       currency: Currency.XLM,
       xpub: virtualAccountAddress,
@@ -63,17 +64,17 @@ export async function xlmVirtualAccountExample() {
     return
   }
 
-  // Fetch created account
+  // Fetch the created virtual account.
   // https://apidoc.tatum.io/tag/Account#operation/getAccountByAccountId
   const createdVirtualAccount = await xlmSDK.ledger.account.get(virtualAccountId)
 
-  // Generate recipient XLM address and secret - funds will be transferred to
+  // Generate another Stellar account.
+  // This is the recipient account where you are going to transfer funds from your virtual account to.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
   const { address: recipientAddress, secret } = xlmSDK.wallet.wallet()
 
   try {
-    // Optional step - activate if needed
-    // Send transaction from 'funding' address to virtual account address to activate it
+    // (OPTIONAL) If needed, send some amount of XLM from the funding account to the virtual account to activate it.
     // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
     const { txId: activateTxId1 } = (await xlmSDK.transaction.sendTransaction(
       {
@@ -91,7 +92,7 @@ export async function xlmVirtualAccountExample() {
     console.log(`Virtual account address ${virtualAccountAddress} was already activated`)
   }
 
-  // Send transaction from 'funding' address to recipient address to activate it
+ // Send some amount of XLM from the funding account to the recipient account to activate it.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
   const { txId: activateTxId2 } = (await xlmSDK.transaction.sendTransaction(
     {
@@ -106,15 +107,16 @@ export async function xlmVirtualAccountExample() {
   console.log(`Waiting for activation tx ${activateTxId2}...`)
   await sleep(20000)
 
-  // We need to generate MEMO - which is a deposit address - for this virtual account
+  // Generate a deposit address with a "memo" for the virtual account.
+  // An XLM virtual account must have a "memo" field generated. For more details, check out this article https://docs.tatum.io/guides/ledger-and-off-chain/how-to-set-up-virtual-accounts-with-xrp-bnb-and-xlm.
   // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
   const depositAddress = await xlmSDK.virtualAccount.depositAddress.create(createdVirtualAccount.id)
   console.log('Deposit address with MEMO:', JSON.stringify(depositAddress))
 
-  // Result of the operation is combination of deposit address and MEMO
+  // This operation returns a combination of the deposit address and the "memo".
   console.log(`Deposit address is ${depositAddress.address} with MEMO ${depositAddress.derivationKey}`)
 
-  // Send transaction from 'funding' address to deposit address of virtual account - deposit virtual account
+  // Send some amount of XLM from the funding account to the deposit address of the virtual account.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
   const { txId: depositTxId } = (await xlmSDK.transaction.sendTransaction(
     {
@@ -130,7 +132,7 @@ export async function xlmVirtualAccountExample() {
   console.log(`Waiting for funding tx ${depositTxId}...`)
   await sleep(120000)
 
-  // I want to send assets from virtualAccount to blockchain address
+  // Send some amount of XLM from the virtual account to the recipient account.
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/XlmTransfer
   const result = await xlmSDK.virtualAccount.sendTransactionFromVirtualAccountToBlockchain(true, {
     fee: '0.00001',

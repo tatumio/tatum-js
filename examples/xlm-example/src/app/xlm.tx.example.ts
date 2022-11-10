@@ -9,7 +9,8 @@ export async function xlmTxExample() {
   const fromSecret = REPLACE
 
   if (isValueSet(fromAddress)) {
-    // Generate XLM address and secret
+    // Generate a Stellar account.
+    // The account address and secret will be generated.
     // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
     const { address, secret } = xlmSDK.wallet.wallet()
     console.log(`=================`)
@@ -22,11 +23,12 @@ export async function xlmTxExample() {
     return
   }
 
-  // Generate recipient address
+  // Generate another Stellar account.
+  // This is the recipient account where you are going to transfer funds to.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
   const { address: recipientAddress } = xlmSDK.wallet.wallet()
 
-  // Get information of XLM account address
+  // Get information about the account.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmGetAccountInfo
   const accountDetails = await xlmSDK.blockchain.getAccountInfo(fromAddress)
 
@@ -37,7 +39,7 @@ export async function xlmTxExample() {
     } XLM.`,
   )
 
-  // Send transaction
+  // Send some amount of XLM from your account to the recipient account.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
   const { txId } = (await xlmSDK.transaction.sendTransaction(
     {
