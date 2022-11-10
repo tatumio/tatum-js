@@ -1,83 +1,107 @@
 import { TatumKlaytnSDK } from '@tatumio/klaytn'
 import { Currency, TransactionHash } from '@tatumio/api-client'
+import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
-const tatumSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const SLEEP_SECONDS = 25
+const klaytnSDK = TatumKlaytnSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
+/**
+ * In order for these examples to work you need to fund your address and use the address & private key combination that has coins
+ * Fund your address here: https://baobab.wallet.klaytn.foundation/faucet
+ */
 export async function klaytnNftExample() {
-  const { mnemonic, xpub } = await tatumSDK.wallet.generateWallet(undefined, { testnet: true })
-  const fromPrivateKey = await tatumSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
-  const address = tatumSDK.wallet.generateAddressFromXPub(xpub, 0)
-  const to = tatumSDK.wallet.generateAddressFromXPub(xpub, 1)
-  const fromPrivateKeyTo = await tatumSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 1)
-  const tokenId = '100000'
+  // This address wil DEPLOY, MINT and TRANSFER NFT to Receiver Address
+  const senderAddress = '<PUT SENDER ADDRESS HERE>'
+  const senderPrivateKey = '<PUT SENDER PRIVATE KEY HERE>'
 
-  // In order for these examples to work you need to fund your address and use the address & private key combination that has coins
-  // Fund your address here: https://baobab.wallet.klaytn.foundation/faucet
-  console.log(`Address: ${address} with private key: ${fromPrivateKey}`)
-  console.log(`Another address: ${to} with private key: ${fromPrivateKeyTo}`)
+  // This address will RECEIVE NFT and BURN it
+  const receiverAddress = '<PUT RECEIVER ADDRESS HERE>'
+  const receiverPrivateKey = '<PUT RECEIVER PRIVATE KEY HERE>'
+
+  const tokenId = '1000'
 
   // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
-  const { txId } = (await tatumSDK.nft.deployNFTSmartContract({
-    chain: 'KLAY',
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftDeployErc721
+  const nftDeploy = (await klaytnSDK.nft.send.deploySignedTransaction({
+    chain: Currency.KLAY,
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
     // your private key of the address that has coins
-    fromPrivateKey,
+    fromPrivateKey: senderPrivateKey,
   })) as TransactionHash
 
-  console.log(`Deployed nft smart contract with transaction id: ${txId}`)
+  // If during this time the transaction is not confirmed, then the waiting time should be increased.
+  // In a real application, the wait mechanism must be implemented properly without using this
+  console.log(`Waiting ${SLEEP_SECONDS} seconds for the transaction [${nftDeploy.txId}] to appear in a block`)
+  await sleepSeconds(SLEEP_SECONDS)
 
   // find deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
-  const transactionData = await tatumSDK.blockchain.smartContractGetAddress('KLAY', txId)
+  const transactionData = await klaytnSDK.blockchain.smartContractGetAddress(Currency.KLAY, nftDeploy.txId)
   const contractAddress = transactionData.contractAddress as string
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 
   // upload your file to the ipfs:
   // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
 
+  // Please note that minted tokens might not appear immediately on the blockchain so in order to execute
+  // all examples at once you should set some timeout between the calls or execute examples separately
+
   // Mint NFTs on your own smart contract
-  const nftMinted = (await tatumSDK.nft.mintNFT({
-    chain: 'KLAY',
+  const nftMinted = (await klaytnSDK.nft.send.mintSignedTransaction({
+    chain: Currency.KLAY,
     tokenId,
     contractAddress,
-    fromPrivateKey,
-    to: address,
+    fromPrivateKey: senderPrivateKey,
+    to: senderAddress,
     // uploaded metadata from ipfs
     url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
   })) as TransactionHash
 
-  console.log(`Minted nft with transaction ID: ${nftMinted.txId}`)
+  console.log(`Minted nft with txID: ${nftMinted.txId}`)
+  console.log(`Waiting ${SLEEP_SECONDS} seconds for the transaction [${nftMinted.txId}] to appear in a block`)
+  await sleepSeconds(SLEEP_SECONDS)
 
   // Get NFT token metadata
-  const { data } = await tatumSDK.nft.getNFTMetadataURI(Currency.KLAY, contractAddress, tokenId)
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetMetadataErc721
+  const { data } = await klaytnSDK.nft.getNFTMetadataURI(Currency.KLAY, contractAddress, tokenId)
 
   console.log(`Token metadata: ${data}`)
 
   // Get all minted NFTs in the collection. Returns all NFTs this contract minted.
-  const nftAccountBalance = await tatumSDK.nft.getNFTAccountBalance(Currency.KLAY, address, contractAddress)
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetBalanceErc721
+  const nftAccountBalance = await klaytnSDK.nft.getNFTAccountBalance(
+    Currency.KLAY,
+    senderAddress,
+    contractAddress,
+  )
 
-  console.log(`Nfts on ${contractAddress}: ${nftAccountBalance}`)
+  console.log(`Nfts on ${contractAddress}:`, nftAccountBalance)
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
-  const nftTransferred = (await tatumSDK.nft.transferNFT({
-    chain: 'KLAY',
-    to,
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
+  const nftTransferred = (await klaytnSDK.nft.send.transferSignedTransaction({
+    chain: Currency.KLAY,
+    to: receiverAddress,
     tokenId,
     contractAddress,
-    fromPrivateKey,
+    fromPrivateKey: senderPrivateKey,
   })) as TransactionHash
 
-  console.log(`Transfered nft with transaction hash: ${nftTransferred.txId}`)
+  console.log(`Transferred nft with transaction hash: ${nftTransferred.txId}`)
+  console.log(
+    `Waiting ${SLEEP_SECONDS} seconds for the transaction [${nftTransferred.txId}] to appear in a block`,
+  )
+  await sleepSeconds(SLEEP_SECONDS)
 
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
-  // Since we previously transferred token to new address we now use private key of that address to burn the token
-  const nftBurned = (await tatumSDK.nft.burnNFT({
-    chain: 'KLAY',
+  // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
+  const nftBurned = (await klaytnSDK.nft.send.burnSignedTransaction({
+    chain: Currency.KLAY,
     tokenId,
     contractAddress,
-    fromPrivateKey: fromPrivateKeyTo,
+    fromPrivateKey: receiverPrivateKey,
   })) as TransactionHash
 
-  console.log(`NFT burn transaction sent with transaction ID: ${nftBurned.txId}`)
+  console.log(`NFT burn transaction sent with txID: ${nftBurned.txId}`)
 }

@@ -35,7 +35,7 @@ export async function klaytnNftExpressExample() {
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
-  const nftTransferred = (await klaytnSDK.nft.transferNFT({
+  const nftTransferred = (await klaytnSDK.nft.send.transferSignedTransaction({
     chain: 'KLAY',
     value: '1',
     to,
@@ -47,7 +47,7 @@ export async function klaytnNftExpressExample() {
   console.log(`Transfered nft with transacion hash: ${nftTransferred.txId}`)
 
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
-  const nftBurned = (await klaytnSDK.nft.burnNFT({
+  const nftBurned = (await klaytnSDK.nft.send.burnSignedTransaction({
     chain: 'KLAY',
     tokenId,
     contractAddress,
@@ -57,7 +57,7 @@ export async function klaytnNftExpressExample() {
   console.log(`NFT burn transaction sent with transaction ID: ${nftBurned.txId}`)
 
   // Minting NFTs with NFT Express using your own smart contract
-  const mintedWithMinter = (await klaytnSDK.nft.mintNFT({
+  const mintedWithMinter = (await klaytnSDK.nft.send.mintSignedTransaction({
     chain: 'KLAY',
     to: address,
     url: 'https://my_token_data.com',
