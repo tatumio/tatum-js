@@ -203,8 +203,8 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
     SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND,
     `UTXO with hash {0} and index {1} not found. Please check that outputs are valid`,
   ],
-  [SdkErrorCode.BTC_BASED_NO_INPUTS, `Not found spendable inputs for {0}`],
-  [SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE, `Not enough coins on address to perform this transaction`],
+  [SdkErrorCode.BTC_BASED_NO_INPUTS, `Not found spendable inputs`],
+  [SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE, `Not enough coins on addresses to perform this transaction`],
   [SdkErrorCode.BTC_FEE_IS_TOO_LARGE, `Fee is too big, make sure it's not a mistake`],
   [
     SdkErrorCode.BTC_BASED_AMOUNT,

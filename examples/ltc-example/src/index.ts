@@ -9,17 +9,6 @@ import { ltcEstimateExample } from './app/ltc.estimate.example'
 import { ltcFromUtxoTransactionsExample } from './app/ltc.tx.fromUtxo.example'
 import { ltcBroadcastTransactionsExample } from './app/ltc.tx.broadcast.example'
 
-console.log(`Running ${ltcWalletExample()}`)
-console.log(`Running ${ltcBlockchainExample()}`)
-console.log(`Running ${ltcBalanceExample()}`)
-console.log(`Running ${ltcSubscriptionsExample()}`)
-console.log(`Running ${ltcEexchangeRateExample()}`)
-console.log(`Running ${ltcEstimateExample()}`)
-console.log(`Running ${ltcBroadcastTransactionsExample()}`)
-console.log(`Running ${ltcFromAddressTransactionsExample()}`)
-console.log(`Running ${ltcFromUtxoTransactionsExample()}`)
-console.log(`Running ${ltcVirtualAccountExample()}`)
-
 const examples = async () => {
   console.log(`Running ltcWalletExample`)
   await ltcWalletExample()
