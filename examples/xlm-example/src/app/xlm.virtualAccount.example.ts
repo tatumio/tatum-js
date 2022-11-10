@@ -71,20 +71,25 @@ export async function xlmVirtualAccountExample() {
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmWallet
   const { address: recipientAddress, secret } = xlmSDK.wallet.wallet()
 
-  // Send transaction from 'funding' address to virtual account address to activate it
-  // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
-  const { txId: activateTxId1 } = (await xlmSDK.transaction.sendTransaction(
-    {
-      fromAccount: fundingAddress,
-      fromSecret: fundingSecret,
-      amount: '10',
-      to: virtualAccountAddress,
-      initialize: true,
-    },
-    { testnet: true },
-  )) as TransactionHash
-  console.log(`Waiting for activation tx ${activateTxId1}...`)
-  await sleep(10000)
+  try {
+    // Optional step - activate if needed
+    // Send transaction from 'funding' address to virtual account address to activate it
+    // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
+    const { txId: activateTxId1 } = (await xlmSDK.transaction.sendTransaction(
+      {
+        fromAccount: fundingAddress,
+        fromSecret: fundingSecret,
+        amount: '10',
+        to: virtualAccountAddress,
+        initialize: true,
+      },
+      { testnet: true },
+    )) as TransactionHash
+    console.log(`Waiting for activation tx ${activateTxId1}...`)
+    await sleep(20000)
+  } catch (e) {
+    console.log(`Virtual account address ${virtualAccountAddress} was already activated`)
+  }
 
   // Send transaction from 'funding' address to recipient address to activate it
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
@@ -99,7 +104,7 @@ export async function xlmVirtualAccountExample() {
     { testnet: true },
   )) as TransactionHash
   console.log(`Waiting for activation tx ${activateTxId2}...`)
-  await sleep(10000)
+  await sleep(20000)
 
   // We need to generate MEMO - which is a deposit address - for this virtual account
   // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
@@ -123,7 +128,7 @@ export async function xlmVirtualAccountExample() {
   )) as TransactionHash
 
   console.log(`Waiting for funding tx ${depositTxId}...`)
-  await sleep(60000)
+  await sleep(120000)
 
   // I want to send assets from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/XlmTransfer
