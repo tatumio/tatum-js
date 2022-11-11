@@ -44,11 +44,13 @@ export async function solanaNftExample() {
   await sleepSeconds(SLEEP_SECONDS)
 
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetMetadataErc721
-  const metadata = await solanaSDK.nft.getNFTMetadataURI(Currency.SOL, nftAddress, 'token')
+  // here we omit the 'token' parameter - not needed in solana
+  const metadata = await solanaSDK.nft.getNFTMetadataURI(Currency.SOL, nftAddress)
   console.log(`Metadata of NFT: ${JSON.stringify(metadata)}`)
 
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetRoyaltyErc721
-  const royalty = await solanaSDK.nft.getNFTRoyalty(Currency.SOL, nftAddress, 'token')
+  // here we omit the 'token' parameter - not needed in solana
+  const royalty = await solanaSDK.nft.getNFTRoyalty(Currency.SOL, nftAddress)
   console.log(`Royalty of NFT: ${JSON.stringify(royalty)}`)
 
   const { txId: transferTx } = (await solanaSDK.transaction.send.transferNft({

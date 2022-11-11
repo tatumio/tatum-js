@@ -27,17 +27,17 @@ export async function btcVirtualAccountExample() {
   // Check if an account exists
   const accountId = account.id
 
-  try {
-    const existingAccount = await btcSDK.virtualAccount.depositAddress.checkExists(accountId)
-    console.log(`Account: ${JSON.stringify(existingAccount)}`)
-  } catch (e) {
-    console.log(`Account: ${e.message}`)
-  }
-
   // Create a deposit address for an account and derivation index
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
   const address = await btcSDK.virtualAccount.depositAddress.create(accountId)
   console.log(`Deposit address: ${JSON.stringify(address)}`)
+
+  try {
+    const existingAccount = await btcSDK.virtualAccount.depositAddress.checkExists(address.address)
+    console.log(`Account: ${JSON.stringify(existingAccount)}`)
+  } catch (e) {
+    console.log(`Account: ${e.message}`)
+  }
 
   // Create multiple deposit addresses for an account and derivation index
   // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccountBatch
