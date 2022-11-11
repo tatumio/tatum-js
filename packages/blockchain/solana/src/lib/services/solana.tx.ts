@@ -297,7 +297,10 @@ const createSplToken = async (
   )
   if (body.signatureId) {
     transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
-    return { txData: transaction.compileMessage().serialize().toString('hex') }
+    return {
+      txData: transaction.compileMessage().serialize().toString('hex'),
+      mintPK: Buffer.from(mint.secretKey).toString('hex'),
+    }
   }
 
   const signers = [web3.generateKeyPair(body.fromPrivateKey), mint]
