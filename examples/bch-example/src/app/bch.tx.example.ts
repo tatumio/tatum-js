@@ -2,7 +2,10 @@ import { TatumUrlArg } from '@tatumio/api-client'
 import { TatumBchSDK } from '@tatumio/bch'
 
 export async function bchTransactionsExample() {
-  const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab', url: 'https://api-acceptance.sandbox.tatum.io' as TatumUrlArg})
+  const bchSDK = TatumBchSDK({
+    apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab',
+    url: 'https://api-acceptance.sandbox.tatum.io' as TatumUrlArg,
+  })
 
   // Prepare unspent output information first.
   // It is unspent transaction information for address, that will be used as an input for next BCH tx
@@ -23,7 +26,6 @@ export async function bchTransactionsExample() {
   const changeAddress = address // we expect to receive change from transaction to sender address back
 
   const options = { testnet: true }
-
 
   // Send Transaction
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchTransferBlockchain
