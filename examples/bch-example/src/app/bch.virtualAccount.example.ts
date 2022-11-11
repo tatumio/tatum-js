@@ -1,9 +1,15 @@
 import { TatumBchSDK } from '@tatumio/bch'
+import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
 export async function bchVirtualAccountExample() {
   // Virtual account example
   // We will receive assets on account and withdraw it
   // More info here: https://docs.tatum.io/guides/ledger-and-off-chain
+
+  // Set recipient values, amount and address where to send.
+  const recipientAddress = 'bchtest:qzk6zxdyjgma9y2uq5untflqpa6wfpn99gxh5sdrtl'
+  const valueToSend = '0.001'
+  const fee = '0.0005'
 
   const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
@@ -40,20 +46,24 @@ export async function bchVirtualAccountExample() {
     `Fund me here (https://faucet.fullstack.cash/) for address: ${address.address} to send virtual account transaction!`,
   )
 
+  console.log('If it take more than 1min, you will have to replace the account info in the send method')
+
+  await sleepSeconds(60)
+
   // If you have funds on account - you can transfer it to another bch address
   // Using keyPair - addresses which are used as a source of the transaction are entered manually
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/BchTransfer
   const resultKeyPair = await bchSDK.virtualAccount.send(true, {
     senderAccountId: virtualAccount.id,
-    address: 'xxxxxxxxx',
-    amount: '0.001',
+    address: recipientAddress,
+    amount: valueToSend,
     keyPair: [
       {
         address: address.address,
         privateKey: privateKey,
       },
     ],
-    fee: '0.0005',
+    fee,
     attr: address.address,
   })
   console.log('Transaction using keypair: ', resultKeyPair)
@@ -63,8 +73,8 @@ export async function bchVirtualAccountExample() {
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/BchTransfer
   const result = await bchSDK.virtualAccount.send(true, {
     senderAccountId: virtualAccount.id,
-    address: 'xxxxxxx',
-    amount: '0.001',
+    address: recipientAddress,
+    amount: valueToSend,
     mnemonic: mnemonic,
     xpub: xpub,
   })
@@ -98,5 +108,5 @@ export async function bchVirtualAccountExample() {
 
   // Remove a deposit address from a virtual account
   // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/removeAddress
-  await bchSDK.virtualAccount.depositAddress.remove(virtualAccount.id, '7c21ed165e294db78b95f0f181086d6f')
+  await bchSDK.virtualAccount.depositAddress.remove(virtualAccount.id, address.address)
 }
