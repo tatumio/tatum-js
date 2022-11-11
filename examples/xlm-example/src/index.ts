@@ -1,5 +1,5 @@
 /**
- * This is example app, which shows how to use XLM SDK. For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/Stellar
+ * This is an example app that shows how to use the Tatum JavaScript SDK for Stellar. For more details, see the README or check out the API Reference for Stellar at https://apidoc.tatum.io/tag/Stellar.
  */
 
 import { xlmBalanceExample } from './app/xlm.balance.example'

@@ -1,42 +1,47 @@
-# How to use TatumSDK with Stellar XLM
+# Tatum JavaScript SDK for Stellar (XLM)
 
-These examples should guide you through some basic operations of the XLM blockchain. You will be able to:
+Welcome to the **Tatum JavaScript SDK** for **Stellar**!
 
-- generate XLM wallet
-- send XLM to another wallet
-- check the balance of your wallet
+We prepared a set of examples to help you complete some basic operations on Stellar using the SDK. Using these examples, you will be able to do the following:
 
-- generate virtual account for XLM
-- generate deposit address for virtual account
+- Generate a Stellar wallet.
+- Send XLM from your wallet to another Stellar wallet.
+- Check the balance of the wallet.
+- Generate a virtual account for XLM.
+- Generate a deposit address for the virtual account.
+- Get information from the blockchain.
 
-## How to start
+The examples are written in TypeScript, but you can use them in JavaScript too.
 
-In order to start, you need to create an API Key at [Tatum Dashboard](https://dashboard.tatum.io).
+## Before you start
 
-You need to install the @tatum/xlm package from npm.
+The examples follow the ECMAScript 6 (ES6) standard. Therefore, make sure that you have Node.js 10 or higher.
 
-```bash
-npm install @tatumio/xlm
-```
+## Get the SDK ready
 
-or
+1. Get your API key from the Tatum Dashboard.
 
-```bash
-yarn add @tatumio/xlm
-```
+    [Log in with your Tatum account](https://dashboard.tatum.io) or [sign up for free](https://dashboard.tatum.io/sign-up).
+1. Install the `@tatum/xlm` package.
 
-At the end, you need to initialize new SDK with your API Key.
+    ```bash
+    npm install @tatumio/xlm
+    ```
+    or
+    ```bash
+    yarn add @tatumio/xlm
+    ```
+1. Initialize the newly installed SDK with your API key.
+        
+    ```typescript
+    import { TatumXlmSDK } from '@tatumio/xlm'
 
-```typescript
-import { TatumXlmSDK } from '@tatumio/xlm'
+    const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+    ```
 
-const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-```
+## Review the examples
 
-Examples are written in TypeScript, but you can use them in JavaScript as well. We are following ES6 standard, so you
-need to have Node.js version 10 or higher.
-
-### How to generate XLM wallet
+Start with generating a Stellar wallet:
 
 ```typescript
 import { TatumXlmSDK } from '@tatumio/xlm'
@@ -46,22 +51,9 @@ const { account, secret } = xlmSDK.wallet.wallet()
 console.log(`My public address is ${account}, with private key ${secret}.`)
 ```
 
-### How to check balance of the address
-
-You can find examples [here](./src/app/xlm.balance.example.ts).
-
-### How to read information from the blockchain
-
-You can find examples [here](./src/app/xlm.blockchain.example.ts).
-
-### How to send transaction to another wallet
-
-You can find examples [here](./src/app/xlm.tx.example.ts).
-
-### How to send create/update/delete trustline transaction to another wallet
-
-You can find examples [here](./src/app/xlm.tx.example.ts).
-
-### How to generate virtual account for XLM and transfer from it to a blockchain address
-
-You can find examples [here](./src/app/xlm.virtualAccount.example.ts).
+Check out more examples to see what you want to do next:
+- [Send XLM from your wallet to another Stellar wallet.](./src/app/xlm.tx.example.ts)
+- [Check the balance of a Stellar wallet.](./src/app/xlm.balance.example.ts)
+- [Send a create/update/delete trustline transaction to a Stellar wallet.](./src/app/xlm.tx.trustline.example.ts)
+- [Generate a virtual account for XLM and transfer funds from this account to a blockchain address.](./src/app/xlm.virtualAccount.example.ts)
+- [Get information from the blockchain.](./src/app/xlm.blockchain.example.ts)
