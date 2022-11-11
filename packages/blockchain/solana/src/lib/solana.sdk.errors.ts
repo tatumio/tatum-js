@@ -1,6 +1,6 @@
 import { SdkError, SdkErrorCode, wrapErrorIfNeeded } from '@tatumio/shared-abstract-sdk'
 
-export class FlowSdkError extends SdkError {
+export class SolanaSdkError extends SdkError {
   constructor({ error, code }: { error?: Error | string; code?: SdkErrorCode }) {
     if (error) {
       const wrapped = wrapErrorIfNeeded(error)

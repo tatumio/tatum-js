@@ -1,6 +1,7 @@
 import { SignatureId } from '@tatumio/api-client'
 import BigNumber from 'bignumber.js'
 import { SdkError, SdkErrorCode, SdkMessageArgs } from './errors.abstract.sdk'
+import _ from 'lodash'
 
 export const amountUtils = {
   /**
@@ -42,6 +43,14 @@ export const placeArgsToString = (message?: string, args?: SdkMessageArgs): stri
     return placedMessage
   }
   return message
+}
+
+export const wrapErrorIfNeeded = (e: Error | string): Error => {
+  if (_.isString(e)) {
+    return new Error(e)
+  }
+
+  return e
 }
 
 export const toHexString = (value: BigNumber) => `0x${value.toString(16)}`
