@@ -4,8 +4,7 @@ import { Currency } from '@tatumio/api-client'
 const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 /**
- * In order for these examples to work you need to fund your address and use the address & private key combination that has coins
- * Fund your address here: https://faucet.apothem.network/
+ * Fund your account with XDC using https://faucet.apothem.network/ so that the account has sufficient funds to make transactions.
  */
 export async function xdcTxExample(): Promise<void> {
   const senderAddress = '<PUT SENDER ADDRESS HERE>'
@@ -13,7 +12,7 @@ export async function xdcTxExample(): Promise<void> {
 
   const receiverAddress = '<PUT RECEIVER ADDRESS HERE>'
 
-  // send native transaction using private key
+  // Send some amount of XDC from your account to the recipient account. Sign the transaction with your private key.
   const { txId } = await xdcSDK.transaction.send.transferSignedTransaction({
     to: senderAddress,
     amount: '0.0001',
@@ -22,8 +21,7 @@ export async function xdcTxExample(): Promise<void> {
 
   console.log(`Transaction using private key was sent txID =`, txId)
 
-  // send native transaction using signatureId
-  // signatureId from Tatum KMS - https://docs.tatum.io/private-key-management/tatum-key-management-system-kms
+  // Send some amount of XDC from your account to the recipient account. Sign the transaction with your signature ID. For more details, check out this article about Key Management System (KMS) https://docs.tatum.io/private-key-management/tatum-key-management-system-kms.
   const { signatureId } = await xdcSDK.transaction.send.transferSignedTransaction({
     currency: Currency.XDC,
     to: receiverAddress,

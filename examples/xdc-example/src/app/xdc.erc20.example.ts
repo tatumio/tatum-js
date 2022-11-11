@@ -6,19 +6,18 @@ const SLEEP_SECONDS = 20
 const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 /**
- * In order for these examples to work you need to fund your address and use the address & private key combination that has coins
- * Fund your address here: https://faucet.apothem.network/
+ * Fund your account with XDC using https://faucet.apothem.network/ so that the account has sufficient funds to make transactions.
  */
 export async function xdcErc20Example() {
-  // This address wil DEPLOY, MINT and TRANSFER ERC20 to Receiver Address
+  // This address will deploy a fungible token smart contract, and then will mint and transfer fungible tokens to the recipient address.
   const senderAddress = '<PUT SENDER ADDRESS HERE>'
   const senderPrivateKey = '<PUT SENDER PRIVATE KEY HERE>'
 
-  // This address will RECEIVE ERC20 token and BURN it
+  // This address will receive the fungible tokens and burn them.
   const receiverAddress = '<PUT RECEIVER ADDRESS HERE>'
   const receiverPrivateKey = '<PUT RECEIVER PRIVATE KEY HERE>'
 
-  // deploy erc20 (fungible token) transaction
+  // Deploy a fungible token smart contract.
   const erc20Deployed = (await xdcSDK.erc20.send.deploySignedTransaction({
     symbol: 'ERC_SYMBOL',
     name: 'mytx',
@@ -31,14 +30,14 @@ export async function xdcErc20Example() {
 
   console.log(`Deployed erc20 token with txID ${erc20Deployed.txId}`)
 
-  // If during this time the transaction is not confirmed, then the waiting time should be increased.
-  // In a real application, the wait mechanism must be implemented properly without using this
+  // If the transaction does not get confirmed within the specified waiting period, increase the waiting time.
+  // In a real-life application, implement the waiting mechanism properly, without using this example.
   console.log(
     `Waiting ${SLEEP_SECONDS} seconds for the transaction [${erc20Deployed.txId}] to appear in a block`,
   )
   await sleepSeconds(SLEEP_SECONDS)
 
-  // fetch deployed contract address from transaction hash
+  // Fetch the address of the deployed smart contract from the hash of the deployment transaction.
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
   const transaction = await xdcSDK.blockchain.smartContractGetAddress(Currency.XDC, erc20Deployed.txId)
   const contractAddress = transaction.contractAddress as string
@@ -57,7 +56,7 @@ export async function xdcErc20Example() {
   )
   await sleepSeconds(SLEEP_SECONDS)
 
-  // send erc20 (fungible token) transaction
+  // Send some amount of the fungible tokens to the recipient address.
   const erc20Transferred = (await xdcSDK.erc20.send.transferSignedTransaction({
     to: receiverAddress,
     amount: '1',
@@ -72,7 +71,7 @@ export async function xdcErc20Example() {
   )
   await sleepSeconds(SLEEP_SECONDS)
 
-  // burn erc20 (fungible token) transaction
+  // Burn some amount of the fungible tokens.
   const erc20Burned = (await xdcSDK.erc20.send.burnSignedTransaction({
     amount: '1',
     contractAddress,

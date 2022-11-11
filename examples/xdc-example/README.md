@@ -1,42 +1,51 @@
-# How to use TatumSDK with XinFin XDC
+# Tatum JavaScript SDK for XinFin (XDC)
 
-These examples should guide you through some basic operations of the XDC blockchain. You will be able to:
+Welcome to the **Tatum JavaScript SDK** for **XinFin**!
 
-- generate XDC wallet
-- send XDC to another wallet
-- check the balance of your wallet
-- How to send transaction using kms
-- generate virtual account for XDC
-- generate deposit address for virtual account
+We prepared a set of examples to help you complete some basic operations on XinFin using the SDK. Using these examples, you will be able to do the following:
 
-## How to start
+- Generate a XinFin wallet.
+- Send XDC from your wallet to another XinFin wallet.
+- Check the balance of the wallet.
+- Generate a virtual account for XDC.
+- Generate a deposit address for the virtual account.
+- Invoke a method in a smart contract.
+- Transfer assets from gas pump addresses.
+- Work with fungible tokens.
+- Create subscriptions.
+- Get information from the blockchain.
 
-In order to start, you need to create an API Key at [Tatum Dashboard](https://dashboard.tatum.io).
+The examples are written in TypeScript, but you can use them in JavaScript too.
 
-You need to install the @tatum/xdc package from npm.
+## Before you start
 
-```bash
-npm install @tatumio/xdc
-```
+The examples follow the ECMAScript 6 (ES6) standard. Therefore, make sure that you have Node.js 10 or higher.
 
-or
+## Get the SDK ready
 
-```bash
-yarn add @tatumio/xdc
-```
+1. Get your API key from the Tatum Dashboard.
 
-At the end, you need to initialize new SDK with your API Key.
+    [Log in with your Tatum account](https://dashboard.tatum.io) or [sign up for free](https://dashboard.tatum.io/sign-up).
+1. Install the `@tatum/xdc` package.
 
-```typescript
-import { TatumXdcSDK } from '@tatumio/xdc'
+    ```bash
+    npm install @tatumio/xdc
+    ```
+    or
+    ```bash
+    yarn add @tatumio/xdc
+    ```
+1. Initialize the newly installed SDK with your API key.
+        
+    ```typescript
+    import { TatumXdcSDK } from '@tatumio/xdc'
 
-const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-```
+    const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+    ```
 
-Examples are written in TypeScript, but you can use them in JavaScript as well. We are following ES6 standard, so you
-need to have Node.js version 10 or higher.
+## Review the examples
 
-### How to generate XDC wallet
+Start with generating a XinFin wallet:
 
 ```typescript
 import { TatumXdcSDK } from '@tatumio/xdc'
@@ -46,7 +55,7 @@ const { account, secret } = xdcSDK.wallet.wallet()
 console.log(`My public address is ${account}, with private key ${secret}.`)
 ```
 
-### How to use web3
+Here is how you can use web3:
 
 ```typescript
 import { TatumXdcSDK } from '@tatumio/xdc'
@@ -62,26 +71,12 @@ const web3 = xdcSDK.web3Client()
 const blockNumber = await web3.eth.getBlockNumber()
 ```
 
-### How to check balance of the address
-
-You can find examples [here](./src/app/xdc.balance.example.ts).
-
-### How to read information from the blockchain
-
-You can find examples [here](./src/app/xdc.blockchain.example.ts).
-
-### How to send transaction to another wallet
-
-You can find examples [here](./src/app/xdc.tx.example.ts).
-
-### How to send transaction using kms
-
-You can find examples [here](./src/app/xdc.kms.example.ts).
-
-### How to generate virtual account for XDC and transfer from it to a blockchain address
-
-You can find examples [here](./src/app/xdc.virtualAccount.example.ts).
-
-# How to work with smart contracts
-
-You can find examples [here](./src/app/xdc.smartContract.example.ts).
+Check out more examples to see what you want to do next:
+- [Send XDC from your wallet to another XinFin wallet.](./src/app/xdc.tx.example.ts)
+- [Check the balance of a XinFin wallet.](./src/app/xdc.balance.example.ts)
+- [Generate a virtual account for XDC and transfer funds from this account to a blockchain address.](./src/app/xdc.virtualAccount.example.ts)
+- [Invoke a method in a smart contract.](./src/app/xdc.smartContract.example.ts)
+- [Transfer assets from gas pump addresses.](./src/app/xdc.gasPump.example.ts)
+- [Work with fungible tokens.](./src/app/xdc.erc20.example.ts)
+- [Create subscriptions.](./src/app/xdc.subscriptions.example.ts)
+- [Get information from the blockchain.](./src/app/xdc.blockchain.example.ts)
