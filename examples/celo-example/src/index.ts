@@ -8,6 +8,7 @@ import { celoBalanceExample } from './app/celo.balance.example'
 import { celoSmartContractExample } from './app/celo.smartContract.example'
 import { celoErc20Example } from './app/celo.erc20.example'
 import { celoNftExample } from './app/celo.nft.example'
+import { celoNftExpressExample } from './app/celo.nft.express.mint.example'
 
 const examples = async () => {
   console.log(`Running celoBlockchainExample`)
@@ -39,6 +40,9 @@ const examples = async () => {
 
   console.log(`Running celoWalletExample`)
   await celoWalletExample()
+
+  console.log(`Running celoNftExpressExample`)
+  await celoNftExpressExample()
 }
 
 void examples()
