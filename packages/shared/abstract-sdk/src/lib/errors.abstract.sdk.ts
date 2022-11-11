@@ -130,6 +130,9 @@ export enum SdkErrorCode {
   CELO_MISSING_CONTRACT_ADDRESS = 'celo.missing.contract-address',
   CELO_NATIVE_CANNOT_PREPARE_TRANSFER_CELO_OR_CUSD_TX = 'celo.native.cannot.prepare.transfer-celo-or-cusd-tx',
 
+  // SOLANA
+  SOLANA_KMS_COMBINATION = 'solana.kms.combination',
+
   // EVM General
   EVM_CANNOT_SIGN_TRANSACTION = 'evm-based.cannot.sign-transaction',
   EVM_CANNOT_ESTIMATE_GAS_LIMIT = 'evm-based.cannot.estimate-gas-limit',
@@ -203,8 +206,8 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
     SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND,
     `UTXO with hash {0} and index {1} not found. Please check that outputs are valid`,
   ],
-  [SdkErrorCode.BTC_BASED_NO_INPUTS, `Not found spendable inputs for {0}`],
-  [SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE, `Not enough coins on address to perform this transaction`],
+  [SdkErrorCode.BTC_BASED_NO_INPUTS, `Not found spendable inputs`],
+  [SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE, `Not enough coins on addresses to perform this transaction`],
   [SdkErrorCode.BTC_FEE_IS_TOO_LARGE, `Fee is too big, make sure it's not a mistake`],
   [
     SdkErrorCode.BTC_BASED_AMOUNT,
@@ -231,6 +234,12 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
     `The target (to) address, currency, feeCurrency or the amount cannot be empty`,
   ],
   [SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS, `Contract address and fee currency should not be empty`],
+
+  // SOLANA
+  [
+    SdkErrorCode.SOLANA_KMS_COMBINATION,
+    'Either signatureId with feePayerSignatureId, or fromPrivateKey with feePayerPrivateKey must be present. Combination is not allowed.',
+  ],
 
   // EVM
   [

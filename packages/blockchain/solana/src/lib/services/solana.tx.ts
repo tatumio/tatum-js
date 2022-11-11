@@ -54,6 +54,7 @@ import {
 import BigNumber from 'bignumber.js'
 import { SdkError, SdkErrorCode, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { Blockchain } from '@tatumio/shared-core'
+import { SolanaSdkError } from '../solana.sdk.errors'
 
 export type FeePayerSignatureId = {
   feePayer: string
@@ -253,11 +254,10 @@ const createSplToken = async (
   web3: SolanaWeb3,
   provider?: string,
   externalFeePayer = false,
-  freezeAuthority?: string,
 ) => {
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from)
-  const freezeAuthorityKey = freezeAuthority ? new PublicKey(freezeAuthority) : from
+  const freezeAuthorityKey = body.freezeAuthority ? new PublicKey(body.freezeAuthority) : from
   const feePayerKey = getFeePayer(externalFeePayer, from, body.feePayer)
   const transaction = new Transaction({ feePayer: feePayerKey })
   const lamports = await getMinimumBalanceForRentExemptMint(connection)
@@ -297,7 +297,10 @@ const createSplToken = async (
   )
   if (body.signatureId) {
     transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
-    return { txData: transaction.compileMessage().serialize().toString('hex') }
+    return {
+      txData: transaction.compileMessage().serialize().toString('hex'),
+      mintPK: Buffer.from(mint.secretKey).toString('hex'),
+    }
   }
 
   const signers = [web3.generateKeyPair(body.fromPrivateKey), mint]
@@ -350,6 +353,12 @@ const burnNft = async (
     }),
   )
   transaction.add(...instructions)
+
+  if (body.signatureId) {
+    transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+    return { txData: transaction.compileMessage().serialize().toString('hex') }
+  }
+
   const signers = [web3.generateKeyPair(body.fromPrivateKey as string)]
   if (externalFeePayer) {
     return signAndBroadcastAsExternalFeePayer(web3, transaction, signers)
@@ -557,7 +566,15 @@ const verifyNftInCollection = async (
 const isUsingKms = <T extends { fromPrivateKey?: string; feePayerPrivateKey?: string; feePayer?: string }>(
   body: SolanaFromPrivateKeyOrSignatureId<T>,
 ) => {
-  return body.signatureId && (!body.feePayer || body.feePayerSignatureId)
+  if (body.signatureId && body.feePayerPrivateKey) {
+    throw new SolanaSdkError({ code: SdkErrorCode.SOLANA_KMS_COMBINATION })
+  }
+
+  if (body.fromPrivateKey && body.feePayerSignatureId) {
+    throw new SolanaSdkError({ code: SdkErrorCode.SOLANA_KMS_COMBINATION })
+  }
+
+  return body.signatureId
 }
 
 export const solanaTxService = (args: { web3: SolanaWeb3 }) => {

@@ -104,6 +104,10 @@ export const btcBasedTransactions = (
     body: BtcFromAddressTypes | LtcFromAddressTypes,
     options: BtcBasedTxOptions,
   ): Promise<Array<string>> => {
+    if (body.fromAddress.length === 0 && !options.skipAllChecks) {
+      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NO_INPUTS)
+    }
+
     try {
       const privateKeysToSign = []
 
@@ -141,12 +145,9 @@ export const btcBasedTransactions = (
         }
       }
 
-      if (transaction.inputs.length === 0 && !options.skipAllChecks) {
-        const addresses = body.fromAddress.map((value) => value.address).join(', ')
-        throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NO_INPUTS, [addresses])
+      if (!options.skipAllChecks) {
+        await validateBalanceFromUTXO(body, utxos)
       }
-
-      await validateBalanceFromUTXO(body, utxos)
 
       return privateKeysToSign
     } catch (e: any) {
@@ -162,6 +163,10 @@ export const btcBasedTransactions = (
     body: BtcFromUtxoTypes | LtcFromUtxoTypes,
     options: BtcBasedTxOptions,
   ): Promise<Array<string>> => {
+    if (body.fromUTXO.length === 0 && !options.skipAllChecks) {
+      throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NO_INPUTS)
+    }
+
     try {
       const privateKeysToSign = []
       const utxos = []
@@ -186,12 +191,9 @@ export const btcBasedTransactions = (
         else if ('privateKey' in utxoItem) privateKeysToSign.push(utxoItem.privateKey)
       }
 
-      if (transaction.inputs.length === 0 && !options.skipAllChecks) {
-        const utxos = body.fromUTXO.map((value) => `[${value.txHash} ${value.index}]`).join(', ')
-        throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NO_INPUTS, [utxos])
+      if (!options.skipAllChecks) {
+        await validateBalanceFromUTXO(body, utxos)
       }
-
-      await validateBalanceFromUTXO(body, utxos)
 
       return privateKeysToSign
     } catch (e: any) {
