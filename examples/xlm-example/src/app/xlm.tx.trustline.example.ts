@@ -28,7 +28,7 @@ export async function xlmTrustlineTxExample() {
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmGetAccountInfo
   const accountDetails = await xlmSDK.blockchain.getAccountInfo(fromAddress)
 
-  // We need to divide the balance by 1_000_000, because the balance is in stroops.
+  // We need to divide the balance by 1,000,000, because the balance is in stroops.
   console.log(
     `Account ${fromAddress} has ${
       Number(accountDetails.balances ? accountDetails.balances[0].balance : 0) / 1000000

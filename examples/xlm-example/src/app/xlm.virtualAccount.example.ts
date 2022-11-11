@@ -4,7 +4,7 @@ import { isValueSet, REPLACE } from './xlm.utils'
 import { sleep } from '@tatumio/shared-abstract-sdk'
 
 export async function xlmVirtualAccountExample() {
-  // Because one API key can have only one extended public key (xpub) on a memo-based blockchain, you have to use your own API key.
+  // Because one API key can have only one extended public key (xpub) on a memo-based blockchain, you have to use your own API key here.
   const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   const fundingAddress = REPLACE

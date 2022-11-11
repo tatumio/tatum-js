@@ -2,7 +2,7 @@
 
 Welcome to the **Tatum JavaScript SDK** for **Stellar**!
 
-We prepared a set of examples to help you complete some basic operations on Stellar. Using these examples, you will be able to do the following:
+We prepared a set of examples to help you complete some basic operations on Stellar using the SDK. Using these examples, you will be able to do the following:
 
 - Generate a Stellar wallet.
 - Send XLM from your wallet to another Stellar wallet.
