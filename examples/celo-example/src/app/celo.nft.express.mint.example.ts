@@ -53,6 +53,7 @@ export async function celoNftExpressExample() {
     tokenId,
     contractAddress,
     fromPrivateKey: senderPrivateKey,
+    feeCurrency: 'CELO',
   })) as TransactionHash
 
   console.log(`Transferred nft with transaction hash: ${nftTransferred.txId}`)
