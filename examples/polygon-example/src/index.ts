@@ -13,6 +13,7 @@ import { polygonNftExample } from './app/polygon.nft.example'
 import { polygonTxExample } from './app/polygon.tx.example'
 import { polygonSubscriptionsExample } from './app/polygon.subscriptions.example'
 import { polygonSmartContractExample } from './app/polygon.smartContract.example'
+import { polygonNftExpressExample } from './app/polygon.nft.express.mint.example'
 
 const examples = async () => {
   console.log(`Running polygonBlockchainExample`)
@@ -47,6 +48,9 @@ const examples = async () => {
 
   console.log(`Running polygonWalletExample`)
   await polygonWalletExample()
+
+  console.log(`Running polygonNftExpressExample`)
+  await polygonNftExpressExample()
 }
 
 void examples()

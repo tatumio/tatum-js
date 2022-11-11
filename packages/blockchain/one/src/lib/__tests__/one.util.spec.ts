@@ -1,4 +1,4 @@
-import { oneUtils } from '@tatumio/one'
+import { oneUtils } from '../one.utils'
 
 describe('ONE utils', () => {
   const CASES = [

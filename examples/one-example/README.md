@@ -66,8 +66,7 @@ const web3response = await oneSDK.httpDriver({
 const gasPriceInWei = await oneSDK.getGasPriceInWei()
 const web3 = oneSDK.web3Client()
 
-const blockNumber = web3.eth.getBlockNumber()
-const balance = web3.eth.getTransactionFromBlock(blockNumber)
+const blockNumber = await web3.eth.getBlockNumber()
 ```
 
 ### How to check balance of the address

@@ -43,9 +43,27 @@ need to have Node.js version 10 or higher.
 ```typescript
 import { TatumCeloSDK } from '@tatumio/celo'
 
-const celoSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const celoSDK = TatumCeloSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 const { mnemonic, xpub } = await celoSDK.wallet.generateWallet()
 console.log(`Wallet mnemonic is ${mnemonic}, extended public key is ${xpub}.`)
+```
+
+### How to use web3
+
+```typescript
+import { TatumCeloSDK } from '@tatumio/celo'
+
+const celoSDK = TatumCeloSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+const web3response = await celoSDK.httpDriver({
+  jsonrpc: '2.0',
+  method: 'web3_clientVersion',
+  params: [],
+  id: 2,
+})
+
+const gasPriceInWei = await celoSDK.getGasPriceInWei()
+const web3 = celoSDK.web3Client()
+const blockNumber = await web3.eth.getBlockNumber()
 ```
 
 ### How to check balance of the address
