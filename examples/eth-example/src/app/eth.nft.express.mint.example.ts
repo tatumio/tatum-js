@@ -41,9 +41,7 @@ export async function ethNftExpressExample() {
   // find deployed contract address from transaction hash
   // in this case contract address is under 'to' property since the hash is not from a contract deploy but mint
   // https://apidoc.tatum.io/tag/Ethereum#operation/EthGetTransaction
-  const transactionData = await ethSDK.blockchain.get(
-    '0x39c8ce55fe93b08464afb6fe28c7d4a3827d2be7746255dc73d265347f4c18ad',
-  )
+  const transactionData = await ethSDK.blockchain.get(nftMinted.txId)
   const contractAddress = transactionData.to as string
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 

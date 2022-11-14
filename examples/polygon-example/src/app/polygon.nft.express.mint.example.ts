@@ -41,9 +41,7 @@ export async function polygonNftExpressExample() {
   // find deployed contract address from transaction hash
   // in this case contract address is under 'to' property since the hash is not from a contract deploy but mint
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGetTransaction
-  const transactionData = await polygonSDK.blockchain.get(
-    '0x48cb4fac5708ea896898635400398d0f09c77a0771dfe501e6bf7ba785efa92a',
-  )
+  const transactionData = await polygonSDK.blockchain.get(nftMinted.txId)
   const contractAddress = transactionData.to as string
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 
