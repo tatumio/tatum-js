@@ -7,8 +7,8 @@ export async function bchVirtualAccountExample() {
   // More info here: https://docs.tatum.io/guides/ledger-and-off-chain
 
   // Set recipient values, amount and address where to send.
-  const recipientAddress = 'bchtest:qzk6zxdyjgma9y2uq5untflqpa6wfpn99gxh5sdrtl'
-  const valueToSend = '0.001'
+  const recipientAddress = 'bchtest:qzwj3wzvh20qjtmwhzmcfu7d85n7epecz5q4hrclrl'
+  const valueToSend = '0.01'
   const fee = '0.0005'
 
   const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })

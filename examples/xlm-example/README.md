@@ -21,23 +21,27 @@ The examples follow the ECMAScript 6 (ES6) standard. Therefore, make sure that y
 
 1. Get your API key from the Tatum Dashboard.
 
-    [Log in with your Tatum account](https://dashboard.tatum.io) or [sign up for free](https://dashboard.tatum.io/sign-up).
+   [Log in with your Tatum account](https://dashboard.tatum.io) or [sign up for free](https://dashboard.tatum.io/sign-up).
+
 1. Install the `@tatum/xlm` package.
 
-    ```bash
-    npm install @tatumio/xlm
-    ```
-    or
-    ```bash
-    yarn add @tatumio/xlm
-    ```
-1. Initialize the newly installed SDK with your API key.
-        
-    ```typescript
-    import { TatumXlmSDK } from '@tatumio/xlm'
+   ```bash
+   npm install @tatumio/xlm
+   ```
 
-    const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-    ```
+   or
+
+   ```bash
+   yarn add @tatumio/xlm
+   ```
+
+1. Initialize the newly installed SDK with your API key.
+
+   ```typescript
+   import { TatumXlmSDK } from '@tatumio/xlm'
+
+   const xlmSDK = TatumXlmSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+   ```
 
 ## Review the examples
 
@@ -52,6 +56,7 @@ console.log(`My public address is ${account}, with private key ${secret}.`)
 ```
 
 Check out more examples to see what you want to do next:
+
 - [Send XLM from your wallet to another Stellar wallet.](./src/app/xlm.tx.example.ts)
 - [Check the balance of a Stellar wallet.](./src/app/xlm.balance.example.ts)
 - [Send a create/update/delete trustline transaction to a Stellar wallet.](./src/app/xlm.tx.trustline.example.ts)
