@@ -4,22 +4,26 @@ import { TatumBchSDK } from '@tatumio/bch'
 const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function bchTransactionBroadcastExample() {
+  // To transfer BCH, please get familiar with UTXO model.
   // Prepare unspent output information first.
   // It is unspent transaction information for address, that will be used as an input for next BCH tx
   // It is possible to have more than one
+  // As an example, after running wallet example, use this url (https://faucet.fullstack.cash/) to faucet the address generated in the example
+  // The faucet transaction will take some time to be confirmed, you can validate that in https://blockexplorer.one/
+  // After to be confirm, replace the bellow values
   const txHash = '1ad94a0c8aee8ee0f1273a551486254fb09b9cce3ed56294c8a72b15e89ee11c'
-  const address = 'bchtest:qr5rrwc8nw59awgpxaemwq37arzg9f303u9fp2ws65'
+  const address = 'bchtest:qzwj3wzvh20qjtmwhzmcfu7d85n7epecz5q4hrclrl'
   const index = 0
 
   // Private key for utxo address
-  const privateKey = 'cU39Ur7xeb2rhty3QxYtuUxZj2UgKCoJtMPEqvLqsY7a4CpTyCU4'
+  const privateKey = 'cQWrA3F3uwwnWFwzdiYQxK4MbSLAxjMCRb5pXCcJ9aAy2L4foz2g'
 
   // Set recipient values, amount and address where to send. Because of internal structure of BCH chain it is possible
   // to pass several input and output address-value pairs. We will work with one recipient
-  const valueToSend = 0.00015
-  const recipientAddress = 'bchtest:qzk6zxdyjgma9y2uq5untflqpa6wfpn99gxh5sdrtl'
+  const valueToSend = 0.08
+  const recipientAddress = 'bchtest:qzwj3wzvh20qjtmwhzmcfu7d85n7epecz5q4hrclrl'
 
-  const fee = '0.00001'
+  const fee = '0.001'
   const changeAddress = address // we expect to receive change from transaction to sender address back
 
   const options = { testnet: true }
