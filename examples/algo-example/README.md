@@ -9,8 +9,7 @@ We prepared a set of examples to help you complete some basic operations on Algo
 - Check the balance of the wallet.
 - Generate a virtual account for ALGO.
 - Generate a deposit address for the virtual account.
-- Get information from the blockchain.
-- Create a subscription for the virtual account to be notified about transactions.
+- Create subscriptions to be notified about transactions on the virtual account.
 - Work with fungible tokens (ASA) and NFTs.
 - Get information from the blockchain.
 
@@ -89,9 +88,11 @@ You can find examples [here](./src/app/algo.fungible.example.ts).
 Check out more examples to see what you want to do next:
 - [Send ALGO from your wallet to another Algorand wallet.](./src/app/algo.tx.example.ts)
 - [Check the balance of an Algorand wallet.](./src/app/algo.balance.example.ts)
-- [Get information from the blockchain.](./src/app/algo.blockchain.example.ts)
 - [Generate a virtual account for ALGO and transfer funds from this account to a blockchain address.](./src/app/algo.virtualAccount.example.ts)
-- [Mint, transfer, and burn fungible tokens (ASA).](./src/app/algo.asa.example.ts)
-- [Mint, transfer, and burn NFTs.](./src/app/algo.nft.example.ts)
+- [Create a subscription to be notified about transactions on the virtual account.](./src/app/algo.subscriptions.example.ts)
+- [Mint and transfer fungible tokens (ASA).](./src/app/algo.asa-transfer.example.ts)
+- [Mint and burn fungible tokens (ASA).](./src/app/algo.asa-burn.example.ts)
+- [Mint and transfer NFTs.](./src/app/algo.nft-transfer.example.ts)
 - [Mint NFTs using NFT Express](./src/app/algo.nft.express.mint.example.ts)
-- [Create subscriptions.](./src/app/algo.subscriptions.example.ts)
+- [Mint and burn NFTs.](./src/app/algo.nft-burn.example.ts)
+- [Get information from the blockchain.](./src/app/algo.blockchain.example.ts)

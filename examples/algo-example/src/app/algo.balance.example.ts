@@ -8,8 +8,8 @@ export async function algoBalanceExample() {
   const { address, secret } = algoSDK.wallet.generateWallet()
   console.log(`Public address is ${address} and secret: ${secret}.`)
 
-  // FUND YOUR ACCOUNT WITH ALGOs FROM https://bank.testnet.algorand.network/
-
+  // Fund the Algorand account with ALGO using https://bank.testnet.algorand.network/.
+  // Get the balance of the account.
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGetBalance
   const balance = await algoSDK.blockchain.getBlockchainAccountBalance(address)
   console.log(`Account ${address} balance is ${JSON.stringify(balance)}.`)
