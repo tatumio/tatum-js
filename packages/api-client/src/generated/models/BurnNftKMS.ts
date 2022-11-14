@@ -16,7 +16,7 @@ export type BurnNftKMS = {
      */
     contractAddress: string;
     /**
-     * (Only if the signature ID is mnemonic-based) The index of the specific address from the mnemonic
+     * (Only if the signature ID is mnemonic-based) The index of the address to pay the transaction fee that was generated from the mnemonic
      */
     index?: number;
     /**

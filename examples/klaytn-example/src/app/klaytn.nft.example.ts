@@ -23,7 +23,6 @@ export async function klaytnNftExample() {
   // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftDeployErc721
   const nftDeploy = (await klaytnSDK.nft.send.deploySignedTransaction({
-    chain: Currency.KLAY,
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
     // your private key of the address that has coins
@@ -81,7 +80,6 @@ export async function klaytnNftExample() {
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
   const nftTransferred = (await klaytnSDK.nft.send.transferSignedTransaction({
-    chain: Currency.KLAY,
     to: receiverAddress,
     tokenId,
     contractAddress,
@@ -97,7 +95,6 @@ export async function klaytnNftExample() {
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
   const nftBurned = (await klaytnSDK.nft.send.burnSignedTransaction({
-    chain: Currency.KLAY,
     tokenId,
     contractAddress,
     fromPrivateKey: receiverPrivateKey,

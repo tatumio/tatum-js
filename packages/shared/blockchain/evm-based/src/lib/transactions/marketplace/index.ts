@@ -343,6 +343,7 @@ export const marketplace = ({
           web3,
           broadcastFunction,
           addressTransformer,
+          blockchain,
         }).prepare.approveSignedTransaction(body, provider),
       /**
        * Approve NFT transfer for listing.
@@ -432,6 +433,7 @@ export const marketplace = ({
               web3,
               broadcastFunction,
               addressTransformer,
+              blockchain,
             }).prepare.approveSignedTransaction(body, provider),
           })
         }

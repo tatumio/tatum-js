@@ -15,10 +15,10 @@ import {
   CancelablePromise,
   CancelSellAssetOnMarketplace,
   ChainBurnErc20 as ApiChainBurnErc20,
+  ChainDeployErc20,
   ChainMintErc20 as ApiChainMintErc20,
   ChainTransferEthErc20,
   Currency,
-  DeployErc20,
   DeployMultiToken,
   DeployNft,
   ExchangeRate,
@@ -60,7 +60,7 @@ import {
   XrpWallet,
 } from '@tatumio/api-client'
 import { Blockchain, blockchainHelper } from '@tatumio/shared-core'
-import { abstractSdk } from '@tatumio/shared-abstract-sdk'
+import { abstractSdk, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainKms } from './services/kms.abstract-blockchain'
 import { abstractBlockchainVirtualAccount } from './services/virtualAccount.abstract-blockchain'
 
@@ -112,51 +112,45 @@ export type FromPrivateKeyOrSignatureIdTron<T extends { fromPrivateKey?: string 
   Partial<SignatureId & { index: number; account: string; from: string }> &
   Partial<Pick<T, 'fromPrivateKey'>>
 
-export type ChainTransferErc20 = FromPrivateKeyOrSignatureId<Omit<ChainTransferEthErc20, 'chain'>>
+export type ChainTransferErc20 = FromPrivateKeyOrSignatureId<WithoutChain<ChainTransferEthErc20>>
 
-export type ChainMintErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainMintErc20, 'chain'>>
+export type ChainMintErc20 = FromPrivateKeyOrSignatureId<WithoutChain<ApiChainMintErc20>>
 
-export type ChainBurnErc20 = FromPrivateKeyOrSignatureId<Omit<ApiChainBurnErc20, 'chain'>>
+export type ChainBurnErc20 = FromPrivateKeyOrSignatureId<WithoutChain<ApiChainBurnErc20>>
 
-export type ChainApproveErc20 = FromPrivateKeyOrSignatureId<ApproveErc20>
+export type ChainApproveErc20 = FromPrivateKeyOrSignatureId<WithoutChain<ApproveErc20>>
 
-export type ChainDeployErc20 = FromPrivateKeyOrSignatureId<DeployErc20>
+export type ChainSdkDeployErc20 = FromPrivateKeyOrSignatureId<WithoutChain<ChainDeployErc20>>
 
-export type ChainMintErc721 = MintErc721 & {
-  fromPrivateKey?: string
-  minter?: string
-  chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY'
-}
+export type ChainMintErc721 = FromPrivateKeyOrSignatureId<WithoutChain<MintNft>>
 
-export type ChainMintNft = FromPrivateKeyOrSignatureId<MintNft>
+export type ChainMintMultipleNft = FromPrivateKeyOrSignatureId<WithoutChain<MintMultipleNft>>
 
-export type ChainMintMultipleNft = FromPrivateKeyOrSignatureId<MintMultipleNft> & {
-  erc20?: string
-}
+export type ChainBurnErc721 = FromPrivateKeyOrSignatureId<WithoutChain<BurnNft>>
 
-export type ChainBurnErc721 = FromPrivateKeyOrSignatureId<BurnNft>
+export type ChainAddMinterErc721 = FromPrivateKeyOrSignatureId<WithoutChain<AddNftMinter>>
 
-export type ChainAddMinterErc721 = FromPrivateKeyOrSignatureId<AddNftMinter>
+export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<WithoutChain<TransferNft>>
 
-export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<TransferNft>
+export type ChainUpdateCashbackErc721 = FromPrivateKeyOrSignatureId<
+  WithoutChain<UpdateCashbackValueForAuthorNft>
+>
 
-export type ChainUpdateCashbackErc721 = FromPrivateKeyOrSignatureId<UpdateCashbackValueForAuthorNft>
+export type ChainDeployErc721 = FromPrivateKeyOrSignatureId<WithoutChain<DeployNft>>
 
-export type ChainDeployErc721 = FromPrivateKeyOrSignatureId<DeployNft>
+export type ChainBurnMultiToken = FromPrivateKeyOrSignatureId<WithoutChain<BurnMultiToken>>
 
-export type ChainBurnMultiToken = FromPrivateKeyOrSignatureId<BurnMultiToken>
+export type ChainBurnMultiTokenBatch = FromPrivateKeyOrSignatureId<WithoutChain<BurnMultiTokenBatch>>
 
-export type ChainBurnMultiTokenBatch = FromPrivateKeyOrSignatureId<BurnMultiTokenBatch>
+export type ChainTransferMultiToken = FromPrivateKeyOrSignatureId<WithoutChain<TransferMultiToken>>
 
-export type ChainTransferMultiToken = FromPrivateKeyOrSignatureId<TransferMultiToken>
+export type ChainTransferMultiTokenBatch = FromPrivateKeyOrSignatureId<WithoutChain<TransferMultiTokenBatch>>
 
-export type ChainTransferMultiTokenBatch = FromPrivateKeyOrSignatureId<TransferMultiTokenBatch>
+export type ChainMintMultiToken = FromPrivateKeyOrSignatureId<WithoutChain<MintMultiToken>>
 
-export type ChainMintMultiToken = FromPrivateKeyOrSignatureId<MintMultiToken>
+export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<WithoutChain<MintMultiTokenBatch>>
 
-export type ChainMintMultiTokenBatch = FromPrivateKeyOrSignatureId<MintMultiTokenBatch>
-
-export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<DeployMultiToken>
+export type ChainDeployMultiToken = FromPrivateKeyOrSignatureId<WithoutChain<DeployMultiToken>>
 
 export type ChainSmartContractMethodInvocation = FromPrivateKeyOrSignatureId<CallSmartContractMethod> & {
   index?: number
@@ -229,7 +223,7 @@ export interface SdkWithErc20Functions {
   decimals(contractAddress: string, provider?: string): any
 
   prepare: {
-    deploySignedTransaction(body: ChainDeployErc20, provider?: string): Promise<string>
+    deploySignedTransaction(body: ChainSdkDeployErc20, provider?: string): Promise<string>
     transferSignedTransaction(body: ChainTransferErc20, provider?: string): Promise<string>
     mintSignedTransaction(body: ChainMintErc20, provider?: string): Promise<string>
     burnSignedTransaction(body: ChainBurnErc20, provider?: string): Promise<string>
@@ -249,13 +243,13 @@ export interface SdkWithErc721Functions {
     mintSignedTransaction(body: ChainMintErc721, provider?: string): Promise<string>
     burnSignedTransaction(body: ChainBurnErc721, provider?: string): Promise<string>
     mintMultipleSignedTransaction(body: ChainMintMultipleNft, provider?: string): Promise<string>
-    mintCashbackSignedTransaction(body: ChainMintNft, provider?: string): Promise<string>
+    mintCashbackSignedTransaction(body: ChainMintErc721, provider?: string): Promise<string>
     mintMultipleCashbackSignedTransaction(body: ChainMintMultipleNft, provider?: string): Promise<string>
     updateCashbackForAuthorSignedTransaction(
       body: ChainUpdateCashbackErc721,
       provider?: string,
     ): Promise<string>
-    mintProvenanceSignedTransaction(body: ChainMintNft, provider?: string): Promise<string>
+    mintProvenanceSignedTransaction(body: ChainMintErc721, provider?: string): Promise<string>
     mintMultipleProvenanceSignedTransaction(
       body: ChainMintMultipleNft & { fixedValues: string[][] },
       provider?: string,

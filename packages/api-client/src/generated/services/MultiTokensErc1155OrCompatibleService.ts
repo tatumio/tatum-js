@@ -530,6 +530,24 @@ export class MultiTokensErc1155OrCompatibleService {
              * Number of tokens held by the address.
              */
             amount?: string;
+            /**
+             * Block number when the token was received by the address.
+             */
+            blockNumber?: number;
+        }>;
+        metadata?: Array<{
+            /**
+             * The ID of the Multi Token owned by this address
+             */
+            tokenId?: string;
+            /**
+             * The URL pointing to the Multi Token metadata; the URL may not be present, and if it is not returned, you can get it by calling the Multi Token Contract.uri() method
+             */
+            url?: string;
+            /**
+             * The metadata scheme obtained from the metadata URL; the scheme may not be present, and if it is not returned, you can get it using the <a href="#operation/MultiTokenGetMetadata">Multi Token metadata API</a>
+             */
+            metadata?: any;
         }>;
     }>> {
         return __request({

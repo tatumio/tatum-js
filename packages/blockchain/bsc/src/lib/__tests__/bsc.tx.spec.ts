@@ -73,51 +73,43 @@ describe('BscSDK - tx', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.BSC, Currency.BSC)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.BSC, Currency.BSC)
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.BSC, Currency.BSC)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.BSC, Currency.BSC)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.BSC, Currency.BSC)
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.BSC, Currency.BSC)
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.BSC, Currency.BSC)
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
-        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.nft,
-          TEST_DATA.BSC,
-          Currency.BSC,
-        )
+        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
 
       describe('mintProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.BSC, Currency.BSC)
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
 
       describe('mintMultipleProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
-          sdk.nft,
-          TEST_DATA.BSC,
-          Currency.BSC,
-        )
+        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
     })
   })
@@ -182,7 +174,6 @@ describe('BscSDK - tx', () => {
         multiTokenTestFactory.prepare.deployMultiTokenTransaction(
           bscTx.multiToken,
           TEST_DATA.BSC,
-          'BSC',
           inmemoryBlockchain.accounts,
         )
       })
@@ -191,7 +182,6 @@ describe('BscSDK - tx', () => {
         multiTokenTestFactory.prepare.mintMultiTokenTransaction(
           bscTx.multiToken,
           TEST_DATA.BSC,
-          'BSC',
           inmemoryBlockchain.accounts,
         )
       })
@@ -200,7 +190,6 @@ describe('BscSDK - tx', () => {
         multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
           bscTx.multiToken,
           TEST_DATA.BSC,
-          'BSC',
           inmemoryBlockchain.accounts,
         )
       })
@@ -209,7 +198,6 @@ describe('BscSDK - tx', () => {
         multiTokenTestFactory.prepare.transferMultiTokenTransaction(
           bscTx.multiToken,
           TEST_DATA.BSC,
-          'BSC',
           inmemoryBlockchain.accounts,
         )
       })
@@ -218,7 +206,6 @@ describe('BscSDK - tx', () => {
         multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
           bscTx.multiToken,
           TEST_DATA.BSC,
-          'BSC',
           inmemoryBlockchain.accounts,
         )
       })
@@ -227,7 +214,6 @@ describe('BscSDK - tx', () => {
         multiTokenTestFactory.prepare.burnMultiTokenTransaction(
           bscTx.multiToken,
           TEST_DATA.BSC,
-          'BSC',
           inmemoryBlockchain.accounts,
         )
       })
@@ -236,7 +222,6 @@ describe('BscSDK - tx', () => {
         multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
           bscTx.multiToken,
           TEST_DATA.BSC,
-          'BSC',
           inmemoryBlockchain.accounts,
         )
       })

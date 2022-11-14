@@ -6,7 +6,7 @@ import type { CustomFee } from './CustomFee';
 
 export type MintMultipleNftCelo = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
     /**
@@ -42,7 +42,7 @@ export type MintMultipleNftCelo = {
      */
     nonce?: number;
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     fee?: CustomFee;

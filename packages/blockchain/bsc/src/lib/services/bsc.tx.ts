@@ -9,7 +9,7 @@ import {
   native,
   smartContract,
 } from '@tatumio/shared-blockchain-evm-based'
-import { EvmBasedBlockchain } from '@tatumio/shared-core'
+import { Blockchain, EvmBasedBlockchain } from '@tatumio/shared-core'
 
 export const bscTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBasedWeb3 }) => {
   return {

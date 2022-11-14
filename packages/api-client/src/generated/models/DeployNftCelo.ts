@@ -6,7 +6,7 @@ import type { CustomFee } from './CustomFee';
 
 export type DeployNftCelo = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
     /**
@@ -30,15 +30,15 @@ export type DeployNftCelo = {
      */
     symbol: string;
     /**
-     * Private key of Ethereum account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
+     * Private key of account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     fee?: CustomFee;

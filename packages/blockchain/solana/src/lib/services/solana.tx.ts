@@ -378,7 +378,6 @@ const mintNft = async (
 ) => {
   const connection = web3.getClient(provider)
   const from = new PublicKey(body.from)
-  const freezeAuthorityKey = body.freezeAuthority ? new PublicKey(body.freezeAuthority) : from
   const feePayerKey = getFeePayer(externalFeePayer, from, body.feePayer)
   const transaction = new Transaction({ feePayer: feePayerKey })
   const mintRent = await connection.getMinimumBalanceForRentExemption(MintLayout.span)
@@ -392,7 +391,7 @@ const mintNft = async (
       space: MintLayout.span,
       programId: TOKEN_PROGRAM_ID,
     }),
-    createInitializeMintInstruction(mint.publicKey, 0, from, freezeAuthorityKey, TOKEN_PROGRAM_ID),
+    createInitializeMintInstruction(mint.publicKey, 0, from, from, TOKEN_PROGRAM_ID),
   )
 
   const userTokenAccountAddress = (

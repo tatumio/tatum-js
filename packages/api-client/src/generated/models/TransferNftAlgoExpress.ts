@@ -4,7 +4,7 @@
 
 export type TransferNftAlgoExpress = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'ALGO';
     /**

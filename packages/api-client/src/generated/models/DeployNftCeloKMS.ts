@@ -6,7 +6,7 @@ import type { CustomFee } from './CustomFee';
 
 export type DeployNftCeloKMS = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
     /**
@@ -39,7 +39,7 @@ export type DeployNftCeloKMS = {
      */
     publicMint?: boolean;
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     fee?: CustomFee;

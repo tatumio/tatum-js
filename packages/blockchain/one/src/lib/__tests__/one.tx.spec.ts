@@ -61,15 +61,11 @@ describe('OneSDK - tx', () => {
       })
 
       describe('mintProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
 
       describe('mintMultipleProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
-          sdk.nft,
-          TEST_DATA.ONE,
-          Currency.ONE,
-        )
+        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
     })
   })
@@ -131,39 +127,34 @@ describe('OneSDK - tx', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
-
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.ONE, Currency.ONE)
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
-        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.nft,
-          TEST_DATA.ONE,
-          Currency.ONE,
-        )
+        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
     })
   })
@@ -174,7 +165,6 @@ describe('OneSDK - tx', () => {
         multiTokenTestFactory.prepare.deployMultiTokenTransaction(
           sdk.multiToken,
           TEST_DATA.ONE,
-          'ONE',
           inmemoryBlockchain.accounts,
         )
       })
@@ -183,7 +173,6 @@ describe('OneSDK - tx', () => {
         multiTokenTestFactory.prepare.mintMultiTokenTransaction(
           sdk.multiToken,
           TEST_DATA.ONE,
-          'ONE',
           inmemoryBlockchain.accounts,
         )
       })
@@ -192,7 +181,6 @@ describe('OneSDK - tx', () => {
         multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
           sdk.multiToken,
           TEST_DATA.ONE,
-          'ONE',
           inmemoryBlockchain.accounts,
         )
       })
@@ -201,7 +189,6 @@ describe('OneSDK - tx', () => {
         multiTokenTestFactory.prepare.transferMultiTokenTransaction(
           sdk.multiToken,
           TEST_DATA.ONE,
-          'ONE',
           inmemoryBlockchain.accounts,
         )
       })
@@ -210,7 +197,6 @@ describe('OneSDK - tx', () => {
         multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
           sdk.multiToken,
           TEST_DATA.ONE,
-          'ONE',
           inmemoryBlockchain.accounts,
         )
       })
@@ -219,7 +205,6 @@ describe('OneSDK - tx', () => {
         multiTokenTestFactory.prepare.burnMultiTokenTransaction(
           sdk.multiToken,
           TEST_DATA.ONE,
-          'ONE',
           inmemoryBlockchain.accounts,
         )
       })
@@ -228,7 +213,6 @@ describe('OneSDK - tx', () => {
         multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
           sdk.multiToken,
           TEST_DATA.ONE,
-          'ONE',
           inmemoryBlockchain.accounts,
         )
       })

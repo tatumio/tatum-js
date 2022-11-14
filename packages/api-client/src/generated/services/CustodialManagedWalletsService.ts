@@ -65,7 +65,7 @@ export class CustodialManagedWalletsService {
      * <p>Get managed address for an API Key. It's possible to export the private key, if query parameter <b>export</b> is set to true.</p>
      *
      * @param id WalletID of the managed address
-     * @param _export If set to, export the private key details in the response
+     * @param _export If set to "true", returns the private key in the response; if not set, defaults to "false" (the private key is not included in the response)
      * @returns CustodialManagedAddress OK
      * @throws ApiError
      */

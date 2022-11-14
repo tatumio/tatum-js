@@ -4,7 +4,7 @@
 
 export type MintMultipleNftTron = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'TRON';
     /**
@@ -28,7 +28,7 @@ export type MintMultipleNftTron = {
      */
     fromPrivateKey: string;
     /**
-     * Max limit for fee to be paid, in TRX.
+     * The maximum amount to be paid as the transaction fee (in TRX)
      */
     feeLimit: number;
 }

@@ -4,35 +4,35 @@
 
 export type UpdateCashbackValueForAuthorNftKMS = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
+    chain: 'BSC' | 'ETH' | 'KCS' | 'KLAY' | 'MATIC' | 'ONE';
     /**
-     * ID of token to be updated.
+     * The ID of the NFT to update royalty information for
      */
     tokenId: string;
     /**
-     * New royalty cashback to be set for the author of token with tokenId. If set to 0, royalty is disabled for this token.
-     */
-    cashbackValue: string;
-    /**
-     * Address of NFT token
+     * The blockchain address of the NFT to update royalty information for
      */
     contractAddress: string;
     /**
-     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
+     * The new value of the royalty cashback to be set for the author of the NFT; to disable the royalties for the NFT completely, set this parameter to 0
      */
-    index?: number;
+    cashbackValue: string;
     /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The KMS identifier of the private key of the NFT author's address
      */
     signatureId: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * (Only if the signature ID is mnemonic-based) The index of the NFT author's address that was generated from the mnemonic
+     */
+    index?: number;
+    /**
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
-     * Custom defined fee. If not present, it will be calculated automatically.
+     * The custom defined fee; if not present, will be calculated automatically
      */
     fee?: {
         /**

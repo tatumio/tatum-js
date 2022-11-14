@@ -5,7 +5,6 @@ import {
   ChainDeployErc721,
   ChainMintErc721,
   ChainMintMultipleNft,
-  ChainMintNft,
   ChainTransferErc721,
   ChainUpdateCashbackErc721,
 } from '@tatumio/shared-blockchain-abstract'
@@ -27,6 +26,7 @@ import {
 } from '@tatumio/api-client'
 import { Erc721Token_General } from '../../contracts/erc721General'
 import { Erc721Token_Cashback } from '../../contracts/erc721Cashback'
+import { blockchainHelper, EvmBasedBlockchain } from '@tatumio/shared-core'
 
 const mintSignedTransactionMinter = async (body: MintNftMinter) => {
   const request = await NftErc721OrCompatibleService.nftMintErc721(body)
@@ -60,7 +60,7 @@ const mintSignedTransaction = async ({
       nonce: nonce,
     }
 
-    return await evmBasedUtils.prepareSignedTransactionAbstraction(
+    return evmBasedUtils.prepareSignedTransactionAbstraction(
       client,
       tx,
       web3,
@@ -80,7 +80,7 @@ const mintCashbackSignedTransaction = async ({
   provider,
   addressTransformer,
 }: {
-  body: ChainMintNft
+  body: ChainMintErc721
   web3: EvmBasedWeb3
   provider?: string
   addressTransformer: AddressTransformer
@@ -106,7 +106,7 @@ const mintCashbackSignedTransaction = async ({
       nonce,
     }
 
-    return await evmBasedUtils.prepareSignedTransactionAbstraction(
+    return evmBasedUtils.prepareSignedTransactionAbstraction(
       client,
       tx,
       web3,
@@ -137,7 +137,7 @@ export const mintMultipleCashbackSignedTransaction = async ({
   const erc20 = addressTransformer(body.erc20?.trim())
   const authorAddresses = body.authorAddresses?.map((i) => i?.map((j) => addressTransformer(j?.trim())))
 
-  const client = await web3.getClient(provider, fromPrivateKey)
+  const client = web3.getClient(provider, fromPrivateKey)
 
   const contract = new client.eth.Contract(Erc721Token_Cashback.abi as any, contractAddress)
   const cashbacks: string[][] = cashbackValues!
@@ -153,7 +153,7 @@ export const mintMultipleCashbackSignedTransaction = async ({
       : contract.methods.mintMultipleCashback(to, tokenId, url, authorAddresses, cb).encodeABI(),
     nonce,
   }
-  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
     web3,
@@ -190,7 +190,7 @@ const mintMultipleSignedTransaction = async ({
     data: contract.methods.mintMultiple(to, tokenId, url).encodeABI(),
     nonce,
   }
-  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
     web3,
@@ -226,7 +226,7 @@ const burnSignedTransaction = async ({
     nonce,
   }
 
-  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
     web3,
@@ -265,7 +265,7 @@ const addMinterSignedTransaction = async ({
     nonce,
   }
 
-  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
     web3,
@@ -314,7 +314,7 @@ const transferSignedTransaction = async ({
     value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
   }
 
-  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
     web3,
@@ -355,7 +355,7 @@ const updateCashbackForAuthorSignedTransaction = async ({
       .encodeABI(),
     nonce,
   }
-  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
     web3,
@@ -408,7 +408,7 @@ const deploySignedTransaction = async ({
     data: deploy.encodeABI(),
     nonce,
   }
-  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
     web3,
@@ -426,7 +426,7 @@ const mintProvenanceSignedTransaction = async ({
   provider,
   addressTransformer,
 }: {
-  body: ChainMintNft
+  body: ChainMintErc721
   web3: EvmBasedWeb3
   provider?: string
   addressTransformer: AddressTransformer
@@ -460,7 +460,7 @@ const mintProvenanceSignedTransaction = async ({
       nonce,
     }
 
-    return await evmBasedUtils.prepareSignedTransactionAbstraction(
+    return evmBasedUtils.prepareSignedTransactionAbstraction(
       client,
       tx,
       web3,
@@ -517,7 +517,7 @@ const mintMultipleProvenanceSignedTransaction = async ({
       : contract.methods.mintMultiple(to, tokenId, url, authorAddresses ?? [], cb, fv).encodeABI(),
     nonce,
   }
-  return await evmBasedUtils.prepareSignedTransactionAbstraction(
+  return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
     web3,
@@ -529,15 +529,23 @@ const mintMultipleProvenanceSignedTransaction = async ({
   )
 }
 
+const isUsingNftMinter = (body: object): body is MintNftMinter => {
+  return 'minter' in body
+}
+
 export const erc721 = ({
+  blockchain,
   web3,
   broadcastFunction,
   addressTransformer = (address: string) => address,
 }: {
+  blockchain: EvmBasedBlockchain
   web3: EvmBasedWeb3
   broadcastFunction: BroadcastFunction
   addressTransformer?: AddressTransformer // to automatically transform address to blockchain specific (e.g. 0x -> xdc, one)
 }) => {
+  const chain = blockchainHelper.getDefaultCurrencyByBlockchain(blockchain)
+
   return {
     prepare: {
       /**
@@ -546,7 +554,7 @@ export const erc721 = ({
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintSignedTransaction: async (body: Omit<ChainMintErc721, 'minter'>, provider?: string) =>
+      mintSignedTransaction: async (body: ChainMintErc721, provider?: string) =>
         mintSignedTransaction({ body, web3, provider, addressTransformer }),
       /**
        * Sign mint ERC 721 transaction with cashback via private keys locally. Nothing is broadcast to the blockchain.
@@ -554,7 +562,7 @@ export const erc721 = ({
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintCashbackSignedTransaction: async (body: ChainMintNft, provider?: string) =>
+      mintCashbackSignedTransaction: async (body: ChainMintErc721, provider?: string) =>
         mintCashbackSignedTransaction({ body, web3, provider, addressTransformer }),
       /**
        * Sign mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -610,7 +618,7 @@ export const erc721 = ({
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction data to be broadcast to blockchain.
        */
-      mintProvenanceSignedTransaction: async (body: ChainMintNft, provider?: string) =>
+      mintProvenanceSignedTransaction: async (body: ChainMintErc721, provider?: string) =>
         mintProvenanceSignedTransaction({ body, web3, provider, addressTransformer }),
       /**
        * Sign mint multiple ERC 721 Cashback transaction with private keys locally. Nothing is broadcast to the blockchain.
@@ -639,14 +647,17 @@ export const erc721 = ({
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintSignedTransaction: async (body: ChainMintErc721, provider?: string) => {
-        if (body.minter) {
-          return await mintSignedTransactionMinter(body as MintNftMinter)
+      mintSignedTransaction: async (body: ChainMintErc721 | MintNftMinter, provider?: string) => {
+        if (isUsingNftMinter(body)) {
+          return mintSignedTransactionMinter(body)
         } else if (body.signatureId) {
-          return await NftErc721OrCompatibleService.nftMintErc721(body as MintNftKMS)
+          return NftErc721OrCompatibleService.nftMintErc721({
+            ...body,
+            chain,
+          } as MintNftKMS)
         } else {
-          return await broadcastFunction({
-            txData: (await mintSignedTransaction({ body, web3, provider, addressTransformer })) as string,
+          return broadcastFunction({
+            txData: await mintSignedTransaction({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -657,17 +668,20 @@ export const erc721 = ({
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintCashbackSignedTransaction: async (body: ChainMintNft, provider?: string) => {
+      mintCashbackSignedTransaction: async (body: ChainMintErc721, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftMintErc721(body as MintNftKMS)
+          return NftErc721OrCompatibleService.nftMintErc721({
+            ...body,
+            chain,
+          } as MintNftKMS)
         } else {
           return broadcastFunction({
-            txData: (await mintCashbackSignedTransaction({
+            txData: await mintCashbackSignedTransaction({
               body,
               web3,
               provider,
               addressTransformer,
-            })) as string,
+            }),
           })
         }
       },
@@ -680,15 +694,18 @@ export const erc721 = ({
        */
       mintMultipleCashbackSignedTransaction: async (body: ChainMintMultipleNft, provider?: string) => {
         if (body.signatureId) {
-          return await NftErc721OrCompatibleService.nftMintMultipleErc721(body as MintMultipleNftKMS)
+          return NftErc721OrCompatibleService.nftMintMultipleErc721({
+            ...body,
+            chain,
+          } as MintMultipleNftKMS)
         } else {
           return broadcastFunction({
-            txData: (await mintMultipleCashbackSignedTransaction({
+            txData: await mintMultipleCashbackSignedTransaction({
               body,
               web3,
               provider,
               addressTransformer,
-            })) as string,
+            }),
           })
         }
       },
@@ -702,15 +719,18 @@ export const erc721 = ({
        */
       mintMultipleSignedTransaction: async (body: ChainMintMultipleNft, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftMintMultipleErc721(body as MintMultipleNftKMS)
+          return NftErc721OrCompatibleService.nftMintMultipleErc721({
+            ...body,
+            chain,
+          } as MintMultipleNftKMS)
         } else {
           return broadcastFunction({
-            txData: (await mintMultipleSignedTransaction({
+            txData: await mintMultipleSignedTransaction({
               body,
               web3,
               provider,
               addressTransformer,
-            })) as string,
+            }),
           })
         }
       },
@@ -723,10 +743,13 @@ export const erc721 = ({
        */
       burnSignedTransaction: async (body: ChainBurnErc721, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftBurnErc721(body as BurnNftKMS)
+          return NftErc721OrCompatibleService.nftBurnErc721({
+            ...body,
+            chain,
+          } as BurnNftKMS)
         } else {
           return broadcastFunction({
-            txData: (await burnSignedTransaction({ body, web3, provider, addressTransformer })) as string,
+            txData: await burnSignedTransaction({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -740,10 +763,13 @@ export const erc721 = ({
        */
       transferSignedTransaction: async (body: ChainTransferErc721, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftTransferErc721(body as TransferNftKMS)
+          return NftErc721OrCompatibleService.nftTransferErc721({
+            ...body,
+            chain,
+          } as TransferNftKMS)
         } else {
           return broadcastFunction({
-            txData: (await transferSignedTransaction({ body, web3, provider, addressTransformer })) as string,
+            txData: await transferSignedTransaction({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -760,17 +786,18 @@ export const erc721 = ({
         provider?: string,
       ) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftUpdateCashbackErc721(
-            body as UpdateCashbackValueForAuthorNftKMS,
-          )
+          return NftErc721OrCompatibleService.nftUpdateCashbackErc721({
+            ...body,
+            chain,
+          } as UpdateCashbackValueForAuthorNftKMS)
         } else {
           return broadcastFunction({
-            txData: (await updateCashbackForAuthorSignedTransaction({
+            txData: await updateCashbackForAuthorSignedTransaction({
               body,
               web3,
               provider,
               addressTransformer,
-            })) as string,
+            }),
           })
         }
       },
@@ -783,10 +810,13 @@ export const erc721 = ({
        */
       deploySignedTransaction: async (body: ChainDeployErc721, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftDeployErc721(body as DeployNftKMS)
+          return NftErc721OrCompatibleService.nftDeployErc721({
+            ...body,
+            chain,
+          } as DeployNftKMS)
         } else {
           return broadcastFunction({
-            txData: (await deploySignedTransaction({ body, web3, provider, addressTransformer })) as string,
+            txData: await deploySignedTransaction({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -798,17 +828,20 @@ export const erc721 = ({
        * @param provider url of the Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintProvenanceSignedTransaction: async (body: ChainMintNft, provider?: string) => {
+      mintProvenanceSignedTransaction: async (body: ChainMintErc721, provider?: string) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftMintErc721(body as MintNftKMS)
+          return NftErc721OrCompatibleService.nftMintErc721({
+            ...body,
+            chain,
+          } as MintNftKMS)
         } else {
           return broadcastFunction({
-            txData: (await mintProvenanceSignedTransaction({
+            txData: await mintProvenanceSignedTransaction({
               body,
               web3,
               provider,
               addressTransformer,
-            })) as string,
+            }),
           })
         }
       },
@@ -824,15 +857,18 @@ export const erc721 = ({
         provider?: string,
       ) => {
         if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftMintMultipleErc721(body as MintMultipleNftKMS)
+          return NftErc721OrCompatibleService.nftMintMultipleErc721({
+            ...body,
+            chain,
+          } as MintMultipleNftKMS)
         } else {
           return broadcastFunction({
-            txData: (await mintMultipleProvenanceSignedTransaction({
+            txData: await mintMultipleProvenanceSignedTransaction({
               body,
               web3,
               provider,
               addressTransformer,
-            })) as string,
+            }),
           })
         }
       },

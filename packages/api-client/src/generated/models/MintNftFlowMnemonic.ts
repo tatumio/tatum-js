@@ -7,7 +7,7 @@
  */
 export type MintNftFlowMnemonic = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'FLOW';
     /**

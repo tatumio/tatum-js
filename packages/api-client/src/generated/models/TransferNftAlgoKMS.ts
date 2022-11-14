@@ -4,7 +4,7 @@
 
 export type TransferNftAlgoKMS = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'ALGO';
     /**

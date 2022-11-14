@@ -24,7 +24,6 @@ export async function kcsMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/DeployMultiToken
   const multiTokenDeployed = (await kcsSDK.multiToken.send.deployMultiTokenTransaction({
-    chain: Currency.KCS,
     // your private key of the address that has coins
     fromPrivateKey: senderPrivateKey,
     // uploaded metadata from ipfs
@@ -52,7 +51,6 @@ export async function kcsMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/MintMultiToken
   const multiTokenMinted = (await kcsSDK.multiToken.send.mintMultiTokenTransaction({
-    chain: Currency.KCS,
     to: senderAddress,
     tokenId,
     amount: '1000',
@@ -69,7 +67,6 @@ export async function kcsMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/TransferMultiToken
   const multiTokenTransferred = (await kcsSDK.multiToken.send.transferMultiTokenTransaction({
-    chain: Currency.KCS,
     to: receiverAddress,
     tokenId,
     amount: '10',
@@ -86,7 +83,6 @@ export async function kcsMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/BurnMultiToken
   const multiTokenBurned = (await kcsSDK.multiToken.send.burnMultiTokenTransaction({
-    chain: Currency.KCS,
     tokenId,
     amount: '1',
     fromPrivateKey: receiverPrivateKey,

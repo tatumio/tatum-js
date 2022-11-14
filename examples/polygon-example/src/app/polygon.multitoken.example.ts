@@ -24,7 +24,6 @@ export async function polygonMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/DeployMultiToken
   const multiTokenDeployed = (await polygonSDK.multiToken.send.deployMultiTokenTransaction({
-    chain: Currency.MATIC,
     // your private key of the address that has coins
     fromPrivateKey: senderPrivateKey,
     // uploaded metadata from ipfs
@@ -52,7 +51,6 @@ export async function polygonMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/MintMultiToken
   const multiTokenMinted = (await polygonSDK.multiToken.send.mintMultiTokenTransaction({
-    chain: Currency.MATIC,
     to: senderAddress,
     tokenId,
     amount: '1000',
@@ -69,7 +67,6 @@ export async function polygonMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/TransferMultiToken
   const multiTokenTransferred = (await polygonSDK.multiToken.send.transferMultiTokenTransaction({
-    chain: Currency.MATIC,
     to: receiverAddress,
     tokenId,
     amount: '10',
@@ -86,7 +83,6 @@ export async function polygonMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/BurnMultiToken
   const multiTokenBurned = (await polygonSDK.multiToken.send.burnMultiTokenTransaction({
-    chain: Currency.MATIC,
     tokenId,
     amount: '1',
     fromPrivateKey: receiverPrivateKey,
