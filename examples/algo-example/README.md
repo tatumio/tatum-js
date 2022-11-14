@@ -1,43 +1,48 @@
-# How to use TatumSDK with Algorand
+# Tatum JavaScript SDK for Algorand (ALGO)
 
-These examples should guide you through some basic operations of the Algorand blockchain. You will be able to:
+Welcome to the **Tatum JavaScript SDK** for **Algorand**!
 
-- generate wallet
-- send ALGO to another wallet
-- check the balance of your wallet
-- generate virtual account
-- generate deposit address for virtual account
-- create subscription for virtual account to be notified about transactions
-- mint, transfer and burn NFT and ASA (ERC20) tokens
+We prepared a set of examples to help you complete some basic operations on Algorand using the SDK. Using these examples, you will be able to do the following:
 
-## How to start
+- Generate an Algorand wallet.
+- Send ALGO from your wallet to another Algorand wallet.
+- Check the balance of the wallet.
+- Generate a virtual account for ALGO.
+- Generate a deposit address for the virtual account.
+- Get information from the blockchain.
+- Create a subscription for the virtual account to be notified about transactions.
+- Work with fungible tokens (ASA) and NFTs.
+- Get information from the blockchain.
 
-In order to start, you need to create an API Key at [Tatum Dashboard](https://dashboard.tatum.io).
+## Before you start
 
-You need to install the @tatum/algo package from npm.
+The examples follow the ECMAScript 6 (ES6) standard. Therefore, make sure that you have Node.js 10 or higher.
 
-```bash
-npm install @tatumio/algo
-```
+## Get the SDK ready
 
-or
+1. Get your API key from the Tatum Dashboard.
 
-```bash
-yarn add @tatumio/algo
-```
+    [Log in with your Tatum account](https://dashboard.tatum.io) or [sign up for free](https://dashboard.tatum.io/sign-up).
+1. Install the `@tatum/algo` package.
 
-At the end, you need to initialize new SDK with your API Key.
+    ```bash
+    npm install @tatumio/algo
+    ```
+    or
+    ```bash
+    yarn add @tatumio/algo
+    ```
+1. Initialize the newly installed SDK with your API key.
+        
+    ```typescript
+    import { TatumAlgoSDK } from '@tatumio/algo'
 
-```typescript
-import { TatumAlgoSDK } from '@tatumio/algo'
+    const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+    ```
 
-const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-```
+## Review the examples
 
-Examples are written in TypeScript, but you can use them in JavaScript as well. We are following ES6 standard, so you
-need to have Node.js version 10 or higher.
-
-### How to generate ALGO wallet
+Start with generating an Algorand wallet:
 
 ```typescript
 import { TatumAlgoSDK } from '@tatumio/algo'
@@ -71,10 +76,22 @@ You can find examples [here](./src/app/algo.subscriptions.example.ts).
 
 You can find examples [here](./src/app/algo.nft.example.ts).
 
-### How to create, transfer and burn Fracional NFTs token
+### How to create, transfer and burn Fractional NFTs token
 
 You can find examples [here](./src/app/algo.nft.example.ts).
 
 ### How to create, transfer and burn fungible ASA (ERC20) token
 
 You can find examples [here](./src/app/algo.fungible.example.ts).
+
+
+
+Check out more examples to see what you want to do next:
+- [Send ALGO from your wallet to another Algorand wallet.](./src/app/algo.tx.example.ts)
+- [Check the balance of an Algorand wallet.](./src/app/algo.balance.example.ts)
+- [Get information from the blockchain.](./src/app/algo.blockchain.example.ts)
+- [Generate a virtual account for ALGO and transfer funds from this account to a blockchain address.](./src/app/algo.virtualAccount.example.ts)
+- [Mint, transfer, and burn fungible tokens (ASA).](./src/app/algo.asa.example.ts)
+- [Mint, transfer, and burn NFTs.](./src/app/algo.nft.example.ts)
+- [Mint NFTs using NFT Express](./src/app/algo.nft.express.mint.example.ts)
+- [Create subscriptions.](./src/app/algo.subscriptions.example.ts)
