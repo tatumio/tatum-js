@@ -7,7 +7,7 @@
  */
 export type MintNftFlowKMS = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'FLOW';
     /**

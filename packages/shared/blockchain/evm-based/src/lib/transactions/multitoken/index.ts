@@ -8,12 +8,22 @@ import {
   ChainTransferMultiToken,
   ChainTransferMultiTokenBatch,
 } from '@tatumio/shared-blockchain-abstract'
-import { MultiTokensErc1155OrCompatibleService } from '@tatumio/api-client'
+import {
+  BurnMultiTokenBatchKMS,
+  BurnMultiTokenKMS,
+  DeployMultiTokenKMS,
+  MintMultiTokenBatchKMS,
+  MintMultiTokenKMS,
+  MultiTokensErc1155OrCompatibleService,
+  TransferMultiTokenBatchKMS,
+  TransferMultiTokenKMS,
+} from '@tatumio/api-client'
 import { TransactionConfig } from 'web3-core'
 import { Erc1155 } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { AddressTransformer, evmBasedUtils } from '../../evm-based.utils'
 import BigNumber from 'bignumber.js'
+import { blockchainHelper, EvmBasedBlockchain } from '@tatumio/shared-core'
 
 const mintMultiToken = async ({
   body,
@@ -296,14 +306,18 @@ const burnMultiTokenBatch = async ({
 }
 
 export const multiToken = ({
+  blockchain,
   web3,
   broadcastFunction,
   addressTransformer = (address: string) => address,
 }: {
+  blockchain: EvmBasedBlockchain
   web3: EvmBasedWeb3
   broadcastFunction: BroadcastFunction
   addressTransformer?: AddressTransformer // to automatically transform address to blockchain specific (e.g. 0x -> xdc, one)
 }) => {
+  const chain = blockchainHelper.getDefaultCurrencyByBlockchain(blockchain)
+
   return {
     prepare: {
       /**
@@ -374,11 +388,13 @@ export const multiToken = ({
        */
       mintMultiTokenTransaction: async (body: ChainMintMultiToken, provider?: string) => {
         if (body.signatureId) {
-          // TODO: find better type
-          return MultiTokensErc1155OrCompatibleService.mintMultiToken(body as any)
+          return MultiTokensErc1155OrCompatibleService.mintMultiToken({
+            ...body,
+            chain,
+          } as MintMultiTokenKMS)
         } else {
           return broadcastFunction({
-            txData: (await mintMultiToken({ body, web3, provider, addressTransformer })) as string,
+            txData: await mintMultiToken({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -390,11 +406,13 @@ export const multiToken = ({
        */
       mintMultiTokenBatchTransaction: async (body: ChainMintMultiTokenBatch, provider?: string) => {
         if (body.signatureId) {
-          // TODO: find better type
-          return MultiTokensErc1155OrCompatibleService.mintMultiTokenBatch(body as any)
+          return MultiTokensErc1155OrCompatibleService.mintMultiTokenBatch({
+            ...body,
+            chain,
+          } as MintMultiTokenBatchKMS)
         } else {
           return broadcastFunction({
-            txData: (await mintMultiTokenBatch({ body, web3, provider, addressTransformer })) as string,
+            txData: await mintMultiTokenBatch({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -407,11 +425,13 @@ export const multiToken = ({
        */
       transferMultiTokenTransaction: async (body: ChainTransferMultiToken, provider?: string) => {
         if (body.signatureId) {
-          // TODO: find better type
-          return MultiTokensErc1155OrCompatibleService.transferMultiToken(body as any)
+          return MultiTokensErc1155OrCompatibleService.transferMultiToken({
+            ...body,
+            chain,
+          } as TransferMultiTokenKMS)
         } else {
           return broadcastFunction({
-            txData: (await transferMultiToken({ body, web3, provider, addressTransformer })) as string,
+            txData: await transferMultiToken({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -424,11 +444,13 @@ export const multiToken = ({
        */
       transferMultiTokenBatchTransaction: async (body: ChainTransferMultiTokenBatch, provider?: string) => {
         if (body.signatureId) {
-          // TODO: find better type
-          return MultiTokensErc1155OrCompatibleService.transferMultiTokenBatch(body as any)
+          return MultiTokensErc1155OrCompatibleService.transferMultiTokenBatch({
+            ...body,
+            chain,
+          } as TransferMultiTokenBatchKMS)
         } else {
           return broadcastFunction({
-            txData: (await transferMultiTokenBatch({ body, web3, provider, addressTransformer })) as string,
+            txData: await transferMultiTokenBatch({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -440,11 +462,13 @@ export const multiToken = ({
        */
       deployMultiTokenTransaction: async (body: ChainDeployMultiToken, provider?: string) => {
         if (body.signatureId) {
-          // TODO: find better type
-          return MultiTokensErc1155OrCompatibleService.deployMultiToken(body as any)
+          return MultiTokensErc1155OrCompatibleService.deployMultiToken({
+            ...body,
+            chain,
+          } as DeployMultiTokenKMS)
         } else {
           return broadcastFunction({
-            txData: (await deployMultiToken({ body, web3, provider, addressTransformer })) as string,
+            txData: await deployMultiToken({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -456,11 +480,13 @@ export const multiToken = ({
        */
       burnMultiTokenTransaction: async (body: ChainBurnMultiToken, provider?: string) => {
         if (body.signatureId) {
-          // TODO: find better type
-          return MultiTokensErc1155OrCompatibleService.burnMultiToken(body as any)
+          return MultiTokensErc1155OrCompatibleService.burnMultiToken({
+            ...body,
+            chain,
+          } as BurnMultiTokenKMS)
         } else {
           return broadcastFunction({
-            txData: (await burnMultiToken({ body, web3, provider, addressTransformer })) as string,
+            txData: await burnMultiToken({ body, web3, provider, addressTransformer }),
           })
         }
       },
@@ -472,11 +498,13 @@ export const multiToken = ({
        */
       burnMultiTokenBatchTransaction: async (body: ChainBurnMultiTokenBatch, provider?: string) => {
         if (body.signatureId) {
-          // TODO: find better type
-          return MultiTokensErc1155OrCompatibleService.burnMultiTokenBatch(body as any)
+          return MultiTokensErc1155OrCompatibleService.burnMultiTokenBatch({
+            ...body,
+            chain,
+          } as BurnMultiTokenBatchKMS)
         } else {
           return broadcastFunction({
-            txData: (await burnMultiTokenBatch({ body, web3, provider, addressTransformer })) as string,
+            txData: await burnMultiTokenBatch({ body, web3, provider, addressTransformer }),
           })
         }
       },

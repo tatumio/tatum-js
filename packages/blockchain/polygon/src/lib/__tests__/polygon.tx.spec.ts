@@ -103,55 +103,43 @@ describe('PolygonSDK - tx', () => {
   describe('erc721', () => {
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
-        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
 
       describe('transferSignedTransaction', () => {
-        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
 
       describe('mintSignedTransaction', () => {
-        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
 
       describe('burnSignedTransaction', () => {
-        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
 
       describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
 
       describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(
-          sdk.nft,
-          TEST_DATA.POLYGON,
-          Currency.MATIC,
-        )
+        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
 
       describe('mintMultipleSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
 
       describe('updateCashbackForAuthorSignedTransaction', () => {
-        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(
-          sdk.nft,
-          TEST_DATA.POLYGON,
-          Currency.MATIC,
-        )
+        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
 
       describe('mintProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.POLYGON, Currency.MATIC)
+        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
 
       describe('mintMultipleProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(
-          sdk.nft,
-          TEST_DATA.POLYGON,
-          Currency.MATIC,
-        )
+        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
     })
   })
@@ -213,47 +201,31 @@ describe('PolygonSDK - tx', () => {
   describe('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
-        multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.POLYGON, 'MATIC')
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.POLYGON)
       })
 
       describe('mintMultiToken', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenTransaction(sdk.multiToken, TEST_DATA.POLYGON, 'MATIC')
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(sdk.multiToken, TEST_DATA.POLYGON)
       })
 
       describe('mintMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.POLYGON,
-          'MATIC',
-        )
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.POLYGON)
       })
 
       describe('transferMultiToken', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenTransaction(
-          sdk.multiToken,
-          TEST_DATA.POLYGON,
-          'MATIC',
-        )
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(sdk.multiToken, TEST_DATA.POLYGON)
       })
 
       describe('transferMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.POLYGON,
-          'MATIC',
-        )
+        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.POLYGON)
       })
 
       describe('burnMultiToken', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenTransaction(sdk.multiToken, TEST_DATA.POLYGON, 'MATIC')
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(sdk.multiToken, TEST_DATA.POLYGON)
       })
 
       describe('burnMultiTokenBatch', () => {
-        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(
-          sdk.multiToken,
-          TEST_DATA.POLYGON,
-          'MATIC',
-        )
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.POLYGON)
       })
     })
   })

@@ -40,7 +40,7 @@ export type MintNftCelo = {
     /**
      * The blockchain address of the custom fungible token
      */
-    erc20?: any;
+    erc20?: string;
     /**
      * Set to "true" if the NFT smart contract is of the <a href="#operation/NftDeployErc721">provenance type</a>; otherwise, set to "false".
      */

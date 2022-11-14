@@ -4,35 +4,35 @@
 
 export type UpdateCashbackValueForAuthorNftKMSTron = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'TRON';
     /**
-     * Blockchain address to perform transaction from
-     */
-    from: string;
-    /**
-     * ID of token to be updated.
+     * The ID of the NFT to update royalty information for
      */
     tokenId: string;
     /**
-     * New royalty cashback to be set for the author of token with tokenId. If set to 0, royalty is disabled for this token.
-     */
-    cashbackValue: string;
-    /**
-     * Address of NFT token
+     * The blockchain address of the NFT to update royalty information for
      */
     contractAddress: string;
     /**
-     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
+     * The new value of the royalty cashback to be set for the author of the NFT; to disable the royalties for the NFT completely, set this parameter to 0
      */
-    index?: number;
+    cashbackValue: string;
     /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The maximum amount to be paid as the transaction fee (in TRX)
+     */
+    feeLimit: number;
+    /**
+     * The blockchain address of the NFT author from which the transaction will be performed
+     */
+    account?: string;
+    /**
+     * The KMS identifier of the private key of the NFT author's address
      */
     signatureId: string;
     /**
-     * Max limit for fee to be paid, in TRX.
+     * (Only if the signature ID is mnemonic-based) The index of the NFT author's address that was generated from the mnemonic
      */
-    feeLimit: number;
+    index?: number;
 }

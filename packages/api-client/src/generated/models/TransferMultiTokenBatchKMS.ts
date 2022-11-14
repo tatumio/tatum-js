@@ -16,9 +16,9 @@ export type TransferMultiTokenBatchKMS = {
      */
     tokenId: Array<string>;
     /**
-     * amount of token.
+     * amounts of token.
      */
-    amount: Array<string>;
+    amounts: Array<string>;
     /**
      * Data in bytes
      */

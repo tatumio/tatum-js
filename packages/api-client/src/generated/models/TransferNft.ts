@@ -8,7 +8,7 @@ export type TransferNft = {
      */
     value?: string;
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
@@ -40,11 +40,11 @@ export type TransferNft = {
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used. Setting nonce is not necessary in Algorand
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
-     * Custom defined fee. If not present, it will be calculated automatically. Setting fee is not necessary in Algorand.
+     * The custom defined fee; if not present, will be calculated automatically
      */
     fee?: {
         /**

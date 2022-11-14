@@ -285,6 +285,7 @@ export type { DeployMultiTokenKMS } from './models/DeployMultiTokenKMS';
 export type { DeployNft } from './models/DeployNft';
 export type { DeployNftCelo } from './models/DeployNftCelo';
 export type { DeployNftCeloKMS } from './models/DeployNftCeloKMS';
+export type { DeployNftFlowKMS } from './models/DeployNftFlowKMS';
 export type { DeployNftFlowMnemonic } from './models/DeployNftFlowMnemonic';
 export type { DeployNftFlowPK } from './models/DeployNftFlowPK';
 export type { DeployNftKMS } from './models/DeployNftKMS';

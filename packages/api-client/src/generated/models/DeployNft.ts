@@ -4,7 +4,7 @@
 
 export type DeployNft = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
@@ -16,7 +16,7 @@ export type DeployNft = {
      */
     symbol: string;
     /**
-     * Private key of Ethereum account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
+     * Private key of account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
     /**
@@ -32,11 +32,11 @@ export type DeployNft = {
      */
     publicMint?: boolean;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
-     * Custom defined fee. If not present, it will be calculated automatically.
+     * The custom defined fee; if not present, will be calculated automatically
      */
     fee?: {
         /**

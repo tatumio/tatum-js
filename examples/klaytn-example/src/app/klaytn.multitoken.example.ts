@@ -20,7 +20,6 @@ export async function klaytnMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/DeployMultiToken
   const multiTokenDeployed = (await klaytnSDK.multiToken.send.deployMultiTokenTransaction({
-    chain: Currency.KLAY,
     // your private key of the address that has coins
     fromPrivateKey: senderPrivateKey,
     // uploaded metadata from ipfs
@@ -48,7 +47,6 @@ export async function klaytnMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/MintMultiToken
   const multiTokenMinted = (await klaytnSDK.multiToken.send.mintMultiTokenTransaction({
-    chain: Currency.KLAY,
     to: senderAddress,
     tokenId,
     amount: '1000',
@@ -65,7 +63,6 @@ export async function klaytnMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/TransferMultiToken
   const multiTokenTransferred = (await klaytnSDK.multiToken.send.transferMultiTokenTransaction({
-    chain: Currency.KLAY,
     to: receiverAddress,
     tokenId,
     amount: '10',
@@ -82,7 +79,6 @@ export async function klaytnMultiTokenExample(): Promise<void> {
 
   // https://apidoc.tatum.io/tag/Multi-Tokens-(ERC-1155-or-compatible)#operation/BurnMultiToken
   const multiTokenBurned = (await klaytnSDK.multiToken.send.burnMultiTokenTransaction({
-    chain: Currency.KLAY,
     tokenId,
     amount: '1',
     fromPrivateKey: receiverPrivateKey,

@@ -4,31 +4,31 @@
 
 export type AddNftMinterKMS = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'CELO' | 'ONE' | 'KLAY' | 'BSC';
+    chain: 'BSC' | 'CELO' | 'ETH' | 'KLAY' | 'KCS' | 'MATIC' | 'ONE';
     /**
-     * Address of NFT token
+     * The blockchain address of the NFT smart contract
      */
     contractAddress: string;
     /**
-     * Address of NFT minter
+     * The blockchain address to add to the smart contract as an NFT minter
      */
     minter: string;
     /**
-     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
-     */
-    index?: number;
-    /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The KMS identifier of the private key of the blockchain address from which the fee will be deducted
      */
     signatureId: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * (Only if the signature ID is mnemonic-based) The index of the address to pay the transaction fee that was generated from the mnemonic
+     */
+    index?: number;
+    /**
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
-     * Custom defined fee. If not present, it will be calculated automatically.
+     * The custom defined fee; if not present, will be calculated automatically
      */
     fee?: {
         /**
@@ -41,7 +41,7 @@ export type AddNftMinterKMS = {
         gasPrice: string;
     };
     /**
-     * Currency to pay for transaction gas, only valid for CELO chain.
+     * (Celo only) The currency in which the transaction fee will be paid
      */
     feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
 }

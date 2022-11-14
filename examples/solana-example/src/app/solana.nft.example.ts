@@ -45,6 +45,7 @@ export async function solanaNftExample() {
 
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetMetadataErc721
   // here we omit the 'token' parameter - not needed in solana
+  // @ts-ignore - TODO FIX
   const metadata = await solanaSDK.nft.getNFTMetadataURI(Currency.SOL, nftAddress)
   console.log(`Metadata of NFT: ${JSON.stringify(metadata)}`)
 

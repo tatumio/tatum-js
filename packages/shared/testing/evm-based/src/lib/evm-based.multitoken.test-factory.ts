@@ -2,13 +2,11 @@ import { SdkWithMultiTokenFunctions } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
 import { GanacheAccount } from './ganacheHelper'
 
-type Chains = 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'BSC' | 'KLAY'
 export const multiTokenTestFactory = {
   prepare: {
     deployMultiTokenTransaction: (
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
-      chain: Chains,
       addresses?: GanacheAccount[],
     ) => {
       const privateKey = testData.TESTNET?.MULTITOKEN?.PRIVATE_KEY
@@ -16,7 +14,6 @@ export const multiTokenTestFactory = {
       it('valid with signatureId', async () => {
         const result = await sdk.prepare.deployMultiTokenTransaction(
           {
-            chain,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
             uri: 'https://example.com',
             fee: {
@@ -35,7 +32,6 @@ export const multiTokenTestFactory = {
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.deployMultiTokenTransaction(
           {
-            chain,
             fromPrivateKey: addresses ? addresses[0].privateKey : privateKey,
             uri: 'https://example.com',
             fee: {
@@ -53,7 +49,6 @@ export const multiTokenTestFactory = {
     transferMultiTokenTransaction: (
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
-      chain: Chains,
       accounts?: GanacheAccount[],
     ) => {
       const contractAddress = accounts ? accounts[0].address : testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
@@ -62,7 +57,6 @@ export const multiTokenTestFactory = {
       it('valid from signatureId', async () => {
         const result = await sdk.prepare.transferMultiTokenTransaction(
           {
-            chain,
             tokenId: '123456',
             to: '0x31a19a9E4BDd33982188BCb058a7E2a3515a8136',
             contractAddress,
@@ -85,7 +79,6 @@ export const multiTokenTestFactory = {
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.transferMultiTokenTransaction(
           {
-            chain,
             tokenId: '123456',
             to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
             contractAddress,
@@ -106,7 +99,6 @@ export const multiTokenTestFactory = {
         try {
           await sdk.prepare.transferMultiTokenTransaction(
             {
-              chain,
               tokenId: '123456',
               to: 'invalidaddress',
               amount: '1',
@@ -129,7 +121,6 @@ export const multiTokenTestFactory = {
     transferMultiTokenBatchTransaction: (
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
-      chain: Chains,
       accounts?: GanacheAccount[],
     ) => {
       const contractAddress = accounts ? accounts[0].address : testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
@@ -138,7 +129,6 @@ export const multiTokenTestFactory = {
       it('valid from signatureId', async () => {
         const result = await sdk.prepare.transferMultiTokenBatchTransaction(
           {
-            chain,
             tokenId: ['123456', '12345644'],
             to: '0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342',
             contractAddress,
@@ -161,7 +151,6 @@ export const multiTokenTestFactory = {
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.transferMultiTokenBatchTransaction(
           {
-            chain,
             tokenId: ['123456', '12345644'],
             to: '0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342',
             contractAddress,
@@ -182,7 +171,6 @@ export const multiTokenTestFactory = {
         try {
           await sdk.prepare.transferMultiTokenBatchTransaction(
             {
-              chain,
               tokenId: ['123456', '12345644'],
               to: 'someinvalid',
               contractAddress,
@@ -205,7 +193,6 @@ export const multiTokenTestFactory = {
     mintMultiTokenTransaction: (
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
-      chain: Chains,
       accounts?: GanacheAccount[],
     ) => {
       const contractAddress = testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
@@ -214,7 +201,6 @@ export const multiTokenTestFactory = {
       it('valid from signatureId', async () => {
         const result = await sdk.prepare.mintMultiTokenTransaction(
           {
-            chain,
             tokenId: '123456',
             to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
             contractAddress: contractAddress,
@@ -237,7 +223,6 @@ export const multiTokenTestFactory = {
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.mintMultiTokenTransaction(
           {
-            chain,
             tokenId: '123456',
             to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
             contractAddress: contractAddress,
@@ -258,7 +243,6 @@ export const multiTokenTestFactory = {
         try {
           await sdk.prepare.mintMultiTokenTransaction(
             {
-              chain,
               tokenId: '123456',
               to: 'invalidaddress',
               contractAddress: contractAddress,
@@ -281,7 +265,6 @@ export const multiTokenTestFactory = {
     mintMultiTokenBatchTransaction: (
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
-      chain: Chains,
       accounts?: GanacheAccount[],
     ) => {
       const contractAddress = testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
@@ -290,7 +273,6 @@ export const multiTokenTestFactory = {
       it('valid from signatureId', async () => {
         const result = await sdk.prepare.mintMultiTokenBatchTransaction(
           {
-            chain,
             tokenId: [['123456'], ['12345644']],
             to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
             contractAddress: contractAddress,
@@ -313,7 +295,6 @@ export const multiTokenTestFactory = {
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.mintMultiTokenBatchTransaction(
           {
-            chain,
             tokenId: [['123456'], ['12345644']],
             to: ['0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9', '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9'],
             contractAddress: contractAddress,
@@ -334,7 +315,6 @@ export const multiTokenTestFactory = {
         try {
           await sdk.prepare.mintMultiTokenBatchTransaction(
             {
-              chain,
               tokenId: [['123456'], ['12345644']],
               to: ['someinvalid', 'anotherinvalid'],
               contractAddress: contractAddress,
@@ -357,7 +337,6 @@ export const multiTokenTestFactory = {
     burnMultiTokenTransaction: (
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
-      chain: Chains,
       accounts?: GanacheAccount[],
     ) => {
       const contractAddress = accounts ? accounts[0].address : testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
@@ -367,7 +346,6 @@ export const multiTokenTestFactory = {
       it('valid from signatureId', async () => {
         const result = await sdk.prepare.burnMultiTokenTransaction(
           {
-            chain,
             tokenId: new Date().getTime().toString(),
             contractAddress: contractAddress,
             account,
@@ -390,7 +368,6 @@ export const multiTokenTestFactory = {
       it('valid from privateKey', async () => {
         const result = await sdk.prepare.burnMultiTokenTransaction(
           {
-            chain,
             tokenId: new Date().getTime().toString(),
             account,
             contractAddress: contractAddress,
@@ -411,7 +388,6 @@ export const multiTokenTestFactory = {
     burnMultiTokenBatchTransaction: (
       sdk: SdkWithMultiTokenFunctions,
       testData: BlockchainTestData,
-      chain: Chains,
       accounts?: GanacheAccount[],
     ) => {
       const contractAddress = accounts ? accounts[0].address : testData.TESTNET?.MULTITOKEN?.CONTRACT_ADDRESS
@@ -424,7 +400,6 @@ export const multiTokenTestFactory = {
       it('valid from signatureId', async () => {
         const result = await sdk.prepare.burnMultiTokenBatchTransaction(
           {
-            chain,
             tokenId: [token1.toString(), token2.toString()],
             contractAddress,
             signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
@@ -449,7 +424,6 @@ export const multiTokenTestFactory = {
         const token2 = new Date().getTime() + 4
         const result = await sdk.prepare.burnMultiTokenBatchTransaction(
           {
-            chain,
             tokenId: [token1.toString(), token2.toString()],
             contractAddress,
             fromPrivateKey: accounts ? accounts[0].privateKey : privateKey,

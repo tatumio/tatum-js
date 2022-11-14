@@ -15,7 +15,6 @@ export async function bscMultiTokenExample(): Promise<void> {
   // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
 
   const multiTokenDeployed = (await bscSDK.multiToken.send.deployMultiTokenTransaction({
-    chain: 'BSC',
     // your private key of the address that has coins
     fromPrivateKey,
     // uploaded metadata from ipfs
@@ -36,7 +35,6 @@ export async function bscMultiTokenExample(): Promise<void> {
   // all examples at once you should set some timeout between the calls or execute examples separately
 
   const multiTokenMinted = (await bscSDK.multiToken.send.mintMultiTokenTransaction({
-    chain: 'BSC',
     to,
     tokenId: '123',
     amount: '1000',
@@ -47,7 +45,6 @@ export async function bscMultiTokenExample(): Promise<void> {
   console.log(`Multi Token mint transaction sent with transaction ID: ${multiTokenMinted.txId}`)
 
   const multiTokenTransferred = (await bscSDK.multiToken.send.transferMultiTokenTransaction({
-    chain: 'BSC',
     to,
     tokenId: '123',
     amount: '10',
@@ -58,7 +55,6 @@ export async function bscMultiTokenExample(): Promise<void> {
   console.log(`Sent Multi Token with transaction ID: ${multiTokenTransferred.txId}`)
 
   const multiTokenBurned = (await bscSDK.multiToken.send.burnMultiTokenTransaction({
-    chain: 'BSC',
     tokenId: '123',
     amount: '1',
     fromPrivateKey,

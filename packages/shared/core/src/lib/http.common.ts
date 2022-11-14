@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { Blockchain, EvmBasedBlockchain } from './models/Blockchain'
 import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { blockchainHelper } from './blockchain.common'
 
 const EndpointsMapping: Record<Blockchain, string> = {
   HARMONY: 'one',
@@ -28,12 +29,6 @@ const EndpointsMapping: Record<Blockchain, string> = {
   BNB: 'bnb',
 }
 
-const RpcEndpointMapping: Record<Blockchain, string> = {
-  ...Blockchain,
-  HARMONY: 'ONE',
-  POLYGON: 'MATIC',
-}
-
 export const httpHelper = {
   get: axios.get,
   post: axios.post,
@@ -41,6 +36,7 @@ export const httpHelper = {
     return `${url}/${TATUM_API_CONSTANTS.API_VERSION}/${EndpointsMapping[blockchain]}/web3/${apiKey}`
   },
   rpcEndpoint: (blockchain: Blockchain, url: string, apiKey: string) => {
-    return `${url}/${TATUM_API_CONSTANTS.API_VERSION}/blockchain/node/${RpcEndpointMapping[blockchain]}/${apiKey}`
+    const chain = blockchainHelper.getDefaultCurrencyByBlockchain(blockchain)
+    return `${url}/${TATUM_API_CONSTANTS.API_VERSION}/blockchain/node/${chain}/${apiKey}`
   },
 }
