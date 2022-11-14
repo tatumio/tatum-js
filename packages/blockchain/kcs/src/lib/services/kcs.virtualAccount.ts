@@ -28,7 +28,7 @@ const sendKcsVirtualAccountTransaction = async (
   const { mnemonic, index, fromPrivateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
   const { amount, address } = withdrawal
   let fromPrivKey: string
-  let txData: any
+  let txData: string
 
   if (body.mnemonic && body.index !== undefined) {
     fromPrivKey = (await evmBasedUtils.generatePrivateKeyFromMnemonic(
@@ -47,7 +47,7 @@ const sendKcsVirtualAccountTransaction = async (
   }
 
   if (account.currency === 'KCS') {
-    txData = txService.native.prepare.transferSignedTransaction({
+    txData = await txService.native.prepare.transferSignedTransaction({
       amount,
       fromPrivateKey: fromPrivKey,
       fee,

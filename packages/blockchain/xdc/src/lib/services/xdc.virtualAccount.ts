@@ -27,7 +27,7 @@ const sendXdcVirtualAccountTransaction = async (
   const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
   const { amount, address } = withdrawal
   let fromPrivKey: string
-  let txData: any
+  let txData: string
 
   if (mnemonic && index !== undefined) {
     fromPrivKey = (await evmBasedUtils.generatePrivateKeyFromMnemonic(
@@ -46,7 +46,7 @@ const sendXdcVirtualAccountTransaction = async (
   }
 
   if (account.currency === Currency.XDC) {
-    txData = txService.native.prepare.transferSignedTransaction({
+    txData = await txService.native.prepare.transferSignedTransaction({
       amount,
       fromPrivateKey: fromPrivKey,
       fee,
@@ -56,7 +56,7 @@ const sendXdcVirtualAccountTransaction = async (
   } else {
     fee.gasLimit = '100000'
     const vc = await VirtualCurrencyService.getCurrency(account.currency)
-    txData = txService.erc20.prepare.transferSignedTransaction({
+    txData = await txService.erc20.prepare.transferSignedTransaction({
       amount,
       fee,
       fromPrivateKey: fromPrivKey,
