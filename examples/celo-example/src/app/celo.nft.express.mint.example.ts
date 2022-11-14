@@ -53,6 +53,7 @@ export async function celoNftExpressExample() {
     tokenId,
     contractAddress,
     fromPrivateKey: senderPrivateKey,
+    feeCurrency: 'CELO',
   })) as TransactionHash
 
   console.log(`Transferred nft with transaction hash: ${nftTransferred.txId}`)
@@ -77,7 +78,7 @@ export async function celoNftExpressExample() {
   const mintedWithMinter = (await celoSDK.nft.mintNFT({
     chain: 'CELO',
     to: senderAddress,
-    url: 'https://my_token_data.com',
+    url: 'ipfs://bafybeidi7xixphrxar6humruz4mn6ul7nzmres7j4triakpfabiezll4ti/metadata.json',
     tokenId,
     contractAddress,
     // minter address is Tatum address which can be found here - https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftMintErc721
