@@ -9,10 +9,10 @@ We prepared a set of examples to help you complete some basic operations on XinF
 - Check the balance of the wallet.
 - Generate a virtual account for XDC.
 - Generate a deposit address for the virtual account.
+- Create subscriptions to be notified about transactions on the virtual account.
 - Invoke a method in a smart contract.
 - Transfer assets from gas pump addresses.
 - Work with fungible tokens.
-- Create subscriptions.
 - Get information from the blockchain.
 
 The examples are written in TypeScript, but you can use them in JavaScript too.
@@ -75,8 +75,8 @@ Check out more examples to see what you want to do next:
 - [Send XDC from your wallet to another XinFin wallet.](./src/app/xdc.tx.example.ts)
 - [Check the balance of a XinFin wallet.](./src/app/xdc.balance.example.ts)
 - [Generate a virtual account for XDC and transfer funds from this account to a blockchain address.](./src/app/xdc.virtualAccount.example.ts)
+- [Create a subscription to be notified about transactions on the virtual account.](./src/app/xdc.subscriptions.example.ts)
 - [Invoke a method in a smart contract.](./src/app/xdc.smartContract.example.ts)
 - [Transfer assets from gas pump addresses.](./src/app/xdc.gasPump.example.ts)
 - [Work with fungible tokens.](./src/app/xdc.erc20.example.ts)
-- [Create subscriptions.](./src/app/xdc.subscriptions.example.ts)
 - [Get information from the blockchain.](./src/app/xdc.blockchain.example.ts)
