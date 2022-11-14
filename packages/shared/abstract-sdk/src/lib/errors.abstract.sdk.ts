@@ -157,6 +157,7 @@ export enum SdkErrorCode {
   EVM_ERC721_CANNOT_PREPARE_MINT_MULTIPLE_TX = 'evm-based.erc721.cannot.prepare.mint-multiple-tx',
   EVM_ERC721_CANNOT_PREPARE_MINT_PROVENANCE_TX = 'evm-based.erc721.cannot.prepare.mint-provenance-tx',
   EVM_ERC721_CANNOT_PREPARE_MINT_MULTIPLE_PROVENANCE_TX = 'evm-based.erc721.cannot.prepare.mint-multiple-provenance-tx',
+  EVM_ERC721_CANNOT_PREPARE_ADD_MINTER = 'evm-based.erc721.cannot.prepare.add-minter',
   EVM_ERC721_CANNOT_PREPARE_BURN_TX = 'evm-based.erc721.cannot.prepare.burn-tx',
   EVM_ERC721_CANNOT_PREPARE_TRANSFER_TX = 'evm-based.erc721.cannot.prepare.transfer-tx',
   EVM_ERC721_CANNOT_PREPARE_UPDATE_CASHBACK_TX = 'evm-based.erc721.cannot.prepare.update-cashback-tx',

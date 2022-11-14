@@ -1,4 +1,5 @@
 import {
+  AddNftMinter,
   BurnMultiTokenBatchCelo,
   BurnMultiTokenCelo,
   BurnNftCelo,
@@ -55,6 +56,8 @@ export type ChainMintMultipleNftCelo = WithoutChain<
 export type ChainBurnErc721Celo = WithoutChain<FromPrivateKeyOrSignatureId<BurnNftCelo>>
 
 export type ChainTransferErc721Celo = WithoutChain<FromPrivateKeyOrSignatureId<TransferNftCelo>>
+
+export type ChainAddMinterErc721Celo = FromPrivateKeyOrSignatureId<WithoutChain<AddNftMinter>>
 
 export type ChainUpdateCashbackErc721Celo = WithoutChain<
   FromPrivateKeyOrSignatureId<UpdateCashbackValueForAuthorNftCelo>

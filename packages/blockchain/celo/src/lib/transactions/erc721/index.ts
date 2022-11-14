@@ -21,6 +21,7 @@ import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import {
   CeloTransactionConfig,
   celoUtils,
+  ChainAddMinterErc721Celo,
   ChainBurnErc721Celo,
   ChainDeployErc721Celo,
   ChainMintMultipleNftCelo,
@@ -551,6 +552,53 @@ const mintMultipleProvenanceSignedTransaction = async (
   throw new EvmBasedSdkError({ code: SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS })
 }
 
+const addMinterSignedTransaction = async (
+  body: ChainAddMinterErc721Celo,
+  provider?: string,
+  testnet?: boolean,
+) => {
+  const { fromPrivateKey, minter, contractAddress, feeCurrency, fee, nonce, signatureId } = body
+
+  const celoProvider = celoUtils.getProvider(provider)
+  const network = await celoProvider.ready
+  const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
+  const contract = new new Web3().eth.Contract(Erc721Token_General.abi as any, contractAddress.trim())
+
+  if (signatureId) {
+    return JSON.stringify({
+      chainId: network.chainId,
+      feeCurrency: feeCurrencyContractAddress,
+      nonce,
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
+      to: contractAddress.trim(),
+      data: contract.methods
+        .grantRole('0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', minter.trim())
+        .encodeABI(),
+    })
+  }
+
+  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+  const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
+    wallet,
+    feeCurrencyContractAddress,
+  )
+
+  const tx: CeloTransactionConfig = {
+    chainId: network.chainId,
+    feeCurrency: feeCurrencyContractAddress,
+    nonce: nonce || txCount,
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
+    to: contractAddress.trim(),
+    data: contract.methods
+      .grantRole('0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6', minter)
+      .encodeABI(),
+    from,
+  }
+  return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+}
+
 const transferSignedTransaction = async (
   body: ChainTransferErc721Celo,
   provider?: string,
@@ -822,6 +870,15 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
         evmBasedUtils.tryCatch(
           () => mintMultipleProvenanceSignedTransaction(body, provider, testnet),
           SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_MULTIPLE_PROVENANCE_TX,
+        ),
+      /**
+       * Sign add minter to ERC 721 with private keys locally. Nothing is broadcast to the blockchain.
+       * @returns transaction data to be broadcast to blockchain.
+       */
+      addMinterSignedTransaction: (body: ChainAddMinterErc721Celo, provider?: string, testnet?: boolean) =>
+        evmBasedUtils.tryCatch(
+          () => addMinterSignedTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_ADD_MINTER,
         ),
     },
     send: {
