@@ -29,7 +29,7 @@ const sendEthVirtualAccountTransaction = async (
   const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
   const { amount, address } = withdrawal
   let fromPrivKey: string
-  let txData: any
+  let txData: string
 
   if (body.mnemonic && body.index !== undefined) {
     fromPrivKey = (await evmBasedUtils.generatePrivateKeyFromMnemonic(
@@ -48,7 +48,7 @@ const sendEthVirtualAccountTransaction = async (
   }
 
   if (account.currency === 'ETH') {
-    txData = txService.native.prepare.transferSignedTransaction({
+    txData = await txService.native.prepare.transferSignedTransaction({
       amount,
       fromPrivateKey: fromPrivKey,
       fee,
