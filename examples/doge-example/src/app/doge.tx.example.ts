@@ -4,9 +4,13 @@ import { TatumDogeSDK } from '@tatumio/doge'
 const dogeSDK = TatumDogeSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function dogeTransactionExample() {
+  // To transfer DOGE, please get familiar with UTXO model. For more information consult our documentation https://apidoc.tatum.io/tag/Dogecoin#operation/DogeTransferBlockchain
   // Prepare unspent output information first.
   // It is unspent transaction information for address, that will be used as an input for next DOGE tx
-  // It is possible to have more than one
+  // It is possible to have more than one transaction Ids
+  // As an example, after running wallet example, use this url (https://testnet-faucet.com/doge-testnet/) to faucet the address generated in the example
+  // The faucet transaction will take some time to be confirmed, you can validate that in https://blockexplorer.one/
+  // After to be confirm, replace the bellow values
   const txHash = 'fcdc23f5c8bd811195921cd113f5724f3cf8b3fa0287a04366c51b9e8545c4c7'
   const address = 'n36h3pAH7sC3z8KMB47BjbqvW2aJd2oTi7'
   const value = '60'

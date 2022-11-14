@@ -6,9 +6,13 @@ const ltcSDK = TatumLtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function ltcFromUtxoTransactionsExample() {
   const REPLACE_ME_WITH_PRIVATE_KEY = ''
 
+  // To transfer LTC, please get familiar with UTXO model. For more information consult our documentation https://apidoc.tatum.io/tag/Litecoin#operation/LtcTransferBlockchain
   // Prepare unspent output information first.
   // It is unspent transaction information for address, that will be used as an input for next LTC tx
-  // It is possible to have more than one
+  // It is possible to have more than one transaction Ids
+  // As an example, after running wallet example, use this url (http://testnet.litecointools.com/) to faucet the address generated in the example
+  // The faucet transaction will take some time to be confirmed, you can validate that in https://blockexplorer.one/
+  // After to be confirm, replace the bellow values
   const txHash = '1a91340d3ea25d55a4395948d8ace5f2fcc6e1871a494cdb0e0d576e65fe9fc4'
   const address = 'mhwaS2i6iAfb9zvVAFCLtAdFCDCAPSLY19'
   const index = 0

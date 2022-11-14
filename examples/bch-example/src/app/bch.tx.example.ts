@@ -8,7 +8,7 @@ export async function bchTransactionsExample() {
   // To transfer BCH, please get familiar with UTXO model. For more information consult our documentation https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchTransferBlockchain
   // Prepare unspent output information first.
   // It is unspent transaction information for address, that will be used as an input for next BCH tx
-  // It is possible to have more than one
+  // It is possible to have more than one transaction Ids
   // As an example, after running wallet example, use this url (https://faucet.fullstack.cash/) to faucet the address generated in the example
   // The faucet transaction will take some time to be confirmed, you can validate that in https://blockexplorer.one/
   // After to be confirm, replace the bellow values
