@@ -4,7 +4,7 @@ import { TatumBchSDK } from '@tatumio/bch'
 const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function bchTransactionBroadcastExample() {
-  // To transfer BCH, please get familiar with UTXO model.
+  // To transfer BCH, please get familiar with UTXO model. For more information consult our documentation https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchTransferBlockchain
   // Prepare unspent output information first.
   // It is unspent transaction information for address, that will be used as an input for next BCH tx
   // It is possible to have more than one
