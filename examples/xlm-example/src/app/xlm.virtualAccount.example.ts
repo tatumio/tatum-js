@@ -48,9 +48,8 @@ export async function xlmVirtualAccountExample() {
   }
 
   // Generate a virtual account for XLM based on the xpub of the Stellar account that you created in the previous step.
-  // https://apidoc.tatum.io/tag/Account#operation/createAccount 
+  // https://apidoc.tatum.io/tag/Account#operation/createAccount
   if (isValueSet(virtualAccountId)) {
-  
     const virtualAccount = await xlmSDK.ledger.account.create({
       currency: Currency.XLM,
       xpub: virtualAccountAddress,
@@ -92,7 +91,7 @@ export async function xlmVirtualAccountExample() {
     console.log(`Virtual account address ${virtualAccountAddress} was already activated`)
   }
 
- // Send some amount of XLM from the funding account to the recipient account to activate it.
+  // Send some amount of XLM from the funding account to the recipient account to activate it.
   // https://apidoc.tatum.io/tag/Stellar#operation/XlmTransferBlockchain
   const { txId: activateTxId2 } = (await xlmSDK.transaction.sendTransaction(
     {
