@@ -47,6 +47,26 @@ const { mnemonic, xpub } = await polygonSDK.wallet.generateWallet()
 console.log(`Wallet mnemonic is ${mnemonic}, extended public key is ${xpub}.`)
 ```
 
+### How to use web3
+
+```typescript
+import { TatumPolygonSDK } from '@tatumio/polygon'
+
+const polygonSDK = TatumPolygonSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+
+const web3response = await polygonSDK.httpDriver({
+  jsonrpc: '2.0',
+  method: 'web3_clientVersion',
+  params: [],
+  id: 2,
+})
+
+const gasPriceInWei = await polygonSDK.getGasPriceInWei()
+const web3 = polygonSDK.web3Client()
+
+const blockNumber = await web3.eth.getBlockNumber()
+```
+
 ### How to check balance of the address
 
 You can find examples [here](./src/app/polygon.balance.example.ts).

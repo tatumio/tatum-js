@@ -37,11 +37,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
     },
     nft: {
       ...txService.erc721,
-      getNFTTransaction,
-      getNFTAccountBalance,
-      getNFTProvenanceData,
-      getNFTMetadataURI,
-      getNFTRoyalty,
+      ...nft,
     },
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
