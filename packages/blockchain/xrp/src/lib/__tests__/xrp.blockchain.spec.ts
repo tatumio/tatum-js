@@ -26,7 +26,7 @@ describe('XrpSDK - blockchain', () => {
     broadcast: [api.xrpBroadcast, { txData: 'hello' }],
     getAccountBalance: [api.xrpGetAccountBalance, testData.ADDRESS],
     getAccountInfo: [api.xrpGetAccountInfo, testData.ADDRESS],
-    getTx: [api.xrpGetTransaction, testData.TX_HASH],
+    getTransaction: [api.xrpGetTransaction, testData.TX_HASH],
     getFee: api.xrpGetFee,
     getLedger: [api.xrpGetLedger, testData.BLOCK_NUMBER],
     getAccountTx: [api.xrpGetAccountTx, testData.ADDRESS],

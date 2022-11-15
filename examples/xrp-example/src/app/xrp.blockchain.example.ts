@@ -25,7 +25,9 @@ export const xrpBlockchainExample = async () => {
 
   // Get transaction information
   // https://apidoc.tatum.io/tag/XRP#operation/XrpGetTransaction
-  const tx = await xrpSDK.blockchain.getTransaction('ACACFAD37D24F06506FFEB5AF16B0DF16DEF52974AC5AB5EA4378385A04DB8DF')
+  const tx = await xrpSDK.blockchain.getTransaction(
+    'ACACFAD37D24F06506FFEB5AF16B0DF16DEF52974AC5AB5EA4378385A04DB8DF',
+  )
   console.log(
     `Transaction with ID ACACFAD37D24F06506FFEB5AF16B0DF16DEF52974AC5AB5EA4378385A04DB8DF has these details ${JSON.stringify(
       tx,
