@@ -7,7 +7,7 @@ import {
   FlowPrivateKeyOrSignatureId,
   Transaction,
   TransactionResult,
-} from '@tatumio/flow'
+} from '../flow.types'
 import {
   BurnNftFlowPK,
   FlowCreateAddressFromPubKeySecret,
@@ -18,10 +18,10 @@ import {
 } from '@tatumio/api-client'
 import * as elliptic from 'elliptic'
 import SHA3 from 'sha3'
-import fcl from '@onflow/fcl'
+import * as fcl from '@onflow/fcl'
 import _ from 'lodash'
 import { FlowSdkError } from '../flow.sdk.errors'
-import types from '@onflow/types'
+import * as types from '@onflow/types'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { flowWalletUtils } from './flow.wallet.utils'
 
