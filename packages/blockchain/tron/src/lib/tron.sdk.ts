@@ -1,6 +1,6 @@
 import { BlockchainUtilsService, TronService } from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
-import { abstractNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { tronWeb } from './services/tron.web'
 import { tronTx } from './services/tron.tx'
@@ -16,7 +16,7 @@ export const TatumTronSDK = (args: SDKArguments) => {
   const txService = tronTx({ tronWeb: web })
   const virtualAccount = virtualAccountService({ blockchain, tronWeb: web })
   const abstractSdk = abstractBlockchainSdk({ ...args, blockchain })
-  const { nft, storage } = abstractNft()
+  const { nft, storage } = abstractSdkNft()
   const { getNFTTransaction, getNFTAccountBalance, getNFTMetadataURI, getNFTRoyalty } = nft
 
   return {

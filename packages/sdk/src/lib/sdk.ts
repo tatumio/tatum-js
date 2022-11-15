@@ -2,10 +2,11 @@ import { TatumBtcSDK } from '@tatumio/btc'
 import { walletSdk } from './services/sdk.wallet'
 import { BlockchainStorageService, Currency, ExchangeRateService, TatumUrlArg } from '@tatumio/api-client'
 import {
-  abstractNft,
+  abstractSdkNft,
   abstractSdk,
   abstractSdkLedgerService,
   abstractSdkVirtualAccount,
+  abstractSdkCustodialManagedWallets,
 } from '@tatumio/shared-abstract-sdk'
 import { sdkKms } from './services/sdk.kms'
 import { TatumEthSDK } from '@tatumio/eth'
@@ -45,7 +46,8 @@ export const TatumSDK = (args: { apiKey: string; url?: TatumUrlArg }) => {
   }
   return {
     ...abstractSdk(args),
-    ...abstractNft(),
+    ...abstractSdkNft(),
+    custodialManagedWallet: abstractSdkCustodialManagedWallets(),
     virtualAccount: abstractSdkVirtualAccount(),
     getExchangeRate: ExchangeRateService.getExchangeRate,
     blockchain: blockchainSpecificSDKs,

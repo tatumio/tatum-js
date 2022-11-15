@@ -6,7 +6,7 @@ import {
   FungibleTokensErc20OrCompatibleService,
   PolygonService,
 } from '@tatumio/api-client'
-import { abstractNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { polygonWeb3 } from './services/polygon.web3'
 import { polygonKmsService } from './services/polygon.kms'
 import { polygonTxService } from './services/polygon.tx'
@@ -21,7 +21,7 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
   const txService = polygonTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
   const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
-  const { nft, storage } = abstractNft()
+  const { nft, storage } = abstractSdkNft()
 
   return {
     ...evmSdk,

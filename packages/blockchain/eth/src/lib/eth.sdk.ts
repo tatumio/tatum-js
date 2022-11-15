@@ -9,7 +9,7 @@ import {
 import { ethWeb3 } from './services/eth.web3'
 import { ethKmsService } from './services/eth.kms'
 import { ethTx } from './services/eth.tx'
-import { abstractNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { ethAuctionService } from './services/eth.auction'
 import { virtualAccountService } from './services/eth.virtualAccount'
 
@@ -21,7 +21,7 @@ export const TatumEthSDK = (args: SDKArguments) => {
   const txService = ethTx({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
   const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
-  const { nft, storage } = abstractNft()
+  const { nft, storage } = abstractSdkNft()
 
   return {
     ...evmSdk,

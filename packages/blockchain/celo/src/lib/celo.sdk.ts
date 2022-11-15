@@ -1,5 +1,5 @@
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { abstractNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import {
   BlockchainUtilsService,
   CeloService,
@@ -19,7 +19,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
   const api = CeloService
   const txService = celoTxService({ blockchain, web3 })
   const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
-  const { nft, storage } = abstractNft()
+  const { nft, storage } = abstractSdkNft()
 
   const virtualAccount = virtualAccountService({ blockchain, web3 })
 

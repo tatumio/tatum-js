@@ -6,7 +6,7 @@ import {
   FungibleTokensErc20OrCompatibleService,
   KuCoinService,
 } from '@tatumio/api-client'
-import { abstractNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { kcsWeb3 } from './services/kcs.web3'
 import { kcsKmsService } from './services/kcs.kms'
 import { kcsTxService } from './services/kcs.tx'
@@ -20,7 +20,7 @@ export const TatumKcsSDK = (args: SDKArguments) => {
   const txService = kcsTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
   const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
-  const { nft, storage } = abstractNft()
+  const { nft, storage } = abstractSdkNft()
 
   const {
     deployNFTSmartContract,

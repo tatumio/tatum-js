@@ -21,7 +21,7 @@ export const TatumXdcSDK = (args: SDKArguments) => {
   const txService = xdcTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
   const wallet = xdcWallet()
-  const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
+  const { custodialManagedWallet, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
     ...evmSdk,

@@ -1,4 +1,4 @@
-import { abstractNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, EvmBasedBlockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
   BlockchainUtilsService,
@@ -22,7 +22,7 @@ export const TatumOneSDK = (args: SDKArguments) => {
   const virtualAccount = virtualAccountService({ blockchain, web3 })
   const walletService = oneWallet({ blockchain })
   const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
-  const { nft, storage } = abstractNft()
+  const { nft, storage } = abstractSdkNft()
 
   const {
     deployNFTSmartContract,

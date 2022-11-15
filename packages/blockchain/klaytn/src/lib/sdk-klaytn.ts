@@ -6,7 +6,7 @@ import {
   FungibleTokensErc20OrCompatibleService,
   KlaytnService,
 } from '@tatumio/api-client'
-import { abstractNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { klaytnWeb3 } from './services/klaytn.web3'
 import { klaytnKmsService } from './services/klaytn.kms'
 import { klaytnTxService } from './services/klaytn.tx'
@@ -19,8 +19,8 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
   const web3 = klaytnWeb3({ blockchain })
   const txService = klaytnTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
-  const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
-  const { nft, storage } = abstractNft()
+  const { custodialManagedWallet, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, storage } = abstractSdkNft()
   const {
     deployNFTSmartContract,
     mintNFT,

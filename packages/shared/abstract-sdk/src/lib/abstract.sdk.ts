@@ -7,11 +7,9 @@ import {
   TatumApi,
   TatumUrlArg,
 } from '@tatumio/api-client'
-import { abstractSdkVirtualAccount } from './services/virtualAccount.abstract'
 import { abstractSdkKms } from './services/kms.abstract'
 import { abstractSdkNftService } from './services/nft.abstract'
 import { abstractSdkLedgerService } from './services/ledger.abstract'
-import { abstractSdkCustodialManagedWallets } from './services/custodial.abstract'
 
 export interface SDKArguments {
   apiKey: string
@@ -35,12 +33,10 @@ export const abstractSdk = (args: SDKArguments) => {
     },
     kms: abstractSdkKms(),
     ledger: abstractSdkLedgerService(),
-
-    custodialManagedWallet: abstractSdkCustodialManagedWallets(), //TODO not all chains
   }
 }
 
-export const abstractNft = () => {
+export const abstractSdkNft = () => {
   return {
     nft: abstractSdkNftService(),
     storage: {
