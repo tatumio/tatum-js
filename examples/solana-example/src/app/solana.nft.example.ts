@@ -18,7 +18,7 @@ export async function solanaNftExample() {
   const receiverPrivateKey = '<PUT RECEIVER PRIVATE KEY HERE>'
 
   // Lets mint new NFT on Solana
-  const { txId, nftAddress } = (await solanaSDK.transaction.send.mintNft({
+  const { txId, nftAddress } = (await solanaSDK.nft.send.mintSignedTransaction({
     to: senderAddress,
     from: senderAddress,
     fromPrivateKey: senderPrivateKey,
@@ -54,7 +54,7 @@ export async function solanaNftExample() {
   const royalty = await solanaSDK.nft.getNFTRoyalty(Currency.SOL, nftAddress)
   console.log(`Royalty of NFT: ${JSON.stringify(royalty)}`)
 
-  const { txId: transferTx } = (await solanaSDK.transaction.send.transferNft({
+  const { txId: transferTx } = (await solanaSDK.nft.send.transferSignedTransaction({
     to: receiverAddress,
     from: senderAddress,
     fromPrivateKey: senderPrivateKey,
@@ -65,7 +65,7 @@ export async function solanaNftExample() {
   console.log(`Waiting ${SLEEP_SECONDS} seconds for the transaction [${txId}] to appear in a block`)
   await sleepSeconds(SLEEP_SECONDS)
 
-  const { txId: burnTx } = (await solanaSDK.transaction.send.burnNft({
+  const { txId: burnTx } = (await solanaSDK.nft.send.burnSignedTransaction({
     from: receiverAddress,
     fromPrivateKey: receiverPrivateKey,
     contractAddress: nftAddress,

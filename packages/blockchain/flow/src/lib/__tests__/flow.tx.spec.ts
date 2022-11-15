@@ -1,37 +1,39 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import dedent from 'dedent-js'
-import {
-  BurnFlowNft,
-  flowTxService,
-  MintFlowNft,
-  MintMultipleFlowNft,
-  TransferFlow,
-  TransferFlowCustomTx,
-  TransferFlowNft,
-} from '../services/flow.tx'
 import { Blockchain } from '@tatumio/shared-core'
 import { flowBlockchain } from '../services/flow.blockchain'
 import { flowProvider } from '../services/flow.provider'
 import { TransactionHashWithAddress } from '../flow.types'
 import { FlowMintedResult, TransactionHash } from '@tatumio/api-client'
+import { flowTxService } from '../services/flow.tx'
+import {
+  BurnFlowNft,
+  flowUtils,
+  MintFlowNft,
+  MintMultipleFlowNft,
+  TransferFlow,
+  TransferFlowCustomTx,
+  TransferFlowNft,
+} from '../utils/flow.utils'
 
 describe.skip('flowTxService', () => {
   jest.setTimeout(999999)
 
+  const apiCalls = flowBlockchain({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   const provider = flowProvider({ testnet: true })
-  const txService = flowTxService(provider, { ...flowBlockchain({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY }) })
+  const txService = flowTxService(provider, apiCalls)
 
   describe('transactions', () => {
     describe('sign', () => {
       it('signs', () => {
-        expect(txService.sign(TEST_DATA.FLOW.TESTNET.PRIVATE_KEY_0, Buffer.from('some message'))).toEqual(
+        expect(flowUtils.sign(TEST_DATA.FLOW.TESTNET.PRIVATE_KEY_0, Buffer.from('some message'))).toEqual(
           'b4fc7c69b22b61dd23d93c0059e674919e6f27dcb6a3234aa920c6a03998ee0d5f91a1b40c18c3c3360e1e6d23bd7eaf2a974f4e65c4dfa44be0fcb644ba0932',
         )
       })
     })
     describe('getSigner', () => {
       it('get signer with sign function', async () => {
-        const globalSigner = txService.getSigner(
+        const globalSigner = flowUtils.getSigner(
           TEST_DATA.FLOW.TESTNET.PRIVATE_KEY_0,
           TEST_DATA.FLOW.TESTNET.ADDRESS_0,
         )
@@ -48,7 +50,7 @@ describe.skip('flowTxService', () => {
     })
     describe('getApiSigner', () => {
       it('get api signer', async () => {
-        const apiSigner = txService.getApiSigner(true)
+        const apiSigner = flowUtils.getApiSigner(apiCalls, true)
 
         const signer = await apiSigner.signer({ addr: 'account' })
 
@@ -61,7 +63,7 @@ describe.skip('flowTxService', () => {
       })
     })
     it('should add public key to account', async () => {
-      const result = (await txService.addPublicKeyToAccount({
+      const result = (await txService.account.send.publicKeySignedTransaction({
         publicKey:
           '968c3ce11e871cb2b7161b282655ee5fcb051f3c04894705d771bf11c6fbebfc6556ab8a0c04f45ea56281312336d0668529077c9d66891a6cad3db877acbe90',
         account: '0x955cd3f17b2fd8ad',
@@ -73,7 +75,7 @@ describe.skip('flowTxService', () => {
     // TODO: Flow Cadence breaking changes https://forum.onflow.org/t/breaking-changes-coming-with-secure-cadence-release/3052
     describe('nfts', () => {
       it.skip('create account from public key', async () => {
-        const result = (await txService.createAccountFromPublicKey({
+        const result = (await txService.account.send.createSignedTransaction({
           publicKey:
             '968c3ce11e871cb2b7161b282655ee5fcb051f3c04894705d771bf11c6fbebfc6556ab8a0c04f45ea56281312336d0668529077c9d66891a6cad3db877acbe90',
           account: '0x955cd3f17b2fd8ad',
@@ -90,16 +92,16 @@ describe.skip('flowTxService', () => {
           privateKey: '44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058',
           account: '0x4f09d8d43e4967b7',
         }
-        const result = (await txService.sendTransaction(
+        const result = (await txService.native.send.transferSignedTransaction(
           body,
           () =>
-            txService.getSigner(
+            flowUtils.getSigner(
               '44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058',
               '0x4f09d8d43e4967b7',
               0,
             ),
           () =>
-            txService.getSigner(
+            flowUtils.getSigner(
               '44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058',
               '0x4f09d8d43e4967b7',
             ),
@@ -114,7 +116,7 @@ describe.skip('flowTxService', () => {
           privateKey: '44179e42e147b391d3deb8a7a160b9490941cd7292936e6cc7277166a99ef058',
           currency: Blockchain.FLOW,
         }
-        const result = (await txService.sendTransaction(body)) as TransactionHash
+        const result = (await txService.native.send.transferSignedTransaction(body)) as TransactionHash
         expect(result.txId).toBeDefined()
       })
       it.skip('should mint NFT FLOW API signer transaction', async () => {
@@ -126,7 +128,7 @@ describe.skip('flowTxService', () => {
           account: '0x10247089e55180c9',
           privateKey: '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4',
         }
-        const result = (await txService.nft.sendNftMintToken(body)) as FlowMintedResult
+        const result = (await txService.nft.send.mintSignedTransaction(body)) as FlowMintedResult
         expect(result.txId).toBeDefined()
         expect(result.tokenId).toBeDefined()
       })
@@ -139,7 +141,7 @@ describe.skip('flowTxService', () => {
           account: '0x10247089e55180c9',
           privateKey: '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4',
         }
-        const result = (await txService.nft.sendNftBurnToken(body)) as TransactionHash
+        const result = (await txService.nft.send.burnSignedTransaction(body)) as TransactionHash
         expect(result.txId).toBeDefined()
       })
       it.skip('should mint multiple NFT FLOW API signer transaction', async () => {
@@ -151,7 +153,7 @@ describe.skip('flowTxService', () => {
           account: '0x10247089e55180c9',
           privateKey: '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4',
         }
-        const result = (await txService.nft.sendNftMintMultipleToken(body)) as FlowMintedResult
+        const result = (await txService.nft.send.mintMultipleSignedTransaction(body)) as FlowMintedResult
         expect(result.txId).toBeDefined()
         expect(result.tokenId).toBeDefined()
       })
@@ -165,7 +167,7 @@ describe.skip('flowTxService', () => {
           account: '0x955cd3f17b2fd8ad',
           privateKey: '37afa218d41d9cd6a2c6f2b96d9eaa3ad96c598252bc50e4d45d62f9356a51f8',
         }
-        const result = (await txService.sendCustomTransaction(body)) as TransactionHash & {
+        const result = (await txService.native.send.customSignedTransaction(body)) as TransactionHash & {
           events: unknown[]
         }
         expect(result.txId).toBeDefined()
@@ -195,7 +197,7 @@ describe.skip('flowTxService', () => {
           tokenId: tokenId.toString(),
           privateKey: '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4',
         }
-        const result = (await txService.nft.sendNftTransferToken(body)) as TransactionHash
+        const result = (await txService.nft.send.transferSignedTransaction(body)) as TransactionHash
         expect(result.txId).toBeDefined()
       })
     })
@@ -210,6 +212,6 @@ describe.skip('flowTxService', () => {
       account: '0x10247089e55180c9',
       privateKey: '3881849dd540a0c80383c3727951d35e3e9e8c238ec82a581726c3fc2ca17bc4',
     }
-    return (await txService.nft.sendNftMintToken(body)) as FlowMintedResult
+    return (await txService.nft.send.mintSignedTransaction(body)) as FlowMintedResult
   }
 })

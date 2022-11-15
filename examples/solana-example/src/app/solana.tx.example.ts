@@ -12,7 +12,7 @@ export async function solanaTxWithPrivateKeyExample(): Promise<void> {
   const receiverAddress = '<PUT RECEIVER ADDRESS HERE>'
 
   // Send SOL from address to address
-  const { txId } = (await solanaSDK.transaction.send.send({
+  const { txId } = (await solanaSDK.transaction.send.transferSignedTransaction({
     from: senderAddress,
     fromPrivateKey: senderPrivateKey,
     to: receiverAddress,
@@ -26,7 +26,7 @@ export async function solanaTxWithPrivateKeyExample(): Promise<void> {
   const feePayer = senderAddress
   const feePayerPrivateKey = senderPrivateKey
 
-  const { txId: externalFeePayerTxId } = (await solanaSDK.transaction.send.send({
+  const { txId: externalFeePayerTxId } = (await solanaSDK.transaction.send.transferSignedTransaction({
     from: senderAddress,
     fromPrivateKey: senderPrivateKey,
     to: receiverAddress,

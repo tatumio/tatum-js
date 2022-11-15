@@ -16,8 +16,6 @@ export const TatumSolanaSDK = (args: SDKArguments) => {
   const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
   const txService = solanaTxService({ web3 })
 
-  const { getNFTMetadataURI, getNFTRoyalty } = nft
-
   return {
     ...abstractSdk,
     web3,
@@ -26,14 +24,15 @@ export const TatumSolanaSDK = (args: SDKArguments) => {
       return api.solanaWeb3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
     },
     kms: solanaKmsService({ web3, blockchain }),
-    transaction: txService,
+    transaction: txService.native,
     ledger: abstractSdkLedgerService(),
     virtualAccount: solanaVirtualAccountTxService({ web3 }),
     nft: {
-      getNFTMetadataURI,
-      getNFTRoyalty,
+      ...txService.nft,
+      ...nft,
     },
     spl: {
+      ...txService.spl,
       getSplAccountBalances: FungibleTokensErc20OrCompatibleService.erc20GetBalanceAddress,
     },
     blockchain: {

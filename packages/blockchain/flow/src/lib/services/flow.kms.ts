@@ -23,44 +23,44 @@ export const flowKmsService = (args: FlowSDKArguments & { blockchain: Blockchain
       const txService = flowTxService(provider, { ...flowBlockchainCalls })
       switch (type) {
         case FlowTxType.CREATE_ACCOUNT:
-          return (await txService.createAccountFromPublicKey({
+          return (await txService.account.send.createSignedTransaction({
             publicKey: body.publicKey,
             account: body.account,
             privateKey: fromPrivateKeys[0],
           })) as TransactionHashPromise
         case FlowTxType.ADD_PK_TO_ACCOUNT:
-          return (await txService.addPublicKeyToAccount({
+          return (await txService.account.send.publicKeySignedTransaction({
             publicKey: body.publicKey,
             account: body.account,
             privateKey: fromPrivateKeys[0],
           })) as TransactionHash
         case FlowTxType.TRANSFER:
-          return (await txService.sendTransaction({
+          return (await txService.native.send.transferSignedTransaction({
             ...body,
             privateKey: fromPrivateKeys[0],
           })) as TransactionHash
         case FlowTxType.TRANSFER_NFT:
-          return (await txService.nft.sendNftTransferToken({
+          return (await txService.nft.send.transferSignedTransaction({
             ...body,
             privateKey: fromPrivateKeys[0],
           })) as TransactionHash
         case FlowTxType.MINT_NFT:
-          return (await txService.nft.sendNftMintToken({
+          return (await txService.nft.send.mintSignedTransaction({
             ...body,
             privateKey: fromPrivateKeys[0],
           })) as TransactionHash
         case FlowTxType.MINT_MULTIPLE_NFT:
-          return (await txService.nft.sendNftMintMultipleToken({
+          return (await txService.nft.send.mintMultipleSignedTransaction({
             ...body,
             privateKey: fromPrivateKeys[0],
           })) as TransactionHash
         case FlowTxType.BURN_NFT:
-          return (await txService.nft.sendNftBurnToken({
+          return (await txService.nft.send.burnSignedTransaction({
             ...body,
             privateKey: fromPrivateKeys[0],
           })) as TransactionHash
         default:
-          return (await txService.sendCustomTransaction({
+          return (await txService.native.send.customSignedTransaction({
             ...body,
             privateKey: fromPrivateKeys[0],
           })) as TransactionHash

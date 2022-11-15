@@ -21,40 +21,22 @@ export const TatumFlowSDK = (args: FlowSDKArguments) => {
   const virtualAccount = virtualAccountService({ blockchain })
   const provider = flowProvider({ ...args })
   const flowBlockchainCalls = flowBlockchain(args)
-  const txService = flowTxService(provider, {
-    ...flowBlockchainCalls,
-  })
-
-  const {
-    deployNFTSmartContract,
-    mintNFT,
-    transferNFT,
-    mintMultipleNFTs,
-    burnNFT,
-    getNFTTransaction,
-    getNFTAccountBalance,
-    getNFTMetadataURI,
-  } = nft
+  const txService = flowTxService(provider, flowBlockchainCalls)
 
   return {
     ...abstractSdk,
     api,
     kms: flowKmsService({ ...args, blockchain }),
     wallet: flowWallet(),
-    transaction: {
-      ...txService,
-    },
+    transaction: txService.native,
+    account: txService.account,
     nft: {
-      deployNFTSmartContract,
-      mintNFT,
-      transferNFT,
-      mintMultipleNFTs,
-      burnNFT,
-      getNFTTransaction,
-      getNFTAccountBalance,
-      getNFTMetadataURI,
+      ...txService.nft,
+      ...nft,
     },
+    templates: txService.templates,
     blockchain: {
+      broadcast: flowBlockchainCalls.broadcast,
       getCurrentBlock: FlowService.flowGetBlockChainInfo,
       getBlock: FlowService.flowGetBlock,
       getAccount: FlowService.flowGetAccount,
@@ -63,8 +45,5 @@ export const TatumFlowSDK = (args: FlowSDKArguments) => {
       generateAddress: FlowService.flowGenerateAddress,
     },
     virtualAccount,
-    call: {
-      broadcast: flowBlockchainCalls.broadcast,
-    },
   }
 }
