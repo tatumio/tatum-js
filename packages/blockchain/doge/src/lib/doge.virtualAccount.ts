@@ -6,6 +6,6 @@ export const virtualAccountService = (args: { blockchain: Blockchain }) => {
   return {
     ...abstractBlockchainVirtualAccount(args),
     send: async (body: TransferDogeMnemonic | TransferDogeKeyPair | TransferDogeKMS) =>
-      ApiServices.offChain.blockchain.dogeTransfer(body),
+      ApiServices.virtualAccount.blockchain.dogeTransfer(body),
   }
 }

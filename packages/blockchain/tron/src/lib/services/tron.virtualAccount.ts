@@ -120,7 +120,7 @@ export const virtualAccountService = (args: { blockchain: Blockchain; tronWeb: I
      */
     send: async (body: TransferVirtualAccountTron) => {
       if (body.signatureId) {
-        return ApiServices.offChain.blockchain.tronTransferOffchain(body as TransferTronKMS)
+        return ApiServices.virtualAccount.blockchain.tronTransferOffchain(body as TransferTronKMS)
       } else {
         return await sendTronVirtualAccountTransaction(body, args.tronWeb)
       }

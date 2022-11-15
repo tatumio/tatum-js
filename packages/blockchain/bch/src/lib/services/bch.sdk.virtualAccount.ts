@@ -102,7 +102,7 @@ const prepareTransaction = async (
   }
 
   if (value < 0) {
-    console.log(`Wrong amount for BCH offchain amount.`)
+    console.log(`Wrong amount for BCH virtual account amount.`)
     throw new BchSdkError(SdkErrorCode.BTC_BASED_DESTINATION_LESS_THAN_ZERO)
   }
 
@@ -113,7 +113,7 @@ const prepareTransaction = async (
         continue
       }
       if (!input.amount) {
-        console.log(`Missing amount preparing BCH offchain transaction.`)
+        console.log(`Missing amount preparing BCH virtual account transaction.`)
         throw new BchSdkError(SdkErrorCode.BTC_BASED_TX_FAILED)
       }
       const value = Number(
@@ -169,7 +169,7 @@ const sendBchVirtualAccountTransaction = async (
     withdrawal.fee = '0.00005'
   }
 
-  const { id, data } = await ApiServices.offChain.withdrawal.storeWithdrawal(withdrawal)
+  const { id, data } = await ApiServices.virtualAccount.withdrawal.storeWithdrawal(withdrawal)
 
   if (!data) {
     throw new BchSdkError(SdkErrorCode.BTC_BASED_TX_FAILED)
@@ -194,7 +194,7 @@ const sendBchVirtualAccountTransaction = async (
   try {
     const txPrepared = await prepareTx()
     return {
-      ...(await ApiServices.offChain.withdrawal.broadcastBlockchainTransaction({
+      ...(await ApiServices.virtualAccount.withdrawal.broadcastBlockchainTransaction({
         txData: txPrepared,
         withdrawalId: id,
         currency: Currency.BCH,
@@ -207,7 +207,7 @@ const sendBchVirtualAccountTransaction = async (
         console.log('Missing withdrawal ID')
         throw e
       }
-      await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id)
+      await ApiServices.virtualAccount.withdrawal.cancelInProgressWithdrawal(id)
     } catch (e1) {
       console.log(e)
       return { id }
@@ -221,7 +221,7 @@ export const virtualAccountService = (args: { blockchain: Blockchain }) => {
     ...abstractBlockchainVirtualAccount(args),
     send: async (isTestnet: boolean, body: TransferBchMnemonic | TransferBchKeyPair | TransferBchKMS) => {
       if ('signatureId' in body) {
-        return ApiServices.offChain.blockchain.bchTransfer(body)
+        return ApiServices.virtualAccount.blockchain.bchTransfer(body)
       } else {
         return await sendBchVirtualAccountTransaction(body, isTestnet)
       }

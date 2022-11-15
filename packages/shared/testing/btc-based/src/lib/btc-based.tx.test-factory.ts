@@ -321,7 +321,7 @@ export const btcBasedTxTestFactory = {
       })
 
       it.skip('invalid private key', async () => {
-        // TODO different address types break logic, offchain tx conflicts
+        // TODO different address types break logic, virtual account tx conflicts
         mockRequestsUtxo(args.mock)
         await expect(
           args.transactions.prepareSignedTransaction(
@@ -401,7 +401,7 @@ export const btcBasedTxTestFactory = {
       })
     })
     it.skip('invalid private key', async () => {
-      // TODO different address types break logic, offchain tx conflicts
+      // TODO different address types break logic, virtual account tx conflicts
       mockRequestsFromAddress(args.mock)
       await expect(
         args.transactions.prepareSignedTransaction(

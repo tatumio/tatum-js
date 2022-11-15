@@ -109,7 +109,7 @@ export const virtualAccountService = (args: { blockchain: Blockchain; web3: EvmB
      */
     send: async (body: TransferVirtualAccountKlay) => {
       if (body.signatureId) {
-        return ApiServices.offChain.blockchain.klayTransfer(body as TransferEthKMS)
+        return ApiServices.virtualAccount.blockchain.klayTransfer(body as TransferEthKMS)
       } else {
         return await sendKlaytnVirtualAccountTransaction(body, args.web3)
       }

@@ -1,5 +1,5 @@
 import '@tatumio/shared-testing-common'
-import { xrpVirtualAccountService } from '../services/xrp.offchain'
+import { xrpVirtualAccountService } from '../services/xrp.virtualAccount'
 import { mockHelper, testHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { Currency, XrpAccount } from '@tatumio/api-client'
@@ -9,8 +9,8 @@ import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)
 
-describe('XrpSDK - offchain', () => {
-  const offchainService = xrpVirtualAccountService({ blockchain: Blockchain.XRP })
+describe('XrpSDK - virtual account', () => {
+  const virtualAccountService = xrpVirtualAccountService({ blockchain: Blockchain.XRP })
 
   const SECRET = 'shunwft7BwrFHdcXmAA87CazLsRMY'
   const ACCOUNT = 'rKHuaCVSzJCFh43ji9EvFAysmu1KHdMb8N'
@@ -23,14 +23,14 @@ describe('XrpSDK - offchain', () => {
     jest.clearAllMocks()
   })
 
-  describe('send offchain transaction', () => {
+  describe('send virtual account transaction', () => {
     it('valid', async () => {
       mockGetAccountInfo()
 
-      mockedApi.offChain.withdrawal.broadcastBlockchainTransaction.mockResolvedValue({ txId: '1234' })
-      mockedApi.offChain.withdrawal.storeWithdrawal.mockResolvedValue({ id: '1' })
+      mockedApi.virtualAccount.withdrawal.broadcastBlockchainTransaction.mockResolvedValue({ txId: '1234' })
+      mockedApi.virtualAccount.withdrawal.storeWithdrawal.mockResolvedValue({ id: '1' })
 
-      const result = await offchainService.sendTransactionFromVirtualAccountToBlockchain({
+      const result = await virtualAccountService.sendTransactionFromVirtualAccountToBlockchain({
         senderAccountId: ACCOUNT,
         account: ACCOUNT,
         address: ACCOUNT,
@@ -40,7 +40,7 @@ describe('XrpSDK - offchain', () => {
       })
 
       expect(result.txId).toBe('1234')
-      testHelper.expectMockCalled(mockedApi.offChain.withdrawal.broadcastBlockchainTransaction, [
+      testHelper.expectMockCalled(mockedApi.virtualAccount.withdrawal.broadcastBlockchainTransaction, [
         { txData: VALID_TX_DATA, withdrawalId: '1', currency: Currency.XRP },
       ])
     })
@@ -49,7 +49,7 @@ describe('XrpSDK - offchain', () => {
       mockGetAccountInfo()
 
       await expect(
-        offchainService.sendTransactionFromVirtualAccountToBlockchain({
+        virtualAccountService.sendTransactionFromVirtualAccountToBlockchain({
           senderAccountId: ACCOUNT,
           account: ACCOUNT,
           address: ACCOUNT,
@@ -64,7 +64,7 @@ describe('XrpSDK - offchain', () => {
       mockGetAccountInfo()
 
       await expect(
-        offchainService.sendTransactionFromVirtualAccountToBlockchain({
+        virtualAccountService.sendTransactionFromVirtualAccountToBlockchain({
           senderAccountId: ACCOUNT,
           account: ACCOUNT,
           address: ACCOUNT,

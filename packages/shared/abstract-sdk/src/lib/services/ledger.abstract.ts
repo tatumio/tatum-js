@@ -96,7 +96,7 @@ export const abstractSdkLedgerService = () => {
           account.xpub = w.xpub // || w.address @TODO not in wallet type
         }
         const a = await AccountService.createAccount(account)
-        const address = await ApiServices.offChain.account.generateDepositAddress(a.id)
+        const address = await ApiServices.virtualAccount.account.generateDepositAddress(a.id)
         if (webhookUrl) {
           await ApiServices.ledger.subscriptions.createSubscription({
             type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',

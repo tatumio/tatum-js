@@ -17,7 +17,7 @@ export const virtualAccountService = (args: { blockchain: Blockchain }) => {
      * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
      */
     send: async (body: TransferVirtualAccountFlow) => {
-      return ApiServices.offChain.blockchain.flowTransfer(
+      return ApiServices.virtualAccount.blockchain.flowTransfer(
         body as TransferFlowMnemonic | TransferFlowPK | TransferFlowKMS,
       )
     },

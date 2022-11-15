@@ -6,6 +6,6 @@ export const btcVirtualAccountService = () => {
   return {
     ...abstractBlockchainVirtualAccount({ blockchain: Blockchain.BTC }),
     send: async (body: TransferBtcMnemonic | TransferBtcKeyPair | TransferBtcKMS) =>
-      ApiServices.offChain.blockchain.btcTransfer(body),
+      ApiServices.virtualAccount.blockchain.btcTransfer(body),
   }
 }

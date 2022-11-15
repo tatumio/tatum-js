@@ -4,7 +4,7 @@ import {
 } from '@tatumio/shared-blockchain-abstract'
 import { ApiServices, Currency, TransferBnb } from '@tatumio/api-client'
 import { bnbTxService } from './bnb.tx'
-import { BnbApiCallsType } from '@tatumio/bnb'
+import { BnbApiCallsType } from '../../index'
 import { Blockchain } from '@tatumio/shared-core'
 import { BnbWeb3 } from './bnb.web3'
 
@@ -25,7 +25,7 @@ export const bnbVirtualAccountService = (args: { web3: BnbWeb3 }, apiCalls: BnbA
   ) => {
     const fee = '0.000075'
 
-    const { id: withdrawalId } = await ApiServices.offChain.withdrawal.storeWithdrawal({ ...body, fee })
+    const { id: withdrawalId } = await ApiServices.virtualAccount.withdrawal.storeWithdrawal({ ...body, fee })
 
     try {
       const prepareTx = () =>
@@ -50,7 +50,7 @@ export const bnbVirtualAccountService = (args: { web3: BnbWeb3 }, apiCalls: BnbA
       }
 
       try {
-        const response = await ApiServices.offChain.withdrawal.broadcastBlockchainTransaction({
+        const response = await ApiServices.virtualAccount.withdrawal.broadcastBlockchainTransaction({
           txData,
           currency: Currency.BNB,
           withdrawalId,
@@ -61,7 +61,7 @@ export const bnbVirtualAccountService = (args: { web3: BnbWeb3 }, apiCalls: BnbA
         throw e
       }
     } catch (e) {
-      console.log('Unable to perform offchain <> blockchain transaction.')
+      console.log('Unable to perform virtualAccount <> blockchain transaction.')
       throw e
     }
   }

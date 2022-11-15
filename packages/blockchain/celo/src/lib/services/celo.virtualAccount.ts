@@ -116,7 +116,7 @@ export const virtualAccountService = (args: { blockchain: Blockchain; web3: EvmB
      */
     send: async (body: TransferVirtualAccountCelo, testnet?: boolean) => {
       if (body.signatureId) {
-        return ApiServices.offChain.blockchain.celoOrErc20Transfer(body as TransferCeloKMS)
+        return ApiServices.virtualAccount.blockchain.celoOrErc20Transfer(body as TransferCeloKMS)
       } else {
         return sendCeloVirtualAccountTransaction(body, args.web3, testnet)
       }

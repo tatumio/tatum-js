@@ -123,9 +123,9 @@ export const virtualAccountService = (args: { blockchain: Blockchain; web3: EvmB
       if (body.signatureId) {
         const account = await AccountService.getAccountByAccountId(body.senderAccountId)
         if (account.currency === 'ETH') {
-          return ApiServices.offChain.blockchain.ethTransfer(body as TransferEthKMS)
+          return ApiServices.virtualAccount.blockchain.ethTransfer(body as TransferEthKMS)
         } else {
-          return ApiServices.offChain.blockchain.ethTransferErc20(body as TransferErc20)
+          return ApiServices.virtualAccount.blockchain.ethTransferErc20(body as TransferErc20)
         }
       } else {
         return await sendEthVirtualAccountTransaction(body, args.web3)

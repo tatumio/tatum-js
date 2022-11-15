@@ -4,7 +4,7 @@ import { Currency } from '@tatumio/api-client'
 
 const tatumSDK = TatumSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
-export async function offChainExample() {
+export async function virtualAccountExample() {
   // create account first
   const account = await tatumSDK.ledger.account.create({
     currency: Currency.BTC,

@@ -1,4 +1,4 @@
-import { TatumFlowSDK } from '@tatumio/flow'
+import { TatumFlowSDK } from '../flow.sdk'
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing-common'
 
 describe('FlowSDK - wallet', () => {

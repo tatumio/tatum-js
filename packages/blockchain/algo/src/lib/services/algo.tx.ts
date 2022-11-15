@@ -62,7 +62,7 @@ export type ChainTransferAlgoErc20KMS = WithoutChain<ApiChainTransferAlgoErc20KM
 export type ChainBurnAlgoErc20 = WithoutChain<ApiChainBurnAlgoErc20>
 export type ChainBurnAlgoErc20KMS = WithoutChain<ApiChainBurnAlgoErc20KMS>
 
-type SendOffchainResponse =
+type SendVirtualAccountTxResponse =
   | OffchainTransactionResult
   | OffchainTransactionSignatureResult
   | { id?: string }
@@ -703,7 +703,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
         ) => {
           if (isWithSignatureId(body as TransferAlgoKMS | TransferAlgoBlockchainKMS)) {
             if ((body as TransferAlgoKMS).senderAccountId) {
-              return ApiServices.offChain.blockchain.algoTransfer(body as TransferAlgoKMS)
+              return ApiServices.virtualAccount.blockchain.algoTransfer(body as TransferAlgoKMS)
             } else {
               return ApiServices.blockchain.algo.algorandBlockchainTransfer(body as TransferAlgoBlockchainKMS)
             }
@@ -729,9 +729,9 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
         body: ApiTransferAlgo | ApiTransferAlgoKMS,
         testnet = false,
         provider?: string,
-      ): Promise<SendOffchainResponse> => {
+      ): Promise<SendVirtualAccountTxResponse> => {
         if (isWithSignatureId(body as ApiTransferAlgoKMS)) {
-          return ApiServices.offChain.blockchain.algoTransfer(body as ApiTransferAlgoKMS)
+          return ApiServices.virtualAccount.blockchain.algoTransfer(body as ApiTransferAlgoKMS)
         }
 
         const { fee, privateKey, ...withdrawal } = body as ApiTransferAlgo
@@ -758,14 +758,14 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           )
         }
 
-        const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal({
+        const { id } = await ApiServices.virtualAccount.withdrawal.storeWithdrawal({
           ...withdrawal,
           fee: new BigNumber(fee || '0.001').toString(),
         })
 
         try {
           return {
-            ...(await ApiServices.offChain.withdrawal.broadcastBlockchainTransaction({
+            ...(await ApiServices.virtualAccount.withdrawal.broadcastBlockchainTransaction({
               txData,
               withdrawalId: id,
               currency: Currency.ALGO,
@@ -774,7 +774,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           }
         } catch (_) {
           try {
-            return await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id!)
+            return await ApiServices.virtualAccount.withdrawal.cancelInProgressWithdrawal(id!)
           } catch (_) {
             return { id, completed: false }
           }

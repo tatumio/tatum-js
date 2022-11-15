@@ -2,7 +2,7 @@ import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testin
 import { ESDT_SYSTEM_SMART_CONTRACT_ADDRESS } from '../../constants'
 import { TatumEgldSDK } from '../egld.sdk'
 
-describe('EgldSDK - offchain tx', () => {
+describe('EgldSDK - virtual account tx', () => {
   const sdk = TatumEgldSDK({
     apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
   })

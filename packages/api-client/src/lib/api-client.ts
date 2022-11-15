@@ -117,7 +117,7 @@ export const ApiServices = {
     transaction: TransactionService,
     virtualCurrency: VirtualCurrencyService,
   },
-  offChain: {
+  virtualAccount: {
     account: BlockchainAddressesService,
     blockchain: BlockchainOperationsService,
     withdrawal: WithdrawalService,
