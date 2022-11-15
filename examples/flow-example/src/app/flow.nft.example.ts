@@ -46,7 +46,7 @@ export async function flowNftExample() {
   // https://docs.tatum.io/guides/blockchain/how-to-store-metadata-to-ipfs-and-include-it-in-an-nft
 
   // Mint NFTs on your own smart contract
-  const nftMinted = (await flowSDK.nft.mintNFT({
+  const nftMinted = (await flowSDK.transaction.nft.sendNftMintToken({
     chain: Currency.FLOW,
     contractAddress,
     account,
@@ -73,7 +73,7 @@ export async function flowNftExample() {
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
-  const nftTransferred = (await flowSDK.nft.transferNFT({
+  const nftTransferred = (await flowSDK.transaction.nft.sendNftTransferToken({
     chain: Currency.FLOW,
     to: secondAccount,
     tokenId,
@@ -86,7 +86,7 @@ export async function flowNftExample() {
 
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
-  const nftBurned = (await flowSDK.nft.burnNFT({
+  const nftBurned = (await flowSDK.transaction.nft.sendNftBurnToken({
     chain: Currency.FLOW,
     tokenId,
     contractAddress,

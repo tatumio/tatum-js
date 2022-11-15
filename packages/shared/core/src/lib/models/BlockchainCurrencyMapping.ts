@@ -40,7 +40,7 @@ export const BlockchainCurrencyMapping: Record<
     currencies: ETH_BASED_CURRENCIES,
   },
   BSC: {
-    nativeCurrency: Currency.ETH,
+    nativeCurrency: Currency.BSC,
     currencies: BSC_BASED_CURRENCIES,
   },
   POLYGON: {

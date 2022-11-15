@@ -22,8 +22,7 @@ export async function polygonNftExample() {
 
   // Deploy an NFT smart contract on the blockchain. In a deployed NFT smart contract, you can mint NFTs (one NFT at a time or multiple NFTs at once), burn, and transfer NFTs.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftDeployErc721
-  const nftDeploy = (await polygonSDK.nft.deployNFTSmartContract({
-    chain: Currency.MATIC,
+  const nftDeploy = (await polygonSDK.nft.send.deploySignedTransaction({
     name: 'My ERC721',
     symbol: 'ERC_SYMBOL',
     // your private key of the address that has coins
@@ -48,8 +47,7 @@ export async function polygonNftExample() {
   // all examples at once you should set some timeout between the calls or execute examples separately
 
   // Mint NFTs on your own smart contract
-  const nftMinted = (await polygonSDK.nft.mintNFT({
-    chain: Currency.MATIC,
+  const nftMinted = (await polygonSDK.nft.send.mintSignedTransaction({
     tokenId,
     contractAddress,
     fromPrivateKey: senderPrivateKey,
@@ -80,8 +78,7 @@ export async function polygonNftExample() {
 
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
-  const nftTransferred = (await polygonSDK.nft.transferNFT({
-    chain: Currency.MATIC,
+  const nftTransferred = (await polygonSDK.nft.send.transferSignedTransaction({
     to: receiverAddress,
     tokenId,
     contractAddress,
@@ -96,8 +93,7 @@ export async function polygonNftExample() {
 
   // Burn one NFT Token. This method destroys any NFT token from smart contract defined in contractAddress.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftBurnErc721
-  const nftBurned = (await polygonSDK.nft.burnNFT({
-    chain: Currency.MATIC,
+  const nftBurned = (await polygonSDK.nft.send.burnSignedTransaction({
     tokenId,
     contractAddress,
     fromPrivateKey: receiverPrivateKey,
