@@ -27,8 +27,8 @@ export async function celoVirtualAccountExample() {
 
   console.log(`Deposit address is ${depositAddress.address}`)
 
-  // Fund your address here: https://faucet.sepolia.dev/
-  console.log(`Fund me ${depositAddress.address} to send offchain transaction!`)
+  // Fund your address here: https://celo.org/developers/faucet
+  console.log(`Fund me ${depositAddress.address} to send transaction from virtual account to blockchain!`)
 
   // I wanna send celo from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/CeloOrErc20Transfer

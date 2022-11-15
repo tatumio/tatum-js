@@ -15,7 +15,7 @@ export const xrpVirtualAccountService = (args: { blockchain: Blockchain }) => {
   }
 }
 
-export type TransferXrpOffchain = TransferXrp & Withdrawal
+export type TransferXrpVirtualAccount = TransferXrp & Withdrawal
 
 /**
  * Send Xrp transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -23,7 +23,7 @@ export type TransferXrpOffchain = TransferXrp & Withdrawal
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain or id of the withdrawal, if it was not cancelled automatically
  */
-export const sendTransactionFromVirtualAccountToBlockchain = async (body: TransferXrpOffchain) => {
+export const sendTransactionFromVirtualAccountToBlockchain = async (body: TransferXrpVirtualAccount) => {
   const { account, secret, ...withdrawal } = body
 
   if (!withdrawal.fee) {
@@ -40,7 +40,7 @@ export const sendTransactionFromVirtualAccountToBlockchain = async (body: Transf
 
   if (!withdrawal.fee || Number(withdrawal.fee) <= 0) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
 
-  const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal(withdrawal)
+  const { id } = await ApiServices.virtualAccount.withdrawal.storeWithdrawal(withdrawal)
   const { amount, fee, address } = withdrawal
   let txData: string
 
@@ -55,13 +55,13 @@ export const sendTransactionFromVirtualAccountToBlockchain = async (body: Transf
       withdrawal.attr,
     )
   } catch (e) {
-    id && (await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id))
+    id && (await ApiServices.virtualAccount.withdrawal.cancelInProgressWithdrawal(id))
     throw e
   }
 
   try {
     return {
-      ...(await ApiServices.offChain.withdrawal.broadcastBlockchainTransaction({
+      ...(await ApiServices.virtualAccount.withdrawal.broadcastBlockchainTransaction({
         txData,
         withdrawalId: id,
         currency: Currency.XRP,
@@ -69,7 +69,7 @@ export const sendTransactionFromVirtualAccountToBlockchain = async (body: Transf
       id,
     }
   } catch (e) {
-    id && (await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id))
+    id && (await ApiServices.virtualAccount.withdrawal.cancelInProgressWithdrawal(id))
     throw e
   }
 }

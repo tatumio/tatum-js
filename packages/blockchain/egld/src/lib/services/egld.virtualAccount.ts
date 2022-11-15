@@ -12,7 +12,7 @@ import { Blockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { prepareSignedTransaction } from './egld.tx'
 
-export const egldOffchainService = (args: { blockchain: Blockchain }) => {
+export const egldVirtualAccountService = (args: { blockchain: Blockchain }) => {
   return {
     ...abstractBlockchainVirtualAccount(args),
     /**
@@ -25,16 +25,16 @@ export const egldOffchainService = (args: { blockchain: Blockchain }) => {
   }
 }
 
-type EgldOffchain = TransferEth | TransferEthMnemonic | TransferEthKMS
-type SendOffchainResponse =
+type EgldVirtualAccountTx = TransferEth | TransferEthMnemonic | TransferEthKMS
+type SendVirtualAccountTxResponse =
   | OffchainTransactionResult
   | OffchainTransactionSignatureResult
   | { id?: string }
   | void
 
-export const send = async (body: EgldOffchain): Promise<SendOffchainResponse> => {
+export const send = async (body: EgldVirtualAccountTx): Promise<SendVirtualAccountTxResponse> => {
   if ('signatureId' in body) {
-    return await ApiServices.offChain.blockchain.egldTransfer(body as TransferEthKMS)
+    return await ApiServices.virtualAccount.blockchain.egldTransfer(body as TransferEthKMS)
   }
 
   const { gasLimit, gasPrice, ...withdrawal } = body
@@ -60,14 +60,14 @@ export const send = async (body: EgldOffchain): Promise<SendOffchainResponse> =>
     from: '',
   })
 
-  const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal({
+  const { id } = await ApiServices.virtualAccount.withdrawal.storeWithdrawal({
     ...withdrawal,
     fee: new BigNumber(fee.gasLimit).multipliedBy(fee.gasPrice).toString(),
   })
 
   try {
     return {
-      ...(await ApiServices.offChain.withdrawal.broadcastBlockchainTransaction({
+      ...(await ApiServices.virtualAccount.withdrawal.broadcastBlockchainTransaction({
         txData,
         withdrawalId: id,
         currency: Currency.EGLD,
@@ -76,7 +76,7 @@ export const send = async (body: EgldOffchain): Promise<SendOffchainResponse> =>
     }
   } catch (e) {
     try {
-      return await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id!)
+      return await ApiServices.virtualAccount.withdrawal.cancelInProgressWithdrawal(id!)
     } catch (e1) {
       return { id }
     }

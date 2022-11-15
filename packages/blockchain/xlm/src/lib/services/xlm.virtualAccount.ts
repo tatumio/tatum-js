@@ -11,7 +11,7 @@ export const xlmVirtualAccountService = (args: { blockchain: Blockchain }) => {
   }
 }
 
-export type TransferXlmOffchain = Pick<TransferXlm, 'secret'> & Withdrawal
+export type TransferXlmVirtualAccount = Pick<TransferXlm, 'secret'> & Withdrawal
 
 /**
  * Send Stellar transaction from Tatum Ledger account to the blockchain. This method broadcasts signed transaction to the blockchain.
@@ -22,7 +22,7 @@ export type TransferXlmOffchain = Pick<TransferXlm, 'secret'> & Withdrawal
  */
 export const sendTransactionFromVirtualAccountToBlockchain = async (
   testnet: boolean,
-  body: TransferXlmOffchain,
+  body: TransferXlmVirtualAccount,
 ) => {
   const { secret, ...withdrawal } = body
   if (!withdrawal.fee) {
@@ -36,7 +36,7 @@ export const sendTransactionFromVirtualAccountToBlockchain = async (
   const memo = memPhrase
 
   const account = await ApiServices.blockchain.xlm.xlmGetAccountInfo(Keypair.fromSecret(secret).publicKey())
-  const { id } = await ApiServices.offChain.withdrawal.storeWithdrawal(withdrawal)
+  const { id } = await ApiServices.virtualAccount.withdrawal.storeWithdrawal(withdrawal)
   const { amount, address } = withdrawal
 
   let txData
@@ -55,12 +55,12 @@ export const sendTransactionFromVirtualAccountToBlockchain = async (
       console.log('Missing withdrawal ID')
       throw e
     }
-    await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id)
+    await ApiServices.virtualAccount.withdrawal.cancelInProgressWithdrawal(id)
     throw e
   }
   try {
     return {
-      ...(await ApiServices.offChain.withdrawal.broadcastBlockchainTransaction({
+      ...(await ApiServices.virtualAccount.withdrawal.broadcastBlockchainTransaction({
         txData,
         withdrawalId: id,
         currency: Currency.XLM,
@@ -73,7 +73,7 @@ export const sendTransactionFromVirtualAccountToBlockchain = async (
         console.log('Missing withdrawal ID')
         throw e
       }
-      await ApiServices.offChain.withdrawal.cancelInProgressWithdrawal(id)
+      await ApiServices.virtualAccount.withdrawal.cancelInProgressWithdrawal(id)
     } catch (e1) {
       console.log(e)
       return { id }

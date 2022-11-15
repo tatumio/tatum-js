@@ -30,7 +30,7 @@ export async function flowVirtualAccountExample() {
   console.log(`Deposit address is ${depositAddress.address}`)
 
   // FUND YOUR ADDRESS
-  console.log(`Fund me ${depositAddress.address} to send offchain transaction!`)
+  console.log(`Fund me ${depositAddress.address} to send transaction from virtual account to blockchain!`)
 
   // I wanna send FLOW from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/FlowTransfer

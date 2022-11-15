@@ -1,5 +1,5 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing-common'
-import { TatumKcsSDK } from '@tatumio/kcs'
+import { TatumKcsSDK } from '../kcs.sdk'
 
 describe('KCS wallet', () => {
   const sdk = TatumKcsSDK({

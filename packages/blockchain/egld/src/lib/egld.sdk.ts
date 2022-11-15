@@ -5,7 +5,7 @@ import { ElrondService } from '@tatumio/api-client'
 import { egldRecord } from './services/egld.record'
 import { egldWallet } from './services/egld.wallet'
 import { egldTransactionService } from './services/egld.tx'
-import { egldOffchainService } from './services/egld.offchain'
+import { egldVirtualAccountService } from './services/egld.virtualAccount'
 import { egldKmsService } from './services/egld.kms'
 
 const blockchain = Blockchain.EGLD
@@ -16,7 +16,7 @@ export const TatumEgldSDK = (args: SDKArguments) => {
     record: egldRecord(),
     wallet: egldWallet(),
     transaction: egldTransactionService(),
-    virtualAccount: egldOffchainService({ blockchain }),
+    virtualAccount: egldVirtualAccountService({ blockchain }),
     kms: egldKmsService({ blockchain }),
     blockchain: {
       broadcast: ElrondService.egldBroadcast,

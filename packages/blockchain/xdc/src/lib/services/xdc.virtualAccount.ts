@@ -109,7 +109,7 @@ export const virtualAccountService = (args: { blockchain: Blockchain; web3: EvmB
      */
     send: async (body: TransferVirtualAccountXdc) => {
       if (body.signatureId) {
-        return ApiServices.offChain.blockchain.xdcTransfer(body as TransferEthKMS)
+        return ApiServices.virtualAccount.blockchain.xdcTransfer(body as TransferEthKMS)
       } else {
         return await sendXdcVirtualAccountTransaction(body, args.web3)
       }

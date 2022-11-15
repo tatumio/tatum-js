@@ -2,7 +2,7 @@ import { OffchainTransactionResult } from '@tatumio/api-client'
 import { expectHexString, REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumEgldSDK } from '../egld.sdk'
 
-describe('Offchain - tx', () => {
+describe('Virtual account - tx', () => {
   const sdk = TatumEgldSDK({
     apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
   })
@@ -10,7 +10,7 @@ describe('Offchain - tx', () => {
   const testData = TEST_DATA.EGLD
   // skiped because account doesn't have balance
   // TODO find a way to fund the account
-  it.skip('should send offchain transaction', async () => {
+  it.skip('should send virtual account transaction', async () => {
     const tx = (await sdk.virtualAccount.send({
       address: testData.ADDRESS_0,
       privateKey: testData.PRIVATE_KEY_0,

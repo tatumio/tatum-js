@@ -25,7 +25,7 @@ export async function klaytnVirtualAccountExample() {
   console.log(`Deposit address is ${depositAddress.address}`)
 
   // Fund your address here: https://baobab.wallet.klaytn.foundation/faucet
-  console.log(`Fund me ${depositAddress.address} to send offchain transaction!`)
+  console.log(`Fund me ${depositAddress.address} to send transaction from virtual account to blockchain!`)
 
   // I wanna send assets from virtualAccount to blockchain address
   // https://apidoc.tatum.io/tag/Blockchain-operations#operation/KlayTransfer

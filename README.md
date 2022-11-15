@@ -209,7 +209,7 @@ Examples
 | httpDriver | ethSDK.httpDriver | Connect directly to Node
 | KMS | ethSDK.kms.getAllPending | Tatum KMS
 | Ledger | ethSDK.ledger.orderBook.newTrade | Tatum private Ledger
-| Offchain | ethSDK.offchain.storeTokenAddress | Tatum Offchain
+| Virtual accounts | ethSDK.virtualAccount.storeTokenAddress | Tatum Virtual Account services
 | Record | ethSDK.record.storeLog | Blockchain log
 | Security | ethSDK.security.checkMaliciousAddress | Security utilities
 | Subscriptions | ethSDK.subscriptions.createSubscription | Notification services

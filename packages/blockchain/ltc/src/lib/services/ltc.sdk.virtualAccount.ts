@@ -6,6 +6,6 @@ export const ltcVirtualAccountService = () => {
   return {
     ...abstractBlockchainVirtualAccount({ blockchain: Blockchain.LTC }),
     send: async (body: TransferLtcMnemonic | TransferLtcKeyPair | TransferLtcKMS) =>
-      ApiServices.offChain.blockchain.ltcTransfer(body),
+      ApiServices.virtualAccount.blockchain.ltcTransfer(body),
   }
 }

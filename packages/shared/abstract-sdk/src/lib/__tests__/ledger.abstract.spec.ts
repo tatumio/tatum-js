@@ -278,7 +278,7 @@ describe('SDK - ledger', () => {
         })
 
         testHelper.expectMockCalled(api.createAccount, [createAccountRequestBody])
-        testHelper.expectMockCalled(mockedApi.offChain.account.generateDepositAddress, [accountId])
+        testHelper.expectMockCalled(mockedApi.virtualAccount.account.generateDepositAddress, [accountId])
         testHelper.expectMockCalled(mockedApi.ledger.subscriptions.createSubscription, [
           {
             type: 'ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION',
