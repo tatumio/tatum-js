@@ -6,13 +6,7 @@ import {
 } from '@tatumio/shared-testing-common'
 import { TatumBscSDK } from '../bsc.sdk'
 import * as apiClient from '@tatumio/api-client'
-import {
-  BscEstimateGas,
-  CallSmartContractMethod,
-  PrivKeyRequest,
-  TransferBscBlockchain,
-} from '@tatumio/api-client'
-import { Web3Request } from '@tatumio/shared-core'
+import { BscEstimateGas, CallSmartContractMethod } from '@tatumio/api-client'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
@@ -34,7 +28,7 @@ describe('BscSDK - blockchain', () => {
     getCurrentBlock: [api.bscGetCurrentBlock, {}],
     getBlock: [api.bscGetBlock, testData.BLOCK_HASH],
     getBlockchainAccountBalance: [api.bscGetBalance, testData.TESTNET.ADDRESS_0],
-    get: [api.bscGetTransaction, testData.TX_HASH],
+    getTransaction: [api.bscGetTransaction, testData.TX_HASH],
     estimateGas: [
       blockchain.estimateGas,
       {
@@ -64,37 +58,6 @@ describe('BscSDK - blockchain', () => {
       } as CallSmartContractMethod,
     ],
     smartContractGetAddress: [blockchain.smartContractGetAddress, 'BSC', testData.TX_HASH],
-    blockchainTransfer: [
-      api.bscBlockchainTransfer,
-      {
-        data: 'My note to recipient.',
-        nonce: 0,
-        to: testData.TESTNET.ADDRESS_100,
-        currency: 'GMC_BSC',
-        fee: { gasLimit: '40000', gasPrice: '20' },
-        amount: '100000',
-        fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
-      } as TransferBscBlockchain,
-    ],
-    generateAddress: [api.bscGenerateAddress, testData.TESTNET.XPUB, 1],
-    generateAddressPrivateKey: [
-      api.bscGenerateAddressPrivateKey,
-      {
-        index: 0,
-        mnemonic: TEST_DATA.MNEMONIC,
-      } as PrivKeyRequest,
-    ],
-    generateWallet: [api.bscGenerateWallet, TEST_DATA.MNEMONIC],
-    web3Driver: [
-      api.bscWeb3Driver,
-      REPLACE_ME_WITH_TATUM_API_KEY,
-      {
-        jsonrpc: '2.0',
-        method: 'web3_clientVersion',
-        params: [],
-        id: 2,
-      } as Web3Request,
-    ],
   }
 
   describe('API methods mapping', () => {

@@ -22,7 +22,29 @@ describe('KlaytnSDK - nft', () => {
   const api = mockedApi.nft
   const testData = TEST_DATA.KLAYTN
 
-  const nftFunctionsMapping: Omit<TestCasesApiCallMapping<typeof nft>, 'prepare' | 'send'> = {
+  const nftFunctionsMapping: Omit<
+    TestCasesApiCallMapping<typeof nft>,
+    'prepare' | 'send' | 'getNFTImage' | 'prepareAddNftMinterAbstraction' | 'getNFTContractAddress'
+  > = {
+    getNFTTransactionsByAddress: [
+      api.nftGetTransactionByAddress,
+      Currency.KLAY,
+      testData.TESTNET.ERC_721?.ADDRESS,
+      testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
+      20,
+    ],
+    getNFTTransactionsByToken: [
+      api.nftGetTransactionByToken,
+      Currency.KLAY,
+      'erc721-token',
+      testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
+      20,
+    ],
+    getNFTsByAddress: [
+      api.nftGetTokensByAddressErc721,
+      Currency.KLAY,
+      testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
+    ],
     deployNFTSmartContract: [
       api.nftDeployErc721,
       {
@@ -121,6 +143,11 @@ describe('KlaytnSDK - nft', () => {
   }
 
   describe('API methods mapping', () => {
-    commonTestFactory.apiMethods<Omit<typeof nft, 'prepare' | 'send'>>(nft, nftFunctionsMapping)
+    commonTestFactory.apiMethods<
+      Omit<
+        typeof nft,
+        'prepare' | 'send' | 'getNFTImage' | 'prepareAddNftMinterAbstraction' | 'getNFTContractAddress'
+      >
+    >(nft, nftFunctionsMapping)
   })
 })

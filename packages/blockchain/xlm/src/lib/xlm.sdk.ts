@@ -31,7 +31,6 @@ export const TatumXlmSDK = (
       getLedgerTx: StellarService.xlmGetLedgerTx,
       getTransaction: StellarService.xlmGetTransaction,
       getAccountTransactions: StellarService.xlmGetAccountTx,
-      sendTransaction: StellarService.xlmTransferBlockchain,
     },
   }
 }

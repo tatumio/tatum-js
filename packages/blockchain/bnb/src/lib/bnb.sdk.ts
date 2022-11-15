@@ -22,13 +22,11 @@ export const TatumBnbSDK = (
     kms: bnbKmsService({ web3 }),
     virtualAccount: bnbVirtualAccountService({ web3 }, apiCalls),
     blockchain: {
-      generateWallet: BnbBeaconChainService.bnbGenerateWallet,
       getCurrentBlock: BnbBeaconChainService.bnbGetCurrentBlock,
       getBlock: BnbBeaconChainService.bnbGetBlock,
       getAccount: BnbBeaconChainService.bnbGetAccount,
       getTransaction: BnbBeaconChainService.bnbGetTransaction,
       getTxByAccount: BnbBeaconChainService.bnbGetTxByAccount,
-      blockchainTransfer: BnbBeaconChainService.bnbBlockchainTransfer,
       broadcast: BnbBeaconChainService.bnbBroadcast,
     },
   }

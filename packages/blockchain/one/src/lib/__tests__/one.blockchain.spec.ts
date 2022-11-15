@@ -6,7 +6,6 @@ import {
 } from '@tatumio/shared-testing-common'
 import { TatumOneSDK } from '../one.sdk'
 import * as apiClient from '@tatumio/api-client'
-import { BlockchainAddressesService, BlockchainUtilsService } from '@tatumio/api-client'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
@@ -28,7 +27,7 @@ describe('OneSDK - blockchain', () => {
     getCurrentBlock: api.oneGetCurrentBlock,
     getBlock: [api.oneGetBlock, testData.BLOCK_HASH],
     getBlockchainAccountBalance: [api.oneGetBalance, testData.TESTNET.ADDRESS_0],
-    get: [api.oneGetTransaction, testData.TX_HASH],
+    getTransaction: [api.oneGetTransaction, testData.TX_HASH],
     smartContractInvocation: [
       api.oneBlockchainSmartContractInvocation,
       {
@@ -49,37 +48,6 @@ describe('OneSDK - blockchain', () => {
       },
     ],
     smartContractGetAddress: [blockchain.smartContractGetAddress, 'ONE', testData.TX_HASH],
-    blockchainTransfer: [
-      api.oneBlockchainTransfer,
-      {
-        data: 'My note to recipient.',
-        nonce: 0,
-        to: testData.TESTNET.ADDRESS_100,
-        currency: 'ONE',
-        fee: { gasLimit: '40000', gasPrice: '20' },
-        amount: '100000',
-        fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
-      },
-    ],
-    generateAddress: [api.oneGenerateAddress, testData.TESTNET.XPUB, 1],
-    generateAddressPrivateKey: [
-      api.oneGenerateAddressPrivateKey,
-      {
-        index: 0,
-        mnemonic: TEST_DATA.MNEMONIC,
-      },
-    ],
-    generateWallet: [api.oneGenerateWallet, TEST_DATA.MNEMONIC],
-    web3Driver: [
-      api.oneWeb3Driver,
-      REPLACE_ME_WITH_TATUM_API_KEY,
-      {
-        jsonrpc: '2.0',
-        method: 'web3_clientVersion',
-        params: [],
-        id: 2,
-      },
-    ],
     formatAddress: [api.oneFormatAddress, 'one13t9ul0yvudlk7e60fwvxr5l0azfg3kyl474xmc'],
   }
 

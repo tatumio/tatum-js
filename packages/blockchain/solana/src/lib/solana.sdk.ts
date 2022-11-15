@@ -47,9 +47,6 @@ export const TatumSolanaSDK = (args: SDKArguments) => {
       getBlock: SolanaService.solanaGetBlock,
       getAccountBalance: SolanaService.solanaGetBalance,
       getTransaction: SolanaService.solanaGetTransaction,
-      sendTransaction: SolanaService.solanaBlockchainTransfer,
-      generateWallet: SolanaService.solanaGenerateWallet,
-      web3Driver: SolanaService.solanaWeb3Driver,
     },
     custodialManagedWallet: abstractSdkCustodialManagedWallets(),
   }

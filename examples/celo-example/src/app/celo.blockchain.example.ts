@@ -5,7 +5,7 @@ const celoSDK = TatumCeloSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function celoBlockchainExample() {
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/Celo#operation/CeloGetTransaction
-  const transaction = await celoSDK.blockchain.get(
+  const transaction = await celoSDK.blockchain.getTransaction(
     '0x6d5e5259a8ec276682b65631fd95bd287ead7dd42be8b7688238212ff3110530',
   )
   console.log(`Transaction: `, transaction)

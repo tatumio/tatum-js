@@ -1,5 +1,5 @@
 import * as apiClient from '@tatumio/api-client'
-import { TransferXlmBlockchain, TrustLineXlmBlockchain } from '@tatumio/api-client'
+import { TrustLineXlmBlockchain } from '@tatumio/api-client'
 import {
   commonTestFactory,
   REPLACE_ME_WITH_TATUM_API_KEY,
@@ -31,14 +31,6 @@ describe('XlmSDK - blockchain', () => {
     getLedger: [api.xlmGetLedger, testData.SEQUENCE],
     getLedgerTx: [api.xlmGetLedgerTx, testData.SEQUENCE],
     getAccountTransactions: [api.xlmGetAccountTx, testData.ADDRESS],
-    sendTransaction: [
-      api.xlmTransferBlockchain,
-      {
-        amount: '1',
-        fromSecret: testData.SECRET,
-        to: testData.ADDRESS,
-      } as TransferXlmBlockchain,
-    ],
     trustLine: [
       api.xlmTrustLineBlockchain,
       {

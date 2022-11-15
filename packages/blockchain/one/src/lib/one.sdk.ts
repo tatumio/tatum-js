@@ -24,21 +24,6 @@ export const TatumOneSDK = (args: SDKArguments) => {
   const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
   const { nft, storage } = abstractSdkNft()
 
-  const {
-    deployNFTSmartContract,
-    mintNFT,
-    transferNFT,
-    mintMultipleNFTs,
-    burnNFT,
-    addNFTMinter,
-    updateNFTRoyalty,
-    getNFTTransaction,
-    getNFTAccountBalance,
-    getNFTProvenanceData,
-    getNFTMetadataURI,
-    getNFTRoyalty,
-  } = nft
-
   return {
     ...evmSdk,
     wallet: walletService,
@@ -51,18 +36,7 @@ export const TatumOneSDK = (args: SDKArguments) => {
     },
     nft: {
       ...txService.erc721,
-      deployNFTSmartContract,
-      mintNFT,
-      transferNFT,
-      mintMultipleNFTs,
-      burnNFT,
-      addNFTMinter,
-      updateNFTRoyalty,
-      getNFTTransaction,
-      getNFTAccountBalance,
-      getNFTProvenanceData,
-      getNFTMetadataURI,
-      getNFTRoyalty,
+      ...nft,
     },
     storage,
     multiToken: txService.multiToken,
@@ -85,15 +59,10 @@ export const TatumOneSDK = (args: SDKArguments) => {
       getCurrentBlock: HarmonyService.oneGetCurrentBlock,
       getBlock: HarmonyService.oneGetBlock,
       getBlockchainAccountBalance: HarmonyService.oneGetBalance,
-      get: HarmonyService.oneGetTransaction,
+      getTransaction: HarmonyService.oneGetTransaction,
       smartContractInvocation: HarmonyService.oneBlockchainSmartContractInvocation,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
       formatAddress: HarmonyService.oneFormatAddress,
-      generateAddress: HarmonyService.oneGenerateAddress,
-      generateAddressPrivateKey: HarmonyService.oneGenerateAddressPrivateKey,
-      generateWallet: HarmonyService.oneGenerateWallet,
-      web3Driver: HarmonyService.oneWeb3Driver,
-      blockchainTransfer: HarmonyService.oneBlockchainTransfer,
     },
     virtualAccount,
   }

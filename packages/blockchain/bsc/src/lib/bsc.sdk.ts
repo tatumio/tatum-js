@@ -23,21 +23,6 @@ export const TatumBscSDK = (args: SDKArguments) => {
   const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
   const { nft, storage } = abstractSdkNft()
 
-  const {
-    deployNFTSmartContract,
-    mintNFT,
-    transferNFT,
-    mintMultipleNFTs,
-    burnNFT,
-    addNFTMinter,
-    updateNFTRoyalty,
-    getNFTTransaction,
-    getNFTAccountBalance,
-    getNFTProvenanceData,
-    getNFTMetadataURI,
-    getNFTRoyalty,
-  } = nft
-
   return {
     ...evmSdk,
     kms: bscKmsService({ blockchain, web3 }),
@@ -49,18 +34,7 @@ export const TatumBscSDK = (args: SDKArguments) => {
     },
     nft: {
       ...txService.erc721,
-      deployNFTSmartContract,
-      mintNFT,
-      transferNFT,
-      mintMultipleNFTs,
-      burnNFT,
-      addNFTMinter,
-      updateNFTRoyalty,
-      getNFTTransaction,
-      getNFTAccountBalance,
-      getNFTProvenanceData,
-      getNFTMetadataURI,
-      getNFTRoyalty,
+      ...nft,
     },
     storage,
     smartContract: txService.smartContract,
@@ -84,15 +58,10 @@ export const TatumBscSDK = (args: SDKArguments) => {
       getCurrentBlock: BnbSmartChainService.bscGetCurrentBlock,
       getBlock: BnbSmartChainService.bscGetBlock,
       getBlockchainAccountBalance: BnbSmartChainService.bscGetBalance,
-      get: BnbSmartChainService.bscGetTransaction,
+      getTransaction: BnbSmartChainService.bscGetTransaction,
       estimateGas: BlockchainFeesService.bscEstimateGas,
       smartContractInvocation: BnbSmartChainService.bscBlockchainSmartContractInvocation,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
-      blockchainTransfer: BnbSmartChainService.bscBlockchainTransfer,
-      generateAddress: BnbSmartChainService.bscGenerateAddress,
-      generateAddressPrivateKey: BnbSmartChainService.bscGenerateAddressPrivateKey,
-      generateWallet: BnbSmartChainService.bscGenerateWallet,
-      web3Driver: BnbSmartChainService.bscWeb3Driver,
     },
     virtualAccount,
   }

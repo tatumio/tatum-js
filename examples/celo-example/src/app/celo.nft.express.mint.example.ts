@@ -41,7 +41,7 @@ export async function celoNftExpressExample() {
   // find deployed contract address from transaction hash
   // in this case contract address is under 'to' property since the hash is not from a contract deploy but mint
   // https://apidoc.tatum.io/tag/Celo#operation/CeloGetTransaction
-  const transactionData = await celoSDK.blockchain.get(nftMinted.txId)
+  const transactionData = await celoSDK.blockchain.getTransaction(nftMinted.txId)
   const contractAddress = transactionData.to as string
   console.log(`Deployed NFT smart contract with contract address: ${JSON.stringify(contractAddress)}`)
 

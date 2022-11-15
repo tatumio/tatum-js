@@ -6,13 +6,7 @@ import {
 } from '@tatumio/shared-testing-common'
 import { TatumKcsSDK } from '../kcs.sdk'
 import * as apiClient from '@tatumio/api-client'
-import {
-  CallSmartContractMethod,
-  KcsEstimateGas,
-  PrivKeyRequest,
-  TransferKcsBlockchain,
-} from '@tatumio/api-client'
-import { Web3Request } from '@tatumio/shared-core'
+import { CallSmartContractMethod, KcsEstimateGas } from '@tatumio/api-client'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
@@ -34,7 +28,7 @@ describe('KcsSDK - blockchain', () => {
     getCurrentBlock: api.kcsGetCurrentBlock,
     getBlock: [api.kcsGetBlock, testData.BLOCK_HASH],
     getBlockchainAccountBalance: [api.kcsGetBalance, testData.TESTNET.ADDRESS_0],
-    get: [api.kcsGetTransaction, testData.TX_HASH],
+    getTransaction: [api.kcsGetTransaction, testData.TX_HASH],
     estimateGas: [
       blockchain.estimateGas,
       {
@@ -62,37 +56,6 @@ describe('KcsSDK - blockchain', () => {
         nonce: 0,
         fee: { gasLimit: '40000', gasPrice: '20' },
       } as CallSmartContractMethod,
-    ],
-    blockchainTransfer: [
-      api.kcsBlockchainTransfer,
-      {
-        data: 'My note to recipient.',
-        nonce: 0,
-        to: testData.TESTNET.ADDRESS_100,
-        currency: 'USDC_KCS',
-        fee: { gasLimit: '40000', gasPrice: '20' },
-        amount: '100000',
-        fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
-      } as TransferKcsBlockchain,
-    ],
-    generateAddress: [api.kcsGenerateAddress, testData.TESTNET.XPUB, 1],
-    generateAddressPrivateKey: [
-      api.kcsGenerateAddressPrivateKey,
-      {
-        index: 0,
-        mnemonic: TEST_DATA.MNEMONIC,
-      } as PrivKeyRequest,
-    ],
-    generateWallet: [api.kcsGenerateWallet, TEST_DATA.MNEMONIC],
-    web3Driver: [
-      api.kcsWeb3Driver,
-      REPLACE_ME_WITH_TATUM_API_KEY,
-      {
-        jsonrpc: '2.0',
-        method: 'web3_clientVersion',
-        params: [],
-        id: 2,
-      } as Web3Request,
     ],
     smartContractGetAddress: [mockedApi.blockchain.util.scGetContractAddress, 'KCS', testData.TX_HASH],
   }

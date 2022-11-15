@@ -33,7 +33,6 @@ export const TatumXrpSDK = (
       getTx: XrpService.xrpGetTransaction,
       getAccountInfo: XrpService.xrpGetAccountInfo,
       getAccountBalance: XrpService.xrpGetAccountBalance,
-      sendTransaction: XrpService.xrpTransferBlockchain,
     },
   }
 }

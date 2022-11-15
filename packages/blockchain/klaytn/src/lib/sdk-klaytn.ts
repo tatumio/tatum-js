@@ -21,20 +21,6 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
   const virtualAccount = virtualAccountService({ blockchain, web3 })
   const { custodialManagedWallet, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
   const { nft, storage } = abstractSdkNft()
-  const {
-    deployNFTSmartContract,
-    mintNFT,
-    transferNFT,
-    mintMultipleNFTs,
-    burnNFT,
-    addNFTMinter,
-    updateNFTRoyalty,
-    getNFTTransaction,
-    getNFTAccountBalance,
-    getNFTProvenanceData,
-    getNFTMetadataURI,
-    getNFTRoyalty,
-  } = nft
 
   return {
     ...evmSdk,
@@ -47,18 +33,7 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
     },
     nft: {
       ...txService.erc721,
-      deployNFTSmartContract,
-      mintNFT,
-      transferNFT,
-      mintMultipleNFTs,
-      burnNFT,
-      addNFTMinter,
-      updateNFTRoyalty,
-      getNFTTransaction,
-      getNFTAccountBalance,
-      getNFTProvenanceData,
-      getNFTMetadataURI,
-      getNFTRoyalty,
+      ...nft,
     },
     storage,
     multiToken: txService.multiToken,
@@ -79,7 +54,7 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
       getCurrentBlock: KlaytnService.klaytnGetCurrentBlock,
       getBlock: KlaytnService.klaytnGetBlock,
       getBlockchainAccountBalance: KlaytnService.klaytnGetBalance,
-      get: KlaytnService.klaytnGetTransaction,
+      getTransaction: KlaytnService.klaytnGetTransaction,
       estimateGas: BlockchainFeesService.klaytnEstimateGas,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
     },

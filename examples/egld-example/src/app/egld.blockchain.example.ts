@@ -9,19 +9,6 @@ export async function egldBlockchainExample() {
     signatureId: '1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6',
   })
 
-  const address = await egldSDK.blockchain.generateAddress(
-    'kit erase harsh crawl taste rebel bus ocean traffic vast undo street car around network deputy wage usage aware void float snake baby sister',
-    1,
-  )
-
-  const privateKey = await egldSDK.blockchain.generatePrivateKeyOfAddress({
-    mnemonic:
-      'kit erase harsh crawl taste rebel bus ocean traffic vast undo street car around network deputy wage usage aware void float snake baby sister',
-    index: 1,
-  })
-
-  const wallet = await egldSDK.blockchain.generateWallet()
-
   const balance = await egldSDK.blockchain.getBalance(
     'erd1r27lx5krup4tffvmx933hjprzffw59tt8zaqz3t36yj9fdtrcsvsrqhyrp',
   )

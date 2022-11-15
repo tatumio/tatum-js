@@ -56,7 +56,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
       getCurrentBlock: CeloService.celoGetCurrentBlock,
       getBlock: CeloService.celoGetBlock,
       getBlockchainAccountBalance: CeloService.celoGetBalance,
-      get: CeloService.celoGetTransaction,
+      getTransaction: CeloService.celoGetTransaction,
       getAccountTransactions: CeloService.celoGetTransactionByAddress,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
     },

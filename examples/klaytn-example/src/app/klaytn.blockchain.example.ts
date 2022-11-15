@@ -14,7 +14,7 @@ export async function klaytnBlockchainExample() {
 
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnGetTransaction
-  const transaction = await klaytnSDK.blockchain.get(
+  const transaction = await klaytnSDK.blockchain.getTransaction(
     '0xa71e938eaae42da7d485afdeb616bcc810fa952a5c64928561457851660b01d9',
   )
   console.log('Transaction: ', transaction)
