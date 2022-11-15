@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type FeeETH = {
+export type FeeEvmBased = {
     /**
      * Gas limit for transaction in gas price.
      */

@@ -2,7 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type FeeBtc = {
+export type FeeBtcBased = {
     /**
      * Transaction fee in BTC|LTC to be paid, if transaction should be included in next 1-2 blocks.
      */

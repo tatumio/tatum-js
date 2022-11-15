@@ -2,7 +2,7 @@ import '@tatumio/shared-testing-common'
 import { ltcTransactions } from './ltc.tx'
 import { mockHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
-import { FeeBtc, LtcTx, LtcUTXO } from '@tatumio/api-client'
+import { FeeBtcBased, LtcTx, LtcUTXO } from '@tatumio/api-client'
 import {
   BtcBasedMocks,
   BtcBasedTestParams,
@@ -169,7 +169,7 @@ describe('LTC transactions', () => {
   }
 
   function mockRequestEstimateFee(
-    obj: FeeBtc = {
+    obj: FeeBtcBased = {
       slow: '0.000001',
       medium: '0.000002',
       fast: '0.000003',
