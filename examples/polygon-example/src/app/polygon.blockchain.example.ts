@@ -18,7 +18,7 @@ export async function polygonBlockchainExample() {
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/Polygon#operation/PolygonGetTransaction
   const hash = '0x56c5ea1b1cc9317dc2427b4d373b1a255eb2bad63eab9505a53c4f6d236eba73'
-  const transaction = await polygonSDK.blockchain.get(hash)
+  const transaction = await polygonSDK.blockchain.getTransaction(hash)
   console.log('Transaction: ', transaction)
 
   // Generate wallet

@@ -2,7 +2,7 @@ import { fromBase58, fromSeed } from 'bip32'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import { ECPair, payments } from 'bitcoinjs-lib'
 import hdkey from 'hdkey'
-import { TronWallet } from '@tatumio/api-client'
+import { Wallet } from '@tatumio/api-client'
 import { BtcBasedBlockchain, blockchainUtils } from '@tatumio/shared-core'
 
 export type BtcBasedWalletUtils = {
@@ -16,7 +16,7 @@ export type BtcBasedWalletUtils = {
 
   generateAddressFromPrivateKey: (privateKey: string, options?: { testnet: boolean }) => string
 
-  generateBlockchainWallet: (mnemonic?: string, options?: { testnet: boolean }) => Promise<TronWallet>
+  generateBlockchainWallet: (mnemonic?: string, options?: { testnet: boolean }) => Promise<Wallet>
 }
 
 export const btcBasedWalletUtils = (blockchain: BtcBasedBlockchain): BtcBasedWalletUtils => {
@@ -43,7 +43,7 @@ export const btcBasedWalletUtils = (blockchain: BtcBasedBlockchain): BtcBasedWal
       const keyPair = ECPair.fromWIF(privateKey, network)
       return payments.p2pkh({ pubkey: keyPair.publicKey, network }).address as string
     },
-    async generateBlockchainWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet> {
+    async generateBlockchainWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<Wallet> {
       const derivationPath = blockchainUtils.getDerivationPath(blockchain, options)
       const mnem = mnemonic ?? generateMnemonic(256)
       const hdwallet = hdkey.fromMasterSeed(

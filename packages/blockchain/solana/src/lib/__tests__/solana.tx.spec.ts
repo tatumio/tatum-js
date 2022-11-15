@@ -2,7 +2,7 @@ import { TatumSolanaSDK } from '../solana.sdk'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
 import BigNumber from 'bignumber.js'
-import { FEE_PAYER } from '../services/solana.tx'
+import { FEE_PAYER } from '../services/solana.utils'
 
 jest.setTimeout(99999)
 
@@ -13,7 +13,7 @@ describe.skip('SolanaSDK - tx', () => {
   })
 
   const mintNFT = async () => {
-    const response = await sdk.transaction.send.mintNft({
+    const response = await sdk.nft.send.mintSignedTransaction({
       from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
       fromPrivateKey:
         '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
@@ -44,7 +44,7 @@ describe.skip('SolanaSDK - tx', () => {
 
   describe('Private Key signing', () => {
     it('should send SPL token', async () => {
-      const tx = await sdk.transaction.send.transferSplToken({
+      const tx = await sdk.spl.send.transferSignedTransaction({
         from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
         contractAddress: 'FUfCgCej9dZoWvYDXSHsVBFwHAfKzQhpkgPDsUHLhHKb',
         digits: 6,
@@ -58,7 +58,7 @@ describe.skip('SolanaSDK - tx', () => {
     })
 
     it('should create SPL token', async () => {
-      const tx = await sdk.transaction.send.createSplToken({
+      const tx = await sdk.spl.send.deploySignedTransaction({
         from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
         address: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
         digits: 6,
@@ -71,7 +71,7 @@ describe.skip('SolanaSDK - tx', () => {
     })
 
     it('should send SOL', async () => {
-      const tx = await sdk.transaction.send.send({
+      const tx = await sdk.transaction.send.transferSignedTransaction({
         from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
         fromPrivateKey:
           '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
@@ -85,7 +85,7 @@ describe.skip('SolanaSDK - tx', () => {
     describe('NFT', function () {
       it('should mint NFT Collection', async () => {
         console.log(
-          await sdk.transaction.send.createCollection({
+          await sdk.nft.send.mintCollectionSignedTransaction({
             from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
             fromPrivateKey:
               '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
@@ -110,7 +110,7 @@ describe.skip('SolanaSDK - tx', () => {
 
       it('should mint NFT', async () => {
         console.log(
-          await sdk.transaction.send.mintNft({
+          await sdk.nft.send.mintSignedTransaction({
             from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
             fromPrivateKey:
               '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
@@ -136,7 +136,7 @@ describe.skip('SolanaSDK - tx', () => {
       it('should burn NFT', async () => {
         const minted = await mintNFT()
         console.log(
-          await sdk.transaction.send.burnNft({
+          await sdk.nft.send.burnSignedTransaction({
             from: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
             fromPrivateKey:
               '54uMYxWikks34Vb7ckU5pW13KMDoc5EjJLV7DDzexFZddf1CCR9dfztBvgLbbK7jZj2iaJwfV6X9GZznSBx6Lnct',
@@ -148,7 +148,7 @@ describe.skip('SolanaSDK - tx', () => {
       it('should transfer NFT', async () => {
         const minted = await mintNFT()
         console.log(
-          await sdk.transaction.send.transferNft({
+          await sdk.nft.send.transferSignedTransaction({
             from: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
             fromPrivateKey:
               '54uMYxWikks34Vb7ckU5pW13KMDoc5EjJLV7DDzexFZddf1CCR9dfztBvgLbbK7jZj2iaJwfV6X9GZznSBx6Lnct',
@@ -161,7 +161,7 @@ describe.skip('SolanaSDK - tx', () => {
       it('should verify NFT under collection', async () => {
         const minted = await mintNFT()
         console.log(
-          await sdk.transaction.send.verifyNftInCollection({
+          await sdk.nft.send.verifySignedTransaction({
             nftAddress: minted['nftAddress'],
             collectionAddress: '2jEzQa8krppfkYmeg6zU8JwHUmgM2djqz1wv6gsMurGM',
             from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
@@ -173,7 +173,7 @@ describe.skip('SolanaSDK - tx', () => {
 
       it('should mint NFT under collection - not verified', async () => {
         console.log(
-          await sdk.transaction.send.mintNft({
+          await sdk.nft.send.mintSignedTransaction({
             from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
             fromPrivateKey:
               '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
@@ -192,7 +192,7 @@ describe.skip('SolanaSDK - tx', () => {
 
       it('should mint NFT under collection - verified', async () => {
         console.log(
-          await sdk.transaction.send.mintNft({
+          await sdk.nft.send.mintSignedTransaction({
             from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
             fromPrivateKey:
               '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
@@ -215,7 +215,7 @@ describe.skip('SolanaSDK - tx', () => {
 
   describe('Fee payer signing', () => {
     it('should send SPL token with fee payer', async () => {
-      const tx = await sdk.transaction.send.transferSplToken({
+      const tx = await sdk.spl.send.transferSignedTransaction({
         from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
         contractAddress: 'FUfCgCej9dZoWvYDXSHsVBFwHAfKzQhpkgPDsUHLhHKb',
         digits: 6,
@@ -232,7 +232,7 @@ describe.skip('SolanaSDK - tx', () => {
     })
 
     it('should create SPL token', async () => {
-      const tx = await sdk.transaction.send.createSplToken({
+      const tx = await sdk.spl.send.deploySignedTransaction({
         from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
         address: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
         digits: 6,
@@ -248,7 +248,7 @@ describe.skip('SolanaSDK - tx', () => {
     })
 
     it('should send SOL', async () => {
-      const tx = await sdk.transaction.send.send({
+      const tx = await sdk.transaction.send.transferSignedTransaction({
         from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
         fromPrivateKey:
           '3abc79a31093e4cfa4a724e94a44906cbbc3a32e2f75f985a28616676a5dbaf1de8d82a7e1d0561bb0e1b729c7a9b9b1708cf2803ad0ca928a332587ace391ad',
@@ -264,7 +264,7 @@ describe.skip('SolanaSDK - tx', () => {
 
     it('should mint NFT', async () => {
       console.log(
-        await sdk.transaction.send.mintNft({
+        await sdk.nft.send.mintSignedTransaction({
           from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
           fromPrivateKey:
             '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
@@ -293,7 +293,7 @@ describe.skip('SolanaSDK - tx', () => {
     it('should burn NFT', async () => {
       const minted = await mintNFT()
       console.log(
-        await sdk.transaction.send.burnNft({
+        await sdk.nft.send.burnSignedTransaction({
           from: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
           fromPrivateKey:
             '54uMYxWikks34Vb7ckU5pW13KMDoc5EjJLV7DDzexFZddf1CCR9dfztBvgLbbK7jZj2iaJwfV6X9GZznSBx6Lnct',
@@ -308,7 +308,7 @@ describe.skip('SolanaSDK - tx', () => {
     it('should transfer NFT', async () => {
       const minted = await mintNFT()
       console.log(
-        await sdk.transaction.send.transferNft({
+        await sdk.nft.send.transferSignedTransaction({
           from: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
           fromPrivateKey:
             '54uMYxWikks34Vb7ckU5pW13KMDoc5EjJLV7DDzexFZddf1CCR9dfztBvgLbbK7jZj2iaJwfV6X9GZznSBx6Lnct',
@@ -323,7 +323,7 @@ describe.skip('SolanaSDK - tx', () => {
 
     it('should mint NFT under collection - not verified', async () => {
       console.log(
-        await sdk.transaction.send.mintNft({
+        await sdk.nft.send.mintSignedTransaction({
           from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
           fromPrivateKey:
             '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
@@ -345,7 +345,7 @@ describe.skip('SolanaSDK - tx', () => {
 
     it('should mint NFT under collection - verified', async () => {
       console.log(
-        await sdk.transaction.send.mintNft({
+        await sdk.nft.send.mintSignedTransaction({
           from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
           fromPrivateKey:
             '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',
@@ -368,7 +368,7 @@ describe.skip('SolanaSDK - tx', () => {
 
   describe('External signing', () => {
     it('should send SPL token with fee payer', async () => {
-      const tx = await sdk.transaction.send.transferSplToken(
+      const tx = await sdk.spl.send.transferSignedTransaction(
         {
           from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
           contractAddress: 'FUfCgCej9dZoWvYDXSHsVBFwHAfKzQhpkgPDsUHLhHKb',
@@ -386,7 +386,7 @@ describe.skip('SolanaSDK - tx', () => {
     })
 
     it('should create SPL token', async () => {
-      const tx = await sdk.transaction.send.createSplToken(
+      const tx = await sdk.spl.send.deploySignedTransaction(
         {
           from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
           address: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
@@ -403,7 +403,7 @@ describe.skip('SolanaSDK - tx', () => {
     })
 
     it('should send SOL', async () => {
-      const tx = await sdk.transaction.send.send(
+      const tx = await sdk.transaction.send.transferSignedTransaction(
         {
           from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
           fromPrivateKey:
@@ -420,7 +420,7 @@ describe.skip('SolanaSDK - tx', () => {
 
     it('should mint NFT', async () => {
       console.log(
-        await sdk.transaction.send.mintNft(
+        await sdk.nft.send.mintSignedTransaction(
           {
             from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
             fromPrivateKey:
@@ -450,7 +450,7 @@ describe.skip('SolanaSDK - tx', () => {
     it('should burn NFT', async () => {
       const minted = await mintNFT()
       console.log(
-        await sdk.transaction.send.burnNft(
+        await sdk.nft.send.burnSignedTransaction(
           {
             from: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
             fromPrivateKey:
@@ -466,7 +466,7 @@ describe.skip('SolanaSDK - tx', () => {
     it('should transfer NFT', async () => {
       const minted = await mintNFT()
       console.log(
-        await sdk.transaction.send.transferNft(
+        await sdk.nft.send.transferSignedTransaction(
           {
             from: 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU',
             fromPrivateKey:
@@ -482,7 +482,7 @@ describe.skip('SolanaSDK - tx', () => {
 
     it('should mint NFT under collection - not verified', async () => {
       console.log(
-        await sdk.transaction.send.mintNft(
+        await sdk.nft.send.mintSignedTransaction(
           {
             from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
             fromPrivateKey:
@@ -505,7 +505,7 @@ describe.skip('SolanaSDK - tx', () => {
 
     it('should mint NFT under collection - verified', async () => {
       console.log(
-        await sdk.transaction.send.mintNft(
+        await sdk.nft.send.mintSignedTransaction(
           {
             from: 'FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ',
             fromPrivateKey:
@@ -553,7 +553,7 @@ describe.skip('SolanaSDK - tx', () => {
 
     it.skip('should prepare mint NFT tx for KMS / Custodial signing', async () => {
       console.log(
-        await sdk.transaction.send.mintNft({
+        await sdk.nft.send.mintSignedTransaction({
           from: 'DSpHmb7hLnetoybammcJBJiyqMVR3pDhCuW6hqVg9eBF',
           signatureId:
             '2B7RyZEuZr9PpfRrn7nYhSXhjeuzte65UYeeKJFQJCvsi3ZQJk5AfmWptwDpD2Xtz22nv1aTg5rmKq13ggB7Fkep',

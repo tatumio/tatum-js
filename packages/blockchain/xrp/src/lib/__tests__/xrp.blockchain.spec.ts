@@ -1,5 +1,4 @@
 import * as apiClient from '@tatumio/api-client'
-import { TransferXrpBlockchain } from '@tatumio/api-client'
 import { TatumXrpSDK } from '../xrp.sdk'
 import {
   commonTestFactory,
@@ -27,19 +26,10 @@ describe('XrpSDK - blockchain', () => {
     broadcast: [api.xrpBroadcast, { txData: 'hello' }],
     getAccountBalance: [api.xrpGetAccountBalance, testData.ADDRESS],
     getAccountInfo: [api.xrpGetAccountInfo, testData.ADDRESS],
-    getTx: [api.xrpGetTransaction, testData.TX_HASH],
+    getTransaction: [api.xrpGetTransaction, testData.TX_HASH],
     getFee: api.xrpGetFee,
     getLedger: [api.xrpGetLedger, testData.BLOCK_NUMBER],
     getAccountTx: [api.xrpGetAccountTx, testData.ADDRESS],
-    sendTransaction: [
-      api.xrpTransferBlockchain,
-      {
-        fromAccount: testData.ADDRESS,
-        amount: '1',
-        fee: '0.00001',
-        fromSecret: testData.SECRET,
-      } as TransferXrpBlockchain,
-    ],
   }
 
   describe('API methods mapping', () => {

@@ -6,7 +6,7 @@ import {
   FungibleTokensErc20OrCompatibleService,
   PolygonService,
 } from '@tatumio/api-client'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { polygonWeb3 } from './services/polygon.web3'
 import { polygonKmsService } from './services/polygon.kms'
 import { polygonTxService } from './services/polygon.tx'
@@ -20,7 +20,8 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
   const api = PolygonService
   const txService = polygonTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
-  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
+  const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, storage } = abstractSdkNft()
 
   return {
     ...evmSdk,
@@ -37,6 +38,7 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
       ...txService.erc721,
       ...nft,
     },
+    storage,
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
     custodial: txService.custodial,
@@ -59,16 +61,11 @@ export const TatumPolygonSDK = (args: SDKArguments) => {
       getCurrentBlock: PolygonService.polygonGetCurrentBlock,
       getBlock: PolygonService.polygonGetBlock,
       getBlockchainAccountBalance: PolygonService.polygonGetBalance,
-      get: PolygonService.polygonGetTransaction,
+      getTransaction: PolygonService.polygonGetTransaction,
       getAccountTransactions: PolygonService.polygonGetTransactionByAddress,
       estimateGas: BlockchainFeesService.polygonEstimateGas,
       smartContractInvocation: PolygonService.polygonBlockchainSmartContractInvocation,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
-      blockchainTransfer: PolygonService.polygonBlockchainTransfer,
-      generateAddress: PolygonService.polygonGenerateAddress,
-      generateAddressPrivateKey: PolygonService.polygonGenerateAddressPrivateKey,
-      generateWallet: PolygonService.polygonGenerateWallet,
-      web3Driver: PolygonService.polygonWeb3Driver,
     },
   }
 }

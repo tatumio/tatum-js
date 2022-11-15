@@ -18,7 +18,7 @@ export async function xdcBlockchainExample() {
 
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/XinFin#operation/XdcGetTransaction
-  const transaction = await xdcSDK.blockchain.get(transactionHash)
+  const transaction = await xdcSDK.blockchain.getTransaction(transactionHash)
   console.log('Transaction: ', transaction)
 
   // Get Balance on account

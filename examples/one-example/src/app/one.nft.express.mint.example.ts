@@ -25,7 +25,7 @@ export async function oneNftExpressExample() {
 
   // fetch deployed contract address from transaction hash
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
-  const deployedTransaction = await oneSDK.blockchain.get(nftMinted.txId)
+  const deployedTransaction = await oneSDK.blockchain.getTransaction(nftMinted.txId)
   const contractAddress = deployedTransaction.contractAddress as string
   console.log(`Deployed NFT smart contract with contract address: ${contractAddress}`)
 

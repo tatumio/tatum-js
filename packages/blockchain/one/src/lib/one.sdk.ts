@@ -1,4 +1,4 @@
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, EvmBasedBlockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import {
   BlockchainUtilsService,
@@ -21,22 +21,8 @@ export const TatumOneSDK = (args: SDKArguments) => {
   const txService = oneTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
   const walletService = oneWallet({ blockchain })
-  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
-
-  const {
-    deployNFTSmartContract,
-    mintNFT,
-    transferNFT,
-    mintMultipleNFTs,
-    burnNFT,
-    addNFTMinter,
-    updateNFTRoyalty,
-    getNFTTransaction,
-    getNFTAccountBalance,
-    getNFTProvenanceData,
-    getNFTMetadataURI,
-    getNFTRoyalty,
-  } = nft
+  const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, storage } = abstractSdkNft()
 
   return {
     ...evmSdk,
@@ -50,19 +36,9 @@ export const TatumOneSDK = (args: SDKArguments) => {
     },
     nft: {
       ...txService.erc721,
-      deployNFTSmartContract,
-      mintNFT,
-      transferNFT,
-      mintMultipleNFTs,
-      burnNFT,
-      addNFTMinter,
-      updateNFTRoyalty,
-      getNFTTransaction,
-      getNFTAccountBalance,
-      getNFTProvenanceData,
-      getNFTMetadataURI,
-      getNFTRoyalty,
+      ...nft,
     },
+    storage,
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
     custodial: txService.custodial,
@@ -83,15 +59,10 @@ export const TatumOneSDK = (args: SDKArguments) => {
       getCurrentBlock: HarmonyService.oneGetCurrentBlock,
       getBlock: HarmonyService.oneGetBlock,
       getBlockchainAccountBalance: HarmonyService.oneGetBalance,
-      get: HarmonyService.oneGetTransaction,
+      getTransaction: HarmonyService.oneGetTransaction,
       smartContractInvocation: HarmonyService.oneBlockchainSmartContractInvocation,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
       formatAddress: HarmonyService.oneFormatAddress,
-      generateAddress: HarmonyService.oneGenerateAddress,
-      generateAddressPrivateKey: HarmonyService.oneGenerateAddressPrivateKey,
-      generateWallet: HarmonyService.oneGenerateWallet,
-      web3Driver: HarmonyService.oneWeb3Driver,
-      blockchainTransfer: HarmonyService.oneBlockchainTransfer,
     },
     virtualAccount,
   }

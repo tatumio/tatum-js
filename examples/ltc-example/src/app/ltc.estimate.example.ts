@@ -1,5 +1,5 @@
 import { TatumLtcSDK } from '@tatumio/ltc'
-import { Currency, EstimateFeeFromAddress, FeeBtc } from '@tatumio/api-client'
+import { Currency, EstimateFeeFromAddress, FeeBtcBased } from '@tatumio/api-client'
 
 export async function ltcEstimateExample() {
   const ltcSDK = TatumLtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
@@ -16,6 +16,6 @@ export async function ltcEstimateExample() {
         value: 0.00015,
       },
     ],
-  } as EstimateFeeFromAddress)) as FeeBtc
+  } as EstimateFeeFromAddress)) as FeeBtcBased
   console.log(`Fee: ${JSON.stringify(estimatedFee)}`)
 }

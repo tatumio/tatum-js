@@ -13,8 +13,8 @@ import type { EthEstimateGas } from '../models/EthEstimateGas';
 import type { EthEstimateGasArray } from '../models/EthEstimateGasArray';
 import type { EthGasEstimation } from '../models/EthGasEstimation';
 import type { EthGasEstimationBatch } from '../models/EthGasEstimationBatch';
-import type { FeeBtc } from '../models/FeeBtc';
-import type { FeeETH } from '../models/FeeETH';
+import type { FeeBtcBased } from '../models/FeeBtcBased';
+import type { FeeEvmBased } from '../models/FeeEvmBased';
 import type { KcsEstimateGas } from '../models/KcsEstimateGas';
 import type { KlaytnEstimateGas } from '../models/KlaytnEstimateGas';
 import type { OneEstimateGas } from '../models/OneEstimateGas';
@@ -51,7 +51,7 @@ export class BlockchainFeesService {
      */
     public static estimateFeeBlockchain(
         requestBody: (EstimateFee | EstimateFeeBatchMintNft | EstimateFeeDeployCustodialWallet | EstimateFeeTransferFromCustodial | EstimateFeeFromAddress | EstimateFeeFromUTXO),
-    ): CancelablePromise<(FeeBtc | FeeETH)> {
+    ): CancelablePromise<(FeeBtcBased | FeeEvmBased)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/estimate`,

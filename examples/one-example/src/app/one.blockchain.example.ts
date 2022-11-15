@@ -5,7 +5,7 @@ const oneSDK = TatumOneSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 export async function oneBlockchainExample() {
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/Harmony#operation/OneGetTransaction
-  const transaction = await oneSDK.blockchain.get(
+  const transaction = await oneSDK.blockchain.getTransaction(
     '0x73e25d4f202b983b97afeea547c6b3b7fda8a88161ee2d94198e35f41f8c9dfa',
   )
   console.log(`Transaction: ${JSON.stringify(transaction)}`)

@@ -23,7 +23,7 @@ export const flowTxExample = async () => {
 
   // Create receiver account on the blockchain using SENDER funds
   //https://apidoc.tatum.io/tag/Flow#operation/FlowCreateAddressFromPubKey
-  const { address: receiverAccount } = (await flowSDK.transaction.createAccountFromPublicKey({
+  const { address: receiverAccount } = (await flowSDK.account.send.createSignedTransaction({
     account: senderAccount,
     privateKey: senderPrivateKey,
     publicKey: receiverPublicKey,
@@ -32,7 +32,7 @@ export const flowTxExample = async () => {
 
   // Send FLOW transaction using private key
   // https://apidoc.tatum.io/tag/Flow#operation/FlowTransferBlockchain
-  const { txId } = (await flowSDK.transaction.sendTransaction({
+  const { txId } = (await flowSDK.transaction.send.transferSignedTransaction({
     account: senderAccount,
     privateKey: senderPrivateKey,
     to: receiverAccount,
@@ -44,7 +44,7 @@ export const flowTxExample = async () => {
   // Send FLOW transaction using signatureId
   // signatureId from Tatum KMS - https://docs.tatum.io/private-key-management/tatum-key-management-system-kms
   const signatureId = 'cac88687-33ed-4ca1-b1fc-b02986a90975'
-  const { signatureId: txSignatureId } = (await flowSDK.transaction.sendTransaction({
+  const { signatureId: txSignatureId } = (await flowSDK.transaction.send.transferSignedTransaction({
     account: senderAccount,
     signatureId,
     to: receiverAccount,
@@ -60,7 +60,7 @@ export const flowCustomTxExample = async () => {
 
   // Send custom transaction using private key
   // https://apidoc.tatum.io/tag/Flow#operation/FlowTransferCustomBlockchain
-  const { txId } = (await flowSDK.transaction.sendCustomTransaction({
+  const { txId } = (await flowSDK.transaction.send.customSignedTransaction({
     account: senderAccount,
     privateKey: senderPrivateKey,
     transaction: 'transaction() {prepare(acct: AuthAccount) {}execute { log("Hello")}}',
@@ -71,7 +71,7 @@ export const flowCustomTxExample = async () => {
   // Send custom transaction using signatureId
   // signatureId from Tatum KMS - https://docs.tatum.io/private-key-management/tatum-key-management-system-kms
   const signatureId = 'cac88687-33ed-4ca1-b1fc-b02986a90975'
-  const { signatureId: txSignatureId } = (await flowSDK.transaction.sendCustomTransaction({
+  const { signatureId: txSignatureId } = (await flowSDK.transaction.send.customSignedTransaction({
     account: senderAccount,
     signatureId,
     transaction: 'transaction() {prepare(acct: AuthAccount) {}execute { log("Hello")}}',

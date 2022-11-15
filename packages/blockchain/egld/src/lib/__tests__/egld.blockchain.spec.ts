@@ -25,15 +25,6 @@ describe('EgldSDK - blockchain', () => {
     broadcast: [api.egldBroadcast, { txData: 'hello' }],
     getBlock: [api.egldGetBlock, testData.BLOCK_HASH],
     getCurrentBlock: api.eGldGetCurrentBlock,
-    generateWallet: [api.egldGenerateWallet, TEST_DATA.MNEMONIC],
-    generateAddress: [api.egldGenerateAddress, TEST_DATA.MNEMONIC, 1],
-    generatePrivateKeyOfAddress: [
-      api.egldGenerateAddressPrivateKey,
-      {
-        index: 0,
-        mnemonic: TEST_DATA.MNEMONIC,
-      },
-    ],
     getBalance: [api.egldGetBalance, testData.ADDRESS_0],
     getTransaction: [api.egldGetTransaction, testData.TX_HASH],
     getTransactionsSentFromAddress: [api.egldGetTransactionAddress, testData.ADDRESS_0],

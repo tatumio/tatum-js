@@ -18,7 +18,7 @@ export async function ethBlockchainExample() {
 
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/Ethereum#operation/EthGetTransaction
-  const transaction = await ethSDK.blockchain.get(transactionHash)
+  const transaction = await ethSDK.blockchain.getTransaction(transactionHash)
   console.log('Transaction: ', transaction)
 
   // Get Balance on account

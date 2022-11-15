@@ -6,14 +6,7 @@ import {
 } from '@tatumio/shared-testing-common'
 import { TatumEthSDK } from '../eth.sdk'
 import * as apiClient from '@tatumio/api-client'
-import {
-  BlockchainUtilsService,
-  CallSmartContractMethod,
-  EthEstimateGas,
-  PrivKeyRequest,
-  TransferEthBlockchain,
-} from '@tatumio/api-client'
-import { Web3Request } from '@tatumio/shared-core'
+import { BlockchainUtilsService, CallSmartContractMethod, EthEstimateGas } from '@tatumio/api-client'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
@@ -35,7 +28,7 @@ describe('EthSDK - blockchain', () => {
     getCurrentBlock: [api.ethGetCurrentBlock, {}],
     getBlock: [api.ethGetBlock, testData.BLOCK_HASH],
     getBlockchainAccountBalance: [api.ethGetBalance, testData.TESTNET.ADDRESS_0],
-    get: [api.ethGetTransaction, testData.TX_HASH],
+    getTransaction: [api.ethGetTransaction, testData.TX_HASH],
     smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, 'BSC', testData.TX_HASH],
     getAccountTransactions: [api.ethGetTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
     getInternalTransaction: [api.ethGetInternalTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
@@ -79,37 +72,6 @@ describe('EthSDK - blockchain', () => {
         nonce: 0,
         fee: { gasLimit: '40000', gasPrice: '20' },
       } as CallSmartContractMethod,
-    ],
-    blockchainTransfer: [
-      api.ethBlockchainTransfer,
-      {
-        data: 'My note to recipient.',
-        nonce: 0,
-        to: testData.TESTNET.ADDRESS_100,
-        currency: 'ETH',
-        fee: { gasLimit: '40000', gasPrice: '20' },
-        amount: '100000',
-        fromPrivateKey: testData.TESTNET.ERC_20.PRIVATE_KEY,
-      } as TransferEthBlockchain,
-    ],
-    generateAddress: [api.ethGenerateAddress, testData.TESTNET.XPUB, 1],
-    generateAddressPrivateKey: [
-      api.ethGenerateAddressPrivateKey,
-      {
-        index: 0,
-        mnemonic: TEST_DATA.MNEMONIC,
-      } as PrivKeyRequest,
-    ],
-    generateWallet: [api.ethGenerateWallet, TEST_DATA.MNEMONIC],
-    web3Driver: [
-      api.ethWeb3Driver,
-      REPLACE_ME_WITH_TATUM_API_KEY,
-      {
-        jsonrpc: '2.0',
-        method: 'web3_clientVersion',
-        params: [],
-        id: 2,
-      } as Web3Request,
     ],
   }
 

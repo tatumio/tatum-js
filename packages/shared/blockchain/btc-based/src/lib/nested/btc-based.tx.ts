@@ -1,16 +1,14 @@
 import {
   ApiServices,
   BlockchainFeesService,
-  BtcBasedBalance,
   BtcTransactionFromAddress,
   BtcTransactionFromAddressKMS,
   BtcTransactionFromUTXO,
   BtcTransactionFromUTXOKMS,
   BtcUTXO,
   Currency,
-  EstimateFeeFromAddress,
   EstimateFeeFromUTXO,
-  FeeBtc,
+  FeeBtcBased,
   LtcTransactionAddress,
   LtcTransactionAddressKMS,
   LtcTransactionUTXO,
@@ -229,7 +227,7 @@ export const btcBasedTransactions = (
       type: 'TRANSFER',
       fromUTXO,
       to: body.to,
-    } as EstimateFeeFromUTXO)) as FeeBtc
+    } as EstimateFeeFromUTXO)) as FeeBtcBased
     return new BigNumber(fee.slow ?? 0)
   }
 

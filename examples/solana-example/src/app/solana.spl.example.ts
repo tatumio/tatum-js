@@ -19,7 +19,7 @@ export async function solanaSplTokenExample() {
 
   // Lets create new SPL token
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy
-  const { txId, contractAddress } = (await solanaSDK.transaction.send.createSplToken({
+  const { txId, contractAddress } = (await solanaSDK.spl.send.deploySignedTransaction({
     digits: 6,
     supply: '1000000',
     address: senderAddress,
@@ -34,7 +34,7 @@ export async function solanaSplTokenExample() {
   await sleepSeconds(SLEEP_SECONDS)
 
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Transfer
-  const { txId: transferTx } = (await solanaSDK.transaction.send.transferSplToken({
+  const { txId: transferTx } = (await solanaSDK.spl.send.transferSignedTransaction({
     digits: 6,
     to: receiverAddress,
     from: senderAddress,

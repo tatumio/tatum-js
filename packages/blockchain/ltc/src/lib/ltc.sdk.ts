@@ -1,7 +1,7 @@
 import { Blockchain } from '@tatumio/shared-core'
 import { BlockchainFeesService, LitecoinService } from '@tatumio/api-client'
 import { ltcTransactions } from './transaction/ltc.tx'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkCustodialManagedWallets, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { ltcWallet } from './ltc.sdk.wallet'
 import { btcBasedSdk } from '@tatumio/shared-blockchain-btc-based'
 import { ltcVirtualAccountService } from './services/ltc.sdk.virtualAccount'
@@ -26,5 +26,6 @@ export const TatumLtcSDK = (args: SDKArguments) => {
       estimateFee: BlockchainFeesService.estimateFeeBlockchain,
     },
     virtualAccount: ltcVirtualAccountService(),
+    custodialManagedWallet: abstractSdkCustodialManagedWallets(),
   }
 }

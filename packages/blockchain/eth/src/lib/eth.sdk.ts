@@ -9,7 +9,7 @@ import {
 import { ethWeb3 } from './services/eth.web3'
 import { ethKmsService } from './services/eth.kms'
 import { ethTx } from './services/eth.tx'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { ethAuctionService } from './services/eth.auction'
 import { virtualAccountService } from './services/eth.virtualAccount'
 
@@ -20,7 +20,8 @@ export const TatumEthSDK = (args: SDKArguments) => {
   const api = EthereumService
   const txService = ethTx({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
-  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
+  const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, storage } = abstractSdkNft()
 
   return {
     ...evmSdk,
@@ -36,6 +37,7 @@ export const TatumEthSDK = (args: SDKArguments) => {
       ...txService.erc721,
       ...nft,
     },
+    storage,
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
     custodial: txService.custodial,
@@ -57,18 +59,13 @@ export const TatumEthSDK = (args: SDKArguments) => {
       getCurrentBlock: EthereumService.ethGetCurrentBlock,
       getBlock: EthereumService.ethGetBlock,
       getBlockchainAccountBalance: EthereumService.ethGetBalance,
-      get: EthereumService.ethGetTransaction,
+      getTransaction: EthereumService.ethGetTransaction,
       getAccountTransactions: EthereumService.ethGetTransactionByAddress,
       estimateGas: BlockchainFeesService.ethEstimateGas,
       estimateGasBatch: BlockchainFeesService.ethEstimateGasBatch,
       smartContractInvocation: EthereumService.ethBlockchainSmartContractInvocation,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
-      blockchainTransfer: EthereumService.ethBlockchainTransfer,
-      generateAddress: EthereumService.ethGenerateAddress,
-      generateAddressPrivateKey: EthereumService.ethGenerateAddressPrivateKey,
-      generateWallet: EthereumService.ethGenerateWallet,
       getInternalTransaction: EthereumService.ethGetInternalTransactionByAddress,
-      web3Driver: EthereumService.ethWeb3Driver,
     },
     virtualAccount,
   }

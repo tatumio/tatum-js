@@ -6,7 +6,7 @@ import {
   FungibleTokensErc20OrCompatibleService,
   KuCoinService,
 } from '@tatumio/api-client'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { kcsWeb3 } from './services/kcs.web3'
 import { kcsKmsService } from './services/kcs.kms'
 import { kcsTxService } from './services/kcs.tx'
@@ -19,22 +19,8 @@ export const TatumKcsSDK = (args: SDKArguments) => {
   const api = KuCoinService
   const txService = kcsTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
-  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
-
-  const {
-    deployNFTSmartContract,
-    mintNFT,
-    transferNFT,
-    mintMultipleNFTs,
-    burnNFT,
-    addNFTMinter,
-    updateNFTRoyalty,
-    getNFTTransaction,
-    getNFTAccountBalance,
-    getNFTProvenanceData,
-    getNFTMetadataURI,
-    getNFTRoyalty,
-  } = nft
+  const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, storage } = abstractSdkNft()
 
   return {
     ...evmSdk,
@@ -47,19 +33,9 @@ export const TatumKcsSDK = (args: SDKArguments) => {
     },
     nft: {
       ...txService.erc721,
-      deployNFTSmartContract,
-      mintNFT,
-      transferNFT,
-      mintMultipleNFTs,
-      burnNFT,
-      addNFTMinter,
-      updateNFTRoyalty,
-      getNFTTransaction,
-      getNFTAccountBalance,
-      getNFTProvenanceData,
-      getNFTMetadataURI,
-      getNFTRoyalty,
+      ...nft,
     },
+    storage,
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
     // TODO: marketplace and auctions not surpported yet
@@ -80,15 +56,10 @@ export const TatumKcsSDK = (args: SDKArguments) => {
       getCurrentBlock: KuCoinService.kcsGetCurrentBlock,
       getBlock: KuCoinService.kcsGetBlock,
       getBlockchainAccountBalance: KuCoinService.kcsGetBalance,
-      get: KuCoinService.kcsGetTransaction,
+      getTransaction: KuCoinService.kcsGetTransaction,
       estimateGas: BlockchainFeesService.kcsEstimateGas,
       smartContractInvocation: KuCoinService.kcsBlockchainSmartContractInvocation,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
-      blockchainTransfer: KuCoinService.kcsBlockchainTransfer,
-      generateAddress: KuCoinService.kcsGenerateAddress,
-      generateAddressPrivateKey: KuCoinService.kcsGenerateAddressPrivateKey,
-      generateWallet: KuCoinService.kcsGenerateWallet,
-      web3Driver: KuCoinService.kcsWeb3Driver,
     },
     virtualAccount,
   }

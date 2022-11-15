@@ -15,7 +15,7 @@ export async function kcsBlockchainExample() {
 
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/KuCoin#operation/KcsGetTransaction
-  const transaction = await kcsSDK.blockchain.get(
+  const transaction = await kcsSDK.blockchain.getTransaction(
     '0xc8fd5133bbf2b81a39066b33a9864cc6848756bf6a39f909cc92d60204c5c349',
   )
   console.log(`Transaction: `, transaction)

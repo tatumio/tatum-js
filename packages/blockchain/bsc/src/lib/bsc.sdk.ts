@@ -6,7 +6,7 @@ import {
   BnbSmartChainService,
   FungibleTokensErc20OrCompatibleService,
 } from '@tatumio/api-client'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { bscWeb3 } from './services/bsc.web3'
 import { bscKmsService } from './services/bsc.kms'
 import { bscTxService } from './services/bsc.tx'
@@ -20,22 +20,8 @@ export const TatumBscSDK = (args: SDKArguments) => {
   const api = BnbSmartChainService
   const virtualAccount = virtualAccountService({ blockchain, web3 })
   const txService = bscTxService({ blockchain, web3 })
-  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
-
-  const {
-    deployNFTSmartContract,
-    mintNFT,
-    transferNFT,
-    mintMultipleNFTs,
-    burnNFT,
-    addNFTMinter,
-    updateNFTRoyalty,
-    getNFTTransaction,
-    getNFTAccountBalance,
-    getNFTProvenanceData,
-    getNFTMetadataURI,
-    getNFTRoyalty,
-  } = nft
+  const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, storage } = abstractSdkNft()
 
   return {
     ...evmSdk,
@@ -48,19 +34,9 @@ export const TatumBscSDK = (args: SDKArguments) => {
     },
     nft: {
       ...txService.erc721,
-      deployNFTSmartContract,
-      mintNFT,
-      transferNFT,
-      mintMultipleNFTs,
-      burnNFT,
-      addNFTMinter,
-      updateNFTRoyalty,
-      getNFTTransaction,
-      getNFTAccountBalance,
-      getNFTProvenanceData,
-      getNFTMetadataURI,
-      getNFTRoyalty,
+      ...nft,
     },
+    storage,
     smartContract: txService.smartContract,
     multiToken: txService.multiToken,
     custodial: txService.custodial,
@@ -82,15 +58,10 @@ export const TatumBscSDK = (args: SDKArguments) => {
       getCurrentBlock: BnbSmartChainService.bscGetCurrentBlock,
       getBlock: BnbSmartChainService.bscGetBlock,
       getBlockchainAccountBalance: BnbSmartChainService.bscGetBalance,
-      get: BnbSmartChainService.bscGetTransaction,
+      getTransaction: BnbSmartChainService.bscGetTransaction,
       estimateGas: BlockchainFeesService.bscEstimateGas,
       smartContractInvocation: BnbSmartChainService.bscBlockchainSmartContractInvocation,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
-      blockchainTransfer: BnbSmartChainService.bscBlockchainTransfer,
-      generateAddress: BnbSmartChainService.bscGenerateAddress,
-      generateAddressPrivateKey: BnbSmartChainService.bscGenerateAddressPrivateKey,
-      generateWallet: BnbSmartChainService.bscGenerateWallet,
-      web3Driver: BnbSmartChainService.bscWeb3Driver,
     },
     virtualAccount,
   }

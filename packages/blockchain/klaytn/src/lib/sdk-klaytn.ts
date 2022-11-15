@@ -6,7 +6,7 @@ import {
   FungibleTokensErc20OrCompatibleService,
   KlaytnService,
 } from '@tatumio/api-client'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { klaytnWeb3 } from './services/klaytn.web3'
 import { klaytnKmsService } from './services/klaytn.kms'
 import { klaytnTxService } from './services/klaytn.tx'
@@ -19,21 +19,8 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
   const web3 = klaytnWeb3({ blockchain })
   const txService = klaytnTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
-  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
-  const {
-    deployNFTSmartContract,
-    mintNFT,
-    transferNFT,
-    mintMultipleNFTs,
-    burnNFT,
-    addNFTMinter,
-    updateNFTRoyalty,
-    getNFTTransaction,
-    getNFTAccountBalance,
-    getNFTProvenanceData,
-    getNFTMetadataURI,
-    getNFTRoyalty,
-  } = nft
+  const { custodialManagedWallet, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, storage } = abstractSdkNft()
 
   return {
     ...evmSdk,
@@ -46,19 +33,9 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
     },
     nft: {
       ...txService.erc721,
-      deployNFTSmartContract,
-      mintNFT,
-      transferNFT,
-      mintMultipleNFTs,
-      burnNFT,
-      addNFTMinter,
-      updateNFTRoyalty,
-      getNFTTransaction,
-      getNFTAccountBalance,
-      getNFTProvenanceData,
-      getNFTMetadataURI,
-      getNFTRoyalty,
+      ...nft,
     },
+    storage,
     multiToken: txService.multiToken,
     marketplace: {
       ...evmBasedMarketplace({
@@ -77,7 +54,7 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
       getCurrentBlock: KlaytnService.klaytnGetCurrentBlock,
       getBlock: KlaytnService.klaytnGetBlock,
       getBlockchainAccountBalance: KlaytnService.klaytnGetBalance,
-      get: KlaytnService.klaytnGetTransaction,
+      getTransaction: KlaytnService.klaytnGetTransaction,
       estimateGas: BlockchainFeesService.klaytnEstimateGas,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
     },

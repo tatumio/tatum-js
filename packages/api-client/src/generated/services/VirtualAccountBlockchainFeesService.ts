@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { FeeBtc } from '../models/FeeBtc';
+import type { FeeBtcBased } from '../models/FeeBtcBased';
 import type { OffchainEstimateFee } from '../models/OffchainEstimateFee';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -21,12 +21,12 @@ export class VirtualAccountBlockchainFeesService {
      * </p>
      *
      * @param requestBody
-     * @returns FeeBtc OK
+     * @returns FeeBtcBased OK
      * @throws ApiError
      */
     public static offchainEstimateFee(
         requestBody: OffchainEstimateFee,
-    ): CancelablePromise<FeeBtc> {
+    ): CancelablePromise<FeeBtcBased> {
         return __request({
             method: 'POST',
             path: `/v3/offchain/blockchain/estimate`,

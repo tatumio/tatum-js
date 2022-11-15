@@ -16,7 +16,7 @@ describe('TatumSolanaSDK', () => {
 
     describe('mint', () => {
       it.skip('should be valid from privateKey', async () => {
-        const result = (await sdk.transaction.send.mintNft(
+        const result = (await sdk.nft.send.mintSignedTransaction(
           {
             to,
             fromPrivateKey: privateKey,
@@ -37,7 +37,7 @@ describe('TatumSolanaSDK', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = (await sdk.transaction.send.mintNft(
+        const result = (await sdk.nft.send.mintSignedTransaction(
           {
             to,
             signatureId,
@@ -58,7 +58,7 @@ describe('TatumSolanaSDK', () => {
 
     describe('transfer nft', () => {
       xit('should be valid from privateKey', async () => {
-        const result = (await sdk.transaction.send.transferNft(
+        const result = (await sdk.nft.send.transferSignedTransaction(
           {
             to,
             fromPrivateKey: privateKey,
@@ -72,7 +72,7 @@ describe('TatumSolanaSDK', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = (await sdk.transaction.send.transferNft(
+        const result = (await sdk.nft.send.transferSignedTransaction(
           {
             to,
             signatureId,
@@ -88,7 +88,7 @@ describe('TatumSolanaSDK', () => {
 
     describe('KMS', () => {
       it.skip('should sign transaction', async () => {
-        const txData = await sdk.transaction.send.send(
+        const txData = await sdk.transaction.send.transferSignedTransaction(
           {
             from: address,
             signatureId: signatureId,
@@ -111,7 +111,7 @@ describe('TatumSolanaSDK', () => {
 
     describe('send solana', () => {
       it('should be valid from privateKey', async () => {
-        const result = await sdk.transaction.send.send(
+        const result = await sdk.transaction.send.transferSignedTransaction(
           {
             to,
             fromPrivateKey: privateKey,
@@ -125,7 +125,7 @@ describe('TatumSolanaSDK', () => {
       })
 
       it('should be valid from signatureId', async () => {
-        const result = await sdk.transaction.send.send(
+        const result = await sdk.transaction.send.transferSignedTransaction(
           {
             to,
             signatureId,

@@ -15,7 +15,7 @@ export async function bscBlockchainExample() {
 
   // Get transaction details by hash
   // https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscGetTransaction
-  const transaction = await bscSDK.blockchain.get(
+  const transaction = await bscSDK.blockchain.getTransaction(
     '0xfae9494fee7c168ccbb79bc6785bb343c6108f2aac38a64f0a25b5efae51d4f1',
   )
   console.log(`Transaction: ${JSON.stringify(transaction)}`)

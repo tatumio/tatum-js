@@ -1,4 +1,4 @@
-import { TronWallet } from '@tatumio/api-client'
+import { TronWallet, Wallet } from '@tatumio/api-client'
 import { Blockchain, DERIVATION_PATH } from '@tatumio/shared-core'
 import { BIP32Interface, fromBase58, fromPublicKey, fromSeed } from 'bip32'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
@@ -34,7 +34,7 @@ export const tronWallet = (args: { tronWeb: ITronWeb }) => {
      * @param mnemonic optional mnemonic seed to use. If not present, new one will be generated
      * @returns wallet or a combination of address and private key
      */
-    async generateWallet(mnemonic?: string): Promise<TronWallet> {
+    async generateWallet(mnemonic?: string): Promise<Wallet> {
       return generateBlockchainWallet(mnemonic ?? generateMnemonic(256))
     },
     /**

@@ -4,6 +4,7 @@ import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { EvmBasedWeb3 } from './services/evm-based.web3'
 import { evmBasedWallet } from './services/evm-based.wallet'
 import { evmBlockchainRecord } from './services/evm-based.record'
+import { abstractSdkCustodialManagedWallets } from '@tatumio/shared-abstract-sdk'
 
 export const evmBasedSdk = (args: {
   apiKey: string
@@ -17,5 +18,6 @@ export const evmBasedSdk = (args: {
     record: evmBlockchainRecord(args),
     getGasPriceInWei: args.web3.getGasPriceInWei,
     wallet: evmBasedWallet(args),
+    custodialManagedWallet: abstractSdkCustodialManagedWallets(),
   }
 }

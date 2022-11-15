@@ -1,7 +1,7 @@
 import { BlockchainUtilsService, FlowService } from '@tatumio/api-client'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain } from '@tatumio/shared-core'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { flowWallet } from './services/flow.sdk.wallet'
 import { flowTxService } from './services/flow.tx'
 import { flowKmsService } from './services/flow.kms'
@@ -17,44 +17,28 @@ export interface FlowSDKArguments extends SDKArguments {
 
 export const TatumFlowSDK = (args: FlowSDKArguments) => {
   const api = FlowService
-  const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
+  const abstractSdk = abstractBlockchainSdk({ ...args, blockchain })
+  const { nft, storage } = abstractSdkNft()
   const virtualAccount = virtualAccountService({ blockchain })
   const provider = flowProvider({ ...args })
   const flowBlockchainCalls = flowBlockchain(args)
-  const txService = flowTxService(provider, {
-    ...flowBlockchainCalls,
-  })
-
-  const {
-    deployNFTSmartContract,
-    mintNFT,
-    transferNFT,
-    mintMultipleNFTs,
-    burnNFT,
-    getNFTTransaction,
-    getNFTAccountBalance,
-    getNFTMetadataURI,
-  } = nft
+  const txService = flowTxService(provider, flowBlockchainCalls)
 
   return {
     ...abstractSdk,
     api,
     kms: flowKmsService({ ...args, blockchain }),
     wallet: flowWallet(),
-    transaction: {
-      ...txService,
-    },
+    transaction: txService.native,
+    account: txService.account,
     nft: {
-      deployNFTSmartContract,
-      mintNFT,
-      transferNFT,
-      mintMultipleNFTs,
-      burnNFT,
-      getNFTTransaction,
-      getNFTAccountBalance,
-      getNFTMetadataURI,
+      ...txService.nft,
+      ...nft,
     },
+    storage,
+    templates: txService.templates,
     blockchain: {
+      broadcast: flowBlockchainCalls.broadcast,
       getCurrentBlock: FlowService.flowGetBlockChainInfo,
       getBlock: FlowService.flowGetBlock,
       getAccount: FlowService.flowGetAccount,
@@ -63,8 +47,5 @@ export const TatumFlowSDK = (args: FlowSDKArguments) => {
       generateAddress: FlowService.flowGenerateAddress,
     },
     virtualAccount,
-    call: {
-      broadcast: flowBlockchainCalls.broadcast,
-    },
   }
 }

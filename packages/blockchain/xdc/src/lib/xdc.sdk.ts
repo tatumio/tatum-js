@@ -21,7 +21,7 @@ export const TatumXdcSDK = (args: SDKArguments) => {
   const txService = xdcTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
   const wallet = xdcWallet()
-  const { ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
+  const { custodialManagedWallet, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
 
   return {
     ...evmSdk,
@@ -47,15 +47,10 @@ export const TatumXdcSDK = (args: SDKArguments) => {
       getCurrentBlock: XinFinService.xdcGetCurrentBlock,
       getBlock: XinFinService.xdcGetBlock,
       getBlockchainAccountBalance: XinFinService.xdcGetBalance,
-      get: XinFinService.xdcGetTransaction,
+      getTransaction: XinFinService.xdcGetTransaction,
       estimateGas: BlockchainFeesService.xdcEstimateGas,
       smartContractInvocation: XinFinService.xdcBlockchainSmartContractInvocation,
-      blockchainTransfer: XinFinService.xdcBlockchainTransfer,
-      generateAddress: XinFinService.xdcGenerateAddress,
-      generateAddressPrivateKey: XinFinService.xdcGenerateAddressPrivateKey,
-      generateWallet: XinFinService.xdcGenerateWallet,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
-      web3Driver: XinFinService.xdcWeb3Driver,
     },
     virtualAccount,
   }
