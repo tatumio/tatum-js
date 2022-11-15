@@ -1,5 +1,5 @@
 import { blockchainHelper } from '@tatumio/shared-core'
-import { Currency, TronWallet } from '@tatumio/api-client'
+import { Currency, Wallet } from '@tatumio/api-client'
 import { evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import { walletSdkUtils } from './sdk.wallet.utils'
 
@@ -76,7 +76,6 @@ export const walletSdk = {
     throw new Error(`Can't find generateAddressFromPrivateKey implementation for ${currency}`)
   },
 
-  // @TODO replace with general wallet (DTO)
   /**
    * Generate wallet
    * @param currency for which you want to perform this operation
@@ -88,7 +87,7 @@ export const walletSdk = {
     currency: Currency,
     mnemonic?: string,
     options?: { testnet: boolean },
-  ): Promise<TronWallet> {
+  ): Promise<Wallet> {
     const blockchain = blockchainHelper.getBlockchainByCurrency(currency)
 
     if (blockchainHelper.isBtcBased(blockchain))

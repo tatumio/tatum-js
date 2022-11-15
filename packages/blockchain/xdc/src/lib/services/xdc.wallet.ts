@@ -1,4 +1,4 @@
-import { TronWallet } from '@tatumio/api-client'
+import { Wallet } from '@tatumio/api-client'
 import { evmBasedUtils, evmBasedWallet } from '@tatumio/shared-blockchain-evm-based'
 import ethWallet from 'ethereumjs-wallet'
 import { ADDRESS_PREFIX, Blockchain } from '@tatumio/shared-core'
@@ -40,7 +40,7 @@ export const xdcWallet = () => {
      * @param options optional testnet or mainnet version of address. Default: mainnet
      * @returns wallet or a combination of address and private key
      */
-    async generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<TronWallet> {
+    async generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<Wallet> {
       return evmBasedUtils.generateBlockchainWallet(blockchain, mnemonic, options)
     },
   }

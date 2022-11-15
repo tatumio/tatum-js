@@ -64484,6 +64484,7 @@
       },
       "Wallet": {
         "type": "object",
+        "required": ["mnemonic", "xpub"],
         "properties": {
           "mnemonic": {
             "description": "Generated mnemonic for wallet.",
