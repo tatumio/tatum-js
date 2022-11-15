@@ -30,7 +30,7 @@ export const TatumXrpSDK = (
       getFee: XrpService.xrpGetFee,
       getAccountTx: XrpService.xrpGetAccountTx,
       getLedger: XrpService.xrpGetLedger,
-      getTx: XrpService.xrpGetTransaction,
+      getTransaction: XrpService.xrpGetTransaction,
       getAccountInfo: XrpService.xrpGetAccountInfo,
       getAccountBalance: XrpService.xrpGetAccountBalance,
     },
