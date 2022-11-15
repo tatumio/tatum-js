@@ -6,7 +6,7 @@ import {
   FungibleTokensErc20OrCompatibleService,
   KuCoinService,
 } from '@tatumio/api-client'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { kcsWeb3 } from './services/kcs.web3'
 import { kcsKmsService } from './services/kcs.kms'
 import { kcsTxService } from './services/kcs.tx'
@@ -19,7 +19,8 @@ export const TatumKcsSDK = (args: SDKArguments) => {
   const api = KuCoinService
   const txService = kcsTxService({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
-  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
+  const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, storage } = abstractNft()
 
   const {
     deployNFTSmartContract,
@@ -60,6 +61,7 @@ export const TatumKcsSDK = (args: SDKArguments) => {
       getNFTMetadataURI,
       getNFTRoyalty,
     },
+    storage,
     multiToken: txService.multiToken,
     smartContract: txService.smartContract,
     // TODO: marketplace and auctions not surpported yet

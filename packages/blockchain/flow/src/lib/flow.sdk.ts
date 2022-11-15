@@ -1,7 +1,7 @@
 import { BlockchainUtilsService, FlowService } from '@tatumio/api-client'
 import { abstractBlockchainSdk } from '@tatumio/shared-blockchain-abstract'
 import { Blockchain } from '@tatumio/shared-core'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { flowWallet } from './services/flow.sdk.wallet'
 import { flowTxService } from './services/flow.tx'
 import { flowKmsService } from './services/flow.kms'
@@ -17,7 +17,8 @@ export interface FlowSDKArguments extends SDKArguments {
 
 export const TatumFlowSDK = (args: FlowSDKArguments) => {
   const api = FlowService
-  const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
+  const abstractSdk = abstractBlockchainSdk({ ...args, blockchain })
+  const { nft, storage } = abstractNft()
   const virtualAccount = virtualAccountService({ blockchain })
   const provider = flowProvider({ ...args })
   const flowBlockchainCalls = flowBlockchain(args)
@@ -34,6 +35,7 @@ export const TatumFlowSDK = (args: FlowSDKArguments) => {
       ...txService.nft,
       ...nft,
     },
+    storage,
     templates: txService.templates,
     blockchain: {
       broadcast: flowBlockchainCalls.broadcast,

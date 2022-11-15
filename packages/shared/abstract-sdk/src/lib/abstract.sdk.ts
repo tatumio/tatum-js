@@ -23,10 +23,6 @@ export const abstractSdk = (args: SDKArguments) => {
   TatumApi(args.apiKey, args.url)
 
   return {
-    storage: {
-      upload: IpfsService.storeIpfs,
-      get: IpfsService.getIpfsData,
-    },
     subscriptions: NotificationSubscriptionsService,
     security: {
       checkMaliciousAddress: MaliciousAddressService.checkMalicousAddress,
@@ -37,11 +33,19 @@ export const abstractSdk = (args: SDKArguments) => {
       freezeApiKey: ServiceUtilsService.freezeApiKey,
       unfreezeApiKey: ServiceUtilsService.unfreezeApiKey,
     },
-    custodialManagedWallet: abstractSdkCustodialManagedWallets(),
-    virtualAccount: abstractSdkVirtualAccount(),
-    nft: abstractSdkNftService(),
     kms: abstractSdkKms(),
-    getExchangeRate: ExchangeRateService.getExchangeRate,
     ledger: abstractSdkLedgerService(),
+
+    custodialManagedWallet: abstractSdkCustodialManagedWallets(), //TODO not all chains
+  }
+}
+
+export const abstractNft = () => {
+  return {
+    nft: abstractSdkNftService(),
+    storage: {
+      upload: IpfsService.storeIpfs,
+      get: IpfsService.getIpfsData,
+    },
   }
 }

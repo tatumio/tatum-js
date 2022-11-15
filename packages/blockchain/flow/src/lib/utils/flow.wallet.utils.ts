@@ -3,6 +3,7 @@ import * as elliptic from 'elliptic'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
 import hdkey from 'hdkey'
 import { DERIVATION_PATH } from '@tatumio/shared-core'
+import { Wallet } from '@tatumio/api-client'
 
 export const flowWalletUtils = {
   generateAddressFromXPub: (xpub: string, i: number): string => {
@@ -14,7 +15,7 @@ export const flowWalletUtils = {
     const s = new elliptic.ec('secp256k1').keyFromPrivate(privateKey).getPublic().encode('hex', false)
     return s.slice(2)
   },
-  generateWallet: async (mnemonic?: string) => {
+  generateWallet: async (mnemonic?: string): Promise<Wallet> => {
     mnemonic ||= generateMnemonic(256)
     const hdwallet = hdkey.fromMasterSeed(await mnemonicToSeed(mnemonic))
     return {

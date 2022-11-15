@@ -6,7 +6,7 @@ import {
   BnbSmartChainService,
   FungibleTokensErc20OrCompatibleService,
 } from '@tatumio/api-client'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { bscWeb3 } from './services/bsc.web3'
 import { bscKmsService } from './services/bsc.kms'
 import { bscTxService } from './services/bsc.tx'
@@ -20,7 +20,8 @@ export const TatumBscSDK = (args: SDKArguments) => {
   const api = BnbSmartChainService
   const virtualAccount = virtualAccountService({ blockchain, web3 })
   const txService = bscTxService({ blockchain, web3 })
-  const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
+  const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, storage } = abstractNft()
 
   const {
     deployNFTSmartContract,
@@ -61,6 +62,7 @@ export const TatumBscSDK = (args: SDKArguments) => {
       getNFTMetadataURI,
       getNFTRoyalty,
     },
+    storage,
     smartContract: txService.smartContract,
     multiToken: txService.multiToken,
     custodial: txService.custodial,

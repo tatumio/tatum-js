@@ -1,5 +1,5 @@
 import { Blockchain } from '@tatumio/shared-core'
-import { SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { abstractNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
 import { abstractBlockchainSdk, abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abstract'
 import { AlgorandService, ApiServices, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
 import { algoWeb } from './services/algo.web'
@@ -17,7 +17,8 @@ export const TatumAlgoSDK = (
 ) => {
   const web = algoWeb(args)
   const txService = algoTxService({ algoWeb: web }, apiCalls)
-  const { nft, ...abstractSdk } = abstractBlockchainSdk({ ...args, blockchain })
+  const abstractSdk = abstractBlockchainSdk({ ...args, blockchain })
+  const { nft, storage } = abstractNft()
 
   const { getNFTAccountBalance, getNFTContractAddress } = nft
 
@@ -39,6 +40,7 @@ export const TatumAlgoSDK = (
         getNFTAccountBalance,
         getNFTContractAddress,
       },
+      storage,
     },
     blockchain: {
       broadcast: AlgorandService.algorandBroadcast,
