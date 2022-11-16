@@ -41,7 +41,7 @@ export const evmBasedUtils = {
     blockchain: EvmBasedBlockchain,
     mnemonic?: string,
     options?: { testnet: boolean },
-  ): Promise<Wallet> => {
+  ): Promise<Required<Wallet>> => {
     const mnem = mnemonic ?? generateMnemonic(256)
     const derivationPath = getDerivationPath(blockchain, options)
     const hdwallet = ethHdKey.fromMasterSeed(await mnemonicToSeed(mnem))

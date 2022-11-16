@@ -44,7 +44,7 @@ export const evmBasedWallet = (args: { blockchain: EvmBasedBlockchain }) => {
      * @param options optional testnet or mainnet version of address. Default: mainnet
      * @returns wallet or a combination of address and private key
      */
-    async generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<Wallet> {
+    async generateWallet(mnemonic?: string, options?: { testnet: boolean }): Promise<Required<Wallet>> {
       return evmBasedUtils.generateBlockchainWallet(args.blockchain, mnemonic, options)
     },
   }

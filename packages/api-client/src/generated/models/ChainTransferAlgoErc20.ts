@@ -27,4 +27,8 @@ export type ChainTransferAlgoErc20 = {
      * The transaction fee in Algos
      */
     fee?: string;
+    /**
+     * Number of decimal points
+     */
+    digits?: number;
 }
