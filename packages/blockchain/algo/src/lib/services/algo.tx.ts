@@ -156,12 +156,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       body.name,
       body.url,
       undefined,
-      params,
-      /*{
+      {
         ...params,
         fee: Number(body.fee || '0.001') * 1000000,
         flatFee: true,
-      },*/
+      },
     )
 
     if (isWithSignatureId(body)) {
@@ -201,12 +200,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       Number.parseInt((body as TransferNftAlgo).value || '1'),
       undefined,
       new BigNumber(body.contractAddress).toNumber(),
-      /*{
+      {
         ...params,
         fee: Number(body.fee || '0.001') * 1000000,
         flatFee: true,
-      },*/
-      params,
+      },
       undefined,
     )
 
@@ -275,12 +273,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       0,
       undefined,
       body.assetId,
-      /*{
+      {
         ...params,
         fee: Number(body.fee || '0.001') * 1000000,
         flatFee: true,
-      },*/
-      params,
+      },
     )
     if (isWithSignatureId(body)) {
       return JSON.stringify(txn)
@@ -318,12 +315,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       body.name,
       (body as DeployAlgoErc20).url,
       undefined,
-      /* {
+      {
         ...params,
         fee: Number(body.fee || '0.001') * 1000000,
         flatFee: true,
-      },*/
-      params,
+      },
     )
 
     if (isWithSignatureId(body)) {
@@ -359,12 +355,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       new BigNumber(body.amount).shiftedBy(body.digits || 1).toNumber(),
       undefined,
       Number(body.contractAddress),
-      /*{
+      {
         ...params,
         fee: Number(body.fee || '0.001') * 1000000,
         flatFee: true,
-      },*/
-      params,
+      },
       undefined,
     )
 
@@ -397,12 +392,11 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
       from,
       undefined,
       Number(body.contractAddress),
-      /*{
+      {
         ...params,
         fee: Number(body.fee || '0.001') * 1000000,
         flatFee: true,
-      },*/
-      params,
+      },
       undefined,
     )
 
