@@ -74,6 +74,7 @@ export async function algoAsaTransferExample() {
       amount: '1',
       contractAddress,
       fromPrivateKey,
+      digits: 1,
     },
     isTestnet,
   )) as TransactionHash

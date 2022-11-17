@@ -15,6 +15,7 @@ import type {
 } from '../algo.types'
 import { AlgoWeb } from '../algo.web'
 import { algoWallet } from '../algo.wallet'
+import { MintNftExpressAlgorand } from '@tatumio/api-client'
 
 export const prepareCreateNFTSignedTransaction = async ({
   body,
@@ -36,13 +37,18 @@ export const prepareCreateNFTSignedTransaction = async ({
     ? body.from
     : algoWallet().generateAddressFromPrivatetKey(body.fromPrivateKey)
 
+  const decimals = (body as unknown as MintNftExpressAlgorand).attr?.['decimals'] || 0
+  const total = new BigNumber((body as unknown as MintNftExpressAlgorand).attr?.['total'] || 1)
+    .multipliedBy(10 ** decimals)
+    .toNumber()
+
   const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
     from,
     undefined,
-    1,
-    0,
+    total,
+    decimals,
     false,
-    from,
+    body.attr?.manager,
     body.attr?.reserve,
     body.attr?.freeze,
     body.attr?.clawback,
@@ -87,16 +93,16 @@ export const prepareTransferNFTSignedTransaction = async ({
     ? (body as TransferNftAlgoKMS).from
     : algoWallet().generateAddressFromPrivatetKey((body as TransferNftAlgo).fromPrivateKey)
 
-  if (!body.value) {
-    throw new Error('No value specified')
-  }
+  const amount = new BigNumber((body as TransferNftAlgoExpress).amount || 1)
+    .multipliedBy(10 ** ((body as TransferNftAlgoExpress).decimals || 0))
+    .toNumber()
 
   const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
     from,
     body.to,
     undefined,
     undefined,
-    Number.parseInt((body as TransferNftAlgo).value || '1'),
+    amount,
     undefined,
     new BigNumber(body.contractAddress).toNumber(),
     {

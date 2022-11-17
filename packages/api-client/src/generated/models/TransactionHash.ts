@@ -4,7 +4,7 @@
 
 export type TransactionHash = {
     /**
-     * TX hash of successful transaction.
+     * The hash (ID) of the transaction
      */
     txId: string;
 }

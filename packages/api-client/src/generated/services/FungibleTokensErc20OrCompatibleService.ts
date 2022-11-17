@@ -310,7 +310,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Polygon</li>
      * </ul>
      *
-     * @param chain Blockchain to work with
+     * @param chain The blockchain to work with
      * @param address Account address you want to get balance of
      * @param tokenAddress Address of the token smart contract
      * @param pageSize Max number of items per page is 50.

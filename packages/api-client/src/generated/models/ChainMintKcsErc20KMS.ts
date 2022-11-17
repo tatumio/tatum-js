@@ -4,7 +4,7 @@
 
 export type ChainMintKcsErc20KMS = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'KCS';
     /**
@@ -24,7 +24,7 @@ export type ChainMintKcsErc20KMS = {
      */
     signatureId: string;
     /**
-     * Nonce to be set to transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
 }
