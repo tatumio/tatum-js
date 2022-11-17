@@ -5,7 +5,7 @@ import { AlgorandService, ApiServices, FungibleTokensErc20OrCompatibleService } 
 import { algoWeb } from './services/algo.web'
 import { algoWallet } from './services/algo.wallet'
 import { algoTxService } from './services/algo.tx'
-import { AlgoApiCallsType } from '../index'
+import type { AlgoApiCallsType } from './services/algo.types'
 
 const blockchain = Blockchain.ALGO
 
