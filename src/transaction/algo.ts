@@ -154,14 +154,14 @@ export const signAlgoKMSTransaction = async (tx: TransactionKMS, fromPrivateKey:
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain
  */
-export const prepareAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: MintAlgoNft, provider?: string) => {
+export const prepareAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: MintAlgoNft, provider?: string, decimals = 0, total = 1) => {
   const algodClient = getAlgoClient(testnet, provider);
   const params = await algodClient.getTransactionParams().do();
   const decoder = new base32.Decoder({ type: 'rfc4648' })
   const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
     tx.fromPrivateKey ? generateAlgodAddressFromPrivatetKey(tx.fromPrivateKey) : tx.from,
     undefined,
-    1, 0, false,
+    total, decimals, false,
     tx.attr?.manager,
     tx.attr?.reserve,
     tx.attr?.freeze,
@@ -197,7 +197,7 @@ export const sendAlgoCreateNFTSignedTransaction = async (testnet: boolean, tx: M
  * @param provider url of the Algorand Server to connect to. If not set, default public server will be used.
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferAlgoNft, provider?: string) => {
+export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, tx: TransferAlgoNft, provider?: string, amount = 1) => {
   const algodClient = getAlgoClient(testnet, provider);
   const params = await algodClient.getTransactionParams().do();
   const decoder = new base32.Decoder({ type: 'rfc4648' })
@@ -206,7 +206,7 @@ export const prepareAlgoTransferNFTSignedTransaction = async (testnet: boolean, 
     tx.to,
     undefined,
     undefined,
-    1,
+    amount,
     undefined,
     new BigNumber(tx.contractAddress).toNumber(),
     params,
