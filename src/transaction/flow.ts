@@ -157,7 +157,7 @@ const sendTransaction = async (testnet: boolean, {
             fcl.proposer(proposer),
             fcl.authorizations(authorizations),
             fcl.payer(payer),
-            fcl.limit(20000),
+            fcl.limit(9999),
         ]);
     } catch (e) {
         try {
