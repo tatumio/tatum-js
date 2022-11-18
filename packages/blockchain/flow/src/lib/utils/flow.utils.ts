@@ -113,7 +113,7 @@ export const flowUtils = {
         fcl.proposer(proposer),
         fcl.authorizations(authorizations),
         fcl.payer(payer),
-        fcl.limit(1000),
+        fcl.limit(9999),
       ])
     } catch (e) {
       await flowUtils.unlockProposalKey(apiCalls, keyHash)
