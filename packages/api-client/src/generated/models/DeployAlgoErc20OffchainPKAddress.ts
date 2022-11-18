@@ -27,11 +27,11 @@ export type DeployAlgoErc20OffchainPKAddress = {
     baseRate?: number;
     customer?: CustomerRegistration;
     /**
-     * Address on Ethereum blockchain, where all initial supply will be stored. Either xpub and derivationIndex, or address must be present, not both.
+     * Address on ALGO blockchain, where all initial supply will be stored. Either xpub and derivationIndex, or address must be present, not both.
      */
     address: string;
     /**
-     * Private key of Ethereum account address, from which gas for deployment of ERC20 will be paid. Private key, mnemonic or signature Id must be present.
+     * Private key of ALGO account address, from which gas for deployment of ERC20 will be paid. Private key, mnemonic or signature Id must be present.
      */
     privateKey: string;
 }

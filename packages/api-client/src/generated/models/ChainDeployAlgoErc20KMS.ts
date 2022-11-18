@@ -30,7 +30,7 @@ export type ChainDeployAlgoErc20KMS = {
     /**
      * The URL pointing to the metadata
      */
-    url: string;
+    url?: string;
     /**
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */

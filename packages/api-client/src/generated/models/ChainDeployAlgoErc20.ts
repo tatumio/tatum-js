@@ -26,7 +26,7 @@ export type ChainDeployAlgoErc20 = {
     /**
      * The URL pointing to the metadata
      */
-    url: string;
+    url?: string;
     /**
      * Private key of Ethereum account address, from which the fee for the deployment of ERC20 will be paid. Private key, or signature Id must be present.
      */
