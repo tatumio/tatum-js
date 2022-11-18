@@ -23402,7 +23402,7 @@
         "operationId": "Erc20GetTransactionByAddress",
         "parameters": [
           {
-            "description": "Blockchain to work with",
+            "description": "The blockchain to work with",
             "in": "path",
             "name": "chain",
             "required": true,
@@ -41996,14 +41996,14 @@
           },
           "customer": { "$ref": "#/components/schemas/CustomerRegistration" },
           "address": {
-            "description": "Address on Ethereum blockchain, where all initial supply will be stored. Either xpub and derivationIndex, or address must be present, not both.",
+            "description": "Address on ALGO blockchain, where all initial supply will be stored. Either xpub and derivationIndex, or address must be present, not both.",
             "maxLength": 58,
             "minLength": 58,
             "example": "NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y",
             "type": "string"
           },
           "privateKey": {
-            "description": "Private key of Ethereum account address, from which gas for deployment of ERC20 will be paid. Private key, mnemonic or signature Id must be present.",
+            "description": "Private key of ALGO account address, from which gas for deployment of ERC20 will be paid. Private key, mnemonic or signature Id must be present.",
             "type": "string",
             "maxLength": 103,
             "minLength": 103,
@@ -60812,8 +60812,8 @@
               "type": "object",
               "properties": {
                 "value": {
-                  "type": "string",
-                  "description": "Value of the argument. In case of Array type, it could be list of strings."
+                  "description": "The value of the argument; can be a string or an array of strings",
+                  "oneOf": [{ "type": "string" }, { "type": "array" }]
                 },
                 "type": {
                   "description": "Type of the argument",
@@ -60932,8 +60932,8 @@
               "type": "object",
               "properties": {
                 "value": {
-                  "type": "string",
-                  "description": "Value of the argument. In case of Array type, it could be list of strings."
+                  "description": "The value of the argument; can be a string or an array of strings",
+                  "oneOf": [{ "type": "string" }, { "type": "array" }]
                 },
                 "type": {
                   "description": "Type of the argument",
@@ -61056,8 +61056,8 @@
               "type": "object",
               "properties": {
                 "value": {
-                  "type": "string",
-                  "description": "Value of the argument. In case of Array type, it could be list of strings."
+                  "description": "The value of the argument; can be a string or an array of strings",
+                  "oneOf": [{ "type": "string" }, { "type": "array" }]
                 },
                 "type": {
                   "description": "Type of the argument",
@@ -63416,7 +63416,7 @@
         "type": "object",
         "properties": {
           "txId": {
-            "description": "TX hash of successful transaction.",
+            "description": "The hash (ID) of the transaction",
             "example": "c83f8818db43d9ba4accfe454aa44fc33123d47a4f89d47b314d6748eb0e9bc9",
             "type": "string"
           }
@@ -63445,7 +63445,7 @@
         "properties": {
           "signatureId": {
             "format": "uuid",
-            "description": "ID of prepared payment template to sign. This is should be stored on a client side to retrieve ID of the blockchain transaction, when signing application signs the transaction and broadcasts it to the blockchain.",
+            "description": "The internal Tatum ID of the prepared transaction for Key Management Sysytem (KMS) to sign<br/>This is different from the <code>signatureId</code> parameter that you provided in the request body. The <code>signatureId</code> parameter in the request body specifies the signature ID associated with the private key in KMS.",
             "example": "1f7f7c0c-3906-4aa1-9dfe-4b67c43918f6",
             "type": "string"
           }
@@ -66191,7 +66191,7 @@
           "nonce": {
             "type": "number",
             "example": 1,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
@@ -66382,7 +66382,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
@@ -66573,7 +66573,11 @@
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
           },
-          "nonce": { "type": "number", "minimum": 0 },
+          "nonce": {
+            "type": "number",
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used",
+            "minimum": 0
+          },
           "provenance": {
             "description": "True if the contract is provenance percentage royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources avaiable here.</a>",
             "example": false,
@@ -66720,8 +66724,8 @@
           },
           "nonce": {
             "type": "number",
-            "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used",
+            "minimum": 0
           },
           "feeCurrency": {
             "type": "string",
@@ -66824,7 +66828,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
@@ -67078,7 +67082,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
@@ -67871,7 +67875,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "The nonce to be set to the transfer transaction; if not present, the last known nonce will be used"
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
@@ -67960,7 +67964,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "The nonce to be set to the transfer transaction; if not present, the last known nonce will be used"
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
@@ -67987,8 +67991,8 @@
             "maxLength": 32
           },
           "contractAddress": {
-            "maxLength": 42,
-            "minLength": 42,
+            "maxLength": 34,
+            "minLength": 34,
             "description": "The blockchain address of the NFT to update royalty information for",
             "example": "TCrmdJmvDUPy8qSTgoVStF51yWm6VUh5yQ",
             "type": "string"
@@ -68096,7 +68100,7 @@
           "nonce": {
             "type": "number",
             "example": 1,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
@@ -68585,7 +68589,6 @@
             "description": "The blockchain to work with",
             "enum": ["ALGO"]
           },
-          "value": { "type": "string", "description": "Value to be sent.", "example": "1" },
           "to": {
             "maxLength": 58,
             "minLength": 58,
@@ -68640,7 +68643,21 @@
             "type": "string",
             "maxLength": 256
           },
-          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
+          "amount": {
+            "description": "The total amount of the NFTs to transfer. Defaults to 1 - which means 1 NFT will be minted. Value above 1 means, you are going to transfer <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>",
+            "example": 1,
+            "default": 1,
+            "type": "number",
+            "minimum": 0
+          },
+          "decimals": {
+            "description": "The decimal places of the NFT to transfer. Defaults to 0 - which means regular NFT will be transfered. Value above 0 means, you are going to transfer <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>",
+            "example": 0,
+            "default": 0,
+            "type": "number",
+            "minimum": 0
+          }
         },
         "required": ["to", "from", "chain", "contractAddress"]
       },
@@ -69265,6 +69282,20 @@
                 "type": "string",
                 "maxLength": 58,
                 "minLength": 58
+              },
+              "total": {
+                "description": "The total amount of the NFTs to mint. Defaults to 1 - which means 1 NFT will be minted. Value above 1 means, you are going to mint <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>",
+                "example": 1,
+                "default": 1,
+                "type": "number",
+                "minimum": 1
+              },
+              "decimals": {
+                "description": "The decimal places of the NFT to mint. Defaults to 0 - which means 1 NFT will be minted. Value above 0 means, you are going to mint <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>",
+                "example": 0,
+                "default": 0,
+                "type": "number",
+                "minimum": 0
               }
             }
           }
@@ -70214,7 +70245,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "The nonce to be set to the transfer transaction; if not present, the last known nonce will be used"
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
             "description": "The custom defined fee; if not present, will be calculated automatically",
@@ -70402,7 +70433,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "The nonce to be set to the transfer transaction; if not present, the last known nonce will be used"
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
             "description": "The custom defined fee; if not present, will be calculated automatically",
@@ -70462,7 +70493,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "The nonce to be set to the transfer transaction; if not present, the last known nonce will be used"
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
             "description": "The custom defined fee; if not present, will be calculated automatically",
@@ -70605,7 +70636,7 @@
           "chain": {
             "type": "string",
             "example": "ETH",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "symbol": {
@@ -70661,10 +70692,10 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -70691,7 +70722,7 @@
           "chain": {
             "type": "string",
             "example": "SOL",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["SOL"]
           },
           "supply": {
@@ -70759,7 +70790,7 @@
           "chain": {
             "type": "string",
             "example": "SOL",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["SOL"]
           },
           "supply": {
@@ -70857,7 +70888,7 @@
           "chain": {
             "type": "string",
             "example": "ETH",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "symbol": {
@@ -70912,10 +70943,10 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -70942,7 +70973,7 @@
           "chain": {
             "type": "string",
             "example": "KCS",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["KCS"]
           },
           "symbol": {
@@ -70998,10 +71029,10 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -71028,7 +71059,7 @@
           "chain": {
             "type": "string",
             "example": "KCS",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["KCS"]
           },
           "symbol": {
@@ -71083,10 +71114,10 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -71113,7 +71144,7 @@
           "chain": {
             "type": "string",
             "example": "ALGO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ALGO"]
           },
           "symbol": {
@@ -71131,13 +71162,6 @@
             "pattern": "^[a-zA-Z0-9_]+$",
             "type": "string"
           },
-          "totalCap": {
-            "description": "Max supply of ERC20 token.",
-            "maxLength": 38,
-            "example": "10000000",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
-            "type": "string"
-          },
           "supply": {
             "description": "Initial supply of ERC20 token. If totalCap is not defined, this will be the total cap.",
             "maxLength": 38,
@@ -71151,13 +71175,6 @@
             "maximum": 19,
             "minimum": 1,
             "type": "number"
-          },
-          "address": {
-            "description": "Address on Ethereum blockchain, where all created ERC20 tokens will be transferred.",
-            "maxLength": 58,
-            "minLength": 42,
-            "example": "52NRXAHUDA5RKC7Q6YYJHBINGTJB7NXLUVY3CSKOBLLNLTKCN2NGPRGTN0",
-            "type": "string"
           },
           "url": {
             "description": "The URL pointing to the metadata",
@@ -71172,14 +71189,9 @@
             "maxLength": 103,
             "minLength": 103
           },
-          "nonce": {
-            "type": "number",
-            "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
-          },
           "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
-        "required": ["chain", "name", "symbol", "address", "supply", "fromPrivateKey", "url", "digits"]
+        "required": ["chain", "name", "symbol", "supply", "fromPrivateKey", "digits"]
       },
       "ChainDeployAlgoErc20KMS": {
         "type": "object",
@@ -71187,7 +71199,7 @@
           "chain": {
             "type": "string",
             "example": "ALGO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ALGO"]
           },
           "symbol": {
@@ -71205,13 +71217,6 @@
             "pattern": "^[a-zA-Z0-9_]+$",
             "type": "string"
           },
-          "totalCap": {
-            "description": "Max supply of ERC20 token.",
-            "maxLength": 38,
-            "example": "10000000",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$",
-            "type": "string"
-          },
           "supply": {
             "description": "Initial supply of ERC20 token. If totalCap is not defined, this will be the total cap.",
             "maxLength": 38,
@@ -71225,13 +71230,6 @@
             "maximum": 19,
             "minimum": 1,
             "type": "number"
-          },
-          "address": {
-            "description": "Address on the blockchain, where all created ERC20 tokens will be transferred.",
-            "maxLength": 58,
-            "minLength": 58,
-            "example": "52NRXAHUDA5RKC7Q6YYJHBINGTJB7NXLUVY3CSKOBLLNLTKCN2NGPRGTN0",
-            "type": "string"
           },
           "from": {
             "maxLength": 58,
@@ -71257,14 +71255,9 @@
             "minimum": 0,
             "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
           },
-          "nonce": {
-            "type": "number",
-            "minimum": 0,
-            "description": "Nonce to be set to the transaction. If not present, last known nonce will be used."
-          },
           "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
-        "required": ["chain", "name", "symbol", "address", "supply", "signatureId", "digits", "url", "from"]
+        "required": ["chain", "name", "symbol", "supply", "signatureId", "digits", "from"]
       },
       "ChainDeployCeloErc20": {
         "type": "object",
@@ -71272,7 +71265,7 @@
           "chain": {
             "type": "string",
             "example": "CELO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["CELO"]
           },
           "symbol": {
@@ -71328,11 +71321,11 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
-            "description": "Currency to pay for transaction gas",
+            "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           },
           "fee": { "$ref": "#/components/schemas/CustomFee" }
@@ -71354,7 +71347,7 @@
           "chain": {
             "type": "string",
             "example": "CELO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["CELO"]
           },
           "symbol": {
@@ -71409,11 +71402,11 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
-            "description": "Currency to pay for transaction gas",
+            "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           },
           "fee": { "$ref": "#/components/schemas/CustomFee" }
@@ -71426,7 +71419,7 @@
           "chain": {
             "type": "string",
             "example": "ETH",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "amount": {
@@ -71459,7 +71452,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           }
         },
         "required": ["chain", "to", "amount", "contractAddress", "fromPrivateKey"]
@@ -71470,7 +71463,7 @@
           "chain": {
             "type": "string",
             "example": "KCS",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["KCS"]
           },
           "amount": {
@@ -71503,7 +71496,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           }
         },
         "required": ["chain", "to", "amount", "contractAddress", "fromPrivateKey"]
@@ -71514,7 +71507,7 @@
           "chain": {
             "type": "string",
             "example": "ETH",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "amount": {
@@ -71546,7 +71539,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           }
         },
         "required": ["chain", "to", "amount", "contractAddress", "signatureId"]
@@ -71557,7 +71550,7 @@
           "chain": {
             "type": "string",
             "example": "KCS",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["KCS"]
           },
           "amount": {
@@ -71589,7 +71582,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           }
         },
         "required": ["chain", "to", "amount", "contractAddress", "signatureId"]
@@ -71600,7 +71593,7 @@
           "chain": {
             "type": "string",
             "example": "CELO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["CELO"]
           },
           "amount": {
@@ -71633,11 +71626,11 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
-            "description": "Currency to pay for transaction gas",
+            "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           },
           "fee": { "$ref": "#/components/schemas/CustomFee" }
@@ -71650,7 +71643,7 @@
           "chain": {
             "type": "string",
             "example": "CELO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["CELO"]
           },
           "amount": {
@@ -71682,11 +71675,11 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
-            "description": "Currency to pay for transaction gas",
+            "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           },
           "fee": { "$ref": "#/components/schemas/CustomFee" }
@@ -71699,7 +71692,7 @@
           "chain": {
             "type": "string",
             "example": "ETH",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ETH", "BSC", "MATIC", "KLAY", "ONE"]
           },
           "amount": {
@@ -71730,7 +71723,7 @@
             "description": "Private key of sender address. Private key, or signature Id must be present."
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -71751,7 +71744,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           }
         },
         "required": ["chain", "spender", "amount", "contractAddress", "fromPrivateKey"]
@@ -71762,7 +71755,7 @@
           "chain": {
             "type": "string",
             "example": "ETH",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ETH", "BSC", "MATIC", "KLAY", "ONE"]
           },
           "amount": {
@@ -71792,7 +71785,7 @@
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -71813,7 +71806,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           }
         },
         "required": ["chain", "spender", "amount", "contractAddress", "signatureId"]
@@ -71824,7 +71817,7 @@
           "chain": {
             "type": "string",
             "example": "CELO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["CELO"]
           },
           "amount": {
@@ -71858,11 +71851,11 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
-            "description": "Currency to pay for transaction gas",
+            "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           }
         },
@@ -71874,7 +71867,7 @@
           "chain": {
             "type": "string",
             "example": "CELO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["CELO"]
           },
           "amount": {
@@ -71907,11 +71900,11 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
-            "description": "Currency to pay for transaction gas",
+            "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           }
         },
@@ -71923,7 +71916,7 @@
           "chain": {
             "type": "string",
             "example": "ETH",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "amount": {
@@ -71947,7 +71940,7 @@
             "description": "Private key of sender address. Private key, or signature Id must be present."
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -71968,7 +71961,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           }
         },
         "required": ["chain", "contractAddress", "fromPrivateKey", "amount"]
@@ -71979,7 +71972,7 @@
           "chain": {
             "type": "string",
             "example": "ETH",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "amount": {
@@ -72002,7 +71995,7 @@
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -72023,7 +72016,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           }
         },
         "required": ["chain", "contractAddress", "signatureId", "amount"]
@@ -72034,7 +72027,7 @@
           "chain": {
             "type": "string",
             "example": "KCS",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["KCS"]
           },
           "amount": {
@@ -72058,7 +72051,7 @@
             "description": "Private key of sender address. Private key, or signature Id must be present."
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -72079,7 +72072,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           }
         },
         "required": ["chain", "contractAddress", "fromPrivateKey", "amount"]
@@ -72090,7 +72083,7 @@
           "chain": {
             "type": "string",
             "example": "KCS",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["KCS"]
           },
           "amount": {
@@ -72113,7 +72106,7 @@
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -72134,7 +72127,7 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           }
         },
         "required": ["chain", "contractAddress", "signatureId", "amount"]
@@ -72145,7 +72138,7 @@
           "chain": {
             "type": "string",
             "example": "CELO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["CELO"]
           },
           "amount": {
@@ -72172,11 +72165,11 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
-            "description": "Currency to pay for transaction gas",
+            "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           }
         },
@@ -72188,7 +72181,7 @@
           "chain": {
             "type": "string",
             "example": "CELO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["CELO"]
           },
           "amount": {
@@ -72214,11 +72207,11 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Celo transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
-            "description": "Currency to pay for transaction gas",
+            "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           }
         },
@@ -72230,46 +72223,46 @@
           "chain": {
             "type": "string",
             "example": "ALGO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ALGO"]
           },
           "to": {
             "maxLength": 58,
             "minLength": 42,
-            "description": "Blockchain address to send ERC20 token to",
+            "description": "The blockchain address to send the fungible tokens to",
             "example": "NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y",
             "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
           },
           "contractAddress": {
             "maxLength": 43,
             "minLength": 1,
-            "description": "assetIndex - asset index uniquely specifying the asset",
+            "description": "The asset ID (the ID of the fungible tokens)",
             "example": "1",
             "type": "string"
+          },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
+          "digits": {
+            "description": "The number of decimal places that the fungible tokens have",
+            "example": 18,
+            "maximum": 30,
+            "minimum": 1,
+            "type": "number"
           },
           "fromPrivateKey": {
             "type": "string",
             "maxLength": 103,
             "example": "72TCV5BRQPBMSAFPYO3CPWVDBYWNGAYNMTW5QHENOMQF7I6QLNMJWCJZ7A3V5YKD7QD6ZZPEHG2PV2ZVVEDDO6BCRGXWIL3DIUMSUCI",
             "minLength": 103,
-            "description": "Private key of sender address. Private key, or signature Id must be present."
+            "description": "The private key of the blockchain address from which the fee will be deducted"
           },
-          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
-          "digits": {
-            "description": "Number of decimal points",
-            "example": 18,
-            "maximum": 19,
-            "minimum": 1,
-            "type": "number"
-          }
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
-        "required": ["chain", "currency", "to", "contractAddress", "fromPrivateKey", "amount"]
+        "required": ["chain", "to", "contractAddress", "amount", "digits", "fromPrivateKey"]
       },
       "ChainTransferAlgoErc20KMS": {
         "type": "object",
@@ -72277,35 +72270,42 @@
           "chain": {
             "type": "string",
             "example": "ALGO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ALGO"]
           },
           "to": {
             "maxLength": 58,
             "minLength": 42,
-            "description": "Blockchain address to send ERC20 token to",
+            "description": "The blockchain address to send the fungible tokens to",
             "example": "TMETT6BXL3QUH7AH5TS6IONU7LVTLKIGG54CFCNPMQXWGRIZFIESZBYWP4",
             "type": "string"
           },
           "from": {
             "maxLength": 58,
             "minLength": 58,
-            "description": "Blockchain address to send ERC20 token from",
+            "description": "The blockchain address to send the fungible tokens from",
             "example": "NTAESFCB3WOD7SAOL42KSPVARLB3JFA3MNX3AESWHYVT2RMYDVZI6YLG4Y",
             "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
           },
           "contractAddress": {
             "maxLength": 43,
             "minLength": 1,
-            "description": "assetIndex - asset index uniquely specifying the asset",
+            "description": "The asset ID (the ID of the fungible tokens)",
             "example": "1",
             "type": "string"
+          },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
+          "digits": {
+            "description": "The number of decimal places that the fungible tokens have",
+            "example": 18,
+            "maximum": 30,
+            "minimum": 1,
+            "type": "number"
           },
           "signatureId": {
             "type": "string",
@@ -72318,14 +72318,7 @@
             "minimum": 0,
             "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
           },
-          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
-          "digits": {
-            "description": "Number of decimal points",
-            "example": 18,
-            "maximum": 19,
-            "minimum": 1,
-            "type": "number"
-          }
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
         },
         "required": ["chain", "currency", "to", "contractAddress", "signatureId", "amount", "from"]
       },
@@ -72400,31 +72393,31 @@
           "chain": {
             "type": "string",
             "example": "ETH",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "to": {
             "maxLength": 50,
             "minLength": 1,
-            "description": "Blockchain address to send ERC20 token to",
+            "description": "The blockchain address to send the fungible tokens to",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
           },
           "contractAddress": {
             "maxLength": 43,
             "minLength": 42,
-            "description": "Address of ERC20 token",
+            "description": "The blockchain address of the fungible token smart contract",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
           "digits": {
-            "description": "Number of decimal points that ERC20 token has.",
+            "description": "The number of decimal places that the fungible tokens have; to find out how many decimal places are used in the fungible tokens, check out the <a href=\"https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress\" target=\"_blank\">smart contract</a>",
             "example": 18,
             "maximum": 30,
             "minimum": 1,
@@ -72435,15 +72428,15 @@
             "maxLength": 66,
             "example": "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2",
             "minLength": 66,
-            "description": "Private key of sender address. Private key, or signature Id must be present."
+            "description": "The private key of the blockchain address from which the fee will be deducted"
           },
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -72470,52 +72463,52 @@
           "chain": {
             "type": "string",
             "example": "SOL",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["SOL"]
           },
-          "to": {
-            "description": "Address on Solana blockchain, where SPL tokens will be transferred.",
-            "maxLength": 43,
-            "minLength": 44,
-            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
-            "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
-          },
-          "contractAddress": {
-            "maxLength": 43,
-            "minLength": 44,
-            "description": "Address of SPL token",
-            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
-            "type": "string"
-          },
-          "digits": {
-            "description": "Number of decimal points that SPL token has.",
-            "example": 18,
-            "maximum": 30,
-            "minimum": 0,
-            "type": "number"
-          },
           "from": {
-            "description": "Address on the Solana blockchain, from which the token will be transferred.",
+            "description": "The blockchain address to send the fungible tokens from",
             "maxLength": 44,
             "minLength": 43,
             "example": "BL4Xgn1jkuU4Yr3SQ4HG8cD5SBrsSk7BihKzkb5zTUfs",
             "type": "string"
+          },
+          "to": {
+            "description": "The blockchain address to send the fungible tokens to",
+            "maxLength": 43,
+            "minLength": 44,
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
+          "contractAddress": {
+            "maxLength": 43,
+            "minLength": 44,
+            "description": "The blockchain address of the fungible tokens",
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
+          "digits": {
+            "description": "The number of decimal places that the fungible tokens have",
+            "example": 18,
+            "maximum": 30,
+            "minimum": 0,
+            "type": "number"
           },
           "fromPrivateKey": {
             "type": "string",
             "maxLength": 87,
             "example": "YdQ1iy2NYs93dtkHdz3ijDuhRJj6uXYAUZmixirCrgCsTMj42BN1Q1buYcGZaMxw5buk9VU5ogQ6zuzn8DMsGaf",
             "minLength": 128,
-            "description": "Private key of sender address. Private key, or signature Id must be present."
+            "description": "The private key of the blockchain address that you are sending the fungible tokens from (the address that you specified in the <code>from</code> parameter); the transaction fee will be deducted from this address"
           },
           "feePayer": {
-            "description": "Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.",
+            "description": "The blockchain address from which the fee will be deducted; if not set, defaults to the address that you specified in the <code>from</code> parameter",
             "maxLength": 44,
             "minLength": 43,
             "example": "BL4Xgn1jkuU4Yr3SQ4HG8cD5SBrsSk7BihKzkb5zTUfs",
@@ -72526,7 +72519,7 @@
             "maxLength": 87,
             "example": "YdQ1iy2NYs93dtkHdz3ijDuhRJj6uXYAUZmixirCrgCsTMj42BN1Q1buYcGZaMxw5buk9VU5ogQ6zuzn8DMsGaf",
             "minLength": 128,
-            "description": "Private key of the fee payer address."
+            "description": "The private key of the blockchain address that you specified in the <code>feePayer</code> parameter; if not set, defaults to the private key that you specified in the <code>fromPrivateKey</code> parameter"
           }
         },
         "required": [
@@ -72546,51 +72539,51 @@
           "chain": {
             "type": "string",
             "example": "SOL",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["SOL"]
           },
-          "to": {
-            "description": "Address on Solana blockchain, where SPL tokens will be transferred.",
-            "maxLength": 43,
-            "minLength": 44,
-            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
-            "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
-          },
-          "contractAddress": {
-            "maxLength": 43,
-            "minLength": 44,
-            "description": "Address of SPL token",
-            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
-            "type": "string"
-          },
-          "digits": {
-            "description": "Number of decimal points that SPL token has.",
-            "example": 18,
-            "maximum": 30,
-            "minimum": 0,
-            "type": "number"
-          },
           "from": {
-            "description": "Address on the Solana blockchain, from which the token will be transferred.",
+            "description": "The blockchain address to send the fungible tokens from",
             "maxLength": 44,
             "minLength": 43,
             "example": "BL4Xgn1jkuU4Yr3SQ4HG8cD5SBrsSk7BihKzkb5zTUfs",
             "type": "string"
           },
+          "to": {
+            "description": "The blockchain address to send the fungible tokens to",
+            "maxLength": 43,
+            "minLength": 44,
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
+          "contractAddress": {
+            "maxLength": 43,
+            "minLength": 44,
+            "description": "The blockchain address of the fungible tokens",
+            "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
+            "type": "string"
+          },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
+          "digits": {
+            "description": "The number of decimal places that the fungible tokens have",
+            "example": 18,
+            "maximum": 30,
+            "minimum": 0,
+            "type": "number"
+          },
           "signatureId": {
             "type": "string",
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
-            "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+            "description": "The KMS identifier of the private key of the blockchain address that you are sending the fungible tokens from (the address that you specified in the <code>from</code> parameter); the transaction fee will be deducted from this address"
           },
           "feePayer": {
-            "description": "Blockchain address to pay the fee for the transaction from",
+            "description": "The blockchain address from which the fee will be deducted; if not set, defaults to the address that you specified in the <code>from</code> parameter",
             "example": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ",
             "maxLength": 44,
             "minLength": 43,
@@ -72600,7 +72593,7 @@
             "type": "string",
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
-            "description": "Identifier of the private key used for paying the gas costs in signing application. Defaults to the signatureId."
+            "description": "The KMS identifier of the private key of the blockchain address that you specified in the <code>feePayer</code> parameter; if not set, defaults to the signature ID that you specified in the <code>signatureId</code> parameter"
           }
         },
         "required": ["chain", "currency", "to", "contractAddress", "digits", "signatureId", "from", "amount"]
@@ -72611,31 +72604,31 @@
           "chain": {
             "type": "string",
             "example": "ETH",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ETH", "BSC", "MATIC", "KLAY", "XDC", "ONE"]
           },
           "to": {
             "maxLength": 50,
             "minLength": 1,
-            "description": "Blockchain address to send ERC20 token to",
+            "description": "The blockchain address to send the fungible tokens to",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
           },
           "contractAddress": {
             "maxLength": 43,
             "minLength": 42,
-            "description": "Address of ERC20 token",
+            "description": "The blockchain address of the fungible token smart contract",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
           "digits": {
-            "description": "Number of decimal points that ERC20 token has.",
+            "description": "The number of decimal places that the fungible tokens have; to find out how many decimal places are used in the fungible tokens, check out the <a href=\"https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress\" target=\"_blank\">smart contract</a>",
             "example": 18,
             "maximum": 30,
             "minimum": 1,
@@ -72645,15 +72638,15 @@
             "type": "string",
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
-            "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+            "description": "The KMS identifier of the private key of the blockchain address from which the fee will be deducted"
           },
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -72680,31 +72673,31 @@
           "chain": {
             "type": "string",
             "example": "KCS",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["KCS"]
           },
           "to": {
             "maxLength": 50,
             "minLength": 1,
-            "description": "Blockchain address to send ERC20 token to",
+            "description": "The blockchain address to send the fungible tokens to",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
           },
           "contractAddress": {
             "maxLength": 43,
             "minLength": 42,
-            "description": "Address of ERC20 token",
+            "description": "The blockchain address of the fungible token smart contract",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
           "digits": {
-            "description": "Number of decimal points that ERC20 token has.",
+            "description": "The number of decimal places that the fungible tokens have",
             "example": 18,
             "maximum": 30,
             "minimum": 1,
@@ -72715,15 +72708,15 @@
             "maxLength": 66,
             "example": "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2",
             "minLength": 66,
-            "description": "Private key of sender address. Private key, or signature Id must be present."
+            "description": "The private key of the blockchain address from which the fee will be deducted"
           },
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -72750,31 +72743,31 @@
           "chain": {
             "type": "string",
             "example": "KCS",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["KCS"]
           },
           "to": {
             "maxLength": 50,
             "minLength": 1,
-            "description": "Blockchain address to send ERC20 token to",
+            "description": "The blockchain address to send the fungible tokens to",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
           },
           "contractAddress": {
             "maxLength": 43,
             "minLength": 42,
-            "description": "Address of ERC20 token",
+            "description": "The blockchain address of the fungible token smart contract",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
           "digits": {
-            "description": "Number of decimal points that ERC20 token has.",
+            "description": "The number of decimal places that the fungible tokens have",
             "example": 18,
             "maximum": 30,
             "minimum": 1,
@@ -72784,15 +72777,15 @@
             "type": "string",
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
-            "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+            "description": "The KMS identifier of the private key of the blockchain address from which the fee will be deducted"
           },
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -72819,31 +72812,31 @@
           "chain": {
             "type": "string",
             "example": "BSC",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["BSC"]
           },
           "to": {
             "maxLength": 50,
             "minLength": 1,
-            "description": "Blockchain address to send BEP20 token to",
+            "description": "The blockchain address to send the fungible tokens to",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
           },
           "contractAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "Address of BEP20 token",
+            "description": "The blockchain address of the fungible tokens",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
           "digits": {
-            "description": "Number of decimal points that BEP20 token has.",
+            "description": "The number of decimal places that the fungible tokens have; to find out how many decimal places are used in the fungible tokens, check out the <a href=\"https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress\" target=\"_blank\">smart contract</a>",
             "example": 18,
             "maximum": 30,
             "minimum": 1,
@@ -72854,15 +72847,15 @@
             "maxLength": 66,
             "example": "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2",
             "minLength": 66,
-            "description": "Private key of sender address. Private key, or signature Id must be present."
+            "description": "The private key of the blockchain address from which the fee will be deducted"
           },
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to BSC transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -72889,31 +72882,31 @@
           "chain": {
             "type": "string",
             "example": "BSC",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["BSC"]
           },
           "to": {
             "maxLength": 50,
             "minLength": 1,
-            "description": "Blockchain address to send BEP20 token to",
+            "description": "The blockchain address to send the fungible tokens to",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
           },
           "contractAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "Address of BEP20 token",
+            "description": "The blockchain address of the fungible tokens",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
           "digits": {
-            "description": "Number of decimal points that BEP20 token has.",
+            "description": "The number of decimal places that the fungible tokens have; to find out how many decimal places are used in the fungible tokens, check out the <a href=\"https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress\" target=\"_blank\">smart contract</a>",
             "example": 18,
             "maximum": 30,
             "minimum": 1,
@@ -72923,15 +72916,15 @@
             "type": "string",
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
-            "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+            "description": "The KMS identifier of the private key of the blockchain address from which the fee will be deducted"
           },
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to BSC transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {
@@ -72958,31 +72951,31 @@
           "chain": {
             "type": "string",
             "example": "CELO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["CELO"]
           },
           "to": {
             "maxLength": 50,
             "minLength": 1,
-            "description": "Blockchain address to send ERC20 token to",
+            "description": "The blockchain address to send the fungible tokens to",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
           },
           "contractAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "Address of ERC20 token",
+            "description": "The blockchain address of the fungible token smart contract",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
           "digits": {
-            "description": "Number of decimal points that ERC20 token has.",
+            "description": "The number of decimal places that the fungible tokens have; to find out how many decimal places are used in the fungible tokens, check out the <a href=\"https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress\" target=\"_blank\">smart contract</a>",
             "example": 18,
             "maximum": 30,
             "minimum": 1,
@@ -72993,16 +72986,16 @@
             "maxLength": 66,
             "example": "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2",
             "minLength": 66,
-            "description": "Private key of sender address. Private key, or signature Id must be present."
+            "description": "The private key of the blockchain address from which the fee will be deducted"
           },
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
-            "description": "Currency to pay for transaction gas",
+            "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           },
           "fee": { "$ref": "#/components/schemas/CustomFee" }
@@ -73015,31 +73008,31 @@
           "chain": {
             "type": "string",
             "example": "CELO",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["CELO"]
           },
           "to": {
             "maxLength": 50,
             "minLength": 1,
-            "description": "Blockchain address to send ERC20 token to",
+            "description": "The blockchain address to send the fungible tokens to",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
-          },
-          "amount": {
-            "description": "Amount to be sent.",
-            "example": "100000",
-            "type": "string",
-            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
           },
           "contractAddress": {
             "maxLength": 42,
             "minLength": 42,
-            "description": "Address of ERC20 token",
+            "description": "The blockchain address of the fungible token smart contract",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
             "type": "string"
           },
+          "amount": {
+            "description": "The amount of the fungible tokens to be sent",
+            "example": "100000",
+            "type": "string",
+            "pattern": "^[+]?((\\d+(\\.\\d*)?)|(\\.\\d+))$"
+          },
           "digits": {
-            "description": "Number of decimal points that ERC20 token has.",
+            "description": "The number of decimal places that the fungible tokens have; to find out how many decimal places are used in the fungible tokens, check out the <a href=\"https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress\" target=\"_blank\">smart contract</a>",
             "example": 18,
             "maximum": 30,
             "minimum": 1,
@@ -73049,16 +73042,16 @@
             "type": "string",
             "format": "uuid",
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
-            "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
+            "description": "The KMS identifier of the private key of the blockchain address from which the fee will be deducted"
           },
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "feeCurrency": {
             "type": "string",
-            "description": "Currency to pay for transaction gas",
+            "description": "The currency in which the transaction fee will be paid",
             "enum": ["CELO", "CUSD", "CEUR"]
           },
           "fee": { "$ref": "#/components/schemas/CustomFee" }
@@ -73071,7 +73064,7 @@
           "chain": {
             "type": "string",
             "example": "ETH",
-            "description": "Chain to work with.",
+            "description": "The blockchain to work with",
             "enum": ["ETH", "BSC", "XDC"]
           },
           "contractAddress": {
@@ -73105,10 +73098,10 @@
           "nonce": {
             "type": "number",
             "minimum": 0,
-            "description": "Nonce to be set to Ethereum transaction. If not present, last known nonce will be used."
+            "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
           "fee": {
-            "description": "Custom defined fee. If not present, it will be calculated automatically.",
+            "description": "The custom defined fee; if not present, will be calculated automatically",
             "type": "object",
             "required": ["gasLimit", "gasPrice"],
             "properties": {

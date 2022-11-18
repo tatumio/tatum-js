@@ -39,5 +39,13 @@ export type MintNftExpressAlgorand = {
          * The address of the freeze account that is used to freeze holdings of the NFT
          */
         freeze?: string;
+        /**
+         * The total amount of the NFTs to mint. Defaults to 1 - which means 1 NFT will be minted. Value above 1 means, you are going to mint <a href="https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts" target="_blank">Fractional NFTs.</a>
+         */
+        total?: number;
+        /**
+         * The decimal places of the NFT to mint. Defaults to 0 - which means 1 NFT will be minted. Value above 0 means, you are going to mint <a href="https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts" target="_blank">Fractional NFTs.</a>
+         */
+        decimals?: number;
     };
 }

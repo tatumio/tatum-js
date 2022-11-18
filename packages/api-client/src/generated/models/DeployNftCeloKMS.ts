@@ -25,6 +25,9 @@ export type DeployNftCeloKMS = {
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
+    /**
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     */
     nonce?: number;
     /**
      * True if the contract is provenance percentage royalty type. False by default. <a href="https://github.com/tatumio/smart-contracts" target="_blank">Details and sources avaiable here.</a>

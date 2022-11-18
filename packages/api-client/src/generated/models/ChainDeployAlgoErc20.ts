@@ -4,7 +4,7 @@
 
 export type ChainDeployAlgoErc20 = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'ALGO';
     /**
@@ -16,10 +16,6 @@ export type ChainDeployAlgoErc20 = {
      */
     name: string;
     /**
-     * Max supply of ERC20 token.
-     */
-    totalCap?: string;
-    /**
      * Initial supply of ERC20 token. If totalCap is not defined, this will be the total cap.
      */
     supply: string;
@@ -28,21 +24,13 @@ export type ChainDeployAlgoErc20 = {
      */
     digits: number;
     /**
-     * Address on Ethereum blockchain, where all created ERC20 tokens will be transferred.
-     */
-    address: string;
-    /**
      * The URL pointing to the metadata
      */
-    url: string;
+    url?: string;
     /**
      * Private key of Ethereum account address, from which the fee for the deployment of ERC20 will be paid. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
-    /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
-     */
-    nonce?: number;
     /**
      * The transaction fee in Algos
      */

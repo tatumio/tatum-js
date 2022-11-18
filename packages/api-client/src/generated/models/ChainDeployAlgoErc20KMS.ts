@@ -4,7 +4,7 @@
 
 export type ChainDeployAlgoErc20KMS = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'ALGO';
     /**
@@ -16,10 +16,6 @@ export type ChainDeployAlgoErc20KMS = {
      */
     name: string;
     /**
-     * Max supply of ERC20 token.
-     */
-    totalCap?: string;
-    /**
      * Initial supply of ERC20 token. If totalCap is not defined, this will be the total cap.
      */
     supply: string;
@@ -28,17 +24,13 @@ export type ChainDeployAlgoErc20KMS = {
      */
     digits: number;
     /**
-     * Address on the blockchain, where all created ERC20 tokens will be transferred.
-     */
-    address: string;
-    /**
      * Blockchain address to create token from
      */
     from: string;
     /**
      * The URL pointing to the metadata
      */
-    url: string;
+    url?: string;
     /**
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
@@ -47,10 +39,6 @@ export type ChainDeployAlgoErc20KMS = {
      * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
      */
     index?: number;
-    /**
-     * Nonce to be set to the transaction. If not present, last known nonce will be used.
-     */
-    nonce?: number;
     /**
      * The transaction fee in Algos
      */
