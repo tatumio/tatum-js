@@ -35,26 +35,31 @@ export const prepareCreateFTSignedTransaction = async ({
     ? (body as DeployAlgoErc20KMS).from
     : algoWallet().generateAddressFromPrivatetKey((body as DeployAlgoErc20).fromPrivateKey)
 
-  const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
+  const decimals = body.digits || 0
+  /**
+   * By default, total = 2 decimals = 1 -> will create supply = 0.2
+   * To simplify it for customers we add zeros to the end of the number
+   */
+  const total = new BigNumber(body.supply).shiftedBy(decimals).toNumber()
+
+  const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
     from,
-    undefined,
-    new BigNumber(body.supply).shiftedBy(new BigNumber(body.digits).toNumber()).toNumber(),
-    new BigNumber(body.digits).toNumber(),
-    false,
-    from,
-    undefined,
-    undefined,
-    undefined,
-    body.symbol,
-    body.name,
-    (body as DeployAlgoErc20).url,
-    undefined,
-    {
+    total,
+    decimals,
+    assetName: body.symbol,
+    unitName: body.name,
+    assetURL: (body as DeployAlgoErc20).url,
+    defaultFrozen: false,
+    freeze: undefined,
+    manager: undefined,
+    clawback: undefined,
+    reserve: undefined,
+    suggestedParams: {
       ...params,
       fee: Number(body.fee || '0.001') * 1000000,
       flatFee: true,
     },
-  )
+  })
 
   if (isWithSignatureId(body)) {
     return JSON.stringify(txn)
@@ -86,12 +91,13 @@ export const prepareTransferFTSignedTransaction = async ({
     ? body.from
     : algoWallet().generateAddressFromPrivatetKey(body.fromPrivateKey)
 
+  const decimals = body.digits || 0
   const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
     from,
     body.to,
     undefined,
     undefined,
-    new BigNumber(body.amount).shiftedBy(body.digits || 1).toNumber(),
+    new BigNumber(body.amount).shiftedBy(decimals).toNumber(),
     undefined,
     Number(body.contractAddress),
     {

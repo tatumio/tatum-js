@@ -37,31 +37,28 @@ export const prepareCreateNFTSignedTransaction = async ({
     ? body.from
     : algoWallet().generateAddressFromPrivatetKey(body.fromPrivateKey)
 
-  const decimals = (body as unknown as MintNftExpressAlgorand).attr?.['decimals'] || 0
-  const total = new BigNumber((body as unknown as MintNftExpressAlgorand).attr?.['total'] || 1)
-    .multipliedBy(10 ** decimals)
-    .toNumber()
+  const decimals = (body as unknown as MintNftExpressAlgorand).attr?.decimals || 0
+  const total = new BigNumber((body as unknown as MintNftExpressAlgorand).attr?.total || 1).toNumber()
 
-  const txn = algosdk.makeAssetCreateTxnWithSuggestedParams(
+  const txn = algosdk.makeAssetCreateTxnWithSuggestedParamsFromObject({
     from,
-    undefined,
     total,
     decimals,
-    false,
-    body.attr?.manager,
-    body.attr?.reserve,
-    body.attr?.freeze,
-    body.attr?.clawback,
-    body.attr?.assetUnit,
-    body.name,
-    body.url,
-    undefined,
-    {
+    defaultFrozen: false,
+    freeze: body.attr?.freeze,
+    manager: body.attr?.manager,
+    clawback: body.attr?.clawback,
+    reserve: body.attr?.reserve,
+    unitName: body.attr?.assetUnit,
+    assetName: body.name,
+    assetURL: body.url,
+    assetMetadataHash: undefined,
+    suggestedParams: {
       ...params,
       fee: Number(body.fee || '0.001') * 1000000,
       flatFee: true,
     },
-  )
+  })
 
   if (isWithSignatureId(body)) {
     return JSON.stringify(txn)
@@ -93,25 +90,19 @@ export const prepareTransferNFTSignedTransaction = async ({
     ? (body as TransferNftAlgoKMS).from
     : algoWallet().generateAddressFromPrivatetKey((body as TransferNftAlgo).fromPrivateKey)
 
-  const amount = new BigNumber((body as TransferNftAlgoExpress).amount || 1)
-    .multipliedBy(10 ** ((body as TransferNftAlgoExpress).decimals || 0))
-    .toNumber()
+  const amount = new BigNumber((body as TransferNftAlgoExpress).amount || 1).toNumber()
 
-  const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
+  const txn = algosdk.makeAssetTransferTxnWithSuggestedParamsFromObject({
     from,
-    body.to,
-    undefined,
-    undefined,
+    to: body.to,
     amount,
-    undefined,
-    new BigNumber(body.contractAddress).toNumber(),
-    {
+    assetIndex: new BigNumber(body.contractAddress).toNumber(),
+    suggestedParams: {
       ...params,
       fee: Number(body.fee || '0.001') * 1000000,
       flatFee: true,
     },
-    undefined,
-  )
+  })
 
   if (isWithSignatureId(body as TransferNftAlgoKMS)) {
     return JSON.stringify(txn)
