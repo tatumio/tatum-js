@@ -1,6 +1,7 @@
 import {Type} from 'class-transformer'
-import {ArrayNotEmpty, IsNotEmpty, IsNumberString, Length, ValidateNested} from 'class-validator'
+import {ArrayNotEmpty, IsNotEmpty, IsNumberString, IsOptional, Length, Validate, ValidateNested} from 'class-validator'
 import {FromUTXO, To} from './TransferBtcBasedBlockchain'
+import {FeeChangeValidator} from "../validation/FeeChangeValidator";
 
 export class FromUTXODoge extends FromUTXO {
     @IsNotEmpty()
@@ -25,11 +26,13 @@ export class TransferDogeBlockchain {
     @Type(() => To)
     public to: To[];
 
-    @IsNotEmpty()
+    @Validate(FeeChangeValidator)
+    @IsOptional()
     @IsNumberString()
-    public fee: string;
+    public fee?: string;
 
-    @IsNotEmpty()
+    @Validate(FeeChangeValidator)
+    @IsOptional()
     @Length(30, 50)
-    public changeAddress: string;
+    public changeAddress?: string;
 }

@@ -13,8 +13,12 @@ const prepareSignedTransaction = async (body: TransferDogeBlockchain) => {
     await validateBody(body, TransferDogeBlockchain)
     const {fromUTXO, to, fee, changeAddress} = body
     const tx = new Transaction()
-        .fee(Number(new BigNumber(fee).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
-        .change(changeAddress)
+
+    if (changeAddress && fee) {
+        tx.fee(Number(new BigNumber(fee).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
+        tx.change(changeAddress)
+    }
+
     const privateKeysToSign = []
     for (const item of fromUTXO) {
         tx.from({
@@ -35,7 +39,9 @@ const prepareSignedTransaction = async (body: TransferDogeBlockchain) => {
     for (const pk of privateKeysToSign) {
         tx.sign(PrivateKey.fromWIF(pk))
     }
-    return tx.serialize()
+    return tx.serialize({
+        disableDustOutputs: true
+    })
 }
 
 /**
