@@ -39,7 +39,9 @@ const prepareSignedTransaction = async (body: TransferDogeBlockchain) => {
     for (const pk of privateKeysToSign) {
         tx.sign(PrivateKey.fromWIF(pk))
     }
-    return tx.serialize()
+    return tx.serialize({
+        disableDustOutputs: true
+    })
 }
 
 /**
