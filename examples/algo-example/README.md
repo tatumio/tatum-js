@@ -8,7 +8,7 @@ We prepared a set of examples to help you complete some basic operations on Algo
 - Send ALGO from your wallet to another Algorand wallet.
 - Check the balance of the wallet.
 - Generate a virtual account for ALGO.
-- Generate a deposit address for the virtual account.
+- Assign a deposit address to the virtual account.
 - Create subscriptions to be notified about transactions on the virtual account.
 - Work with fungible tokens (ASA) and NFTs.
 - Get information from the blockchain.
