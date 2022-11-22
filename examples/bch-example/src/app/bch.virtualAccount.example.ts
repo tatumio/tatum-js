@@ -2,46 +2,45 @@ import { TatumBchSDK } from '@tatumio/bch'
 import { sleepSeconds } from '@tatumio/shared-abstract-sdk'
 
 export async function bchVirtualAccountExample() {
-  // Virtual account example
-  // We will receive assets on account and withdraw it
-  // More info here: https://docs.tatum.io/guides/ledger-and-off-chain
+  // 
+  // For information about virtual accounts, refer to https://docs.tatum.io/guides/ledger-and-off-chain.
 
-  // Set recipient values, amount and address where to send.
+  // Specify the recipient address and the amount to sent.
   const recipientAddress = 'bchtest:qzwj3wzvh20qjtmwhzmcfu7d85n7epecz5q4hrclrl'
   const valueToSend = '0.01'
   const fee = '0.0005'
 
   const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-  // if you don't already have a wallet, address and private key - generate them
-  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateWallet
+  // Generate a Bitcoin Cash wallet.
+  // https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateWallet
   const { mnemonic, xpub } = await bchSDK.wallet.generateWallet(null, { testnet: true })
   console.log(`Mnemonic: ${mnemonic} - xpub: ${xpub}`)
 
-  // Generate PrivateKey from Mnemonic with a given index
-  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddressPrivateKey
+  // Generate the private key with a specified index from the wallet's mnemonic.
+  // https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddressPrivateKey
   const privateKey = await bchSDK.wallet.generatePrivateKeyFromMnemonic(mnemonic, 0, { testnet: true })
   console.log('PrivateKey: ', privateKey)
 
-  // Generate Address from xpub with a given index
-  // You can find more details in https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddress
+  // Generate an address with the specified index from the wallet's xpub.
+  // https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchGenerateAddress
   const to = bchSDK.wallet.generateAddressFromXPub(xpub, 0, { testnet: true })
   console.log('Address:', to)
 
-  // Generate new virtual account for BCH with specific blockchain address
-  // You can find more details in https://apidoc.tatum.io/tag/Account#operation/createAccount
+  // Generate a virtual account for BCH based on the xpub of the Bitcoin Cash account (wallet) that you created earlier.
+  // https://apidoc.tatum.io/tag/Account#operation/createAccount
   const virtualAccount = await bchSDK.ledger.account.create({
     currency: 'BCH',
     xpub: xpub,
   })
   console.log('Virtual Account', JSON.stringify(virtualAccount))
 
-  // Create a deposit address for a virtual account
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
+  // Generate a deposit address for the virtual account.
+  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddress
   const address = await bchSDK.virtualAccount.depositAddress.create(virtualAccount.id)
   console.log('Virtual Account address', address)
 
-  // Fund your address here: https://faucet.fullstack.cash/
+  // Fund the deposit address with BCH using https://faucet.fullstack.cash/.
   console.log(
     `Fund me here (https://faucet.fullstack.cash/) for address: ${address.address} to send virtual account transaction!`,
   )
@@ -50,9 +49,8 @@ export async function bchVirtualAccountExample() {
 
   await sleepSeconds(60)
 
-  // If you have funds on account - you can transfer it to another bch address
-  // Using keyPair - addresses which are used as a source of the transaction are entered manually
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/BchTransfer
+  // Send some amount of BTC from the virtual account to recipient address using keyPair: manually enter the addresses that are used as a source of the transaction.
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/BchTransfer
   const resultKeyPair = await bchSDK.virtualAccount.send(true, {
     senderAccountId: virtualAccount.id,
     address: recipientAddress,
@@ -68,9 +66,8 @@ export async function bchVirtualAccountExample() {
   })
   console.log('Transaction using keypair: ', resultKeyPair)
 
-  // If you have funds on account - you can transfer it to another bch address
-  // Using mnemonic - all of the addresses, that are generated from the mnemonic are scanned for the incoming deposits which are used as a source of the transaction.
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-operations#operation/BchTransfer
+  // Send some amount of BTC from the virtual account to the recipient address using the mnemonic: all the addresses that are generated from the mnemonic are scanned for incoming deposits, which are used as a source of the transaction.
+  // https://apidoc.tatum.io/tag/Blockchain-operations#operation/BchTransfer
   const result = await bchSDK.virtualAccount.send(true, {
     senderAccountId: virtualAccount.id,
     address: recipientAddress,
@@ -80,8 +77,8 @@ export async function bchVirtualAccountExample() {
   })
   console.log('Transaction using mnemonic: ', result)
 
-  // Create multiple deposit addresses for a virtual account
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddressesBatch
+  // Generate multiple deposit addresses for the virtual account.
+  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/generateDepositAddressesBatch
   const addresses = await bchSDK.virtualAccount.depositAddress.createMultiple({
     addresses: [
       {
@@ -96,17 +93,17 @@ export async function bchVirtualAccountExample() {
   })
   console.log('Addresses: ', addresses)
 
-  // Check whether a blockchain address is assigned to a virtual account
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/addressExists
+  // Check whether a blockchain address is assigned to the virtual account.
+  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/addressExists
   const account = await bchSDK.virtualAccount.depositAddress.checkExists(address.address)
   console.log('Virtual Account: ', account)
 
-  // Get all deposit addresses for a virtual account
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/getAllDepositAddresses
+  // Get all deposit addresses for the virtual account.
+  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/getAllDepositAddresses
   const addressByAccount = await bchSDK.virtualAccount.depositAddress.getByAccount(virtualAccount.id)
   console.log('Address: ', addressByAccount)
 
-  // Remove a deposit address from a virtual account
-  // You can find more details in https://apidoc.tatum.io/tag/Blockchain-addresses#operation/removeAddress
+  // Remove a deposit address from the virtual account.
+  // https://apidoc.tatum.io/tag/Blockchain-addresses#operation/removeAddress
   await bchSDK.virtualAccount.depositAddress.remove(virtualAccount.id, address.address)
 }

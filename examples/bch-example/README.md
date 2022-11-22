@@ -4,9 +4,10 @@ We prepared a set of examples to help you complete some basic operations on Bitc
 
 - Generate a Bitcoin Cash wallet.
 - Send BCH from your wallet to another Bitcoin Cash wallet.
-- Check the balance of the wallet.
+- Broadcast a transaction to the blockchain.
+- Get the current exchange rates.
 - Generate a virtual account for BCH.
-- Assign a deposit address to the virtual account.
+- Generate a deposit address to the virtual account.
 - Get information from the blockchain.
 
 The examples are written in TypeScript, but you can use them in JavaScript too.
@@ -15,7 +16,7 @@ The examples are written in TypeScript, but you can use them in JavaScript too.
 
 The examples follow the ECMAScript 6 (ES6) standard. Therefore, make sure that you have Node.js 10 or higher.
 
-# Get the SDK ready
+## Get the SDK ready
 
 1. Get your API key from the Tatum Dashboard.
 
@@ -54,8 +55,9 @@ console.log(`Mnemonic: ${mnemonic} - xpub: ${xpub}`)
 
 Check out more examples to see what you want to do next:
 
-- [Generate an address and private key for a Bitcoin Cash account.](./src/app/bch.wallet.example.ts)
+- [Generate an address and private key for a Bitcoin Cash wallet.](./src/app/bch.wallet.example.ts)
 - [Send BCH from your wallet to another Bitcoin Cash wallet.](./src/app/bch.tx.example.ts)
+- [Broadcast a transaction to the blockchain.](./src/app/bch.tx.broadcast.example.ts)
 - [Get the current exchange rates](./src/app/bch.root.example.ts)
 - [Generate a virtual account for BCH and transfer funds from this account to a blockchain address.](./src/app/bch.virtualAccount.example.ts)
 - [Get information from the blockchain.](./src/app/bch.blockchain.example.ts)
