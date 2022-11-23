@@ -260,6 +260,10 @@ yarn add -D react-app-rewired
 
 </details>
 
+### Usage with React/Next.js
+
+To streamline your development we have prepared a full scale Next.js front-end application with many examples of using the Tatum JS SDK in React. The application can be found at [this repository](https://github.com/tatumio/tatum-js-example-react-app) where you can get started in seconds.
+
 ## Contributing
 
 Contributions to the Tatum SDK are welcome. Please ensure
