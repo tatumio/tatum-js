@@ -369,6 +369,9 @@ const createAuctionHouse = async (params: CreateAuctionHouse, web3: SolanaWeb3) 
   const signers = [web3.generateKeyPair(params.fromPrivateKey)]
   return {
     txId: await connection.sendTransaction(transaction, signers),
+    contractAddress: auctionHouse.toBase58(),
+    feeAccount: feeAccount.toBase58(),
+    treasuryAccount: treasuryAccount.toBase58(),
   }
 }
 
