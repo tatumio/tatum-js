@@ -29,6 +29,7 @@ export const TatumSolanaSDK = (args: SDKArguments) => {
     transaction: txService,
     ledger: abstractSdkLedgerService(),
     virtualAccount: solanaVirtualAccountTxService({ web3 }),
+    marketplace: txService.marketplace,
     nft: {
       getNFTMetadataURI,
       getNFTRoyalty,

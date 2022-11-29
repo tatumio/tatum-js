@@ -42,6 +42,7 @@ import {
 } from '@metaplex-foundation/mpl-token-metadata'
 import BigNumber from 'bignumber.js'
 import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { solanaMarketPlaceService } from './solana.marketplace'
 
 export type TransferSolana = FromPrivateKeyOrSignatureId<TransferSolanaBlockchain>
 export type TransferSolanaNft = FromPrivateKeyOrSignatureId<TransferNftSolana>
@@ -575,6 +576,7 @@ const verifyNftInCollection = async (
 
 export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
   return {
+    marketplace: solanaMarketPlaceService(args),
     /**
      * Transfer SOL from account to another account.
      * @param body body of the request

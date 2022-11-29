@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - master
+      - hotfix/marketplace-TT-4039
 
 jobs:
   #  agents:
