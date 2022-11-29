@@ -1,10 +1,4 @@
-import {
-  PublicKey,
-  PublicKeyInitData,
-  SYSVAR_INSTRUCTIONS_PUBKEY,
-  Transaction,
-  TransactionInstruction,
-} from '@solana/web3.js'
+import { PublicKey, PublicKeyInitData, Transaction, TransactionInstruction } from '@solana/web3.js'
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   createAssociatedTokenAccountInstruction,
@@ -18,14 +12,12 @@ import {
   createBuyInstruction,
   createCreateAuctionHouseInstruction,
   createExecuteSaleInstruction,
-  createPrintListingReceiptInstruction,
   createSellInstruction,
   createUpdateAuctionHouseInstruction,
 } from '@metaplex-foundation/mpl-auction-house'
 import BN from 'bn.js'
 import { TOKEN_METADATA_PROGRAM_ID } from '../schema/instructions'
 import web3 from '@solana/web3.js'
-import * as beet from '@metaplex-foundation/beet'
 import { BuyInstructionAccounts } from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/buy'
 import { deserializeUnchecked } from 'borsh'
 import {
@@ -33,9 +25,9 @@ import {
   ExecuteSaleInstructionArgs,
 } from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/executeSale'
 
-export const METADATA_REPLACE = new RegExp('\u0000', 'g')
+export const METADATA_REPLACE_CONST = new RegExp('\u0000', 'g')
 
-export class Creator {
+export class CreatorStruct {
   address: web3.PublicKey
   verified: boolean
   share: number
@@ -47,7 +39,7 @@ export class Creator {
   }
 }
 
-export enum MetadataKey {
+export enum MetadataKeyStruct {
   Uninitialized = 0,
   MetadataV1 = 4,
   EditionV1 = 1,
@@ -56,49 +48,49 @@ export enum MetadataKey {
   EditionMarker = 7,
 }
 
-export class MasterEditionV2 {
-  key: MetadataKey
+export class MasterEditionV2Struct {
+  key: MetadataKeyStruct
   supply: BN
   maxSupply?: BN
-  constructor(args: { key: MetadataKey; supply: BN; maxSupply?: BN }) {
-    this.key = MetadataKey.MasterEditionV2
+  constructor(args: { key: MetadataKeyStruct; supply: BN; maxSupply?: BN }) {
+    this.key = MetadataKeyStruct.MasterEditionV2
     this.supply = args.supply
     this.maxSupply = args.maxSupply
   }
 }
 
-export class EditionMarker {
-  key: MetadataKey
+export class EditionMarkerStruct {
+  key: MetadataKeyStruct
   ledger: number[]
-  constructor(args: { key: MetadataKey; ledger: number[] }) {
-    this.key = MetadataKey.EditionMarker
+  constructor(args: { key: MetadataKeyStruct; ledger: number[] }) {
+    this.key = MetadataKeyStruct.EditionMarker
     this.ledger = args.ledger
   }
 }
 
-export class Edition {
-  key: MetadataKey
+export class EditionStruct {
+  key: MetadataKeyStruct
   parent: web3.PublicKey
   edition: BN
-  constructor(args: { key: MetadataKey; parent: web3.PublicKey; edition: BN }) {
-    this.key = MetadataKey.EditionV1
+  constructor(args: { key: MetadataKeyStruct; parent: web3.PublicKey; edition: BN }) {
+    this.key = MetadataKeyStruct.EditionV1
     this.parent = args.parent
     this.edition = args.edition
   }
 }
 
-export class Data {
+export class DataStruct {
   name: string
   symbol: string
   uri: string
   sellerFeeBasisPoints: number
-  creators: Creator[] | null
+  creators: CreatorStruct[] | null
   constructor(args: {
     name: string
     symbol: string
     uri: string
     sellerFeeBasisPoints: number
-    creators: Creator[] | null
+    creators: CreatorStruct[] | null
   }) {
     this.name = args.name
     this.symbol = args.symbol
@@ -108,11 +100,11 @@ export class Data {
   }
 }
 
-export class Metadata {
-  key: MetadataKey
+export class MetadataStruct {
+  key: MetadataKeyStruct
   updateAuthority: web3.PublicKey
   mint: web3.PublicKey
-  data: Data
+  data: DataStruct
   primarySaleHappened: boolean
   isMutable: boolean
   masterEdition?: web3.PublicKey
@@ -120,12 +112,12 @@ export class Metadata {
   constructor(args: {
     updateAuthority: web3.PublicKey
     mint: web3.PublicKey
-    data: Data
+    data: DataStruct
     primarySaleHappened: boolean
     isMutable: boolean
     masterEdition?: web3.PublicKey
   }) {
-    this.key = MetadataKey.MetadataV1
+    this.key = MetadataKeyStruct.MetadataV1
     this.updateAuthority = args.updateAuthority
     this.mint = args.mint
     this.data = args.data
@@ -134,9 +126,9 @@ export class Metadata {
   }
 }
 
-export const METADATA_SCHEMA = new Map<any, any>([
+export const NFT_METADATA_SCHEMA = new Map<any, any>([
   [
-    MasterEditionV2,
+    MasterEditionV2Struct,
     {
       kind: 'struct',
       fields: [
@@ -147,7 +139,7 @@ export const METADATA_SCHEMA = new Map<any, any>([
     },
   ],
   [
-    Edition,
+    EditionStruct,
     {
       kind: 'struct',
       fields: [
@@ -158,7 +150,7 @@ export const METADATA_SCHEMA = new Map<any, any>([
     },
   ],
   [
-    Data,
+    DataStruct,
     {
       kind: 'struct',
       fields: [
@@ -166,12 +158,12 @@ export const METADATA_SCHEMA = new Map<any, any>([
         ['symbol', 'string'],
         ['uri', 'string'],
         ['sellerFeeBasisPoints', 'u16'],
-        ['creators', { kind: 'option', type: [Creator] }],
+        ['creators', { kind: 'option', type: [CreatorStruct] }],
       ],
     },
   ],
   [
-    Creator,
+    CreatorStruct,
     {
       kind: 'struct',
       fields: [
@@ -182,21 +174,21 @@ export const METADATA_SCHEMA = new Map<any, any>([
     },
   ],
   [
-    Metadata,
+    MetadataStruct,
     {
       kind: 'struct',
       fields: [
         ['key', 'u8'],
         ['updateAuthority', [32]],
         ['mint', [32]],
-        ['data', Data],
+        ['data', DataStruct],
         ['primarySaleHappened', 'u8'],
         ['isMutable', 'u8'],
       ],
     },
   ],
   [
-    EditionMarker,
+    EditionMarkerStruct,
     {
       kind: 'struct',
       fields: [
@@ -211,6 +203,7 @@ export const AUCTION_HOUSE = 'auction_house'
 export const AUCTION_HOUSE_PROGRAM_ID = new PublicKey('hausS13jsjafwWwGqZTUQRmWyvyxn9EQpqMwV1PBBmk')
 export const FEE_PAYER = 'fee_payer'
 export const TREASURY = 'treasury'
+
 export const getAuctionHouseFeeAcct = async (auctionHouse: PublicKey): Promise<[PublicKey, number]> => {
   return await PublicKey.findProgramAddress(
     [Buffer.from(AUCTION_HOUSE), auctionHouse.toBuffer(), Buffer.from(FEE_PAYER)],
@@ -297,11 +290,11 @@ const getFeePayer = (externalFeePayer: boolean, from: PublicKey, feePayer?: stri
   return feePayer ? new PublicKey(feePayer) : from
 }
 
-export const parseMetadata = (buffer: Buffer): Metadata => {
-  const metadata = deserializeUnchecked(METADATA_SCHEMA, Metadata, buffer) as Metadata
-  metadata.data.name = metadata.data.name.replace(METADATA_REPLACE, '')
-  metadata.data.uri = metadata.data.uri.replace(METADATA_REPLACE, '')
-  metadata.data.symbol = metadata.data.symbol.replace(METADATA_REPLACE, '')
+export const parseNftMetadata = (buffer: Buffer): MetadataStruct => {
+  const metadata = deserializeUnchecked(NFT_METADATA_SCHEMA, MetadataStruct, buffer) as MetadataStruct
+  metadata.data.name = metadata.data.name.replace(METADATA_REPLACE_CONST, '')
+  metadata.data.uri = metadata.data.uri.replace(METADATA_REPLACE_CONST, '')
+  metadata.data.symbol = metadata.data.symbol.replace(METADATA_REPLACE_CONST, '')
   return metadata
 }
 
@@ -566,7 +559,7 @@ export const treasuryMintIsNative = (treasuryMint: PublicKey) => {
   return treasuryMint.equals(NATIVE_MINT)
 }
 
-export const safeAwait = <T>(promise: Promise<T>, finallyCallback?: any) => {
+export const safeAwaitCall = <T>(promise: Promise<T>, callback?: any) => {
   return promise
     .then((data) => {
       return { result: data, error: undefined }
@@ -575,34 +568,34 @@ export const safeAwait = <T>(promise: Promise<T>, finallyCallback?: any) => {
       return { result: undefined, error: error }
     })
     .finally(() => {
-      if (finallyCallback && typeof finallyCallback === 'function') {
-        finallyCallback()
+      if (callback && typeof callback === 'function') {
+        callback()
       }
     })
 }
 
-const compileAtaCreationIxs = async (
+const generateCreationInstructions = async (
   web3: SolanaWeb3,
-  payer: web3.PublicKey,
+  payer: PublicKey,
   addresses: string[],
-  mint: web3.PublicKey,
-): Promise<web3.TransactionInstruction[] | null> => {
+  mint: PublicKey,
+): Promise<TransactionInstruction[] | null> => {
   const connection = web3.getClient()
 
-  const ix: web3.TransactionInstruction[] = []
+  const ix: TransactionInstruction[] = []
   for (const addr of addresses) {
     const addrPubKey = new PublicKey(addr)
-    const ataAddress = await getAssociatedTokenAddress(mint, addrPubKey)
+    const tokenAddress = await getAssociatedTokenAddress(mint, addrPubKey)
 
-    const ataAccountRes = await safeAwait(getAccount(connection, ataAddress))
+    const tokenAccountRes = await safeAwaitCall(getAccount(connection, tokenAddress))
 
-    const ataAccount = ataAccountRes.result
+    const tokenAccount = tokenAccountRes.result
 
-    if (!ataAccount || !ataAccount.isInitialized) {
+    if (!tokenAccount || !tokenAccount.isInitialized) {
       ix.push(
         createAssociatedTokenAccountInstruction(
           payer,
-          ataAddress,
+          tokenAddress,
           addrPubKey,
           mint,
           TOKEN_PROGRAM_ID,
@@ -683,16 +676,6 @@ export const buyAndExecuteSale = async (
     ? buyerPublicKey
     : await getAssociatedTokenAddress(treasuryMint, buyerPublicKey)
 
-  // await checkPaymentAccountBalance(program.provider.connection, paymentAccount, isNative, price.toNumber())
-  //
-  // await checkNftAvailability(
-  //   program.provider.connection,
-  //   tokenAccount,
-  //   sellTradeState,
-  //   sellTradeStateBump,
-  //   amount.toNumber(),
-  // )
-
   const buyInstructionArgs = {
     buyerPrice: new BN(amount),
     tokenSize: new BN(1),
@@ -722,7 +705,7 @@ export const buyAndExecuteSale = async (
     throw new Error('WRONG NFT')
   }
 
-  const metadataDecoded: Metadata = parseMetadata(Buffer.from(metadataObj.data))
+  const metadataParsed: MetadataStruct = parseNftMetadata(Buffer.from(metadataObj.data))
 
   const remainingAccounts = [] as Array<{
     pubkey: web3.PublicKey
@@ -730,11 +713,10 @@ export const buyAndExecuteSale = async (
     isSigner: boolean
   }>
 
-  // make sure there won't be duplicate addresses
-  const accountsRequireAtaSet = new Set<string>()
+  const accountsRequireTokenSet = new Set<string>()
 
-  if (metadataDecoded && metadataDecoded.data && metadataDecoded.data.creators) {
-    for (let creator of metadataDecoded.data.creators) {
+  if (metadataParsed && metadataParsed.data && metadataParsed.data.creators) {
+    for (let creator of metadataParsed.data.creators) {
       const creatorPublicKey = new PublicKey(creator.address)
 
       remainingAccounts.push({
@@ -744,13 +726,13 @@ export const buyAndExecuteSale = async (
       })
 
       if (!isNative) {
-        const ataAddress = await getAssociatedTokenAddress(treasuryMint, creatorPublicKey)
+        const associatedTokenAddress = await getAssociatedTokenAddress(treasuryMint, creatorPublicKey)
         remainingAccounts.push({
-          pubkey: ataAddress,
+          pubkey: associatedTokenAddress,
           isWritable: true,
           isSigner: false,
         })
-        accountsRequireAtaSet.add(creatorPublicKey.toString())
+        accountsRequireTokenSet.add(creatorPublicKey.toString())
       }
     }
   }
@@ -760,41 +742,33 @@ export const buyAndExecuteSale = async (
     : await getAssociatedTokenAddress(treasuryMint, sellerPublicKey)
 
   if (!isNative) {
-    accountsRequireAtaSet.add(sellerPublicKey.toString())
+    accountsRequireTokenSet.add(sellerPublicKey.toString())
   }
 
-  const allAtaIxs: web3.TransactionInstruction[] = []
+  const allTokenInstructions: TransactionInstruction[] = []
 
-  const treasuyMintAtaIxs = await compileAtaCreationIxs(
+  const treasuryMintTokenInstructions = await generateCreationInstructions(
     web3,
     buyerPublicKey,
-    Array.from(accountsRequireAtaSet.values()),
+    Array.from(accountsRequireTokenSet.values()),
     treasuryMint,
   )
-  if (treasuyMintAtaIxs) {
-    allAtaIxs.push(...treasuyMintAtaIxs)
+  if (treasuryMintTokenInstructions) {
+    allTokenInstructions.push(...treasuryMintTokenInstructions)
   }
 
   const buyerReceiptTokenAccount = await getAssociatedTokenAddress(tokenMint, buyerPublicKey)
 
-  // for SOL as treausy shop we dont need this, as the ix has enough budget to complete execution
-  // but use for non-SOL as treasury shop to save the execution budget of executeSaleWithProxy
   if (!isNative) {
-    const tokenMintAtaIxs = await compileAtaCreationIxs(
+    const tokenMintInstructions = await generateCreationInstructions(
       web3,
       buyerPublicKey,
       [buyerPublicKey.toString()],
       tokenMint,
     )
-    if (tokenMintAtaIxs) {
-      allAtaIxs.push(...tokenMintAtaIxs)
+    if (tokenMintInstructions) {
+      allTokenInstructions.push(...tokenMintInstructions)
     }
-    //
-    // await checkDelegateOnReceiptAccounts(
-    //   program.provider.connection,
-    //   sellerPaymentReceiptAccount,
-    //   buyerReceiptTokenAccount,
-    // )
   }
 
   const executeSellInstructionArgs: ExecuteSaleInstructionArgs = {
@@ -833,15 +807,8 @@ export const buyAndExecuteSale = async (
 
   transaction.add(buyInstruction)
   transaction.add(executeSaleInstruction)
-  //
-  // if (allAtaIxs.length > 0) {
-  //   const ataCreationTx = new Transaction()
-  //   ataCreationTx.add(...allAtaIxs)
-  //   const atasCreationTx = await sendTx(wallet, ataCreationTx, program)
-  //   console.log('atasCreationTx', atasCreationTx)
-  // }
 
-  const signers = [web3.generateKeyPair(buyer.fromPrivateKey) /*, web3.generateKeyPair(fromPrivateKey)*/]
+  const signers = [web3.generateKeyPair(buyer.fromPrivateKey), web3.generateKeyPair(fromPrivateKey)]
   return {
     txId: await connection.sendTransaction(transaction, signers),
   }
@@ -862,12 +829,6 @@ export const solanaMarketPlaceService = (args: { web3: SolanaWeb3 }) => {
       return treasuryAcct
     },
     send: {
-      /**
-       * Create SPL token.
-       * @param body body of the request
-       * @param provider optional URL of the Solana cluster
-       * @param externalFeePayer if this is set to true, feePayer and feePayerPrivateKey are ignored and fee is paid externally using <a href="https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress">https://apidoc.tatum.io/tag/Custodial-managed-wallets#operation/CustodialTransferManagedAddress</a>
-       */
       deploySignedTransaction: async (
         params: CreateAuctionHouseParams,
         fromAddress: string,
