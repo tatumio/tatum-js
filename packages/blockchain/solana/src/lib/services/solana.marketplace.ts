@@ -300,7 +300,7 @@ export const parseNftMetadata = (buffer: Buffer): MetadataStruct => {
 }
 
 export interface CreateAuctionHouseParams {
-  sellerFeeBasisPoints: number
+  marketplaceFee: number
   canChangeSalePrice?: boolean
   requiresSignOff?: boolean
   treasuryWithdrawalDestination?: PublicKeyInitData
@@ -320,7 +320,7 @@ const createAuctionHouse = async (params: CreateAuctionHouse, web3: SolanaWeb3) 
   const transaction = new Transaction({ feePayer: feePayerKey })
 
   const {
-    sellerFeeBasisPoints,
+    marketplaceFee,
     canChangeSalePrice = false,
     requiresSignOff = false,
     treasuryWithdrawalDestination,
@@ -359,7 +359,7 @@ const createAuctionHouse = async (params: CreateAuctionHouse, web3: SolanaWeb3) 
         bump,
         feePayerBump,
         treasuryBump,
-        sellerFeeBasisPoints,
+        sellerFeeBasisPoints: marketplaceFee,
         requiresSignOff,
         canChangeSalePrice,
       },
@@ -373,7 +373,7 @@ const createAuctionHouse = async (params: CreateAuctionHouse, web3: SolanaWeb3) 
 }
 
 export interface UpdateAuctionHouseParams {
-  sellerFeeBasisPoints: number
+  marketplaceFee: number
   canChangeSalePrice?: boolean
   requiresSignOff?: boolean
   treasuryWithdrawalDestination?: PublicKeyInitData
@@ -393,7 +393,7 @@ export const updateAuctionHouse = async (params: UpdateAuctionHouse, web3: Solan
   const transaction = new Transaction({ feePayer: feePayerKey })
 
   const {
-    sellerFeeBasisPoints,
+    marketplaceFee,
     canChangeSalePrice = false,
     requiresSignOff = false,
     treasuryWithdrawalDestination,
@@ -424,7 +424,7 @@ export const updateAuctionHouse = async (params: UpdateAuctionHouse, web3: Solan
         auctionHouse,
       },
       {
-        sellerFeeBasisPoints,
+        sellerFeeBasisPoints: marketplaceFee,
         requiresSignOff,
         canChangeSalePrice,
       },
