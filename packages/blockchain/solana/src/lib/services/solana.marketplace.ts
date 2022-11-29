@@ -24,6 +24,7 @@ import {
   ExecuteSaleInstructionAccounts,
   ExecuteSaleInstructionArgs,
 } from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/executeSale'
+import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 
 export const METADATA_REPLACE_CONST = new RegExp('\u0000', 'g')
 
@@ -305,16 +306,16 @@ export interface CreateAuctionHouseParams {
   treasuryWithdrawalDestination?: PublicKeyInitData
   feeWithdrawalDestination?: PublicKeyInitData
   treasuryMint?: PublicKeyInitData
+
+  fromPrivateKey: string
+  from: string
 }
 
-const createAuctionHouse = async (
-  params: CreateAuctionHouseParams,
-  web3: SolanaWeb3,
-  fromAddress: string,
-  fromPrivateKey: string,
-) => {
+export type CreateAuctionHouse = FromPrivateKeyOrSignatureId<CreateAuctionHouseParams>
+
+const createAuctionHouse = async (params: CreateAuctionHouse, web3: SolanaWeb3) => {
   const connection = web3.getClient()
-  const from = new PublicKey(fromAddress)
+  const from = new PublicKey(params.from)
   const feePayerKey = getFeePayer(false, from)
   const transaction = new Transaction({ feePayer: feePayerKey })
 
@@ -365,7 +366,7 @@ const createAuctionHouse = async (
     ),
   )
 
-  const signers = [web3.generateKeyPair(fromPrivateKey)]
+  const signers = [web3.generateKeyPair(params.fromPrivateKey)]
   return {
     txId: await connection.sendTransaction(transaction, signers),
   }
@@ -378,16 +379,16 @@ export interface UpdateAuctionHouseParams {
   treasuryWithdrawalDestination?: PublicKeyInitData
   feeWithdrawalDestination?: PublicKeyInitData
   treasuryMint?: PublicKeyInitData
+
+  fromPrivateKey: string
+  from: string
 }
 
-export const updateAuctionHouse = async (
-  params: UpdateAuctionHouseParams,
-  web3: SolanaWeb3,
-  fromAddress: string,
-  fromPrivateKey: string,
-) => {
+export type UpdateAuctionHouse = FromPrivateKeyOrSignatureId<UpdateAuctionHouseParams>
+
+export const updateAuctionHouse = async (params: UpdateAuctionHouse, web3: SolanaWeb3) => {
   const connection = web3.getClient()
-  const from = new PublicKey(fromAddress)
+  const from = new PublicKey(params.from)
   const feePayerKey = getFeePayer(false, from)
   const transaction = new Transaction({ feePayer: feePayerKey })
 
@@ -430,43 +431,44 @@ export const updateAuctionHouse = async (
     ),
   )
 
-  const signers = [web3.generateKeyPair(fromPrivateKey)]
+  const signers = [web3.generateKeyPair(params.fromPrivateKey)]
   return {
     txId: await connection.sendTransaction(transaction, signers),
   }
 }
 
 export interface PostParams {
-  ah: {
-    authority: string
-    treasuryMint: string
-  }
-  nft: {
-    mintAddress: string
-    associatedTokenAccountAddress: string
-    fromPrivateKey: string
-    address: string
-  }
-  amount: string
+  authority: string
+  treasuryMint: string
+  authorityPrivateKey?: string
+
+  nftAddress: string
+  nftAccountAddress: string
+  fromPrivateKey: string
+  from: string
+
+  price: string
 }
 
-const post = async (body: PostParams, web3: SolanaWeb3, fromAddress: string, fromPrivateKey: string) => {
-  const { ah, nft, amount } = body
+export type SellParams = FromPrivateKeyOrSignatureId<PostParams>
+
+const post = async (body: SellParams, web3: SolanaWeb3) => {
+  const { authorityPrivateKey, nftAddress, nftAccountAddress, fromPrivateKey, price } = body
 
   const connection = web3.getClient()
-  const from = new PublicKey(nft.address)
+  const from = new PublicKey(body.from)
   const feePayerKey = getFeePayer(false, from)
   const transaction = new Transaction({ feePayer: feePayerKey })
 
-  const publicKey = new PublicKey(nft.address)
+  const publicKey = new PublicKey(body.from)
 
-  const buyerPrice = amount
-  const authority = new PublicKey(ah.authority)
-  const treasuryMint = new PublicKey(ah.treasuryMint)
-  const tokenMint = new PublicKey(nft.mintAddress)
+  const buyerPrice = price
+  const authority = new PublicKey(body.authority)
+  const treasuryMint = new PublicKey(body.treasuryMint)
+  const tokenMint = new PublicKey(nftAddress)
   const [metadata, bump] = await getMetadataAccount(tokenMint)
 
-  const associatedTokenAccount = new PublicKey(nft.associatedTokenAccountAddress)
+  const associatedTokenAccount = new PublicKey(nftAccountAddress)
 
   const [auctionHouse] = await getAuctionHouse(authority, treasuryMint)
   const [feeAccount] = await getAuctionHouseFeeAcct(auctionHouse)
@@ -478,7 +480,7 @@ const post = async (body: PostParams, web3: SolanaWeb3, fromAddress: string, fro
     treasuryMint,
     tokenMint,
     new BN(1),
-    new BN(amount),
+    new BN(price),
   )
 
   const [freeTradeState, freeTradeBump] = await getAuctionHouseTradeState(
@@ -530,30 +532,34 @@ const post = async (body: PostParams, web3: SolanaWeb3, fromAddress: string, fro
   //   },
   // )
 
-  const signers = [web3.generateKeyPair(nft.fromPrivateKey), web3.generateKeyPair(fromPrivateKey)]
+  const signers = [web3.generateKeyPair(fromPrivateKey)]
+
+  if (authorityPrivateKey) {
+    signers.push(web3.generateKeyPair(authorityPrivateKey))
+  }
+
   return {
     txId: await connection.sendTransaction(transaction, signers),
   }
 }
 
 export interface BuyParams {
-  ah: {
-    authority: string
-    treasuryMint: string
-  }
-  buyer: {
-    address: string
-    fromPrivateKey: string
-  }
-  seller: {
-    address: string
-  }
-  nft: {
-    mintAddress: string
-    associatedTokenAccountAddress: string
-  }
-  amount: string
+  authority: string
+  treasuryMint: string
+  authorityPrivateKey?: string
+
+  seller: string
+
+  nftAddress: string
+  nftAccountAddress: string
+
+  fromPrivateKey: string
+  from: string
+
+  price: string
 }
+
+export type BuyType = FromPrivateKeyOrSignatureId<BuyParams>
 
 export const treasuryMintIsNative = (treasuryMint: PublicKey) => {
   return treasuryMint.equals(NATIVE_MINT)
@@ -607,26 +613,21 @@ const generateCreationInstructions = async (
   return ix
 }
 
-export const buyAndExecuteSale = async (
-  params: BuyParams,
-  web3: SolanaWeb3,
-  fromAddress: string,
-  fromPrivateKey: string,
-) => {
-  const { ah, nft, buyer, seller, amount } = params
+export const buyAndExecuteSale = async (params: BuyType, web3: SolanaWeb3) => {
+  const { authorityPrivateKey, seller, nftAddress, nftAccountAddress, fromPrivateKey, from, price } = params
 
   const connection = web3.getClient()
 
-  const authority = new PublicKey(ah.authority)
-  const treasuryMint = new PublicKey(ah.treasuryMint)
-  const buyerPublicKey = new PublicKey(buyer.address)
+  const authority = new PublicKey(params.authority)
+  const treasuryMint = new PublicKey(params.treasuryMint)
+  const buyerPublicKey = new PublicKey(from)
 
   const feePayerKey = getFeePayer(false, buyerPublicKey)
 
-  const tokenMint = new PublicKey(nft.mintAddress)
+  const tokenMint = new PublicKey(nftAddress)
   const [metadata] = await getMetadataAccount(tokenMint)
 
-  const associatedTokenAccount = new PublicKey(nft.associatedTokenAccountAddress)
+  const associatedTokenAccount = new PublicKey(nftAccountAddress)
 
   const [auctionHouse] = await getAuctionHouse(authority, treasuryMint)
   const [feeAccount] = await getAuctionHouseFeeAcct(auctionHouse)
@@ -640,12 +641,12 @@ export const buyAndExecuteSale = async (
     treasuryMint,
     tokenMint,
     new BN(1),
-    new BN(amount),
+    new BN(price),
   )
 
   const isNative = treasuryMintIsNative(treasuryMint)
 
-  const sellerPublicKey = new PublicKey(seller.address)
+  const sellerPublicKey = new PublicKey(seller)
 
   const [treasuryAccount, treasuryBump] = await getAuctionHouseTreasuryAcct(auctionHouse)
 
@@ -656,7 +657,7 @@ export const buyAndExecuteSale = async (
     treasuryMint,
     tokenMint,
     new BN(1),
-    new BN(amount),
+    new BN(price),
   )
 
   const [freeTradeState, freeTradeStateBump] = await getAuctionHouseTradeState(
@@ -677,7 +678,7 @@ export const buyAndExecuteSale = async (
     : await getAssociatedTokenAddress(treasuryMint, buyerPublicKey)
 
   const buyInstructionArgs = {
-    buyerPrice: new BN(amount),
+    buyerPrice: new BN(price),
     tokenSize: new BN(1),
     tradeStateBump: buyTradeStateBump,
     escrowPaymentBump: buyerEscrowBump,
@@ -775,7 +776,7 @@ export const buyAndExecuteSale = async (
     escrowPaymentBump: buyerEscrowBump,
     freeTradeStateBump: freeTradeStateBump,
     programAsSignerBump: programAsSignerBump,
-    buyerPrice: new BN(amount),
+    buyerPrice: new BN(price),
     tokenSize: new BN(1),
   }
 
@@ -808,7 +809,12 @@ export const buyAndExecuteSale = async (
   transaction.add(buyInstruction)
   transaction.add(executeSaleInstruction)
 
-  const signers = [web3.generateKeyPair(buyer.fromPrivateKey), web3.generateKeyPair(fromPrivateKey)]
+  const signers = [web3.generateKeyPair(fromPrivateKey)]
+
+  if (authorityPrivateKey) {
+    signers.push(web3.generateKeyPair(authorityPrivateKey))
+  }
+
   return {
     txId: await connection.sendTransaction(transaction, signers),
   }
@@ -829,25 +835,17 @@ export const solanaMarketPlaceService = (args: { web3: SolanaWeb3 }) => {
       return treasuryAcct
     },
     send: {
-      deploySignedTransaction: async (
-        params: CreateAuctionHouseParams,
-        fromAddress: string,
-        fromPrivateKey: string,
-      ) => {
-        return createAuctionHouse(params, args.web3, fromAddress, fromPrivateKey)
+      deploySignedTransaction: async (params: CreateAuctionHouse) => {
+        return createAuctionHouse(params, args.web3)
       },
-      updateSignedTransaction: async (
-        params: UpdateAuctionHouseParams,
-        fromAddress: string,
-        fromPrivateKey: string,
-      ) => {
-        return updateAuctionHouse(params, args.web3, fromAddress, fromPrivateKey)
+      updateSignedTransaction: async (params: UpdateAuctionHouse) => {
+        return updateAuctionHouse(params, args.web3)
       },
-      sellSignedTransaction: async (params: PostParams, fromAddress: string, fromPrivateKey: string) => {
-        return post(params, args.web3, fromAddress, fromPrivateKey)
+      sellSignedTransaction: async (params: SellParams) => {
+        return post(params, args.web3)
       },
-      buySignedTransaction: async (params: BuyParams, fromAddress: string, fromPrivateKey: string) => {
-        return buyAndExecuteSale(params, args.web3, fromAddress, fromPrivateKey)
+      buySignedTransaction: async (params: BuyType) => {
+        return buyAndExecuteSale(params, args.web3)
       },
     },
   }
