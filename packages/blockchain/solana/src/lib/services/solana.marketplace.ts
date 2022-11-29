@@ -376,7 +376,7 @@ const createAuctionHouse = async (params: CreateAuctionHouse, web3: SolanaWeb3) 
 }
 
 export interface UpdateAuctionHouseParams {
-  marketplaceFee: number
+  marketplaceFee?: number
   canChangeSalePrice?: boolean
   requiresSignOff?: boolean
   treasuryWithdrawalDestination?: PublicKeyInitData
@@ -397,8 +397,8 @@ export const updateAuctionHouse = async (params: UpdateAuctionHouse, web3: Solan
 
   const {
     marketplaceFee,
-    canChangeSalePrice = false,
-    requiresSignOff = false,
+    canChangeSalePrice,
+    requiresSignOff,
     treasuryWithdrawalDestination,
     feeWithdrawalDestination,
     treasuryMint,
