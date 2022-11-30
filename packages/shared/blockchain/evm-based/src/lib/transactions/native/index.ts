@@ -19,7 +19,6 @@ const transferSignedTransaction = async (
     to: body.to,
     data: body.data,
     value: evmBasedUtils.transformToWei(body.amount),
-    gas: (body.data?.length || 0) * 68 + 21000,
     nonce: body.nonce,
   }
 

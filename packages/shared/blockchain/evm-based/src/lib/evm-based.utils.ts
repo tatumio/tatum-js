@@ -62,8 +62,8 @@ export const evmBasedUtils = {
       : await web3.getGasPriceInWei(provider)
     const tx: TransactionConfig = {
       from: 0,
-      gas: gasLimit,
       ...transaction,
+      gas: gasLimit,
       gasPrice: gasPriceDefined,
     }
 
@@ -72,7 +72,7 @@ export const evmBasedUtils = {
     }
 
     tx.from = tx.from || client.eth.defaultAccount || 0
-    tx.gas = gasLimit ?? (await client.eth.estimateGas(tx))
+    tx.gas = tx.gas ?? (await client.eth.estimateGas(tx))
 
     if (!fromPrivateKey) {
       throw new Error('signatureId or fromPrivateKey has to be defined')
