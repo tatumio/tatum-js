@@ -1,4 +1,10 @@
-import { PublicKey, PublicKeyInitData, Transaction, TransactionInstruction } from '@solana/web3.js'
+import {
+  PublicKey,
+  PublicKeyInitData,
+  SYSVAR_INSTRUCTIONS_PUBKEY,
+  Transaction,
+  TransactionInstruction,
+} from '@solana/web3.js'
 import {
   ASSOCIATED_TOKEN_PROGRAM_ID,
   createAssociatedTokenAccountInstruction,
@@ -9,11 +15,19 @@ import {
 } from '@solana/spl-token'
 import { SolanaWeb3 } from './solana.web3'
 import {
+  AuctionHouse,
   createBuyInstruction,
+  createCancelInstruction,
+  createCancelListingReceiptInstruction,
   createCreateAuctionHouseInstruction,
   createExecuteSaleInstruction,
+  createPrintBidReceiptInstruction,
+  createPrintListingReceiptInstruction,
+  createPrintPurchaseReceiptInstruction,
   createSellInstruction,
   createUpdateAuctionHouseInstruction,
+  createWithdrawFromFeeInstruction,
+  createWithdrawFromTreasuryInstruction,
 } from '@metaplex-foundation/mpl-auction-house'
 import BN from 'bn.js'
 import { TOKEN_METADATA_PROGRAM_ID } from '../schema/instructions'
@@ -25,6 +39,17 @@ import {
   ExecuteSaleInstructionArgs,
 } from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/executeSale'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
+import {
+  PrintBidReceiptInstructionAccounts,
+  PrintBidReceiptInstructionArgs,
+} from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/printBidReceipt'
+import { WithdrawFromTreasuryInstructionAccounts } from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/withdrawFromTreasury'
+import {
+  WithdrawFromFeeInstructionAccounts,
+  WithdrawFromFeeInstructionArgs,
+} from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/withdrawFromFee'
+import _ from 'lodash'
+import { solanaUtils } from '@tatumio/solana'
 
 export const METADATA_REPLACE_CONST = new RegExp('\u0000', 'g')
 
@@ -277,12 +302,28 @@ export const getAuctionHouseEscrow = (
   )
 }
 
-// export const findListingReceiptAddress = (sellerTradeState) => {
-//   return PublicKey.findProgramAddress(
-//     [Buffer.from('listing_receipt'), sellerTradeState.toBuffer()],
-//     AUCTION_HOUSE_PROGRAM_ID,
-//   )
-// }
+export const findListingReceiptAddress = (sellerTradeState: PublicKey) => {
+  return PublicKey.findProgramAddress(
+    [Buffer.from('listing_receipt'), sellerTradeState.toBuffer()],
+    AUCTION_HOUSE_PROGRAM_ID,
+  )
+}
+
+export const BID_RECEIPT = 'bid_receipt'
+export const PURCHASE_RECEIPT = 'purchase_receipt'
+
+export const findBidReceiptAddress = async (buyerTradeState: PublicKey) => {
+  return PublicKey.findProgramAddress(
+    [Buffer.from(BID_RECEIPT, 'utf8'), buyerTradeState.toBuffer()],
+    AUCTION_HOUSE_PROGRAM_ID,
+  )
+}
+export const findPurchaseReceiptAddress = async (sellerTradeState: PublicKey, buyerTradeState: PublicKey) => {
+  return PublicKey.findProgramAddress(
+    [Buffer.from(PURCHASE_RECEIPT, 'utf8'), sellerTradeState.toBuffer(), buyerTradeState.toBuffer()],
+    AUCTION_HOUSE_PROGRAM_ID,
+  )
+}
 
 const getFeePayer = (externalFeePayer: boolean, from: PublicKey, feePayer?: string) => {
   if (externalFeePayer) {
@@ -427,9 +468,9 @@ export const updateAuctionHouse = async (params: UpdateAuctionHouse, web3: Solan
         auctionHouse,
       },
       {
-        sellerFeeBasisPoints: marketplaceFee,
-        requiresSignOff,
-        canChangeSalePrice,
+        sellerFeeBasisPoints: solanaUtils.valueOrNull(marketplaceFee),
+        requiresSignOff: solanaUtils.valueOrNull(requiresSignOff),
+        canChangeSalePrice: solanaUtils.valueOrNull(canChangeSalePrice),
       },
     ),
   )
@@ -522,18 +563,20 @@ const post = async (body: SellParams, web3: SolanaWeb3) => {
 
   transaction.add(sellInstruction)
 
-  // const [receipt, receiptBump] = await findListingReceiptAddress(sellerTradeState)
-  //
-  // const printListingReceiptInstruction = createPrintListingReceiptInstruction(
-  //   {
-  //     receipt,
-  //     bookkeeper: publicKey,
-  //     instruction: SYSVAR_INSTRUCTIONS_PUBKEY,
-  //   },
-  //   {
-  //     receiptBump,
-  //   },
-  // )
+  const [receipt, receiptBump] = await findListingReceiptAddress(sellerTradeState)
+
+  const printListingReceiptInstruction = createPrintListingReceiptInstruction(
+    {
+      receipt,
+      bookkeeper: publicKey,
+      instruction: SYSVAR_INSTRUCTIONS_PUBKEY,
+    },
+    {
+      receiptBump,
+    },
+  )
+
+  transaction.add(printListingReceiptInstruction)
 
   const signers = [web3.generateKeyPair(fromPrivateKey)]
 
@@ -663,6 +706,8 @@ export const buyAndExecuteSale = async (params: BuyType, web3: SolanaWeb3) => {
     new BN(price),
   )
 
+  const [listingReceipt, _listingReceiptBump] = await findListingReceiptAddress(sellTradeState)
+
   const [freeTradeState, freeTradeStateBump] = await getAuctionHouseTradeState(
     auctionHouse,
     sellerPublicKey,
@@ -775,6 +820,27 @@ export const buyAndExecuteSale = async (params: BuyType, web3: SolanaWeb3) => {
     }
   }
 
+  const [bidReceipt, bidReceiptBump] = await findBidReceiptAddress(buyTradeState)
+
+  const printBidReceiptAccounts: PrintBidReceiptInstructionAccounts = {
+    bookkeeper: buyerPublicKey,
+    receipt: bidReceipt,
+    instruction: SYSVAR_INSTRUCTIONS_PUBKEY,
+  }
+  const printBidReceiptArgs: PrintBidReceiptInstructionArgs = {
+    receiptBump: bidReceiptBump,
+  }
+
+  const printBidReceiptInstruction = createPrintBidReceiptInstruction(
+    printBidReceiptAccounts,
+    printBidReceiptArgs,
+  )
+
+  const [purchaseReceipt, purchaseReceiptBump] = await findPurchaseReceiptAddress(
+    sellTradeState,
+    buyTradeState,
+  )
+
   const executeSellInstructionArgs: ExecuteSaleInstructionArgs = {
     escrowPaymentBump: buyerEscrowBump,
     freeTradeStateBump: freeTradeStateBump,
@@ -809,8 +875,26 @@ export const buyAndExecuteSale = async (params: BuyType, web3: SolanaWeb3) => {
     executeSellInstructionArgs,
   )
 
+  const printPurchaseReceiptAccounts = {
+    bookkeeper: buyerPublicKey,
+    purchaseReceipt,
+    bidReceipt,
+    listingReceipt,
+    instruction: SYSVAR_INSTRUCTIONS_PUBKEY,
+  }
+  const printPurchaseReceiptArgs = {
+    purchaseReceiptBump,
+  }
+
+  const printPurchaseReceiptInstruction = createPrintPurchaseReceiptInstruction(
+    printPurchaseReceiptAccounts,
+    printPurchaseReceiptArgs,
+  )
+
   transaction.add(buyInstruction)
+  transaction.add(printBidReceiptInstruction)
   transaction.add(executeSaleInstruction)
+  transaction.add(printPurchaseReceiptInstruction)
 
   const signers = [web3.generateKeyPair(fromPrivateKey)]
 
@@ -823,20 +907,197 @@ export const buyAndExecuteSale = async (params: BuyType, web3: SolanaWeb3) => {
   }
 }
 
+export interface CancelParams {
+  authority: string
+  treasuryMint: string
+  authorityPrivateKey?: string
+
+  nftAddress: string
+  nftAccountAddress: string
+  fromPrivateKey: string
+  from: string
+
+  price: string
+}
+
+export type CancelParamsType = FromPrivateKeyOrSignatureId<CancelParams>
+
+const cancel = async (params: CancelParamsType, web3: SolanaWeb3) => {
+  const { authorityPrivateKey, nftAddress, nftAccountAddress, fromPrivateKey, from, price } = params
+
+  const connection = web3.getClient()
+
+  const authority = new PublicKey(params.authority)
+  const treasuryMint = new PublicKey(params.treasuryMint)
+  const sellerPublicKey = new PublicKey(from)
+
+  const feePayerKey = getFeePayer(false, sellerPublicKey)
+
+  const tokenMint = new PublicKey(nftAddress)
+
+  const associatedTokenAccount = new PublicKey(nftAccountAddress)
+
+  const [auctionHouse] = await getAuctionHouse(authority, treasuryMint)
+  const [feeAccount] = await getAuctionHouseFeeAcct(auctionHouse)
+
+  const [sellTradeState] = await getAuctionHouseTradeState(
+    auctionHouse,
+    sellerPublicKey,
+    associatedTokenAccount,
+    treasuryMint,
+    tokenMint,
+    new BN(1),
+    new BN(price),
+  )
+
+  const [listingReceipt, _listingReceiptBump] = await findListingReceiptAddress(sellTradeState)
+
+  const cancelInstructionAccounts = {
+    wallet: sellerPublicKey,
+    tokenAccount: associatedTokenAccount,
+    tokenMint,
+    authority,
+    auctionHouse,
+    auctionHouseFeeAccount: feeAccount,
+    tradeState: sellTradeState,
+  }
+  const cancelInstructionArgs = {
+    buyerPrice: new BN(price),
+    tokenSize: 1,
+  }
+
+  const cancelListingReceiptAccounts = {
+    receipt: listingReceipt,
+    instruction: SYSVAR_INSTRUCTIONS_PUBKEY,
+  }
+
+  const transaction = new Transaction({ feePayer: feePayerKey })
+
+  const cancelInstruction = createCancelInstruction(cancelInstructionAccounts, cancelInstructionArgs)
+  const cancelListingReceiptInstruction = createCancelListingReceiptInstruction(cancelListingReceiptAccounts)
+
+  transaction.add(cancelInstruction)
+  transaction.add(cancelListingReceiptInstruction)
+
+  const signers = [web3.generateKeyPair(fromPrivateKey)]
+
+  if (authorityPrivateKey) {
+    signers.push(web3.generateKeyPair(authorityPrivateKey))
+  }
+
+  return {
+    txId: await connection.sendTransaction(transaction, signers),
+  }
+}
+
+export interface WithdrawParams {
+  contractAddress: string
+  amount: string
+  fromPrivateKey: string
+  from: string
+}
+
+export type WithdrawParamsType = FromPrivateKeyOrSignatureId<WithdrawParams>
+
+const withdraw = async (params: WithdrawParamsType, web3: SolanaWeb3) => {
+  const { contractAddress, amount, from, fromPrivateKey } = params
+
+  const connection = web3.getClient()
+
+  const auctionHouseAddress = new PublicKey(contractAddress)
+
+  const auctionHouse = await AuctionHouse.fromAccountAddress(connection, auctionHouseAddress)
+
+  const authority = auctionHouse.authority
+  const treasuryMint = auctionHouse.treasuryMint
+
+  const feePayerKey = getFeePayer(false, new PublicKey(from))
+
+  const auctionHouseTreasury = new PublicKey(auctionHouse.auctionHouseTreasury)
+
+  const treasuryWithdrawalDestination = new PublicKey(auctionHouse.treasuryWithdrawalDestination)
+
+  const withdrawFromTreasuryInstructionAccounts: WithdrawFromTreasuryInstructionAccounts = {
+    treasuryMint,
+    authority,
+    treasuryWithdrawalDestination,
+    auctionHouseTreasury,
+    auctionHouse: auctionHouseAddress,
+  }
+  const withdrawFromTreasuryInstructionArgs = {
+    amount: new BN(amount),
+  }
+
+  const withdrawFromTreasuryInstruction = createWithdrawFromTreasuryInstruction(
+    withdrawFromTreasuryInstructionAccounts,
+    withdrawFromTreasuryInstructionArgs,
+  )
+
+  const transaction = new Transaction({ feePayer: feePayerKey })
+
+  transaction.add(withdrawFromTreasuryInstruction)
+
+  const signers = [web3.generateKeyPair(fromPrivateKey)]
+
+  return {
+    txId: await connection.sendTransaction(transaction, signers),
+  }
+}
+
+export interface WithdrawFeeParams {
+  contractAddress: string
+  amount: string
+  fromPrivateKey: string
+  from: string
+}
+
+export type WithdrawFeeParamsType = FromPrivateKeyOrSignatureId<WithdrawFeeParams>
+
+const withdrawFee = async (params: WithdrawFeeParamsType, web3: SolanaWeb3) => {
+  const { contractAddress, amount, from, fromPrivateKey } = params
+
+  const connection = web3.getClient()
+
+  const auctionHouseAddress = new PublicKey(contractAddress)
+
+  const auctionHouse = await AuctionHouse.fromAccountAddress(connection, auctionHouseAddress)
+
+  const authority = auctionHouse.authority
+
+  const feePayerKey = getFeePayer(false, new PublicKey(from))
+
+  const auctionHouseFeeAccount = auctionHouse.auctionHouseFeeAccount
+
+  const feeWithdrawalDestination = auctionHouse.feeWithdrawalDestination
+
+  const withdrawFromTreasuryInstructionAccounts: WithdrawFromFeeInstructionAccounts = {
+    authority,
+    feeWithdrawalDestination,
+    auctionHouseFeeAccount,
+    auctionHouse: auctionHouseAddress,
+  }
+  const withdrawFromTreasuryInstructionArgs: WithdrawFromFeeInstructionArgs = {
+    amount: new BN(amount),
+  }
+
+  const withdrawFromTreasuryInstruction = createWithdrawFromFeeInstruction(
+    withdrawFromTreasuryInstructionAccounts,
+    withdrawFromTreasuryInstructionArgs,
+  )
+
+  const transaction = new Transaction({ feePayer: feePayerKey })
+
+  transaction.add(withdrawFromTreasuryInstruction)
+
+  const signers = [web3.generateKeyPair(fromPrivateKey)]
+
+  return {
+    txId: await connection.sendTransaction(transaction, signers),
+  }
+}
+
 export const solanaMarketPlaceService = (args: { web3: SolanaWeb3 }) => {
   return {
-    getAuctionHouse: async (authority: string, treasuryMint: string) => {
-      const [auctionHouse] = await getAuctionHouse(new PublicKey(authority), new PublicKey(treasuryMint))
-      return auctionHouse
-    },
-    getAuctionHouseFeeAcct: async (ah: string) => {
-      const [feeAcc] = await getAuctionHouseFeeAcct(new PublicKey(ah))
-      return feeAcc
-    },
-    getAuctionHouseTreasuryAcct: async (ah: string) => {
-      const [treasuryAcct] = await getAuctionHouseTreasuryAcct(new PublicKey(ah))
-      return treasuryAcct
-    },
     send: {
       deploySignedTransaction: async (params: CreateAuctionHouse) => {
         return createAuctionHouse(params, args.web3)
@@ -849,6 +1110,15 @@ export const solanaMarketPlaceService = (args: { web3: SolanaWeb3 }) => {
       },
       buySignedTransaction: async (params: BuyType) => {
         return buyAndExecuteSale(params, args.web3)
+      },
+      cancelSignedTransaction: async (params: CancelParamsType) => {
+        return cancel(params, args.web3)
+      },
+      withdrawSignedTransaction: async (params: WithdrawParamsType) => {
+        return withdraw(params, args.web3)
+      },
+      withdrawFeeSignedTransaction: async (params: WithdrawFeeParamsType) => {
+        return withdrawFee(params, args.web3)
       },
     },
   }
