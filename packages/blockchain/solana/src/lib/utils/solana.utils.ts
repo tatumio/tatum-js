@@ -22,7 +22,7 @@ export const solanaUtils = {
     } else if (BN.isBN(bytes)) {
       return encode(bytes.toArray())
     } else {
-      return encode(new BN(bytes, 'le').toArray())
+      return encode(new BN(bytes, 'be').toArray())
     }
   },
 }

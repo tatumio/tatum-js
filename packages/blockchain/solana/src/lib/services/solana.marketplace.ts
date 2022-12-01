@@ -145,22 +145,16 @@ export interface WithdrawFeeParams {
 export type WithdrawFeeParamsType = FromPrivateKeyOrSignatureId<WithdrawFeeParams>
 
 export declare type MarketplaceInfo = {
-  auctionHouseFeeAccount: string
-  auctionHouseTreasury: string
+  feeAccount: string
+  treasuryAccount: string
   treasuryWithdrawalDestination: string
   feeWithdrawalDestination: string
   treasuryMint: string
   authority: string
   creator: string
-  bump: number
-  treasuryBump: number
-  feePayerBump: number
-  sellerFeeBasisPoints: number
+  marketplaceFee: number
   requiresSignOff: boolean
   canChangeSalePrice: boolean
-  escrowPaymentBump: number
-  hasAuctioneer: boolean
-  auctioneerAddress: string
 }
 
 export interface Creator {
@@ -226,22 +220,16 @@ export const solanaMarketPlaceService = (args: { web3: SolanaWeb3 }) => {
         new PublicKey(contractAddress),
       )
       return {
-        auctionHouseFeeAccount: test.auctionHouseFeeAccount.toBase58(),
-        auctionHouseTreasury: test.auctionHouseTreasury.toBase58(),
+        feeAccount: test.auctionHouseFeeAccount.toBase58(),
+        treasuryAccount: test.auctionHouseTreasury.toBase58(),
         treasuryWithdrawalDestination: test.treasuryWithdrawalDestination.toBase58(),
         feeWithdrawalDestination: test.feeWithdrawalDestination.toBase58(),
         treasuryMint: test.treasuryMint.toBase58(),
         authority: test.authority.toBase58(),
         creator: test.creator.toBase58(),
-        bump: test.bump,
-        treasuryBump: test.treasuryBump,
-        feePayerBump: test.feePayerBump,
-        sellerFeeBasisPoints: test.sellerFeeBasisPoints,
+        marketplaceFee: test.sellerFeeBasisPoints,
         requiresSignOff: test.requiresSignOff,
         canChangeSalePrice: test.canChangeSalePrice,
-        escrowPaymentBump: test.escrowPaymentBump,
-        hasAuctioneer: test.hasAuctioneer,
-        auctioneerAddress: test.auctioneerAddress?.toBase58(),
       }
     },
     getListingDetails: async (
@@ -1132,6 +1120,8 @@ export const solanaMarketPlaceServiceNew = (
 
     const treasuryWithdrawalDestination = new PublicKey(auctionHouse.treasuryWithdrawalDestination)
 
+    const finalAmount = await formatPrice(connection, false, amount, treasuryMint)
+
     const withdrawFromTreasuryInstructionAccounts: WithdrawFromTreasuryInstructionAccounts = {
       treasuryMint,
       authority,
@@ -1140,7 +1130,7 @@ export const solanaMarketPlaceServiceNew = (
       auctionHouse: auctionHouseAddress,
     }
     const withdrawFromTreasuryInstructionArgs = {
-      amount: new BN(amount),
+      amount: new BN(finalAmount),
     }
 
     const withdrawFromTreasuryInstruction = createWithdrawFromTreasuryInstruction(
@@ -1176,6 +1166,8 @@ export const solanaMarketPlaceServiceNew = (
 
     const feeWithdrawalDestination = auctionHouse.feeWithdrawalDestination
 
+    const lamports = new BigNumber(amount).multipliedBy(LAMPORTS_PER_SOL).toFixed()
+
     const withdrawFromTreasuryInstructionAccounts: WithdrawFromFeeInstructionAccounts = {
       authority,
       feeWithdrawalDestination,
@@ -1183,7 +1175,7 @@ export const solanaMarketPlaceServiceNew = (
       auctionHouse: auctionHouseAddress,
     }
     const withdrawFromTreasuryInstructionArgs: WithdrawFromFeeInstructionArgs = {
-      amount: new BN(amount),
+      amount: new BN(lamports),
     }
 
     const withdrawFromTreasuryInstruction = createWithdrawFromFeeInstruction(
