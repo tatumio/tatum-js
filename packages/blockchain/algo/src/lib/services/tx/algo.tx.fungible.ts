@@ -51,7 +51,7 @@ export const prepareCreateFTSignedTransaction = async ({
     assetURL: (body as DeployAlgoErc20).url,
     defaultFrozen: false,
     freeze: undefined,
-    manager: undefined,
+    manager: from,
     clawback: undefined,
     reserve: undefined,
     suggestedParams: {
