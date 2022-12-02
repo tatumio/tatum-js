@@ -21,7 +21,7 @@ export type MintNftCelo = {
      */
     contractAddress: string;
     /**
-     * The ID of the NFT
+     * The ID of the NFT.
      */
     tokenId: string;
     /**

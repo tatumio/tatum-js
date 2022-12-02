@@ -2,13 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type UpdateCashbackValueForAuthorNft = {
     /**
      * The blockchain to work with
      */
     chain: 'BSC' | 'ETH' | 'KCS' | 'KLAY' | 'MATIC' | 'ONE';
     /**
-     * The ID of the NFT to update royalty information for
+     * The ID of the NFT to update royalty information for.
      */
     tokenId: string;
     /**
@@ -27,17 +29,5 @@ export type UpdateCashbackValueForAuthorNft = {
      * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * The custom defined fee; if not present, will be calculated automatically
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

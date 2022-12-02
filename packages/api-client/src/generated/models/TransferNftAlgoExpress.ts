@@ -8,10 +8,6 @@ export type TransferNftAlgoExpress = {
      */
     chain: 'ALGO';
     /**
-     * Value to be sent.
-     */
-    value?: string;
-    /**
      * Blockchain address to send NFT token to
      */
     to: string;
@@ -28,11 +24,7 @@ export type TransferNftAlgoExpress = {
      */
     fee?: string;
     /**
-     * The total amount of the NFTs to transfer. Defaults to 1 - which means 1 NFT will be minted. Value above 1 means, you are going to transfer <a href="https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts" target="_blank">Fractional NFTs.</a>
+     * The total amount of NFT fractions to transfer. Defaults to 1 - which means 1 fraction of NFT will be transferred. This is only valid for <a href="https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts" target="_blank">Fractional NFTs.</a>
      */
     amount?: number;
-    /**
-     * The decimal places of the NFT to transfer. Defaults to 0 - which means regular NFT will be transfered. Value above 0 means, you are going to transfer <a href="https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts" target="_blank">Fractional NFTs.</a>
-     */
-    decimals?: number;
 }

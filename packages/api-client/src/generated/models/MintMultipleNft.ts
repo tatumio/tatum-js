@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type MintMultipleNft = {
     /**
      * The blockchain to work with
@@ -43,17 +45,5 @@ export type MintMultipleNft = {
      * The blockchain address of the custom fungible token
      */
     erc20?: string;
-    /**
-     * The custom defined fee; if not present, will be calculated automatically
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

@@ -18,7 +18,7 @@ export type TransferNftCelo = {
      */
     to: string;
     /**
-     * ID of token.
+     * ID of the token.
      */
     tokenId: string;
     /**

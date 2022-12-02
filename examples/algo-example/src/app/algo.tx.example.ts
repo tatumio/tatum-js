@@ -1,9 +1,8 @@
 import { TatumAlgoSDK, TransferAlgoBlockchain } from '@tatumio/algo'
 import { TransactionHash } from '@tatumio/api-client'
-import { isTestnet, sdkArguments } from '../index'
 
 export async function algoTxExample() {
-  const algoSDK = TatumAlgoSDK(sdkArguments)
+  const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   // generate "from" and "to" addresses for wallets
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet
@@ -22,7 +21,7 @@ export async function algoTxExample() {
       fromPrivateKey,
       to,
     } as TransferAlgoBlockchain,
-    isTestnet,
+    true,
   )) as TransactionHash
   console.log(`Sent transaction using private key with ID ${txData.txId}`)
 }

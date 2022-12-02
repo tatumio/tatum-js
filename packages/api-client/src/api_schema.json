@@ -12765,7 +12765,7 @@
     },
     "/v3/offchain/token/{name}/{address}": {
       "post": {
-        "description": "<h4>2 credits per API call.</h4><br/>\n<p>Set the contact address of an ERC-20 or ERC-20-equivalent token (for example, BEP-20, HRM-20, and so on) to be able to communicate with the smart contract.\n<br/>\n<br/>\n<p>After creating and deploying an ERC-20 or ERC-20-equivalent token to the blockchain, the smart contract address is generated and must be set within Tatum. If the address is not set, the Tatum platform will not be able to detect incoming deposits of the tokens and transfer the tokens from virtual accounts to blockchain addresses.</p>\n<p><b>NOTE:</b>For Algorand, the contact address should be the token asset ID (AssetID), for example, <code>55351976</code>.</p>\n",
+        "description": "<h4>2 credits per API call.</h4><br/>\n<p>Set the contract address of an ERC-20 or ERC-20-equivalent token (for example, BEP-20, HRM-20, and so on) to be able to communicate with the smart contract.\n<br/>\n<br/>\n<p>After creating and deploying an ERC-20 or ERC-20-equivalent token to the blockchain, the smart contract address is generated and must be set within Tatum. If the address is not set, the Tatum platform will not be able to detect incoming deposits of the tokens and transfer the tokens from virtual accounts to blockchain addresses.</p>\n<p><b>NOTE:</b> For Algorand, the contract address should be the token asset ID (AssetID), for example, <code>55351976</code>.</p>\n",
         "operationId": "storeTokenAddress",
         "parameters": [
           {
@@ -12833,7 +12833,7 @@
         },
         "security": [{ "X-API-Key": [] }],
         "x-codeSamples": [],
-        "summary": "Set the contact address of an ERC-20 or ERC-20-equivalent token",
+        "summary": "Set the contract address of an ERC-20 or ERC-20-equivalent token",
         "tags": ["Blockchain operations"]
       }
     },
@@ -13279,7 +13279,7 @@
         },
         "security": [{ "X-API-Key": [] }],
         "x-codeSamples": [],
-        "summary": "Set the contact address of a Celo ERC-20-equivalent token",
+        "summary": "Set the contract address of a Celo ERC-20-equivalent token",
         "tags": ["Blockchain operations"]
       }
     },
@@ -14181,7 +14181,7 @@
         },
         "security": [{ "X-API-Key": [] }],
         "x-codeSamples": [],
-        "summary": "Set the contact address of a TRC-10 or TRC-20 token",
+        "summary": "Set the contract address of a TRC-10 or TRC-20 token",
         "tags": ["Blockchain operations"]
       }
     },
@@ -20629,11 +20629,11 @@
     },
     "/v3/tatum/rate/{currency}": {
       "get": {
-        "description": "<h4>1 credit per API call.</h4><br/>\n<p>Get currenct exchange rate of the supported FIAT / crypto asset. Base pair is EUR by default. E.g. to obtain exchange rate for the Bitcoin,\nresponse value for the API call will be expressed as 1 BTC = 10,000 EUR.</p>\n",
+        "description": "<p><b>1 credit per API call</b></p>\n<p>Get the current exchange rate for exchanging fiat/crypto assets.</p>\n<p>By default, the base pair (the target asset) is EUR. When obtaining the exchange rate for an asset (for example, BTC), the value returned by the API expresses the amount of EUR that can be currently exchanged into 1 BTC.</p>\n",
         "operationId": "getExchangeRate",
         "parameters": [
           {
-            "description": "FIAT or crypto asset",
+            "description": "The fiat or crypto asset to exchange",
             "in": "path",
             "name": "currency",
             "required": true,
@@ -20848,11 +20848,12 @@
             }
           },
           {
-            "description": "FIAT to convert as a basePair",
+            "description": "The target fiat asset to get the exchange rate for",
             "in": "query",
             "name": "basePair",
             "schema": {
               "type": "string",
+              "default": "EUR",
               "example": "USD",
               "enum": [
                 "AED",
@@ -21058,7 +21059,7 @@
         },
         "security": [{ "X-API-Key": [] }],
         "x-codeSamples": [],
-        "summary": "Get currenct exchange rate of the supported FIAT / crypto asset",
+        "summary": "Get the current exchange rate for exchanging fiat/crypto assets",
         "tags": ["Exchange rate"]
       }
     },
@@ -21748,7 +21749,7 @@
     },
     "/v3/nft/mint/batch": {
       "post": {
-        "description": "<p><b>100 credits per API call on Flow<br/>\n2 credits per API call on the other blockchains</b></p>\n<p>Create multiple NFT Tokens and transfer them to destination account. Create and transfer any NFT tokens from smart contract defined in contractAddress.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Flow</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>TRON</li>\n</ul>\nThis operation works in two modes.\n\nFirst mode works just like other NFT endpoints. Every time the funds are transferred, the transaction must be signed with the corresponding private key.\nNo one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey\nor signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,\n<a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.\nAlternatively, using the Tatum client library for supported languages.\n\nSecond mode enables you to mint on any custom NFT ERC-721 smart contract, on which specified minter address is approved as a minter. You don't specify private key or signatureId, only minter address, from which the NFT will be minted.<br/>\nIt means you perform mint multiple NFT request with following body:\n<pre>{\n   \"to\": [\"0x80d8bac9a6901698b3749fe336bbd1385c1f98f2\"],\n   \"url\": [\"ipfs://QmXJJ6UF5WkF4WTJvsdhiA1etGwBLfpva7Vr9AudGMe3pj\"],\n   \"tokenId\": [\"9876541124516\"],\n   \"contractAddress\":\"0xcd2ada00c48a27faa5cc67f9a1ed55b89ddf7f77\",\n   \"minter\": \"0x542b9ac4945a3836fd12ad98acbc76a0c8b743f5\",\n   \"chain\": \"MATIC\"\n}</pre>\nThe blockchain fee of the performed transaction is paid from the address connected with built-in private key and is debitted in form of credits. The credits are debitted only if NFT mint requests are performed with paid API key plan.\nWe transform fee to the credits in accordance to the rates provided by the Tatum.\nIf you want to batch mint on ERC-721 contract which is not deployed via Tatum API, your smart contract must contain this method:\n<pre>mintMultiple(address[] to, uint256[] tokenId, string[] uri): boolean</pre>\nYou can use addresses specified in the bellow table to be used as a minter.\n<table>\n  <tr>\n    <th>Chain</th>\n    <th>Testnet address</th>\n    <th>Mainnet Address</th>\n  </tr>\n  <tr>\n    <td>MATIC</td>\n    <td>0x542b9ac4945a3836fd12ad98acbc76a0c8b743f5</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n  <tr>\n    <td>BSC</td>\n    <td>0xc16ae5e8c985b906935a0cadf4e24f0400531883</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n  <tr>\n    <td>ONE</td>\n    <td>0x8906f62d40293ddca77fdf6714c3f63265deddf0</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n  <tr>\n    <td>ETH</td>\n    <td>0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n  <tr>\n    <td>CELO</td>\n    <td>0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n  <tr>\n    <td>KLAY</td>\n    <td>0x80d8bac9a6901698b3749fe336bbd1385c1f98f2</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n</table>\nIf there are not enough coins on any testnet address, feel free to send coins there.</p>\n",
+        "description": "<p><b>100 credits per API call on Flow<br/>\n2 credits per API call on the other blockchains</b></p>\n<p>Create multiple NFT Tokens and transfer them to destination account. Create and transfer any NFT tokens from smart contract defined in contractAddress.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Flow</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>TRON</li>\n</ul>\nThis operation works in two modes.\n\nFirst mode works just like other NFT endpoints. Every time the funds are transferred, the transaction must be signed with the corresponding private key.\nNo one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and loss of funds. In this method, it is possible to enter privateKey\nor signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,\n<a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.\nAlternatively, using the Tatum client library for supported languages.\n\nSecond mode enables you to mint on any custom NFT ERC-721 smart contract, on which specified minter address is approved as a minter. You don't specify private key or signatureId, only minter address, from which the NFT will be minted.<br/>\nIt means you perform mint multiple NFT request with following body:\n<pre>{\n   \"to\": [\"0x80d8bac9a6901698b3749fe336bbd1385c1f98f2\"],\n   \"url\": [\"ipfs://QmXJJ6UF5WkF4WTJvsdhiA1etGwBLfpva7Vr9AudGMe3pj\"],\n   \"tokenId\": [\"9876541124516\"],\n   \"contractAddress\":\"0xcd2ada00c48a27faa5cc67f9a1ed55b89ddf7f77\",\n   \"minter\": \"0x542b9ac4945a3836fd12ad98acbc76a0c8b743f5\",\n   \"chain\": \"MATIC\"\n}</pre>\nThe blockchain fee of the performed transaction is paid from the address connected with built-in private key and is debited in form of credits. The credits are debited only if NFT mint requests are performed with paid API key plan.\nWe transform fee to the credits in accordance to the rates provided by the Tatum.\nIf you want to batch mint on ERC-721 contract which is not deployed via Tatum API, your smart contract must contain this method:\n<pre>mintMultiple(address[] to, uint256[] tokenId, string[] uri): boolean</pre>\nYou can use addresses specified in the bellow table to be used as a minter.\n<table>\n  <tr>\n    <th>Chain</th>\n    <th>Testnet address</th>\n    <th>Mainnet Address</th>\n  </tr>\n  <tr>\n    <td>MATIC</td>\n    <td>0x542b9ac4945a3836fd12ad98acbc76a0c8b743f5</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n  <tr>\n    <td>BSC</td>\n    <td>0xc16ae5e8c985b906935a0cadf4e24f0400531883</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n  <tr>\n    <td>ONE</td>\n    <td>0x8906f62d40293ddca77fdf6714c3f63265deddf0</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n  <tr>\n    <td>ETH</td>\n    <td>0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n  <tr>\n    <td>CELO</td>\n    <td>0xBC2eBA680EE50d685cc4Fe65f102AA70AfB27D3F</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n  <tr>\n    <td>KLAY</td>\n    <td>0x80d8bac9a6901698b3749fe336bbd1385c1f98f2</td>\n    <td>0xcf9e127455d28e7362380aec1b92ddee8200b295</td>\n  </tr>\n</table>\nIf there are not enough coins on any testnet address, feel free to send coins there.</p>\n",
         "operationId": "NftMintMultipleErc721",
         "parameters": [
           {
@@ -22029,10 +22030,7 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "oneOf": [{ "$ref": "#/components/schemas/NftTx" }] }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/NftTx" } }
               }
             },
             "description": "OK"
@@ -22078,11 +22076,11 @@
             "schema": { "type": "string", "enum": ["CELO", "ETH", "MATIC"], "example": "CELO" }
           },
           {
-            "description": "NFT Token ID",
+            "description": "NFT Token ID.",
             "in": "path",
             "name": "tokenId",
             "required": true,
-            "schema": { "type": "integer", "minimum": 0, "example": 1 }
+            "schema": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
           },
           {
             "description": "Address of the token smart contract",
@@ -22121,10 +22119,7 @@
           "200": {
             "content": {
               "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": { "oneOf": [{ "$ref": "#/components/schemas/NftTx" }] }
-                }
+                "schema": { "type": "array", "items": { "$ref": "#/components/schemas/NftTx" } }
               }
             },
             "description": "OK"
@@ -22241,7 +22236,7 @@
     },
     "/v3/nft/address/balance/{chain}/{address}": {
       "get": {
-        "description": "<p><b>1 credit per API call + 5 credits for each owned NFT</b></p>\n<p>Get all NFTs that a blockchain address holds. The NFTs are returned grouped by the smart contracts they were minted on.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Polygon</li>\n<li>Solana</li>\n</ul>\n<p>On Solana and Algorand, if a blockchain address holds fewer than 50 NFTs, the API also returns each NFT's metadata. If the metadata is not returned, you can obtain it using the <a href=\"https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)/#operation/NftGetMetadataErc721\">API for getting NFT metadata</a>.</p>\n",
+        "description": "<p><b>1 credit per API call + 5 credits for each owned NFT</b></p>\n<p>Get all NFTs that a blockchain address holds. The NFTs are returned grouped by the smart contracts they were minted on.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain - mainnet only</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Polygon</li>\n<li>Solana</li>\n</ul>\n<p>On Solana and Algorand, if a blockchain address holds fewer than 50 NFTs, the API also returns each NFT's metadata. If the metadata is not returned, you can obtain it using the <a href=\"https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)/#operation/NftGetMetadataErc721\">API for getting NFT metadata</a>.</p>\n",
         "operationId": "NftGetTokensByAddressErc721",
         "parameters": [
           {
@@ -22249,7 +22244,11 @@
             "in": "path",
             "name": "chain",
             "required": true,
-            "schema": { "type": "string", "example": "SOL", "enum": ["ALGO", "CELO", "ETH", "MATIC", "SOL"] }
+            "schema": {
+              "type": "string",
+              "example": "SOL",
+              "enum": ["ALGO", "BSC", "CELO", "ETH", "MATIC", "SOL"]
+            }
           },
           {
             "description": "The blockchain address that you want to get the token balance of",
@@ -22265,54 +22264,7 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": ["contractAddress", "balances", "metadata"],
-                    "properties": {
-                      "contractAddress": {
-                        "type": "string",
-                        "example": "43821281",
-                        "description": "On Algorand, this is the asset ID (the ID of the NFT); on the other blockchains, this is the address of the NFT smart contract"
-                      },
-                      "balances": {
-                        "type": "array",
-                        "description": "On Algorand, this is an array of <code>1</code> to indicate that the NFTs with the specified IDs exist; on the other blockchains, this is an array of the IDs of the NFTs",
-                        "items": { "type": "string", "example": "1" }
-                      },
-                      "blockNumber": {
-                        "type": "array",
-                        "description": "(EVM-based blockchains only) On EVM-based blockchains like Celo, Polygon or Ethereum, this is an array of block numbers, in which the NFT was received by the address",
-                        "items": { "type": "number", "example": 13816552 }
-                      },
-                      "metadata": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "properties": {
-                            "tokenId": {
-                              "description": "The ID of the NFT owned by this address",
-                              "example": "1",
-                              "type": "string"
-                            },
-                            "url": {
-                              "description": "The URL pointing to the NFT metadata; the URL may not be present, and if it is not returned, you can get it by calling the NFT Contract.tokenURI() method",
-                              "example": "ipfs://QmXFpaS3S7CkLZvihLFA9JbawKdqhjg8dJeDkPntmkD2Pc",
-                              "type": "string"
-                            },
-                            "metadata": {
-                              "type": "object",
-                              "description": "The metadata scheme obtained from the metadata URL; the scheme may not be present, and if it is not returned, you can get it using the <a href=\"#operation/NftGetMetadataErc721\">NFT metadata API</a>",
-                              "example": {
-                                "name": "Example NFT name",
-                                "description": "Example NFT description",
-                                "image": "ipfs://QmP4R7ACZ7JRQ6sLdmnPHqjWEXxzdnPvhAV2f6RnQ8uxJ6"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                  "items": { "$ref": "#/components/schemas/NftTokenByAddressErc721" }
                 }
               }
             },
@@ -22389,45 +22341,7 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "type": "object",
-                    "required": ["tokenId", "metadata"],
-                    "properties": {
-                      "tokenId": {
-                        "type": "string",
-                        "example": "43821281",
-                        "description": "ID of the token."
-                      },
-                      "metadata": {
-                        "type": "array",
-                        "items": {
-                          "type": "object",
-                          "required": ["tokenID"],
-                          "properties": {
-                            "tokenId": {
-                              "description": "TokenID of the NFT token owned by this address.",
-                              "example": "1",
-                              "type": "string"
-                            },
-                            "url": {
-                              "description": "Metadata URL of the TokenID. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.",
-                              "example": "ipfs://QmXFpaS3S7CkLZvihLFA9JbawKdqhjg8dJeDkPntmkD2Pc",
-                              "type": "string"
-                            },
-                            "metadata": {
-                              "type": "object",
-                              "description": "Metadata scheme obtained from the url. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.",
-                              "example": {
-                                "name": "Example NFT name",
-                                "description": "Example NFT description",
-                                "image": "ipfs://QmP4R7ACZ7JRQ6sLdmnPHqjWEXxzdnPvhAV2f6RnQ8uxJ6"
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
+                  "items": { "$ref": "#/components/schemas/NftTokenByCollectionErc721" }
                 }
               }
             },
@@ -22561,7 +22475,7 @@
         "tags": ["NFT (ERC-721 or compatible)"]
       }
     },
-    "/v3/nft/metadata/{chain}/{contractAddress}/{token}": {
+    "/v3/nft/metadata/{chain}/{contractAddress}/{tokenId}": {
       "get": {
         "description": "<p><b>1 credit per API call</b></p>\n<p>Get metadata of an NFT.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Flow</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>Solana</li>\n<li>TRON</li>\n</ul>\n",
         "operationId": "NftGetMetadataErc721",
@@ -22586,9 +22500,9 @@
           {
             "description": "The ID of the NFT to get metadata for<br/>Do <b>not</b> use this parameter if you are getting metadata for an NFT on Solana, this parameter is irrelevant on Solana.",
             "in": "path",
-            "name": "token",
+            "name": "tokenId",
             "required": true,
-            "schema": { "type": "string", "example": "1", "maxLength": 32 }
+            "schema": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
           },
           {
             "description": "(Flow only) The account that holds the NFT",
@@ -22608,18 +22522,7 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "data": {
-                      "type": "string",
-                      "description": "The URL pointing to the NFT metadata",
-                      "example": "https://my_token_data.com"
-                    }
-                  }
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/NftMetadataErc721" } }
             },
             "description": "OK"
           },
@@ -22675,11 +22578,11 @@
             "schema": { "type": "string", "example": "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326" }
           },
           {
-            "description": "The ID of the NFT to get provenance information for",
+            "description": "The ID of the NFT to get provenance information for.",
             "in": "path",
             "name": "tokenId",
             "required": true,
-            "schema": { "type": "string", "example": "1", "maxLength": 32 }
+            "schema": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
           },
           {
             "description": "Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.",
@@ -22695,16 +22598,7 @@
               "application/json": {
                 "schema": {
                   "type": "array",
-                  "items": {
-                    "type": "object",
-                    "properties": {
-                      "provenanceData": {
-                        "type": "string",
-                        "example": "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326"
-                      },
-                      "tokenPrice": { "type": "string", "example": "123" }
-                    }
-                  }
+                  "items": { "$ref": "#/components/schemas/NftProvenanceDataErc721" }
                 }
               }
             },
@@ -22742,7 +22636,7 @@
         "tags": ["NFT (ERC-721 or compatible)"]
       }
     },
-    "/v3/nft/royalty/{chain}/{contractAddress}/{token}": {
+    "/v3/nft/royalty/{chain}/{contractAddress}/{tokenId}": {
       "get": {
         "description": "<p><b>1 credit per API call</b></p>\n<p>Get information about royalties for an NFT.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n<li>Solana</li>\n<li>TRON</li>\n</ul>\n",
         "operationId": "NftGetRoyaltyErc721",
@@ -22765,11 +22659,11 @@
             "schema": { "type": "string", "example": "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326" }
           },
           {
-            "description": "The ID of the NFT to get royalty information for<br/>Do <b>not</b> use this parameter if you are getting metadata for an NFT on Solana, this parameter is irrelevant on Solana",
+            "description": "The ID of the NFT to get royalty information for<br/>Do <b>not</b> use this parameter if you are getting metadata for an NFT on Solana, this parameter is irrelevant on Solana.",
             "in": "path",
-            "name": "token",
-            "required": false,
-            "schema": { "type": "string", "example": "1", "maxLength": 32 }
+            "name": "tokenId",
+            "required": true,
+            "schema": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
           },
           {
             "description": "Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.",
@@ -22782,23 +22676,7 @@
         "responses": {
           "200": {
             "content": {
-              "application/json": {
-                "schema": {
-                  "type": "object",
-                  "properties": {
-                    "addresses": {
-                      "type": "array",
-                      "description": "The blockchain addresses where the royalty cashback will be sent every time the NFT is transferred",
-                      "items": { "type": "string", "example": "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326" }
-                    },
-                    "values": {
-                      "type": "array",
-                      "description": "The amounts of the royalties that will be paid to the authors of the NFT every time the NFT is transferred; the royalties are paid as a percentage of the NFT price (on Solana) or in a native blockchain currency (on the other supported blockchains)\n",
-                      "items": { "type": "string", "example": "0.2" }
-                    }
-                  }
-                }
-              }
+              "application/json": { "schema": { "$ref": "#/components/schemas/NftRoyaltyErc721" } }
             },
             "description": "OK"
           },
@@ -23734,7 +23612,7 @@
     },
     "/v3/multitoken/mint": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Mint a fixed amount of Multi Token and transfer it to destination account. Create and transfer any Multi Token token from smart contract defined in contractAddress. It is possible to add Metadata to the created token with a more detailed information about instead.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When minting a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Mint a fixed amount of Multi Token and transfer it to destination account. Create and transfer any Multi Token token from smart contract defined in contractAddress. It is possible to add Metadata to the created token with a more detailed information about instead.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When minting a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "operationId": "MintMultiToken",
         "parameters": [
           {
@@ -23886,7 +23764,7 @@
     },
     "/v3/multitoken/burn": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Burn a fixed amount of Multi Tokens by id. This method destroys Multi Tokens from smart contract defined in contractAddress.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When burning a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Burn a fixed amount of Multi Tokens by id. This method destroys Multi Tokens from smart contract defined in contractAddress.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When burning a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "operationId": "BurnMultiToken",
         "parameters": [
           {
@@ -24038,7 +23916,7 @@
     },
     "/v3/multitoken/transaction": {
       "post": {
-        "description": "<p><b>2 credits per API call</b></p>\n<p>Transfer a certain amount of Multi Token from account to another account. Transfer Multi Tokens token from smart contract defined in contractAddress.</p>\n<p>Only 1 specific token with specified tokenId and value can be transferred. This method invokes ERC1155 method safeTransfer() to transfer the token in case of ETH, Celo and blockchains.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>Algorand</li>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When transferring a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
+        "description": "<p><b>2 credits per API call</b></p>\n<p>Transfer a certain amount of Multi Token from account to another account. Transfer Multi Tokens token from smart contract defined in contractAddress.</p>\n<p>Only 1 specific token with specified tokenId and value can be transferred. This method invokes ERC1155 method safeTransfer() to transfer the token in case of ETH, Celo and blockchains.</p>\n<p>This API is supported for the following blockchains:</p>\n<ul>\n<li>BNB Smart Chain</li>\n<li>Celo</li>\n<li>Ethereum</li>\n<li>Harmony</li>\n<li>Klaytn</li>\n<li>KuCoin Community Chain</li>\n<li>Polygon</li>\n</ul>\n<p><b>Signing a transaction</b></p>\n<p>When transferring a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>\n<p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>\n<p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href=\"https://github.com/tatumio/tatum-kms\" target=\"_blank\">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href=\"https://github.com/tatumio/tatum-js\" target=\"_blank\">Tatum JavaScript client</a>.</p>\n",
         "operationId": "TransferMultiToken",
         "parameters": [
           {
@@ -28959,8 +28837,9 @@
     },
     "/v3/algorand/transactions/{from}/{to}": {
       "get": {
-        "description": "<h4>1 credit per API call.</h4><br/><p>Get Algorand transaction by specified period of time.</p>",
+        "description": "<p><b>1 credit per API call</b></p>\n<p><b>This endpoint is deprecated.</b></p><br/>\n<p>Get Algorand transaction by specified period of time.</p>\n",
         "operationId": "AlgorandGetPayTransactionsByFromTo",
+        "deprecated": true,
         "parameters": [
           {
             "description": "Start timestamp in specified period of time",
@@ -34432,11 +34311,11 @@
           },
           "fee": {
             "type": "string",
-            "description": "The fee to be paid for the transaction (in ADA)",
+            "description": "The fee to be paid for the transaction (in ADA); if you are using this parameter, you have to also use the <code>changeAddress</code> parameter because these two parameters only work together.",
             "example": "0.0015"
           },
           "changeAddress": {
-            "description": "The blockchain address to send any extra assets remaning after covering the fee to",
+            "description": "The blockchain address to send any extra assets remaning after covering the fee to; if you are using this parameter, you have to also use the <code>fee</code> parameter because these two parameters only work together.",
             "type": "string",
             "example": "2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7",
             "minimum": 30,
@@ -34504,11 +34383,11 @@
           },
           "fee": {
             "type": "string",
-            "description": "The fee to be paid for the transaction (in ADA)",
+            "description": "The fee to be paid for the transaction (in ADA); if you are using this parameter, you have to also use the <code>changeAddress</code> parameter because these two parameters only work together.",
             "example": "0.0015"
           },
           "changeAddress": {
-            "description": "The blockchain address to send any extra assets remaning after covering the fee",
+            "description": "The blockchain address to send any extra assets remaning after covering the fee; if you are using this parameter, you have to also use the <code>fee</code> parameter because these two parameters only work together.",
             "type": "string",
             "example": "2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7",
             "minimum": 30,
@@ -34575,11 +34454,11 @@
           },
           "fee": {
             "type": "string",
-            "description": "The fee to be paid for the transaction (in ADA)",
+            "description": "The fee to be paid for the transaction (in ADA); if you are using this parameter, you have to also use the <code>changeAddress</code> parameter because these two parameters only work together.",
             "example": "0.0015"
           },
           "changeAddress": {
-            "description": "The blockchain address to send any extra assets remaning after covering the fee to",
+            "description": "The blockchain address to send any extra assets remaning after covering the fee to; if you are using this parameter, you have to also use the <code>fee</code> parameter because these two parameters only work together.",
             "type": "string",
             "example": "2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7",
             "minimum": 30,
@@ -34646,11 +34525,11 @@
           },
           "fee": {
             "type": "string",
-            "description": "The fee to be paid for the transaction (in ADA)",
+            "description": "The fee to be paid for the transaction (in ADA); if you are using this parameter, you have to also use the <code>changeAddress</code> parameter because these two parameters only work together.",
             "example": "0.0015"
           },
           "changeAddress": {
-            "description": "The blockchain address to send any extra assets remaning after covering the fee",
+            "description": "The blockchain address to send any extra assets remaning after covering the fee; if you are using this parameter, you have to also use the <code>fee</code> parameter because these two parameters only work together.",
             "type": "string",
             "example": "2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7",
             "minimum": 30,
@@ -35480,11 +35359,11 @@
           },
           "fee": {
             "type": "string",
-            "description": "The fee to be paid for the transaction (in DOGE)",
+            "description": "The fee to be paid for the transaction (in DOGE); if you are using this parameter, you have to also use the <code>changeAddress</code> parameter because these two parameters only work together.",
             "example": "0.0015"
           },
           "changeAddress": {
-            "description": "The blockchain address to send any extra assets remaning after covering the fee",
+            "description": "The blockchain address to send any extra assets remaning after covering the fee; if you are using this parameter, you have to also use the <code>fee</code> parameter because these two parameters only work together.",
             "type": "string",
             "example": "2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7",
             "minimum": 30,
@@ -35564,11 +35443,11 @@
           },
           "fee": {
             "type": "string",
-            "description": "The fee to be paid for the transaction (in DOGE)",
+            "description": "The fee to be paid for the transaction (in DOGE); if you are using this parameter, you have to also use the <code>changeAddress</code> parameter because these two parameters only work together.",
             "example": "0.0015"
           },
           "changeAddress": {
-            "description": "The blockchain address to send any extra assets remaning after covering the fee to",
+            "description": "The blockchain address to send any extra assets remaning after covering the fee to; if you are using this parameter, you have to also use the <code>fee</code> parameter because these two parameters only work together.",
             "type": "string",
             "example": "2MzNGwuKvMEvKMQogtgzSqJcH2UW3Tc5oc7",
             "minimum": 30,
@@ -44732,7 +44611,7 @@
             "description": "TRUE if the transaction was successful, FALSE, if the EVM reverted the transaction."
           },
           "blockNumber": {
-            "type": "number",
+            "type": ["number", "null"],
             "description": "Block number where this transaction was in.",
             "example": 6470854
           },
@@ -44768,7 +44647,7 @@
             "example": "0xbC546fa1716Ed886967cf73f40e8F2F5e623a92d"
           },
           "transactionIndex": {
-            "type": "number",
+            "type": ["number", "null"],
             "description": "Integer of the transactions index position in the block.",
             "example": 3
           },
@@ -44778,12 +44657,12 @@
             "example": "1000000000000000000"
           },
           "gasUsed": {
-            "type": "number",
+            "type": ["number", "null"],
             "description": "The amount of gas used by this specific transaction alone.",
             "example": 21000
           },
           "cumulativeGasUsed": {
-            "type": "number",
+            "type": ["number", "null"],
             "description": "The total amount of gas used when this transaction was executed in the block.",
             "example": 314159
           },
@@ -51563,7 +51442,7 @@
         "required": ["contractAddress", "params", "methodABI", "fromPrivateKey", "methodName"]
       },
       "CustomFee": {
-        "description": "Custom defined fee. If not present, it will be calculated automatically.",
+        "description": "The custom defined fee; if not present, will be calculated automatically.",
         "type": "object",
         "required": ["gasLimit", "gasPrice"],
         "properties": {
@@ -58565,7 +58444,7 @@
             "example": "20"
           }
         },
-        "required": ["senderAccountId", "address", "amount", "feeCurrency", "fromPrivateKey"]
+        "required": ["senderAccountId", "address", "amount", "feeCurrency", "privateKey"]
       },
       "TransferCeloMnemonic": {
         "type": "object",
@@ -66131,6 +66010,141 @@
           }
         }
       },
+      "NftMetadataErc721": {
+        "type": "object",
+        "properties": {
+          "data": {
+            "type": "string",
+            "description": "Metadata associated with token.",
+            "example": "https://my_token_data.com"
+          }
+        }
+      },
+      "NftProvenanceDataErc721": {
+        "type": "object",
+        "properties": {
+          "provenanceData": { "type": "string", "example": "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326" },
+          "tokenPrice": { "type": "string", "example": "123" }
+        }
+      },
+      "NftRoyaltyErc721": {
+        "type": "object",
+        "properties": {
+          "addresses": {
+            "type": "array",
+            "description": "The blockchain addresses where the royalty cashback will be sent every time the NFT is transferred",
+            "items": { "type": "string", "example": "0x94Ce79B9F001E25BBEbE7C01998A78F7B27D1326" }
+          },
+          "values": {
+            "type": "array",
+            "description": "The amounts of the royalties that will be paid to the authors of the NFT every time the NFT is transferred; the royalties are paid as a percentage of the NFT price (on Solana) or in a native blockchain currency (on the other supported blockchains)\n",
+            "items": { "type": "string", "example": "0.2" }
+          }
+        }
+      },
+      "NftTokenByAddressErc721": {
+        "type": "object",
+        "required": ["contractAddress", "balances", "metadata"],
+        "properties": {
+          "contractAddress": {
+            "type": "string",
+            "example": "43821281",
+            "description": "On Algorand, this is the asset ID (the ID of the NFT); on the other blockchains, this is the address of the NFT smart contract"
+          },
+          "balances": {
+            "type": "array",
+            "description": "On Algorand, an array of \"1\" to indicate that the NFTs with the specified IDs exist, or array with amount of fractions for <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>; on the other blockchains, this is an array of the IDs of the NFTs.",
+            "items": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
+          },
+          "blockNumber": {
+            "type": "array",
+            "description": "(EVM-based blockchains only) On EVM-based blockchains like Celo, Polygon or Ethereum, this is an array of block numbers, in which the NFT was received by the address",
+            "items": { "type": "number", "example": 13816552 }
+          },
+          "metadata": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/NftTokenByAddressErc721TokenMetadata" }
+          },
+          "supply": {
+            "type": "number",
+            "example": 10,
+            "description": "Only on Algorand, shows supply of <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>"
+          },
+          "decimals": {
+            "type": "number",
+            "example": 1,
+            "description": "Only on Algorand, shows decimals of <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>"
+          }
+        }
+      },
+      "NftTokenByAddressErc721TokenMetadata": {
+        "type": "object",
+        "properties": {
+          "tokenId": {
+            "description": "(EVM-based blockchains only) The ID of the NFT owned by this address.",
+            "type": "string",
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
+          },
+          "url": {
+            "description": "The URL pointing to the NFT metadata; the URL may not be present, and if it is not returned, you can get it by calling the NFT Contract.tokenURI() method",
+            "example": "ipfs://QmXFpaS3S7CkLZvihLFA9JbawKdqhjg8dJeDkPntmkD2Pc",
+            "type": "string"
+          },
+          "metadata": { "$ref": "#/components/schemas/NftTokenByAddressErc721Metadata" }
+        }
+      },
+      "NftTokenByAddressErc721Metadata": {
+        "type": "object",
+        "description": "The metadata scheme obtained from the metadata URL; the scheme may not be present, and if it is not returned, you can get it using the <a href=\"#operation/NftGetMetadataErc721\">NFT metadata API</a>",
+        "example": {
+          "name": "Example NFT name",
+          "description": "Example NFT description",
+          "image": "ipfs://QmP4R7ACZ7JRQ6sLdmnPHqjWEXxzdnPvhAV2f6RnQ8uxJ6"
+        }
+      },
+      "NftTokenByCollectionErc721": {
+        "type": "object",
+        "required": ["tokenId"],
+        "properties": {
+          "tokenId": {
+            "description": "ID of the token.",
+            "type": "string",
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
+          },
+          "metadata": { "$ref": "#/components/schemas/NftTokenByCollectionErc721TokenMetadata" }
+        }
+      },
+      "NftTokenByCollectionErc721TokenMetadata": {
+        "type": "object",
+        "required": ["tokenID"],
+        "properties": {
+          "tokenId": {
+            "description": "TokenID of the NFT token owned by this address.",
+            "type": "string",
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
+          },
+          "url": {
+            "description": "Metadata URL of the TokenID. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.",
+            "example": "ipfs://QmXFpaS3S7CkLZvihLFA9JbawKdqhjg8dJeDkPntmkD2Pc",
+            "type": "string"
+          },
+          "metadata": {
+            "type": "object",
+            "description": "Metadata scheme obtained from the url. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.",
+            "example": {
+              "name": "Example NFT name",
+              "description": "Example NFT description",
+              "image": "ipfs://QmP4R7ACZ7JRQ6sLdmnPHqjWEXxzdnPvhAV2f6RnQ8uxJ6"
+            }
+          }
+        }
+      },
       "TransferNftCelo": {
         "type": "object",
         "properties": {
@@ -66153,10 +66167,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "ID of token.",
-            "example": "100000",
+            "description": "ID of the token.",
             "type": "string",
-            "maxLength": 256
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "provenance": {
             "description": "True if the contract is provenance type",
@@ -66224,10 +66239,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "ID of token.",
-            "example": "100000",
+            "description": "ID of the token.",
             "type": "string",
-            "maxLength": 256
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 34,
@@ -66261,7 +66277,13 @@
           },
           "tokenId": {
             "type": "array",
-            "items": { "type": "number", "description": "ID of the minted token", "example": 12345 }
+            "items": {
+              "description": "ID of the minted token.",
+              "type": "string",
+              "maxLength": 78,
+              "example": "123",
+              "format": "uint256"
+            }
           }
         }
       },
@@ -66273,7 +66295,13 @@
             "description": "Transaction ID",
             "example": "d67787399d205139f4d6f42c2aa4fffdf6f247411fae3706e874fbba0ce04b1b"
           },
-          "tokenId": { "type": "number", "description": "ID of the minted token", "example": 12345 }
+          "tokenId": {
+            "description": "ID of the token.",
+            "type": "string",
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
+          }
         }
       },
       "SolanaMintedResult": {
@@ -66330,8 +66358,8 @@
           "tokenId": {
             "type": "array",
             "description": "ID of token to be created.",
-            "example": ["100000"],
-            "items": { "type": "string", "maxLength": 32 }
+            "example": ["123"],
+            "items": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
           },
           "url": {
             "description": "The URL pointing to the NFT metadata; for more information, see <a href=\"https://eips.ethereum.org/EIPS/eip-721#specification\" target=\"_blank\">EIP-721</a>",
@@ -66411,8 +66439,8 @@
           "tokenId": {
             "type": "array",
             "description": "ID of token to be created.",
-            "example": ["100000"],
-            "items": { "type": "string", "maxLength": 32 }
+            "example": ["123"],
+            "items": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
           },
           "url": {
             "description": "The URL pointing to the NFT metadata; for more information, see <a href=\"https://eips.ethereum.org/EIPS/eip-721#specification\" target=\"_blank\">EIP-721</a>",
@@ -66459,12 +66487,12 @@
             "type": "string"
           },
           "provenance": {
-            "description": "True if the contract is provenance percentage royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources avaiable here.</a>",
+            "description": "True if the contract is provenance percentage royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources available here.</a>",
             "example": false,
             "type": "boolean"
           },
           "cashback": {
-            "description": "True if the contract is fixed price royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources avaiable here.</a>",
+            "description": "True if the contract is fixed price royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources available here.</a>",
             "example": false,
             "type": "boolean"
           },
@@ -66579,12 +66607,12 @@
             "minimum": 0
           },
           "provenance": {
-            "description": "True if the contract is provenance percentage royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources avaiable here.</a>",
+            "description": "True if the contract is provenance percentage royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources available here.</a>",
             "example": false,
             "type": "boolean"
           },
           "cashback": {
-            "description": "True if the contract is fixed price royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources avaiable here.</a>",
+            "description": "True if the contract is fixed price royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources available here.</a>",
             "example": false,
             "type": "boolean"
           },
@@ -66669,8 +66697,8 @@
           "tokenId": {
             "type": "array",
             "description": "ID of token to be created.",
-            "example": ["100000"],
-            "items": { "type": "string", "maxLength": 32 }
+            "example": ["123"],
+            "items": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
           },
           "url": {
             "description": "The URL pointing to the NFT metadata; for more information, see <a href=\"https://eips.ethereum.org/EIPS/eip-721#specification\" target=\"_blank\">EIP-721</a>",
@@ -66761,8 +66789,8 @@
           "tokenId": {
             "type": "array",
             "description": "ID of token to be created.",
-            "example": ["100000"],
-            "items": { "type": "string", "maxLength": 32 }
+            "example": ["123"],
+            "items": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
           },
           "url": {
             "description": "The URL pointing to the NFT metadata; for more information, see <a href=\"https://eips.ethereum.org/EIPS/eip-721#specification\" target=\"_blank\">EIP-721</a>",
@@ -66807,9 +66835,10 @@
           },
           "tokenId": {
             "description": "ID of token to be destroyed.",
-            "example": "100000",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 42,
@@ -66914,9 +66943,10 @@
           },
           "tokenId": {
             "description": "ID of token to be destroyed.",
-            "example": "100000",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 34,
@@ -67057,9 +67087,10 @@
           },
           "tokenId": {
             "description": "ID of token to be destroyed.",
-            "example": "100000",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 42,
@@ -67111,9 +67142,10 @@
           },
           "tokenId": {
             "description": "ID of token to be destroyed.",
-            "example": "100000",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 34,
@@ -67152,9 +67184,10 @@
           },
           "tokenId": {
             "description": "ID of token to be destroyed.",
-            "example": "100000",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 36,
@@ -67191,9 +67224,10 @@
           },
           "tokenId": {
             "description": "ID of token to be destroyed.",
-            "example": "100000",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 36,
@@ -67236,9 +67270,10 @@
           },
           "tokenId": {
             "description": "ID of token to be destroyed.",
-            "example": "100000",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 36,
@@ -67674,9 +67709,10 @@
           },
           "tokenId": {
             "description": "ID of token to be sent.",
-            "example": "100000",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 36,
@@ -67720,9 +67756,10 @@
           },
           "tokenId": {
             "description": "ID of token to be sent.",
-            "example": "100000",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 36,
@@ -67772,9 +67809,10 @@
           },
           "tokenId": {
             "description": "ID of token to be sent.",
-            "example": "100000",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 36,
@@ -67819,7 +67857,13 @@
             "example": "0x4f54fAD27F7F46C102Cd49b8E75C5593397cd9c3",
             "description": "Contract address"
           },
-          "tokenId": { "type": "string", "example": "1", "description": "ID of the token" },
+          "tokenId": {
+            "description": "ID of the token.",
+            "type": "string",
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
+          },
           "from": {
             "type": "string",
             "example": "0x780c3de0aba1b51f04cfe8a5d9d277d4ad032b8d",
@@ -67843,10 +67887,11 @@
             "enum": ["CELO"]
           },
           "tokenId": {
-            "description": "The ID of the NFT to update royalty information for",
-            "example": "100000",
+            "description": "The ID of the NFT to update royalty information for.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 42,
@@ -67891,10 +67936,11 @@
             "enum": ["TRON"]
           },
           "tokenId": {
-            "description": "The ID of the NFT to update royalty information for",
-            "example": "100000",
+            "description": "The ID of the NFT to update royalty information for.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 34,
@@ -67933,10 +67979,11 @@
             "enum": ["CELO"]
           },
           "tokenId": {
-            "description": "The ID of the NFT to update royalty information for",
-            "example": "100000",
+            "description": "The ID of the NFT to update royalty information for.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 42,
@@ -67985,10 +68032,11 @@
             "enum": ["TRON"]
           },
           "tokenId": {
-            "description": "The ID of the NFT to update royalty information for",
-            "example": "100000",
+            "description": "The ID of the NFT to update royalty information for.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 34,
@@ -68058,10 +68106,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "ID of token.",
-            "example": "100000",
+            "description": "ID of the token.",
             "type": "string",
-            "maxLength": 256
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 42,
@@ -68140,10 +68189,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "ID of token.",
-            "example": "100000",
+            "description": "ID of the token.",
             "type": "string",
-            "maxLength": 256
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 34,
@@ -68196,10 +68246,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "The ID of the NFT",
-            "example": "100000",
+            "description": "The ID of the NFT.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "url": {
             "description": "The URL pointing to the NFT metadata; for more information, see <a href=\"https://eips.ethereum.org/EIPS/eip-721#specification\" target=\"_blank\">EIP-721</a>",
@@ -68285,10 +68336,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "The ID of the NFT",
-            "example": "100000",
+            "description": "The ID of the NFT.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "url": {
             "description": "The URL pointing to the NFT metadata; for more information, see <a href=\"https://eips.ethereum.org/EIPS/eip-721#specification\" target=\"_blank\">EIP-721</a>",
@@ -68351,10 +68403,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "The ID of the NFT",
-            "example": "100000",
+            "description": "The ID of the NFT.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "url": {
             "description": "The URL pointing to the NFT metadata; for more information, see <a href=\"https://eips.ethereum.org/EIPS/eip-721#specification\" target=\"_blank\">EIP-721</a>",
@@ -68444,10 +68497,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "The ID of the NFT",
-            "example": "100000",
+            "description": "The ID of the NFT.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "url": {
             "description": "The URL pointing to the NFT metadata; for more information, see <a href=\"https://eips.ethereum.org/EIPS/eip-721#specification\" target=\"_blank\">EIP-721</a>",
@@ -68518,10 +68572,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "ID of token.",
-            "example": "100000",
+            "description": "ID of the token.",
             "type": "string",
-            "maxLength": 256
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 42,
@@ -68558,25 +68613,7 @@
             "example": 1,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "chain", "contractAddress", "tokenId", "fromPrivateKey"]
       },
@@ -68609,7 +68646,14 @@
             "minLength": 106,
             "description": "Private key of sender address."
           },
-          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" }
+          "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
+          "amount": {
+            "description": "The total amount of the NFTs to transfer. Defaults to 1 - which means 1 NFT will be transferred. Value above 1 means, you are going to transfer <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>",
+            "example": 1,
+            "default": 1,
+            "minimum": 1,
+            "type": "number"
+          }
         },
         "required": ["to", "chain", "contractAddress", "fromPrivateKey"]
       },
@@ -68622,7 +68666,6 @@
             "description": "The blockchain to work with",
             "enum": ["ALGO"]
           },
-          "value": { "type": "string", "description": "Value to be sent.", "example": "1" },
           "to": {
             "maxLength": 58,
             "minLength": 58,
@@ -68645,18 +68688,11 @@
           },
           "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
           "amount": {
-            "description": "The total amount of the NFTs to transfer. Defaults to 1 - which means 1 NFT will be minted. Value above 1 means, you are going to transfer <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>",
+            "description": "The total amount of NFT fractions to transfer. Defaults to 1 - which means 1 fraction of NFT will be transferred. This is only valid for <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>",
             "example": 1,
             "default": 1,
-            "type": "number",
-            "minimum": 0
-          },
-          "decimals": {
-            "description": "The decimal places of the NFT to transfer. Defaults to 0 - which means regular NFT will be transfered. Value above 0 means, you are going to transfer <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>",
-            "example": 0,
-            "default": 0,
-            "type": "number",
-            "minimum": 0
+            "minimum": 0,
+            "type": "number"
           }
         },
         "required": ["to", "from", "chain", "contractAddress"]
@@ -68724,7 +68760,6 @@
             "description": "The blockchain to work with",
             "enum": ["ALGO"]
           },
-          "value": { "type": "string", "description": "Value to be sent.", "example": "1" },
           "from": {
             "maxLength": 58,
             "minLength": 58,
@@ -68752,10 +68787,12 @@
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "Identifier of the private key associated in signing application. Private key, or signature Id must be present."
           },
-          "index": {
+          "amount": {
+            "description": "The total amount of NFT fractions to transfer. Defaults to 1 - which means 1 fraction of NFT will be transferred. This is only valid for <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>",
+            "example": 1,
+            "default": 1,
             "type": "number",
-            "minimum": 0,
-            "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
+            "minimum": 0
           }
         },
         "required": ["to", "chain", "contractAddress", "from", "signatureId"]
@@ -68843,12 +68880,12 @@
             "minLength": 66
           },
           "provenance": {
-            "description": "True if the contract is provenance percentage royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources avaiable here.</a>",
+            "description": "True if the contract is provenance percentage royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources available here.</a>",
             "example": false,
             "type": "boolean"
           },
           "cashback": {
-            "description": "True if the contract is fixed price royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources avaiable here.</a>",
+            "description": "True if the contract is fixed price royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources available here.</a>",
             "example": false,
             "type": "boolean"
           },
@@ -68862,25 +68899,7 @@
             "minimum": 0,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["name", "chain", "symbol", "fromPrivateKey"]
       },
@@ -68901,12 +68920,12 @@
             "type": "string"
           },
           "provenance": {
-            "description": "True if the contract is provenance percentage royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources avaiable here.</a>",
+            "description": "True if the contract is provenance percentage royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources available here.</a>",
             "example": false,
             "type": "boolean"
           },
           "cashback": {
-            "description": "True if the contract is fixed price royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources avaiable here.</a>",
+            "description": "True if the contract is fixed price royalty type. False by default. <a href=\"https://github.com/tatumio/smart-contracts\" target=\"_blank\">Details and sources available here.</a>",
             "example": false,
             "type": "boolean"
           },
@@ -68938,25 +68957,7 @@
             "minimum": 0,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["name", "chain", "symbol", "signatureId"]
       },
@@ -68982,10 +68983,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "ID of token.",
-            "example": "100000",
+            "description": "ID of the token.",
             "type": "string",
-            "maxLength": 256
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 42,
@@ -69026,25 +69028,7 @@
             "example": 1,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "chain", "contractAddress", "signatureId", "tokenId"]
       },
@@ -69073,10 +69057,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "The ID of the NFT",
-            "example": "100000",
+            "description": "The ID of the NFT.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "url": {
             "description": "The URL pointing to the NFT metadata; for more information, see <a href=\"https://eips.ethereum.org/EIPS/eip-721#specification\" target=\"_blank\">EIP-721</a>",
@@ -69128,25 +69113,7 @@
             "minimum": 0,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "chain", "url", "fromPrivateKey", "tokenId", "contractAddress"]
       },
@@ -69182,10 +69149,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "The ID of the NFT",
-            "example": "100000",
+            "description": "The ID of the NFT.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "url": {
             "description": "The URL pointing to the NFT metadata; for more information, see <a href=\"https://eips.ethereum.org/EIPS/eip-721#specification\" target=\"_blank\">EIP-721</a>",
@@ -69284,18 +69252,19 @@
                 "minLength": 58
               },
               "total": {
-                "description": "The total amount of the NFTs to mint. Defaults to 1 - which means 1 NFT will be minted. Value above 1 means, you are going to mint <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>",
-                "example": 1,
+                "description": "The total amount of the NFTs to mint. Defaults to 1 - which means 1 NFT will be minted.<br/>Value above 1 means, you are going to mint <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>In this case value must be a power of 10 larger than 1 e.g. 10, 100, 1000...",
+                "example": 10,
                 "default": 1,
                 "type": "number",
-                "minimum": 1
+                "minimum": 10
               },
               "decimals": {
-                "description": "The decimal places of the NFT to mint. Defaults to 0 - which means 1 NFT will be minted. Value above 0 means, you are going to mint <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>",
-                "example": 0,
+                "description": "The decimal places of the NFT to mint. Defaults to 0 - which means 1 NFT will be minted.<br/>Value above 0 means, you are going to mint <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>In this case value must be equal to the logarithm in base 10 of total number of units (e.g. for total = 10, decimal will be 1)",
+                "example": 1,
                 "default": 0,
                 "type": "number",
-                "minimum": 0
+                "minimum": 1,
+                "maximum": 15
               }
             }
           }
@@ -69370,6 +69339,21 @@
                 "type": "string",
                 "maxLength": 58,
                 "minLength": 58
+              },
+              "total": {
+                "description": "The total amount of the NFTs to mint. Defaults to 1 - which means 1 NFT will be minted.<br/>Value above 1 means, you are going to mint <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>In this case value must be a power of 10 larger than 1 e.g. 10, 100, 1000...",
+                "example": 10,
+                "default": 1,
+                "type": "number",
+                "minimum": 10
+              },
+              "decimals": {
+                "description": "The decimal places of the NFT to mint. Defaults to 0 - which means 1 NFT will be minted.<br/>Value above 0 means, you are going to mint <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>In this case value must be equal to the logarithm in base 10 of total number of units (e.g. for total = 10, decimal will be 1)",
+                "example": 1,
+                "default": 0,
+                "type": "number",
+                "minimum": 1,
+                "maximum": 15
               }
             }
           }
@@ -69412,11 +69396,6 @@
             "example": "26d3883e-4e17-48b3-a0ee-09a3e484ac83",
             "description": "The KMS identifier of the private key of the minting account; the transaction fee will be paid from this account"
           },
-          "index": {
-            "type": "number",
-            "minimum": 0,
-            "description": "If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic."
-          },
           "fee": { "description": "The transaction fee in Algos", "type": "string", "example": "0.001" },
           "attr": {
             "type": "object",
@@ -69455,6 +69434,21 @@
                 "type": "string",
                 "maxLength": 58,
                 "minLength": 58
+              },
+              "total": {
+                "description": "The total amount of the NFTs to mint. Defaults to 1 - which means 1 NFT will be minted.<br/>Value above 1 means, you are going to mint <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>In this case value must be a power of 10 larger than 1 e.g. 10, 100, 1000...",
+                "example": 10,
+                "default": 1,
+                "type": "number",
+                "minimum": 10
+              },
+              "decimals": {
+                "description": "The decimal places of the NFT to mint. Defaults to 0 - which means 1 NFT will be minted.<br/>Value above 0 means, you are going to mint <a href=\"https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts\" target=\"_blank\">Fractional NFTs.</a>In this case value must be equal to the logarithm in base 10 of total number of units (e.g. for total = 10, decimal will be 1)",
+                "example": 1,
+                "default": 0,
+                "type": "number",
+                "minimum": 1,
+                "maximum": 15
               }
             }
           }
@@ -69486,10 +69480,11 @@
             "type": "string"
           },
           "tokenId": {
-            "description": "The ID of the NFT",
-            "example": "100000",
+            "description": "The ID of the NFT.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "url": {
             "description": "The URL pointing to the NFT metadata; for more information, see <a href=\"https://eips.ethereum.org/EIPS/eip-721#specification\" target=\"_blank\">EIP-721</a>",
@@ -69545,25 +69540,7 @@
             "minimum": 0,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "chain", "url", "contractAddress", "signatureId", "tokenId"]
       },
@@ -69976,8 +69953,8 @@
           "tokenId": {
             "type": "array",
             "description": "ID of token to be created.",
-            "example": ["100000"],
-            "items": { "type": "string", "maxLength": 32 }
+            "example": ["123"],
+            "items": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
           },
           "url": {
             "type": "array",
@@ -70037,25 +70014,7 @@
             "description": "The blockchain address of the custom fungible token",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "chain", "url", "contractAddress", "fromPrivateKey", "tokenId"]
       },
@@ -70077,8 +70036,8 @@
           "tokenId": {
             "type": "array",
             "description": "ID of token to be created.",
-            "example": ["100000"],
-            "items": { "type": "string", "maxLength": 32 }
+            "example": ["123"],
+            "items": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
           },
           "minter": {
             "maxLength": 42,
@@ -70126,8 +70085,8 @@
           "tokenId": {
             "type": "array",
             "description": "ID of token to be created.",
-            "example": ["100000"],
-            "items": { "type": "string", "maxLength": 32 }
+            "example": ["123"],
+            "items": { "type": "string", "maxLength": 78, "example": "123", "format": "uint256" }
           },
           "url": {
             "type": "array",
@@ -70191,25 +70150,7 @@
             "description": "The blockchain address of the custom fungible token",
             "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "chain", "contractAddress", "tokenId", "url", "signatureId"]
       },
@@ -70223,10 +70164,11 @@
             "enum": ["ETH", "MATIC", "KCS", "ONE", "KLAY", "BSC"]
           },
           "tokenId": {
-            "description": "The ID of the NFT to burn",
-            "example": "100000",
+            "description": "The ID of the NFT to burn.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 42,
@@ -70247,25 +70189,7 @@
             "minimum": 0,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "chain", "url", "contractAddress", "fromPrivateKey", "tokenId"]
       },
@@ -70304,25 +70228,7 @@
             "minimum": 0,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "feeCurrency": {
             "type": "string",
             "description": "(Celo only) The currency in which the transaction fee will be paid",
@@ -70341,10 +70247,11 @@
             "enum": ["BSC", "ETH", "KCS", "KLAY", "MATIC", "ONE"]
           },
           "tokenId": {
-            "description": "The ID of the NFT to update royalty information for",
-            "example": "100000",
+            "description": "The ID of the NFT to update royalty information for.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 42,
@@ -70374,25 +70281,7 @@
             "minimum": 0,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "chain", "url", "contractAddress", "tokenId", "cashbackValue", "signatureId"]
       },
@@ -70406,10 +70295,11 @@
             "enum": ["BSC", "ETH", "KCS", "KLAY", "MATIC", "ONE"]
           },
           "tokenId": {
-            "description": "The ID of the NFT to update royalty information for",
-            "example": "100000",
+            "description": "The ID of the NFT to update royalty information for.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 42,
@@ -70435,25 +70325,7 @@
             "minimum": 0,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "chain", "url", "cashbackValue", "contractAddress", "fromPrivateKey", "tokenId"]
       },
@@ -70467,10 +70339,11 @@
             "enum": ["ETH", "MATIC", "KCS", "ONE", "KLAY", "BSC"]
           },
           "tokenId": {
-            "description": "The ID of the NFT to burn",
-            "example": "100000",
+            "description": "The ID of the NFT to burn.",
             "type": "string",
-            "maxLength": 32
+            "maxLength": 78,
+            "example": "123",
+            "format": "uint256"
           },
           "contractAddress": {
             "maxLength": 42,
@@ -70495,25 +70368,7 @@
             "minimum": 0,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          }
+          "fee": { "$ref": "#/components/schemas/CustomFee" }
         },
         "required": ["to", "chain", "url", "contractAddress", "tokenId", "signatureId"]
       },
@@ -70556,25 +70411,7 @@
             "minimum": 0,
             "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
           },
-          "fee": {
-            "description": "The custom defined fee; if not present, will be calculated automatically",
-            "type": "object",
-            "required": ["gasLimit", "gasPrice"],
-            "properties": {
-              "gasLimit": {
-                "type": "string",
-                "description": "Gas limit for transaction in gas price.",
-                "pattern": "^[+]?\\d+$",
-                "example": "40000"
-              },
-              "gasPrice": {
-                "type": "string",
-                "description": "Gas price in Gwei.",
-                "pattern": "^[+]?\\d+$",
-                "example": "20"
-              }
-            }
-          },
+          "fee": { "$ref": "#/components/schemas/CustomFee" },
           "feeCurrency": {
             "type": "string",
             "description": "(Celo only) The currency in which the transaction fee will be paid",
@@ -70589,7 +70426,13 @@
           "data": {
             "type": "array",
             "description": "The array returning the ID of the NFTs",
-            "items": { "type": "string", "description": "The ID of the NFT", "example": "10" }
+            "items": {
+              "description": "The ID of the NFT.",
+              "type": "string",
+              "maxLength": 78,
+              "example": "123",
+              "format": "uint256"
+            }
           }
         }
       },
@@ -71171,9 +71014,9 @@
           },
           "digits": {
             "description": "Number of decimal points",
-            "example": 18,
-            "maximum": 19,
-            "minimum": 1,
+            "example": 1,
+            "maximum": 15,
+            "minimum": 0,
             "type": "number"
           },
           "url": {
@@ -71227,8 +71070,8 @@
           "digits": {
             "description": "Number of decimal points",
             "example": 18,
-            "maximum": 19,
-            "minimum": 1,
+            "maximum": 15,
+            "minimum": 0,
             "type": "number"
           },
           "from": {
@@ -74128,7 +73971,7 @@
             "type": "string",
             "example": "ETH",
             "description": "Chain to work with.",
-            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC", "ALGO"]
+            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC"]
           },
           "to": {
             "maxLength": 42,
@@ -74374,7 +74217,7 @@
             "type": "string",
             "example": "ETH",
             "description": "Chain to work with.",
-            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC", "ALGO"]
+            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC"]
           },
           "to": {
             "maxLength": 42,
@@ -74523,7 +74366,7 @@
             "type": "string",
             "example": "ETH",
             "description": "Chain to work with.",
-            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC", "ALGO"]
+            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC"]
           },
           "tokenId": {
             "description": "ID of token to be created.",
@@ -74593,7 +74436,7 @@
             "type": "string",
             "example": "ETH",
             "description": "Chain to work with.",
-            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC", "ALGO"]
+            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC"]
           },
           "tokenId": {
             "description": "ID of token to be created.",
@@ -74809,7 +74652,7 @@
             "type": "string",
             "example": "ETH",
             "description": "Chain to work with.",
-            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC", "ALGO"]
+            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC"]
           },
           "account": {
             "maxLength": 42,
@@ -74949,7 +74792,7 @@
             "type": "string",
             "example": "ETH",
             "description": "Chain to work with.",
-            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC", "ALGO"]
+            "enum": ["ETH", "ONE", "MATIC", "KCS", "KLAY", "BSC"]
           },
           "account": {
             "maxLength": 42,

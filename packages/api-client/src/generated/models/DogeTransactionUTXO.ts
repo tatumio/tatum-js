@@ -42,11 +42,11 @@ export type DogeTransactionUTXO = {
         value: number;
     }>;
     /**
-     * The fee to be paid for the transaction (in DOGE)
+     * The fee to be paid for the transaction (in DOGE); if you are using this parameter, you have to also use the <code>changeAddress</code> parameter because these two parameters only work together.
      */
     fee?: string;
     /**
-     * The blockchain address to send any extra assets remaning after covering the fee to
+     * The blockchain address to send any extra assets remaning after covering the fee to; if you are using this parameter, you have to also use the <code>fee</code> parameter because these two parameters only work together.
      */
     changeAddress?: string;
 }

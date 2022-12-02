@@ -1,9 +1,8 @@
 import { TatumAlgoSDK } from '@tatumio/algo'
 import { Currency } from '@tatumio/api-client'
-import { sdkArguments } from '../index'
 
 export async function algoSubscriptionsExample() {
-  const algoSDK = TatumAlgoSDK(sdkArguments)
+  const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
   // generate wallet
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet

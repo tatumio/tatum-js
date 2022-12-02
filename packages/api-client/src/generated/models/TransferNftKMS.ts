@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type TransferNftKMS = {
     /**
      * If token to be transferred is Royalty NFT token, this is a value to be paid as a cashback to the authors of the token.
@@ -16,7 +18,7 @@ export type TransferNftKMS = {
      */
     to: string;
     /**
-     * ID of token.
+     * ID of the token.
      */
     tokenId: string;
     /**
@@ -47,17 +49,5 @@ export type TransferNftKMS = {
      * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * The custom defined fee; if not present, will be calculated automatically
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

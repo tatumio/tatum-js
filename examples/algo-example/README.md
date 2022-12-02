@@ -71,10 +71,10 @@ You can find examples [here](./src/app/algo.subscriptions.example.ts).
 
 You can find examples [here](./src/app/algo.nft.example.ts).
 
-### How to create NFT token with express
+### How to create, transfer and burn Fracional NFTs token
 
-You can find examples [here](./src/app/algo.nft.express.mint.example.ts).
+You can find examples [here](./src/app/algo.nft.example.ts).
 
-### How to create, transfer and burn ASA (ERC20) token
+### How to create, transfer and burn fungible ASA (ERC20) token
 
-You can find examples [here](./src/app/algo.asa.example.ts).
+You can find examples [here](./src/app/algo.fungible.example.ts).

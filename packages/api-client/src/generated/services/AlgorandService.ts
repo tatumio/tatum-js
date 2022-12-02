@@ -341,8 +341,12 @@ export class AlgorandService {
     }
 
     /**
+     * @deprecated
      * Get Algorand Transactions between from and to
-     * <h4>1 credit per API call.</h4><br/><p>Get Algorand transaction by specified period of time.</p>
+     * <p><b>1 credit per API call</b></p>
+     * <p><b>This endpoint is deprecated.</b></p><br/>
+     * <p>Get Algorand transaction by specified period of time.</p>
+     *
      * @param from Start timestamp in specified period of time
      * @param to End timestamp in specified period of time
      * @param limit page size for pagination

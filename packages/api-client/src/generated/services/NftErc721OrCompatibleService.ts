@@ -59,6 +59,11 @@ import type { MintNftSolanaKMS } from '../models/MintNftSolanaKMS';
 import type { MintNftTron } from '../models/MintNftTron';
 import type { NftGetBalanceSc } from '../models/NftGetBalanceSc';
 import type { NftGetBalanceScAlgo } from '../models/NftGetBalanceScAlgo';
+import type { NftMetadataErc721 } from '../models/NftMetadataErc721';
+import type { NftProvenanceDataErc721 } from '../models/NftProvenanceDataErc721';
+import type { NftRoyaltyErc721 } from '../models/NftRoyaltyErc721';
+import type { NftTokenByAddressErc721 } from '../models/NftTokenByAddressErc721';
+import type { NftTokenByCollectionErc721 } from '../models/NftTokenByCollectionErc721';
 import type { NftTx } from '../models/NftTx';
 import type { SignatureId } from '../models/SignatureId';
 import type { SolanaMintedResult } from '../models/SolanaMintedResult';
@@ -500,7 +505,7 @@ export class NftErc721OrCompatibleService {
                  * "minter": "0x542b9ac4945a3836fd12ad98acbc76a0c8b743f5",
                  * "chain": "MATIC"
                  * }</pre>
-                 * The blockchain fee of the performed transaction is paid from the address connected with built-in private key and is debitted in form of credits. The credits are debitted only if NFT mint requests are performed with paid API key plan.
+                 * The blockchain fee of the performed transaction is paid from the address connected with built-in private key and is debited in form of credits. The credits are debited only if NFT mint requests are performed with paid API key plan.
                  * We transform fee to the credits in accordance to the rates provided by the Tatum.
                  * If you want to batch mint on ERC-721 contract which is not deployed via Tatum API, your smart contract must contain this method:
                  * <pre>mintMultiple(address[] to, uint256[] tokenId, string[] uri): boolean</pre>
@@ -672,7 +677,7 @@ export class NftErc721OrCompatibleService {
                  * @param offset Offset to obtain next page of the data.
                  * @param from Transactions from this block onwards will be included.
                  * @param to Transactions up to this block will be included.
-                 * @returns any OK
+                 * @returns NftTx OK
                  * @throws ApiError
                  */
                 public static nftGetTransactionByAddress(
@@ -705,18 +710,18 @@ export class NftErc721OrCompatibleService {
                  * Get NFT transactions for an NFT
                  * <p><b>1 credit per API call</b></p> <p>Get incoming and outgoing transactions for an NFT.</p> <p>This API is supported for the following blockchains:</p> <ul> <li>Celo</li> <li>Ethereum</li> <li>Polygon</li> </ul>
                  * @param chain The blockchain to work with
-                 * @param tokenId NFT Token ID
+                 * @param tokenId NFT Token ID.
                  * @param tokenAddress Address of the token smart contract
                  * @param pageSize Max number of items per page is 50.
                  * @param offset Offset to obtain next page of the data.
                  * @param from Transactions from this block onwards will be included.
                  * @param to Transactions up to this block will be included.
-                 * @returns any OK
+                 * @returns NftTx OK
                  * @throws ApiError
                  */
                 public static nftGetTransactionByToken(
                     chain: 'CELO' | 'ETH' | 'MATIC',
-                    tokenId: number,
+                    tokenId: string,
                     tokenAddress: string,
                     pageSize: number,
                     offset?: number,
@@ -790,6 +795,7 @@ export class NftErc721OrCompatibleService {
                  * <p>This API is supported for the following blockchains:</p>
                  * <ul>
                  * <li>Algorand</li>
+                 * <li>BNB Smart Chain - mainnet only</li>
                  * <li>Celo</li>
                  * <li>Ethereum</li>
                  * <li>Polygon</li>
@@ -799,40 +805,13 @@ export class NftErc721OrCompatibleService {
                  *
                  * @param chain The blockchain to work with
                  * @param address The blockchain address that you want to get the token balance of
-                 * @returns any OK
+                 * @returns NftTokenByAddressErc721 OK
                  * @throws ApiError
                  */
                 public static nftGetTokensByAddressErc721(
-                    chain: 'ALGO' | 'CELO' | 'ETH' | 'MATIC' | 'SOL',
+                    chain: 'ALGO' | 'BSC' | 'CELO' | 'ETH' | 'MATIC' | 'SOL',
                     address: string,
-                ): CancelablePromise<Array<{
-                    /**
-                     * On Algorand, this is the asset ID (the ID of the NFT); on the other blockchains, this is the address of the NFT smart contract
-                     */
-                    contractAddress: string;
-                    /**
-                     * On Algorand, this is an array of <code>1</code> to indicate that the NFTs with the specified IDs exist; on the other blockchains, this is an array of the IDs of the NFTs
-                     */
-                    balances: Array<string>;
-                    /**
-                     * (EVM-based blockchains only) On EVM-based blockchains like Celo, Polygon or Ethereum, this is an array of block numbers, in which the NFT was received by the address
-                     */
-                    blockNumber?: Array<number>;
-                    metadata: Array<{
-                        /**
-                         * The ID of the NFT owned by this address
-                         */
-                        tokenId?: string;
-                        /**
-                         * The URL pointing to the NFT metadata; the URL may not be present, and if it is not returned, you can get it by calling the NFT Contract.tokenURI() method
-                         */
-                        url?: string;
-                        /**
-                         * The metadata scheme obtained from the metadata URL; the scheme may not be present, and if it is not returned, you can get it using the <a href="#operation/NftGetMetadataErc721">NFT metadata API</a>
-                         */
-                        metadata?: any;
-                    }>;
-                }>> {
+                ): CancelablePromise<Array<NftTokenByAddressErc721>> {
                     return __request({
                         method: 'GET',
                         path: `/v3/nft/address/balance/${chain}/${address}`,
@@ -860,7 +839,7 @@ export class NftErc721OrCompatibleService {
                  * @param pageSize Max number of items per page is 50.
                  * @param address The blockchain address of the collection
                  * @param offset Offset to obtain next page of the data.
-                 * @returns any OK
+                 * @returns NftTokenByCollectionErc721 OK
                  * @throws ApiError
                  */
                 public static nftGetTokensByCollectionErc721(
@@ -868,26 +847,7 @@ export class NftErc721OrCompatibleService {
                     pageSize: number,
                     address: string,
                     offset?: number,
-                ): CancelablePromise<Array<{
-                    /**
-                     * ID of the token.
-                     */
-                    tokenId: string;
-                    metadata: Array<{
-                        /**
-                         * TokenID of the NFT token owned by this address.
-                         */
-                        tokenId?: string;
-                        /**
-                         * Metadata URL of the TokenID. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
-                         */
-                        url?: string;
-                        /**
-                         * Metadata scheme obtained from the url. This data don't have to be present, safest way (if not present) is to obtain them from the NFT Contract.tokenURI() method call.
-                         */
-                        metadata?: any;
-                    }>;
-                }>> {
+                ): CancelablePromise<Array<NftTokenByCollectionErc721>> {
                     return __request({
                         method: 'GET',
                         path: `/v3/nft/collection/${chain}/${address}`,
@@ -973,27 +933,22 @@ export class NftErc721OrCompatibleService {
                  *
                  * @param chain The blockchain to work with
                  * @param contractAddress The blockchain address of the NFT to get metadata for
-                 * @param token The ID of the NFT to get metadata for<br/>Do <b>not</b> use this parameter if you are getting metadata for an NFT on Solana, this parameter is irrelevant on Solana.
+                 * @param tokenId The ID of the NFT to get metadata for<br/>Do <b>not</b> use this parameter if you are getting metadata for an NFT on Solana, this parameter is irrelevant on Solana.
                  * @param account (Flow only) The account that holds the NFT
                  * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
-                 * @returns any OK
+                 * @returns NftMetadataErc721 OK
                  * @throws ApiError
                  */
                 public static nftGetMetadataErc721(
                     chain: 'BSC' | 'CELO' | 'ETH' | 'FLOW' | 'KCS' | 'KLAY' | 'MATIC' | 'ONE' | 'SOL' | 'TRON',
                     contractAddress: string,
-                    token: string,
+                    tokenId: string,
                     account?: string,
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-                ): CancelablePromise<{
-                    /**
-                     * The URL pointing to the NFT metadata
-                     */
-                    data?: string;
-                }> {
+                ): CancelablePromise<NftMetadataErc721> {
                     return __request({
                         method: 'GET',
-                        path: `/v3/nft/metadata/${chain}/${contractAddress}/${token}`,
+                        path: `/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`,
                         headers: {
                             'x-testnet-type': xTestnetType,
                         },
@@ -1027,9 +982,9 @@ export class NftErc721OrCompatibleService {
                  *
                  * @param chain The blockchain to work with
                  * @param contractAddress The blockchain address of the NFT to get provenance information for
-                 * @param tokenId The ID of the NFT to get provenance information for
+                 * @param tokenId The ID of the NFT to get provenance information for.
                  * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
-                 * @returns any OK
+                 * @returns NftProvenanceDataErc721 OK
                  * @throws ApiError
                  */
                 public static nftGetProvenanceDataErc721(
@@ -1037,10 +992,7 @@ export class NftErc721OrCompatibleService {
                     contractAddress: string,
                     tokenId: string,
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-                ): CancelablePromise<Array<{
-                    provenanceData?: string;
-                    tokenPrice?: string;
-                }>> {
+                ): CancelablePromise<Array<NftProvenanceDataErc721>> {
                     return __request({
                         method: 'GET',
                         path: `/v3/nft/provenance/${chain}/${contractAddress}/${tokenId}`,
@@ -1075,30 +1027,20 @@ export class NftErc721OrCompatibleService {
                  *
                  * @param chain The blockchain to work with
                  * @param contractAddress The blockchain address of the NFT to get royalty information for
-                 * @param token The ID of the NFT to get royalty information for<br/>Do <b>not</b> use this parameter if you are getting metadata for an NFT on Solana, this parameter is irrelevant on Solana
+                 * @param tokenId The ID of the NFT to get royalty information for<br/>Do <b>not</b> use this parameter if you are getting metadata for an NFT on Solana, this parameter is irrelevant on Solana.
                  * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
-                 * @returns any OK
+                 * @returns NftRoyaltyErc721 OK
                  * @throws ApiError
                  */
                 public static nftGetRoyaltyErc721(
                     chain: 'BSC' | 'CELO' | 'ETH' | 'KCS' | 'KLAY' | 'MATIC' | 'ONE' | 'SOL' | 'TRON',
                     contractAddress: string,
-                    token?: string,
+                    tokenId: string,
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-                ): CancelablePromise<{
-                    /**
-                     * The blockchain addresses where the royalty cashback will be sent every time the NFT is transferred
-                     */
-                    addresses?: Array<string>;
-                    /**
-                     * The amounts of the royalties that will be paid to the authors of the NFT every time the NFT is transferred; the royalties are paid as a percentage of the NFT price (on Solana) or in a native blockchain currency (on the other supported blockchains)
-                     *
-                     */
-                    values?: Array<string>;
-                }> {
+                ): CancelablePromise<NftRoyaltyErc721> {
                     return __request({
                         method: 'GET',
-                        path: `/v3/nft/royalty/${chain}/${contractAddress}/${token}`,
+                        path: `/v3/nft/royalty/${chain}/${contractAddress}/${tokenId}`,
                         headers: {
                             'x-testnet-type': xTestnetType,
                         },

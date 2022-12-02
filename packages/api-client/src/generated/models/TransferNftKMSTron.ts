@@ -20,7 +20,7 @@ export type TransferNftKMSTron = {
      */
     to: string;
     /**
-     * ID of token.
+     * ID of the token.
      */
     tokenId: string;
     /**
