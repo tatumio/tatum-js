@@ -478,6 +478,11 @@ export const solanaMarketPlaceServiceNew = (
       ),
     )
 
+    if (params.signatureId) {
+      transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+      return { txData: transaction.compileMessage().serialize().toString('hex') }
+    }
+
     const signers = [web3.generateKeyPair(params.fromPrivateKey)]
     return {
       txId: await connection.sendTransaction(transaction, signers),
@@ -545,6 +550,11 @@ export const solanaMarketPlaceServiceNew = (
         },
       ),
     )
+
+    if (params.signatureId) {
+      transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+      return { txData: transaction.compileMessage().serialize().toString('hex') }
+    }
 
     const signers = [web3.generateKeyPair(params.fromPrivateKey)]
     return {
@@ -656,6 +666,11 @@ export const solanaMarketPlaceServiceNew = (
 
     if (authorityPrivateKey) {
       signers.push(web3.generateKeyPair(authorityPrivateKey))
+    }
+
+    if (body.signatureId) {
+      transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+      return { txData: transaction.compileMessage().serialize().toString('hex') }
     }
 
     return {
@@ -1014,6 +1029,11 @@ export const solanaMarketPlaceServiceNew = (
     transaction.add(executeSaleInstruction)
     transaction.add(printPurchaseReceiptInstruction)
 
+    if (params.signatureId) {
+      transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+      return { txData: transaction.compileMessage().serialize().toString('hex') }
+    }
+
     const signers = [web3.generateKeyPair(fromPrivateKey)]
 
     if (authorityPrivateKey) {
@@ -1091,6 +1111,11 @@ export const solanaMarketPlaceServiceNew = (
     transaction.add(cancelInstruction)
     transaction.add(cancelListingReceiptInstruction)
 
+    if (params.signatureId) {
+      transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+      return { txData: transaction.compileMessage().serialize().toString('hex') }
+    }
+
     const signers = [web3.generateKeyPair(fromPrivateKey)]
 
     if (authorityPrivateKey) {
@@ -1142,6 +1167,11 @@ export const solanaMarketPlaceServiceNew = (
 
     transaction.add(withdrawFromTreasuryInstruction)
 
+    if (params.signatureId) {
+      transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+      return { txData: transaction.compileMessage().serialize().toString('hex') }
+    }
+
     const signers = [web3.generateKeyPair(fromPrivateKey)]
 
     return {
@@ -1186,6 +1216,11 @@ export const solanaMarketPlaceServiceNew = (
     const transaction = new Transaction({ feePayer: feePayerKey })
 
     transaction.add(withdrawFromTreasuryInstruction)
+
+    if (params.signatureId) {
+      transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+      return { txData: transaction.compileMessage().serialize().toString('hex') }
+    }
 
     const signers = [web3.generateKeyPair(fromPrivateKey)]
 
