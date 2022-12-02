@@ -9,9 +9,9 @@ import { algoWalletExample } from './app/algo.wallet.examples'
 import { algoNftFractionalExample } from './app/algo.nft.fractional.example'
 
 /**
- * This is example app, which shows how to use ALGO SDK.
- * For more details, see README or checkout our documentation at https://apidoc.tatum.io/tag/Algorand
+ * This is an example app that shows how to use the Tatum JavaScript SDK for Algorand. For more details, see the README or check out the API Reference for Algorand at https://apidoc.tatum.io/tag/Algorand.
  */
+
 const examples = async () => {
   console.log(`Running algoWalletExample`)
   await algoWalletExample()

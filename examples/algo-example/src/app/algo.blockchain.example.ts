@@ -3,7 +3,7 @@ import { TatumAlgoSDK } from '@tatumio/algo'
 const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function algoBlockchainExample() {
-  // Get current block
+  // Get the current block.
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGetCurrentBlock
   const currentBlock = await algoSDK.blockchain.getCurrentBlock()
   console.log(`Current block in blockchain is ${currentBlock}.`)
