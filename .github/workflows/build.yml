@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - master
-      - hotfix/estimate-TT-4484-2
 
 env:
   NX_CLOUD_DISTRIBUTED_EXECUTION: true
