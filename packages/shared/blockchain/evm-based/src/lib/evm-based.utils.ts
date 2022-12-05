@@ -119,7 +119,7 @@ export const evmBasedUtils = {
       nonce: body.nonce,
       gasPrice: body.gasPrice
         ? `0x${new BigNumber(toWei(body.gasPrice, 'gwei')).toString(16)}`
-        : await web3.getGasPriceInWei(),
+        : await web3.getGasPriceInWei(provider),
     }
 
     return evmBasedUtils.prepareSignedTransactionAbstraction(
@@ -130,6 +130,7 @@ export const evmBasedUtils = {
       body.fromPrivateKey,
       body.gasLimit,
       body.gasPrice,
+      provider
     )
   },
   tryCatch: async (method: () => any, code: SdkErrorCode) => {
