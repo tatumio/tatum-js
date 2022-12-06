@@ -662,15 +662,15 @@ export const solanaMarketPlaceServiceNew = (
 
     transaction.add(printListingReceiptInstruction)
 
+    if (body.signatureId) {
+      transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
+      return { txData: transaction.compileMessage().serialize().toString('hex') }
+    }
+
     const signers = [web3.generateKeyPair(fromPrivateKey)]
 
     if (authorityPrivateKey) {
       signers.push(web3.generateKeyPair(authorityPrivateKey))
-    }
-
-    if (body.signatureId) {
-      transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
-      return { txData: transaction.compileMessage().serialize().toString('hex') }
     }
 
     return {
