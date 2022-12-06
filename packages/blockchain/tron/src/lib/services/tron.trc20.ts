@@ -13,7 +13,6 @@ import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abst
 type TransferTronTrc20 = FromPrivateKeyOrSignatureIdTron<TransferTronTrc20Blockchain>
 type CreateTronTrc20 = FromPrivateKeyOrSignatureIdTron<CreateTronTrc20Blockchain>
 
-// TODO: do a balance check before sending tx - https://app.clickup.com/t/24443045/TT-3496
 const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronWeb, provider?: string) => {
   const { to, tokenAddress, amount, feeLimit } = body
 
@@ -21,6 +20,15 @@ const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronW
   client.setAddress(tokenAddress)
   const contractInstance = await client.contract().at(tokenAddress)
   const decimals = await contractInstance.decimals().call()
+
+  const from = body.signatureId
+    ? body.from
+    : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
+  const balance = ((await contractInstance.balanceOf(from).call()) as BigNumber).toNumber()
+  const valueToSend = new BigNumber(amount).multipliedBy(new BigNumber(10).pow(decimals))
+  if (valueToSend.isGreaterThan(new BigNumber(balance || 0))) {
+    throw new Error('Insufficient TRC20 balance')
+  }
 
   const tokenAddressHex = client.address.toHex(tokenAddress)
   const methodName = 'transfer(address,uint256)'
@@ -39,10 +47,10 @@ const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronW
       methodName,
       {
         feeLimit: feeLimitSun,
-        from: body.from,
+        from,
       },
       params,
-      body.from,
+      from,
     )
     return JSON.stringify(transaction)
   } else {
@@ -51,10 +59,10 @@ const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronW
       methodName,
       {
         feeLimit: feeLimitSun,
-        from: client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey)),
+        from,
       },
       params,
-      client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey)),
+      from,
     )
     return JSON.stringify(await client.trx.sign(transaction, body.fromPrivateKey))
   }

@@ -39,6 +39,15 @@ export async function tronTrc20Example() {
   // Please note that tokens might not appear immediately on the blockchain so in order to execute
   // all examples at once you should set some timeout between the calls or execute examples separately
 
+  // https://apidoc.tatum.io/tag/Tron#operation/TronGetAccount
+  const { trc20 } = await tronSdk.blockchain.getAccount(address)
+  const balanceItem = ((trc20 as any[]) || []).find((e) => {
+    const [token] = Object.keys(e)
+    return token === tokenAddress
+  })
+  const balance = balanceItem ? Object.values(balanceItem)[0] : -1
+  console.log(`Balance TRC20 token(s): ${tokenAddress} for address ${address} is ${balance}`)
+
   // transfer trc20 token
   // https://apidoc.tatum.io/tag/Tron#operation/TronTransferTrc20
   const trc20Transffered = (await tronSdk.trc20.send.signedTransaction({
