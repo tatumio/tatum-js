@@ -50,7 +50,7 @@ import {
 } from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/withdrawFromFee'
 import { solanaUtils } from '@tatumio/solana'
 import BigNumber from 'bignumber.js'
-import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { SdkError, SdkErrorCode, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import _ from 'lodash'
 import {
   ApiServices,
@@ -71,12 +71,16 @@ export const TREASURY = 'treasury'
 export const BID_RECEIPT = 'bid_receipt'
 export const PURCHASE_RECEIPT = 'purchase_receipt'
 
-export type CreateSolanaMarketplace = FromPrivateKeyOrSignatureId<GenerateMarketplaceSolana>
-export type UpdateSolanaMarketplace = FromPrivateKeyOrSignatureId<UpdateMarketplaceSolana>
-export type SellMarketplaceSolana = FromPrivateKeyOrSignatureId<SellAssetOnMarketplaceSolana>
-export type BuyMarketplaceSolana = FromPrivateKeyOrSignatureId<BuyAssetOnMarketplaceSolana>
-export type CancelMarketplaceSolana = FromPrivateKeyOrSignatureId<CancelSellAssetOnMarketplaceSolana>
-export type WithdrawMarketplaceSolana = FromPrivateKeyOrSignatureId<WithdrawFromMarketplaceSolana>
+export type CreateSolanaMarketplace = WithoutChain<FromPrivateKeyOrSignatureId<GenerateMarketplaceSolana>>
+export type UpdateSolanaMarketplace = WithoutChain<FromPrivateKeyOrSignatureId<UpdateMarketplaceSolana>>
+export type SellMarketplaceSolana = WithoutChain<FromPrivateKeyOrSignatureId<SellAssetOnMarketplaceSolana>>
+export type BuyMarketplaceSolana = WithoutChain<FromPrivateKeyOrSignatureId<BuyAssetOnMarketplaceSolana>>
+export type CancelMarketplaceSolana = WithoutChain<
+  FromPrivateKeyOrSignatureId<CancelSellAssetOnMarketplaceSolana>
+>
+export type WithdrawMarketplaceSolana = WithoutChain<
+  FromPrivateKeyOrSignatureId<WithdrawFromMarketplaceSolana>
+>
 
 export const solanaMarketPlaceService = (
   args: { web3: SolanaWeb3 },
