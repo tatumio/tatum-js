@@ -33,7 +33,6 @@ import {
   GenerateCustodialWalletCelo,
   GenerateMarketplace,
   MarketplaceService,
-  MintErc721,
   MintMultipleNft,
   MintMultiToken,
   MintMultiTokenBatch,
@@ -226,6 +225,7 @@ export interface SdkWithErc20Functions {
     deploySignedTransaction(body: ChainSdkDeployErc20, provider?: string): Promise<string>
     transferSignedTransaction(body: ChainTransferErc20, provider?: string): Promise<string>
     mintSignedTransaction(body: ChainMintErc20, provider?: string): Promise<string>
+    approveSignedTransaction(body: ChainApproveErc20, provider?: string): Promise<string>
     burnSignedTransaction(body: ChainBurnErc20, provider?: string): Promise<string>
   }
 }

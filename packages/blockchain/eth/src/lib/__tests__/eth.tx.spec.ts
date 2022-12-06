@@ -12,7 +12,6 @@ import {
   nativeTestFactory,
   smartContractTestFactory,
 } from '@tatumio/shared-testing-evm-based'
-import { Currency } from '@tatumio/api-client'
 
 const blockchain = Blockchain.ETH
 
@@ -29,7 +28,7 @@ describe('EthSDK - tx', () => {
     web3: {
       getClient: () => inmemoryBlockchain.web3,
       async getGasPriceInWei(): Promise<string> {
-        return '@TODO'
+        return '250000000'
       },
     },
   })
@@ -60,6 +59,11 @@ describe('EthSDK - tx', () => {
 
       xdescribe('mintSignedTransaction', () => {
         erc20TestFactory.prepare.mintSignedTransaction(ethTxService.erc20, TEST_DATA.ETH)
+      })
+
+      // TODO:  not applicable for inmemoryBlockchain
+      xdescribe('approveSignedTransaction', () => {
+        erc20TestFactory.prepare.approveSignedTransaction(ethTxService.erc20, TEST_DATA.ETH)
       })
 
       // TODO:  Returned error: execution reverted

@@ -1,4 +1,5 @@
 import {
+  ApproveErc20KMS,
   ChainBurnErc20KMS,
   ChainDeployErc20KMS,
   ChainMintErc20KMS,
@@ -236,12 +237,10 @@ const approveSignedTransaction = async ({
 
   const client = web3.getClient(provider, body.fromPrivateKey)
 
-  const smartContractMethodName = 'approve'
-
   // TODO remove any type
-  const data = new client.eth.Contract(Erc20Token.abi as any).methods[smartContractMethodName](
-    params,
-  ).encodeABI()
+  const data = new client.eth.Contract(Erc20Token.abi as any, contractAddress).methods
+    .approve(...params)
+    .encodeABI()
 
   const tx: TransactionConfig = {
     from: 0,
@@ -405,6 +404,25 @@ export const erc20 = ({
         } else {
           return broadcastFunction({
             txData: await burnSignedTransaction({ body, web3, provider, addressTransformer }),
+          })
+        }
+      },
+      /**
+       * Send approve erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      approveSignedTransaction: async (body: ChainApproveErc20, provider?: string) => {
+        if (body.signatureId) {
+          return FungibleTokensErc20OrCompatibleService.erc20Approve({
+            ...body,
+            chain,
+          } as ApproveErc20KMS)
+        } else {
+          return broadcastFunction({
+            txData: await approveSignedTransaction({ body, web3, provider, addressTransformer }),
           })
         }
       },
