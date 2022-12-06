@@ -160,6 +160,25 @@ export const erc20TestFactory = {
       })
     },
 
+    approveSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
+      it('valid from privateKey', async () => {
+        const nonce = 3252345722143
+
+        const result = await sdk.prepare.approveSignedTransaction(
+          {
+            amount: '1',
+            contractAddress: testData.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+            fromPrivateKey: testData.TESTNET.ERC_20!.PRIVATE_KEY,
+            spender: testData.TESTNET.ADDRESS_100,
+            nonce,
+          },
+          testData.TESTNET.PROVIDER,
+        )
+
+        expectHexString(result)
+      })
+    },
+
     burnSignedTransaction: (sdk: SdkWithErc20Functions, testData: BlockchainTestData) => {
       it('valid from privateKey', async () => {
         const nonce = 3252345722143

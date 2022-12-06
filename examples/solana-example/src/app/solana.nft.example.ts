@@ -51,6 +51,7 @@ export async function solanaNftExample() {
 
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetRoyaltyErc721
   // here we omit the 'token' parameter - not needed in solana
+  // @ts-ignore - TODO FIX
   const royalty = await solanaSDK.nft.getNFTRoyalty(Currency.SOL, nftAddress)
   console.log(`Royalty of NFT: ${JSON.stringify(royalty)}`)
 
