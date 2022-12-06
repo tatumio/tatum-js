@@ -29,7 +29,7 @@ export type TransferEgldBlockchain = {
         gasPrice?: string;
     };
     /**
-     * Additinal data, that will be passed to blockchain transaction as data property.
+     * Additional data, that will be passed to blockchain transaction as data property.
      */
     data?: string;
     /**

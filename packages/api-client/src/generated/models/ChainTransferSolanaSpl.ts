@@ -4,31 +4,39 @@
 
 export type ChainTransferSolanaSpl = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'SOL';
     /**
-     * Address on Solana blockchain, where SPL tokens will be transferred.
-     */
-    to: string;
-    /**
-     * Amount to be sent.
-     */
-    amount: string;
-    /**
-     * Address of SPL token
-     */
-    contractAddress: string;
-    /**
-     * Number of decimal points that SPL token has.
-     */
-    digits: number;
-    /**
-     * Address on the Solana blockchain, from which the token will be transferred.
+     * The blockchain address to send the fungible tokens from
      */
     from: string;
     /**
-     * Private key of sender address. Private key, or signature Id must be present.
+     * The blockchain address to send the fungible tokens to
+     */
+    to: string;
+    /**
+     * The blockchain address of the fungible tokens
+     */
+    contractAddress: string;
+    /**
+     * The amount of the fungible tokens to be sent
+     */
+    amount: string;
+    /**
+     * The number of decimal places that the fungible tokens have
+     */
+    digits: number;
+    /**
+     * The private key of the blockchain address that you are sending the fungible tokens from (the address that you specified in the <code>from</code> parameter); the transaction fee will be deducted from this address
      */
     fromPrivateKey: string;
+    /**
+     * The blockchain address from which the fee will be deducted; if not set, defaults to the address that you specified in the <code>from</code> parameter
+     */
+    feePayer?: string;
+    /**
+     * The private key of the blockchain address that you specified in the <code>feePayer</code> parameter; if not set, defaults to the private key that you specified in the <code>fromPrivateKey</code> parameter
+     */
+    feePayerPrivateKey?: string;
 }

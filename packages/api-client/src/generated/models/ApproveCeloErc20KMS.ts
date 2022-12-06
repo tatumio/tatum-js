@@ -4,7 +4,7 @@
 
 export type ApproveCeloErc20KMS = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
     /**
@@ -24,7 +24,7 @@ export type ApproveCeloErc20KMS = {
      */
     signatureId: string;
     /**
-     * Custom defined fee. If not present, it will be calculated automatically.
+     * The custom defined fee; if not present, will be calculated automatically
      */
     fee?: {
         /**
@@ -37,11 +37,11 @@ export type ApproveCeloErc20KMS = {
         gasPrice: string;
     };
     /**
-     * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

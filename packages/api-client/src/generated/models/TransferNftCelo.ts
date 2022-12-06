@@ -8,7 +8,7 @@ export type TransferNftCelo = {
      */
     value?: string;
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
     /**
@@ -16,7 +16,7 @@ export type TransferNftCelo = {
      */
     to: string;
     /**
-     * ID of token.
+     * ID of the token.
      */
     tokenId: string;
     /**
@@ -40,11 +40,11 @@ export type TransferNftCelo = {
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
 }

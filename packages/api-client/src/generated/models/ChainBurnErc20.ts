@@ -4,7 +4,7 @@
 
 export type ChainBurnErc20 = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'ALGO';
     /**
@@ -20,7 +20,7 @@ export type ChainBurnErc20 = {
      */
     fromPrivateKey: string;
     /**
-     * Custom defined fee. If not present, it will be calculated automatically.
+     * The custom defined fee; if not present, will be calculated automatically
      */
     fee?: {
         /**
@@ -33,7 +33,7 @@ export type ChainBurnErc20 = {
         gasPrice: string;
     };
     /**
-     * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
 }

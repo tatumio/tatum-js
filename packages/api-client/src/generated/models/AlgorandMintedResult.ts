@@ -4,15 +4,15 @@
 
 export type AlgorandMintedResult = {
     /**
-     * Transaction ID
+     * The ID of the transaction
      */
     txId?: string;
     /**
-     * Identifier of the minted NFT
+     * The ID of the minted NFT
      */
     assetIndex?: number;
     /**
-     * True, if transaction was included in the block within 5 rounds, false otherwise. False doesnt mean that transaction was not included, Tatum just doesn't wait for that much time.
+     * If set to "true", the transaction was included in the block within five rounds; otherwise, returned set to "false". "false" does not mean that the transaction was not included in the block; the Tatum API just does not wait for that much time to return the response.
      */
     confirmed?: boolean;
 }

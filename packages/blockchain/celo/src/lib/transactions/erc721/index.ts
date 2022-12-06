@@ -81,7 +81,7 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
   return await celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
 }
 
-const mintSignedTransaction = async (body: ChainMintErc721Celo, provider?: string, testnet?: boolean) => {
+const mintSignedTransaction = async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) => {
   const { contractAddress, nonce, signatureId, feeCurrency, to, tokenId, url, fromPrivateKey } = body
 
   const celoProvider = celoUtils.getProvider(provider)
@@ -184,7 +184,7 @@ const mintMultipleSignedTransaction = async (
 }
 
 const mintCashbackSignedTransaction = async (
-  body: MintNftCelo & { signatureId?: string },
+  body: ChainMintNftCelo & { signatureId?: string },
   provider?: string,
   testnet?: boolean,
 ) => {
@@ -683,7 +683,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * Prepare a signed Celo mint erc732 transaction with the private key locally. Nothing is broadcasted to the blockchain.
        * @returns raw transaction data in hex, to be broadcasted to blockchain.
        */
-      mintSignedTransaction: async (body: ChainMintErc721Celo, provider?: string, testnet?: boolean) =>
+      mintSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) =>
         evmBasedUtils.tryCatch(
           () => mintSignedTransaction(body, provider, testnet),
           SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_TX,
@@ -800,7 +800,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
        * @returns transaction id of the transaction in the blockchain
        */
-      mintSignedTransaction: async (body: ChainMintErc721Celo, provider?: string, testnet?: boolean) => {
+      mintSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) => {
         await args.broadcastFunction({
           txData: await mintSignedTransaction(body, provider, testnet),
           signatureId: body.signatureId,
