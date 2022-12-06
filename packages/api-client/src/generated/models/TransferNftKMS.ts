@@ -2,13 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type TransferNftKMS = {
     /**
      * If token to be transferred is Royalty NFT token, this is a value to be paid as a cashback to the authors of the token.
      */
     value?: string;
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
@@ -16,7 +18,7 @@ export type TransferNftKMS = {
      */
     to: string;
     /**
-     * ID of token.
+     * ID of the token.
      */
     tokenId: string;
     /**
@@ -44,20 +46,8 @@ export type TransferNftKMS = {
      */
     signatureId: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

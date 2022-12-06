@@ -231,8 +231,11 @@ export class LitecoinService {
     }
 
     /**
-     * Get Litecoin Balance of the address
-     * <h4>5 credits per API call.</h4><br/><p>Get Litecoin Balance of the address.</p>
+     * Get the balance of a Litecoin address
+     * <p><b>5 credits per API call</b></p>
+     * <p>Get the balance of a Litecoin address.</p>
+     * <p>The API returns the balance only if the address has up to 50,000 UTXOs (Unspent Transaction Outputs). For an address with more than 50,000 UTXOs, the API returns an error with the <code>403</code> response code.</p>
+     *
      * @param address Address
      * @returns BtcBasedBalance OK
      * @throws ApiError

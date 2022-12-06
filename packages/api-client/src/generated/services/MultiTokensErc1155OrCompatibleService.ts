@@ -93,7 +93,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <p>Mint a fixed amount of Multi Token and transfer it to destination account. Create and transfer any Multi Token token from smart contract defined in contractAddress. It is possible to add Metadata to the created token with a more detailed information about instead.</p>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
-     * <li>Algorand</li>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
      * <li>Ethereum</li>
@@ -184,7 +183,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <p>Burn a fixed amount of Multi Tokens by id. This method destroys Multi Tokens from smart contract defined in contractAddress.</p>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
-     * <li>Algorand</li>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
      * <li>Ethereum</li>
@@ -276,7 +274,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <p>Only 1 specific token with specified tokenId and value can be transferred. This method invokes ERC1155 method safeTransfer() to transfer the token in case of ETH, Celo and blockchains.</p>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
-     * <li>Algorand</li>
      * <li>BNB Smart Chain</li>
      * <li>Celo</li>
      * <li>Ethereum</li>
@@ -530,6 +527,24 @@ export class MultiTokensErc1155OrCompatibleService {
              * Number of tokens held by the address.
              */
             amount?: string;
+            /**
+             * Block number when the token was received by the address.
+             */
+            blockNumber?: number;
+        }>;
+        metadata?: Array<{
+            /**
+             * The ID of the Multi Token owned by this address
+             */
+            tokenId?: string;
+            /**
+             * The URL pointing to the Multi Token metadata; the URL may not be present, and if it is not returned, you can get it by calling the Multi Token Contract.uri() method
+             */
+            url?: string;
+            /**
+             * The metadata scheme obtained from the metadata URL; the scheme may not be present, and if it is not returned, you can get it using the <a href="#operation/MultiTokenGetMetadata">Multi Token metadata API</a>
+             */
+            metadata?: any;
         }>;
     }>> {
         return __request({

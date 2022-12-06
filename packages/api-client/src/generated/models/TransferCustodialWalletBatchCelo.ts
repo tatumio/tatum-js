@@ -8,7 +8,7 @@ export type TransferCustodialWalletBatchCelo = {
      */
     chain: 'CELO';
     /**
-     * The gas pump address that transfers the assets
+     * The gas pump address that transfers the assets; this is the address that you <a href="#operation/PrecalculateGasPumpAddresses">precalculated</a> and <a href="#operation/ActivateGasPumpAddresses">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the "master address"
      */
     custodialAddress: string;
     /**

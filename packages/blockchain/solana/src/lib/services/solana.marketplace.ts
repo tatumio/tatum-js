@@ -1,9 +1,7 @@
 import {
-  AccountInfo,
   Connection,
   LAMPORTS_PER_SOL,
   PublicKey,
-  PublicKeyInitData,
   SYSVAR_INSTRUCTIONS_PUBKEY,
   Transaction,
   TransactionInstruction,
@@ -31,8 +29,6 @@ import {
   createUpdateAuctionHouseInstruction,
   createWithdrawFromFeeInstruction,
   createWithdrawFromTreasuryInstruction,
-  ListingReceipt,
-  PurchaseReceipt,
 } from '@metaplex-foundation/mpl-auction-house'
 import BN from 'bn.js'
 import { TOKEN_METADATA_PROGRAM_ID } from '../schema/instructions'
@@ -55,8 +51,18 @@ import {
 import { solanaUtils } from '@tatumio/solana'
 import BigNumber from 'bignumber.js'
 import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
-import { Metadata } from '@metaplex-foundation/mpl-token-metadata/dist/src/generated/accounts/Metadata'
 import _ from 'lodash'
+import {
+  ApiServices,
+  BuyAssetOnMarketplaceSolana,
+  CancelSellAssetOnMarketplaceSolana,
+  Currency,
+  GenerateMarketplaceSolana,
+  SellAssetOnMarketplaceSolana,
+  SolanaListingData,
+  UpdateMarketplaceSolana,
+  WithdrawFromMarketplaceSolana,
+} from '@tatumio/api-client'
 
 export const AUCTION_HOUSE = 'auction_house'
 export const AUCTION_HOUSE_PROGRAM_ID = new PublicKey('hausS13jsjafwWwGqZTUQRmWyvyxn9EQpqMwV1PBBmk')
@@ -65,265 +71,21 @@ export const TREASURY = 'treasury'
 export const BID_RECEIPT = 'bid_receipt'
 export const PURCHASE_RECEIPT = 'purchase_receipt'
 
-export interface CreateAuctionHouseParams {
-  marketplaceFee: number
-  canChangeSalePrice?: boolean
-  requiresSignOff?: boolean
-  treasuryWithdrawalDestination?: PublicKeyInitData
-  feeWithdrawalDestination?: PublicKeyInitData
-  treasuryMint?: PublicKeyInitData
+export type CreateSolanaMarketplace = FromPrivateKeyOrSignatureId<GenerateMarketplaceSolana>
+export type UpdateSolanaMarketplace = FromPrivateKeyOrSignatureId<UpdateMarketplaceSolana>
+export type SellMarketplaceSolana = FromPrivateKeyOrSignatureId<SellAssetOnMarketplaceSolana>
+export type BuyMarketplaceSolana = FromPrivateKeyOrSignatureId<BuyAssetOnMarketplaceSolana>
+export type CancelMarketplaceSolana = FromPrivateKeyOrSignatureId<CancelSellAssetOnMarketplaceSolana>
+export type WithdrawMarketplaceSolana = FromPrivateKeyOrSignatureId<WithdrawFromMarketplaceSolana>
 
-  fromPrivateKey: string
-  from: string
-}
-
-export type CreateAuctionHouse = FromPrivateKeyOrSignatureId<CreateAuctionHouseParams>
-
-export interface UpdateAuctionHouseParams {
-  contractAddress: string
-
-  marketplaceFee?: number
-  canChangeSalePrice?: boolean
-  requiresSignOff?: boolean
-  treasuryWithdrawalDestination?: PublicKeyInitData
-  feeWithdrawalDestination?: PublicKeyInitData
-
-  fromPrivateKey: string
-  from: string
-}
-
-export type UpdateAuctionHouse = FromPrivateKeyOrSignatureId<UpdateAuctionHouseParams>
-
-export interface PostParams {
-  contractAddress: string
-  nftAddress: string
-  from: string
-  price: string
-
-  fromPrivateKey: string
-  authorityPrivateKey?: string
-}
-
-export type SellParams = FromPrivateKeyOrSignatureId<PostParams>
-
-export interface BuyParams {
-  contractAddress: string
-  listingId: string
-  authorityPrivateKey?: string
-  fromPrivateKey: string
-  from: string
-}
-
-export type BuyType = FromPrivateKeyOrSignatureId<BuyParams>
-
-export interface CancelParams {
-  contractAddress: string
-  listingId: string
-  authorityPrivateKey?: string
-  fromPrivateKey: string
-  from: string
-}
-
-export type CancelParamsType = FromPrivateKeyOrSignatureId<CancelParams>
-
-export interface WithdrawParams {
-  contractAddress: string
-  amount: string
-  fromPrivateKey: string
-  from: string
-}
-
-export type WithdrawParamsType = FromPrivateKeyOrSignatureId<WithdrawParams>
-
-export interface WithdrawFeeParams {
-  contractAddress: string
-  amount: string
-  fromPrivateKey: string
-  from: string
-}
-
-export type WithdrawFeeParamsType = FromPrivateKeyOrSignatureId<WithdrawFeeParams>
-
-export declare type MarketplaceInfo = {
-  feeAccount: string
-  treasuryAccount: string
-  treasuryWithdrawalDestination: string
-  feeWithdrawalDestination: string
-  treasuryMint: string
-  authority: string
-  creator: string
-  marketplaceFee: number
-  requiresSignOff: boolean
-  canChangeSalePrice: boolean
-}
-
-export interface Creator {
-  address: string
-  verified: boolean
-  share: number
-}
-
-export interface ExtendedMarketplaceListing {
-  listingId: string
-  state: number
-  nft: {
-    address: string
-    data: {
-      name: string
-      symbol: string
-      uri: string
-      sellerFeeBasisPoints: number
-      creators: Creator[] | null
-    }
-  }
-  seller: string
-  amount: string
-  price: string
-  buyer?: string
-}
-
-export type ListingReceiptType = {
-  tradeState: string
-  bookkeeper: string
-  auctionHouse: string
-  seller: string
-  metadata: string
-  purchaseReceipt?: string
-  price: string
-  tokenSize: string
-  bump: number
-  tradeStateBump: number
-  createdAt: string
-  canceledAt?: string
-}
-
-export type PurchaseReceiptType = {
-  bookkeeper: string
-  buyer: string
-  seller: string
-  auctionHouse: string
-  metadata: string
-  tokenSize: string
-  price: string
-  bump: number
-  createdAt: string
-}
-
-type GetMarketplaceInfo = (contractAddress: string) => Promise<MarketplaceInfo>
-type GetListingDetails = (contractAddress: string, listingId: string) => Promise<ExtendedMarketplaceListing>
-
-export const solanaMarketPlaceService = (args: { web3: SolanaWeb3 }) => {
-  return solanaMarketPlaceServiceNew(args, {
-    getMarketplaceInfo: async (contractAddress: string): Promise<MarketplaceInfo> => {
-      const test = await AuctionHouse.fromAccountAddress(
-        args.web3.getClient(),
-        new PublicKey(contractAddress),
-      )
-      return {
-        feeAccount: test.auctionHouseFeeAccount.toBase58(),
-        treasuryAccount: test.auctionHouseTreasury.toBase58(),
-        treasuryWithdrawalDestination: test.treasuryWithdrawalDestination.toBase58(),
-        feeWithdrawalDestination: test.feeWithdrawalDestination.toBase58(),
-        treasuryMint: test.treasuryMint.toBase58(),
-        authority: test.authority.toBase58(),
-        creator: test.creator.toBase58(),
-        marketplaceFee: test.sellerFeeBasisPoints,
-        requiresSignOff: test.requiresSignOff,
-        canChangeSalePrice: test.canChangeSalePrice,
-      }
-    },
-    getListingDetails: async (
-      contractAddress: string,
-      listingId: string,
-    ): Promise<ExtendedMarketplaceListing> => {
-      const getListingData = async (address: string): Promise<ListingReceiptType> => {
-        const data = await ListingReceipt.fromAccountAddress(args.web3.getClient(), new PublicKey(address))
-
-        return {
-          tradeState: data.tradeState.toBase58(),
-          bookkeeper: data.bookkeeper.toBase58(),
-          auctionHouse: data.auctionHouse.toBase58(),
-          seller: data.seller.toBase58(),
-          metadata: data.metadata.toBase58(),
-          purchaseReceipt: data.purchaseReceipt?.toBase58(),
-          price: data.price.toString(),
-          tokenSize: data.tokenSize.toString(),
-          bump: data.bump,
-          tradeStateBump: data.tradeStateBump,
-          createdAt: data.createdAt.toString(),
-          canceledAt: data.canceledAt?.toString(),
-        }
-      }
-
-      const createPurchaseData = (accountInfo: AccountInfo<Buffer>): PurchaseReceiptType => {
-        const data = PurchaseReceipt.fromAccountInfo(accountInfo)[0]
-
-        return {
-          bookkeeper: data.bookkeeper.toBase58(),
-          buyer: data.buyer.toBase58(),
-          seller: data.seller.toBase58(),
-          auctionHouse: data.auctionHouse.toBase58(),
-          metadata: data.metadata.toBase58(),
-          tokenSize: data.tokenSize.toString(),
-          price: data.price.toString(),
-          bump: data.bump,
-          createdAt: data.createdAt.toString(),
-        }
-      }
-
-      const data = await getListingData(listingId)
-
-      const client = args.web3.getClient()
-
-      const keys = [new PublicKey(data.metadata)]
-      if (data.purchaseReceipt) {
-        keys.push(new PublicKey(data.purchaseReceipt))
-      }
-
-      const accounts = await client.getMultipleAccountsInfo(keys)
-
-      const nftMetadata = Metadata.fromAccountInfo(solanaUtils.valueOrThrow(accounts[0]))[0]
-
-      return {
-        amount: data.tokenSize,
-        buyer: data.purchaseReceipt
-          ? createPurchaseData(solanaUtils.valueOrThrow(accounts[1])).buyer
-          : undefined,
-        listingId: listingId,
-        nft: {
-          address: nftMetadata.mint.toBase58(),
-          data: {
-            name: nftMetadata.data.name,
-            symbol: nftMetadata.data.symbol,
-            uri: nftMetadata.data.uri,
-            sellerFeeBasisPoints: nftMetadata.data.sellerFeeBasisPoints,
-            creators: solanaUtils.valueOrNull(
-              nftMetadata.data.creators?.map((item) => ({
-                address: item.address.toBase58(),
-                share: item.share,
-                verified: item.verified,
-              })),
-            ),
-          },
-        },
-        price: data.price,
-        seller: data.seller,
-        state:
-          _.isNil(data.purchaseReceipt) && _.isNil(data.canceledAt)
-            ? 0
-            : _.isNil(data.purchaseReceipt)
-            ? 1
-            : 2,
-      }
-    },
-  })
-}
-
-export const solanaMarketPlaceServiceNew = (
+export const solanaMarketPlaceService = (
   args: { web3: SolanaWeb3 },
   apiCalls: {
-    getMarketplaceInfo: GetMarketplaceInfo
-    getListingDetails: GetListingDetails
+    getMarketplaceInfo: typeof ApiServices.marketplace.getMarketplaceInfo
+    getListingDetails: typeof ApiServices.marketplace.getMarketplaceListing
+  } = {
+    getMarketplaceInfo: ApiServices.marketplace.getMarketplaceInfo,
+    getListingDetails: ApiServices.marketplace.getMarketplaceListing,
   },
 ) => {
   const getAuctionHouseFeeAcct = async (auctionHouse: PublicKey): Promise<[PublicKey, number]> => {
@@ -425,7 +187,7 @@ export const solanaMarketPlaceServiceNew = (
     return feePayer ? new PublicKey(feePayer) : from
   }
 
-  const createAuctionHouse = async (params: CreateAuctionHouse, web3: SolanaWeb3) => {
+  const createMarketplace = async (params: CreateSolanaMarketplace, web3: SolanaWeb3) => {
     const connection = web3.getClient()
     const from = new PublicKey(params.from)
     const feePayerKey = getFeePayer(false, from)
@@ -492,7 +254,7 @@ export const solanaMarketPlaceServiceNew = (
     }
   }
 
-  const updateAuctionHouse = async (params: UpdateAuctionHouse, web3: SolanaWeb3) => {
+  const updateMarketplace = async (params: UpdateSolanaMarketplace, web3: SolanaWeb3) => {
     const connection = web3.getClient()
     const from = new PublicKey(params.from)
     const feePayerKey = getFeePayer(false, from)
@@ -508,7 +270,7 @@ export const solanaMarketPlaceServiceNew = (
     } = params
 
     const auctionHouse = new PublicKey(contractAddress)
-    const auctionHouseObj = await apiCalls.getMarketplaceInfo(contractAddress)
+    const auctionHouseObj = await apiCalls.getMarketplaceInfo(Currency.SOL, contractAddress)
 
     const authority = new PublicKey(auctionHouseObj.authority)
     const treasuryMint = new PublicKey(auctionHouseObj.treasuryMint)
@@ -576,7 +338,7 @@ export const solanaMarketPlaceServiceNew = (
     return new BigNumber(price).multipliedBy(new BigNumber(10).pow(balance.value.decimals)).toFixed()
   }
 
-  const post = async (body: SellParams, web3: SolanaWeb3) => {
+  const post = async (body: SellMarketplaceSolana, web3: SolanaWeb3) => {
     const { authorityPrivateKey, contractAddress, nftAddress, fromPrivateKey } = body
 
     const connection = web3.getClient()
@@ -590,10 +352,10 @@ export const solanaMarketPlaceServiceNew = (
     const [metadata] = await getMetadataAccount(tokenMint)
 
     const auctionHouse = new PublicKey(contractAddress)
-    const auctionHouseObj = await AuctionHouse.fromAccountAddress(connection, auctionHouse)
+    const auctionHouseObj = await apiCalls.getMarketplaceInfo(Currency.SOL, contractAddress)
 
-    const authority = auctionHouseObj.authority
-    const treasuryMint = auctionHouseObj.treasuryMint
+    const authority = new PublicKey(auctionHouseObj.authority)
+    const treasuryMint = new PublicKey(auctionHouseObj.treasuryMint)
     const associatedTokenAccount = await getAssociatedTokenAddress(tokenMint, from)
 
     const isNative = treasuryMintIsNative(treasuryMint)
@@ -789,13 +551,13 @@ export const solanaMarketPlaceServiceNew = (
     }
   }
 
-  const buyAndExecuteSale = async (params: BuyType, web3: SolanaWeb3) => {
+  const buyAndExecuteSale = async (params: BuyMarketplaceSolana, web3: SolanaWeb3) => {
     const { contractAddress, authorityPrivateKey, listingId, fromPrivateKey, from } = params
 
     const connection = web3.getClient()
 
     const auctionHouse = new PublicKey(contractAddress)
-    const auctionHouseObj = await apiCalls.getMarketplaceInfo(contractAddress)
+    const auctionHouseObj = await apiCalls.getMarketplaceInfo(Currency.SOL, contractAddress)
 
     const authority = new PublicKey(auctionHouseObj.authority)
     const treasuryMint = new PublicKey(auctionHouseObj.treasuryMint)
@@ -804,9 +566,17 @@ export const solanaMarketPlaceServiceNew = (
 
     const feePayerKey = getFeePayer(false, buyerPublicKey)
 
-    const listing = await apiCalls.getListingDetails(contractAddress, listingId)
+    const listing = (await apiCalls.getListingDetails(
+      Currency.SOL,
+      contractAddress,
+      listingId,
+    )) as SolanaListingData
 
-    const price = listing.price
+    const isNative = treasuryMintIsNative(treasuryMint)
+
+    // TODO - can be optimized re-using call in checkBalance
+    const price = await formatPrice(connection, isNative, listing.price, treasuryMint)
+
     const seller = new PublicKey(listing.seller)
     const tokenMint = new PublicKey(listing.nft.address)
     const [metadata] = await getMetadataAccount(tokenMint)
@@ -826,8 +596,6 @@ export const solanaMarketPlaceServiceNew = (
       new BN(1),
       new BN(price),
     )
-
-    const isNative = treasuryMintIsNative(treasuryMint)
 
     const sellerPublicKey = new PublicKey(seller)
 
@@ -927,6 +695,7 @@ export const solanaMarketPlaceServiceNew = (
       accountsRequireTokenSet.add(sellerPublicKey.toString())
     }
 
+    // TODO - finish it
     const allTokenInstructions: TransactionInstruction[] = []
 
     const treasuryMintTokenInstructions = await generateCreationInstructions(
@@ -1045,13 +814,13 @@ export const solanaMarketPlaceServiceNew = (
     }
   }
 
-  const cancel = async (params: CancelParamsType, web3: SolanaWeb3) => {
+  const cancel = async (params: CancelMarketplaceSolana, web3: SolanaWeb3) => {
     const { contractAddress, listingId, authorityPrivateKey, fromPrivateKey, from } = params
 
     const connection = web3.getClient()
 
     const auctionHouse = new PublicKey(contractAddress)
-    const auctionHouseObj = await apiCalls.getMarketplaceInfo(contractAddress)
+    const auctionHouseObj = await apiCalls.getMarketplaceInfo(Currency.SOL, contractAddress)
 
     const authority = new PublicKey(auctionHouseObj.authority)
     const treasuryMint = new PublicKey(auctionHouseObj.treasuryMint)
@@ -1060,7 +829,11 @@ export const solanaMarketPlaceServiceNew = (
 
     const feePayerKey = getFeePayer(false, sellerPublicKey)
 
-    const listing = await apiCalls.getListingDetails(contractAddress, listingId)
+    const listing = (await apiCalls.getListingDetails(
+      Currency.SOL,
+      contractAddress,
+      listingId,
+    )) as SolanaListingData
 
     const price = listing.price
 
@@ -1127,7 +900,7 @@ export const solanaMarketPlaceServiceNew = (
     }
   }
 
-  const withdraw = async (params: WithdrawParamsType, web3: SolanaWeb3) => {
+  const withdraw = async (params: WithdrawMarketplaceSolana, web3: SolanaWeb3) => {
     const { contractAddress, amount, from, fromPrivateKey } = params
 
     const connection = web3.getClient()
@@ -1179,7 +952,7 @@ export const solanaMarketPlaceServiceNew = (
     }
   }
 
-  const withdrawFee = async (params: WithdrawFeeParamsType, web3: SolanaWeb3) => {
+  const withdrawFee = async (params: WithdrawMarketplaceSolana, web3: SolanaWeb3) => {
     const { contractAddress, amount, from, fromPrivateKey } = params
 
     const connection = web3.getClient()
@@ -1231,25 +1004,25 @@ export const solanaMarketPlaceServiceNew = (
 
   return {
     send: {
-      deploySignedTransaction: async (params: CreateAuctionHouse) => {
-        return createAuctionHouse(params, args.web3)
+      deploySignedTransaction: async (params: CreateSolanaMarketplace) => {
+        return createMarketplace(params, args.web3)
       },
-      updateSignedTransaction: async (params: UpdateAuctionHouse) => {
-        return updateAuctionHouse(params, args.web3)
+      updateSignedTransaction: async (params: UpdateSolanaMarketplace) => {
+        return updateMarketplace(params, args.web3)
       },
-      sellSignedTransaction: async (params: SellParams) => {
+      sellSignedTransaction: async (params: SellMarketplaceSolana) => {
         return post(params, args.web3)
       },
-      buySignedTransaction: async (params: BuyType) => {
+      buySignedTransaction: async (params: BuyMarketplaceSolana) => {
         return buyAndExecuteSale(params, args.web3)
       },
-      cancelSignedTransaction: async (params: CancelParamsType) => {
+      cancelSignedTransaction: async (params: CancelMarketplaceSolana) => {
         return cancel(params, args.web3)
       },
-      withdrawSignedTransaction: async (params: WithdrawParamsType) => {
+      withdrawSignedTransaction: async (params: WithdrawMarketplaceSolana) => {
         return withdraw(params, args.web3)
       },
-      withdrawFeeSignedTransaction: async (params: WithdrawFeeParamsType) => {
+      withdrawFeeSignedTransaction: async (params: WithdrawMarketplaceSolana) => {
         return withdrawFee(params, args.web3)
       },
     },

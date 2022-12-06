@@ -26,7 +26,7 @@ export type VC = {
     /**
      * Type of Tron token.
      */
-    trcType?: string;
+    trcType?: 'TRC10' | 'TRC20';
     /**
      * Base pair for virtual currency. Transaction value will be calculated according to this base pair. e.g. 1 VC_VIRTUAL is equal to 1 BTC, if basePair is set to BTC.
      */

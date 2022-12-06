@@ -4,7 +4,7 @@
 
 export type MintMultipleNftCelo = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
     /**
@@ -16,7 +16,7 @@ export type MintMultipleNftCelo = {
      */
     tokenId: Array<string>;
     /**
-     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
      */
     url: Array<string>;
     /**
@@ -24,7 +24,7 @@ export type MintMultipleNftCelo = {
      */
     authorAddresses?: Array<Array<string>>;
     /**
-     * List of values for every token, which will be paid as a royalty for author of the NFT token with every token transfer. This is exact value in native blockhain currency.
+     * List of values for every token, which will be paid as a royalty for author of the NFT token with every token transfer. This is exact value in native blockchain currency.
      */
     cashbackValues?: Array<Array<string>>;
     /**
@@ -36,11 +36,11 @@ export type MintMultipleNftCelo = {
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

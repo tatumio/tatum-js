@@ -3,7 +3,7 @@
 /* eslint-disable */
 
 /**
- * Custom defined fee. If not present, it will be calculated automatically.
+ * The custom defined fee; if not present, will be calculated automatically.
  */
 export type CustomFee = {
     /**
