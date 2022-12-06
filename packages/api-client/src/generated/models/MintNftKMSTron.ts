@@ -2,49 +2,52 @@
 /* tslint:disable */
 /* eslint-disable */
 
+/**
+ * <p>The <code>MintNftKMSTron</code> schema lets you mint NFTs natively on TRON and sign the transaction with your signature ID.<br/>For more information, see "Minting NFTs natively on a blockchain" in <a href="#operation/NftMintErc721">Mint an NFT</a>.</p><br/>
+ */
 export type MintNftKMSTron = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'TRON';
     /**
-     * Blockchain address to perform transaction from
-     */
-    account: string;
-    /**
-     * ID of token to be created.
-     */
-    tokenId: string;
-    /**
-     * Blockchain address to send NFT token to
+     * The blockchain address to send the NFT to
      */
     to: string;
     /**
-     * Address of NFT token
+     * The blockchain address of the smart contract to build the NFT on
      */
     contractAddress: string;
     /**
-     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+     * The ID of the NFT.
+     */
+    tokenId: string;
+    /**
+     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
      */
     url: string;
     /**
-     * List of addresses, where royalty cashback for every transfer of this NFT will be send. Royalties are paid in native blockchain currency TRON.
+     * The maximum amount to be paid as the transaction fee (in TRX)
      */
-    authorAddresses?: Array<string>;
+    feeLimit: number;
     /**
-     * List of values, which will be paid as a royalty for author of the NFT token with every token transfer. This is exact value in native blockhain currency.
+     * The blockchain address that will pay the fee for the transaction
      */
-    cashbackValues?: Array<string>;
+    account: string;
     /**
-     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
-     */
-    index?: number;
-    /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The KMS identifier of the private key of the blockchain address that will pay the fee for the transaction
      */
     signatureId: string;
     /**
-     * Max limit for fee to be paid, in TRX.
+     * (Only if the signature ID is mnemonic-based) The index of the address to pay the transaction fee that was generated from the mnemonic
      */
-    feeLimit: number;
+    index?: number;
+    /**
+     * The blockchain addresses where the royalties will be sent every time the minted NFT is transferred; the royalties are paid in the native blockchain currency, TRX
+     */
+    authorAddresses?: Array<string>;
+    /**
+     * The amounts of the royalties that will be paid to the authors of the minted NFT every time the NFT is transferred; the amount is defined as a fixed amount of the native blockchain currency
+     */
+    cashbackValues?: Array<string>;
 }

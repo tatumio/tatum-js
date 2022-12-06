@@ -10,20 +10,23 @@ export type DogeUTXO = {
         addresses?: Array<string>;
     };
     /**
-     * Version of the UTXO.
+     * The version of the transaction
      */
     version?: number;
+    /**
+     * The height (number) of the block where the transaction is included in
+     */
     height?: number;
     /**
-     * Amount of UTXO in 1/1000000 DOGE.
+     * The amount of the UTXO (in 1/1000000 DOGE)
      */
     value?: number;
     /**
-     * Coinbase transaction - miner fee.
+     * If set to "true", the transaction is a coinbase transaction (a transaction created by a Bitcoin miner to collect their reward)
      */
     coinbase?: boolean;
     /**
-     * Block hash.
+     * The block hash
      */
     bestblock?: string;
 }

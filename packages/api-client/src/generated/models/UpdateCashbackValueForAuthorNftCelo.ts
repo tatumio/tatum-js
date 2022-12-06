@@ -4,31 +4,31 @@
 
 export type UpdateCashbackValueForAuthorNftCelo = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
     /**
-     * ID of token to be updated.
+     * The ID of the NFT to update royalty information for.
      */
     tokenId: string;
     /**
-     * New royalty cashback to be set for the author of token with tokenId. If set to 0, royalty is disabled for this token.
-     */
-    cashbackValue: string;
-    /**
-     * Address of NFT token
+     * The blockchain address of the NFT to update royalty information for
      */
     contractAddress: string;
     /**
-     * Private key of sender address. Private key, or signature Id must be present.
+     * The new value of the royalty cashback to be set for the author of the NFT; to disable the royalties for the NFT completely, set this parameter to 0
+     */
+    cashbackValue: string;
+    /**
+     * The currency in which the transaction fee will be paid
+     */
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    /**
+     * The private key of the NFT author's address
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * Currency to pay for transaction gas
-     */
-    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

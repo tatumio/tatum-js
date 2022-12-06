@@ -4,27 +4,31 @@
 
 export type ChainTransferAlgoErc20KMS = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'ALGO';
     /**
-     * Blockchain address to send ERC20 token to
+     * The blockchain address to send the fungible tokens from
+     */
+    from: string;
+    /**
+     * The blockchain address to send the fungible tokens to
      */
     to: string;
     /**
-     * Amount to be sent.
-     */
-    amount: string;
-    /**
-     * assetIndex - asset index uniquely specifying the asset
+     * The asset ID (the ID of the fungible tokens)
      */
     contractAddress: string;
     /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The amount of the fungible tokens to be sent
+     */
+    amount: string;
+    /**
+     * The number of decimal places that the fungible tokens have
+     */
+    digits: number;
+    /**
+     * The KMS identifier of the private key of the blockchain address that you are sending the fungible tokens from (the address that you specified in the <code>from</code> parameter); the transaction fee will be deducted from this address
      */
     signatureId: string;
-    /**
-     * Blockchain address to send ERC20 token to
-     */
-    from: string;
 }

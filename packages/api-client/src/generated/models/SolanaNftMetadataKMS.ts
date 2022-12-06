@@ -6,19 +6,19 @@ import type { SolanaNftMetadataCreator } from './SolanaNftMetadataCreator';
 
 export type SolanaNftMetadataKMS = {
     /**
-     * Name of the NFT token.
+     * The name of the NFT
      */
     name: string;
     /**
-     * Symbol of the NFT token.
+     * The symbol or abbreviated name of the NFT
      */
     symbol: string;
     /**
-     * Basis points of the seller fee.
+     * The basis points of the seller fee
      */
     sellerFeeBasisPoints: number;
     /**
-     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
      */
     uri: string;
     /**
@@ -26,11 +26,11 @@ export type SolanaNftMetadataKMS = {
      */
     collection?: string;
     /**
-     * If NFT metadata are mutable or not. Defaults to true.
+     * Specifies whether the NFT metadata is mutable ("true") or immutable ("false"); if not set, defaults to "true"
      */
     mutable?: boolean;
     /**
-     * Royalty receivers for NFT transfers.
+     * The blockchain addresses where the royalties will be sent every time the minted NFT is transferred
      */
     creators?: Array<SolanaNftMetadataCreator>;
 }

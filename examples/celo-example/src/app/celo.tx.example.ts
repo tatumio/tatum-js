@@ -394,6 +394,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       feeCurrency: 'CELO',
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
       contractType: [0, 1, 2, 3],
+      tokenId: ['1', '2', '3', '4'],
       custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
       tokenAddress: [
         '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
@@ -416,6 +417,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
     contractType: [0, 1, 2, 3],
     custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
+    tokenId: ['1', '2', '3', '4'],
     tokenAddress: [
       '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
       '0x9b0eea3aa1e61b8ecb7d1c8260cd426eb2a9a698',
@@ -843,6 +845,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       feeCurrency: 'CELO',
       fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
       contractType: [0, 1, 2, 3],
+      tokenId: ['1', '2', '3', '4'],
       custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
       tokenAddress: [
         '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
@@ -864,6 +867,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
     feeCurrency: 'CELO',
     fromPrivateKey: '0x1612736ca819d2c5907a07d4e4dfb91dd5a8b3691079289afaee824ddcfdf495',
     contractType: [0, 1, 2, 3],
+    tokenId: ['1', '2', '3', '4'],
     custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
     tokenAddress: [
       '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',

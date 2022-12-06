@@ -4,35 +4,35 @@
 
 export type ChainTransferBscBep20 = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'BSC';
     /**
-     * Blockchain address to send BEP20 token to
+     * The blockchain address to send the fungible tokens to
      */
     to: string;
     /**
-     * Amount to be sent.
-     */
-    amount: string;
-    /**
-     * Address of BEP20 token
+     * The blockchain address of the fungible tokens
      */
     contractAddress: string;
     /**
-     * Number of decimal points that BEP20 token has.
+     * The amount of the fungible tokens to be sent
+     */
+    amount: string;
+    /**
+     * The number of decimal places that the fungible tokens have; to find out how many decimal places are used in the fungible tokens, check out the <a href="https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress" target="_blank">smart contract</a>
      */
     digits: number;
     /**
-     * Private key of sender address. Private key, or signature Id must be present.
+     * The private key of the blockchain address from which the fee will be deducted
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to BSC transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
-     * Custom defined fee. If not present, it will be calculated automatically.
+     * The custom defined fee; if not present, will be calculated automatically
      */
     fee?: {
         /**

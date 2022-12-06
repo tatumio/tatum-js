@@ -557,6 +557,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       chain: 'BSC',
       signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
       contractType: [0, 1, 2, 3],
+      tokenId: ['1', '2', '3', '4'],
       custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
       tokenAddress: [
         '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
@@ -577,6 +578,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
     chain: 'BSC',
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
     contractType: [0, 1, 2, 3],
+    tokenId: ['1', '2', '3', '4'],
     custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
     tokenAddress: [
       '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
@@ -1158,6 +1160,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       chain: 'BSC',
       fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
       contractType: [0, 1, 2, 3],
+      tokenId: ['1', '2', '3', '4'],
       custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
       tokenAddress: [
         '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
@@ -1178,6 +1181,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
     chain: 'BSC',
     fromPrivateKey: '0xc313f7e1303ce1c344df819d1d48c79a834c493c73e12b4389bfb50127c8aaa7',
     contractType: [0, 1, 2, 3],
+    tokenId: ['1', '2', '3', '4'],
     custodialAddress: '0x009bc01b990e2781e8a961fd792f4ebb12a683b4',
     tokenAddress: [
       '0xec5dcb5dbf4b114c9d0f65bccab49ec54f6a0867',
