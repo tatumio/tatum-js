@@ -33,21 +33,7 @@ import {
 import BN from 'bn.js'
 import { TOKEN_METADATA_PROGRAM_ID } from '../schema/instructions'
 import web3 from '@solana/web3.js'
-import { BuyInstructionAccounts } from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/buy'
-import {
-  ExecuteSaleInstructionAccounts,
-  ExecuteSaleInstructionArgs,
-} from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/executeSale'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
-import {
-  PrintBidReceiptInstructionAccounts,
-  PrintBidReceiptInstructionArgs,
-} from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/printBidReceipt'
-import { WithdrawFromTreasuryInstructionAccounts } from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/withdrawFromTreasury'
-import {
-  WithdrawFromFeeInstructionAccounts,
-  WithdrawFromFeeInstructionArgs,
-} from '@metaplex-foundation/mpl-auction-house/dist/src/generated/instructions/withdrawFromFee'
 import { solanaUtils } from '@tatumio/solana'
 import BigNumber from 'bignumber.js'
 import { SdkError, SdkErrorCode, WithoutChain } from '@tatumio/shared-abstract-sdk'
@@ -200,7 +186,7 @@ export const solanaMarketPlaceService = (
     const {
       marketplaceFee,
       canChangeSalePrice = false,
-      requiresSignOff = false,
+      requiresSignOff = true,
       treasuryWithdrawalDestination,
       feeWithdrawalDestination,
       treasuryMint,
@@ -644,7 +630,7 @@ export const solanaMarketPlaceService = (
       escrowPaymentBump: buyerEscrowBump,
     }
 
-    const buyInstructionAccounts: BuyInstructionAccounts = {
+    const buyInstructionAccounts = {
       wallet: buyerPublicKey,
       paymentAccount,
       transferAuthority: buyerPublicKey,
@@ -728,12 +714,12 @@ export const solanaMarketPlaceService = (
 
     const [bidReceipt, bidReceiptBump] = await findBidReceiptAddress(buyTradeState)
 
-    const printBidReceiptAccounts: PrintBidReceiptInstructionAccounts = {
+    const printBidReceiptAccounts = {
       bookkeeper: buyerPublicKey,
       receipt: bidReceipt,
       instruction: SYSVAR_INSTRUCTIONS_PUBKEY,
     }
-    const printBidReceiptArgs: PrintBidReceiptInstructionArgs = {
+    const printBidReceiptArgs = {
       receiptBump: bidReceiptBump,
     }
 
@@ -747,7 +733,7 @@ export const solanaMarketPlaceService = (
       buyTradeState,
     )
 
-    const executeSellInstructionArgs: ExecuteSaleInstructionArgs = {
+    const executeSellInstructionArgs = {
       escrowPaymentBump: buyerEscrowBump,
       freeTradeStateBump: freeTradeStateBump,
       programAsSignerBump: programAsSignerBump,
@@ -755,7 +741,7 @@ export const solanaMarketPlaceService = (
       tokenSize: new BN(1),
     }
 
-    const executeSellInstructionAccounts: ExecuteSaleInstructionAccounts = {
+    const executeSellInstructionAccounts = {
       buyer: buyerPublicKey,
       seller: sellerPublicKey,
       tokenAccount: associatedTokenAccount,
@@ -839,7 +825,8 @@ export const solanaMarketPlaceService = (
       listingId,
     )) as SolanaListingData
 
-    const price = listing.price
+    const isNative = treasuryMintIsNative(treasuryMint)
+    const price = await formatPrice(connection, isNative, listing.price, treasuryMint)
 
     const tokenMint = new PublicKey(listing.nft.address)
 
@@ -924,7 +911,7 @@ export const solanaMarketPlaceService = (
 
     const finalAmount = await formatPrice(connection, false, amount, treasuryMint)
 
-    const withdrawFromTreasuryInstructionAccounts: WithdrawFromTreasuryInstructionAccounts = {
+    const withdrawFromTreasuryInstructionAccounts = {
       treasuryMint,
       authority,
       treasuryWithdrawalDestination,
@@ -975,13 +962,13 @@ export const solanaMarketPlaceService = (
 
     const lamports = new BigNumber(amount).multipliedBy(LAMPORTS_PER_SOL).toFixed()
 
-    const withdrawFromTreasuryInstructionAccounts: WithdrawFromFeeInstructionAccounts = {
+    const withdrawFromTreasuryInstructionAccounts = {
       authority,
       feeWithdrawalDestination,
       auctionHouseFeeAccount,
       auctionHouse: auctionHouseAddress,
     }
-    const withdrawFromTreasuryInstructionArgs: WithdrawFromFeeInstructionArgs = {
+    const withdrawFromTreasuryInstructionArgs = {
       amount: new BN(lamports),
     }
 
