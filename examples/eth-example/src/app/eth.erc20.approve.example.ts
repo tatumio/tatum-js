@@ -21,7 +21,7 @@ export async function ethErc20ApproveExample() {
   console.log(`Contract address`, contractAddress)
 
   // approve erc20 (fungible token) to spender (receiverAddress)
-  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Transfer
+  // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Approve
   const erc20Approved = (await ethSDK.erc20.send.approveSignedTransaction({
     spender: receiverAddress,
     amount: '1',
