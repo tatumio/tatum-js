@@ -133,6 +133,9 @@ export enum SdkErrorCode {
   // SOLANA
   SOLANA_KMS_COMBINATION = 'solana.kms.combination',
 
+  // ALGO
+  ALGO_TOKEN_NAME_TOO_LONG = 'algo.token.name.too-long',
+
   // EVM General
   EVM_CANNOT_SIGN_TRANSACTION = 'evm-based.cannot.sign-transaction',
   EVM_CANNOT_ESTIMATE_GAS_LIMIT = 'evm-based.cannot.estimate-gas-limit',
@@ -241,6 +244,9 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
     SdkErrorCode.SOLANA_KMS_COMBINATION,
     'Either signatureId with feePayerSignatureId, or fromPrivateKey with feePayerPrivateKey must be present. Combination is not allowed.',
   ],
+
+  // ALGO
+  [SdkErrorCode.ALGO_TOKEN_NAME_TOO_LONG, 'Token name should not be more than 8 characters long'],
 
   // EVM
   [

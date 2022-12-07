@@ -1,7 +1,7 @@
 // No types for base32.js
 // @ts-ignore
 import base32 from 'base32.js'
-import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
+import { isWithSignatureId, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import * as algosdk from 'algosdk'
 import { BigNumber } from 'bignumber.js'
 import type {
@@ -16,6 +16,7 @@ import type {
 import { AlgoWeb } from '../algo.web'
 import { algoWallet } from '../algo.wallet'
 import { MintNftExpressAlgorand } from '@tatumio/api-client'
+import { AlgoSdkError } from '../../algo.sdk.errors'
 
 export const prepareCreateNFTSignedTransaction = async ({
   body,
@@ -28,6 +29,8 @@ export const prepareCreateNFTSignedTransaction = async ({
   algoWeb: AlgoWeb
   provider?: string
 }) => {
+  if (body.name.length > 8) throw new AlgoSdkError(SdkErrorCode.ALGO_TOKEN_NAME_TOO_LONG)
+
   const algodClient = algoWeb.getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()
 

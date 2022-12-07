@@ -1,4 +1,4 @@
-import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
+import { isWithSignatureId, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import * as algosdk from 'algosdk'
 import { BigNumber } from 'bignumber.js'
 import type {
@@ -14,6 +14,7 @@ import type {
 import base32 from 'base32.js'
 import { AlgoWeb } from '../algo.web'
 import { algoWallet } from '../algo.wallet'
+import { AlgoSdkError } from '../../algo.sdk.errors'
 
 export const prepareCreateFTSignedTransaction = async ({
   body,
@@ -26,6 +27,8 @@ export const prepareCreateFTSignedTransaction = async ({
   algoWeb: AlgoWeb
   provider?: string
 }) => {
+  if (body.name.length > 8) throw new AlgoSdkError(SdkErrorCode.ALGO_TOKEN_NAME_TOO_LONG)
+
   const algodClient = algoWeb.getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()
 
