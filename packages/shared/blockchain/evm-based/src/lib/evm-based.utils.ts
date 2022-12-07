@@ -130,7 +130,7 @@ export const evmBasedUtils = {
       body.fromPrivateKey,
       body.gasLimit,
       body.gasPrice,
-      provider
+      provider,
     )
   },
   tryCatch: async (method: () => any, code: SdkErrorCode) => {
