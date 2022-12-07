@@ -15,11 +15,8 @@ import { Currency } from './Currency';
 import { Fee } from './Fee';
 
 export class CreateRecord {
-
-  @ValidateIf(o => o.chain === Currency.ETH && ((o.fromPrivateKey && o.signatureId) || !o.signatureId))
-  @Validate(SignatureIdValidator)
   @IsNotEmpty()
-  @Length(66, 66)
+  @Length(64, 103)
   public fromPrivateKey: string;
 
   @ValidateIf(o => o.chain === Currency.ETH && ((o.fromPrivateKey && o.signatureId) || !o.fromPrivateKey))
@@ -34,7 +31,7 @@ export class CreateRecord {
   public data: string;
 
   @IsNotEmpty()
-  @IsIn([Currency.ETH, Currency.BSC, Currency.CELO, Currency.MATIC, Currency.XDC, Currency.KLAY, Currency.ONE, Currency.EGLD])
+  @IsIn([Currency.ETH, Currency.BSC, Currency.CELO, Currency.MATIC, Currency.KLAY, Currency.ONE, Currency.EGLD])
   public chain: string;
 
   @ValidateIf(o => o.chain === Currency.CELO)
@@ -42,8 +39,8 @@ export class CreateRecord {
   @IsIn([Currency.CELO, Currency.CUSD, Currency.CEUR])
   public feeCurrency?: Currency;
 
-  @IsNotEmpty()
   @ValidateIf(o => o.chain === Currency.EGLD)
+  @IsNotEmpty()
   @Length(42, 62)
   public from: string;
 
