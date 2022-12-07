@@ -58,7 +58,7 @@ export const ethGetGasPriceInWei = async () => {
   }
   const data = await Promise.all([
     axios.get(gasStationUrl.toString())
-      .then(response => `${response.data.fastest / 10}`),
+      .then(response => `${response.data.average / 10}`),
   ])
   const gasPrice = data[0] === '0' ? '20' : data[0]
   return Web3.utils.toWei(gasPrice, 'gwei')
