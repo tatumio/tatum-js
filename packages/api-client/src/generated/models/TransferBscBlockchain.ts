@@ -4,7 +4,7 @@
 
 export type TransferBscBlockchain = {
     /**
-     * (Only for BSC transactions) Additional data that can be passed to a blockchain transaction as a data property; must be in the hexadecimal format
+     * Additional data, that can be passed to blockchain transaction as data property. Only for BSC transactions.
      */
     data?: string;
     /**
@@ -33,7 +33,7 @@ export type TransferBscBlockchain = {
         gasPrice: string;
     };
     /**
-     * Amount to be sent.
+     * Amount to be sent in Ether.
      */
     amount: string;
     /**

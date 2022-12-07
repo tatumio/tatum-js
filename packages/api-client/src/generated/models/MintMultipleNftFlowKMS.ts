@@ -4,7 +4,7 @@
 
 export type MintMultipleNftFlowKMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'FLOW';
     /**
@@ -12,7 +12,7 @@ export type MintMultipleNftFlowKMS = {
      */
     to: Array<string>;
     /**
-     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
+     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
      */
     url: Array<string>;
     /**

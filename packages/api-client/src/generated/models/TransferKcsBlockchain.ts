@@ -33,7 +33,7 @@ export type TransferKcsBlockchain = {
         gasPrice: string;
     };
     /**
-     * Amount to be sent.
+     * Amount to be sent in Ether.
      */
     amount: string;
     /**

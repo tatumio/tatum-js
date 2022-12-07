@@ -12,7 +12,7 @@ export type BidOnAuctionCelo = {
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
-     * Address of the auction smart contract.
+     * Address of the marketplace smart contract.
      */
     contractAddress: string;
     /**
@@ -30,7 +30,7 @@ export type BidOnAuctionCelo = {
     /**
      * Amount of the assets to be bid. This must include auction fee.
      */
-    bidValue: string;
+    bidValue?: string;
     /**
      * Private key of sender address. Private key, or signature Id must be present.
      */

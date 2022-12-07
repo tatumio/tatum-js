@@ -2,44 +2,41 @@
 /* tslint:disable */
 /* eslint-disable */
 
-/**
- * <p>The <code>MintNftTron</code> schema lets you mint NFTs natively on TRON and sign the transaction with your private key.<br/>For more information, see "Minting NFTs natively on a blockchain" in <a href="#operation/NftMintErc721">Mint an NFT</a>.</p><br/>
- */
 export type MintNftTron = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'TRON';
     /**
-     * The blockchain address to send the NFT to
-     */
-    to: string;
-    /**
-     * The blockchain address of the smart contract to build the NFT on
-     */
-    contractAddress: string;
-    /**
-     * The ID of the NFT.
+     * ID of token to be created.
      */
     tokenId: string;
     /**
-     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
+     * Blockchain address to send NFT token to
+     */
+    to: string;
+    /**
+     * Address of NFT token
+     */
+    contractAddress: string;
+    /**
+     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
      */
     url: string;
     /**
-     * The maximum amount to be paid as the transaction fee (in TRX)
-     */
-    feeLimit: number;
-    /**
-     * The private key of the blockchain address that will pay the fee for the transaction
-     */
-    fromPrivateKey: string;
-    /**
-     * The blockchain addresses where the royalties will be sent every time the minted NFT is transferred; the royalties are paid in the native blockchain currency, TRX
+     * List of addresses, where royalty cashback for every transfer of this NFT will be send. Royalties are paid in native blockchain currency TRON.
      */
     authorAddresses?: Array<string>;
     /**
-     * The amounts of the royalties that will be paid to the authors of the minted NFT every time the NFT is transferred; the amount is defined as a fixed amount of the native blockchain currency
+     * List of values, which will be paid as a royalty for author of the NFT token with every token transfer. This is exact value in native blockhain currency.
      */
     cashbackValues?: Array<string>;
+    /**
+     * Private key of sender address. Private key, or signature Id must be present.
+     */
+    fromPrivateKey: string;
+    /**
+     * Max limit for fee to be paid, in TRX.
+     */
+    feeLimit: number;
 }

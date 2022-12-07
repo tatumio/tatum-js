@@ -4,7 +4,7 @@
 
 export type ChainCallSmartContractMethod = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'ETH' | 'BSC' | 'XDC';
     /**
@@ -28,11 +28,11 @@ export type ChainCallSmartContractMethod = {
      */
     fromPrivateKey: string;
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
     /**
-     * The custom defined fee; if not present, will be calculated automatically
+     * Custom defined fee. If not present, it will be calculated automatically.
      */
     fee?: {
         /**

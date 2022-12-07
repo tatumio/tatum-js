@@ -10,19 +10,17 @@ export type AdaTx = {
      */
     hash?: string;
     /**
-     * Fee paid for this transaction, in ADA.
+     * Fee paid for this transaction, in LTC.
      */
     fee?: string;
-    block?: {
-        /**
-         * Index of the block this transaction belongs to.
-         */
-        number?: number;
-        /**
-         * Block hash.
-         */
-        hash?: string;
-    };
+    /**
+     * Index of the block this transaction belongs to.
+     */
+    block?: number;
+    /**
+     * Time of the transaction.
+     */
+    includedAt?: string;
     /**
      * List of transactions, from which assets are being sent.
      */
@@ -31,6 +29,14 @@ export type AdaTx = {
          * Transaction hash of the input.
          */
         txHash?: string;
+        /**
+         * Transaction hash of the source transaction input.
+         */
+        sourceTxHash?: string;
+        /**
+         * Transaction index of the input.
+         */
+        sourceTxIndex?: number;
         /**
          * Value of the transaction, in Lovelace - 1/1000000 of ADA.
          */

@@ -1,7 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
-import type { AdaAccountBalance } from '../models/AdaAccountBalance';
+import type { AdaAccount } from '../models/AdaAccount';
 import type { AdaBlock } from '../models/AdaBlock';
 import type { AdaInfo } from '../models/AdaInfo';
 import type { AdaTransactionFromAddress } from '../models/AdaTransactionFromAddress';
@@ -35,6 +35,34 @@ export class CardanoService {
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * @deprecated
+     * Ada GraphQL
+     * <p><b>Support for Cardano is deprecated.<br/>
+     * You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a></b>.</p><br/>
+     * <p><b>100 credits per API call</b></p>
+     * <p>Use this endpoint URL as an GraphQL to connect directly to the Ada node provided by Tatum. You can find full documentation on the <a target='_blank' href='https://github.com/input-output-hk/cardano-graphql'>Cardano GraphQL API</a>.</p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static adaGraphQl(
+        requestBody: any,
+    ): CancelablePromise<any> {
+        return __request({
+            method: 'POST',
+            path: `/v3/ada/graphql`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server while processing the request.`,
             },
         });
@@ -237,25 +265,26 @@ export class CardanoService {
 
     /**
      * @deprecated
-     * Send ADA to Cardano addresses
+     * Send Ada to blockchain addresses
      * <p><b>Support for Cardano is deprecated.<br/>
      * You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a></b>.</p><br/>
-     * <p><b>2 credits per API call</b></p>
-     * <p>Send ADA to blockchain addresses.</p>
-     * <p>Cardano transactions are based on UTXOs. "UTXO" stands for "Unspent Transaction Output". A UTXO is the amount of ADA that remains at a Cardano address after a cryptocurrency transaction involving this address has been performed. The UTXO can then be used as input for a new cryptocurrency transaction. For more information about the UTXO, see the <a href="https://developer.bitcoin.org/devguide/transactions.html" target="_blank">Bitcoin user documentation</a>.</p>
-     * <p>You can build an ADA transaction by one of the following methods:</p>
+     * <h4>2 credits per API call.</h4>
+     * <p>Send Ada to blockchain addresses. It is possible to build a blockchain transaction in 2 ways:
      * <ul>
-     * <li><b>Sending ADA from blockchain addresses</b><br/>The assets are sent from a list of addresses. For each address, the last 100 transactions are scanned for any UTXO to be included in the transaction. For easier control over the assets to be sent, we recommend that you use this method only if you have one address to send the assets from.<br/> To use this method, use the <code>AdaTransactionFromAddress</code> or <code>AdaTransactionFromAddressKMS</code> schema of the request body.</li>
-     * <li><b>Sending ADA from UTXOs</b><br/>The assets are sent from a list of UTXOs. Each UTXO is included in the transaction. Use this method if you want to manually calculate the amount to send.<br/> To use this method, use the <code>AdaTransactionFromUTXO</code> or <code>AdaTransactionFromUTXOKMS</code> schema of the request body.</li>
+     * <li><b>fromAddress</b> - assets will be sent from the list of addresses. For each of the addresses, the last 100 transactions will be scanned for any unspent UTXO to be included in the transaction.</li>
+     * <li><b>fromUTXO</b> - assets will be sent from the list of unspent UTXOs. Each of the UTXOs will be included in the transaction.</li>
      * </ul>
-     * <p>When an UTXO is entered into a transaction, the whole UTXO amount is included and must be spent. For example, address A receives two transactions, T1 with 1 ADA and T2 with 2 ADA. A transaction that consumes the UTXOs from both T1 and T2 will have an available amount of 3 ADA to spend:<br/><code>1 ADA (from T1) + 2 ADA (from T2) = 3 ADA (to spend in total)</code></p>
-     * <p>You can send the assets to one or multiple recipients in one transaction. If you send the assets to multiple addresses, each address must have its own amount to receive.</p>
-     * <p><b>Paying the gas fee and receiving the change</b><br/>
-     * When the amount that the recipients should receive is lower than the amount from the UTXOs, the difference between these two amounts is by default used as the gas fee for the transaction. Because this amount may be considerable and you may not want to spend it all on the gas fee, you can explicitly specify the fee amount and the blockchain address where any extra funds remaining after covering the fee will be sent (the <code>fee</code> and <code>changeAddress</code> parameters in the request body, correspondingly).</p>
-     * <p><b>Signing a transaction</b><br/>
-     * When sending ADA, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
-     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
-     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
+     * In bitcoin-like blockchains, a transaction is created from the list of previously unspent UTXOs. Every UTXO contains the amount of funds that can be spent.
+     * When the UTXO is entered into the transaction, the whole amount is included and must be spent. For example, address A receives 2 transactions, T1 with 1 ADA and T2 with 2 ADA.
+     * The transaction, which will consume the UTXOs for T1 and T2, will have an available amount to spend of 3 ADA = 1 ADA (T1) + 2 ADA(T2).<br/><br/>
+     * There can be multiple recipients of the transactions. In the <b>to</b> section, every recipient address has its own corresponding amount.
+     * When the amount of funds that the recipient should receive is lower than the amount of funds from the UTXOs, the difference is split as transaction fee and change, which will be send to change address..<br/><br/>
+     * This operation requires the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+     * No one should ever send their private keys to the Internet because there is a strong possibility that they will be stolen and the funds will be lost. In this method, it is possible to enter a privateKey
+     * or signatureId. The privateKey should be used only for quick development on testnet versions of blockchains when there is no risk of losing funds. In production,
+     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used to ensure the highest level of security, and the signatureId should be present in the request.
+     * Alternatively, it is also possible to use the Tatum Client Library for supported languages.
+     * </p>
      *
      * @param requestBody
      * @returns any OK
@@ -284,7 +313,7 @@ export class CardanoService {
      * <p><b>Support for Cardano is deprecated.<br/>
      * You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a></b>.</p><br/>
      * <h4>2 credits per API call.</h4>
-     * <p>Broadcasts a signed transaction to the Ada blockchain. This method is used internally from Tatum KMS or Tatum Client Libraries.
+     * <p>Broadcasts a signed transaction to the Ada blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum Client Libraries.
      * It is possible to create a custom signing mechanism and only use this method for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
@@ -317,12 +346,12 @@ export class CardanoService {
      * <p>Gets a Ada account by address.</p>
      *
      * @param address Address
-     * @returns AdaAccountBalance OK
+     * @returns AdaAccount OK
      * @throws ApiError
      */
     public static adaGetAccount(
         address: string,
-    ): CancelablePromise<Array<AdaAccountBalance>> {
+    ): CancelablePromise<Array<AdaAccount>> {
         return __request({
             method: 'GET',
             path: `/v3/ada/account/${address}`,

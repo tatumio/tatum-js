@@ -4,7 +4,7 @@
 
 export type DeployNftTronKMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'TRON';
     /**
@@ -28,7 +28,7 @@ export type DeployNftTronKMS = {
      */
     signatureId: string;
     /**
-     * The maximum amount to be paid as the transaction fee (in TRX); deployment of a smart contract on TRON costs around 580 TRX
+     * Max limit for fee to be paid, in TRX. For deploy, around 580 TRX is consumed.
      */
     feeLimit: number;
 }

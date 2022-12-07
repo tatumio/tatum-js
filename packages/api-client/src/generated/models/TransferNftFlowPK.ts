@@ -4,7 +4,7 @@
 
 export type TransferNftFlowPK = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'FLOW';
     /**

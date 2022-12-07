@@ -4,7 +4,7 @@
 
 export type ChainDeploySolanaSplKMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'SOL';
     /**

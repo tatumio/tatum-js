@@ -22,5 +22,5 @@ export type TransferTronBlockchainKMS = {
     /**
      * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
      */
-    index?: number;
+    index: number;
 }

@@ -4,7 +4,7 @@
 
 export type MintMultipleNftMinter = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'ETH' | 'MATIC' | 'CELO' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
@@ -20,7 +20,7 @@ export type MintMultipleNftMinter = {
      */
     minter: string;
     /**
-     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
+     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
      */
     url: Array<string>;
     /**
@@ -28,7 +28,7 @@ export type MintMultipleNftMinter = {
      */
     contractAddress: string;
     /**
-     * (Celo only) The currency in which the transaction fee will be paid
+     * Currency to pay for transaction gas, only valid for CELO chain.
      */
     feeCurrency?: 'CELO';
 }

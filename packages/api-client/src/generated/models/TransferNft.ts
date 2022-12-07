@@ -2,15 +2,13 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { CustomFee } from './CustomFee';
-
 export type TransferNft = {
     /**
      * If token to be transferred is Royalty NFT token, this is a value to be paid as a cashback to the authors of the token.
      */
     value?: string;
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
@@ -18,7 +16,7 @@ export type TransferNft = {
      */
     to: string;
     /**
-     * ID of the token.
+     * ID of token.
      */
     tokenId: string;
     /**
@@ -42,8 +40,20 @@ export type TransferNft = {
      */
     fromPrivateKey: string;
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used. Setting nonce is not necessary in Algorand
      */
     nonce?: number;
-    fee?: CustomFee;
+    /**
+     * Custom defined fee. If not present, it will be calculated automatically. Setting fee is not necessary in Algorand.
+     */
+    fee?: {
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in Gwei.
+         */
+        gasPrice: string;
+    };
 }

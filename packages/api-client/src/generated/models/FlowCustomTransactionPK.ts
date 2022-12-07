@@ -13,9 +13,9 @@ export type FlowCustomTransactionPK = {
     transaction: string;
     args: Array<{
         /**
-         * The value of the argument; can be a string or an array of strings
+         * Value of the argument. In case of Array type, it could be list of strings.
          */
-        value: (string | any[]);
+        value: string;
         /**
          * Type of the argument
          */

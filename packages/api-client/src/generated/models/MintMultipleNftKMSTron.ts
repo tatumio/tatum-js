@@ -4,7 +4,7 @@
 
 export type MintMultipleNftKMSTron = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'TRON';
     /**
@@ -20,7 +20,7 @@ export type MintMultipleNftKMSTron = {
      */
     tokenId: Array<string>;
     /**
-     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
+     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
      */
     url: Array<string>;
     /**
@@ -36,7 +36,7 @@ export type MintMultipleNftKMSTron = {
      */
     signatureId: string;
     /**
-     * The maximum amount to be paid as the transaction fee (in TRX)
+     * Max limit for fee to be paid, in TRX.
      */
     feeLimit: number;
 }

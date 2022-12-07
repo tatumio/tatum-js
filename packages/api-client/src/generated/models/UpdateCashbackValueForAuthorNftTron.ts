@@ -4,27 +4,27 @@
 
 export type UpdateCashbackValueForAuthorNftTron = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'TRON';
     /**
-     * The ID of the NFT to update royalty information for.
+     * ID of token to be updated.
      */
     tokenId: string;
     /**
-     * The blockchain address of the NFT to update royalty information for
-     */
-    contractAddress: string;
-    /**
-     * The new value of the royalty cashback to be set for the author of the NFT; to disable the royalties for the NFT completely, set this parameter to 0
+     * New royalty cashback to be set for the author of token with tokenId. If set to 0, royalty is disabled for this token.
      */
     cashbackValue: string;
     /**
-     * The maximum amount to be paid as the transaction fee (in TRX)
+     * Address of NFT token
      */
-    feeLimit: number;
+    contractAddress: string;
     /**
-     * The private key of the NFT author's address
+     * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
+    /**
+     * Max limit for fee to be paid, in TRX.
+     */
+    feeLimit: number;
 }

@@ -7,34 +7,19 @@ import { request as __request } from '../core/request';
 export class BlockchainUtilsService {
 
     /**
-     * Get the blockchain address of a smart contract by the deployment transaction ID
-     * <p><b>1 credit per API call</b></p>
-     * <p>Get the blockchain address of a smart contract by the ID of its deployment transaction.</p>
-     * <p>This API is supported for the following blockchains:</p>
-     * <ul>
-     * <li>BNB Smart Chain</li>
-     * <li>Celo</li>
-     * <li>Elrond</li>
-     * <li>Ethereum</li>
-     * <li>Flow</li>
-     * <li>Harmony</li>
-     * <li>Klaytn</li>
-     * <li>Polygon</li>
-     * <li>TRON</li>
-     * <li>XinFix</li>
-     * </ul>
-     *
-     * @param chain The blockchain to work with
-     * @param hash The ID (hash) of the deployment transaction
+     * Get contract address from transaction
+     * <h4>1 credit per API call.</h4><br/><p>Get smart contract address from deploy transaction.</p>
+     * @param chain Blockchain to work with
+     * @param hash Transaction hash
      * @returns any OK
      * @throws ApiError
      */
     public static scGetContractAddress(
-        chain: 'BSC' | 'CELO' | 'EGLD' | 'ETH' | 'FLOW' | 'KLAY' | 'MATIC' | 'ONE' | 'TRON' | 'XDC',
+        chain: 'ETH' | 'ONE' | 'CELO' | 'TRON' | 'MATIC' | 'BSC',
         hash: string,
     ): CancelablePromise<{
         /**
-         * The blockchain address of the smart contract
+         * Address of the smart contract.
          */
         contractAddress?: string;
     }> {
@@ -51,27 +36,27 @@ export class BlockchainUtilsService {
     }
 
     /**
-     * Estimate the block height for a future point in time
-     * <p><b>1 credit per API call</b></p>
-     * <p>Get an estimated block height (number) for some future point in time.</p>
-     * <p>Note that this API returnes an <b>estimation</b> of what the block height might be and <b>not</b> the exact block height.</p>
-     * <p>This API is supported for the following blockchains:</p>
+     * Estimate block height based on time
+     * <h4>1 credits per API call.</h4><br/>
+     * <p>Get estimated block height at given time. This is estimation, not an exact block height.<br/>
+     * Supported blockchains:
      * <ul>
-     * <li>BNB Smart Chain</li>
-     * <li>Celo</li>
+     * <li>Binance Smart Chain</li>
+     * <li>Harmony.ONE</li>
      * <li>Ethereum</li>
-     * <li>Harmony</li>
+     * <li>Celo</li>
+     * <li>Polygon (Matic)</li>
      * <li>Klaytn</li>
-     * <li>Polygon</li>
      * </ul>
+     * </p>
      *
-     * @param chain The blockchain to work with
-     * @param date The date and time in the ISO 8601 standard format
+     * @param chain Blockchain to work with
+     * @param date Date and time in ISO 8601 string
      * @returns number OK
      * @throws ApiError
      */
     public static getAuctionEstimatedTime(
-        chain: 'BSC' | 'CELO' | 'ETH' | 'KLAY' | 'MATIC' | 'ONE',
+        chain: 'ETH' | 'ONE' | 'CELO' | 'MATIC' | 'BSC',
         date: string,
     ): CancelablePromise<number> {
         return __request({

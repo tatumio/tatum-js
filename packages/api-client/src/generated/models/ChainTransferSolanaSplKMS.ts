@@ -4,39 +4,31 @@
 
 export type ChainTransferSolanaSplKMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'SOL';
     /**
-     * The blockchain address to send the fungible tokens from
-     */
-    from: string;
-    /**
-     * The blockchain address to send the fungible tokens to
+     * Address on Solana blockchain, where SPL tokens will be transferred.
      */
     to: string;
     /**
-     * The blockchain address of the fungible tokens
-     */
-    contractAddress: string;
-    /**
-     * The amount of the fungible tokens to be sent
+     * Amount to be sent.
      */
     amount: string;
     /**
-     * The number of decimal places that the fungible tokens have
+     * Address of SPL token
+     */
+    contractAddress: string;
+    /**
+     * Number of decimal points that SPL token has.
      */
     digits: number;
     /**
-     * The KMS identifier of the private key of the blockchain address that you are sending the fungible tokens from (the address that you specified in the <code>from</code> parameter); the transaction fee will be deducted from this address
+     * Address on the Solana blockchain, from which the token will be transferred.
+     */
+    from: string;
+    /**
+     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
-    /**
-     * The blockchain address from which the fee will be deducted; if not set, defaults to the address that you specified in the <code>from</code> parameter
-     */
-    feePayer?: string;
-    /**
-     * The KMS identifier of the private key of the blockchain address that you specified in the <code>feePayer</code> parameter; if not set, defaults to the signature ID that you specified in the <code>signatureId</code> parameter
-     */
-    feePayerSignatureId?: string;
 }

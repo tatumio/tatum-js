@@ -430,18 +430,18 @@ export class TronService {
     /**
      * Get information about a TRC-10 token
      * <p><b>5 credits per API call</b></p>
-     * <p>Get information about a TRON TRC-10 token.</p>
+     * <p>Get Tron TRC10 token details.</p>
      *
-     * @param idOrOwnerAddress The ID of the TRC-10 token or the address of the token's owner
+     * @param id TRC10 token ID
      * @returns TronTrc10Detail OK
      * @throws ApiError
      */
     public static tronTrc10Detail(
-        idOrOwnerAddress: string,
+        id: number,
     ): CancelablePromise<TronTrc10Detail> {
         return __request({
             method: 'GET',
-            path: `/v3/tron/trc10/detail/${idOrOwnerAddress}`,
+            path: `/v3/tron/trc10/detail/${id}`,
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
@@ -508,8 +508,8 @@ export class TronService {
     /**
      * Broadcast a TRON transaction
      * <p><b>5 credits per API call</b></p>
-     * <p>Broadcast Tron transaction. This method is used internally from Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
+     * <p>Broadcast Tron transaction. This method is used internally from Tatum Middleware or Tatum client libraries.
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
      * @returns TransactionHash OK

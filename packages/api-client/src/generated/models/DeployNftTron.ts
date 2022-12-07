@@ -4,7 +4,7 @@
 
 export type DeployNftTron = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'TRON';
     /**
@@ -16,11 +16,11 @@ export type DeployNftTron = {
      */
     symbol: string;
     /**
-     * Private key of account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
+     * Private key of Ethereum account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
     /**
-     * The maximum amount to be paid as the transaction fee (in TRX); deployment of a smart contract on TRON costs around 580 TRX
+     * Max limit for fee to be paid, in TRX. For deploy, around 580 TRX is consumed.
      */
     feeLimit: number;
 }

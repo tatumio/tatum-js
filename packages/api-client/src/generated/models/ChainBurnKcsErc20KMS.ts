@@ -4,7 +4,7 @@
 
 export type ChainBurnKcsErc20KMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'KCS';
     /**
@@ -20,7 +20,7 @@ export type ChainBurnKcsErc20KMS = {
      */
     signatureId: string;
     /**
-     * The custom defined fee; if not present, will be calculated automatically
+     * Custom defined fee. If not present, it will be calculated automatically.
      */
     fee?: {
         /**
@@ -33,7 +33,7 @@ export type ChainBurnKcsErc20KMS = {
         gasPrice: string;
     };
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
 }

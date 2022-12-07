@@ -8,7 +8,7 @@ export type TransferNftKMSCelo = {
      */
     value?: string;
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'CELO';
     /**
@@ -16,7 +16,7 @@ export type TransferNftKMSCelo = {
      */
     to: string;
     /**
-     * ID of the token.
+     * ID of token.
      */
     tokenId: string;
     /**
@@ -44,11 +44,11 @@ export type TransferNftKMSCelo = {
      */
     signatureId: string;
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
     /**
-     * The currency in which the transaction fee will be paid
+     * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

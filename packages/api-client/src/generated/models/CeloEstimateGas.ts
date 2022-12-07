@@ -12,11 +12,11 @@ export type CeloEstimateGas = {
      */
     to: string;
     /**
-     * Amount to be sent.
+     * Amount to be sent in Ether.
      */
     amount: string;
     /**
-     * Additional data, that can be passed to blockchain transaction as data property.
+     * Additinal data, that can be passed to blockchain transaction as data property.
      */
     data?: string;
 }
