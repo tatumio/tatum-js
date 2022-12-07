@@ -2,32 +2,42 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { CustomFee } from './CustomFee';
-
 export type AddNftMinter = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
-    chain: 'BSC' | 'CELO' | 'ETH' | 'KLAY' | 'KCS' | 'MATIC' | 'ONE';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'CELO' | 'ONE' | 'KLAY' | 'BSC';
     /**
-     * The blockchain address of the NFT smart contract
+     * Address of NFT token
      */
     contractAddress: string;
     /**
-     * The blockchain address to add to the smart contract as an NFT minter
+     * Address of NFT minter
      */
     minter: string;
     /**
-     * The private key of the blockchain address from which the fee will be deducted
+     * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-    fee?: CustomFee;
     /**
-     * (Celo only) The currency in which the transaction fee will be paid
+     * Custom defined fee. If not present, it will be calculated automatically.
+     */
+    fee?: {
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in Gwei.
+         */
+        gasPrice: string;
+    };
+    /**
+     * Currency to pay for transaction gas, only valid for CELO chain.
      */
     feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
 }

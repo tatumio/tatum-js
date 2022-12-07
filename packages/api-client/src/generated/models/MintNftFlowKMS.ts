@@ -2,12 +2,9 @@
 /* tslint:disable */
 /* eslint-disable */
 
-/**
- * <p>The <code>MintNftFlowKMS</code> schema lets you mint NFTs natively on Flow and sign the transaction with your signature ID.<br/>For more information, see "Minting NFTs natively on a blockchain" in <a href="#operation/NftMintErc721">Mint an NFT</a>.</p><br/>
- */
 export type MintNftFlowKMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'FLOW';
     /**
@@ -15,7 +12,7 @@ export type MintNftFlowKMS = {
      */
     to: string;
     /**
-     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
+     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
      */
     url: string;
     /**

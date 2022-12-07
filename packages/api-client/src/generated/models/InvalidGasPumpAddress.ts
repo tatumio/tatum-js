@@ -4,7 +4,7 @@
 
 export type InvalidGasPumpAddress = {
     /**
-     * The not activated gas pump address
+     * A not activated gas pump address
      */
     address?: string;
     /**

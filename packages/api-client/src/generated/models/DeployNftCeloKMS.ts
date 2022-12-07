@@ -4,7 +4,7 @@
 
 export type DeployNftCeloKMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'CELO';
     /**
@@ -23,16 +23,13 @@ export type DeployNftCeloKMS = {
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
-    /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
-     */
     nonce?: number;
     /**
-     * True if the contract is provenance percentage royalty type. False by default. <a href="https://github.com/tatumio/smart-contracts" target="_blank">Details and sources available here.</a>
+     * True if the contract is provenance percentage royalty type. False by default. <a href="https://github.com/tatumio/smart-contracts" target="_blank">Details and sources avaiable here.</a>
      */
     provenance?: boolean;
     /**
-     * True if the contract is fixed price royalty type. False by default. <a href="https://github.com/tatumio/smart-contracts" target="_blank">Details and sources available here.</a>
+     * True if the contract is fixed price royalty type. False by default. <a href="https://github.com/tatumio/smart-contracts" target="_blank">Details and sources avaiable here.</a>
      */
     cashback?: boolean;
     /**
@@ -40,7 +37,7 @@ export type DeployNftCeloKMS = {
      */
     publicMint?: boolean;
     /**
-     * The currency in which the transaction fee will be paid
+     * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

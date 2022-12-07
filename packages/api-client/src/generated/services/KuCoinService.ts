@@ -323,7 +323,7 @@ export class KuCoinService {
      * Broadcast signed Kcs transaction
      * <p><b>2 credits per API call</b></p>
      * <p>Broadcast signed transaction to Kcs blockchain. This method is used internally from Tatum KMS or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
      * @returns TransactionHash OK

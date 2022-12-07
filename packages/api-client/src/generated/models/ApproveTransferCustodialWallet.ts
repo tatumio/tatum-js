@@ -22,7 +22,7 @@ export type ApproveTransferCustodialWallet = {
     /**
      * The address of the asset to transfer
      */
-    tokenAddress: string;
+    tokenAddress?: string;
     /**
      * (Only if the asset is a fungible token or Multi Token) The amount of the asset to transfer. Do not use if the asset is an NFT.
      */

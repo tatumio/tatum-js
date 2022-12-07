@@ -4,9 +4,6 @@
 
 import type { SolanaNftMetadata } from './SolanaNftMetadata';
 
-/**
- * <p>The <code>MintNftSolana</code> schema lets you mint NFTs natively on Solana and sign the transaction with your private key.<br/>For more information, see "Minting NFTs natively on a blockchain" in <a href="#operation/NftMintErc721">Mint an NFT</a>.</p><br/>
- */
 export type MintNftSolana = {
     /**
      * The blockchain to work with
@@ -17,11 +14,11 @@ export type MintNftSolana = {
      */
     to: string;
     /**
-     * The blockchain address that will pay the fee for the transaction
+     * The blockchain address to mint the NFT from. The transaction fee will be paid from this address.
      */
     from: string;
     /**
-     * The private key of the blockchain address that will pay the fee for the transaction
+     * The private key of the sender's address
      */
     fromPrivateKey: string;
     /**

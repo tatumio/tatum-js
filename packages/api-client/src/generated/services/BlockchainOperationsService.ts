@@ -1033,13 +1033,13 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Set the contract address of an ERC-20 or ERC-20-equivalent token
+     * Set the contact address of an ERC-20 or ERC-20-equivalent token
      * <h4>2 credits per API call.</h4><br/>
-     * <p>Set the contract address of an ERC-20 or ERC-20-equivalent token (for example, BEP-20, HRM-20, and so on) to be able to communicate with the smart contract.
+     * <p>Set the contact address of an ERC-20 or ERC-20-equivalent token (for example, BEP-20, HRM-20, and so on) to be able to communicate with the smart contract.
      * <br/>
      * <br/>
      * <p>After creating and deploying an ERC-20 or ERC-20-equivalent token to the blockchain, the smart contract address is generated and must be set within Tatum. If the address is not set, the Tatum platform will not be able to detect incoming deposits of the tokens and transfer the tokens from virtual accounts to blockchain addresses.</p>
-     * <p><b>NOTE:</b> For Algorand, the contract address should be the token asset ID (AssetID), for example, <code>55351976</code>.</p>
+     * <p><b>NOTE:</b>For Algorand, the contact address should be the token asset ID (AssetID), for example, <code>55351976</code>.</p>
      *
      * @param address Contract address
      * @param name Symbol name.
@@ -1217,7 +1217,7 @@ export class BlockchainOperationsService {
 
     /**
      * @deprecated
-     * Set the contract address of a Celo ERC-20-equivalent token
+     * Set the contact address of a Celo ERC-20-equivalent token
      * <h4>2 credits per API call.</h4><br/>
      * <b>This method is deprecated. Please use <a href="#operation/storeTokenAddress">this method</a> instead.</b>
      *
@@ -1624,7 +1624,7 @@ export class BlockchainOperationsService {
 
     /**
      * @deprecated
-     * Set the contract address of a TRC-10 or TRC-20 token
+     * Set the contact address of a TRC-10 or TRC-20 token
      * <h4>2 credits per API call.</h4><br/>
      * <b>This method is deprecated. Please use <a href="#operation/storeTokenAddress">this method</a> instead.</b>
      *

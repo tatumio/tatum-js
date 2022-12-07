@@ -237,7 +237,7 @@ export class PolygonService {
      * @param address Account address you want to get balance of
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
-     * @param from Transactions from this block onwards will be included.
+     * @param from Transactions from this block onwords will be included.
      * @param to Transactions up to this block will be included.
      * @param sort Sorting of the data. ASC - oldest first, DESC - newest first.
      * @returns PolygonTx OK
@@ -364,7 +364,7 @@ export class PolygonService {
      * Broadcast signed Polygon transaction
      * <b><p>2 credits per API call</p></b>
      * <p>Broadcast signed transaction to Polygon blockchain. This method is used internally from Tatum KMS or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
      * @returns TransactionHash OK

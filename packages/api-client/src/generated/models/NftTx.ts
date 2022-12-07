@@ -16,7 +16,7 @@ export type NftTx = {
      */
     contractAddress: string;
     /**
-     * ID of the token.
+     * ID of the token
      */
     tokenId: string;
     /**

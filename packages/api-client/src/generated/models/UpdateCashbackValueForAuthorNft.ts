@@ -2,32 +2,42 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { CustomFee } from './CustomFee';
-
 export type UpdateCashbackValueForAuthorNft = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
-    chain: 'BSC' | 'ETH' | 'KCS' | 'KLAY' | 'MATIC' | 'ONE';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
-     * The ID of the NFT to update royalty information for.
+     * ID of token to be updated.
      */
     tokenId: string;
     /**
-     * The blockchain address of the NFT to update royalty information for
-     */
-    contractAddress: string;
-    /**
-     * The new value of the royalty cashback to be set for the author of the NFT; to disable the royalties for the NFT completely, set this parameter to 0
+     * New royalty cashback to be set for the author of token with tokenId. If set to 0, royalty is disabled for this token.
      */
     cashbackValue: string;
     /**
-     * The private key of the NFT author's address
+     * Address of NFT token
+     */
+    contractAddress: string;
+    /**
+     * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-    fee?: CustomFee;
+    /**
+     * Custom defined fee. If not present, it will be calculated automatically.
+     */
+    fee?: {
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in Gwei.
+         */
+        gasPrice: string;
+    };
 }

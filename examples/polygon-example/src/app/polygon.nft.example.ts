@@ -32,7 +32,7 @@ export async function polygonNftExample() {
   )
   const transactionByToken = await polygonSDK.nft.getNFTTransactionsByToken(
     Currency.MATIC,
-    '1',
+    1,
     '0x1ce4e40889a13971681391aad29e88efaf91f784',
     10,
   )

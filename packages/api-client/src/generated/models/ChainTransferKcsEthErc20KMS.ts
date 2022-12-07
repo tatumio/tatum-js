@@ -4,35 +4,35 @@
 
 export type ChainTransferKcsEthErc20KMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'KCS';
     /**
-     * The blockchain address to send the fungible tokens to
+     * Blockchain address to send ERC20 token to
      */
     to: string;
     /**
-     * The blockchain address of the fungible token smart contract
-     */
-    contractAddress: string;
-    /**
-     * The amount of the fungible tokens to be sent
+     * Amount to be sent.
      */
     amount: string;
     /**
-     * The number of decimal places that the fungible tokens have
+     * Address of ERC20 token
+     */
+    contractAddress: string;
+    /**
+     * Number of decimal points that ERC20 token has.
      */
     digits: number;
     /**
-     * The KMS identifier of the private key of the blockchain address from which the fee will be deducted
+     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
     /**
-     * The custom defined fee; if not present, will be calculated automatically
+     * Custom defined fee. If not present, it will be calculated automatically.
      */
     fee?: {
         /**

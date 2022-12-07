@@ -4,7 +4,7 @@
 
 export type BurnNftTron = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'TRON';
     /**
@@ -20,7 +20,7 @@ export type BurnNftTron = {
      */
     fromPrivateKey: string;
     /**
-     * The maximum amount to be paid as the transaction fee (in TRX)
+     * Max limit for fee to be paid, in TRX.
      */
     feeLimit: number;
 }

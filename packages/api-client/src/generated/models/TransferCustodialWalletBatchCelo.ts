@@ -8,7 +8,7 @@ export type TransferCustodialWalletBatchCelo = {
      */
     chain: 'CELO';
     /**
-     * The gas pump address that transfers the assets; this is the address that you <a href="#operation/PrecalculateGasPumpAddresses">precalculated</a> and <a href="#operation/ActivateGasPumpAddresses">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the "master address"
+     * The gas pump address that transfers the assets
      */
     custodialAddress: string;
     /**
@@ -20,47 +20,17 @@ export type TransferCustodialWalletBatchCelo = {
      */
     contractType: Array<0 | 1 | 2 | 3>;
     /**
-     * <ul>
-     * <li>
-     * If the assets are fungible tokens, NFTs, or Multi Tokens, set this parameter to the array of the addresses of the tokens to transfer:<br/>
-     * <code>"tokenAddress": ["0x782919AFc85eEA2cB736874225456bB5d3e242bA","0x74225456bB5d3e242bA782919AFc85eEA2cB7368",...,"0x3e242bA78274225456bB52cB7368d919AFc85eEA"]</code>
-     * </li>
-     * <li>
-     * If the assets are a native blockchain currency, set this parameter to the array of zeros, a zero per currency:<br/>
-     * <code>"tokenAddress": ["0","0",...,"0"]</code>
-     * </li>
-     * </ul>
-     *
+     * (Only if the assets are fungible tokens, NFTs, or Multi Tokens) The addresses of the tokens to transfer. Do not use if the assets are a native blockchain currency.
      */
-    tokenAddress: Array<string>;
+    tokenAddress?: Array<string>;
     /**
-     * <ul>
-     * <li>
-     * If the assets are fungible tokens, Multi Tokens, or a native blockchain currency, set this parameter to the array of the amounts of the assets to transfer:<br/>
-     * <code>"amount": ["100000","15000",...,"250000"]</code>
-     * </li>
-     * <li>
-     * If the assets are NFTs, set this parameter to the array of zeros, a zero per NFT:<br/>
-     * <code>"amount": ["0","0",...,"0"]</code>
-     * </li>
-     * </ul>
-     *
+     * (Only if the assets are fungible tokens, Multi Tokens, or a native blockchain currency) The amounts of the assets to transfer. Do not use if the assets are NFTs.
      */
-    amount: Array<string>;
+    amount?: Array<string>;
     /**
-     * <ul>
-     * <li>
-     * If the assets are Multi Tokens or NFTs, set this parameter to the array of the IDs of the tokens to transfer:<br/>
-     * <code>"tokenId": ["12","13",...,"24"]</code>
-     * </li>
-     * <li>
-     * If the assets are fungible tokens or a native blockchain currency, set this parameter to the array of zeros, a zero per fungible token/currency:<br/>
-     * <code>"tokenId": ["0","0",...,"0"]</code>
-     * </li>
-     * </ul>
-     *
+     * (Only if the assets are Multi Tokens or NFTs) The IDs of the tokens to transfer. Do not use if the assets are fungible tokens or a native blockchain currency.
      */
-    tokenId: Array<string>;
+    tokenId?: Array<string>;
     /**
      * The private key of the blockchain address that owns the gas pump address ("master address")
      */

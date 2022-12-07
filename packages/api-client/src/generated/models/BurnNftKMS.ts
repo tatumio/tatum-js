@@ -2,32 +2,42 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { CustomFee } from './CustomFee';
-
 export type BurnNftKMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
-     * The ID of the NFT to burn.
+     * ID of token to be destroyed.
      */
     tokenId: string;
     /**
-     * The blockchain address of the NFT to burn
+     * Address of NFT token
      */
     contractAddress: string;
     /**
-     * (Only if the signature ID is mnemonic-based) The index of the address to pay the transaction fee that was generated from the mnemonic
+     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
      */
     index?: number;
     /**
-     * The KMS identifier of the private key of the blockchain address from which the fee will be deducted
+     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-    fee?: CustomFee;
+    /**
+     * Custom defined fee. If not present, it will be calculated automatically.
+     */
+    fee?: {
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in Gwei.
+         */
+        gasPrice: string;
+    };
 }

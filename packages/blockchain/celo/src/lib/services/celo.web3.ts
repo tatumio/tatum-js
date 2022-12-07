@@ -27,7 +27,7 @@ export const celoWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }
       }
 
       const data = (await httpHelper.get(gasStationUrl)).data
-      const gasPrice = data['fast'] ?? 20
+      const gasPrice = data['average'] ?? 20
 
       return Web3.utils.toWei((gasPrice / 10).toString(), 'gwei')
     },

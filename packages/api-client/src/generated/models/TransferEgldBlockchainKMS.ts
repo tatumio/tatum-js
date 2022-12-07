@@ -29,7 +29,7 @@ export type TransferEgldBlockchainKMS = {
         gasPrice?: string;
     };
     /**
-     * Additional data, that will be passed to blockchain transaction as data property.
+     * Additinal data, that will be passed to blockchain transaction as data property.
      */
     data?: string;
     /**

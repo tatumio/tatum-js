@@ -4,11 +4,11 @@
 
 export type ChainMintErc20 = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE';
     /**
-     * Amount to be minted and transferred to the recipient.
+     * Amount to be minted and transfered to the recipient.
      */
     amount: string;
     /**
@@ -24,7 +24,7 @@ export type ChainMintErc20 = {
      */
     fromPrivateKey: string;
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
 }

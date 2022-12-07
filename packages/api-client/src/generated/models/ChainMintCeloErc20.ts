@@ -4,11 +4,11 @@
 
 export type ChainMintCeloErc20 = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'CELO';
     /**
-     * Amount to be minted and transferred to the recipient.
+     * Amount to be minted and transfered to the recipient.
      */
     amount: string;
     /**
@@ -24,11 +24,11 @@ export type ChainMintCeloErc20 = {
      */
     fromPrivateKey: string;
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
     /**
-     * The currency in which the transaction fee will be paid
+     * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

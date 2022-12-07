@@ -2,24 +2,39 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { BtcTransactionFromAddressSource } from './BtcTransactionFromAddressSource';
-import type { BtcTransactionFromAddressTarget } from './BtcTransactionFromAddressTarget';
-
 export type BtcTransactionFromAddress = {
     /**
-     * The array of blockchain addresses to send the assets from and their private keys. For each address, the last 100 transactions are scanned for any UTXO to be included in the transaction.
+     * Array of addresses and corresponding private keys. Tatum will automatically scan last 100 transactions for each address and will use all of the unspent values. We advise to use this option if you have 1 address per 1 transaction only.
      */
-    fromAddress: Array<BtcTransactionFromAddressSource>;
+    fromAddress: Array<{
+        /**
+         * Address to send assets from.
+         */
+        address: string;
+        /**
+         * Private key of the address to send assets from. Private key, or signature Id must be present.
+         */
+        privateKey: string;
+    }>;
     /**
-     * The array of blockchain addresses to send the assets to and the amounts that each address should receive (in BTC). The difference between the UTXOs calculated in the <code>fromAddress</code> section and the total amount to receive calculated in the <code>to</code> section will be used as the gas fee. To explicitly specify the fee amount and the blockchain address where any extra funds remaining after covering the fee will be sent, set the <code>fee</code> and <code>changeAddress</code> parameters.
+     * Array of addresses and values to send bitcoins to. Values must be set in BTC. Difference between from and to is transaction fee.
      */
-    to: Array<BtcTransactionFromAddressTarget>;
+    to: Array<{
+        /**
+         * Destination address.
+         */
+        address: string;
+        /**
+         * Amount to be sent, in BTC.
+         */
+        value: number;
+    }>;
     /**
-     * The fee to be paid for the transaction (in BTC); if you are using this parameter, you have to also use the <code>changeAddress</code> parameter because these two parameters only work together.
+     * Fee to be paid in BTC.
      */
     fee?: string;
     /**
-     * The blockchain address to send any extra assets remaning after covering the fee to; if you are using this parameter, you have to also use the <code>fee</code> parameter because these two parameters only work together.
+     * Address, where unspent funds will be transferred.
      */
     changeAddress?: string;
 }

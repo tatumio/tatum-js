@@ -16,7 +16,7 @@ export type OneEstimateGas = {
      */
     amount: string;
     /**
-     * Additional data, that can be passed to blockchain transaction as data property.
+     * Additinal data, that can be passed to blockchain transaction as data property.
      */
     data?: string;
 }

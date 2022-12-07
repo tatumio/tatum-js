@@ -16,9 +16,9 @@ export type TransferKlaytnBlockchainKMS = {
      */
     to: string;
     /**
-     * Currency to transfer from Klaytn Blockchain Account.
+     * Currency to transfer from Klaytn Blockchain Account. ERC20 tokens BETH, BBTC, BADA, WKLAY, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
      */
-    currency: 'KLAY';
+    currency: 'BETH' | 'BBTC' | 'BADA' | 'WKLAY' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'KLAY';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */

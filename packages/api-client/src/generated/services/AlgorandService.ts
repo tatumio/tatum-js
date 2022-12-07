@@ -81,7 +81,7 @@ export class AlgorandService {
      * <br/>
      * Example call for Get Tx By ID is described in the response. <a href="https://developer.algorand.org/docs/rest-apis/indexer/#get-v2transactionstxid" target="_blank">https://developer.algorand.org/docs/rest-apis/indexer/#get-v2transactionstxid</a>.
      * <br/>
-     * URL used for this call would be <pre>https://api.tatum.io/v3/algorand/node/indexer/YOUR_API_KEY/v2/transactions/HNIQ76UTJYPOLZP5FWODYABBJPYPGJNEM2QEJSMDMQRWEKHEYJHQ</pre></p>
+     * URL used for this call would be <pre>https://api-eu1.tatum.io/v3/algorand/node/indexer/YOUR_API_KEY/v2/transactions/HNIQ76UTJYPOLZP5FWODYABBJPYPGJNEM2QEJSMDMQRWEKHEYJHQ</pre></p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
      * @param indexerPath `**` path of indexer.
@@ -113,7 +113,7 @@ export class AlgorandService {
      * <br/>
      * Example call for Get Block is described in the response. <a href="https://developer.algorand.org/docs/rest-apis/algod/v2/#get-v2blocksround" target="_blank">https://developer.algorand.org/docs/rest-apis/algod/v2/#get-v2blocksround</a>.
      * <br/>
-     * URL used for this call would be <pre>https://api.tatum.io/v3/algorand/node/algod/YOUR_API_KEY/v2/blocks/16775567</pre>
+     * URL used for this call would be <pre>https://api-eu1.tatum.io/v3/algorand/node/algod/YOUR_API_KEY/v2/blocks/16775567</pre>
      * </p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
@@ -146,7 +146,7 @@ export class AlgorandService {
      * <br/>
      * Example call for Broadcast a raw transaction is described in the response. <a href="https://developer.algorand.org/docs/rest-apis/algod/v2/#post-v2transactions" target="_blank">https://developer.algorand.org/docs/rest-apis/algod/v2/#post-v2transactions</a>.
      * <br/>
-     * URL used for this call would be <pre>https://api.tatum.io/v3/algorand/node/algod/YOUR_API_KEY/v2/transactions</pre>
+     * URL used for this call would be <pre>https://api-eu1.tatum.io/v3/algorand/node/algod/YOUR_API_KEY/v2/transactions</pre>
      * </p>
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
@@ -341,12 +341,8 @@ export class AlgorandService {
     }
 
     /**
-     * @deprecated
      * Get Algorand Transactions between from and to
-     * <p><b>1 credit per API call</b></p>
-     * <p><b>This endpoint is deprecated.</b></p><br/>
-     * <p>Get Algorand transaction by specified period of time.</p>
-     *
+     * <h4>1 credit per API call.</h4><br/><p>Get Algorand transaction by specified period of time.</p>
      * @param from Start timestamp in specified period of time
      * @param to End timestamp in specified period of time
      * @param limit page size for pagination
@@ -379,7 +375,7 @@ export class AlgorandService {
      * Broadcast signed Algorand transaction
      * <h4>2 credits per API call.</h4><br/>
      * <p>Broadcast signed transaction to Algorand blockchain. This method is used internally from Tatum KMS or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
      *
      * @param requestBody
      * @returns AlgoTransactionHashKMS OK

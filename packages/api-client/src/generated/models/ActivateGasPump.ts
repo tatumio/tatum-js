@@ -6,7 +6,7 @@ export type ActivateGasPump = {
     /**
      * The blockchain to work with
      */
-    chain: 'BSC' | 'ETH' | 'KLAY' | 'MATIC' | 'ONE';
+    chain: 'BSC' | 'ETH' | 'KLAY' | 'MATIC';
     /**
      * The blockchain address that owns the precalculated gas pump addresses and is used to pay gas fees for operations made on the gas pump addresses; can be referred to as "master address"
      */

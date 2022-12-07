@@ -2,8 +2,6 @@
 /* tslint:disable */
 /* eslint-disable */
 
-import type { CustomFee } from './CustomFee';
-
 export type CallSmartContractMethod = {
     /**
      * The address of the smart contract
@@ -33,5 +31,17 @@ export type CallSmartContractMethod = {
      * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-    fee?: CustomFee;
+    /**
+     * Custom defined fee. If not present, it will be calculated automatically.
+     */
+    fee?: {
+        /**
+         * Gas limit for transaction in gas price.
+         */
+        gasLimit: string;
+        /**
+         * Gas price in Gwei.
+         */
+        gasPrice: string;
+    };
 }

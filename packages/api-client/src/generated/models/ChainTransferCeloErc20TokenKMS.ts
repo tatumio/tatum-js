@@ -4,35 +4,35 @@
 
 export type ChainTransferCeloErc20TokenKMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'CELO';
     /**
-     * The blockchain address to send the fungible tokens to
+     * Blockchain address to send ERC20 token to
      */
     to: string;
     /**
-     * The blockchain address of the fungible token smart contract
-     */
-    contractAddress: string;
-    /**
-     * The amount of the fungible tokens to be sent
+     * Amount to be sent.
      */
     amount: string;
     /**
-     * The number of decimal places that the fungible tokens have; to find out how many decimal places are used in the fungible tokens, check out the <a href="https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress" target="_blank">smart contract</a>
+     * Address of ERC20 token
+     */
+    contractAddress: string;
+    /**
+     * Number of decimal points that ERC20 token has.
      */
     digits: number;
     /**
-     * The KMS identifier of the private key of the blockchain address from which the fee will be deducted
+     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
     /**
-     * The currency in which the transaction fee will be paid
+     * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

@@ -4,7 +4,7 @@
 
 export type ApproveErc20KMS = {
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'ONE';
     /**
@@ -24,7 +24,7 @@ export type ApproveErc20KMS = {
      */
     signatureId: string;
     /**
-     * The custom defined fee; if not present, will be calculated automatically
+     * Custom defined fee. If not present, it will be calculated automatically.
      */
     fee?: {
         /**
@@ -37,7 +37,7 @@ export type ApproveErc20KMS = {
         gasPrice: string;
     };
     /**
-     * The nonce to be set to the transaction; if not present, the last known nonce will be used
+     * Nonce to be set to transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
 }

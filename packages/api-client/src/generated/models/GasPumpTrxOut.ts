@@ -2,14 +2,14 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { GasPumpAddress } from './GasPumpAddress';
 import type { InvalidGasPumpAddress } from './InvalidGasPumpAddress';
-import type { ValidGasPumpAddress } from './ValidGasPumpAddress';
 
 export type GasPumpTrxOut = {
     /**
      * Activated gas pump addresses
      */
-    valid?: Array<ValidGasPumpAddress>;
+    valid?: Array<GasPumpAddress>;
     /**
      * Not activated gas pump addresses
      */

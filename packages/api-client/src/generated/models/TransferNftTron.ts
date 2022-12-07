@@ -8,7 +8,7 @@ export type TransferNftTron = {
      */
     value?: string;
     /**
-     * The blockchain to work with
+     * Chain to work with.
      */
     chain: 'TRON';
     /**
@@ -16,7 +16,7 @@ export type TransferNftTron = {
      */
     to: string;
     /**
-     * ID of the token.
+     * ID of token.
      */
     tokenId: string;
     /**
@@ -28,7 +28,7 @@ export type TransferNftTron = {
      */
     fromPrivateKey: string;
     /**
-     * The maximum amount to be paid as the transaction fee (in TRX)
+     * Max limit for fee to be paid, in TRX.
      */
     feeLimit: number;
 }
