@@ -56,10 +56,10 @@ Library is written in TypeScript with ES2017 as the target JS version. Library s
 
 ## Configuration and setup
 
-| Variable                  | Required | Default value    | Description                                                                                                                                                                                                                                   |
-| ------------------------- | -------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| TESTNET_TYPE              |          | ethereum-ropsten | For Ethereum, there are 2 testnet chains supported - Ropsten and Rinkeby. To enable Rinkeby, you need to use ethereum-rinkeby.                                                                                                                |
-| YOUR_TRON_PRO_API_KEY     |          |                  | If you want to work with TRON locally, you need to enter API Key for [Trongrid] (https://trongrid.io).                                                                                                                                        |
+| Variable              | Required | Default value    | Description                                                                                                                    |
+| --------------------- | -------- | ---------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| TESTNET_TYPE          |          | ethereum-ropsten | For Ethereum, there are 2 testnet chains supported - Ropsten and Rinkeby. To enable Rinkeby, you need to use ethereum-rinkeby. |
+| YOUR_TRON_PRO_API_KEY |          |                  | If you want to work with TRON locally, you need to enter API Key for [Trongrid] (https://trongrid.io).                         |
 
 ## Usage
 
