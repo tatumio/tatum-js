@@ -2,6 +2,7 @@ import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA, walletTestFactory } from '@ta
 import { Blockchain } from '@tatumio/shared-core'
 import { celoWeb3 } from './services/celo.web3'
 import { TatumCeloSDK } from './celo.sdk'
+import { BlockchainFeesService } from '@tatumio/api-client'
 
 describe('TatumCeloSDK', () => {
   const sdk = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
@@ -41,7 +42,12 @@ describe('TatumCeloSDK', () => {
       })
 
       it('should return valid web3 client with privateKey', async () => {
-        const web3 = celoWeb3({ blockchain: Blockchain.CELO })
+        const web3 = celoWeb3({
+          blockchain: Blockchain.CELO,
+          apiCalls: {
+            estimateFee: BlockchainFeesService.getBlockchainFee,
+          },
+        })
         const client = web3.getClient(provider, TEST_DATA.CELO.TESTNET.ERC_721!.PRIVATE_KEY)
 
         expect(client).toBeDefined()
