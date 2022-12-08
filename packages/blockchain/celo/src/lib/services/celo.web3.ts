@@ -3,7 +3,13 @@ import Web3 from 'web3'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { BlockchainFeesService } from '@tatumio/api-client'
 
-export const celoWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }) => {
+export const celoWeb3 = (args: {
+  blockchain: EvmBasedBlockchain
+  client?: Web3
+  apiCalls: {
+    estimateFee: typeof BlockchainFeesService.getBlockchainFee
+  }
+}) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
 
   return {
@@ -20,7 +26,7 @@ export const celoWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }
     },
     async getGasPriceInWei(): Promise<string> {
       // TODO: SHOULD BE REPLACED TO CELO
-      return (await BlockchainFeesService.getBlockchainFee('ETH')).medium.toString()
+      return (await args.apiCalls.estimateFee('ETH')).medium.toString()
     },
   }
 }

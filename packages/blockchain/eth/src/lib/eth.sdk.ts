@@ -16,7 +16,12 @@ import { virtualAccountService } from './services/eth.virtualAccount'
 const blockchain = Blockchain.ETH
 
 export const TatumEthSDK = (args: SDKArguments) => {
-  const web3 = ethWeb3({ blockchain })
+  const web3 = ethWeb3({
+    blockchain,
+    apiCalls: {
+      estimateFee: BlockchainFeesService.getBlockchainFee,
+    },
+  })
   const api = EthereumService
   const txService = ethTx({ blockchain, web3 })
   const virtualAccount = virtualAccountService({ blockchain, web3 })
