@@ -1,6 +1,7 @@
 import { evmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import Web3 from 'web3'
-import { EvmBasedBlockchain, httpHelper, THIRD_PARTY_API } from '@tatumio/shared-core'
+import { EvmBasedBlockchain } from '@tatumio/shared-core'
+import { BlockchainFeesService } from '@tatumio/api-client'
 
 export const ethWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
@@ -18,17 +19,7 @@ export const ethWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web3 })
       return web3
     },
     async getGasPriceInWei(): Promise<string> {
-      let gasStationUrl = THIRD_PARTY_API.ETH_GAS_STATION
-      // @TODO
-      const gasStationApiKey = process.env['TATUM_GAS_STATION_API_KEY']
-      if (gasStationApiKey) {
-        gasStationUrl = `${gasStationUrl}?apiKey=${gasStationApiKey}`
-      }
-
-      const data = (await httpHelper.get(gasStationUrl)).data
-      const gasPrice = data['fast'] ?? 20
-
-      return Web3.utils.toWei((gasPrice / 10).toString(), 'gwei')
+      return (await BlockchainFeesService.getBlockchainFee('ETH')).medium.toString()
     },
   }
 }

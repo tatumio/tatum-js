@@ -3072,6 +3072,51 @@
         "tags": ["Bitcoin"]
       }
     },
+    "/v3/blockchain/fee/{chain}": {
+      "get": {
+        "description": "<p><b>1 credit per API call</b></p>\n<p>Get recommended blockchain fee / gas price</p>\n",
+        "operationId": "getBlockchainFee",
+        "parameters": [
+          {
+            "description": "Chain",
+            "in": "path",
+            "name": "chain",
+            "required": true,
+            "schema": { "type": "string", "example": "BTC", "enum": ["ETH", "BTC", "LTC", "DOGE"] }
+          }
+        ],
+        "responses": {
+          "200": {
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/BlockchainFee" } } },
+            "description": "OK"
+          },
+          "401": {
+            "content": {
+              "application/json": {
+                "schema": {
+                  "oneOf": [
+                    { "$ref": "#/components/schemas/Error401NotActive" },
+                    { "$ref": "#/components/schemas/Error401Invalid" }
+                  ]
+                }
+              }
+            },
+            "description": "Unauthorized. Not valid or inactive subscription key present in the HTTP Header."
+          },
+          "403": {
+            "description": "Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions."
+          },
+          "500": {
+            "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error500" } } },
+            "description": "Internal server error. There was an error on the server while processing the request."
+          }
+        },
+        "security": [{ "X-API-Key": [] }],
+        "x-codeSamples": [],
+        "summary": "Get recommended blockchain fee / gas price",
+        "tags": ["Blockchain fees"]
+      }
+    },
     "/v3/blockchain/estimate": {
       "post": {
         "description": "<h4>10 credits per API call.</h4><br/>\n<p>Estimate current transaction fee for different operations.<br/>\nSupported blockchains:\n<ul>\n<li>Bitcoin</li>\n<li>Litecoin</li>\n<li>Harmony.ONE</li>\n<li>The XDC Network</li>\n<li>Ethereum</li>\n<li>Celo</li>\n<li>Klaytn</li>\n<li>Binance Smart Chain</li>\n<li>Polygon</li>\n</ul>\n</p>\n",
@@ -49170,6 +49215,43 @@
         },
         "type": "object",
         "required": ["amount", "currency", "sourceDate", "source"]
+      },
+      "BlockchainFee": {
+        "description": "Recommended fees to perform blockchain transaction",
+        "properties": {
+          "fast": {
+            "description": "Fast transaction acceptance time into block. For btc-based chains - fee per byte. For evm-based chains - gas price in wei",
+            "example": 14766927339,
+            "type": "number"
+          },
+          "medium": {
+            "description": "Medium transaction acceptance time into block. For btc-based chains - fee per byte. For evm-based chains - gas price in wei",
+            "example": 13333333333,
+            "type": "number"
+          },
+          "slow": {
+            "description": "Slow transaction acceptance time into block. For btc-based chains - fee per byte. For evm-based chains - gas price in wei",
+            "example": 12953333333,
+            "type": "number"
+          },
+          "baseFee": {
+            "description": "(evm-based only) This is the minimum fee needs to paid in order for the tx to be accepted into block.",
+            "example": 12657357496,
+            "type": "number"
+          },
+          "time": {
+            "description": "Last time fees were recalculated",
+            "example": "2022-12-08T08:42:04.518Z",
+            "type": "string"
+          },
+          "block": {
+            "description": "Last used to calculate fee from",
+            "example": "16138867",
+            "type": "string"
+          }
+        },
+        "type": "object",
+        "required": ["fast", "medium", "slow", "time", "block"]
       },
       "ExchangeRate": {
         "description": "FIAT value in EURO of the FIAT or crypto asset.",

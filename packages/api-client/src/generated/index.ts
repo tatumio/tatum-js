@@ -59,6 +59,7 @@ export type { BidOnAuctionCeloKMS } from './models/BidOnAuctionCeloKMS';
 export type { BidOnAuctionKMS } from './models/BidOnAuctionKMS';
 export type { Blockage } from './models/Blockage';
 export type { BlockAmount } from './models/BlockAmount';
+export type { BlockchainFee } from './models/BlockchainFee';
 export type { BnbAccount } from './models/BnbAccount';
 export type { BnbBlock } from './models/BnbBlock';
 export type { BnbTransaction } from './models/BnbTransaction';

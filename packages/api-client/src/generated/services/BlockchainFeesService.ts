@@ -1,6 +1,7 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { BlockchainFee } from '../models/BlockchainFee';
 import type { BscEstimateGas } from '../models/BscEstimateGas';
 import type { CeloEstimateGas } from '../models/CeloEstimateGas';
 import type { EstimateFee } from '../models/EstimateFee';
@@ -26,6 +27,29 @@ import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
 export class BlockchainFeesService {
+
+    /**
+     * Get recommended blockchain fee / gas price
+     * <p><b>1 credit per API call</b></p>
+     * <p>Get recommended blockchain fee / gas price</p>
+     *
+     * @param chain Chain
+     * @returns BlockchainFee OK
+     * @throws ApiError
+     */
+    public static getBlockchainFee(
+        chain: 'ETH' | 'BTC' | 'LTC' | 'DOGE',
+    ): CancelablePromise<BlockchainFee> {
+        return __request({
+            method: 'GET',
+            path: `/v3/blockchain/fee/${chain}`,
+            errors: {
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
 
     /**
      * Estimate the fee for a transaction
