@@ -1,20 +1,20 @@
-import { BigNumber } from 'bignumber.js';
-import Web3 from 'web3';
-import { TransactionConfig } from 'web3-core';
-import { toWei } from 'web3-utils';
-import { ethBroadcast, ethGetTransactionsCount } from '../blockchain';
-import { axios, validateBody } from '../connector/tatum';
-import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants';
-import erc1155TokenABI from '../contracts/erc1155/erc1155_abi';
-import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode';
-import erc20_abi from '../contracts/erc20/token_abi';
-import erc20TokenABI from '../contracts/erc20/token_abi';
-import erc20TokenBytecode from '../contracts/erc20/token_bytecode';
-import erc721CashbackTokenABI from '../contracts/erc721Cashback/erc721_abi';
-import erc721CashbackTokenBytecode from '../contracts/erc721Cashback/erc721_bytecode';
-import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
-import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode';
-import { auction, listing } from '../contracts/marketplace';
+import { BigNumber } from 'bignumber.js'
+import Web3 from 'web3'
+import { TransactionConfig } from 'web3-core'
+import { toWei } from 'web3-utils'
+import { ethBroadcast, ethGetTransactionsCount } from '../blockchain'
+import { get, validateBody } from '../connector/tatum'
+import { CONTRACT_ADDRESSES, CONTRACT_DECIMALS, TATUM_API_URL, TRANSFER_METHOD_ABI } from '../constants'
+import erc1155TokenABI from '../contracts/erc1155/erc1155_abi'
+import erc1155TokenBytecode from '../contracts/erc1155/erc1155_bytecode'
+import erc20_abi from '../contracts/erc20/token_abi'
+import erc20TokenABI from '../contracts/erc20/token_abi'
+import erc20TokenBytecode from '../contracts/erc20/token_bytecode'
+import erc721CashbackTokenABI from '../contracts/erc721Cashback/erc721_abi'
+import erc721CashbackTokenBytecode from '../contracts/erc721Cashback/erc721_bytecode'
+import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi'
+import erc721Provenance_bytecode from '../contracts/erc721Provenance/erc721Provenance_bytecode'
+import { auction, listing } from '../contracts/marketplace'
 import {
   BurnErc20,
   CreateRecord,
@@ -42,26 +42,19 @@ import {
   TransferMultiToken,
   TransferMultiTokenBatch,
   UpdateCashbackErc721,
-} from '../model';
-import { mintNFT } from '../nft';
-import { obtainCustodialAddressType } from '../wallet';
+} from '../model'
+import { mintNFT } from '../nft'
+import { obtainCustodialAddressType } from '../wallet'
 import erc721GeneralTokenABI from '../contracts/erc721General/erc721_abi'
 import erc721GeneralTokenBytecode from '../contracts/erc721General/erc721_bytecode'
+import { BlockchainFee } from '../model/response/common/BlockchainFee'
 
 /**
  * Estimate Gas price for the transaction.
  */
 export const ethGetGasPriceInWei = async () => {
-  let gasStationUrl = 'https://ethgasstation.info/json/ethgasAPI.json';
-  if (process.env.TATUM_GAS_STATION_API_KEY) {
-    gasStationUrl = `${gasStationUrl}?apiKey=${process.env.TATUM_GAS_STATION_API_KEY}`;
-  }
-  const data = await Promise.all([
-    axios.get(gasStationUrl.toString())
-      .then(response => `${response.data.average / 10}`),
-  ])
-  const gasPrice = data[0] === '0' ? '20' : data[0]
-  return Web3.utils.toWei(gasPrice, 'gwei')
+  const result = await get<BlockchainFee>(`/v3/blockchain/fee/ETH`)
+  return result.medium
 }
 
 /**
