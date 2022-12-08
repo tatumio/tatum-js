@@ -45,7 +45,7 @@ describe('TatumCeloSDK', () => {
         const web3 = celoWeb3({
           blockchain: Blockchain.CELO,
           apiCalls: {
-            estimateFee: BlockchainFeesService.getBlockchainFee,
+            getFee: BlockchainFeesService.getBlockchainFee,
           },
         })
         const client = web3.getClient(provider, TEST_DATA.CELO.TESTNET.ERC_721!.PRIVATE_KEY)

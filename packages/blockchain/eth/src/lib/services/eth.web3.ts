@@ -7,7 +7,7 @@ export const ethWeb3 = (args: {
   blockchain: EvmBasedBlockchain
   client?: Web3
   apiCalls: {
-    estimateFee: typeof BlockchainFeesService.getBlockchainFee
+    getFee: typeof BlockchainFeesService.getBlockchainFee
   }
 }) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
@@ -25,7 +25,7 @@ export const ethWeb3 = (args: {
       return web3
     },
     async getGasPriceInWei(): Promise<string> {
-      return (await args.apiCalls.estimateFee('ETH')).medium.toString()
+      return (await args.apiCalls.getFee('ETH')).medium.toString()
     },
   }
 }

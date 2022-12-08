@@ -19,7 +19,7 @@ export const TatumCeloSDK = (args: SDKArguments) => {
   const web3 = celoWeb3({
     blockchain,
     apiCalls: {
-      estimateFee: BlockchainFeesService.getBlockchainFee,
+      getFee: BlockchainFeesService.getBlockchainFee,
     },
   })
   const api = CeloService

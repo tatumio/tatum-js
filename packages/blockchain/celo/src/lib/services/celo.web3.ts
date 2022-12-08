@@ -7,7 +7,7 @@ export const celoWeb3 = (args: {
   blockchain: EvmBasedBlockchain
   client?: Web3
   apiCalls: {
-    estimateFee: typeof BlockchainFeesService.getBlockchainFee
+    getFee: typeof BlockchainFeesService.getBlockchainFee
   }
 }) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
@@ -26,7 +26,7 @@ export const celoWeb3 = (args: {
     },
     async getGasPriceInWei(): Promise<string> {
       // TODO: SHOULD BE REPLACED TO CELO
-      return (await args.apiCalls.estimateFee('ETH')).medium.toString()
+      return (await args.apiCalls.getFee('ETH')).medium.toString()
     },
   }
 }

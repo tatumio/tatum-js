@@ -29,5 +29,5 @@ export type BlockchainFee = {
     /**
      * Last used to calculate fee from
      */
-    block: string;
+    block: number;
 }

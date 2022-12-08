@@ -19,7 +19,7 @@ export const TatumEthSDK = (args: SDKArguments) => {
   const web3 = ethWeb3({
     blockchain,
     apiCalls: {
-      estimateFee: BlockchainFeesService.getBlockchainFee,
+      getFee: BlockchainFeesService.getBlockchainFee,
     },
   })
   const api = EthereumService
