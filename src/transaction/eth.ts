@@ -54,7 +54,7 @@ import { BlockchainFee } from '../model/response/common/BlockchainFee'
  */
 export const ethGetGasPriceInWei = async () => {
   const result = await get<BlockchainFee>(`/v3/blockchain/fee/ETH`)
-  return result.medium
+  return result.medium.toString()
 }
 
 /**
