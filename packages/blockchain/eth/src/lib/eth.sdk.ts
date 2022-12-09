@@ -14,7 +14,12 @@ import { ethAuctionService } from './services/eth.auction'
 const blockchain = Blockchain.ETH
 
 export const TatumEthSDK = (args: SDKArguments) => {
-  const web3 = ethWeb3({ blockchain })
+  const web3 = ethWeb3({
+    blockchain,
+    apiCalls: {
+      getFee: BlockchainFeesService.getBlockchainFee,
+    },
+  })
   const api = EthereumService
   const txService = ethTx({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
