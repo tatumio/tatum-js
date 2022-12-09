@@ -3,7 +3,12 @@ import Web3 from 'web3'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { BlockchainFeesService } from '@tatumio/api-client'
 
-export const ethWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
+export const ethWeb3 = (args: {
+  blockchain: EvmBasedBlockchain
+  apiCalls: {
+    getFee: typeof BlockchainFeesService.getBlockchainFee
+  }
+}) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
 
   return {
@@ -19,7 +24,7 @@ export const ethWeb3 = (args: { blockchain: EvmBasedBlockchain }) => {
       return web3
     },
     async getGasPriceInWei(): Promise<string> {
-      return (await BlockchainFeesService.getBlockchainFee('ETH')).medium.toString()
+      return (await args.apiCalls.getFee('ETH')).medium.toString()
     },
   }
 }

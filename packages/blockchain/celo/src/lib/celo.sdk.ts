@@ -1,6 +1,10 @@
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
 import { SDKArguments } from '@tatumio/shared-abstract-sdk'
-import { CeloService, FungibleTokensErc20OrCompatibleService } from '@tatumio/api-client'
+import {
+  CeloService,
+  FungibleTokensErc20OrCompatibleService,
+  BlockchainFeesService,
+} from '@tatumio/api-client'
 import { celoWeb3 } from './services/celo.web3'
 import { evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
 import { celoKmsService } from './services/celo.kms'
@@ -10,7 +14,12 @@ import { celoAuctionService } from './services/celo.auction'
 const blockchain = Blockchain.CELO
 
 export const TatumCeloSDK = (args: SDKArguments) => {
-  const web3 = celoWeb3({ blockchain })
+  const web3 = celoWeb3({
+    blockchain,
+    apiCalls: {
+      getFee: BlockchainFeesService.getBlockchainFee,
+    },
+  })
   const api = CeloService
   const txService = celoTxService({ blockchain, web3 })
   const { nft, ...evmSdk } = evmBasedSdk({ ...args, blockchain, web3 })
