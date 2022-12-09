@@ -1,15 +1,10 @@
-import { ethEstimateGas } from "../blockchain";
+import { ethEstimateGas } from '../blockchain';
+import { BurnErc20, Currency, DeployErc20, MintErc20, TransferErc20 } from '../model';
+import { SmartContractReadMethodInvocation } from '../model/request/SmartContractReadMethodInvocation';
+import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
+import { sendDeployErc20Transaction } from './eth';
 import {
-  BurnErc20,
-  Currency,
-  DeployErc20,
-  MintErc20,
-  TransferErc20,
-} from "../model";
-import { SmartContractReadMethodInvocation } from "../model/request/SmartContractReadMethodInvocation";
-import erc721Provenance_abi from "../contracts/erc721Provenance/erc721Provenance_abi";
-import { sendDeployErc20Transaction } from "./eth";
-import {
+  ethGetGasPriceInWei,
   prepareCustomErc20SignedTransaction,
   prepareDeployErc20SignedTransaction,
   prepareEthBurnErc20SignedTransaction,
@@ -20,16 +15,15 @@ import {
   sendErc721Transaction,
   sendMintErc721Transaction,
   sendMintMultipleErc721Transaction,
-  sendSmartContractMethodInvocationTransaction,
-  sendMintErc721ProvenanceTransaction,
+  sendSmartContractMethodInvocationTransaction,sendMintErc721ProvenanceTransaction,
   prepareEthBurnErc721SignedTransaction,
   prepareEthDeployErc721SignedTransaction,
   prepareEthMintMultipleErc721ProvenanceSignedTransaction,
   prepareEthMintErc721ProvenanceSignedTransaction,
-  sendSmartContractReadMethodInvocationTransaction,
-} from "./eth";
-process.env.TATUM_API_KEY = "13320948-488c-4963-8eb4-e4a1d541a559";
-describe("ETH transactions", () => {
+  sendSmartContractReadMethodInvocationTransaction
+} from './eth';
+process.env.TATUM_API_KEY='13320948-488c-4963-8eb4-e4a1d541a559'
+describe('ETH transactions', () => {
   // it('should test valid transaction ETH data', async () => {
   //   const body = new TransferErc20();
   //   body.fromPrivateKey = '0x2dedb85f2a87f17e143dbd5e51a589f27b4c6acf6bf29ebff8eb5c32b5e9de05'
@@ -364,22 +358,21 @@ describe("ETH transactions", () => {
   //   })
   //   expect(burnErc721Token).not.toBeNull()
   // })
-  it("should test eth 721 send transaction", async () => {
+  it('should test eth 721 send transaction', async () => {
     const sendErc721Token = await sendErc721Transaction({
-      to: "0x6597da6f497c74118929d93311daa6533f00f196",
-      tokenId: "1",
+      to: '0x6597da6f497c74118929d93311daa6533f00f196',
+      tokenId: '1',
       provenance: true,
-      fromPrivateKey:
-        "0xd71444acde61b56af4df1d9154cd2c83a8111f8a40c4fcc54a8ffceebcafacb8",
+      fromPrivateKey: '0xd71444acde61b56af4df1d9154cd2c83a8111f8a40c4fcc54a8ffceebcafacb8',
       provenanceData: "CUSTOMTOKEN0xd15d2f98708e55ecac9c3da5aad64cd8eef6d6af",
-      tokenPrice: "1000",
-      value: "2",
+      tokenPrice: '1000',
+      value: '2',
       chain: Currency.ETH,
-      contractAddress: "0xf79656021abc06d6d7a9a23319510f08b370ea10",
-    });
-    console.log(sendErc721Token);
-    expect(sendErc721Token).not.toBeNull();
-  });
+      contractAddress: '0xf79656021abc06d6d7a9a23319510f08b370ea10',
+    })
+    console.log(sendErc721Token)
+    expect(sendErc721Token).not.toBeNull()
+  })
   // it('should test valid transfer data 721 transaction', async () => {
   //   const body = new SmartContractReadMethodInvocation()
   //   body.contractAddress = '0x5ef08fba01e8d80ff18f4d98e31a43fbb01e7f8a'
@@ -390,4 +383,4 @@ describe("ETH transactions", () => {
   //   // @ts-ignore
   //   console.log(JSON.stringify(response))
   // })
-});
+})
