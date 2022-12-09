@@ -3,7 +3,7 @@ Tatum API client allows browsers and Node.js clients to interact with Tatum API.
 
 > **Warning**
 > 
-> Important notice about using ETH: Please upgrade to version 1.37.22 (all previous versions depend on https://ethgasstation.info which will stop working from 12.12.2022)
+> Important notice about using ETH and CELO: Please upgrade to version 1.37.22 or newer (all previous versions depend on https://ethgasstation.info which will stop working from 12.12.2022)
 
 - **wallet** - cryptographic functions like generation of wallets, private keys or addresses.
 - **kms** - set of API calls to communicate with <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a>.
