@@ -1,9 +1,9 @@
 # [Tatum API client](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum)](https://img.shields.io/npm/v/@tatumio/tatum) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
 Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.
 
-> **Warning** 
+> **Warning**
 > Important notice about using ETH: Please upgrade to version 1.37.22 (all previous versions depend on https://ethgasstation.info which will stop working from 12.12.2022)
- 
+
 - **wallet** - cryptographic functions like generation of wallets, private keys or addresses.
 - **kms** - set of API calls to communicate with <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a>.
 - **blockchain** - set of API calls to communicate with different blockchains via <a href="https://tatum.io" target="_blank">Tatum API</a>.
