@@ -58,6 +58,14 @@ export const ethGetGasPriceInWei = async () => {
 }
 
 /**
+ * (!) Internal function
+ * Used to be able to override it later
+ */
+export const ethGetGasPriceInWeiWrapper = {
+  ethGetGasPriceInWei: ethGetGasPriceInWei,
+}
+
+/**
  * Returns Ethereum server to connect to.
  *
  * @param provider url of the Ethereum Server to connect to. If not set, default public server will be used.
@@ -97,7 +105,7 @@ export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
     transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string);
   }
   if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' || transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
-    transactionConfig.gasPrice = await ethGetGasPriceInWei();
+    transactionConfig.gasPrice = await ethGetGasPriceInWeiWrapper.ethGetGasPriceInWei();
   }
   return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey as string)).rawTransaction as string;
 }
@@ -152,7 +160,7 @@ export const prepareStoreDataTransaction = async (body: CreateRecord, provider?:
     gasPrice: client.utils.toWei(ethFee.gasPrice, 'gwei'),
   } : {
     gasLimit: `${hexData.length * 68 + 21000}`,
-    gasPrice: await ethGetGasPriceInWei(),
+    gasPrice: await ethGetGasPriceInWeiWrapper.ethGetGasPriceInWei(),
   }
 
   const tx: TransactionConfig = {
@@ -206,7 +214,7 @@ export const prepareEthMintErc20SignedTransaction = async (body: MintErc20, prov
 const prepareEthSignedTransactionAbstraction = async (
   client: Web3, transaction: TransactionConfig, signatureId: string | undefined, fromPrivateKey: string | undefined, fee?: Fee | undefined,
 ) => {
-  const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWei()
+  const gasPrice = fee ? client.utils.toWei(fee.gasPrice, 'gwei') : await ethGetGasPriceInWeiWrapper.ethGetGasPriceInWei()
   const tx: TransactionConfig = {
     ...transaction,
     gasPrice,

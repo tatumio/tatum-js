@@ -6,7 +6,7 @@ import {CONTRACT_ADDRESSES, CONTRACT_DECIMALS} from '../constants'
 import tokenAbi from '../contracts/erc20/token_abi'
 import {getAccountById, getVirtualCurrencyByName} from '../ledger'
 import {Currency, ETH_BASED_CURRENCIES, PrepareEthErc20SignedOffchainTransaction, PrepareEthSignedOffchainTransaction, TransactionKMS, TransferEthOffchain,} from '../model'
-import {ethGetGasPriceInWei, getClient} from '../transaction'
+import { ethGetGasPriceInWeiWrapper, getClient } from '../transaction'
 import {generatePrivateKeyFromMnemonic} from '../wallet'
 import {offchainBroadcast, offchainCancelWithdrawal, offchainStoreWithdrawal} from './common'
 import { offchainTransferEthKMS } from './kms'
@@ -39,7 +39,7 @@ export const sendEthOffchainTransaction = async (testnet: boolean, body: Transfe
     }
 
     const web3 = await getClient(provider, fromPriv)
-    const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei()
+    const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWeiWrapper.ethGetGasPriceInWei()
 
     const account = await getAccountById(withdrawal.senderAccountId)
     const {txData, gasLimit} = await prepareEthSignedOffchainTransaction({
@@ -94,7 +94,7 @@ export const sendEthErc20OffchainTransaction = async (testnet: boolean, body: Tr
     }
 
     const web3 = await getClient(provider, fromPriv)
-    const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWei()
+    const gasPrice = body.gasPrice ? web3.utils.toWei(body.gasPrice, 'gwei') : await ethGetGasPriceInWeiWrapper.ethGetGasPriceInWei()
 
     const account = await getAccountById(withdrawal.senderAccountId)
 
@@ -149,7 +149,7 @@ export const signEthOffchainKMSTransaction = async (tx: TransactionKMS, fromPriv
         transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string)
     }
     if (!transactionConfig.gasPrice || transactionConfig.gasPrice === '0' ||transactionConfig.gasPrice === 0 || transactionConfig.gasPrice === '0x0') {
-        transactionConfig.gasPrice = await ethGetGasPriceInWei()
+        transactionConfig.gasPrice = await ethGetGasPriceInWeiWrapper.ethGetGasPriceInWei()
     }
     return (await client.eth.accounts.signTransaction(transactionConfig, fromPrivateKey)).rawTransaction as string
 }

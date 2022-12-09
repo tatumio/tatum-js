@@ -4,7 +4,6 @@ import { SmartContractReadMethodInvocation } from '../model/request/SmartContrac
 import erc721Provenance_abi from '../contracts/erc721Provenance/erc721Provenance_abi';
 import { sendDeployErc20Transaction } from './eth';
 import {
-  ethGetGasPriceInWei,
   prepareCustomErc20SignedTransaction,
   prepareDeployErc20SignedTransaction,
   prepareEthBurnErc20SignedTransaction,
