@@ -4,6 +4,7 @@ import { TatumKlaytnSDK } from './sdk-klaytn'
 describe('TatumKlaytnSDK', () => {
   const sdk = TatumKlaytnSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
+
   describe('Wallet', () => {
     describe('Generate wallet', () => {
       walletTestFactory.generateBlockchainWallet(sdk.wallet, TEST_DATA.KLAYTN)
