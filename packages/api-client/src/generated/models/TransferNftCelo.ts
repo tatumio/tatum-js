@@ -48,6 +48,6 @@ export type TransferNftCelo = {
     /**
      * The currency in which the transaction fee will be paid
      */
-    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
+    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     fee?: CustomFee;
 }

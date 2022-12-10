@@ -138,7 +138,7 @@ export class CustodialManagedWalletsService {
      * <pre>
      * import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction, Connection } from '@solana/web3.js'
      *
-     * const connection = new Connection('https://api-eu1.tatum.io/v3/blockchain/node/SOL')
+     * const connection = new Connection('https://api.tatum.io/v3/blockchain/node/SOL')
      * const from = 'HrJtQTy2RW9c6y41RvN8x3bEiD6Co74AuhER2MGCpa58'
      * const to = 'FZAS4mtPvswgVxbpc117SqfNgCDLTCtk5CoeAtt58FWU'
      * const amount = '0.000001'

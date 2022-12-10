@@ -8,19 +8,19 @@ export type ApproveErc20KMS = {
      */
     chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'ONE';
     /**
-     * Amount to be approved for the spender.
-     */
-    amount: string;
-    /**
-     * Blockchain address of the new spender.
-     */
-    spender: string;
-    /**
-     * Address of ERC-20 token
+     * The address of the smart contract
      */
     contractAddress: string;
     /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The blockchain address to be allowed to transfer or burn the fungible tokens
+     */
+    spender: string;
+    /**
+     * The amount of the tokens allowed to be transferred or burnt
+     */
+    amount: string;
+    /**
+     * The KMS identifier of the private key of the smart contract's owner; the fee will be deducted from the owner's address
      */
     signatureId: string;
     /**

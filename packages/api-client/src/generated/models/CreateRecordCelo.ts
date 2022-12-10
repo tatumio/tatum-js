@@ -6,28 +6,28 @@ import type { CustomFee } from './CustomFee';
 
 export type CreateRecordCelo = {
     /**
-     * Log data to be stored on a blockchain.
+     * The data to be stored on the blockchain
      */
     data: string;
     /**
-     * Blockchain, where to store log data.
+     * The blockchain to store the data on
      */
     chain: 'CELO';
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     fee?: CustomFee;
     /**
      * Private key of account, from which the transaction will be initiated. If not present, transaction fee will be debited from Tatum internal account and additional credits will be charged.
      */
-    fromPrivateKey?: string;
+    fromPrivateKey: string;
     /**
      * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
     /**
-     * Blockchain address to store log on. If not defined, it will be stored on an address, from which the transaction was being made.
+     * The blockchain address to store the data on<br/>If not provided, the data will be stored on the address from which the transaction is made
      */
     to?: string;
 }

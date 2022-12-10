@@ -247,7 +247,7 @@ export class LitecoinService {
     }
 
     /**
-     * Get Litecoin Balance of the address
+     * Get the balance of a Litecoin address
      * <h4>5 credits per API call.</h4>
      * <br/><p>Get Litecoin Balance of the address.</p>
      * <br />Examples of using this endpoint with the Tatum JS SDK can be found in <a href="https://github.com/tatumio/tatum-js/blob/master/examples/ltc-example/src/app/ltc.blockchain.example.ts" target="_blank">Tatum LTC SDK</a>.'

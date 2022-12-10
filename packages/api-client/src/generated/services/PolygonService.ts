@@ -8,6 +8,8 @@ import type { CallPolygonSmartContractMethodKMS } from '../models/CallPolygonSma
 import type { CallPolygonSmartContractReadMethod } from '../models/CallPolygonSmartContractReadMethod';
 import type { Data } from '../models/Data';
 import type { EthBlock } from '../models/EthBlock';
+import type { GeneratedAddressMatic } from '../models/GeneratedAddressMatic';
+import type { MaticBalance } from '../models/MaticBalance';
 import type { PolygonTx } from '../models/PolygonTx';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
@@ -56,18 +58,13 @@ export class PolygonService {
      *
      * @param xpub Extended public key of wallet.
      * @param index Derivation index of desired address to be generated.
-     * @returns any OK
+     * @returns GeneratedAddressMatic OK
      * @throws ApiError
      */
     public static polygonGenerateAddress(
         xpub: string,
         index: number,
-    ): CancelablePromise<{
-        /**
-         * Polygon address
-         */
-        address?: string;
-    }> {
+    ): CancelablePromise<GeneratedAddressMatic> {
         return __request({
             method: 'GET',
             path: `/v3/polygon/address/${xpub}/${index}`,
@@ -183,17 +180,12 @@ export class PolygonService {
      * <p>Get Polygon account balance in MATIC. This method does not prints any balance of the ERC20 or ERC721 tokens on the account.</p>
      *
      * @param address Account address you want to get balance of
-     * @returns any OK
+     * @returns MaticBalance OK
      * @throws ApiError
      */
     public static polygonGetBalance(
         address: string,
-    ): CancelablePromise<{
-        /**
-         * Balance in MATIC
-         */
-        balance?: string;
-    }> {
+    ): CancelablePromise<MaticBalance> {
         return __request({
             method: 'GET',
             path: `/v3/polygon/account/balance/${address}`,
