@@ -50,7 +50,7 @@ export type SellAssetOnMarketplaceCeloKMS = {
      */
     isErc721: boolean;
     /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The KMS identifier of the private key of the seller's blockchain address
      */
     signatureId: string;
     /**

@@ -234,19 +234,22 @@ export class AuctionService {
     }
 
     /**
-     * Approve NFT token spending for the Auction / Marketplace
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Approve NFT transfer for auction to perform listing of the asset.<br/>
-     * Supported blockchains:
+     * Allow the auction or marketplace to transfer an asset
+     * <p><b>2 credits per API call</b></p>
+     * <p>Allow the auction/marketplace smart contract to transfer the asset (NFT or Multi Token) that is listed for selling.<br/>The auction/marketplace smart contract will transfer the asset to the buyer after the asset is purchased.</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
-     * <li>Binance Smart Chain</li>
-     * <li>Harmony.ONE</li>
-     * <li>Ethereum</li>
+     * <li>BNB Smart Chain</li>
      * <li>Celo</li>
-     * <li>Polygon (Matic)</li>
+     * <li>Ethereum</li>
+     * <li>Harmony</li>
      * <li>Klaytn</li>
+     * <li>Polygon</li>
      * </ul>
-     * </p>
+     * <p><b>Signing a transaction</b><br/>
+     * When allowing the auction/marketplace smart contract to transfer the asset, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK

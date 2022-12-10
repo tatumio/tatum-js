@@ -10,14 +10,14 @@ import {
 } from '@tatumio/api-client'
 import {
   abstractBlockchainVirtualAccount,
-  FromPrivateKeyOrSignatureId,
+  PrivateKeyOrSignatureId,
 } from '@tatumio/shared-blockchain-abstract'
 import { evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import { Blockchain, CONTRACT_ADDRESSES, CONTRACT_DECIMALS } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { bscTxService } from './bsc.tx'
 
-type TransferVirtualAccountBsc = FromPrivateKeyOrSignatureId<TransferBsc>
+type TransferVirtualAccountBsc = PrivateKeyOrSignatureId<TransferBsc>
 type VirtualAccountResponse = { id?: string; txId?: string; completed?: boolean } | void
 
 const sendBscVirtualAccountTransaction = async (
@@ -25,7 +25,7 @@ const sendBscVirtualAccountTransaction = async (
   web3: EvmBasedWeb3,
 ): Promise<VirtualAccountResponse> => {
   const txService = bscTxService({ blockchain: Blockchain.BSC, web3 })
-  const { mnemonic, index, fromPrivateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
+  const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, ...withdrawal } = body
   const { amount, address } = withdrawal
   let fromPrivKey: string
   let txData: string
@@ -37,7 +37,7 @@ const sendBscVirtualAccountTransaction = async (
       body.index,
     )) as string
   } else {
-    fromPrivKey = body.fromPrivateKey as string
+    fromPrivKey = body.privateKey as string
   }
 
   const account = await AccountService.getAccountByAccountId(body.senderAccountId)

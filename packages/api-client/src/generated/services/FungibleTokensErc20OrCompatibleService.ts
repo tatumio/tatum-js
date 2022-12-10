@@ -193,9 +193,9 @@ export class FungibleTokensErc20OrCompatibleService {
     }
 
     /**
-     * Approve spending of fungible tokens
+     * Allow a blockchain address to transfer and burn fungible tokens
      * <p><b>2 credits per API call</b></p>
-     * <p>Allow another blockchain address (the <code>spender</code> parameter in the request body) to spend and burn fungible tokens on behalf of the smart contract owner.</p>
+     * <p>Allow a blockchain address (the <code>spender</code> parameter in the request body) to transfer and burn fungible tokens on behalf of the smart contract owner.</p>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>BNB Smart Chain</li>
@@ -206,7 +206,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Polygon</li>
      * </ul>
      * <p><b>Signing a transaction</b><br/>
-     * When approving spending of fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * When allowing a blockchain address to transfer and burn fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
@@ -350,7 +350,7 @@ export class FungibleTokensErc20OrCompatibleService {
     }
 
     /**
-     * Get the number of fungible tokens from a specific smart contract that a blockchain address holds
+     * Get the number of fungible tokens that a blockchain address holds in a smart contract
      * <p><b>1 credit per API call</b></p>
      * <p>Get the number of the fungible tokens minted on a specific smart contract (the <code>contractAddress</code> path parameter in the request endpoint URL) that a blockchain address holds.</p>
      * <p>This API is supported for the following blockchains:</p>

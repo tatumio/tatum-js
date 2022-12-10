@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type CallPolygonSmartContractMethodCaller = {
     /**
      * The address of the account, which will be sender and fee payer of this transaction
@@ -24,17 +26,5 @@ export type CallPolygonSmartContractMethodCaller = {
      */
     methodABI: any;
     params: Array<string>;
-    /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

@@ -41,7 +41,7 @@ export async function bscVirtualAccountExample() {
   const result = await bscSdk.virtualAccount.send({
     senderAccountId: virtualAccount.id,
     amount: '0.01',
-    fromPrivateKey,
+    privateKey: fromPrivateKey,
     address: receiverAddress,
   })
 

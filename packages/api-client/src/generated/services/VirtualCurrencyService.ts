@@ -17,7 +17,7 @@ export class VirtualCurrencyService {
      * <h4>2 credits per API call.</h4><br/>
      * <p>Create new virtual currency with given supply stored in account. This will create Tatum internal virtual currency. Every virtual currency must be prefixed with <b>VC_</b>.<br/>
      * Every virtual currency must be pegged to existing FIAT or supported cryptocurrency. 1 unit of virtual currency has then the same amount as 1 unit of the base currency it is pegged to. It is possible to set a custom base rate for the virtual currency. (baseRate = 2 => 1 VC unit = 2 basePair units)<br/>
-     * Tatum virtual currency acts as any other asset within Tatum. For creation of ERC20 token, see <a href=\"#tatum-blockchain-api-erc20\">ERC20 </a>.<br/>
+     * Tatum virtual currency acts as any other asset within Tatum. To create a fungible token, see the <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy" target="_blank">API for deploying a fungible token smart contract</a>.<br/>
      * This operation returns the newly created Tatum Ledger account with an initial balance set to the virtual currency's total supply. Total supply can be changed in the future.</p>
      *
      * @param requestBody

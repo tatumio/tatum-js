@@ -2,25 +2,43 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type CreateRecord = {
     /**
-     * Log data to be stored on a blockchain.
+     * The data to be stored on the blockchain
      */
     data: string;
     /**
-     * Blockchain, where to store log data.
+     * The blockchain to store the data on
      */
-    chain: 'ETH' | 'ONE' | 'XDC' | 'KLAY' | 'BSC' | 'MATIC';
+    chain: 'BSC' | 'EGLD' | 'ETH' | 'KLAY' | 'MATIC' | 'ONE';
     /**
-     * Private key of account, from which the transaction will be initiated. If not present, transaction fee will be debited from Tatum internal account and additional credits will be charged.
+     * The private key of the blockchain address from which the transaction will be made and the transaction fee will be deducted
      */
-    fromPrivateKey?: string;
+    fromPrivateKey: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * (Elrond only; required) The blockchain address from which the transaction will be made<br/>This is a mandatory parameter for Elrond. Do not use it with any other blockchain.
+     */
+    from?: string;
+    /**
+     * The blockchain address to store the data on<br/>If not provided, the data will be stored on the address from which the transaction is made
+     */
+    to?: string;
+    /**
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
-     * Blockchain address to store log on. If not defined, it will be stored on an address, from which the transaction was being made.
+     * (Harmony only) The ID of the shard from which the data should be read
      */
-    to?: string;
+    fromShardID?: number;
+    /**
+     * (Harmony only) The ID of the shard to which the data should be recorded
+     */
+    toShardID?: number;
+    /**
+     * (Ethereum only) The custom defined fee; if not present, will be calculated automatically
+     */
+    ethFee?: CustomFee;
 }

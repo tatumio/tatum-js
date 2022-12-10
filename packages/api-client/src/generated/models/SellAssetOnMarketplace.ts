@@ -44,7 +44,7 @@ export type SellAssetOnMarketplace = {
      */
     isErc721: boolean;
     /**
-     * Private key of sender address. Private key, or signature Id must be present.
+     * The private key of the seller's blockchain address
      */
     fromPrivateKey: string;
     /**

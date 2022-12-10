@@ -175,6 +175,7 @@ export class BitcoinService {
      * Get the balance of a Bitcoin address
      * <p><b>1 credit per API call</b></p>
      * <p>Get the balance of a Bitcoin address.</p>
+     * <p>The API returns the balance only if the address has up to 50,000 UTXOs (Unspent Transaction Outputs). For an address with more than 50,000 UTXOs, the API returns an error with the <code>403</code> response code.</p>
      *
      * @param address The blockchain address to get the balance for
      * @returns BtcBasedBalance OK
