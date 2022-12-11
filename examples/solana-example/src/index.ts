@@ -6,6 +6,7 @@ import { solanaVirtualAccountExample } from './app/solana.virtualAccount.example
 import { solanaBalanceExample } from './app/solana.balance.example'
 import { solanaSplTokenExample } from './app/solana.spl.example'
 import { solanaWalletExample } from './app/solana.wallet.example'
+import { solanaMarketplaceExample } from './app/solana.marketplace.example'
 
 const examples = async () => {
   console.log(`Running solanaBlockchainExample`)
@@ -31,6 +32,9 @@ const examples = async () => {
 
   console.log(`Running solanaWalletExample`)
   await solanaWalletExample()
+
+  console.log(`Running solanaMarketplaceExample`)
+  await solanaMarketplaceExample()
 }
 
 void examples()

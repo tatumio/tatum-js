@@ -1,4 +1,4 @@
-import {
+import web3, {
   Connection,
   LAMPORTS_PER_SOL,
   PublicKey,
@@ -32,7 +32,6 @@ import {
 } from '@metaplex-foundation/mpl-auction-house'
 import BN from 'bn.js'
 import { TOKEN_METADATA_PROGRAM_ID } from '../schema/instructions'
-import web3 from '@solana/web3.js'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import BigNumber from 'bignumber.js'
 import { SdkError, SdkErrorCode, WithoutChain } from '@tatumio/shared-abstract-sdk'
@@ -40,22 +39,22 @@ import _ from 'lodash'
 import {
   ApiServices,
   BuyAssetOnMarketplaceSolana,
+  BuyAssetOnMarketplaceSolanaKMS,
   CancelSellAssetOnMarketplaceSolana,
+  CancelSellAssetOnMarketplaceSolanaKMS,
   Currency,
   GenerateMarketplaceSolana,
+  GenerateMarketplaceSolanaKMS,
   SellAssetOnMarketplaceSolana,
+  SellAssetOnMarketplaceSolanaKMS,
   SolanaListingData,
   UpdateMarketplaceSolana,
+  UpdateMarketplaceSolanaKMS,
   WithdrawFromMarketplaceSolana,
+  WithdrawFromMarketplaceSolanaKMS,
 } from '@tatumio/api-client'
 import { solanaUtils } from './solana.utils'
-
-export const AUCTION_HOUSE = 'auction_house'
-export const AUCTION_HOUSE_PROGRAM_ID = new PublicKey('hausS13jsjafwWwGqZTUQRmWyvyxn9EQpqMwV1PBBmk')
-export const FEE_PAYER_CONST = 'fee_payer'
-export const TREASURY = 'treasury'
-export const BID_RECEIPT = 'bid_receipt'
-export const PURCHASE_RECEIPT = 'purchase_receipt'
+import { Blockchain } from '@tatumio/shared-core'
 
 export type CreateSolanaMarketplace = WithoutChain<FromPrivateKeyOrSignatureId<GenerateMarketplaceSolana>>
 export type UpdateSolanaMarketplace = WithoutChain<FromPrivateKeyOrSignatureId<UpdateMarketplaceSolana>>
@@ -78,6 +77,13 @@ export const solanaMarketPlaceService = (
     getListingDetails: ApiServices.marketplace.getMarketplaceListing,
   },
 ) => {
+  const AUCTION_HOUSE = 'auction_house'
+  const AUCTION_HOUSE_PROGRAM_ID = new PublicKey('hausS13jsjafwWwGqZTUQRmWyvyxn9EQpqMwV1PBBmk')
+  const FEE_PAYER_CONST = 'fee_payer'
+  const TREASURY = 'treasury'
+  const BID_RECEIPT = 'bid_receipt'
+  const PURCHASE_RECEIPT = 'purchase_receipt'
+
   const getAuctionHouseFeeAcct = async (auctionHouse: PublicKey): Promise<[PublicKey, number]> => {
     return await PublicKey.findProgramAddress(
       [Buffer.from(AUCTION_HOUSE), auctionHouse.toBuffer(), Buffer.from(FEE_PAYER_CONST)],
@@ -170,17 +176,14 @@ export const solanaMarketPlaceService = (
     )
   }
 
-  const getFeePayer = (externalFeePayer: boolean, from: PublicKey, feePayer?: string) => {
-    if (externalFeePayer) {
-      return new PublicKey(FEE_PAYER_CONST)
-    }
-    return feePayer ? new PublicKey(feePayer) : from
-  }
-
-  const createMarketplace = async (params: CreateSolanaMarketplace, web3: SolanaWeb3) => {
-    const connection = web3.getClient()
+  const deploySignedTransaction = async (
+    params: CreateSolanaMarketplace,
+    web3: SolanaWeb3,
+    provider?: string,
+  ) => {
+    const connection = web3.getClient(provider)
     const from = new PublicKey(params.from)
-    const feePayerKey = getFeePayer(false, from)
+    const feePayerKey = solanaUtils.getFeePayer(false, from)
     const transaction = new Transaction({ feePayer: feePayerKey })
 
     const {
@@ -244,10 +247,14 @@ export const solanaMarketPlaceService = (
     }
   }
 
-  const updateMarketplace = async (params: UpdateSolanaMarketplace, web3: SolanaWeb3) => {
-    const connection = web3.getClient()
+  const updateSignedTransaction = async (
+    params: UpdateSolanaMarketplace,
+    web3: SolanaWeb3,
+    provider?: string,
+  ) => {
+    const connection = web3.getClient(provider)
     const from = new PublicKey(params.from)
-    const feePayerKey = getFeePayer(false, from)
+    const feePayerKey = solanaUtils.getFeePayer(false, from)
     const transaction = new Transaction({ feePayer: feePayerKey })
 
     const {
@@ -328,12 +335,12 @@ export const solanaMarketPlaceService = (
     return new BigNumber(price).multipliedBy(new BigNumber(10).pow(balance.value.decimals)).toFixed()
   }
 
-  const post = async (body: SellMarketplaceSolana, web3: SolanaWeb3) => {
+  const sellSignedTransaction = async (body: SellMarketplaceSolana, web3: SolanaWeb3, provider?: string) => {
     const { authorityPrivateKey, contractAddress, nftAddress, fromPrivateKey } = body
 
-    const connection = web3.getClient()
+    const connection = web3.getClient(provider)
     const from = new PublicKey(body.from)
-    const feePayerKey = getFeePayer(false, from)
+    const feePayerKey = solanaUtils.getFeePayer(false, from)
     const transaction = new Transaction({ feePayer: feePayerKey })
 
     const publicKey = new PublicKey(body.from)
@@ -435,21 +442,6 @@ export const solanaMarketPlaceService = (
     return treasuryMint.equals(NATIVE_MINT)
   }
 
-  const safeAwaitCall = <T>(promise: Promise<T>, callback?: any) => {
-    return promise
-      .then((data) => {
-        return { result: data, error: undefined }
-      })
-      .catch((error: Error) => {
-        return { result: undefined, error: error }
-      })
-      .finally(() => {
-        if (callback && typeof callback === 'function') {
-          callback()
-        }
-      })
-  }
-
   const generateCreationInstructions = async (
     web3: SolanaWeb3,
     payer: PublicKey,
@@ -463,9 +455,7 @@ export const solanaMarketPlaceService = (
       const addrPubKey = new PublicKey(addr)
       const tokenAddress = await getAssociatedTokenAddress(mint, addrPubKey)
 
-      const tokenAccountRes = await safeAwaitCall(getAccount(connection, tokenAddress))
-
-      const tokenAccount = tokenAccountRes.result
+      const tokenAccount = await getAccount(connection, tokenAddress)
 
       if (!tokenAccount || !tokenAccount.isInitialized) {
         ix.push(
@@ -541,10 +531,10 @@ export const solanaMarketPlaceService = (
     }
   }
 
-  const buyAndExecuteSale = async (params: BuyMarketplaceSolana, web3: SolanaWeb3) => {
+  const buySignedTransaction = async (params: BuyMarketplaceSolana, web3: SolanaWeb3, provider?: string) => {
     const { contractAddress, authorityPrivateKey, listingId, fromPrivateKey, from } = params
 
-    const connection = web3.getClient()
+    const connection = web3.getClient(provider)
 
     const auctionHouse = new PublicKey(contractAddress)
     const auctionHouseObj = await apiCalls.getMarketplaceInfo(Currency.SOL, contractAddress)
@@ -554,7 +544,7 @@ export const solanaMarketPlaceService = (
 
     const buyerPublicKey = new PublicKey(from)
 
-    const feePayerKey = getFeePayer(false, buyerPublicKey)
+    const feePayerKey = solanaUtils.getFeePayer(false, buyerPublicKey)
 
     const listing = (await apiCalls.getListingDetails(
       Currency.SOL,
@@ -804,7 +794,11 @@ export const solanaMarketPlaceService = (
     }
   }
 
-  const cancel = async (params: CancelMarketplaceSolana, web3: SolanaWeb3) => {
+  const cancelSignedTransaction = async (
+    params: CancelMarketplaceSolana,
+    web3: SolanaWeb3,
+    provider?: string,
+  ) => {
     const { contractAddress, listingId, authorityPrivateKey, fromPrivateKey, from } = params
 
     const connection = web3.getClient()
@@ -817,7 +811,7 @@ export const solanaMarketPlaceService = (
 
     const sellerPublicKey = new PublicKey(from)
 
-    const feePayerKey = getFeePayer(false, sellerPublicKey)
+    const feePayerKey = solanaUtils.getFeePayer(false, sellerPublicKey)
 
     const listing = (await apiCalls.getListingDetails(
       Currency.SOL,
@@ -891,10 +885,14 @@ export const solanaMarketPlaceService = (
     }
   }
 
-  const withdraw = async (params: WithdrawMarketplaceSolana, web3: SolanaWeb3) => {
+  const withdrawFromTreasurySignedTransaction = async (
+    params: WithdrawMarketplaceSolana,
+    web3: SolanaWeb3,
+    provider?: string,
+  ) => {
     const { contractAddress, amount, from, fromPrivateKey } = params
 
-    const connection = web3.getClient()
+    const connection = web3.getClient(provider)
 
     const auctionHouseAddress = new PublicKey(contractAddress)
 
@@ -903,7 +901,7 @@ export const solanaMarketPlaceService = (
     const authority = auctionHouse.authority
     const treasuryMint = auctionHouse.treasuryMint
 
-    const feePayerKey = getFeePayer(false, new PublicKey(from))
+    const feePayerKey = solanaUtils.getFeePayer(false, new PublicKey(from))
 
     const auctionHouseTreasury = new PublicKey(auctionHouse.auctionHouseTreasury)
 
@@ -943,10 +941,14 @@ export const solanaMarketPlaceService = (
     }
   }
 
-  const withdrawFee = async (params: WithdrawMarketplaceSolana, web3: SolanaWeb3) => {
+  const withdrawFromFeeSignedTransaction = async (
+    params: WithdrawMarketplaceSolana,
+    web3: SolanaWeb3,
+    provider?: string,
+  ) => {
     const { contractAddress, amount, from, fromPrivateKey } = params
 
-    const connection = web3.getClient()
+    const connection = web3.getClient(provider)
 
     const auctionHouseAddress = new PublicKey(contractAddress)
 
@@ -954,7 +956,7 @@ export const solanaMarketPlaceService = (
 
     const authority = auctionHouse.authority
 
-    const feePayerKey = getFeePayer(false, new PublicKey(from))
+    const feePayerKey = solanaUtils.getFeePayer(false, new PublicKey(from))
 
     const auctionHouseFeeAccount = auctionHouse.auctionHouseFeeAccount
 
@@ -994,27 +996,162 @@ export const solanaMarketPlaceService = (
   }
 
   return {
+    prepareOrSend: {
+      /**
+       * Deploy new smart contract for NFT marketplace logic.
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      deploySignedTransaction: async (body: CreateSolanaMarketplace, provider?: string) =>
+        deploySignedTransaction(body, args.web3, provider),
+      /**
+       * Update existing marketplace smart contract
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      updateSignedTransaction: async (body: UpdateSolanaMarketplace, provider?: string) =>
+        updateSignedTransaction(body, args.web3, provider),
+      /**
+       * Create new listing on the marketplace.
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      sellSignedTransaction: async (body: SellMarketplaceSolana, provider?: string) =>
+        sellSignedTransaction(body, args.web3, provider),
+      /**
+       * Buy listing on the marketplace
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      buySignedTransaction: async (body: BuyMarketplaceSolana, provider?: string) =>
+        buySignedTransaction(body, args.web3, provider),
+      /**
+       * Cancel existing listing on the marketplace
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      cancelSignedTransaction: async (body: CancelMarketplaceSolana, provider?: string) =>
+        cancelSignedTransaction(body, args.web3, provider),
+      /**
+       * Withdraw funds from treasury account.
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      withdrawFromTreasurySignedTransaction: async (body: WithdrawMarketplaceSolana, provider?: string) =>
+        withdrawFromTreasurySignedTransaction(body, args.web3, provider),
+      /**
+       * Withdraw funds from fee account.
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      withdrawFromFeeSignedTransaction: async (body: WithdrawMarketplaceSolana, provider?: string) =>
+        withdrawFromFeeSignedTransaction(body, args.web3, provider),
+    },
     send: {
-      deploySignedTransaction: async (params: CreateSolanaMarketplace) => {
-        return createMarketplace(params, args.web3)
+      /**
+       * Deploy new smart contract for NFT marketplace logic.
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      deploySignedTransaction: async (body: CreateSolanaMarketplace, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.marketplace.generateMarketplace({
+            ...body,
+            chain: Blockchain.SOL,
+          } as GenerateMarketplaceSolanaKMS)
+        }
+
+        return deploySignedTransaction(body, args.web3, provider)
       },
-      updateSignedTransaction: async (params: UpdateSolanaMarketplace) => {
-        return updateMarketplace(params, args.web3)
+      /**
+       * Update existing marketplace smart contract
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      updateSignedTransaction: async (body: UpdateSolanaMarketplace, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.marketplace.updateMarketplace({
+            ...body,
+            chain: Blockchain.SOL,
+          } as UpdateMarketplaceSolanaKMS)
+        }
+
+        return updateSignedTransaction(body, args.web3, provider)
       },
-      sellSignedTransaction: async (params: SellMarketplaceSolana) => {
-        return post(params, args.web3)
+      /**
+       * Create new listing on the marketplace.
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      sellSignedTransaction: async (body: SellMarketplaceSolana, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.marketplace.sellAssetOnMarketplace({
+            ...body,
+            chain: Blockchain.SOL,
+          } as SellAssetOnMarketplaceSolanaKMS)
+        }
+
+        return sellSignedTransaction(body, args.web3, provider)
       },
-      buySignedTransaction: async (params: BuyMarketplaceSolana) => {
-        return buyAndExecuteSale(params, args.web3)
+      /**
+       * Buy listing on the marketplace
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      buySignedTransaction: async (body: BuyMarketplaceSolana, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.marketplace.buyAssetOnMarketplace({
+            ...body,
+            chain: Blockchain.SOL,
+          } as BuyAssetOnMarketplaceSolanaKMS)
+        }
+
+        return buySignedTransaction(body, args.web3, provider)
       },
-      cancelSignedTransaction: async (params: CancelMarketplaceSolana) => {
-        return cancel(params, args.web3)
+      /**
+       * Cancel existing listing on the marketplace
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      cancelSignedTransaction: async (body: CancelMarketplaceSolana, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.marketplace.cancelSellMarketplaceListing({
+            ...body,
+            chain: Blockchain.SOL,
+          } as CancelSellAssetOnMarketplaceSolanaKMS)
+        }
+
+        return cancelSignedTransaction(body, args.web3, provider)
       },
-      withdrawSignedTransaction: async (params: WithdrawMarketplaceSolana) => {
-        return withdraw(params, args.web3)
+      /**
+       * Withdraw funds from treasury account.
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      withdrawFromTreasurySignedTransaction: async (body: WithdrawMarketplaceSolana, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.marketplace.withdrawTreasuryFromMarketplace({
+            ...body,
+            chain: Blockchain.SOL,
+          } as WithdrawFromMarketplaceSolanaKMS)
+        }
+
+        return withdrawFromTreasurySignedTransaction(body, args.web3, provider)
       },
-      withdrawFeeSignedTransaction: async (params: WithdrawMarketplaceSolana) => {
-        return withdrawFee(params, args.web3)
+      /**
+       * Withdraw funds from fee account.
+       * @param body body of the request
+       * @param provider optional URL of the Solana cluster
+       */
+      withdrawFromFeeSignedTransaction: async (body: WithdrawMarketplaceSolana, provider?: string) => {
+        if (body.signatureId) {
+          return ApiServices.marketplace.withdrawFeeFromMarketplace({
+            ...body,
+            chain: Blockchain.SOL,
+          } as WithdrawFromMarketplaceSolanaKMS)
+        }
+
+        return withdrawFromFeeSignedTransaction(body, args.web3, provider)
       },
     },
   }
