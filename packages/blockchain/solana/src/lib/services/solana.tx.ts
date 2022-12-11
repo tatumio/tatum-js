@@ -6,6 +6,7 @@ import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { solanaUtils, TransferSolana } from './solana.utils'
 import { solanaSplService } from './solana.spl'
 import { solanaNftService } from './solana.nft'
+import { solanaMarketPlaceService } from '@tatumio/solana'
 
 const transferSignedTransaction = async (
   body: TransferSolana,
@@ -58,6 +59,7 @@ export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
   return {
     spl: solanaSplService(args),
     nft: solanaNftService(args),
+    marketplace: solanaMarketPlaceService(args),
     native: {
       // TODO - refactor to separate prepare/send func
       prepareOrSend: {

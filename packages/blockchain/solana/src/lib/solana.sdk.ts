@@ -1,5 +1,9 @@
 import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
-import { FungibleTokensErc20OrCompatibleService, SolanaService } from '@tatumio/api-client'
+import {
+  FungibleTokensErc20OrCompatibleService,
+  MarketplaceService,
+  SolanaService,
+} from '@tatumio/api-client'
 import {
   abstractSdkNft,
   abstractSdkLedgerService,
@@ -41,6 +45,12 @@ export const TatumSolanaSDK = (args: SDKArguments) => {
     spl: {
       ...txService.spl,
       getSplAccountBalances: FungibleTokensErc20OrCompatibleService.erc20GetBalanceAddress,
+    },
+    marketplace: {
+      ...txService.marketplace,
+      getMarketplaceInfo: MarketplaceService.getMarketplaceInfo,
+      getMarketplaceListings: MarketplaceService.getMarketplaceListings,
+      getMarketplaceListing: MarketplaceService.getMarketplaceListing,
     },
     blockchain: {
       getCurrentBlock: SolanaService.solanaGetCurrentBlock,
