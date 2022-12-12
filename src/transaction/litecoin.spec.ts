@@ -2,25 +2,25 @@ import {TransferBtcBasedBlockchain} from '../model'
 import {prepareLitecoinSignedTransaction, sendLitecoinTransaction} from './litecoin'
 
 describe('LTC transactions', () => {
-  it('Change address and fee support', async () => {
-    process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
-    const body = new TransferBtcBasedBlockchain()
-    body.fromAddress = [{
-      address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
-      privateKey: 'cQ4WBAs4PvXphpV6ezUHqo5QhBPPsJKtHhaBSJy5TtJoV2qs4koP',
-    }]
-    body.to = [{
-      address: 'mqyiRxb4wMbTFHtgqDyLRwBT6z82tUktDF',
-      value: 0.1
-    }]
-    body.fee = '0.005'
-    body.changeAddress = 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo'
-    const txData = await prepareLitecoinSignedTransaction(true, body)
-    expect(txData).toBe('0200000001d3c8db438a253cb9bdf6ff440848e79cb71c5d197f37185de3df379c3a33504f000000006b483045022100dfa3cf9e826d457f36bd622b51107bc1aa14d55d0ba6f6cc95f597a6be9c068402207ea536d16e1512d8efaa9d89cf9af10a6d068030c9f88a670aa65abcbd9e1c8201210234166c1b874af0faa08b1145ff3dbc31358c0eb35ec6d461000466f5f80b22ecffffffff0280969800000000001976a91472c0ea7cf5ab9299169798c776a14c958444875a88ace08b2901000000001976a914bafecce5010ae353c2c7d7298e14f6e5d8950d2888ac00000000')
-  })
+  describe('Change address and fee support', () => {
+    it('Should prepare tx with change address and fee', async () => {
+      process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
+      const body = new TransferBtcBasedBlockchain()
+      body.fromAddress = [{
+        address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
+        privateKey: 'cQ4WBAs4PvXphpV6ezUHqo5QhBPPsJKtHhaBSJy5TtJoV2qs4koP',
+      }]
+      body.to = [{
+        address: 'mqyiRxb4wMbTFHtgqDyLRwBT6z82tUktDF',
+        value: 0.1
+      }]
+      body.fee = '0.005'
+      body.changeAddress = 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo'
+      const txData = await prepareLitecoinSignedTransaction(true, body)
+      expect(txData).toBe('0200000001d3c8db438a253cb9bdf6ff440848e79cb71c5d197f37185de3df379c3a33504f000000006b483045022100dfa3cf9e826d457f36bd622b51107bc1aa14d55d0ba6f6cc95f597a6be9c068402207ea536d16e1512d8efaa9d89cf9af10a6d068030c9f88a670aa65abcbd9e1c8201210234166c1b874af0faa08b1145ff3dbc31358c0eb35ec6d461000466f5f80b22ecffffffff0280969800000000001976a91472c0ea7cf5ab9299169798c776a14c958444875a88ace08b2901000000001976a914bafecce5010ae353c2c7d7298e14f6e5d8950d2888ac00000000')
+    })
 
-  describe('Should contain both fee and changeAddress, or none of them', () => {
-    it('only changeAddress', async () => {
+    it('fail - only changeAddress', async () => {
       process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
       try {
         const body = new TransferBtcBasedBlockchain()
@@ -40,7 +40,7 @@ describe('LTC transactions', () => {
       }
     })
 
-    it('only fee', async () => {
+    it('fail - only fee', async () => {
       process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
       try {
         const body = new TransferBtcBasedBlockchain()
@@ -59,38 +59,38 @@ describe('LTC transactions', () => {
         console.log(e)
       }
     })
-  })
 
-  it('Should generate the same output for changeaddress/fee and to clause', async () => {
-    process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
-    const bodyWithChangeAddressFee = new TransferBtcBasedBlockchain()
-    bodyWithChangeAddressFee.fromAddress = [{
-      address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
-      privateKey: 'cQ4WBAs4PvXphpV6ezUHqo5QhBPPsJKtHhaBSJy5TtJoV2qs4koP',
-    }]
-    bodyWithChangeAddressFee.to = [{
-      address: 'mqyiRxb4wMbTFHtgqDyLRwBT6z82tUktDF',
-      value: 0.1
-    }]
-    bodyWithChangeAddressFee.fee = '0.005'
-    bodyWithChangeAddressFee.changeAddress = 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo'
-    const txDataChangeAddressFee = await prepareLitecoinSignedTransaction(true, bodyWithChangeAddressFee)
+    it('Should generate the same output for changeaddress/fee and to clause', async () => {
+      process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
+      const bodyWithChangeAddressFee = new TransferBtcBasedBlockchain()
+      bodyWithChangeAddressFee.fromAddress = [{
+        address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
+        privateKey: 'cQ4WBAs4PvXphpV6ezUHqo5QhBPPsJKtHhaBSJy5TtJoV2qs4koP',
+      }]
+      bodyWithChangeAddressFee.to = [{
+        address: 'mqyiRxb4wMbTFHtgqDyLRwBT6z82tUktDF',
+        value: 0.1
+      }]
+      bodyWithChangeAddressFee.fee = '0.005'
+      bodyWithChangeAddressFee.changeAddress = 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo'
+      const txDataChangeAddressFee = await prepareLitecoinSignedTransaction(true, bodyWithChangeAddressFee)
 
-    const bodyWithTo = new TransferBtcBasedBlockchain()
-    bodyWithTo.fromAddress = [{
-      address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
-      privateKey: 'cQ4WBAs4PvXphpV6ezUHqo5QhBPPsJKtHhaBSJy5TtJoV2qs4koP',
-    }]
-    bodyWithTo.to = [{
-      address: 'mqyiRxb4wMbTFHtgqDyLRwBT6z82tUktDF',
-      value: 0.1
-    }, {
-      address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
-      value: 0.195
-    }]
-    const txDataToClause = await prepareLitecoinSignedTransaction(true, bodyWithTo)
+      const bodyWithTo = new TransferBtcBasedBlockchain()
+      bodyWithTo.fromAddress = [{
+        address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
+        privateKey: 'cQ4WBAs4PvXphpV6ezUHqo5QhBPPsJKtHhaBSJy5TtJoV2qs4koP',
+      }]
+      bodyWithTo.to = [{
+        address: 'mqyiRxb4wMbTFHtgqDyLRwBT6z82tUktDF',
+        value: 0.1
+      }, {
+        address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
+        value: 0.195
+      }]
+      const txDataToClause = await prepareLitecoinSignedTransaction(true, bodyWithTo)
 
-    expect(txDataToClause).toBe(txDataChangeAddressFee)
+      expect(txDataToClause).toBe(txDataChangeAddressFee)
+    })
   })
 
   it('should test LTC transaction data', async () => {

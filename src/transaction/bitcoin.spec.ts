@@ -2,6 +2,97 @@ import { TransferBtcBasedBlockchain } from '../model'
 import { prepareBitcoinSignedTransaction, sendBitcoinTransaction } from './bitcoin'
 
 describe('BTC transactions', () => {
+  describe('Change address and fee support', () => {
+    it('Should prepare tx with change address and fee', async () => {
+      process.env.TATUM_API_KEY = 'f0220cf8-543e-482b-b5b1-a1e9104a2e3c'
+      const body = new TransferBtcBasedBlockchain()
+      body.fromAddress = [{
+        address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
+        privateKey: 'cNuevgLtdHpChaGmqyG3HkqEAVEX2faL9HNw1e6hs1Jh6Q3Tv38i',
+      }]
+      body.to = [{
+        address: 'tb1q0wlck27y5zvl0yxd9ene4kaktqxe923xyylt07',
+        value: 0.001
+      }]
+      body.fee = '0.004'
+      body.changeAddress = 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq'
+      const txData = await prepareBitcoinSignedTransaction(true, body)
+      expect(txData).toBe('02000000000102b8b1f896e62b9d932382857e7b4d31c0b5873f11dd42de7345456e1581dc87730000000000ffffffff1363f6ac0c648c4eb28c41556335f3de7a9627573c1b6b076d7ff4fcfe516c870000000000ffffffff02a0860100000000001600147bbf8b2bc4a099f790cd2e679adbb6580d92aa26422300000000000016001489c78efa5ca1fcf1be05ba30d9f73ad7e07bc1c80247304402203bc050bfdbac4ccbd1c181ce3d3bb30f6cac71cef9a67337808e9d6673036f560220763e37a248bbc910d32c7b5ab2d116fca13d07eafdbc22e00ceb44543c8b2553012103ca94c2a396faa0c6940bd156516857b74f7378677518880d80c6ca9998d3e21b0247304402201af7ae35aada207eb75c2638d8e4d40db47c5fed69884b94698aecfb8c15094b022027166a491461f427987f062933a40178708855b9abd19245e43e989ba774e3e1012103ca94c2a396faa0c6940bd156516857b74f7378677518880d80c6ca9998d3e21b00000000')
+    })
+
+    it('fail - only changeAddress', async () => {
+      process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
+      try {
+        const body = new TransferBtcBasedBlockchain()
+        body.fromAddress = [{
+          address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
+          privateKey: 'cNuevgLtdHpChaGmqyG3HkqEAVEX2faL9HNw1e6hs1Jh6Q3Tv38i',
+        }]
+        body.to = [{
+          address: 'tb1q0wlck27y5zvl0yxd9ene4kaktqxe923xyylt07',
+          value: 0.001
+        }]
+        body.changeAddress = 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq'
+        await prepareBitcoinSignedTransaction(true, body)
+        fail('Validation did not pass.')
+      } catch (e) {
+        console.log(e)
+      }
+    })
+
+    it('fail - only fee', async () => {
+      process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
+      try {
+        const body = new TransferBtcBasedBlockchain()
+        body.fromAddress = [{
+          address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
+          privateKey: 'cNuevgLtdHpChaGmqyG3HkqEAVEX2faL9HNw1e6hs1Jh6Q3Tv38i',
+        }]
+        body.to = [{
+          address: 'tb1q0wlck27y5zvl0yxd9ene4kaktqxe923xyylt07',
+          value: 0.001
+        }]
+        body.fee = '0.004'
+        await prepareBitcoinSignedTransaction(true, body)
+        fail('Validation did not pass.')
+      } catch (e) {
+        console.log(e)
+      }
+    })
+
+    it('Should generate the same output for changeaddress/fee and to clause', async () => {
+      process.env.TATUM_API_KEY = 'f0220cf8-543e-482b-b5b1-a1e9104a2e3c'
+      const bodyWithChangeAddressFee = new TransferBtcBasedBlockchain()
+      bodyWithChangeAddressFee.fromAddress = [{
+        address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
+        privateKey: 'cNuevgLtdHpChaGmqyG3HkqEAVEX2faL9HNw1e6hs1Jh6Q3Tv38i',
+      }]
+      bodyWithChangeAddressFee.to = [{
+        address: 'tb1q0wlck27y5zvl0yxd9ene4kaktqxe923xyylt07',
+        value: 0.001
+      }]
+      bodyWithChangeAddressFee.fee = '0.004'
+      bodyWithChangeAddressFee.changeAddress = 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq'
+      const txDataChangeAddressFee = await prepareBitcoinSignedTransaction(true, bodyWithChangeAddressFee)
+
+      const bodyWithTo = new TransferBtcBasedBlockchain()
+      bodyWithTo.fromAddress = [{
+        address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
+        privateKey: 'cNuevgLtdHpChaGmqyG3HkqEAVEX2faL9HNw1e6hs1Jh6Q3Tv38i',
+      }]
+      bodyWithTo.to = [{
+        address: 'tb1q0wlck27y5zvl0yxd9ene4kaktqxe923xyylt07',
+        value: 0.001
+      }, {
+        address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
+        value: 0.00009026
+      }]
+      const txDataToClause = await prepareBitcoinSignedTransaction(true, bodyWithTo)
+
+      expect(txDataToClause).toBe(txDataChangeAddressFee)
+    })
+  })
+  
   it('should test BTC transaction data', async () => {
     process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
     const body = new TransferBtcBasedBlockchain()
