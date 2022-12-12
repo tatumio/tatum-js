@@ -1,11 +1,12 @@
 import {TransferBtcBasedBlockchain} from '../model'
 import {prepareLitecoinSignedTransaction, sendLitecoinTransaction} from './litecoin'
+import {TransferBtcLtcBlockchain} from "../model/request/TransferBtcLtcBlockchain";
 
 describe('LTC transactions', () => {
   describe('Change address and fee support', () => {
     it('Should prepare tx with change address and fee', async () => {
       process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
-      const body = new TransferBtcBasedBlockchain()
+      const body = new TransferBtcLtcBlockchain()
       body.fromAddress = [{
         address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
         privateKey: 'cQ4WBAs4PvXphpV6ezUHqo5QhBPPsJKtHhaBSJy5TtJoV2qs4koP',
@@ -23,7 +24,7 @@ describe('LTC transactions', () => {
     it('fail - only changeAddress', async () => {
       process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
       try {
-        const body = new TransferBtcBasedBlockchain()
+        const body = new TransferBtcLtcBlockchain()
         body.fromAddress = [{
           address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
           privateKey: 'cQ4WBAs4PvXphpV6ezUHqo5QhBPPsJKtHhaBSJy5TtJoV2qs4koP',
@@ -43,7 +44,7 @@ describe('LTC transactions', () => {
     it('fail - only fee', async () => {
       process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
       try {
-        const body = new TransferBtcBasedBlockchain()
+        const body = new TransferBtcLtcBlockchain()
         body.fromAddress = [{
           address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
           privateKey: 'cQ4WBAs4PvXphpV6ezUHqo5QhBPPsJKtHhaBSJy5TtJoV2qs4koP',
@@ -62,7 +63,7 @@ describe('LTC transactions', () => {
 
     it('Should generate the same output for changeaddress/fee and to clause', async () => {
       process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
-      const bodyWithChangeAddressFee = new TransferBtcBasedBlockchain()
+      const bodyWithChangeAddressFee = new TransferBtcLtcBlockchain()
       bodyWithChangeAddressFee.fromAddress = [{
         address: 'mxZhDaGuFLL3jBKsxGfzd1DnRDLYQagqbo',
         privateKey: 'cQ4WBAs4PvXphpV6ezUHqo5QhBPPsJKtHhaBSJy5TtJoV2qs4koP',

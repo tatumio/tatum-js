@@ -1,11 +1,12 @@
 import { TransferBtcBasedBlockchain } from '../model'
 import { prepareBitcoinSignedTransaction, sendBitcoinTransaction } from './bitcoin'
+import {TransferBtcLtcBlockchain} from "../model/request/TransferBtcLtcBlockchain";
 
 describe('BTC transactions', () => {
   describe('Change address and fee support', () => {
     it('Should prepare tx with change address and fee', async () => {
-      process.env.TATUM_API_KEY = 'f0220cf8-543e-482b-b5b1-a1e9104a2e3c'
-      const body = new TransferBtcBasedBlockchain()
+      process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
+      const body = new TransferBtcLtcBlockchain()
       body.fromAddress = [{
         address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
         privateKey: 'cNuevgLtdHpChaGmqyG3HkqEAVEX2faL9HNw1e6hs1Jh6Q3Tv38i',
@@ -21,9 +22,9 @@ describe('BTC transactions', () => {
     })
 
     it('fail - only changeAddress', async () => {
-      process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
+      process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
       try {
-        const body = new TransferBtcBasedBlockchain()
+        const body = new TransferBtcLtcBlockchain()
         body.fromAddress = [{
           address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
           privateKey: 'cNuevgLtdHpChaGmqyG3HkqEAVEX2faL9HNw1e6hs1Jh6Q3Tv38i',
@@ -41,9 +42,9 @@ describe('BTC transactions', () => {
     })
 
     it('fail - only fee', async () => {
-      process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
+      process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
       try {
-        const body = new TransferBtcBasedBlockchain()
+        const body = new TransferBtcLtcBlockchain()
         body.fromAddress = [{
           address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
           privateKey: 'cNuevgLtdHpChaGmqyG3HkqEAVEX2faL9HNw1e6hs1Jh6Q3Tv38i',
@@ -61,8 +62,8 @@ describe('BTC transactions', () => {
     })
 
     it('Should generate the same output for changeaddress/fee and to clause', async () => {
-      process.env.TATUM_API_KEY = 'f0220cf8-543e-482b-b5b1-a1e9104a2e3c'
-      const bodyWithChangeAddressFee = new TransferBtcBasedBlockchain()
+      process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
+      const bodyWithChangeAddressFee = new TransferBtcLtcBlockchain()
       bodyWithChangeAddressFee.fromAddress = [{
         address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
         privateKey: 'cNuevgLtdHpChaGmqyG3HkqEAVEX2faL9HNw1e6hs1Jh6Q3Tv38i',
