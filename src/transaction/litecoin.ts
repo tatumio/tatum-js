@@ -13,6 +13,12 @@ const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
     await validateBody(body, TransferBtcBasedBlockchain)
     const {fromUTXO, fromAddress, to} = body
     const tx = new Transaction()
+
+    if (body.changeAddress && body.fee) {
+        tx.change(body.changeAddress)
+        tx.fee(Number(new BigNumber(body.fee).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
+    }
+
     const privateKeysToSign = []
     if (fromAddress) {
         for (const item of fromAddress) {

@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer'
 import {
     ArrayNotEmpty,
-    IsNotEmpty, IsUUID,
+    IsNotEmpty, IsNumberString, IsOptional, IsUUID,
     Length,
     Max,
     Min,
@@ -11,6 +11,7 @@ import {
 } from 'class-validator'
 import { SignatureIdValidator } from '../validation/SignatureIdValidator'
 import { TransferBtcValidator } from '../validation/TransferBtcValidator'
+import {FeeChangeValidator} from "../validation/FeeChangeValidator";
 
 class PrivateKeyOrSignatureIdBtcBased {
     /**
@@ -107,10 +108,31 @@ export class TransferBtcBasedBlockchain {
     public fromUTXO?: FromUTXO[];
 
     /**
-     * Array of addresses and values to send bitcoins to. Values must be set in BTC. Difference between from and to is transaction fee.
+     * Array of addresses and values to send bitcoins to. Values must be set in BTC.
+     * Difference between from and to is transaction fee.
      */
     @ArrayNotEmpty()
     @ValidateNested({ each: true })
     @Type(() => To)
     public to: To[];
+
+    /**
+     * The fee to be paid for the transaction (in BCH);
+     * if you are using this parameter, you have to also use the <code>changeAddress</code> parameter
+     * because these two parameters only work together.
+     */
+    @Validate(FeeChangeValidator)
+    @IsOptional()
+    @IsNumberString()
+    public fee?: string;
+
+    /**
+     * The blockchain address to send any extra assets remaning after covering the fee;
+     * if you are using this parameter, you have to also use the <code>fee</code> parameter
+     * because these two parameters only work together.
+     */
+    @Validate(FeeChangeValidator)
+    @IsOptional()
+    @Length(30, 110)
+    public changeAddress?: string;
 }
