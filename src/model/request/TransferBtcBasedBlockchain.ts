@@ -1,7 +1,7 @@
 import { Type } from 'class-transformer'
 import {
     ArrayNotEmpty,
-    IsNotEmpty, IsUUID,
+    IsNotEmpty, IsNumberString, IsOptional, IsUUID,
     Length,
     Max,
     Min,
@@ -11,6 +11,7 @@ import {
 } from 'class-validator'
 import { SignatureIdValidator } from '../validation/SignatureIdValidator'
 import { TransferBtcValidator } from '../validation/TransferBtcValidator'
+import {FeeChangeValidator} from "../validation/FeeChangeValidator";
 
 class PrivateKeyOrSignatureIdBtcBased {
     /**
@@ -107,7 +108,8 @@ export class TransferBtcBasedBlockchain {
     public fromUTXO?: FromUTXO[];
 
     /**
-     * Array of addresses and values to send bitcoins to. Values must be set in BTC. Difference between from and to is transaction fee.
+     * Array of addresses and values to send bitcoins to. Values must be set in BTC.
+     * Difference between from and to is transaction fee.
      */
     @ArrayNotEmpty()
     @ValidateNested({ each: true })

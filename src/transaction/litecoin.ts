@@ -3,16 +3,23 @@ import BigNumber from 'bignumber.js'
 import {PrivateKey, Script, Transaction} from 'bitcore-lib-ltc'
 import {ltcBroadcast, ltcGetTransaction, ltcGetTxForAccount, ltcGetUTXO} from '../blockchain'
 import {validateBody} from '../connector/tatum'
-import {Currency, LtcTxOutputs, TransactionKMS, TransferBtcBasedBlockchain} from '../model'
+import {Currency, LtcTxOutputs, TransactionKMS} from '../model'
+import {TransferBtcLtcBlockchain} from "../model/request/TransferBtcLtcBlockchain";
 
 /**
  * Prepare a signed Ltc transaction with the private key locally. Nothing is broadcasted to the blockchain.
  * @returns raw transaction data in hex, to be broadcasted to blockchain.
  */
-const prepareSignedTransaction = async (body: TransferBtcBasedBlockchain) => {
-    await validateBody(body, TransferBtcBasedBlockchain)
+const prepareSignedTransaction = async (body: TransferBtcLtcBlockchain) => {
+    await validateBody(body, TransferBtcLtcBlockchain)
     const {fromUTXO, fromAddress, to} = body
     const tx = new Transaction()
+
+    if (body.changeAddress && body.fee) {
+        tx.change(body.changeAddress)
+        tx.fee(Number(new BigNumber(body.fee).multipliedBy(100000000).toFixed(8, BigNumber.ROUND_FLOOR)))
+    }
+
     const privateKeysToSign = []
     if (fromAddress) {
         for (const item of fromAddress) {
@@ -89,7 +96,7 @@ export const signLitecoinKMSTransaction = async (tx: TransactionKMS, privateKeys
  * @param body content of the transaction to broadcast
  * @returns transaction data to be broadcast to blockchain.
  */
-export const prepareLitecoinSignedTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
+export const prepareLitecoinSignedTransaction = async (testnet: boolean, body: TransferBtcLtcBlockchain) => {
     return prepareSignedTransaction(body)
 }
 
@@ -100,6 +107,6 @@ export const prepareLitecoinSignedTransaction = async (testnet: boolean, body: T
  * @param body content of the transaction to broadcast
  * @returns transaction id of the transaction in the blockchain
  */
-export const sendLitecoinTransaction = async (testnet: boolean, body: TransferBtcBasedBlockchain) => {
+export const sendLitecoinTransaction = async (testnet: boolean, body: TransferBtcLtcBlockchain) => {
     return ltcBroadcast(await prepareLitecoinSignedTransaction(testnet, body))
 }
