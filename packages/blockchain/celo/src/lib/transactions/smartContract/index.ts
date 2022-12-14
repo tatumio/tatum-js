@@ -66,9 +66,10 @@ const smartContractWriteMethodInvocation = async (
 
   transaction.nonce = transaction.nonce || txCount
   transaction.from = from
+  const gasEstimate = await wallet.estimateGas(transaction)
+
   transaction.gasLimit =
-    transaction.gasLimit ??
-    (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
+    transaction.gasLimit ?? (await gasEstimate).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
   transaction.gasPrice = fee?.gasPrice
     ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16)
     : gasPrice.toHexString()
