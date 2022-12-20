@@ -1,5 +1,6 @@
 import {
   AddNftMinter,
+  ApproveCeloErc20,
   BurnMultiTokenBatchCelo,
   BurnMultiTokenCelo,
   BurnNftCelo,
@@ -89,6 +90,8 @@ export type ChainDeployErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<Chai
 
 export type ChainMintErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ChainMintCeloErc20>>
 
+export type ChainApproveErc20Celo = WithoutChain<FromPrivateKeyOrSignatureId<ApproveCeloErc20>>
+
 export type ChainTransferErc20Celo = Omit<
   WithoutChain<FromPrivateKeyOrSignatureId<ChainTransferCeloErc20Token>>,
   'digits'
@@ -116,11 +119,11 @@ export const CELO_CONSTANTS = {
 export const celoUtils = {
   prepareSignedTransactionAbstraction: async (wallet: CeloWallet, transaction: CeloTransactionConfig) => {
     try {
+      const estimated = await wallet.estimateGas(transaction)
+
       transaction.gasLimit =
         transaction.gasLimit ??
-        (await wallet.estimateGas(transaction))
-          .add(transaction.feeCurrency === Currency.CELO ? 0 : 100000)
-          .toHexString()
+        estimated.add(transaction.feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
     } catch (e) {
       throw new EvmBasedSdkError({ error: e as Error, code: SdkErrorCode.EVM_CANNOT_ESTIMATE_GAS_LIMIT })
     }

@@ -151,6 +151,7 @@ export enum SdkErrorCode {
   EVM_ERC20_CANNOT_PREPARE_MINT_TX = 'evm-based.erc20.cannot.prepare.mint-tx',
   EVM_ERC20_CANNOT_PREPARE_TRANSFER_TX = 'evm-based.erc20.cannot.prepare.transfer-tx',
   EVM_ERC20_CANNOT_PREPARE_BURN_TX = 'evm-based.erc20.cannot.prepare.burn-tx',
+  EVM_ERC20_CANNOT_PREPARE_APPROVE_TX = 'evm-based.erc20.cannot.prepare.approve-tx',
 
   // ERC721
   EVM_ERC721_CANNOT_PREPARE_DEPLOY_TX = 'evm-based.erc721.cannot.prepare.deploy-tx',

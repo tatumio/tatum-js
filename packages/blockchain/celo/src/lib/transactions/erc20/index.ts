@@ -1,6 +1,7 @@
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import {
   ApiServices,
+  ApproveCeloErc20KMS,
   ChainBurnCeloErc20KMS,
   ChainDeployCeloErc20KMS,
   ChainMintCeloErc20KMS,
@@ -16,6 +17,7 @@ import Web3 from 'web3'
 import {
   CeloTransactionConfig,
   celoUtils,
+  ChainApproveErc20Celo,
   ChainBurnErc20Celo,
   ChainDeployErc20Celo,
   ChainMintErc20Celo,
@@ -232,6 +234,56 @@ const prepareBurnSignedTransaction = async (
   return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
 }
 
+const prepareApproveSignedTransaction = async (
+  body: ChainApproveErc20Celo,
+  provider?: string,
+  testnet?: boolean,
+) => {
+  const { fromPrivateKey, amount, spender, contractAddress, nonce, fee, signatureId } = body
+
+  const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
+    body,
+    provider,
+    testnet,
+    contractAddress.trim(),
+  )
+
+  const decimals = await contract.methods.decimals().call()
+
+  if (signatureId) {
+    return JSON.stringify({
+      chainId: network.chainId,
+      feeCurrency: feeCurrencyContractAddress,
+      nonce,
+      gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+      gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice),
+      to: contractAddress.trim(),
+      data: contract.methods
+        .approve(spender.trim(), amountUtils.amountToHexString(amount, decimals))
+        .encodeABI(),
+    })
+  }
+  const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+  const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
+    wallet,
+    feeCurrencyContractAddress,
+  )
+
+  const tx: CeloTransactionConfig = {
+    chainId: network.chainId,
+    feeCurrency: feeCurrencyContractAddress,
+    nonce: nonce || txCount,
+    gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
+    gasPrice: evmBasedUtils.gasPriceWeiToHexWithFallback(fee?.gasPrice, gasPrice),
+    to: contractAddress.trim(),
+    data: contract.methods
+      .approve(spender.trim(), amountUtils.amountToHexString(amount, decimals))
+      .encodeABI(),
+    from,
+  }
+  return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
+}
+
 export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
   return {
     prepare: {
@@ -270,6 +322,15 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
         evmBasedUtils.tryCatch(
           () => prepareBurnSignedTransaction(body, provider, testnet),
           SdkErrorCode.EVM_ERC20_CANNOT_PREPARE_BURN_TX,
+        ),
+      /**
+       * Prepare approve ERC20 signed transaction..
+       * @returns raw transaction data in hex, to be broadcasted to blockchain.
+       */
+      approveSignedTransaction: async (body: ChainApproveErc20Celo, provider?: string, testnet?: boolean) =>
+        evmBasedUtils.tryCatch(
+          () => prepareApproveSignedTransaction(body, provider, testnet),
+          SdkErrorCode.EVM_ERC20_CANNOT_PREPARE_APPROVE_TX,
         ),
     },
     send: {
@@ -351,6 +412,25 @@ export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
         }
         return args.broadcastFunction({
           txData: await prepareBurnSignedTransaction(body, provider, testnet),
+        })
+      },
+      /**
+       * Send approve erc20 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+       * This operation is irreversible.
+       * @param testnet mainnet or testnet version
+       * @param body content of the transaction to broadcast
+       * @param provider url of the Celo Server to connect to. If not set, default public server will be used.
+       * @returns transaction id of the transaction in the blockchain
+       */
+      approveSignedTransaction: async (body: ChainApproveErc20Celo, provider?: string, testnet?: boolean) => {
+        if (body.signatureId) {
+          return ApiServices.fungibleToken.erc20Approve({
+            ...body,
+            chain: Blockchain.CELO,
+          } as ApproveCeloErc20KMS)
+        }
+        return args.broadcastFunction({
+          txData: await prepareApproveSignedTransaction(body, provider, testnet),
         })
       },
     },
