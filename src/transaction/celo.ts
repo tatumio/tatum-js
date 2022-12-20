@@ -837,7 +837,8 @@ export const prepareCeloSmartContractWriteMethodInvocation = async (testnet: boo
 
   transaction.nonce = transaction.nonce || txCount
   transaction.from = from
-  transaction.gasLimit = transaction.gasLimit ?? (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000).toHexString()
+  const estimateGas = (await wallet.estimateGas(transaction)).add(feeCurrency === Currency.CELO ? 0 : 100000)
+  transaction.gasLimit = transaction.gasLimit ?? estimateGas.toHexString()
   transaction.gasPrice = fee?.gasPrice ? '0x' + new BigNumber(toWei(fee.gasPrice, 'gwei')).toString(16) : gasPrice.toHexString()
   return wallet.signTransaction(transaction)
 }
