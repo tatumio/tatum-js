@@ -415,6 +415,19 @@ export const prepareTronTrc20SignedTransaction = async (testnet: boolean, body: 
     tronWeb.setAddress(tokenAddress)
     const contractInstance = await tronWeb.contract().at(tokenAddress)
     const decimals = await contractInstance.decimals().call()
+
+    const from =
+      'signatureId' in body
+        ? body.from
+        : tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(body.fromPrivateKey))
+
+    const balance = new BigNumber( ((await contractInstance.balanceOf(from).call()) as BigNumber).toNumber() || 0)
+    const valueToSend = new BigNumber(amount).multipliedBy(new BigNumber(10).pow(decimals))
+    if (valueToSend.isGreaterThan(balance)) {
+        const balanceInTrx = balance.dividedBy(new BigNumber(10).pow(decimals))
+        throw new Error(`Not enough TRC20 tokens on address to perform this transaction. Balance: ${balanceInTrx}`)
+    }
+
     const {transaction} = await tronWeb.transactionBuilder.triggerSmartContract(
         tronWeb.address.toHex(tokenAddress),
         'transfer(address,uint256)',
