@@ -8,7 +8,8 @@ import {
 import BigNumber from 'bignumber.js'
 import { ITronWeb } from './tron.web'
 import { Trc20Token } from '@tatumio/shared-blockchain-evm-based'
-import { isWithSignatureId } from '@tatumio/shared-abstract-sdk'
+import { isWithSignatureId, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { TronSdkError } from '../tron.sdk.errors'
 
 const prepareSignedTransaction = async (
   body: TransferTronTrc20Blockchain | TransferTronTrc20BlockchainKMS,
@@ -21,6 +22,16 @@ const prepareSignedTransaction = async (
   client.setAddress(tokenAddress)
   const contractInstance = await client.contract().at(tokenAddress)
   const decimals = await contractInstance.decimals().call()
+
+  const from = 'signatureId' in body
+    ? body.from
+    : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
+
+  const balance = ((await contractInstance.balanceOf(from).call()) as BigNumber).toNumber()
+  const valueToSend = new BigNumber(amount).multipliedBy(new BigNumber(10).pow(decimals))
+  if (valueToSend.isGreaterThan(new BigNumber(balance || 0))) {
+    throw new TronSdkError(SdkErrorCode.TRON_NOT_ENOUGH_BALANCE)
+  }
 
   const tokenAddressHex = client.address.toHex(tokenAddress)
   const methodName = 'transfer(address,uint256)'
