@@ -1,10 +1,8 @@
 import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
-export const TRON_ERRORS_MAPPING = {
-}
+export const TRON_ERRORS_MAPPING = {}
 
-export type TronSdkErrorCode =
-  SdkErrorCode.TRON_NOT_ENOUGH_BALANCE
+export type TronSdkErrorCode = SdkErrorCode.TRON_NOT_ENOUGH_BALANCE
 
 export class TronSdkError extends SdkError {
   constructor(error: Error | TronSdkErrorCode) {

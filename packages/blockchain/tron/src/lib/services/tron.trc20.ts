@@ -23,9 +23,10 @@ const prepareSignedTransaction = async (
   const contractInstance = await client.contract().at(tokenAddress)
   const decimals = await contractInstance.decimals().call()
 
-  const from = 'signatureId' in body
-    ? body.from
-    : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
+  const from =
+    'signatureId' in body
+      ? body.from
+      : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
 
   const balance = ((await contractInstance.balanceOf(from).call()) as BigNumber).toNumber()
   const valueToSend = new BigNumber(amount).multipliedBy(new BigNumber(10).pow(decimals))
