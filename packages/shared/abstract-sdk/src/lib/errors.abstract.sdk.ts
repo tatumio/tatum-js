@@ -112,6 +112,9 @@ export enum SdkErrorCode {
   FLOW_MISSING_PRIVATE_KEY = 'flow.private-key.missing',
   FLOW_MISSING_MNEMONIC = 'flow.mnemonic.missing',
 
+  // TRON
+  TRON_NOT_ENOUGH_BALANCE = 'tron.balance.not-enough',
+
   // CELO
   CELO_MISSING_CURRENCY = 'celo.missing.currency',
   CELO_MISSING_CONTRACT_ADDRESS = 'celo.missing.contract-address',
@@ -193,6 +196,9 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
 
   // XRP
   [SdkErrorCode.XRP_SECRET_DOES_NOT_MATCH, `Secret not valid or doesn't match address`],
+
+  // TRON
+  [SdkErrorCode.TRON_NOT_ENOUGH_BALANCE, `Not enough coins on address to perform this transaction`],
 
   // XLM
   [SdkErrorCode.SECRET_CHECKSUM, `Secret is not valid. Please check your secret for typos`],
