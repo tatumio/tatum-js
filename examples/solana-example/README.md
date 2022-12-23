@@ -1,4 +1,4 @@
-# How to use TatumSDK with Stellar Solana
+# How to use TatumSDK with Solana
 
 These examples should guide you through some basic operations of the Solana blockchain. You will be able to:
 
