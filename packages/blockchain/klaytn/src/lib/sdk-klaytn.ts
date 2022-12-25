@@ -37,6 +37,7 @@ export const TatumKlaytnSDK = (args: SDKArguments) => {
     },
     storage,
     multiToken: txService.multiToken,
+    gasPump: txService.gasPump,
     marketplace: {
       ...evmBasedMarketplace({
         blockchain,
