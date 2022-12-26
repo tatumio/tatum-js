@@ -51,24 +51,25 @@ describe('PolygonSDK - tx', () => {
           expectHexString(result)
         })
 
-        it('valid with signatureId', async () => {
-          const nonce = 3252345722143
-
-          const result = await sdk.transaction.prepare.storeDataTransaction({
-            data: 'Hello world.',
-            signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-            nonce,
-            to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
-            gasLimit: '53632',
-            gasPrice: '20',
-          })
-
-          const json = JSON.parse(result)
-
-          expect(json.nonce).toBe(nonce)
-          expect(json.gasPrice).toBe('20000000000')
-          expectHexString(json.data)
-        })
+        // TODO we dont have kms support here?
+        // it('valid with signatureId', async () => {
+        //   const nonce = 3252345722143
+        //
+        //   const result = await sdk.transaction.prepare.storeDataTransaction({
+        //     data: 'Hello world.',
+        //     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
+        //     nonce,
+        //     to: '0x811DfbFF13ADFBC3Cf653dCc373C03616D3471c9',
+        //     gasLimit: '53632',
+        //     gasPrice: '20',
+        //   })
+        //
+        //   const json = JSON.parse(result)
+        //
+        //   expect(json.nonce).toBe(nonce)
+        //   expect(json.gasPrice).toBe('20000000000')
+        //   expectHexString(json.data)
+        // })
       })
     })
   })

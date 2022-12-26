@@ -11,12 +11,22 @@ import { XrpSdkError } from '../xrp.sdk.errors'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { XrpApiCallsType } from '../../index'
 import { FromSecretOrSignatureId } from '@tatumio/shared-blockchain-abstract'
+import { xrpUtils } from './xrp.utils'
 
 type TransferXrp = FromSecretOrSignatureId<TransferXrpBlockchain> & { issuerAccount?: string; token?: string }
 type Trustline = FromSecretOrSignatureId<TrustLineXrpBlockchain>
 type AccountSettings = FromSecretOrSignatureId<AccountSettingsXrpBlockchain>
 
 export const xrpTxService = (apiCalls: XrpApiCallsType) => {
+  const prepareFee = async (fee?: string): Promise<number> => {
+    if (fee && new BigNumber(fee).lte(0)) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
+
+    const manualFee = new BigNumber(fee ?? '0')
+    const estimatedFee = xrpUtils.toAmount((await apiCalls.getFee())?.drops?.base_fee)
+
+    return Math.max(manualFee.toNumber(), estimatedFee.toNumber())
+  }
+
   /**
    * Send Xrp transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
    * This operation is irreversible.
@@ -78,9 +88,8 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
         issuerAccount,
       } = body
 
-      if (fee && new BigNumber(fee).isZero()) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
-      const xrpFee = new BigNumber((await apiCalls.getFee())?.drops?.base_fee as string)
-      const finalFee = Math.max(new BigNumber(fee || '0').toNumber(), xrpFee.toNumber()) / 100000
+      const finalFee = await prepareFee(fee)
+
       const payment: Payment = {
         source: {
           address: fromAccount,
@@ -103,7 +112,7 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
       }
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
       const balanceRequired = new BigNumber(amount).plus(finalFee)
-      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0).dividedBy(1000000)
+      const accountBalance = xrpUtils.toAmount(accountInfo.account_data?.Balance)
       if (accountBalance.isLessThan(balanceRequired)) {
         throw new XrpSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,
@@ -114,7 +123,7 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
       const maxLedgerVersion = accountInfo.ledger_current_index! + 500
       const rippleAPI = new RippleAPI()
       const prepared = await rippleAPI.preparePayment(fromAccount, payment, {
-        fee: `${finalFee}`,
+        fee: finalFee.toString(),
         sequence,
         maxLedgerVersion,
       })
@@ -143,14 +152,12 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
           'rippling and requireDestinationTag cannot be set at the same time',
         )
       }
-      if (fee && new BigNumber(fee).isZero()) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
-      const xrpFee = new BigNumber((await apiCalls.getFee())?.drops?.base_fee as string)
-      const finalFee = Math.max(new BigNumber(fee || '0').toNumber(), xrpFee.toNumber()) / 1000000
+      const finalFee = await prepareFee(fee)
       const rippleAPI = new RippleAPI()
 
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
 
-      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0).dividedBy(1000000)
+      const accountBalance = xrpUtils.toAmount(accountInfo.account_data?.Balance)
       if (accountBalance.isLessThan(finalFee)) {
         throw new XrpSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,
@@ -185,12 +192,11 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
     try {
       const { fromAccount, fromSecret, issuerAccount, token, limit, fee, signatureId } = body
 
-      if (fee && new BigNumber(fee).isZero()) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
-      const xrpFee = new BigNumber((await apiCalls.getFee())?.drops?.base_fee as string)
-      const finalFee = Math.max(new BigNumber(fee || '0').toNumber(), xrpFee.toNumber()) / 1000000
+      const finalFee = await prepareFee(fee)
+
       const rippleAPI = new RippleAPI()
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
-      const accountBalance = new BigNumber(accountInfo.account_data?.Balance || 0).dividedBy(1000000)
+      const accountBalance = xrpUtils.toAmount(accountInfo.account_data?.Balance)
       if (accountBalance.isLessThan(finalFee)) {
         throw new XrpSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,

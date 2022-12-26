@@ -1,4 +1,3 @@
-import { BigNumber } from 'bignumber.js'
 import { ApiServices, Currency, TransferXrp, Withdrawal } from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
 import { RippleAPI } from 'ripple-lib'
@@ -6,6 +5,7 @@ import { abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abs
 import { XrpSdkError } from '../xrp.sdk.errors'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { Payment } from 'ripple-lib/dist/npm/transaction/payment'
+import { xrpUtils } from './xrp.utils'
 
 export const xrpVirtualAccountService = (args: { blockchain: Blockchain }) => {
   return {
@@ -28,11 +28,8 @@ export const sendTransactionFromVirtualAccountToBlockchain = async (body: Transf
 
   if (!withdrawal.fee) {
     try {
-      withdrawal.fee = new BigNumber(
-        (await (await ApiServices.blockchain.xrp.xrpGetFee())?.drops?.base_fee) || 0,
-      )
-        .dividedBy(1000000)
-        .toString()
+      const baseFee = xrpUtils.toAmount((await ApiServices.blockchain.xrp.xrpGetFee())?.drops?.base_fee)
+      withdrawal.fee = baseFee.toString()
     } catch (e) {
       withdrawal.fee = '0'
     }
