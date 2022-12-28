@@ -11,6 +11,7 @@ import type { ApiResult } from './ApiResult'
 import { CancelablePromise } from './CancelablePromise'
 import type { OnCancel } from './CancelablePromise'
 import { OpenAPI } from './OpenAPI'
+import { version } from '../../../package.json'
 
 function isDefined<T>(value: T | null | undefined): value is Exclude<T, null | undefined> {
   return value !== undefined && value !== null
@@ -135,7 +136,7 @@ async function getHeaders(options: ApiRequestOptions, formData?: FormData): Prom
 
   const headers = Object.entries({
     Accept: 'application/json',
-    'User-Agent': 'tatum-sdk-js-v2',
+    'User-Agent': `Tatum_SDK_JS/${version}`,
     ...additionalHeaders,
     ...options.headers,
     ...formHeaders,
