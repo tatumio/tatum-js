@@ -135,6 +135,7 @@ async function getHeaders(options: ApiRequestOptions, formData?: FormData): Prom
 
   const headers = Object.entries({
     Accept: 'application/json',
+    'User-Agent': 'tatum-sdk-js-v2',
     ...additionalHeaders,
     ...options.headers,
     ...formHeaders,
