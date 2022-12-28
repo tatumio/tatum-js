@@ -22,7 +22,7 @@ axiosRetry(axios, {
 
 const baseUrl = () => process.env.TATUM_API_URL || TATUM_API_URL;
 
-const headers = () => ({headers: {'x-api-key': process.env.TATUM_API_KEY, 'x-testnet-type': process.env.TESTNET_TYPE || 'ethereum-ropsten'}});
+const headers = () => ({headers: {'x-api-key': process.env.TATUM_API_KEY, 'x-testnet-type': process.env.TESTNET_TYPE || 'ethereum-ropsten', 'User-Agent': 'tatum-sdk-js-v1',}});
 
 export const get = async <T>(url: string): Promise<T> => {
   const { data } = await axios.get(`${baseUrl()}${url}`, headers())
