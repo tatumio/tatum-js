@@ -6,6 +6,7 @@ import {validateOrReject} from 'class-validator';
 import FormData from 'form-data';
 import http from 'http';
 import https from 'https';
+import { version } from '../../package.json'
 import {TATUM_API_URL, TATUM_RETRIES, TATUM_RETRY_DELAY} from '../constants';
 
 export const axios = a.create({
@@ -22,7 +23,7 @@ axiosRetry(axios, {
 
 const baseUrl = () => process.env.TATUM_API_URL || TATUM_API_URL;
 
-const headers = () => ({headers: {'x-api-key': process.env.TATUM_API_KEY, 'x-testnet-type': process.env.TESTNET_TYPE || 'ethereum-ropsten', 'User-Agent': 'tatum-sdk-js-v1',}});
+const headers = () => ({headers: {'x-api-key': process.env.TATUM_API_KEY, 'x-testnet-type': process.env.TESTNET_TYPE || 'ethereum-ropsten', 'User-Agent': `Tatum_SDK_JS/${version}`,}});
 
 export const get = async <T>(url: string): Promise<T> => {
   const { data } = await axios.get(`${baseUrl()}${url}`, headers())
