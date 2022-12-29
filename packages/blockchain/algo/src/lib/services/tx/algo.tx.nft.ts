@@ -29,7 +29,7 @@ export const prepareCreateNFTSignedTransaction = async ({
   algoWeb: AlgoWeb
   provider?: string
 }) => {
-  if (body.name.length > 8) throw new AlgoSdkError(SdkErrorCode.ALGO_TOKEN_NAME_TOO_LONG)
+  if (body.name.length > 32) throw new AlgoSdkError(SdkErrorCode.ALGO_TOKEN_NAME_TOO_LONG)
 
   const algodClient = algoWeb.getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()

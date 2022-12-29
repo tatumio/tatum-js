@@ -27,7 +27,7 @@ export const prepareCreateFTSignedTransaction = async ({
   algoWeb: AlgoWeb
   provider?: string
 }) => {
-  if (body.name.length > 8) throw new AlgoSdkError(SdkErrorCode.ALGO_TOKEN_NAME_TOO_LONG)
+  if (body.name.length > 32) throw new AlgoSdkError(SdkErrorCode.ALGO_TOKEN_NAME_TOO_LONG)
 
   const algodClient = algoWeb.getClient(testnet, provider)
   const params = await algodClient.getTransactionParams().do()
@@ -49,8 +49,8 @@ export const prepareCreateFTSignedTransaction = async ({
     from,
     total,
     decimals,
-    assetName: body.symbol,
-    unitName: body.name,
+    assetName: body.name,
+    unitName: body.symbol,
     assetURL: (body as DeployAlgoErc20).url,
     defaultFrozen: false,
     freeze: undefined,
