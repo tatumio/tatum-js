@@ -103,7 +103,7 @@ export const evmBasedUtils = {
       throw new EvmBasedSdkError({
         code: SdkErrorCode.INSUFFICIENT_FUNDS,
         error: new Error(
-          `Insufficient funds burn erc20 transaction from account ${account.address} -> available balance is ${balance}, required balance is ${amount}`,
+          `Insufficient funds burn erc20 transaction from account ${account.address} -> available balance is ${new BigNumber(balance).dividedBy(new BigNumber(10).pow(decimals)).toString()}, required balance is ${amount}`,
         ),
       })
     }
