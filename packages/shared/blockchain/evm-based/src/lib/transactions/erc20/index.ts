@@ -103,7 +103,7 @@ const burnSignedTransaction = async ({
   }
 
   if (body.fromPrivateKey) {
-    await evmBasedUtils.validateErc20Balance(client, body.fromPrivateKey, contractAddress, tx)
+    await evmBasedUtils.validateErc20Balance(client, body.fromPrivateKey, contractAddress, body.amount)
   }
 
   return evmBasedUtils.prepareSignedTransactionAbstraction(

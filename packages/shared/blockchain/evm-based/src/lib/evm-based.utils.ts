@@ -97,21 +97,20 @@ export const evmBasedUtils = {
     client: Web3,
     privateKey: string,
     contractAddress: string,
-    tx: TransactionConfig,
+    amount: string,
   ) => {
-    const { value } = tx
-
     const account = client.eth.accounts.privateKeyToAccount(privateKey)
     const contract = new client.eth.Contract(Erc20Token.abi as any, contractAddress)
     const balance = await contract.methods.balanceOf(account.address).call()
+    const decimals = await contract.methods.decimals().call()
 
-    if (!balance || new BigNumber(balance).isLessThan(value as string)) {
+    if (!balance || new BigNumber(balance).dividedBy(new BigNumber(10).pow(decimals)).isLessThan(amount)) {
       throw new EvmBasedSdkError({
         code: SdkErrorCode.INSUFFICIENT_FUNDS,
         error: new Error(
           `Insufficient funds burn erc20 transaction from account ${
             account.address
-          } -> available balance is ${balance}, required balance is ${value as string}`,
+          } -> available balance is ${balance}, required balance is ${amount}`,
         ),
       })
     }
