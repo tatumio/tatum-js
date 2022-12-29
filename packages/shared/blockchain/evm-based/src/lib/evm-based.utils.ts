@@ -93,12 +93,7 @@ export const evmBasedUtils = {
     return signedTransaction.rawTransaction
   },
 
-  validateErc20Balance: async (
-    client: Web3,
-    privateKey: string,
-    contractAddress: string,
-    amount: string,
-  ) => {
+  validateErc20Balance: async (client: Web3, privateKey: string, contractAddress: string, amount: string) => {
     const account = client.eth.accounts.privateKeyToAccount(privateKey)
     const contract = new client.eth.Contract(Erc20Token.abi as any, contractAddress)
     const balance = await contract.methods.balanceOf(account.address).call()
@@ -108,9 +103,7 @@ export const evmBasedUtils = {
       throw new EvmBasedSdkError({
         code: SdkErrorCode.INSUFFICIENT_FUNDS,
         error: new Error(
-          `Insufficient funds burn erc20 transaction from account ${
-            account.address
-          } -> available balance is ${balance}, required balance is ${amount}`,
+          `Insufficient funds burn erc20 transaction from account ${account.address} -> available balance is ${balance}, required balance is ${amount}`,
         ),
       })
     }
