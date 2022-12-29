@@ -100,7 +100,7 @@ export const evmBasedUtils = {
     tx: TransactionConfig,
   ) => {
     const { value } = tx
-    
+
     const account = client.eth.accounts.privateKeyToAccount(privateKey)
     const contract = new client.eth.Contract(Erc20Token.abi as any, contractAddress)
     const balance = await contract.methods.balanceOf(account.address).call()
