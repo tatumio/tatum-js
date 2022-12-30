@@ -64,6 +64,15 @@ export const solanaUtils = {
       return encode(new BN(bytes, 'be').toArray())
     }
   },
+  safeAwait: <T>(promise: Promise<T>) => {
+    return promise
+      .then((data) => {
+        return { result: data, error: undefined }
+      })
+      .catch((error: Error) => {
+        return { result: undefined, error: error }
+      })
+  },
   getFeePayer: (externalFeePayer: boolean, from: PublicKey, feePayer?: string) => {
     if (externalFeePayer) {
       return new PublicKey(FEE_PAYER)

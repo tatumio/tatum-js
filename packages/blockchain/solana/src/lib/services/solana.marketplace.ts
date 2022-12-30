@@ -332,7 +332,21 @@ export const solanaMarketPlaceService = (
     }
 
     const balance = await connection.getTokenSupply(treasuryMint)
-    return new BigNumber(price).multipliedBy(new BigNumber(10).pow(balance.value.decimals)).toFixed()
+    const result = new BigNumber(price).multipliedBy(new BigNumber(10).pow(balance.value.decimals))
+
+    if (result.decimalPlaces() > 0) {
+      throw new SdkError({
+        code: SdkErrorCode.SOLANA_DECIMAL_PLACES,
+        originalError: {
+          name: SdkErrorCode.SOLANA_DECIMAL_PLACES,
+          message: `The maximum number of decimals places in the SPL token ${treasuryMint.toBase58()} is ${
+            balance.value.decimals
+          } but 'price' contains more`,
+        },
+      })
+    }
+
+    return result.toFixed()
   }
 
   const sellSignedTransaction = async (body: SellMarketplaceSolana, web3: SolanaWeb3, provider?: string) => {
@@ -455,7 +469,8 @@ export const solanaMarketPlaceService = (
       const addrPubKey = new PublicKey(addr)
       const tokenAddress = await getAssociatedTokenAddress(mint, addrPubKey)
 
-      const tokenAccount = await getAccount(connection, tokenAddress)
+      const tokenAccountRes = await solanaUtils.safeAwait(getAccount(connection, tokenAddress))
+      const tokenAccount = tokenAccountRes.result
 
       if (!tokenAccount || !tokenAccount.isInitialized) {
         ix.push(

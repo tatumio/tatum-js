@@ -132,6 +132,7 @@ export enum SdkErrorCode {
 
   // SOLANA
   SOLANA_KMS_COMBINATION = 'solana.kms.combination',
+  SOLANA_DECIMAL_PLACES = 'solana.amount.decimals',
 
   // ALGO
   ALGO_TOKEN_NAME_TOO_LONG = 'algo.token.name.too-long',
