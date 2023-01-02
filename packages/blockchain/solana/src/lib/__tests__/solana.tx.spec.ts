@@ -542,7 +542,7 @@ describe.skip('SolanaSDK - tx', () => {
         SystemProgram.transfer({
           fromPubkey: fromPubkey,
           toPubkey: new PublicKey(to),
-          lamports: BigInt(amount) * BigInt(LAMPORTS_PER_SOL),
+          lamports: BigInt(new BigNumber(amount).multipliedBy(LAMPORTS_PER_SOL).toFixed()),
         }),
       )
       transaction.recentBlockhash = '7WyEshBZcZwEbJsvSeGgCkSNMxxxFAym3x7Cuj6UjAUE'
