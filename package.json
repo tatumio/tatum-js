@@ -40,7 +40,7 @@
     "@onflow/sdk": "^1.1.2",
     "@onflow/types": "^1.0.5",
     "@onflow/util-encode-key": "^1.0.3",
-    "@solana/spl-token": "0.2.0",
+    "@solana/spl-token": "0.3.6",
     "@solana/web3.js": "^1.50.1",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "algosdk": "^1.13.1",
