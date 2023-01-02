@@ -16,7 +16,6 @@ import {
   createAssociatedTokenAccountInstruction,
   SPL_ASSOCIATED_TOKEN_ACCOUNT_PROGRAM_ID,
 } from '../schema/instructions'
-import BigNumber from 'bignumber.js'
 import { CreateSolanaSpl, solanaUtils, TransferSolanaSpl } from './solana.utils'
 
 const transferSignedTransaction = async (
@@ -45,7 +44,7 @@ const transferSignedTransaction = async (
       fromTokenAddress,
       toTokenAccountAddress,
       from,
-      new BigNumber(body.amount).multipliedBy(10 ** body.digits).toNumber(),
+      BigInt(body.amount) * BigInt(10) ** BigInt(body.digits),
       [],
       TOKEN_PROGRAM_ID,
     ),
@@ -108,7 +107,7 @@ const deploySignedTransaction = async (
       mint.publicKey,
       userTokenAccountAddress,
       from,
-      new BigNumber(body.supply).multipliedBy(10 ** body.digits).toNumber(),
+      BigInt(body.supply) * BigInt(10) ** BigInt(body.digits),
       [],
       TOKEN_PROGRAM_ID,
     ),
