@@ -334,7 +334,8 @@ export const solanaMarketPlaceService = (
     const balance = await connection.getTokenSupply(treasuryMint)
     const result = new BigNumber(price).multipliedBy(new BigNumber(10).pow(balance.value.decimals))
 
-    if (result.decimalPlaces() > 0) {
+    const decimals = result.decimalPlaces()
+    if (!_.isNil(decimals) && decimals > 0) {
       throw new SdkError({
         code: SdkErrorCode.SOLANA_DECIMAL_PLACES,
         originalError: {

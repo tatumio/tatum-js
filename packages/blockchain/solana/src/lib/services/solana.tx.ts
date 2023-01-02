@@ -34,7 +34,7 @@ const transferSignedTransaction = async (
     SystemProgram.transfer({
       fromPubkey: from,
       toPubkey: new PublicKey(body.to),
-      lamports: new BigNumber(body.amount).multipliedBy(LAMPORTS_PER_SOL).toNumber(),
+      lamports: BigInt(body.amount) * BigInt(LAMPORTS_PER_SOL),
     }),
   )
 
