@@ -145,7 +145,7 @@ const transferSignedTransaction = async ({
 
   const tx: TransactionConfig = {
     from: 0,
-    to: contractAddress,
+    to,
     data,
     nonce: body.nonce,
   }
