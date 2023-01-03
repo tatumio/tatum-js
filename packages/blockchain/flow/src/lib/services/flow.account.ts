@@ -1,11 +1,11 @@
 import { FlowProvider } from './flow.provider'
 import { CreateAddressFromPubKey, FlowApiCalls, flowUtils } from '../utils/flow.utils'
 import { flowTxTemplates } from './flow.tx.templates'
-import { AccountSigner } from '@tatumio/flow'
+import { AccountSigner, FLOW_MAINNET_ADDRESSES, FLOW_TESTNET_ADDRESSES } from '@tatumio/flow'
 import { ECDSA_secp256k1, encodeKey, SHA3_256 } from '@onflow/util-encode-key'
 import { FlowSdkError } from '../flow.sdk.errors'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
-import { ApiServices, FlowCreateAddressFromPubKeyKMS } from '@tatumio/api-client'
+import { ApiServices, Currency, FlowCreateAddressFromPubKeyKMS } from '@tatumio/api-client'
 
 export const flowAccountService = (provider: FlowProvider, apiCalls: FlowApiCalls) => {
   const txTemplates = flowTxTemplates()
@@ -80,7 +80,47 @@ export const flowAccountService = (provider: FlowProvider, apiCalls: FlowApiCall
     return { txId: result.id, address: result.events[0].data.address }
   }
 
+  const getAccountBalance = async (account: string, currency: Currency.FLOW | Currency.FUSD) => {
+    let tokenAddress
+    let tokenName
+    let tokenStorage
+    if (currency === Currency.FLOW) {
+      tokenAddress = provider.isTestnet()
+        ? FLOW_TESTNET_ADDRESSES.FlowToken
+        : FLOW_MAINNET_ADDRESSES.FlowToken
+      tokenName = 'FlowToken'
+      tokenStorage = 'flowToken'
+    } else {
+      tokenAddress = provider.isTestnet() ? FLOW_TESTNET_ADDRESSES.FUSD : FLOW_MAINNET_ADDRESSES.FUSD
+      tokenName = 'FUSD'
+      tokenStorage = 'fusd'
+    }
+
+    const balanceTx = txTemplates.prepareBalanceTxTemplate(
+      provider.isTestnet(),
+      tokenAddress,
+      tokenName,
+      tokenStorage,
+    )
+    const balanceArgs = [{ value: account, type: 'Address' }]
+
+    try {
+      return await flowUtils.sendScript(balanceTx, balanceArgs, provider.getProvider())
+    } catch (_e) {
+      return '0'
+    }
+  }
+
   return {
+    get: {
+      /**
+       * Get account balance.
+       * @param account Flow account
+       * @param currency FLOW or FUSD
+       */
+      balance: async (account: string, currency: Currency.FLOW | Currency.FUSD) =>
+        getAccountBalance(account, currency),
+    },
     send: {
       /**
        * Create account on the FLOW network. It automatically creates 100 0-weight proposal keys, which are managed by Tatum API - index 1-100.
