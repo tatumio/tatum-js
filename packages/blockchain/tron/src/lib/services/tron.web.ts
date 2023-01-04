@@ -9,8 +9,9 @@ export type TronWebClient = any
 export interface ITronWeb {
   getClient(provider?: string): TronWebClient
 }
+export const tronWeb = (args?: { tronProApiKey?: string }): ITronWeb => {
+  const tronProApiKey = args?.tronProApiKey ?? getTronApiKey()
 
-export const tronWeb = (): ITronWeb => {
   return {
     getClient: (provider?: string): TronWebClient => {
       const endpoint = provider || `${OpenAPI.BASE}/v3/tron/node/${TATUM_API_CONSTANTS.API_KEY}`
@@ -24,10 +25,14 @@ export const tronWeb = (): ITronWeb => {
       const tronWebInstace = new TronWeb(fullNode, solidityNode, eventServer)
 
       tronWebInstace.setHeader({
-        'TRON-PRO-API-KEY': process.env['TRON_PRO_API_KEY'] ?? TATUM_API_CONSTANTS.TRON_PRO_API_KEY,
+        'TRON-PRO-API-KEY': tronProApiKey,
       })
 
       return tronWebInstace
     },
   }
+}
+
+function getTronApiKey(): string {
+  return process.env['TRON_PRO_API_KEY'] ?? TATUM_API_CONSTANTS.TRON_PRO_API_KEY
 }
