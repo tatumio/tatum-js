@@ -20,10 +20,6 @@ export type BurnMultiTokenKMS = {
      */
     amount: string;
     /**
-     * Data in bytes
-     */
-    data?: string;
-    /**
      * Address of Multi Token token
      */
     contractAddress: string;

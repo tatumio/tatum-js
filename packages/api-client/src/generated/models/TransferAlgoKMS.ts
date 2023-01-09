@@ -8,10 +8,6 @@ export type TransferAlgoKMS = {
      */
     senderAccountId: string;
     /**
-     * The blockchain address of the Algorand wallet (account) associated with the virtual account
-     */
-    account: string;
-    /**
      * The blockchain address to send Algos to
      */
     address: string;
@@ -22,7 +18,7 @@ export type TransferAlgoKMS = {
     /**
      * The transaction fee in Algos
      */
-    fee: string;
+    fee?: string;
     /**
      * The identifier of the secret of the Algorand wallet (account) in the signing application. Secret, or signature Id must be present.
      */

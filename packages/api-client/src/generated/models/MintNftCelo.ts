@@ -21,7 +21,7 @@ export type MintNftCelo = {
      */
     contractAddress: string;
     /**
-     * The ID of the NFT.
+     * The ID of the NFT
      */
     tokenId: string;
     /**
@@ -29,9 +29,9 @@ export type MintNftCelo = {
      */
     url: string;
     /**
-     * The currency in which the transaction fee will be paid
+     * The currency in which the transaction fee will be paid.
      */
-    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
     fee?: CustomFee;
     /**
      * The private key of the blockchain address that will pay the fee for the transaction

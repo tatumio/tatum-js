@@ -8,7 +8,7 @@ export type TransferXdcBlockchain = {
      */
     data?: string;
     /**
-     * Currency of the transfer.
+     * Currency of the transfer. ERC20 tokens are available only for mainnet use.
      */
     currency: 'XDC';
     /**

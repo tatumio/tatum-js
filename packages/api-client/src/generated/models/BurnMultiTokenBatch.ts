@@ -20,10 +20,6 @@ export type BurnMultiTokenBatch = {
      */
     amounts: Array<string>;
     /**
-     * Data in bytes
-     */
-    data?: string;
-    /**
      * The address of the Multi Token smart contract
      */
     contractAddress: string;

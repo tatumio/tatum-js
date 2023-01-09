@@ -6,15 +6,15 @@ import type { CustomFee } from './CustomFee';
 
 export type UpdateFeeCeloKMS = {
     /**
-     * Blockchain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
     /**
-     * Address of the marketplace smart contract.
+     * The blockchain address of the marketplace smart contract
      */
     contractAddress: string;
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
@@ -22,15 +22,15 @@ export type UpdateFeeCeloKMS = {
      */
     marketplaceFee: number;
     /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The KMS identifier of the private key of the blockchain address from which the fee will be deducted
      */
     signatureId: string;
     /**
-     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
+     * (Only if the signature ID is mnemonic-based) The index of the address from which the fee will be deducted that was generated from the mnemonic
      */
     index?: number;
     /**
-     * Nonce to be set to transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     fee?: CustomFee;

@@ -188,7 +188,6 @@ export const solanaMarketPlaceService = (
 
     const {
       marketplaceFee,
-      canChangeSalePrice = false,
       requiresSignOff = true,
       treasuryWithdrawalDestination,
       feeWithdrawalDestination,
@@ -228,7 +227,7 @@ export const solanaMarketPlaceService = (
           treasuryBump,
           sellerFeeBasisPoints: marketplaceFee,
           requiresSignOff,
-          canChangeSalePrice,
+          canChangeSalePrice: false,
         },
       ),
     )
@@ -259,7 +258,6 @@ export const solanaMarketPlaceService = (
 
     const {
       marketplaceFee,
-      canChangeSalePrice,
       requiresSignOff,
       treasuryWithdrawalDestination,
       feeWithdrawalDestination,
@@ -305,7 +303,7 @@ export const solanaMarketPlaceService = (
         {
           sellerFeeBasisPoints: solanaUtils.valueOrNull(marketplaceFee),
           requiresSignOff: solanaUtils.valueOrNull(requiresSignOff),
-          canChangeSalePrice: solanaUtils.valueOrNull(canChangeSalePrice),
+          canChangeSalePrice: null,
         },
       ),
     )
@@ -662,7 +660,7 @@ export const solanaMarketPlaceService = (
 
     const metadataParsed = listing.nft.data
     if (metadataParsed && metadataParsed.creators) {
-      for (let creator of metadataParsed.creators) {
+      for (const creator of metadataParsed.creators) {
         const creatorPublicKey = new PublicKey(creator.address)
 
         remainingAccounts.push({

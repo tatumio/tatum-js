@@ -8,15 +8,11 @@ export type TransferNftAlgoExpress = {
      */
     chain: 'ALGO';
     /**
-     * Blockchain address to send NFT token to
+     * The blockchain address to transfer the NFT to
      */
     to: string;
     /**
-     * Blockchain address to send NFT token from
-     */
-    from: string;
-    /**
-     * AssetID of token.
+     * The asset ID (the ID of the NFT)
      */
     contractAddress: string;
     /**
@@ -24,7 +20,7 @@ export type TransferNftAlgoExpress = {
      */
     fee?: string;
     /**
-     * The total amount of NFT fractions to transfer. Defaults to 1 - which means 1 fraction of NFT will be transferred. This is only valid for <a href="https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts" target="_blank">Fractional NFTs.</a>
+     * (For <a href="https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts" target="_blank">fractional NFTs</a> only) The number of NFT fractions to transfer; if not set, defaults to 1, which means that one fraction of the NFT will be transferred
      */
     amount?: number;
 }

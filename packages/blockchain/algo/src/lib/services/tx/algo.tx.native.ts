@@ -27,9 +27,9 @@ export const prepareSignedTransaction = async ({
   apiCalls: AlgoApiCallsType
   provider?: string
 }): Promise<string> => {
-  const account = (body as TransferAlgoBlockchain).from || (body as TransferAlgo).account
-  const to = (body as TransferAlgoBlockchain).to || (body as TransferAlgo).address
-  const privateKey = (body as TransferAlgoBlockchain).fromPrivateKey || (body as TransferAlgo).privateKey
+  const account = (body as TransferAlgoBlockchain).from
+  const to = (body as TransferAlgoBlockchain).to
+  const privateKey = (body as TransferAlgoBlockchain).fromPrivateKey
 
   const from = isWithSignatureId(body as TransferAlgoKMS | TransferAlgoBlockchainKMS)
     ? account

@@ -10,7 +10,7 @@ export type BurnNft = {
      */
     chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
-     * The ID of the NFT to burn.
+     * The ID of the NFT to burn
      */
     tokenId: string;
     /**

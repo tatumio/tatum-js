@@ -2,6 +2,10 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { FlowAccount } from '../models/FlowAccount';
+import type { FlowAddPubKeyMnemonic } from '../models/FlowAddPubKeyMnemonic';
+import type { FlowAddPubKeySecret } from '../models/FlowAddPubKeySecret';
+import type { FlowAddPubKeySecretKMS } from '../models/FlowAddPubKeySecretKMS';
+import type { FlowAddressXpub } from '../models/FlowAddressXpub';
 import type { FlowBlock } from '../models/FlowBlock';
 import type { FlowCreateAddressFromPubKeyKMS } from '../models/FlowCreateAddressFromPubKeyKMS';
 import type { FlowCreateAddressFromPubKeyMnemonic } from '../models/FlowCreateAddressFromPubKeyMnemonic';
@@ -238,7 +242,7 @@ export class FlowService {
     }
 
     /**
-     * Get Flow account
+     * Get the balance of a Flow account
      * <h4>1 credit per API call.</h4><br/><p>Get Flow account details.</p>
      * @param address Account address you want to get balance of
      * @returns FlowAccount OK
@@ -355,16 +359,7 @@ export class FlowService {
      */
     public static flowCreateAddressFromPubKey(
         requestBody: (FlowCreateAddressFromPubKeyMnemonic | FlowCreateAddressFromPubKeySecret | FlowCreateAddressFromPubKeyKMS),
-    ): CancelablePromise<(SignatureId | {
-        /**
-         * Id of the transaction
-         */
-        txId?: string;
-        /**
-         * Generated blockchain address
-         */
-        address?: string;
-    })> {
+    ): CancelablePromise<(FlowAddressXpub | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/flow/account`,
@@ -400,7 +395,7 @@ export class FlowService {
      * @throws ApiError
      */
     public static flowAddPubKeyToAddress(
-        requestBody: (FlowCreateAddressFromPubKeyMnemonic | FlowCreateAddressFromPubKeySecret | FlowCreateAddressFromPubKeyKMS),
+        requestBody: (FlowAddPubKeyMnemonic | FlowAddPubKeySecret | FlowAddPubKeySecretKMS),
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'PUT',

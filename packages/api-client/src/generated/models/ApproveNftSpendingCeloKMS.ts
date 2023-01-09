@@ -30,7 +30,7 @@ export type ApproveNftSpendingCeloKMS = {
      */
     signatureId: string;
     /**
-     * (Only if the signature ID is mnemonic-based) The index of the address to [send the assets from] that was generated from the mnemonic
+     * (Only if the signature ID is mnemonic-based) The index of the address from which the fee will be deducted that was generated from the mnemonic
      */
     index?: number;
     /**

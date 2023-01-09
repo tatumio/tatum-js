@@ -6,7 +6,7 @@ import type { NftTokenByAddressErc721Metadata } from './NftTokenByAddressErc721M
 
 export type NftTokenByAddressErc721TokenMetadata = {
     /**
-     * (EVM-based blockchains only) The ID of the NFT owned by this address.
+     * (EVM-based blockchains only) The ID of the NFT owned by this address
      */
     tokenId?: string;
     /**

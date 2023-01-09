@@ -18,7 +18,7 @@ export type TransferCeloBlockchain = {
      */
     to: string;
     /**
-     * Currency of the transaction
+     * Currency of the transaction.
      */
     currency: 'CELO' | 'CUSD' | 'CEUR';
     /**

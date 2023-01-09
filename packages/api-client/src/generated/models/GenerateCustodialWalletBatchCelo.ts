@@ -10,9 +10,9 @@ export type GenerateCustodialWalletBatchCelo = {
      */
     chain: 'CELO';
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
-    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * Private key of account, from which the transaction will be initiated.
      */
@@ -27,7 +27,7 @@ export type GenerateCustodialWalletBatchCelo = {
     owner: string;
     fee?: CustomFee;
     /**
-     * Nonce to be set to the transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
 }

@@ -24,10 +24,6 @@ export type BurnMultiToken = {
      */
     fromPrivateKey: string;
     /**
-     * Data in bytes
-     */
-    data?: string;
-    /**
      * amount of token to be destroyed.
      */
     amount: string;

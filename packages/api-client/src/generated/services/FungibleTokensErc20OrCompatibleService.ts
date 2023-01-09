@@ -41,6 +41,8 @@ import type { ChainTransferKcsEthErc20 } from '../models/ChainTransferKcsEthErc2
 import type { ChainTransferKcsEthErc20KMS } from '../models/ChainTransferKcsEthErc20KMS';
 import type { ChainTransferSolanaSpl } from '../models/ChainTransferSolanaSpl';
 import type { ChainTransferSolanaSplKMS } from '../models/ChainTransferSolanaSplKMS';
+import type { Erc20Balance } from '../models/Erc20Balance';
+import type { Erc20BalanceForAddress } from '../models/Erc20BalanceForAddress';
 import type { FungibleTx } from '../models/FungibleTx';
 import type { SignatureId } from '../models/SignatureId';
 import type { TransactionHash } from '../models/TransactionHash';
@@ -312,7 +314,7 @@ export class FungibleTokensErc20OrCompatibleService {
      *
      * @param chain The blockchain to work with
      * @param address Account address you want to get balance of
-     * @param tokenAddress Address of the token smart contract
+     * @param tokenAddress Address of the token smart contract (or asset id in case of ALGO)
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
      * @param from Transactions from this block onwards will be included.
@@ -372,7 +374,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * @param address The blockchain address that you want to get the token balance of
      * @param contractAddress The address of the fungible token smart contract
      * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
-     * @returns any OK
+     * @returns Erc20Balance OK
      * @throws ApiError
      */
     public static erc20GetBalance(
@@ -380,12 +382,7 @@ export class FungibleTokensErc20OrCompatibleService {
         address: string,
         contractAddress: string,
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-    ): CancelablePromise<{
-        /**
-         * The number of fungible tokens in the smallest token unit (for example, if the token has 10 decimal places, the number is returned as 9*10^10)
-         */
-        balance?: string;
-    }> {
+    ): CancelablePromise<Erc20Balance> {
         return __request({
             method: 'GET',
             path: `/v3/blockchain/token/balance/${chain}/${contractAddress}/${address}`,
@@ -402,9 +399,9 @@ export class FungibleTokensErc20OrCompatibleService {
     }
 
     /**
-     * Get the number of fungible tokens that a blockchain address holds across a blockchain
+     * Get the total number of fungible tokens that a blockchain address holds
      * <p><b>1 credit per API call</b></p>
-     * <p>Get the number of fungible tokens that a blockchain address holds across a blockchain. The tokens are returned grouped by the smart contracts they were minted on.</p>
+     * <p>Get the number of all fungible tokens that a blockchain address holds across a blockchain. The tokens are returned grouped by the smart contracts they were minted on.</p>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>Algorand</li>
@@ -416,22 +413,13 @@ export class FungibleTokensErc20OrCompatibleService {
      *
      * @param chain Network name
      * @param address The blockchain address that you want to get the token balance of
-     * @returns any OK
+     * @returns Erc20BalanceForAddress OK
      * @throws ApiError
      */
     public static erc20GetBalanceAddress(
         chain: 'CELO' | 'ETH' | 'MATIC' | 'SOL' | 'ALGO',
         address: string,
-    ): CancelablePromise<Array<{
-        /**
-         * The address of the smart contract that the fungible tokens were minted on
-         */
-        contractAddress?: string;
-        /**
-         * The number of the fungible tokens
-         */
-        balance?: string;
-    }>> {
+    ): CancelablePromise<Array<Erc20BalanceForAddress>> {
         return __request({
             method: 'GET',
             path: `/v3/blockchain/token/address/${chain}/${address}`,

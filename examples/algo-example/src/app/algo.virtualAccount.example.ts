@@ -39,7 +39,6 @@ export async function algoVirtualAccountExample() {
     senderAccountId: virtualAccount.id,
     amount: '1',
     privateKey,
-    account: address,
     address: to,
     fee: '0.001',
   })

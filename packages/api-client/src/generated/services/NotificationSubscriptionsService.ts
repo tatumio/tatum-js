@@ -40,7 +40,7 @@ export class NotificationSubscriptionsService {
      * <p>The following subscription types are available:</p>
      * <ul>
      * <li><b>ADDRESS_TRANSACTION</b> - Enable HTTP POST JSON notifications for any blockchain transaction (both incoming and outgoing) at a specified address. This notification applies to transactions in the native blockchain currency or with any type of blockchain tokens.<br/>
-     * - For <b>EMV-based blockchains</b> (ETH), this web hook is first invoked when a transaction appears in the mempool, and then it is invoked again once the transaction is added to a block.<br/>
+     * - For <b>EVM-based blockchains</b> (ETH), this web hook is first invoked when a transaction appears in the mempool, and then it is invoked again once the transaction is added to a block.<br/>
      * - For the <b>other blockchains</b>, this webhook is invoked when a transaction is added to a block.<br/>
      * Free community plans can monitor up to 10 addresses per plan.<br/>
      * The following table describes the availability of this notification type on different blockchains and the credit consumption:<br/>
@@ -61,7 +61,7 @@ export class NotificationSubscriptionsService {
      * </tr>
      * <tr>
      * <td>Ethereum</td>
-     * <td>Yes/Yes</td>
+     * <td>Yes (Sepolia, Goerli)/Yes</td>
      * <td>ETH, Internal transfers, ERC20, ERC721, ERC1155</td>
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>25 credits / day / address</td>
@@ -134,12 +134,12 @@ export class NotificationSubscriptionsService {
      * <pre>{
          * "address": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ", // the address on which the transaction occurs; for EVM-based chains, this is the recipient's address
          * "txId": "2rdy3YCZHSwvpWtuDom1d4Jjy5UU9STLxF3ffXau6GToReDkfw8wEgX541fvzvh6btVC5D8iNapcKTXfPsoDBk7A", // the transaction ID
-         * "blockNumber": 110827114, // the block number; does not appear if the transaction is in the mempool (for EMV-based blockchains)
+         * "blockNumber": 110827114, // the block number; does not appear if the transaction is in the mempool (for EVM-based blockchains)
          * "asset": "3gUeeR3BfVhukYJMwtHownRtRkGcf1bvwiV8TbKMZBVz", // the asset of the transaction: for token assets, this is the token address; for native blochckain assets, this is the name of the asset (for example, SOL)
          * "amount": "1", // the amount of the asset that was credited to (+) or debited from (-) the address; for EVM-based chains, when "counterAddress" is present, the amount is always positive
          * "tokenId": "1", // (ERC-721 / ERC-1155 only) the ID of the transferred token
          * "type": "token", // the type of the transaction; can be either "native" or "token"
-         * "mempool": true, // (EMV-based blockchains only) if appears and set to "true", the transaction is in the mempool; if set to "false" or does not appear at all, the transaction has been added to a block
+         * "mempool": true, // (EVM-based blockchains only) if appears and set to "true", the transaction is in the mempool; if set to "false" or does not appear at all, the transaction has been added to a block
          * "counterAddress": undefined // an optional counter party address of the transaction; for EVM-based blockchains, this is the recipient's address
          * "addressesRiskRatio": [ // (optional, subject to change; for Solana mainnet only) risk levels assigned to the addresses with which the address communicated within the transaction; the addresses are assessed using the AML/CFT solution by blockmate.io, see https://docs.blockmate.io/docs/risk-API/sources
          * {"vTEfAhXTmvgFmepgfhzBbRrJ4EtUP9adbMJjpzLsDMk": 0},
@@ -158,7 +158,7 @@ export class NotificationSubscriptionsService {
          * </tr>
          * <tr>
          * <td>Ethereum</td>
-         * <td>ethereum-sepolia / ethereum-mainnet</td>
+         * <td>ethereum-sepolia / ethereum-goerli / ethereum-mainnet</td>
          * <td>500,000 credits / day</td>
          * </tr>
          * <tr>
@@ -214,7 +214,7 @@ export class NotificationSubscriptionsService {
                      * </tr>
                      * <tr>
                      * <td>Ethereum</td>
-                     * <td>ethereum-sepolia / ethereum-mainnet</td>
+                     * <td>ethereum-sepolia / ethereum-goerli / ethereum-mainnet</td>
                      * <td>500,000 credits / day</td>
                      * </tr>
                      * <tr>
@@ -270,7 +270,7 @@ export class NotificationSubscriptionsService {
                                  * </tr>
                                  * <tr>
                                  * <td>Ethereum</td>
-                                 * <td>ethereum-sepolia / ethereum-mainnet</td>
+                                 * <td>ethereum-sepolia / ethereum-goerli / ethereum-mainnet</td>
                                  * <td>50,000 credits / day</td>
                                  * </tr>
                                  * <tr>
@@ -321,6 +321,7 @@ export class NotificationSubscriptionsService {
                                                  * "date": 1619176527481,
                                                  * "amount": "0.005",
                                                  * "currency": "BTC",
+                                                 * "subscriptionType":"ACCOUNT_INCOMING_BLOCKCHAIN_TRANSACTION",
                                                  * "accountId": "6082ab462936b4478117c6a0",
                                                  * "reference: "c9875708-4ba3-41c9-a4cd-271048b41b9a", // the reference of the transaction in the virtual account
                                                  * "txId": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99",
@@ -334,7 +335,7 @@ export class NotificationSubscriptionsService {
                                                  * <li><b>ACCOUNT_PENDING_BLOCKCHAIN_TRANSACTION</b> - Enable HTTP POST JSON notifications about incoming blockchain transactions on virtual accounts.<br />
                                                  * This web hook is supported only for BCH, BTC, DOGE, ETH, and LTC accounts.<br />
                                                  * - For <b>BTC-based blockchains</b> (BCH, BTC, DOGE, and LTC), this web hook is invoked when an incoming transaction appears in a block for the first time. At that time, the transaction has one confirmation but this is not enough for the transaction to be reflected on the balance of the virtual account yet. Instead, a deposit corresponding to the pending transaction with a status of "in progress" appears on the virtual account. Once the transaction is added to the block, the deposit's status changes to "done", and the account balance gets updated.<br />
-                                                 * - For <b>EMV-based blockchains</b> (ETH), this web hook is invoked when an incoming transaction appears in the mempool. The virtual account balance is not updated until the transaction is added to a block. Instead, a deposit corresponding to the pending transaction with a status of "in progress" appears on the virtual account. Once the transaction is added to the block, the deposit's status changes to "done", and the account balance gets updated.<br />
+                                                 * - For <b>EVM-based blockchains</b> (ETH), this web hook is invoked when an incoming transaction appears in the mempool. The virtual account balance is not updated until the transaction is added to a block. Instead, a deposit corresponding to the pending transaction with a status of "in progress" appears on the virtual account. Once the transaction is added to the block, the deposit's status changes to "done", and the account balance gets updated.<br />
                                                  * The request body of the POST request is a JSON object with the following structure:<br/>
                                                  * <pre>{
                                                      * "date": 1619176527481,
@@ -343,8 +344,8 @@ export class NotificationSubscriptionsService {
                                                      * "accountId": "6082ab462936b4478117c6a0",
                                                      * "reference: "c9875708-4ba3-41c9-a4cd-271048b41b9a", // the reference of the transaction in the virtual account
                                                      * "txId": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99",
-                                                     * "blockHash": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99", // the hash of the block, might not be present every time; if set to "null", the transaction is in the mempool (for EMV-based blockchains)
-                                                     * "blockHeight": 12345, // if set to "null", the transaction is in the mempool (for EMV-based blockchains)
+                                                     * "blockHash": "45af182a0ffab58e5ba32fee57b297b2260c6e23a1de5ddc76c7ee22d72dea99", // the hash of the block, might not be present every time; if set to "null", the transaction is in the mempool (for EVM-based blockchains)
+                                                     * "blockHeight": 12345, // if set to "null", the transaction is in the mempool (for EVM-based blockchains)
                                                      * "from": "SENDER_ADDRESS", // might not be present every time; not present for UTXO-based blockchains (BCH, BTC, DOGE, LTC)
                                                      * "to": "RECIPIENT_ADDRESS_CONNECTED_TO_LEDGER_ACCOUNT", // the blockchain address of the recipient
                                                      * "index": 5 // for UTXO-based blockchains (BCH, BTC, DOGE, LTC), this is the index of the output in the transaction

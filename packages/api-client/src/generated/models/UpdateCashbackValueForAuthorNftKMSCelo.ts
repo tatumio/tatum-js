@@ -10,7 +10,7 @@ export type UpdateCashbackValueForAuthorNftKMSCelo = {
      */
     chain: 'CELO';
     /**
-     * The ID of the NFT to update royalty information for.
+     * The ID of the NFT to update royalty information for
      */
     tokenId: string;
     /**

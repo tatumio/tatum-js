@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type TransferBep20BlockchainKMS = {
     /**
-     * Blockchain address to send ERC20 token to
+     * Blockchain address to send HRM20 token to
      */
     to: string;
     /**
@@ -12,11 +14,11 @@ export type TransferBep20BlockchainKMS = {
      */
     amount: string;
     /**
-     * Address of ERC20 token
+     * Address of HRM20 token
      */
     contractAddress: string;
     /**
-     * Number of decimal points that ERC20 token has.
+     * Number of decimal points that HRM20 token has.
      */
     digits: number;
     /**
@@ -28,20 +30,8 @@ export type TransferBep20BlockchainKMS = {
      */
     signatureId: string;
     /**
-     * Nonce to be set to Kcs transaction. If not present, last known nonce will be used.
+     * Nonce to be set to ONE transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
-    /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

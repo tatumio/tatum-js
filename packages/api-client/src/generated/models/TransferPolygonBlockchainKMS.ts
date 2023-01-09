@@ -18,9 +18,9 @@ export type TransferPolygonBlockchainKMS = {
      */
     to: string;
     /**
-     * Currency to transfer from Polygon Blockchain Account. ERC20 tokens BETH, BBTC, BADA, WMATIC, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
+     * Currency to transfer from Polygon Blockchain Account. ERC20 tokens like USDC_MATIC, USDT_MATIC, GAMEE, INTENT, EURTENT, GOLDAX are available only for mainnet use.
      */
-    currency: 'BETH' | 'BBTC' | 'BADA' | 'WMATIC' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'MATIC';
+    currency: 'MATIC' | 'USDC_MATIC' | 'USDT_MATIC' | 'GAMEE' | 'INTENT' | 'EURTENT' | 'GOLDAX';
     fee?: CustomFee;
     /**
      * Amount to be sent.

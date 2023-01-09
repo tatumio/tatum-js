@@ -60,6 +60,9 @@ import type { MintNftTron } from '../models/MintNftTron';
 import type { NftGetBalanceSc } from '../models/NftGetBalanceSc';
 import type { NftGetBalanceScAlgo } from '../models/NftGetBalanceScAlgo';
 import type { NftMetadataErc721 } from '../models/NftMetadataErc721';
+import type { NftMetadataErc721OnchainAlgo } from '../models/NftMetadataErc721OnchainAlgo';
+import type { NftMetadataErc721OnchainFlow } from '../models/NftMetadataErc721OnchainFlow';
+import type { NftMetadataErc721OnchainSolana } from '../models/NftMetadataErc721OnchainSolana';
 import type { NftProvenanceDataErc721 } from '../models/NftProvenanceDataErc721';
 import type { NftRoyaltyErc721 } from '../models/NftRoyaltyErc721';
 import type { NftTokenByAddressErc721 } from '../models/NftTokenByAddressErc721';
@@ -248,13 +251,7 @@ export class NftErc721OrCompatibleService {
      * <li>The recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">agrees to receive the NFT</a> to their address.</li>
      * <li>You <a href="#operation/NftTransferErc721">transfer the NFT</a> to the recipient's address (use the <code>transferNftAlgoExpress</code> schema of the request body).<br /><b>NOTE:</b> On the <b>mainnet</b>, Tatum covers your transaction fees for the NFT transfer and pays for them from its own blockchain address. Then, the fee amount paid by Tatum is converted to the number of credits, and these credits are deducted from the monthly credit allowance of your paid pricing plan. On the <b>testnet</b>, no credits are deducted from the monthly credit allowance.</li>
      * </ol></li>
-     * <li>To mint NFTs on <b>Solana</b>, use this API with the <code>MintNftExpressSolana</code> schema of the request body.<br/>Solana uses the <a href="https://www.metaplex.com/" target="_blank">Metaplex Protocol</a>, a smart contract and metadata standard for creating and working with NFTs. When you mint an NFT on Solana with NFT Express, the pre-built smart contract based on the Metaplex Protocol is used.<br/>When an NFT is minted on Solana, a new blockchain address is created to receive the NFT under the recipient's account address (the one in the <code>to</code> parameter of the request body). This address is returned in the <code>nftAccountAddress</code> parameter in the response body, is owned by the recipient's address, and has the same private key.<br/>The response body also returns the address of the minted NFT itself, which is held in the <code>nftAddress</code> parameter.<br/>After the NFT is minted, you have to <a href="#operation/NftTransferErc721">transfer it</a> to the recipient's address (use the <code>transferNftSolana</code> or <code>transferNftSolanaKMS</code> schema of the request body). In the request body of the transfer call:
-     * <ul>
-     * <li>Set the <code>from</code> parameter to the address that you used in the <code>to</code> parameter in the request body of the minting call.</li>
-     * <li>Set the <code>to</code> parameter to the recipient's address.</li>
-     * <li>Set the <code>contractAddress</code> parameter to the address from the <code>nftAddress</code> parameter returned in the response body of the minting call.</li>
-     * <li>Set the <code>fromPrivateKey</code>/<code>signatureId</code> parameter to the private key/signature ID of the blockchain address that you specified in the <code>from</code> parameter.</li>
-     * </ul></li></ul>
+     * <li>To mint NFTs on <b>Solana</b>, use this API with the <code>MintNftExpressSolana</code> schema of the request body.<br/>Solana uses the <a href="https://www.metaplex.com/" target="_blank">Metaplex Protocol</a>, a smart contract and metadata standard for creating and working with NFTs. When you mint an NFT on Solana with NFT Express, the pre-built smart contract based on the Metaplex Protocol is used.<br/>When an NFT is minted on Solana, a new blockchain address is created to receive the NFT under the recipient's account address (the one in the <code>to</code> parameter of the request body). This address is returned in the <code>nftAccountAddress</code> parameter in the response body, is owned by the recipient's address, and has the same private key.<br/>The response body also returns the address of the minted NFT itself, which is held in the <code>nftAddress</code> parameter.</li></ul>
      * <h4 id="NftExpressOwn">Use your own smart contract to mint NFTs</h4>
      * <p>If you want to mint NFTs using your own smart contract, you are going to use an <b>NTF minter</b>, a special blockchain address provided by Tatum that will cover the minting fees. The number of credits equivalent to the fees will be then deducted from the monthly credit allowance of your paid pricing plan.</br>
      * <b>IMPORTANT!</b> Your smart contract must be deployed as a <a href="#operation/NftDeployErc721">general NFT smart contract</a>. You cannot use cashback and provenance smart contracts with NFT Express.</p>
@@ -344,7 +341,7 @@ export class NftErc721OrCompatibleService {
              * </table>
              * <p>*If a minter blockchain address on the testnet does not have sufficient funds to cover the transaction fee, add some amount to it using a crypto faucet of the blockchain.</p>
              * <h3 id="NftNative">Minting NFTs natively on a blockchain</h3>
-             * <p>When minting an NFT natively on a blockchain, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+             * <p>When minting an NFT natively on a blockchain, you are using your own smart contract. You are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
              * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
              * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
              * <p>You can mint NFTs natively on the following blockchains:</p>
@@ -437,7 +434,13 @@ export class NftErc721OrCompatibleService {
              * <li>If you want to transfer an NFT that <a href="#operation/NftMintErc721">was minted using NFT Express</a>, use the <code>transferNftAlgoExpress</code> schema of the request body.<br /><b>NOTE:</b> On the <b>mainnet</b>, Tatum covers your transaction fees for the NFT transfer and pays for them from its own blockchain address. Then, the fee amount paid by Tatum is converted to the number of credits, and these credits are deducted from the monthly credit allowance of your paid pricing plan. On the <b>testnet</b>, no credits are deducted from the monthly credit allowance.</li>
              * </ul>
              * <p><b>Transferring NFTs on Solana</b><br/>
-             * If you want to transfer an NFT that <a href="#operation/NftMintErc721">was minted using NFT Express</a>, see the section about minting NFTs on Solana using the <a href="#operation/NftMintErc721">pre-built NFT smart contract provided by Tatum</a> for the information about how to set up the parameters in the request body.</p>
+             * If you want to transfer an NFT that <a href="#operation/NftMintErc721">was minted using NFT Express</a>, use the <code>transferNftSolana</code> or <code>transferNftSolanaKMS</code> schema of the request body. In the request body:
+             * <ul>
+             * <li>Set the <code>from</code> parameter to the address that you used in the <code>to</code> parameter in the request body of the minting call.</li>
+             * <li>Set the <code>to</code> parameter to the recipient's address.</li>
+             * <li>Set the <code>contractAddress</code> parameter to the address from the <code>nftAddress</code> parameter returned in the response body of the minting call.</li>
+             * <li>Set the <code>fromPrivateKey</code>/<code>signatureId</code> parameter to the private key/signature ID of the blockchain address that you specified in the <code>from</code> parameter.</li>
+             * </ul>
              * <p><b>Signing a transaction</b><br/>
              * When transferring an NFT, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
              * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
@@ -929,23 +932,24 @@ export class NftErc721OrCompatibleService {
                  * <li>Polygon</li>
                  * <li>Solana</li>
                  * <li>TRON</li>
+                 * <li>ALGO</li>
                  * </ul>
                  *
                  * @param chain The blockchain to work with
                  * @param contractAddress The blockchain address of the NFT to get metadata for
-                 * @param tokenId The ID of the NFT to get metadata for<br/>Do <b>not</b> use this parameter if you are getting metadata for an NFT on Solana, this parameter is irrelevant on Solana.
+                 * @param tokenId The ID of the NFT to get metadata for<br/>For Solana and ALGO put 0 since this parameter is irrelevant for those chains.
                  * @param account (Flow only) The account that holds the NFT
                  * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
-                 * @returns NftMetadataErc721 OK
+                 * @returns any OK
                  * @throws ApiError
                  */
                 public static nftGetMetadataErc721(
-                    chain: 'BSC' | 'CELO' | 'ETH' | 'FLOW' | 'KCS' | 'KLAY' | 'MATIC' | 'ONE' | 'SOL' | 'TRON',
+                    chain: 'BSC' | 'CELO' | 'ETH' | 'FLOW' | 'KCS' | 'KLAY' | 'MATIC' | 'ONE' | 'SOL' | 'TRON' | 'ALGO',
                     contractAddress: string,
                     tokenId: string,
                     account?: string,
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
-                ): CancelablePromise<NftMetadataErc721> {
+                ): CancelablePromise<(NftMetadataErc721 | NftMetadataErc721OnchainSolana | NftMetadataErc721OnchainFlow | NftMetadataErc721OnchainAlgo)> {
                     return __request({
                         method: 'GET',
                         path: `/v3/nft/metadata/${chain}/${contractAddress}/${tokenId}`,
@@ -982,7 +986,7 @@ export class NftErc721OrCompatibleService {
                  *
                  * @param chain The blockchain to work with
                  * @param contractAddress The blockchain address of the NFT to get provenance information for
-                 * @param tokenId The ID of the NFT to get provenance information for.
+                 * @param tokenId The ID of the NFT to get provenance information for
                  * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
                  * @returns NftProvenanceDataErc721 OK
                  * @throws ApiError

@@ -6,7 +6,7 @@ import type { DeployErc20OffchainKMSAddress } from './DeployErc20OffchainKMSAddr
 
 export type DeployCeloErc20OffchainKMSAddress = (DeployErc20OffchainKMSAddress & {
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 });
