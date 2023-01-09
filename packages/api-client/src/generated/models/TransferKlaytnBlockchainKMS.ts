@@ -4,7 +4,7 @@
 
 export type TransferKlaytnBlockchainKMS = {
     /**
-     * Additional data, that can be passed to blockchain transaction as data property. Only for KLAY transactions.
+     * Additional data that can be passed to a blockchain transaction as a data property; must be in the hexadecimal format
      */
     data?: string;
     /**
@@ -16,9 +16,9 @@ export type TransferKlaytnBlockchainKMS = {
      */
     to: string;
     /**
-     * Currency to transfer from Klaytn Blockchain Account. ERC20 tokens BETH, BBTC, BADA, WKLAY, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
+     * Currency to transfer from Klaytn Blockchain Account.
      */
-    currency: 'BETH' | 'BBTC' | 'BADA' | 'WKLAY' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'KLAY';
+    currency: 'KLAY';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */

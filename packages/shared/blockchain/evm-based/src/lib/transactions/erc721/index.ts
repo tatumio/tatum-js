@@ -14,7 +14,7 @@ import { Erc721_Provenance } from '../../contracts'
 import { EvmBasedWeb3 } from '../../services/evm-based.web3'
 import { evmBasedUtils } from '../../evm-based.utils'
 import BigNumber from 'bignumber.js'
-import { ApiServices, MintNftMinter, TransactionHash } from '@tatumio/api-client'
+import { ApiServices, BurnNft, BurnNftKMS, MintNftMinter, TransactionHash } from '@tatumio/api-client'
 import { Erc721Token_General } from '../../contracts/erc721General'
 import { Erc721Token_Cashback } from '../../contracts/erc721Cashback'
 
@@ -181,7 +181,8 @@ const mintMultipleSignedTransaction = async (
 }
 
 const burnSignedTransaction = async (body: ChainBurnErc721, web3: EvmBasedWeb3, provider?: string) => {
-  const { fromPrivateKey, tokenId, fee, contractAddress, nonce, signatureId } = body
+  const { fromPrivateKey, tokenId, fee, contractAddress, nonce } = body as BurnNft
+  const { signatureId } = body as BurnNftKMS
 
   const client = web3.getClient(provider, fromPrivateKey)
 
@@ -609,7 +610,7 @@ export const erc721 = (args: {
       burnSignedTransaction: async (body: ChainBurnErc721, provider?: string) =>
         args.broadcastFunction({
           txData: (await burnSignedTransaction(body, args.web3, provider)) as string,
-          signatureId: body.signatureId,
+          signatureId: (body as any)['signatureId'],
         }),
       /**
        * Send BEP721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.

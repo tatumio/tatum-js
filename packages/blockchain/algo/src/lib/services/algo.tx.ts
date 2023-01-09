@@ -27,7 +27,7 @@ function isTransferAlgoKMS(input: TransferAlgo | TransferAlgoKMS): input is Tran
 }
 
 // TODO: Probably missing in OpenAPI spec
-export type TransferAlgo = Omit<ApiTransferAlgo, 'senderAccountId'>
+export type TransferAlgo = Omit<ApiTransferAlgo, 'senderAccountId'> & { account: string }
 export type TransferAlgoKMS = Omit<ApiTransferAlgoKMS, 'senderAccountId'> & { from: string; fee: string }
 
 const prepareSignedTransaction = async (
@@ -43,6 +43,7 @@ const prepareSignedTransaction = async (
   const enc = new TextEncoder()
   const note = enc.encode(body.senderNote ?? '')
   const bodyn = algosdk.makePaymentTxnWithSuggestedParams(
+    // @ts-ignore  - openapi issue
     body.account,
     body.address,
     Number(body.amount) * 1000000,

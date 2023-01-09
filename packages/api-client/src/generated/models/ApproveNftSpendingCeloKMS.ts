@@ -2,54 +2,44 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type ApproveNftSpendingCeloKMS = {
     /**
-     * Blockchain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
     /**
-     * Currency to pay for transaction gas
-     */
-    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
-    /**
-     * Address of the ERC20 token, which is used for buying NFT asset from the marketplace.
-     */
-    contractAddress: string;
-    /**
-     * Address of the auction smart contract - new spender.
+     * The blockchain address of the auction/marketplace smart contract
      */
     spender: string;
     /**
-     * True if asset is NFT of type ERC721, false if ERC1155.
+     * Set to "true" if the asset is an NFT; set to "false" is the asset is a Multi Token
      */
     isErc721: boolean;
     /**
-     * ID of token, if transaction is for ERC-721 or ERC-1155.
+     * The ID of the asset (NFT or Multi Token)
      */
     tokenId: string;
     /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The blockchain address of the smart contract from which the asset (NFT or Multi Token) was minted
+     */
+    contractAddress: string;
+    /**
+     * The KMS identifier of the private key of the blockchain address from which the fee will be deducted
      */
     signatureId: string;
     /**
-     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
+     * (Only if the signature ID is mnemonic-based) The index of the address from which the fee will be deducted that was generated from the mnemonic
      */
     index?: number;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The currency in which the transaction fee will be paid - CELO - CUSD - CEUR
+     */
+    feeCurrency: string;
+    /**
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

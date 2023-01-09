@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { Chart } from '../models/Chart';
 import type { ChartRequest } from '../models/ChartRequest';
+import type { CreateFutureTrade } from '../models/CreateFutureTrade';
 import type { CreateTrade } from '../models/CreateTrade';
 import type { Id } from '../models/Id';
 import type { ListOderBookActiveBuyBody } from '../models/ListOderBookActiveBuyBody';
@@ -92,7 +93,7 @@ export class OrderBookService {
                      * @throws ApiError
                      */
                     public static storeTrade(
-                        requestBody: CreateTrade,
+                        requestBody: (CreateTrade | CreateFutureTrade),
                     ): CancelablePromise<Id> {
                         return __request({
                             method: 'POST',

@@ -6,7 +6,7 @@ import type { DeployErc20OffchainMnemonicAddress } from './DeployErc20OffchainMn
 
 export type DeployCeloErc20OffchainMnemonicAddress = (DeployErc20OffchainMnemonicAddress & {
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 });

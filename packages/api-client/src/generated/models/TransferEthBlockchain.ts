@@ -2,13 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type TransferEthBlockchain = {
     /**
-     * Additinal data, that can be passed to blockchain transaction as data property. Only for ETH transactions.
+     * Additional data that can be passed to a blockchain transaction as a data property; must be in the hexadecimal format
      */
     data?: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
@@ -19,19 +21,7 @@ export type TransferEthBlockchain = {
      * Currency to transfer from Ethereum Blockchain Account.
      */
     currency: 'USDT' | 'LEO' | 'LINK' | 'UNI' | 'FREE' | 'GMC' | 'GMC_BSC' | 'RMD' | 'MKR' | 'USDC' | 'BAT' | 'TUSD' | 'BUSD' | 'PAX' | 'PAXG' | 'MMY' | 'WBTC' | 'XCON' | 'ETH';
-    /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
     /**
      * Amount to be sent in Ether.
      */

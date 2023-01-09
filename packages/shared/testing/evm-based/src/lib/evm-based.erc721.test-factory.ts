@@ -1,5 +1,6 @@
 import { SdkWithErc721Functions } from '@tatumio/shared-blockchain-abstract'
 import { BlockchainTestData, expectHexString } from '@tatumio/shared-testing-common'
+import { BurnNft, BurnNftKMS } from '@tatumio/api-client'
 
 export const erc721TestFactory = {
   prepare: {
@@ -650,7 +651,7 @@ export const erc721TestFactory = {
               gasLimit: '3264521',
               gasPrice: '20',
             },
-          },
+          } as BurnNft,
           provider,
         )
 
@@ -668,7 +669,7 @@ export const erc721TestFactory = {
               gasLimit: '3264521',
               gasPrice: '20',
             },
-          },
+          } as BurnNftKMS,
           provider,
         )
 

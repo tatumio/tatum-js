@@ -8,11 +8,11 @@ export type BidOnAuctionCelo = {
      */
     chain: 'CELO';
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
-     * Address of the marketplace smart contract.
+     * Address of the auction smart contract.
      */
     contractAddress: string;
     /**
@@ -30,13 +30,13 @@ export type BidOnAuctionCelo = {
     /**
      * Amount of the assets to be bid. This must include auction fee.
      */
-    bidValue?: string;
+    bidValue: string;
     /**
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**

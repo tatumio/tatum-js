@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type ChainDeployKcsErc20KMS = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'KCS';
     /**
@@ -36,20 +38,8 @@ export type ChainDeployKcsErc20KMS = {
      */
     signatureId: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

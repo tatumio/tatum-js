@@ -221,7 +221,7 @@ export class CeloService {
      * @param address Account address you want to get balance of
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
-     * @param from Transactions from this block onwords will be included.
+     * @param from Transactions from this block onwards will be included.
      * @param to Transactions up to this block will be included.
      * @param sort Sorting of the data. ASC - oldest first, DESC - newest first.
      * @returns CeloTx OK
@@ -341,8 +341,12 @@ export class CeloService {
      * <li>For <b>read-only</b> methods, the output of the invoked method is returned.</li>
      * <li>For <b>write</b> methods, the ID of the associated transaction is returned.</li>
      * </ul>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When invoking a method in a smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p><b>Troubleshooting a failed transaction</b><br/>
+     * Tatum ensures that this API works against the blockchain (accesses the blockchain, finds the specified smart contract, and executes the specified ABI method with the provided parameters).<br/>However, because this API can be run against any smart contract on the blockchain, Tatum cannot in any way guarantee that the method itself will be executed successfully.</p>
+     * <p>If you have issues with invoking the method, refer to the user documentation for this method, or contact the author of the smart contract.</p>
+     * <p>For more information about invoking methods in smart contracts, see <a href="https://support.tatum.io/support/solutions/articles/80001052441" target="_blank">this article</a> on our Support Portal.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When invoking a method in a smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
@@ -371,7 +375,7 @@ export class CeloService {
      * Broadcast signed Celo transaction
      * <p><b>2 credits per API call</b></p>
      * <p>Broadcast signed transaction to Celo blockchain. This method is used internally from Tatum KMS or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
      * @returns TransactionHash OK

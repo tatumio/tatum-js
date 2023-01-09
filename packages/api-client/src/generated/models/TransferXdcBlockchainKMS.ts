@@ -4,7 +4,7 @@
 
 export type TransferXdcBlockchainKMS = {
     /**
-     * Additional data, that can be passed to blockchain transaction as data property. Only for XDC transactions.
+     * Additional data that can be passed to a blockchain transaction as a data property; must be in the hexadecimal format
      */
     data?: string;
     /**

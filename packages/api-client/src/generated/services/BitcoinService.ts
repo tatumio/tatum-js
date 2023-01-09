@@ -4,6 +4,7 @@
 import type { BroadcastKMS } from '../models/BroadcastKMS';
 import type { BtcBasedBalance } from '../models/BtcBasedBalance';
 import type { BtcBlock } from '../models/BtcBlock';
+import type { BtcBlockHash } from '../models/BtcBlockHash';
 import type { BtcInfo } from '../models/BtcInfo';
 import type { BtcTransactionFromAddress } from '../models/BtcTransactionFromAddress';
 import type { BtcTransactionFromAddressKMS } from '../models/BtcTransactionFromAddressKMS';
@@ -11,6 +12,7 @@ import type { BtcTransactionFromUTXO } from '../models/BtcTransactionFromUTXO';
 import type { BtcTransactionFromUTXOKMS } from '../models/BtcTransactionFromUTXOKMS';
 import type { BtcTx } from '../models/BtcTx';
 import type { BtcUTXO } from '../models/BtcUTXO';
+import type { GeneratedAddressBtc } from '../models/GeneratedAddressBtc';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
 import type { SignatureId } from '../models/SignatureId';
@@ -56,18 +58,13 @@ export class BitcoinService {
      *
      * @param xpub Extended public key of a wallet.
      * @param index Derivation index of the desired address to be generated.
-     * @returns any OK
+     * @returns GeneratedAddressBtc OK
      * @throws ApiError
      */
     public static btcGenerateAddress(
         xpub: string,
         index: number,
-    ): CancelablePromise<{
-        /**
-         * Bitcoin address
-         */
-        address?: string;
-    }> {
+    ): CancelablePromise<GeneratedAddressBtc> {
         return __request({
             method: 'GET',
             path: `/v3/bitcoin/address/${xpub}/${index}`,
@@ -132,17 +129,12 @@ export class BitcoinService {
      * <p>Gets a Bitcoin block hash. Returns the hash of the block to get the block's details.</p>
      *
      * @param i The number of blocks preceding a particular block on a blockchain.
-     * @returns any OK
+     * @returns BtcBlockHash OK
      * @throws ApiError
      */
     public static btcGetBlockHash(
         i: number,
-    ): CancelablePromise<{
-        /**
-         * Block hash
-         */
-        hash?: string;
-    }> {
+    ): CancelablePromise<BtcBlockHash> {
         return __request({
             method: 'GET',
             path: `/v3/bitcoin/block/hash/${i}`,
@@ -183,6 +175,7 @@ export class BitcoinService {
      * Get the balance of a Bitcoin address
      * <p><b>1 credit per API call</b></p>
      * <p>Get the balance of a Bitcoin address.</p>
+     * <p>The API returns the balance only if the address has up to 50,000 UTXOs (Unspent Transaction Outputs). For an address with more than 50,000 UTXOs, the API returns an error with the <code>403</code> response code.</p>
      *
      * @param address The blockchain address to get the balance for
      * @returns BtcBasedBalance OK
@@ -238,16 +231,19 @@ export class BitcoinService {
     /**
      * Send BTC to Bitcoin addresses
      * <p><b>2 credits per API call</b></p>
-     * <p>Send BTC to blockchain addresses. It is possible to build a blockchain transaction in 2 ways:</p>
+     * <p>Send BTC to blockchain addresses.</p>
+     * <p>Bitcoin transactions are based on UTXOs. "UTXO" stands for "Unspent Transaction Output". A UTXO is the amount of BTC/satoshis that remains at a Bitcoin address after a cryptocurrency transaction involving this address has been performed. The UTXO can then be used as input for a new cryptocurrency transaction. For more information about Bitcoin transactions and UTXO, see the <a href="https://developer.bitcoin.org/devguide/transactions.html" target="_blank">Bitcoin user documentation</a>. To check UTXOs in a transaction, see the <a href="#operation/BtcGetUTXO">API for getting information about a transaction output (UTXO) in a Bitcoin transaction</a>.</p>
+     * <p>You can build a BTC transaction by one of the following methods:</p>
      * <ul>
-     * <li><b>fromAddress</b> - assets will be sent from the list of addresses. For each of the addresses, the last 100 transactions will be scanned for any unspent UTXO to be included in the transaction.</li>
-     * <li><b>fromUTXO</b> - assets will be sent from the list of unspent UTXOs. Each of the UTXOs will be included in the transaction.</li>
+     * <li><b>Sending BTC from blockchain addresses</b><br/>The assets are sent from a list of addresses. For each address, the last 100 transactions are scanned for any UTXO to be included in the transaction. For easier control over the assets to be sent, we recommend that you use this method only if you have one address to send the assets from.<br/> To use this method, use the <code>BtcTransactionFromAddress</code> or <code>BtcTransactionFromAddressKMS</code> schema of the request body.</li>
+     * <li><b>Sending BTC from UTXOs</b><br/>The assets are sent from a list of UTXOs. Each UTXO is included in the transaction. Use this method if you want to manually calculate the amount to send.<br/> To use this method, use the <code>BtcTransactionFromUTXO</code> or <code>BtcTransactionFromUTXOKMS</code> schema of the request body.</li>
      * </ul>
-     * <p>In bitcoin-like blockchains, a transaction is created from the list of previously unspent UTXOs. Every UTXO contains the amount of funds that can be spent.</p>
-     * <p>When the UTXO is entered into the transaction, the whole amount is included and must be spent. For example, address A receives 2 transactions, T1 with 1 BTC and T2 with 2 BTC. The transaction, which will consume the UTXOs for T1 and T2, will have an available amount to spend of 3 BTC = 1 BTC (T1) + 2 BTC(T2).</p>
-     * <p>There can be multiple recipients of the transactions. In the <b>to</b> section, every recipient address has its own corresponding amount. When the amount of funds that the recipient should receive is lower than the amount of funds from the UTXOs, the difference is used as a transaction fee.</p>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When sending BTC, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>When an UTXO is entered into a transaction, the whole UTXO amount is included and must be spent. For example, address A receives two transactions, T1 with 1 BTC and T2 with 2 BTC. A transaction that consumes the UTXOs from both T1 and T2 will have an available amount of 3 BTC to spend:<br/><code>1 BTC (from T1) + 2 BTC (from T2) = 3 BTC (to spend in total)</code></p>
+     * <p>You can send the assets to one or multiple recipients in one transaction. If you send the assets to multiple addresses, each address must have its own amount to receive.</p>
+     * <p><b>Paying the gas fee and receiving the change</b><br/>
+     * When the amount that the recipients should receive is lower than the amount from the UTXOs, the difference between these two amounts is by default used as the gas fee for the transaction. Because this amount may be considerable and you may not want to spend it all on the gas fee, you can explicitly specify the fee amount and the blockchain address where any extra funds remaining after covering the fee will be sent (the <code>fee</code> and <code>changeAddress</code> parameters in the request body, correspondingly).</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When sending BTC, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
@@ -351,7 +347,7 @@ export class BitcoinService {
     /**
      * Broadcast a signed Bitcoin transaction
      * <p><b>2 credits per API call</b></p>
-     * <p>Broadcasts a signed transaction to the Bitcoin blockchain. This method is used internally from Tatum KMS, Tatum Middleware or Tatum Client Libraries.
+     * <p>Broadcasts a signed transaction to the Bitcoin blockchain. This method is used internally from Tatum KMS or Tatum Client Libraries.
      * It is possible to create a custom signing mechanism and only use this method for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
@@ -405,7 +401,7 @@ export class BitcoinService {
             /**
              * Params to the method call, if required.
              */
-            params?: any[];
+            params?: Array<any>;
         },
     ): CancelablePromise<any> {
         return __request({

@@ -1,5 +1,6 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
 import { TatumFlowSDK } from '@tatumio/flow'
+import { FlowTransactionMnemonic } from '@tatumio/api-client'
 
 const flowSDK = TatumFlowSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -54,7 +55,7 @@ export const flowApiExample = async () => {
     amount: '11',
     mnemonic: 'urge pulp usage sister evidence arrest palm math please chief egg abuse',
     index: 0,
-  })
+  } as FlowTransactionMnemonic)
 
   // Send arbitrary transaction to blockchain
   const tx3 = await flowSDK.api.flowTransferCustomBlockchain({

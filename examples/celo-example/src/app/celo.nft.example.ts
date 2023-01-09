@@ -32,7 +32,7 @@ export async function celoNftExample() {
   )
   const transactionByToken = await celoSDK.nft.getNFTTransactionsByToken(
     Currency.CELO,
-    1,
+    '1',
     '0x1ce4e40889a13971681391aad29e88efaf91f784',
     10,
   )

@@ -8,6 +8,8 @@ import type { CallPolygonSmartContractMethodKMS } from '../models/CallPolygonSma
 import type { CallPolygonSmartContractReadMethod } from '../models/CallPolygonSmartContractReadMethod';
 import type { Data } from '../models/Data';
 import type { EthBlock } from '../models/EthBlock';
+import type { GeneratedAddressMatic } from '../models/GeneratedAddressMatic';
+import type { MaticBalance } from '../models/MaticBalance';
 import type { PolygonTx } from '../models/PolygonTx';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
@@ -56,18 +58,13 @@ export class PolygonService {
      *
      * @param xpub Extended public key of wallet.
      * @param index Derivation index of desired address to be generated.
-     * @returns any OK
+     * @returns GeneratedAddressMatic OK
      * @throws ApiError
      */
     public static polygonGenerateAddress(
         xpub: string,
         index: number,
-    ): CancelablePromise<{
-        /**
-         * Polygon address
-         */
-        address?: string;
-    }> {
+    ): CancelablePromise<GeneratedAddressMatic> {
         return __request({
             method: 'GET',
             path: `/v3/polygon/address/${xpub}/${index}`,
@@ -183,17 +180,12 @@ export class PolygonService {
      * <p>Get Polygon account balance in MATIC. This method does not prints any balance of the ERC20 or ERC721 tokens on the account.</p>
      *
      * @param address Account address you want to get balance of
-     * @returns any OK
+     * @returns MaticBalance OK
      * @throws ApiError
      */
     public static polygonGetBalance(
         address: string,
-    ): CancelablePromise<{
-        /**
-         * Balance in MATIC
-         */
-        balance?: string;
-    }> {
+    ): CancelablePromise<MaticBalance> {
         return __request({
             method: 'GET',
             path: `/v3/polygon/account/balance/${address}`,
@@ -237,7 +229,7 @@ export class PolygonService {
      * @param address Account address you want to get balance of
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
-     * @param from Transactions from this block onwords will be included.
+     * @param from Transactions from this block onwards will be included.
      * @param to Transactions up to this block will be included.
      * @param sort Sorting of the data. ASC - oldest first, DESC - newest first.
      * @returns PolygonTx OK
@@ -333,8 +325,12 @@ export class PolygonService {
      * <li>For <b>read-only</b> methods, the output of the invoked method is returned.</li>
      * <li>For <b>write</b> methods, the ID of the associated transaction is returned.</li>
      * </ul>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When invoking a method in a smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p><b>Troubleshooting a failed transaction</b><br/>
+     * Tatum ensures that this API works against the blockchain (accesses the blockchain, finds the specified smart contract, and executes the specified ABI method with the provided parameters).<br/>However, because this API can be run against any smart contract on the blockchain, Tatum cannot in any way guarantee that the method itself will be executed successfully.</p>
+     * <p>If you have issues with invoking the method, refer to the user documentation for this method, or contact the author of the smart contract.</p>
+     * <p>For more information about invoking methods in smart contracts, see <a href="https://support.tatum.io/support/solutions/articles/80001052441" target="_blank">this article</a> on our Support Portal.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When invoking a method in a smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>If <b>caller</b> field is present instead of the private key, Tatum will sign the transaction with the managed private key connected to the caller address. This is applicable only for paid mainnet plans and all testnet plans. Keep in mind that the caller address must have enough access right to perform the action in the smart contract method.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
@@ -364,7 +360,7 @@ export class PolygonService {
      * Broadcast signed Polygon transaction
      * <b><p>2 credits per API call</p></b>
      * <p>Broadcast signed transaction to Polygon blockchain. This method is used internally from Tatum KMS or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
      * @returns TransactionHash OK

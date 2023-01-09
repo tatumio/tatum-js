@@ -8,7 +8,7 @@ export type SellAssetOnMarketplaceCeloKMS = {
      */
     chain: 'CELO';
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
@@ -48,7 +48,7 @@ export type SellAssetOnMarketplaceCeloKMS = {
      */
     isErc721: boolean;
     /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The KMS identifier of the private key of the seller's blockchain address
      */
     signatureId: string;
     /**
@@ -56,7 +56,7 @@ export type SellAssetOnMarketplaceCeloKMS = {
      */
     index?: number;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**

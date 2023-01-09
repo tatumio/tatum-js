@@ -2,13 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type TransferCustodialWalletCeloKMS = {
     /**
      * The blockchain to work with
      */
     chain: 'CELO';
     /**
-     * The gas pump address that transfers the asset
+     * The gas pump address that transfers the asset; this is the address that you <a href="#operation/PrecalculateGasPumpAddresses">precalculated</a> and <a href="#operation/ActivateGasPumpAddresses">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the "master address"
      */
     custodialAddress: string;
     /**
@@ -36,7 +38,7 @@ export type TransferCustodialWalletCeloKMS = {
      */
     signatureId: string;
     /**
-     * (Only if the signature ID is mnemonic-based) The index of the specific address from the mnemonic
+     * (Only if the signature ID is mnemonic-based) The index of the "master address" that was generated from the mnemonic
      */
     index?: number;
     /**
@@ -47,17 +49,5 @@ export type TransferCustodialWalletCeloKMS = {
      * The nonce to be set to the transfer transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * The custom defined fee; if not present, will be calculated automatically
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

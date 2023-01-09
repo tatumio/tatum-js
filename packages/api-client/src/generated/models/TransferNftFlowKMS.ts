@@ -4,7 +4,7 @@
 
 export type TransferNftFlowKMS = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'FLOW';
     /**

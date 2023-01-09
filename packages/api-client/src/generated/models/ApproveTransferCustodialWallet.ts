@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type ApproveTransferCustodialWallet = {
     /**
      * The blockchain to work with
@@ -22,7 +24,7 @@ export type ApproveTransferCustodialWallet = {
     /**
      * The address of the asset to transfer
      */
-    tokenAddress?: string;
+    tokenAddress: string;
     /**
      * (Only if the asset is a fungible token or Multi Token) The amount of the asset to transfer. Do not use if the asset is an NFT.
      */
@@ -39,17 +41,5 @@ export type ApproveTransferCustodialWallet = {
      * The nonce to be set to the transfer transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * The custom defined fee; if not present, will be calculated automatically
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

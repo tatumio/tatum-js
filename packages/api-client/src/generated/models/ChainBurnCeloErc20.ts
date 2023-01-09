@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type ChainBurnCeloErc20 = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
     /**
@@ -19,25 +21,13 @@ export type ChainBurnCeloErc20 = {
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
+    fee?: CustomFee;
     /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
-    /**
-     * Nonce to be set to Celo transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 }

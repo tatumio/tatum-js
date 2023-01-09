@@ -19,4 +19,12 @@ export type TransferSolanaBlockchain = {
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
+    /**
+     * Address on the Solana blockchain, from which the fee will be paid for transaction. Defaults to from.
+     */
+    feePayer?: string;
+    /**
+     * Private key of the fee payer address.
+     */
+    feePayerPrivateKey?: string;
 }

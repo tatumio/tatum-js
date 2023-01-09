@@ -24,7 +24,7 @@ export type MintMultipleErc721 = {
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
