@@ -400,9 +400,10 @@ export class TronService {
     /**
      * Create a TRC-10 token
      * <p><b>10 credits per API call</b></p>
-     * <p>Create Tron TRC10 token. 1 account can create only 1 token. All supply of the tokens are transferred to the issuer account 100 seconds after the creation.</p>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When creating a TRC-10 token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Create a TRON TRC-10 token.</p>
+     * <p>One TRON account can create only one TRC-10 token. The whole supply of the token is transferred to the issuer's account 100 seconds after the token has been created.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When creating a TRC-10 token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
@@ -430,18 +431,18 @@ export class TronService {
     /**
      * Get information about a TRC-10 token
      * <p><b>5 credits per API call</b></p>
-     * <p>Get Tron TRC10 token details.</p>
+     * <p>Get information about a TRON TRC-10 token.</p>
      *
-     * @param id TRC10 token ID
+     * @param idOrOwnerAddress The ID of the TRC-10 token or the address of the token's owner
      * @returns TronTrc10Detail OK
      * @throws ApiError
      */
     public static tronTrc10Detail(
-        id: number,
+        idOrOwnerAddress: string,
     ): CancelablePromise<TronTrc10Detail> {
         return __request({
             method: 'GET',
-            path: `/v3/tron/trc10/detail/${id}`,
+            path: `/v3/tron/trc10/detail/${idOrOwnerAddress}`,
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
@@ -454,9 +455,9 @@ export class TronService {
     /**
      * Create a TRC-20 token
      * <p><b>10 credits per API call</b></p>
-     * <p>Create Tron TRC20 token. 1 account can create only 1 token. All supply of the tokens are transfered to the issuer account 100 seconds after the creation.</p>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When creating a TRC-20 token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Create a TRON TRC-20 token.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When creating a TRC-20 token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *
@@ -508,8 +509,8 @@ export class TronService {
     /**
      * Broadcast a TRON transaction
      * <p><b>5 credits per API call</b></p>
-     * <p>Broadcast Tron transaction. This method is used internally from Tatum Middleware or Tatum client libraries.
-     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchian.</p>
+     * <p>Broadcast Tron transaction. This method is used internally from Tatum client libraries.
+     * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
      * @returns TransactionHash OK

@@ -1,5 +1,10 @@
 import { TatumCeloSDK } from '@tatumio/celo'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import {
+  MintNftKMSCelo,
+  TransferCustodialWalletBatchCelo,
+  TransferCustodialWalletBatchCeloKMS,
+} from '@tatumio/api-client'
 
 const celoSDK = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -56,7 +61,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
     signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
     nonce: 46533715.43995557,
     feeCurrency: 'CUSD',
-  })
+  } as MintNftKMSCelo)
 
   const preparedMintMultipleSignedTransaction = await celoSDK.nft.prepare.mintMultipleSignedTransaction({
     chain: 'CELO',
@@ -408,7 +413,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
         '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
       ],
       amount: ['1', '0', '1', '3'],
-    })
+    } as TransferCustodialWalletBatchCeloKMS)
 
   const sentBatchTransferFromCustodialWallet = await celoSDK.custodial.send.batchTransferFromCustodialWallet({
     chain: 'CELO',
@@ -429,7 +434,7 @@ export async function celoTxWithSignatureIdExample(): Promise<void> {
       '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
     ],
     amount: ['1', '0', '1', '3'],
-  })
+  } as TransferCustodialWalletBatchCeloKMS)
 
   const preparedApproveFromCustodialWallet = await celoSDK.custodial.prepare.approveFromCustodialWallet({
     chain: 'CELO',
@@ -857,7 +862,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
         '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
       ],
       amount: ['1', '0', '1', '3'],
-    })
+    } as TransferCustodialWalletBatchCelo)
 
   const sentBatchTransferFromCustodialWallet = await celoSDK.custodial.send.batchTransferFromCustodialWallet({
     chain: 'CELO',
@@ -878,7 +883,7 @@ export async function celoTxWithPrivateKeyExample(): Promise<void> {
       '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
     ],
     amount: ['1', '0', '1', '3'],
-  })
+  } as TransferCustodialWalletBatchCelo)
 
   const preparedApproveFromCustodialWallet = await celoSDK.custodial.prepare.approveFromCustodialWallet({
     chain: 'CELO',

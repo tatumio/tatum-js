@@ -8,7 +8,7 @@ export type FlowMintedResult = {
      */
     txId?: string;
     /**
-     * ID of the minted token
+     * ID of the token.
      */
-    tokenId?: number;
+    tokenId?: string;
 }

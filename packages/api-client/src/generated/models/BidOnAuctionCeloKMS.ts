@@ -8,11 +8,11 @@ export type BidOnAuctionCeloKMS = {
      */
     chain: 'CELO';
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
-     * Address of the marketplace smart contract.
+     * Address of the auction smart contract.
      */
     contractAddress: string;
     /**
@@ -30,7 +30,7 @@ export type BidOnAuctionCeloKMS = {
     /**
      * Amount of the assets to be bid. This must include auction fee.
      */
-    bidValue?: string;
+    bidValue: string;
     /**
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
@@ -40,7 +40,7 @@ export type BidOnAuctionCeloKMS = {
      */
     index?: number;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**

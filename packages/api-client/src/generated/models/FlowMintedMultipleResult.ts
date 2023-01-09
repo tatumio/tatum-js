@@ -7,5 +7,5 @@ export type FlowMintedMultipleResult = {
      * Transaction ID
      */
     txId?: string;
-    tokenId?: Array<number>;
+    tokenId?: Array<string>;
 }

@@ -8,7 +8,7 @@ export type BuyAssetOnMarketplaceCeloKMS = {
      */
     chain: 'CELO';
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
@@ -40,7 +40,7 @@ export type BuyAssetOnMarketplaceCeloKMS = {
      */
     index?: number;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**

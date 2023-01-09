@@ -2,7 +2,7 @@ import {
   ApproveNftSpending,
   AuctionService,
   BidOnAuction,
-  CancelOrSettleAuction,
+  CancelAuction,
   GenerateAuction,
   UpdateFeeRecipient,
 } from '@tatumio/api-client'
@@ -108,7 +108,7 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
        */
-      auctionCancelSignedTransaction: async (body: CancelAuction, provider?: string) =>
+      auctionCancelSignedTransaction: async (body: CancelOrSettleAuction, provider?: string) =>
         auctionCancelSignedTransaction(body, web3, provider),
       /**
        * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
@@ -199,7 +199,7 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      auctionCancelSignedTransaction: async (body: CancelAuction, provider?: string) =>
+      auctionCancelSignedTransaction: async (body: SettleAuction, provider?: string) =>
         broadcastFunction({
           txData: await auctionCancelSignedTransaction(body, web3, provider),
           signatureId: body.signatureId,
@@ -428,11 +428,10 @@ const auctionBidSignedTransaction = async (
   )
 }
 
-export type SettleAuction = FromPrivateKeyOrSignatureId<WithoutChain<CancelOrSettleAuction>> & Partial<Amount>
+export type SettleAuction = FromPrivateKeyOrSignatureId<WithoutChain<CancelAuction>> & Partial<Amount>
+export type CancelOrSettleAuction = SettleAuction
 
-export type CancelAuction = SettleAuction
-
-const auctionCancelSignedTransaction = async (body: CancelAuction, web3: EvmBasedWeb3, provider?: string) => {
+const auctionCancelSignedTransaction = async (body: SettleAuction, web3: EvmBasedWeb3, provider?: string) => {
   const client = web3.getClient(provider)
 
   const params = [body.id]

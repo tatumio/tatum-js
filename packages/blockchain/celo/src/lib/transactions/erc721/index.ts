@@ -1,6 +1,6 @@
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
-import { MintNftCelo } from '@tatumio/api-client'
+import { MintNftCelo, MintNftKMSCelo } from '@tatumio/api-client'
 import {
   Erc721_Provenance,
   Erc721Token_Cashback,
@@ -82,7 +82,9 @@ const deploySignedTransaction = async (body: ChainDeployErc721Celo, provider?: s
 }
 
 const mintSignedTransaction = async (body: ChainMintErc721Celo, provider?: string, testnet?: boolean) => {
-  const { contractAddress, nonce, signatureId, feeCurrency, to, tokenId, url, fromPrivateKey } = body
+  const { contractAddress, nonce, feeCurrency, to, tokenId, url } = body
+  const { fromPrivateKey } = body as MintNftCelo
+  const { signatureId } = body as MintNftKMSCelo
 
   const celoProvider = celoUtils.getProvider(provider)
   const network = await celoProvider.ready
@@ -694,7 +696,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        */
       mintCashbackSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) =>
         evmBasedUtils.tryCatch(
-          () => mintCashbackSignedTransaction(body, provider, testnet),
+          () => mintCashbackSignedTransaction(body as any, provider, testnet),
           SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_CASHBACK_TX,
         ),
 
@@ -803,7 +805,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
       mintSignedTransaction: async (body: ChainMintErc721Celo, provider?: string, testnet?: boolean) => {
         await args.broadcastFunction({
           txData: await mintSignedTransaction(body, provider, testnet),
-          signatureId: body.signatureId,
+          signatureId: (body as MintNftKMSCelo).signatureId,
         })
       },
       /**
@@ -816,7 +818,7 @@ export const erc721 = (args: { blockchain: EvmBasedBlockchain; broadcastFunction
        */
       mintCashbackSignedTransaction: async (body: ChainMintNftCelo, provider?: string, testnet?: boolean) =>
         await args.broadcastFunction({
-          txData: (await mintCashbackSignedTransaction(body, provider, testnet)) as string,
+          txData: (await mintCashbackSignedTransaction(body as any, provider, testnet)) as string,
           signatureId: body.signatureId,
         }),
       /**

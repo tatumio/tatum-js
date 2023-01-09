@@ -2,7 +2,6 @@ import { expectHexString } from '@tatumio/shared-testing-common'
 import {
   ApproveNftTransfer,
   AuctionBid,
-  CancelAuction,
   CreateAuction,
   DeployNftAuction,
   SettleAuction,
@@ -474,7 +473,7 @@ export interface SdkWithAuctionFunctions {
     auctionApproveNftTransferSignedTransaction(body: ApproveNftTransfer, provider?): Promise<string>
     auctionApproveErc20TransferSignedTransaction(body: ApproveNftTransfer, provider?): Promise<string>
     auctionBidSignedTransaction(body: AuctionBid, provider?): Promise<string>
-    auctionCancelSignedTransaction(body: CancelAuction, provider?): Promise<string>
+    auctionCancelSignedTransaction(body: SettleAuction, provider?): Promise<string>
     auctionSettleSignedTransaction(body: SettleAuction, provider?): Promise<string>
   }
 }

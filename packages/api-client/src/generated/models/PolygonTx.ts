@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { PolygonTxLog } from './PolygonTxLog';
+
 export type PolygonTx = {
     /**
      * Hash of the block where this transaction was in.
@@ -12,9 +14,9 @@ export type PolygonTx = {
      */
     status?: boolean;
     /**
-     * Block number where this transaction was in.
+     * The number of the block that the transaction is included in; if not returned, the transaction has not been included in a block yet.
      */
-    blockNumber?: number;
+    blockNumber?: number | null;
     /**
      * Address of the sender.
      */
@@ -44,21 +46,21 @@ export type PolygonTx = {
      */
     to?: string;
     /**
-     * Integer of the transactions index position in the block.
+     * The integer of the transactions index position in the block; if not returned, the transaction has not been included in a block yet.
      */
-    transactionIndex?: number;
+    transactionIndex?: number | null;
     /**
      * Value transferred in wei.
      */
     value?: string;
     /**
-     * The amount of gas used by this specific transaction alone.
+     * The amount of gas used by this specific transaction alone; if not returned, the transaction has not been included in a block yet.
      */
-    gasUsed?: number;
+    gasUsed?: number | null;
     /**
-     * The total amount of gas used when this transaction was executed in the block.
+     * The total amount of gas used when this transaction was executed in the block; if not returned, the transaction has not been included in a block yet.
      */
-    cumulativeGasUsed?: number;
+    cumulativeGasUsed?: number | null;
     /**
      * The contract address created, if the transaction was a contract creation, otherwise null.
      */
@@ -66,38 +68,5 @@ export type PolygonTx = {
     /**
      * Log events, that happened in this transaction.
      */
-    logs?: Array<{
-        /**
-         * From which this event originated from.
-         */
-        address?: string;
-        /**
-         * An array with max 4 32 Byte topics, topic 1-3 contains indexed parameters of the log.
-         */
-        topics?: Array<string>;
-        /**
-         * The data containing non-indexed log parameter.
-         */
-        data?: string;
-        /**
-         * Integer of the event index position in the block.
-         */
-        logIndex?: number;
-        /**
-         * Block number where this transaction was in.
-         */
-        blockNumber?: number;
-        /**
-         * Hash of the block.
-         */
-        blockHash?: string;
-        /**
-         * Integer of the transaction’s index position, the event was created in.
-         */
-        transactionIndex?: number;
-        /**
-         * Hash of the transaction this event was created in.
-         */
-        transactionHash?: string;
-    }>;
+    logs?: Array<PolygonTxLog>;
 }

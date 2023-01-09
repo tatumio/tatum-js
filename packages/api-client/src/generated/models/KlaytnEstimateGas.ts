@@ -16,7 +16,7 @@ export type KlaytnEstimateGas = {
      */
     amount: string;
     /**
-     * Additional data, that can be passed to blockchain transaction as data property.
+     * Additional data that can be passed to a blockchain transaction as a data property; must be in the hexadecimal format
      */
     data?: string;
 }

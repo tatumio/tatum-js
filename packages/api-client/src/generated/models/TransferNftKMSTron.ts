@@ -8,7 +8,7 @@ export type TransferNftKMSTron = {
      */
     value?: string;
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'TRON';
     /**
@@ -20,7 +20,7 @@ export type TransferNftKMSTron = {
      */
     to: string;
     /**
-     * ID of token.
+     * ID of the token.
      */
     tokenId: string;
     /**
@@ -36,7 +36,7 @@ export type TransferNftKMSTron = {
      */
     signatureId: string;
     /**
-     * Max limit for fee to be paid, in TRX.
+     * The maximum amount to be paid as the transaction fee (in TRX)
      */
     feeLimit: number;
 }

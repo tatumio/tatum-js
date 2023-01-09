@@ -2,38 +2,28 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type BurnNft = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'ALGO';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
     /**
-     * ID of token to be destroyed.
+     * The ID of the NFT to burn
      */
     tokenId: string;
     /**
-     * Address of NFT token
+     * The blockchain address of the NFT to burn
      */
     contractAddress: string;
     /**
-     * Private key of sender address. Private key, or signature Id must be present.
+     * The private key of the blockchain address from which the fee will be deducted
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

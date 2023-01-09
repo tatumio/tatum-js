@@ -8,7 +8,7 @@ export type BidOnAuctionKMS = {
      */
     chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
-     * Address of the marketplace smart contract.
+     * Address of the auction smart contract.
      */
     contractAddress?: string;
     /**
@@ -26,7 +26,7 @@ export type BidOnAuctionKMS = {
     /**
      * Amount of the assets to be bid. This must include auction fee.
      */
-    bidValue?: string;
+    bidValue: string;
     /**
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
@@ -36,7 +36,7 @@ export type BidOnAuctionKMS = {
      */
     index?: number;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**

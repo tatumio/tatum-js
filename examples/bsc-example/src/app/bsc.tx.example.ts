@@ -1,5 +1,10 @@
 import { TatumBscSDK } from '@tatumio/bsc'
 import { REPLACE_ME_WITH_TATUM_API_KEY } from '@tatumio/shared-testing-common'
+import {
+  TransferCustodialWalletBatch,
+  TransferCustodialWalletBatchKMS,
+  TransferCustodialWalletKMS,
+} from '@tatumio/api-client'
 
 const bscSDK = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
@@ -571,7 +576,11 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
         '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
       ],
       amount: ['1', '0', '1', '3'],
-    })
+      fee: {
+        gasLimit: '100000',
+        gasPrice: '100000',
+      },
+    } as TransferCustodialWalletBatchKMS)
 
   const sentBatchTransferFromCustodialWallet = await bscSDK.custodial.send.batchTransferFromCustodialWallet({
     chain: 'BSC',
@@ -591,7 +600,7 @@ export async function bscTxWithSignatureIdExample(): Promise<void> {
       '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
     ],
     amount: ['1', '0', '1', '3'],
-  })
+  } as TransferCustodialWalletBatchKMS)
 
   const preparedApproveFromCustodialWallet = await bscSDK.custodial.prepare.approveFromCustodialWallet({
     chain: 'BSC',
@@ -1172,7 +1181,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
         '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
       ],
       amount: ['1', '0', '1', '3'],
-    })
+    } as TransferCustodialWalletBatch)
 
   const sentBatchTransferFromCustodialWallet = await bscSDK.custodial.send.batchTransferFromCustodialWallet({
     chain: 'BSC',
@@ -1192,7 +1201,7 @@ export async function bscTxWithPrivateKeyExample(): Promise<void> {
       '0x8cb76aEd9C5e336ef961265c6079C14e9cD3D2eA',
     ],
     amount: ['1', '0', '1', '3'],
-  })
+  } as TransferCustodialWalletBatch)
 
   const preparedApproveFromCustodialWallet = await bscSDK.custodial.prepare.approveFromCustodialWallet({
     chain: 'BSC',

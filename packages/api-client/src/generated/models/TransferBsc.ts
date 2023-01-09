@@ -4,7 +4,7 @@
 
 export type TransferBsc = {
     /**
-     * Nonce to be set to Binance Smart Chain transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**
@@ -22,7 +22,7 @@ export type TransferBsc = {
     /**
      * Private key of sender address. Either mnemonic and index, privateKey or signature Id must be present - depends on the type of account and xpub.
      */
-    fromPrivateKey: string;
+    privateKey: string;
     /**
      * Identifier of the payment, shown for created Transaction within Tatum sender account.
      */

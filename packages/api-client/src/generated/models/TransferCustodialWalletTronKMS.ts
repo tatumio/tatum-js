@@ -8,11 +8,11 @@ export type TransferCustodialWalletTronKMS = {
      */
     chain: 'TRON';
     /**
-     * The gas pump address that transfers the asset
+     * The gas pump address that transfers the asset; this is the address that you <a href="#operation/PrecalculateGasPumpAddresses">precalculated</a> and <a href="#operation/ActivateGasPumpAddresses">activated</a> earlier and that is assigned to a customer in your custodial application; this is not the "master address"
      */
     custodialAddress: string;
     /**
-     * The gas pump address that transfers the assets in the Base58 format
+     * The blockchain address that owns the gas pump address ("master address") in the Base58 format
      */
     from: string;
     /**
@@ -40,7 +40,7 @@ export type TransferCustodialWalletTronKMS = {
      */
     signatureId: string;
     /**
-     * (Only if the signature ID is mnemonic-based) The index of the specific address from the mnemonic
+     * (Only if the signature ID is mnemonic-based) The index of the "master address" that was generated from the mnemonic
      */
     index?: number;
     /**

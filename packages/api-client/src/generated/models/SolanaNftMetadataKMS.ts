@@ -6,19 +6,19 @@ import type { SolanaNftMetadataCreator } from './SolanaNftMetadataCreator';
 
 export type SolanaNftMetadataKMS = {
     /**
-     * Name of the NFT token.
+     * The name of the NFT
      */
     name: string;
     /**
-     * Symbol of the NFT token.
+     * The symbol or abbreviated name of the NFT
      */
     symbol: string;
     /**
-     * Basis points of the seller fee.
+     * The royalty that will be paid to the authors of the minted NFT every time the NFT is transferred<br/>The royalty is calculated as a percentage of the NFT price. To set the royalty to 1%, set this parameter to <code>100</code>; to set 10%, set this parameter to <code>1000</code>; to set 50%, set this parameter to <code>5000</code>, and so on.<br/>To specify the NFT authors and their shares in the royalty, set the <code>creators</code> parameter.<br/>To disable the royalty for the NFT completely, set <code>sellerFeeBasisPoints</code> to <code>0</code> and do not set <code>creators</code>.
      */
     sellerFeeBasisPoints: number;
     /**
-     * Metadata of the token. See https://eips.ethereum.org/EIPS/eip-721#specification for more details.
+     * The URL pointing to the NFT metadata; for more information, see <a href="https://eips.ethereum.org/EIPS/eip-721#specification" target="_blank">EIP-721</a>
      */
     uri: string;
     /**
@@ -26,11 +26,11 @@ export type SolanaNftMetadataKMS = {
      */
     collection?: string;
     /**
-     * If NFT metadata are mutable or not. Defaults to true.
+     * Specifies whether the NFT metadata is mutable ("true") or immutable ("false"); if not set, defaults to "true"
      */
     mutable?: boolean;
     /**
-     * Royalty receivers for NFT transfers.
+     * The blockchain addresses where the royalties will be sent every time the minted NFT is transferred
      */
     creators?: Array<SolanaNftMetadataCreator>;
 }

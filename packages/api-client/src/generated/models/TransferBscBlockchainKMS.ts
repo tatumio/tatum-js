@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type TransferBscBlockchainKMS = {
     /**
-     * Additional data, that can be passed to blockchain transaction as data property. Only for BSC transactions.
+     * (Only for BSC transactions) Additional data that can be passed to a blockchain transaction as a data property; must be in the hexadecimal format
      */
     data?: string;
     /**
@@ -19,21 +21,9 @@ export type TransferBscBlockchainKMS = {
      * Currency to transfer from BSC Blockchain Account. BEP20 tokens BETH, BBTC, BADA, WBNB, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
      */
     currency: 'BETH' | 'BBTC' | 'BADA' | 'WBNB' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'BSC';
+    fee?: CustomFee;
     /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
-    /**
-     * Amount to be sent in Ether.
+     * Amount to be sent.
      */
     amount: string;
     /**

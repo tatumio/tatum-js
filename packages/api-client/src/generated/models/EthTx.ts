@@ -2,6 +2,8 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { EthTxLog } from './EthTxLog';
+
 export type EthTx = {
     /**
      * Hash of the block where this transaction was in.
@@ -14,7 +16,7 @@ export type EthTx = {
     /**
      * Block number where this transaction was in.
      */
-    blockNumber?: number;
+    blockNumber?: number | null;
     /**
      * Address of the sender.
      */
@@ -46,7 +48,7 @@ export type EthTx = {
     /**
      * Integer of the transactions index position in the block.
      */
-    transactionIndex?: number;
+    transactionIndex?: number | null;
     /**
      * Value transferred in wei.
      */
@@ -54,11 +56,11 @@ export type EthTx = {
     /**
      * The amount of gas used by this specific transaction alone.
      */
-    gasUsed?: number;
+    gasUsed?: number | null;
     /**
      * The total amount of gas used when this transaction was executed in the block.
      */
-    cumulativeGasUsed?: number;
+    cumulativeGasUsed?: number | null;
     /**
      * The contract address created, if the transaction was a contract creation, otherwise null.
      */
@@ -66,30 +68,5 @@ export type EthTx = {
     /**
      * Log events, that happened in this transaction.
      */
-    logs?: Array<{
-        /**
-         * From which this event originated from.
-         */
-        address?: string;
-        /**
-         * An array with max 4 32 Byte topics, topic 1-3 contains indexed parameters of the log.
-         */
-        topics?: Array<string>;
-        /**
-         * The data containing non-indexed log parameter.
-         */
-        data?: string;
-        /**
-         * Integer of the event index position in the block.
-         */
-        logIndex?: number;
-        /**
-         * Integer of the transaction’s index position, the event was created in.
-         */
-        transactionIndex?: number;
-        /**
-         * Hash of the transaction this event was created in.
-         */
-        transactionHash?: string;
-    }>;
+    logs?: Array<EthTxLog>;
 }

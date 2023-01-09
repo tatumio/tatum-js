@@ -14,7 +14,7 @@ export type FlowTransactionPK = {
     /**
      * Blockchain address to send assets
      */
-    to?: string;
+    to: string;
     /**
      * Amount to be sent, in Flow.
      */

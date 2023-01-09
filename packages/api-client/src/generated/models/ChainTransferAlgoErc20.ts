@@ -4,23 +4,27 @@
 
 export type ChainTransferAlgoErc20 = {
     /**
-     * Chain to work with.
+     * The blockchain to work with
      */
     chain: 'ALGO';
     /**
-     * Blockchain address to send ERC20 token to
+     * The blockchain address to send the fungible tokens to
      */
     to: string;
     /**
-     * Amount to be sent.
-     */
-    amount: string;
-    /**
-     * assetIndex - asset index uniquely specifying the asset
+     * The asset ID (the ID of the fungible tokens)
      */
     contractAddress: string;
     /**
-     * Private key of sender address. Private key, or signature Id must be present.
+     * The amount of the fungible tokens to be sent
+     */
+    amount: string;
+    /**
+     * The number of decimal places that the fungible tokens have
+     */
+    digits: number;
+    /**
+     * The private key of the blockchain address from which the fee will be deducted
      */
     fromPrivateKey: string;
 }

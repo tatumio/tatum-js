@@ -87,7 +87,9 @@ import type { TransferXlm } from '../models/TransferXlm';
 import type { TransferXlmKMS } from '../models/TransferXlmKMS';
 import type { TransferXrp } from '../models/TransferXrp';
 import type { TransferXrpKMS } from '../models/TransferXrpKMS';
-import type { Trc } from '../models/Trc';
+import type { Trc20Response } from '../models/Trc20Response';
+import type { TrcAddress } from '../models/TrcAddress';
+import type { TrcXpub } from '../models/TrcXpub';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
@@ -110,11 +112,11 @@ export class BlockchainOperationsService {
      * It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.<br/>
      * This method is a helper method, which internally wraps these steps:
      * <ol>
-     * <li><a href="#operation/storeWithdrawal">Store withdrawal</a> - create a ledger transaction, which debits the assets on the sender account.</li>
-     * <li><a href="#operation/BtcTransferBlockchain">Perform blockchain transaction</a> - </li>
-     * <li><a href="#operation/completeWithdrawal">Complete withdrawal</a> - move the withdrawal to the completed state, when all of the previous steps were successful.</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Withdrawal#operation/storeWithdrawal">Store withdrawal</a> - create a ledger transaction, which debits the assets on the sender account.</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Bitcoin#operation/BtcTransferBlockchain">Perform blockchain transaction</a></li>
+     * <li><a href="https://apidoc.tatum.io/tag/Withdrawal#operation/completeWithdrawal">Complete withdrawal</a> - move the withdrawal to the completed state, when all of the previous steps were successful.</li>
      * </ol>
-     * When some of the steps fails, <a href="#operation/cancelInProgressWithdrawal">Cancel withdrawal</a> operation is used, which cancels withdrawal and creates refund transaction to the sender account.</li>
+     * When some of the steps fails, <a href="https://apidoc.tatum.io/tag/Withdrawal#operation/cancelInProgressWithdrawal">Cancel withdrawal</a> operation is used, which cancels withdrawal and creates refund transaction to the sender account.</li>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
      * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
@@ -159,9 +161,9 @@ export class BlockchainOperationsService {
      * It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.<br/>
      * This method is a helper method, which internally wraps these steps:
      * <ol>
-     * <li><a href="#operation/storeWithdrawal">Store withdrawal</a> - create a ledger transaction, which debits the assets on the sender account.</li>
-     * <li><a href="#operation/BchTransferBlockchain">Perform blockchain transaction</a> - </li>
-     * <li><a href="#operation/completeWithdrawal">Complete withdrawal</a> - move the withdrawal to the completed state, when all of the previous steps were successful.</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Withdrawal#operation/storeWithdrawal">Store withdrawal</a> - create a ledger transaction, which debits the assets on the sender account.</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Bitcoin-Cash#operation/BchTransferBlockchain">Perform blockchain transaction</a></li>
+     * <li><a href="https://apidoc.tatum.io/tag/Withdrawal#operation/completeWithdrawal">Complete withdrawal</a> - move the withdrawal to the completed state, when all of the previous steps were successful.</li>
      * </ol>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
@@ -207,9 +209,9 @@ export class BlockchainOperationsService {
      * It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.<br/>
      * This method is a helper method, which internally wraps these steps:
      * <ol>
-     * <li><a href="#operation/storeWithdrawal">Store withdrawal</a> - create a ledger transaction, which debits the assets on the sender account.</li>
-     * <li><a href="#operation/LtcTransferBlockchain">Perform blockchain transaction</a> - </li>
-     * <li><a href="#operation/completeWithdrawal">Complete withdrawal</a> - move the withdrawal to the completed state, when all of the previous steps were successful.</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Withdrawal#operation/storeWithdrawal">Store withdrawal</a> - create a ledger transaction, which debits the assets on the sender account.</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Litecoin#operation/LtcTransferBlockchain">Perform blockchain transaction</a></li>
+     * <li><a href="https://apidoc.tatum.io/tag/Withdrawal#operation/completeWithdrawal">Complete withdrawal</a> - move the withdrawal to the completed state, when all of the previous steps were successful.</li>
      * </ol>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
@@ -254,9 +256,9 @@ export class BlockchainOperationsService {
      * It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.<br/>
      * This method is a helper method, which internally wraps these steps:
      * <ol>
-     * <li><a href="#operation/storeWithdrawal">Store withdrawal</a> - create a ledger transaction, which debits the assets on the sender account.</li>
-     * <li><a href="#operation/FlowTransferBlockchain">Perform blockchain transaction</a> - </li>
-     * <li><a href="#operation/completeWithdrawal">Complete withdrawal</a> - move the withdrawal to the completed state, when all of the previous steps were successful.</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Withdrawal#operation/storeWithdrawal">Store withdrawal</a> - create a ledger transaction, which debits the assets on the sender account.</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Flow#operation/FlowTransferBlockchain">Perform blockchain transaction</a></li>
+     * <li><a href="https://apidoc.tatum.io/tag/Withdrawal#operation/completeWithdrawal">Complete withdrawal</a> - move the withdrawal to the completed state, when all of the previous steps were successful.</li>
      * </ol>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
@@ -302,9 +304,9 @@ export class BlockchainOperationsService {
      * It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.<br/>
      * This method is a helper method, which internally wraps these steps:
      * <ol>
-     * <li><a href="#operation/storeWithdrawal">Store withdrawal</a> - create a ledger transaction, which debits the assets on the sender account.</li>
-     * <li><a href="#operation/DogeTransferBlockchain">Perform blockchain transaction</a> - </li>
-     * <li><a href="#operation/completeWithdrawal">Complete withdrawal</a> - move the withdrawal to the completed state, when all of the previous steps were successful.</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Withdrawal#operation/storeWithdrawal">Store withdrawal</a> - create a ledger transaction, which debits the assets on the sender account.</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Dogecoin#operation/DogeTransferBlockchain">Perform blockchain transaction</a></li>
+     * <li><a href="https://apidoc.tatum.io/tag/Withdrawal#operation/completeWithdrawal">Complete withdrawal</a> - move the withdrawal to the completed state, when all of the previous steps were successful.</li>
      * </ol>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
@@ -484,8 +486,8 @@ export class BlockchainOperationsService {
     /**
      * @deprecated
      * Register a new Ethereum ERC-20 token in the virtual account
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>This method is deprecated. Use <a href="#operation/registerErc20Token">Register token</a> instead.</p>
+     * <p><b>This method is deprecated.<br/>Use <a href="#operation/registerErc20Token">this method</a> instead.</b></p><br/>
+     * <h4>2 credits per API call.</h4>
      * <p>First step to create new ERC20 token with given supply on Ethereum blockchain with support of Tatum's private ledger.<br/>
      * This method only creates Tatum Private ledger virtual currency with predefined parameters. It will not generate any blockchain smart contract.<br/>
      * The whole supply of ERC20 token is stored in the customer's newly created account. Then it is possible to create new Tatum accounts with ERC20 token name as account's currency.<br/>
@@ -525,7 +527,7 @@ export class BlockchainOperationsService {
      * Deploy an Ethereum ERC-20 smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
      * <p>Deploy an Ethereum ERC-20 smart contract. This is a helper method, which is combination of
-     * <a href="#operation/createErc20">Register new ERC20 token in the ledger</a> and <a href="#operation/EthDeployErc20Blockchain">Deploy blockchain ERC20</a>.<br/>
+     * <a href="#operation/registerErc20Token">Register new ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
      * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
@@ -597,8 +599,8 @@ export class BlockchainOperationsService {
     /**
      * @deprecated
      * Register a new BNB Smart Chain BEP-20 token in the virtual account
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>This method is deprecated. Use <a href="#operation/registerErc20Token">Register token</a> instead.</p>
+     * <p><b>This method is deprecated.<br/>Use <a href="#operation/registerErc20Token">this method</a> instead.</b></p><br/>
+     * <h4>2 credits per API call.</h4>
      * <p>First step to create new BEP20 token with given supply on BSC blockchain with support of Tatum's private ledger.<br/>
      * <br/>
      * <br/>
@@ -640,7 +642,7 @@ export class BlockchainOperationsService {
      * Deploy a BNB Smart Chain BEP-20 smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
      * <p>Deploy a BNB Smart Chain BEP-20 smart contract. This is a helper method, which is combination of
-     * <a href="#operation/createBep20">Register new BEP20 token in the ledger</a> and <a href="#operation/BscDeployBep20Blockchain">Deploy blockchain BEP20</a>.<br/>
+     * <a href="#operation/registerErc20Token">Register new BEP20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
      * <br/>
      * <br/>
      * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
@@ -715,7 +717,7 @@ export class BlockchainOperationsService {
      * Deploy a Klaytn ERC-20-equivalent smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
      * <p>Deploy a Klaytn ERC-20-equivalent smart contract. This is a helper method, which is combination of
-     * <a href="#operation/registerErc20Token">Register new ERC20 token in the ledger</a> and <a href="#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
+     * <a href="#operation/registerErc20Token">Register new ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
      * <br/>
      * <br/>
      * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
@@ -789,11 +791,9 @@ export class BlockchainOperationsService {
     /**
      * @deprecated
      * Register a new XinFin ERC-20-equivalent token in the virtual account
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>This method is deprecated. Use <a href="#operation/registerErc20Token">Register token</a> instead.</p>
+     * <p><b>This method is deprecated.<br/>Use <a href="#operation/registerErc20Token">this method</a> instead.</b></p><br/>
+     * <h4>2 credits per API call.</h4>
      * <p>First step to create new ERC20 token with given supply on XDC blockchain with support of Tatum's private ledger.<br/>
-     * <br/>
-     * <br/>
      * This method only creates Tatum Private ledger virtual currency with predefined parameters. It will not generate any blockchain smart contract.<br/>
      * The whole supply of ERC20 token is stored in the customer's newly created account. Then it is possible to create new Tatum accounts with ERC20 token name as account's currency.<br/>
      * Newly created account is frozen until the specific ERC20 smart contract address is linked with the Tatum virtual currency, representing the token.<br/>
@@ -832,7 +832,7 @@ export class BlockchainOperationsService {
      * Deploy a XinFin ERC-20-equivalent smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
      * <p>Deploy a XinFin ERC-20-equivalent smart contract. This is a helper method, which is combination of
-     * <a href="#operation/createXdc20">Register new ERC20 token in the ledger</a> and <a href="#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
+     * <a href="#operation/registerErc20Token">Register new ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
      * <br/>
      * <br/>
      * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
@@ -911,8 +911,8 @@ export class BlockchainOperationsService {
     /**
      * @deprecated
      * Register a new Harmony HRM-20 token in the virtual account
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>This method is deprecated. Use <a href="#operation/registerErc20Token">Register token</a> instead.</p>
+     * <p><b>This method is deprecated.<br/>Use <a href="#operation/registerErc20Token">this method</a> instead.</b></p><br/>
+     * <h4>2 credits per API call.</h4>
      * <p>First step to create new HRM20 token with given supply on ONE blockchain with support of Tatum's private ledger.<br/>
      * <br/>
      * <br/>
@@ -954,7 +954,7 @@ export class BlockchainOperationsService {
      * Deploy a Harmony HRM-20 smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
      * <p>Deploy a Harmony HRM-20 smart contract. This is a helper method, which is combination of
-     * <a href="#operation/createHrm20">Register new HRM20 token in the ledger</a> and <a href="#operation/Erc20Deploy">Deploy blockchain HRM20</a>.<br/>
+     * <a href="#operation/registerErc20Token">Register new HRM20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
      * <br/>
      * <br/>
      * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
@@ -1002,11 +1002,11 @@ export class BlockchainOperationsService {
      * Newly created account is frozen until the specific smart contract address is linked with the Tatum virtual currency, representing the token.<br/>
      * Order of the steps to create smart contract with Tatum private ledger support:
      * <ol>
-     * <li><a href="#operation/registerErc20Token">Register token</a> - creates a virtual currency within Tatum</li>
-     * <li>Deploy smart contract - create new smart contract on the blockchain</li>
+     * <li>Register token</a> (this API) - creates a virtual currency within Tatum</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy smart contract</a> - create new smart contract on the blockchain</li>
      * <li><a href="#operation/storeTokenAddress">Store smart contract address</a> - link newly created smart contract address with Tatum virtual currency - this operation enables frozen account and enables ledger synchronization for Tatum accounts</li>
      * </ol>
-     * Address on the blockchain, where all initial supply will be transferred, can be defined via the address or xpub and derivationIndex. When xpub is present, the account connected to this virtualCurrency will be set as the account's xpub.
+     * Blockchain address will be assigned to the virtual account as a deposit address. It can be defined via the address explicitly or by using xpub and derivationIndex.
      * </p>
      *
      * @param chain Blockchain to work with
@@ -1033,16 +1033,18 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Set the contact address of an ERC-20 or ERC-20-equivalent token
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Set the contact address of an ERC-20 or ERC-20-equivalent token (for example, BEP-20, HRM-20, and so on) to be able to communicate with the smart contract.
-     * <br/>
-     * <br/>
-     * <p>After creating and deploying an ERC-20 or ERC-20-equivalent token to the blockchain, the smart contract address is generated and must be set within Tatum. If the address is not set, the Tatum platform will not be able to detect incoming deposits of the tokens and transfer the tokens from virtual accounts to blockchain addresses.</p>
-     * <p><b>NOTE:</b>For Algorand, the contact address should be the token asset ID (AssetID), for example, <code>55351976</code>.</p>
+     * Set the contract address of an ERC-20, ERC-20-equivalent, or TRC-10 token
+     * <p><b>2 credits per API call</b></p>
+     * <p>Set the contract address of an ERC-20, ERC-20-equivalent (for example, BEP-20, HRM-20, and so on), or TRC-10 token to be able to communicate with the smart contract.</p>
+     * <p>After creating and deploying the token to the blockchain, the smart contract address is generated and must be set within Tatum. If the address is not set, the Tatum platform will not be able to detect incoming deposits of the tokens and transfer the tokens from virtual accounts to blockchain addresses.</p>
+     * <p><b>NOTE:</b></p>
+     * <ul>
+     * <li>For <b>Algorand</b>, the contract address is the asset ID (<code>assetId</code>), for example, <code>55351976</code>.</li>
+     * <li>For <b>TRON</b>, the contract address is the token ID (<code>tokenId</code>), for example, <code>1234567</code>.</li>
+     * </ul>
      *
-     * @param address Contract address
-     * @param name Symbol name.
+     * @param address On Algorand, this is the asset ID; on TRON, this is the token ID; on the other blockchains, this is the address of the smart contract.
+     * @param name The name of the token (the token symbol)
      * @returns void
      * @throws ApiError
      */
@@ -1104,8 +1106,8 @@ export class BlockchainOperationsService {
     /**
      * @deprecated
      * Register a new Celo ERC-20-equivalent token in the virtual account
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>This method is deprecated. Use <a href="#operation/registerErc20Token">Register token</a> instead.</p>
+     * <p><b>This method is deprecated.<br/>Use <a href="#operation/registerErc20Token">this method</a> instead.</b></p><br/>
+     * <h4>2 credits per API call.</h4>
      * <p>First step to create new ERC-20 token with given supply on Celo blockchain with support of Tatum's private ledger.<br/>
      * <br/>
      * <br/>
@@ -1147,7 +1149,7 @@ export class BlockchainOperationsService {
      * Deploy a Celo ERC-20-equivalent smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
      * <p>Deploy a Celo ERC-20-equivalent smart contract. This is a helper method, which is combination of
-     * <a href="#operation/createCeloErc20">Register new Celo ERC-20 token in the ledger</a> and <a href="#operation/CeloDeployErc20">Deploy blockchain ERC-20</a>.<br/>
+     * <a href="#operation/registerErc20Token">Register new Celo ERC-20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
      * <br/>
      * <br/>
      * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
@@ -1183,7 +1185,7 @@ export class BlockchainOperationsService {
      * Deploy a KuCoin Community Chain (KCC) ERC-20-equivalent smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
      * <p>Deploy a KuCoin Community Chain (KCC) ERC-20-equivalent smart contract. This is a helper method, which is combination of
-     * <a href="#operation/createErc20">Register new Kcs ERC20 token in the ledger</a> and <a href="#operation/KcsDeployErc20Blockchain">Deploy blockchain ERC-20</a>.<br/>
+     * <a href="#operation/registerErc20Token">Register new Kcs ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
      * <br/>
      * <br/>
      * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
@@ -1217,9 +1219,9 @@ export class BlockchainOperationsService {
 
     /**
      * @deprecated
-     * Set the contact address of a Celo ERC-20-equivalent token
-     * <h4>2 credits per API call.</h4><br/>
-     * <b>This method is deprecated. Please use <a href="#operation/storeTokenAddress">this method</a> instead.</b>
+     * Set the contract address of a Celo ERC-20-equivalent token
+     * <p><b>This method is deprecated.<br/>Use <a href="#operation/storeTokenAddress">this method</a> instead.</b></p><br/>
+     * <h4>2 credits per API call.</h4>
      *
      * @param address ERC-20 contract address
      * @param name ERC-20 symbol name.
@@ -1452,7 +1454,7 @@ export class BlockchainOperationsService {
     /**
      * Create a BNB-based asset
      * <h4>2 credits per API call.</h4><br/><p>
-     * <p>Create a BNB-based asset in a virtual account. The asset must first be <a href="https://docs.binance.org/tokens.html" targer="_blank">created and configured on BNB Beacon Chain blockhain</a>.</p>
+     * <p>Create a BNB-based asset in a virtual account. The asset must first be <a href="https://docs.bnbchain.org/docs/beaconchain/learn/BEP8" target="_blank">created and configured on BNB Beacon Chain blockhain</a>.</p>
      * <p>This API call will create an internal virtual currency. You can create virtual accounts with off-chain support.</p>
      *
      * @param requestBody
@@ -1559,21 +1561,21 @@ export class BlockchainOperationsService {
      * Newly created account is frozen until the specific TRC 10/20 smart contract address is linked with the Tatum virtual currency, representing the token.<br/>
      * Order of the steps to create TRC 10/20 smart contract with Tatum private ledger support:
      * <ol>
-     * <li><a href="#operation/createTrc">Create TRC 10/20 token</a> - creates a virtual currency within Tatum</li>
-     * <li><a href="#operation/TronCreateTrc20">Deploy TRC 10</a> or <a href="#operation/TronCreateTrc10">TRC 20 smart contract</a> - create new TRC 10/20 smart contract on the blockchain</li>
-     * <li><a href="#operation/storeTrcAddress">Store TRC 10/20 smart contract address</a> - link newly created TRC 10/20 smart contract address with Tatum virtual currency - this operation enables frozen account and enables ledger synchronization for TRC 10/20 Tatum accounts</li>
+     * <li>Create TRC 10/20 token (this API) - creates a virtual currency within Tatum</li>
+     * <li><a href="https://apidoc.tatum.io/tag/Tron#operation/TronCreateTrc10">Deploy TRC 10</a> or <a href="https://apidoc.tatum.io/tag/Tron#operation/TronCreateTrc20">TRC 20 smart contract</a> - create new TRC 10/20 smart contract on the blockchain</li>
+     * <li><a href="#operation/storeTokenAddress">Store TRC 10/20 smart contract address</a> - link newly created TRC 10/20 smart contract address with Tatum virtual currency - this operation enables frozen account and enables ledger synchronization for TRC 10/20 Tatum accounts</li>
      * </ol>
+     * Blockchain address will be assigned to the virtual account as a deposit address. It can be defined via the address explicitly or by using xpub and derivationIndex.
      * There is a helper method <a href="#operation/TronDeployTrc">Deploy TRC 10/20 Smart Contract to Blockchain and Ledger</a>, which wraps first 2 steps into 1 method.<br/>
-     * Address on the blockchain, where all initial supply will be transferred, can be defined via the address or xpub and derivationIndex. When xpub is present, the account connected to this virtualCurrency will be set as the account's xpub.
      * </p>
      *
      * @param requestBody
-     * @returns Erc20Response OK
+     * @returns Trc20Response OK
      * @throws ApiError
      */
     public static createTrc(
-        requestBody: Trc,
-    ): CancelablePromise<Erc20Response> {
+        requestBody: (TrcAddress | TrcXpub),
+    ): CancelablePromise<Trc20Response> {
         return __request({
             method: 'POST',
             path: `/v3/offchain/tron/trc`,
@@ -1592,7 +1594,7 @@ export class BlockchainOperationsService {
      * Deploy a TRON TRC-10 or TRC-20 smart contract to the blockchain and a virtual account
      * <h4>10 credits per API call.</h4><br/>
      * <p>Deploy a TRON TRC-10 or TRC-20 smart contract. This is a helper method, which is combination of
-     * <a href="#operation/createTrc">Register new TRC-10/20 token in the ledger</a> and <a href="#operation/TronCreateTrc20">Deploy blockchain TRC20</a> or <a href="#operation/TronCreateTrc10">Deploy blockchain TRC10</a>.<br/>
+     * <a href="#operation/createTrc">Register new TRC-10/20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Tron#operation/TronCreateTrc20">Deploy blockchain TRC20</a> or <a href="https://apidoc.tatum.io/tag/Tron#operation/TronCreateTrc10">Deploy blockchain TRC10</a>.<br/>
      * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
      * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
@@ -1624,9 +1626,9 @@ export class BlockchainOperationsService {
 
     /**
      * @deprecated
-     * Set the contact address of a TRC-10 or TRC-20 token
-     * <h4>2 credits per API call.</h4><br/>
-     * <b>This method is deprecated. Please use <a href="#operation/storeTokenAddress">this method</a> instead.</b>
+     * Set the contract address of a TRC-10 or TRC-20 token
+     * <p><b>This method is deprecated.<br/>Use <a href="#operation/storeTokenAddress">this method</a> instead.</b></p><br/>
+     * <h4>2 credits per API call.</h4>
      *
      * @param address TRC-10 Token ID or TRC-20 contract address
      * @param name TRC 10/20 symbol name.
@@ -1692,7 +1694,7 @@ export class BlockchainOperationsService {
      * Deploy an Algorand ERC-20-equivalent smart contract to the blockchain and a virtual account
      * <h4>4 credits per API call.</h4><br/>
      * <p>Deploy an Algorand ERC-20-equivalent smart contract. This is a helper method, which is combination of
-     * <a href="#operation/createErc20">Register new Algorand ERC20 token in the ledger</a> and <a href="#operation/AlgoDeployErc20Blockchain">Deploy blockchain ERC-20</a>.<br/>
+     * <a href="#operation/registerErc20Token">Register new Algorand ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
      * <br/>
      * <br/>
      * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
@@ -1725,7 +1727,7 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * Send Algos from a virtual account to the blockchain
+     * Send ALGO from a virtual account to the blockchain
      * <p><b>4 credits per API call</b></p>
      * <p>Send Algos or ERC-20-equivalent Algorand tokens from a virtual account (even from a virtual account without deposit addresses adssigned) to the Algorand blockchain.</p>
      * <p>The recipient has to agree in advance to receive assets because Algorand charges users for storing assets on their addresses, and an Algorand blockchain address by default does not receive assets unless explicitly agreed. Before sending any asset from a virtual account to the blockchain, make sure that the recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">has agreed to receive the assets</a> to their address.</p>
@@ -1734,8 +1736,8 @@ export class BlockchainOperationsService {
      * <li>If a server connection is unavailable, the withdrawal request is cancelled.</li>
      * <li>If the transfer to the blockchain is successful, but the Tatum infrastructure cannot be accesses, the ID of the blockchain transaction is returned and you have to <a href="https://apidoc.tatum.io/tag/Withdrawal#operation/completeWithdrawal" target="_blank">complete the withdrawal request manually</a>. Otherwise, all other withdrawals will be pending.</li>
      * </ul>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When sending Algos or ERC-20-equivalent Algorand tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When sending Algos or ERC-20-equivalent Algorand tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
      *

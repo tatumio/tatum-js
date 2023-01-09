@@ -2,9 +2,11 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type TransferPolygonBlockchainKMS = {
     /**
-     * Additional data, that can be passed to blockchain transaction as data property. Only for MATIC transactions.
+     * Additional data that can be passed to a blockchain transaction as a data property; must be in the hexadecimal format
      */
     data?: string;
     /**
@@ -19,21 +21,9 @@ export type TransferPolygonBlockchainKMS = {
      * Currency to transfer from Polygon Blockchain Account. ERC20 tokens BETH, BBTC, BADA, WMATIC, BDOT, BXRP, BLTC, BBCH are available only for mainnet use.
      */
     currency: 'BETH' | 'BBTC' | 'BADA' | 'WMATIC' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'MATIC';
+    fee?: CustomFee;
     /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
-    /**
-     * Amount to be sent in Ether.
+     * Amount to be sent.
      */
     amount: string;
     /**

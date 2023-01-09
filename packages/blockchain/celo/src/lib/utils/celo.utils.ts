@@ -16,6 +16,7 @@ import {
   MintMultiTokenBatchCelo,
   MintMultiTokenCelo,
   MintNftCelo,
+  MintNftKMSCelo,
   TATUM_API_CONSTANTS,
   TransferCeloBlockchain,
   TransferMultiTokenBatchCelo,
@@ -44,11 +45,7 @@ export interface CeloTransactionConfig {
   feeCurrency?: string
 }
 
-export type ChainMintErc721Celo =
-  | MintNftCelo & {
-      signatureId?: string
-      chain: 'CELO'
-    }
+export type ChainMintErc721Celo = MintNftCelo | MintNftKMSCelo
 
 export type ChainMintNftCelo = FromPrivateKeyOrSignatureId<MintNftCelo>
 

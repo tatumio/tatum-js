@@ -7,6 +7,8 @@ import {
   BurnMultiToken,
   BurnMultiTokenBatch,
   BurnNft,
+  BurnNftAlgo,
+  BurnNftCelo,
   BuyAssetOnMarketplace,
   CallCeloSmartContractMethod,
   CallReadSmartContractMethod,
@@ -36,6 +38,7 @@ import {
   MintMultiToken,
   MintMultiTokenBatch,
   MintNft,
+  NftErc721OrCompatibleService,
   PendingTransaction,
   SellAssetOnMarketplace,
   SignatureId,
@@ -107,7 +110,7 @@ export type ChainMintMultipleNft = FromPrivateKeyOrSignatureId<MintMultipleNft> 
   erc20?: string
 }
 
-export type ChainBurnErc721 = FromPrivateKeyOrSignatureId<BurnNft>
+export type ChainBurnErc721 = Parameters<typeof NftErc721OrCompatibleService['nftBurnErc721']>[0]
 
 export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<TransferNft>
 

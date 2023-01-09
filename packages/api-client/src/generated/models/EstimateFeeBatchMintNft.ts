@@ -22,7 +22,7 @@ export type EstimateFeeBatchMintNft = {
     /**
      * Contract address of NFT token
      */
-    contractAddress?: string;
+    contractAddress: string;
     /**
      * Token IDs
      */
