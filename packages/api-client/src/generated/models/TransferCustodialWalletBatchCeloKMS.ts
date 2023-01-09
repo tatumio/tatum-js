@@ -68,13 +68,13 @@ export type TransferCustodialWalletBatchCeloKMS = {
      */
     signatureId: string;
     /**
-     * (Only if the signature ID is mnemonic-based) The index of the specific address from the mnemonic
+     * (Only if the signature ID is mnemonic-based) The index of the "master address" that was generated from the mnemonic
      */
     index?: number;
     /**
-     * The currency to pay for the gas fee
+     * The currency to pay for the gas fee.
      */
-    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * The nonce to be set to the transfer transaction; if not present, the last known nonce will be used
      */

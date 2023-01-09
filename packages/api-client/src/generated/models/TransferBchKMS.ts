@@ -28,10 +28,6 @@ export type TransferBchKMS = {
      */
     fee?: string;
     /**
-     * Used to parametrize withdrawal as a change address for left coins from transaction. XPub or attr must be used.
-     */
-    attr?: string;
-    /**
      * Signature hash of the mnemonic, which will be used to sign transactions locally.
      * All signature Ids should be present, which might be used to sign transaction.
      * Tatum KMS does not support keyPair type of off-chain transaction, only mnemonic based.

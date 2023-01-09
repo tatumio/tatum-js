@@ -34,5 +34,5 @@ export type ChainDeployAlgoErc20 = {
     /**
      * The transaction fee in Algos
      */
-    fee?: string;
+    fee: string;
 }

@@ -2,12 +2,18 @@ import { Blockchain } from '@tatumio/shared-core'
 import { flowTxService } from './flow.tx'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
 import { FlowTxType } from '../flow.constants'
-import { PendingTransaction, TransactionHash } from '@tatumio/api-client'
+import {
+  FlowAddressXpub,
+  FlowCreateAddressFromPubKeySecret,
+  PendingTransaction,
+  SignatureId,
+  TransactionHash,
+} from '@tatumio/api-client'
 import { flowBlockchain } from './flow.blockchain'
 import { flowProvider } from './flow.provider'
 import { FlowSDKArguments } from '../flow.sdk'
 
-type TransactionHashPromise = Promise<{ txId: string; address: string } | { txId: string }>
+type TransactionHashPromise = Promise<FlowAddressXpub | TransactionHash>
 
 export const flowKmsService = (args: FlowSDKArguments & { blockchain: Blockchain }) => {
   return {
@@ -27,7 +33,7 @@ export const flowKmsService = (args: FlowSDKArguments & { blockchain: Blockchain
             publicKey: body.publicKey,
             account: body.account,
             privateKey: fromPrivateKeys[0],
-          })) as TransactionHashPromise
+          })) as Awaited<TransactionHashPromise>
         case FlowTxType.ADD_PK_TO_ACCOUNT:
           return (await txService.account.send.publicKeySignedTransaction({
             publicKey: body.publicKey,

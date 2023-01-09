@@ -105,7 +105,7 @@ describe('SDK - nft', () => {
 
     testHelper.expectMockCalled(api.nftGetMetadataErc721, [chain, contractAddress, tokenId, accountId])
 
-    expect(result.originalUrl).toBe(imageUrl)
-    expect(result.publicUrl).toBe(`https://gateway.pinata.cloud/ipfs/${imageUrl}`)
+    expect(result?.originalUrl).toBe(imageUrl)
+    expect(result?.publicUrl).toBe(`https://gateway.pinata.cloud/ipfs/${imageUrl}`)
   })
 })

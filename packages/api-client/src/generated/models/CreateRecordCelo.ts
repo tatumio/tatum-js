@@ -27,7 +27,7 @@ export type CreateRecordCelo = {
      */
     nonce?: number;
     /**
-     * The blockchain address to store the data on<br/>If not provided, the data will be stored on the address from which the transaction is made
+     * The blockchain address to store the data on<br/>If not provided, the data will be stored on the address from which the transaction is made.
      */
     to?: string;
 }

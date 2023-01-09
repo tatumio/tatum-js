@@ -27,6 +27,7 @@ export async function algoFungibleExample() {
     from: senderAddress,
     fromPrivateKey: senderSecret,
     digits: 1,
+    fee: '0.001',
   })) as TransactionHash
 
   console.log(`Deployed algo fungible token with txID ${fungibleDeployed.txId}`)

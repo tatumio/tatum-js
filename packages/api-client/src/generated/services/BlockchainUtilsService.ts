@@ -22,7 +22,7 @@ export class BlockchainUtilsService {
      * <li>Klaytn</li>
      * <li>Polygon</li>
      * <li>TRON</li>
-     * <li>XinFix</li>
+     * <li>XinFin</li>
      * </ul>
      *
      * @param chain The blockchain to work with

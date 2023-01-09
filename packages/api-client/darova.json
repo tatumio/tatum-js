@@ -1,0 +1,74 @@
+{
+  "type": "object",
+  "properties": {
+    "chain": {
+      "type": "string",
+      "example": "CELO",
+      "description": "The blockchain to work with",
+      "enum": [
+        "CELO"
+      ]
+    },
+    "contractAddress": {
+      "maxLength": 42,
+      "minLength": 42,
+      "description": "Address of token",
+      "example": "0x687422eEA2cB73B5d3e242bA5456b782919AFc85",
+      "type": "string"
+    },
+    "methodName": {
+      "minLength": 1,
+      "maxLength": 500,
+      "description": "Name of the method to invoke on smart contract.",
+      "type": "string",
+      "example": "transfer"
+    },
+    "methodABI": {
+      "type": "object",
+      "description": "ABI of the method to invoke."
+    },
+    "params": {
+      "type": "array",
+      "example": [
+        "0x632"
+      ],
+      "items": {
+        "type": "string"
+      },
+      "description": "Parameters of the method to be invoked."
+    },
+    "fromPrivateKey": {
+      "type": "string",
+      "maxLength": 66,
+      "example": "0x05e150c73f1920ec14caa1e0b6aa09940899678051a78542840c2668ce5080c2",
+      "minLength": 66,
+      "description": "Private key of sender address. Private key, or signature Id must be present."
+    },
+    "nonce": {
+      "type": "number",
+      "minimum": 0,
+      "description": "The nonce to be set to the transaction; if not present, the last known nonce will be used"
+    },
+    "fee": {
+      "$ref": "#/components/schemas/CustomFee"
+    },
+    "feeCurrency": {
+      "type": "string",
+      "description": "The currency in which the transaction fee will be paid",
+      "enum": [
+        "CELO",
+        "CUSD",
+        "CEUR"
+      ]
+    }
+  },
+  "required": [
+    "chain",
+    "contractAddress",
+    "params",
+    "methodABI",
+    "fromPrivateKey",
+    "methodName",
+    "feeCurrency"
+  ]
+}

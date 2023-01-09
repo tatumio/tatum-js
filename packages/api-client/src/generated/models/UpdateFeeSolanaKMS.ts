@@ -4,11 +4,11 @@
 
 export type UpdateFeeSolanaKMS = {
     /**
-     * Blockchain to work with.
+     * The blockchain to work with
      */
     chain: 'SOL';
     /**
-     * Blockchain address of the smart contract
+     * The blockchain address of the marketplace smart contract
      */
     contractAddress: string;
     /**

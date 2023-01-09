@@ -38,9 +38,9 @@ export type TransferCustodialWalletCelo = {
      */
     fromPrivateKey: string;
     /**
-     * The currency to pay for the gas fee
+     * The currency to pay for the gas fee.
      */
-    feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
+    feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
     /**
      * The nonce to be set to the transfer transaction; if not present, the last known nonce will be used
      */

@@ -2,13 +2,15 @@
 /* tslint:disable */
 /* eslint-disable */
 
+import type { CustomFee } from './CustomFee';
+
 export type UpdateFee = {
     /**
-     * Blockchain to work with.
+     * The blockchain to work with
      */
     chain: 'ETH' | 'ONE' | 'BSC' | 'KLAY' | 'MATIC';
     /**
-     * Address of the marketplace smart contract.
+     * The blockchain address of the marketplace smart contract
      */
     contractAddress: string;
     /**
@@ -16,24 +18,12 @@ export type UpdateFee = {
      */
     marketplaceFee: number;
     /**
-     * Private key of sender address. Private key, or signature Id must be present.
+     * The private key of the blockchain address from which the fee will be deducted
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * Custom defined fee. If not present, it will be calculated automatically.
-     */
-    fee?: {
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in Gwei.
-         */
-        gasPrice: string;
-    };
+    fee?: CustomFee;
 }

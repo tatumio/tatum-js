@@ -186,7 +186,7 @@ const sendBchVirtualAccountTransaction = async (
         mnemonic: 'mnemonic' in body ? body.mnemonic : undefined,
         xpub: 'xpub' in body ? body.xpub : undefined,
         keyPair: 'keyPair' in body ? Object.assign(body.keyPair, [] as KeyPair[]) : undefined,
-        attr: body.attr,
+        attr: 'keyPair' in body ? body.attr : undefined,
       },
       isTestnet,
       body.multipleAmounts,

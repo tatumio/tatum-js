@@ -16,9 +16,9 @@ export type TransferKcsBlockchainKMS = {
      */
     to: string;
     /**
-     * Currency to transfer from Kcs Blockchain Account. ERC20 tokens BETH, BBTC, BADA, WMATIC, BDOT, BXRP, BLTC, BBCH, KCS are available only for mainnet use.
+     * Currency to transfer from Kcs Blockchain Account.
      */
-    currency: 'BETH' | 'BBTC' | 'BADA' | 'WMATIC' | 'BDOT' | 'BXRP' | 'BLTC' | 'BBCH' | 'MATIC' | 'KCS';
+    currency: 'KCS';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */

@@ -44,7 +44,7 @@ export type TransferLtcKeyPair = {
         privateKey?: string;
     }>;
     /**
-     * Used to parametrize withdrawal as a change address for left coins from transaction. XPub or attr must be used.
+     * Used to parametrize withdrawal as a change address for left coins from transaction.
      */
     attr: string;
     /**

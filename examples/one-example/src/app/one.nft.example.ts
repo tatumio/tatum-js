@@ -63,9 +63,9 @@ export async function oneNftExample() {
 
   // Get NFT token metadata
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetMetadataErc721
-  const { data } = await oneSDK.nft.getNFTMetadataURI(Currency.ONE, contractAddress, tokenId)
+  const response = await oneSDK.nft.getNFTMetadataURI(Currency.ONE, contractAddress, tokenId)
 
-  console.log(`Token metadata: ${data}`)
+  console.log(`Token metadata: ${JSON.stringify(response)}`)
 
   // Get all minted NFTs in the collection. Returns all NFTs this contract minted.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetBalanceErc721

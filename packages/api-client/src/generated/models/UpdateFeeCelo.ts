@@ -6,15 +6,15 @@ import type { CustomFee } from './CustomFee';
 
 export type UpdateFeeCelo = {
     /**
-     * Blockchain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
     /**
-     * Address of the marketplace smart contract.
+     * The blockchain address of the marketplace smart contract
      */
     contractAddress: string;
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
@@ -22,11 +22,11 @@ export type UpdateFeeCelo = {
      */
     marketplaceFee: number;
     /**
-     * Private key of sender address. Private key, or signature Id must be present.
+     * The private key of the blockchain address from which the fee will be deducted
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     fee?: CustomFee;

@@ -28,10 +28,6 @@ export type TransferDogeMnemonic = {
      */
     multipleAmounts?: Array<string>;
     /**
-     * Used to parametrize withdrawal as a change address for left coins from transaction. XPub or attr must be used.
-     */
-    attr?: string;
-    /**
      * Mnemonic seed - usually 12-24 words with access to whole wallet.
      * Either mnemonic, keyPair or signature Id must be present - depends on the type of account and xpub.
      * Tatum KMS does not support keyPair type of off-chain transaction, only mnemonic based.

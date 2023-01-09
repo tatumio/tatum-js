@@ -10,7 +10,7 @@ export type UpdateCashbackValueForAuthorNft = {
      */
     chain: 'BSC' | 'ETH' | 'KCS' | 'KLAY' | 'MATIC' | 'ONE';
     /**
-     * The ID of the NFT to update royalty information for.
+     * The ID of the NFT to update royalty information for
      */
     tokenId: string;
     /**

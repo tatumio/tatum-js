@@ -12,6 +12,10 @@ export type FlowAccount = {
      */
     balance?: number;
     /**
+     * FUSD Balance of the account
+     */
+    fusdBalance?: string;
+    /**
      * Account code
      */
     code?: string;

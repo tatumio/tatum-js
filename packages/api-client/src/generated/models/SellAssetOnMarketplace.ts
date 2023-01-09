@@ -28,7 +28,7 @@ export type SellAssetOnMarketplace = {
      */
     listingId: string;
     /**
-     * Amount of the assets to be sent. For ERC-721 tokens, enter amount only in case of native currency cashback.
+     * Amount of the assets to be sent. For ERC-721 tokens, enter amount only in case of native currency cashback. In case of ERC-1155 this field is required and must be greater than 0
      */
     amount?: string;
     /**
@@ -48,7 +48,7 @@ export type SellAssetOnMarketplace = {
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to Ethereum transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**

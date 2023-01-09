@@ -32,10 +32,6 @@ export type UpdateMarketplaceSolanaKMS = {
      */
     requiresSignOff?: boolean;
     /**
-     * Set to "true" to allow the marketplace to change the sale price that the seller intentionally set to 0; if not set, defaults to "false" (the marketplace cannot change the sale price)
-     */
-    canChangeSalePrice?: boolean;
-    /**
      * The KMS identifier of the private key of the marketplace authority
      */
     signatureId: string;

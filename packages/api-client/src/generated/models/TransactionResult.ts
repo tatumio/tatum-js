@@ -4,7 +4,7 @@
 
 export type TransactionResult = {
     /**
-     * Transaction internal reference - unique identifier within Tatum ledger. In order of failure, use this value to search for problems.
+     * The internal reference to the transaction (a unique identifier of the transaction within the virtual account); if the transaction fails, use this reference to search through the logs
      */
     reference?: string;
 }

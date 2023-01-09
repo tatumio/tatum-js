@@ -14,7 +14,7 @@ export type TransferCeloBlockchainKMS = {
      */
     nonce?: number;
     /**
-     * Currency of the transaction
+     * Currency of the transaction.
      */
     currency: 'CELO' | 'CUSD' | 'CEUR';
     /**

@@ -105,7 +105,7 @@ export class AccountService {
         pageSize?: number,
         page?: number,
         sort?: 'asc' | 'desc',
-        sortBy?: '_id' | 'account_number' | 'account_balance' | 'available_balance',
+        sortBy?: 'id' | 'account_number' | 'account_balance' | 'available_balance',
         active?: boolean,
         onlyNonZeroBalance?: boolean,
         frozen?: boolean,

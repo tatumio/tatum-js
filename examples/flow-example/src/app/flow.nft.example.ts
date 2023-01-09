@@ -62,9 +62,9 @@ export async function flowNftExample() {
 
   // Get NFT token metadata
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetMetadataErc721
-  const { data } = await flowSDK.nft.getNFTMetadataURI(Currency.FLOW, contractAddress, tokenId, account)
+  const response = await flowSDK.nft.getNFTMetadataURI(Currency.FLOW, contractAddress, tokenId, account)
 
-  console.log(`Token metadata: ${data}`)
+  console.log(`Token metadata: ${JSON.stringify(response)}`)
 
   // Get all minted NFTs in the collection. Returns all NFTs this contract minted.
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetBalanceErc721

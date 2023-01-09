@@ -8,15 +8,15 @@ export type TransferNftAlgoKMS = {
      */
     chain: 'ALGO';
     /**
-     * Blockchain address to send NFT token from
+     * The blockchain address to transfer the NFT from
      */
     from: string;
     /**
-     * Blockchain address to send NFT token to
+     * The blockchain address to transfer the NFT to
      */
     to: string;
     /**
-     * AssetID of token.
+     * The asset ID (the ID of the NFT)
      */
     contractAddress: string;
     /**
@@ -24,11 +24,11 @@ export type TransferNftAlgoKMS = {
      */
     fee?: string;
     /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
+     * The KMS identifier of the private key of the sender's blockchain address
      */
     signatureId: string;
     /**
-     * The total amount of NFT fractions to transfer. Defaults to 1 - which means 1 fraction of NFT will be transferred. This is only valid for <a href="https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts" target="_blank">Fractional NFTs.</a>
+     * (For <a href="https://developer.algorand.org/docs/get-started/tokenization/nft/#fractional-nfts" target="_blank">fractional NFTs</a> only) The number of NFT fractions to transfer; if not set, defaults to 1, which means that one fraction of the NFT will be transferred
      */
     amount?: number;
 }

@@ -52,8 +52,8 @@ export class NodeRpcService {
                      * <li><a href="https://docs.avax.network/apis/avalanchego/apis/x-chain" target="_blank">Avalanche X-Chain</a></li>
                      * <li><a href="https://developer.bitcoin.org/reference/rpc/index.html" target="_blank">Bitcoin</a></li>
                      * <li><a href="https://docs.bitcoincashnode.org/doc/json-rpc/" target="_blank">Bitcoin Cash</a></li>
+                     * <li><a href="https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list" target="_blank">BNB Beacon Chain</a></li>
                      * <li><a href="https://docs.bnbchain.org/docs/rpc" target="_blank">BNB Smart Chain</a></li>
-                     * <li><a href="https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list" target="_blank">BNB Beacon chain</a></li>
                      * <li><a href="https://docs.cardano.org/cardano-components/cardano-rosetta" target="_blank">Cardano</a></li>
                      * <li><a href="https://explorer.celo.org/api-docs" target="_blank">Celo</a></li>
                      * <li><a href="https://cronos.org/docs/resources/chain-integration.html" target="_blank">Cronos</a></li>
@@ -62,6 +62,7 @@ export class NodeRpcService {
                      * <li><a href="https://developers.eos.io/welcome/latest/reference/nodeos-rpc-api-reference" target="_blank">EOSIO</a></li>
                      * <li><a href="https://ethereum.org/en/developers/docs/apis/json-rpc/" target="_blank">Ethereum</a></li>
                      * <li><a href="https://docs.fantom.foundation/api/public-api-endpoints" target="_blank">Fantom</a></li>
+                     * <li><a href="https://developers.flow.com/http-api" target="_blank">Flow</a></li>
                      * <li><a href="https://developers.gnosischain.com/for-developers/developer-resources" target="_blank">Gnosis</a></li>
                      * <li><a href="https://docs.harmony.one/home/developers/api" target="_blank">Harmony</a></li>
                      * <li><a href="https://docs.klaytn.foundation/dapp/json-rpc" target="_blank">Klaytn</a></li>
@@ -69,7 +70,6 @@ export class NodeRpcService {
                      * <li><a href="https://guide.kusama.network/docs/build-node-interaction/" target="_blank">Kusama</a></li>
                      * <li><a href="https://lisk.com/documentation/lisk-service/references/api.html" target="_blank">Lisk</a></li>
                      * <li><a href="https://litecoin.org/" target="_blank">Litecoin</a></li>
-                     * <li><a href="https://developers.flow.com/http-api" target="_blank">Flow</a></li>
                      * <li><a href="https://docs.near.org/api/rpc/introduction" target="_blank">NEAR</a></li>
                      * <li><a href="https://docs.neo.org/docs/en-us/reference/rpc/latest-version/api.html" target="_blank">Neo</a></li>
                      * <li><a href="https://docs.oasis.dev/oasis-core/oasis-node/rpc/" target="_blank">Oasis Network</a></li>
@@ -161,9 +161,9 @@ export class NodeRpcService {
                                      * <p>This API is supported for the following blockchains:</p>
                                      * <ul>
                                      * <li><a href="https://developer.algorand.org/docs/rest-apis/restendpoints/" target="_blank">Algorand</a></li>
+                                     * <li><a href="https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list" target="_blank">BNB Beacon Chain</a></li>
                                      * <li><a href="https://docs.elrond.com/sdk-and-tools/rest-api/nodes/" target="_blank">Elrond</a></li>
                                      * <li><a href="https://developers.stellar.org/api" target="_blank">Stellar</a></li>
-                                     * <li><a href="https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list" target="_blank">BNB Beacon chain</a></li>
                                      * </ul>
                                      *
                                      * @param chain Blockchain to communicate with.
@@ -205,11 +205,11 @@ export class NodeRpcService {
                                      * <p>This API is supported for the following blockchains:</p>
                                      * <ul>
                                      * <li><a href="https://developer.algorand.org/docs/rest-apis/restendpoints/" target="_blank">Algorand</a></li>
-                                     * <li><a href="https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list" target="_blank">BNB Beacon chain</a></li>
+                                     * <li><a href="https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list" target="_blank">BNB Beacon Chain</a></li>
                                      * <li><a href="https://docs.elrond.com/sdk-and-tools/rest-api/nodes/" target="_blank">Elrond</a></li>
+                                     * <li><a href="https://developers.flow.com/http-api" target="_blank">Flow</a></li>
                                      * <li><a href="https://lisk.com/documentation/lisk-service/references/api.html" target="_blank">Lisk</a></li>
                                      * <li><a href="https://developers.stellar.org/api" target="_blank">Stellar</a></li>
-                                     * <li><a href="https://developers.flow.com/http-api" target="_blank">Flow</a></li>
                                      * <li><a href="https://opentezos.com/tezos-basics/cli-and-rpc/" target="_blank">Tezos</a></li>
                                      * <li><a href="https://developers.tron.network/reference/full-node-api-overview" target="_blank">TRON</a></li>
                                      * </ul>

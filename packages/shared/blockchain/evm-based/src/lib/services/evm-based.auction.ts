@@ -12,10 +12,10 @@ import {
   BidOnAuctionCelo,
   BidOnAuctionCeloKMS,
   BidOnAuctionKMS,
-  CancelOrSettleAuction,
-  CancelOrSettleAuctionCelo,
-  CancelOrSettleAuctionCeloKMS,
-  CancelOrSettleAuctionKMS,
+  CancelAuction,
+  CancelAuctionCelo,
+  CancelAuctionKMS,
+  CancelAuctionCeloKMS,
   CreateAuction,
   CreateAuctionCelo,
   CreateAuctionCeloKMS,
@@ -139,7 +139,7 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns transaction data to be broadcast to blockchain, or signatureId in case of Tatum KMS
        */
-      auctionCancelSignedTransaction: async (body: CancelAuction, provider?: string) =>
+      auctionCancelSignedTransaction: async (body: CancelSettleAuction, provider?: string) =>
         auctionCancelSignedTransaction(body, web3, provider),
       /**
        * Settle auction. There must be buyer present for that auction. NFT will be sent to the bidder, assets to the seller and fee to the operator.
@@ -147,7 +147,7 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      auctionSettleSignedTransaction: async (body: SettleAuction, provider?: string) =>
+      auctionSettleSignedTransaction: async (body: CancelSettleAuction, provider?: string) =>
         auctionSettleSignedTransaction(body, web3, provider),
     },
     send: {
@@ -259,18 +259,18 @@ export const evmBasedAuction = (args: {
        * @param provider optional provider to enter. if not present, Tatum Web3 will be used.
        * @returns {txId: string} Transaction ID of the operation, or signatureID in case of Tatum KMS
        */
-      auctionCancelSignedTransaction: async (body: CancelAuction, provider?: string) => {
+      auctionCancelSignedTransaction: async (body: CancelSettleAuction, provider?: string) => {
         if (body.signatureId) {
-          return AuctionService.cancelAuction(body as CancelOrSettleAuctionKMS | CancelOrSettleAuctionCeloKMS)
+          return AuctionService.cancelAuction(body as CancelAuctionKMS | CancelAuctionCeloKMS)
         } else {
           return broadcastFunction({
             txData: await auctionCancelSignedTransaction(body, web3, provider),
           })
         }
       },
-      auctionSettleSignedTransaction: async (body: SettleAuction, provider?: string) => {
+      auctionSettleSignedTransaction: async (body: CancelSettleAuction, provider?: string) => {
         if (body.signatureId) {
-          return AuctionService.settleAuction(body as CancelOrSettleAuctionKMS)
+          return AuctionService.settleAuction(body as CancelAuctionKMS)
         } else {
           return broadcastFunction({
             txData: await auctionSettleSignedTransaction(body, web3, provider),
@@ -508,15 +508,18 @@ const auctionBidSignedTransaction = async (
   )
 }
 
-export type SettleAuction = (
-  | FromPrivateKeyOrSignatureId<CancelOrSettleAuction>
-  | FromPrivateKeyOrSignatureId<CancelOrSettleAuctionCelo>
+// @TODO WHHHYYYYY ???
+export type CancelSettleAuction = (
+  | FromPrivateKeyOrSignatureId<CancelAuction>
+  | FromPrivateKeyOrSignatureId<CancelAuctionCelo>
 ) &
   Partial<Amount>
 
-export type CancelAuction = SettleAuction
-
-const auctionCancelSignedTransaction = async (body: CancelAuction, web3: EvmBasedWeb3, provider?: string) => {
+const auctionCancelSignedTransaction = async (
+  body: CancelSettleAuction,
+  web3: EvmBasedWeb3,
+  provider?: string,
+) => {
   const client = web3.getClient(provider, body?.fromPrivateKey)
   const methodName = 'cancelAuction'
 
@@ -546,7 +549,11 @@ const auctionCancelSignedTransaction = async (body: CancelAuction, web3: EvmBase
   )
 }
 
-const auctionSettleSignedTransaction = async (body: SettleAuction, web3: EvmBasedWeb3, provider?: string) => {
+const auctionSettleSignedTransaction = async (
+  body: CancelSettleAuction,
+  web3: EvmBasedWeb3,
+  provider?: string,
+) => {
   const client = web3.getClient(provider, body?.fromPrivateKey)
 
   const params = [body.id]

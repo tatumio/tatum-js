@@ -23,7 +23,7 @@ export type MintNftMinter = {
      */
     to: string;
     /**
-     * The ID of the NFT.
+     * The ID of the NFT
      */
     tokenId: string;
     /**

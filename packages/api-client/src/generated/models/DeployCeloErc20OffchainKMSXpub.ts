@@ -6,7 +6,7 @@ import type { DeployErc20OffchainKMSXpub } from './DeployErc20OffchainKMSXpub';
 
 export type DeployCeloErc20OffchainKMSXpub = (DeployErc20OffchainKMSXpub & {
     /**
-     * Currency to pay for transaction gas
+     * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
 });

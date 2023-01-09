@@ -6,6 +6,8 @@ import type { SolanaBlock } from '../models/SolanaBlock';
 import type { SolanaBroadcastConfirm } from '../models/SolanaBroadcastConfirm';
 import type { SolanaTransactionHashWithConfirm } from '../models/SolanaTransactionHashWithConfirm';
 import type { SolanaTx } from '../models/SolanaTx';
+import type { SolanaWallet } from '../models/SolanaWallet';
+import type { SolBalance } from '../models/SolBalance';
 import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferSolanaBlockchain } from '../models/TransferSolanaBlockchain';
 import type { TransferSolanaBlockchainKMS } from '../models/TransferSolanaBlockchainKMS';
@@ -19,19 +21,10 @@ export class SolanaService {
      * <h4>1 credit per API call.</h4><br/>
      * <p>Generate Solana private key and account address.</p>
      *
-     * @returns any OK
+     * @returns SolanaWallet OK
      * @throws ApiError
      */
-    public static solanaGenerateWallet(): CancelablePromise<{
-        /**
-         * Generated account address.
-         */
-        address?: string;
-        /**
-         * Generated private key for account.
-         */
-        privateKey?: string;
-    }> {
+    public static solanaGenerateWallet(): CancelablePromise<SolanaWallet> {
         return __request({
             method: 'GET',
             path: `/v3/solana/wallet`,
@@ -119,17 +112,12 @@ export class SolanaService {
      * Get Solana Account balance
      * <h4>1 credit per API call.</h4><br/><p>Get Solana account balance in SOL. This method does not prints any balance of the SPL or NFT tokens on the account.</p>
      * @param address Account address you want to get balance of
-     * @returns any OK
+     * @returns SolBalance OK
      * @throws ApiError
      */
     public static solanaGetBalance(
         address: string,
-    ): CancelablePromise<{
-        /**
-         * Balance in SOL
-         */
-        balance?: string;
-    }> {
+    ): CancelablePromise<SolBalance> {
         return __request({
             method: 'GET',
             path: `/v3/solana/account/balance/${address}`,

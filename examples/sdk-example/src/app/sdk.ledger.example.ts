@@ -52,10 +52,6 @@ export async function ledgerOrderBookExample() {
     currency2AccountId: '603bddc9fbf47f7a279d76ca',
     feeAccountId: '603bddc9fbf47f7a279d76ca',
     fee: 1.5,
-    // @TODO OPENAPI should be optional?
-    attr: {
-      sealDate: Date.now(),
-    },
   })
 
   const trades = await tatumSDK.ledger.orderBook.getHistorical({

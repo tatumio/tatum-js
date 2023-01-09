@@ -3,10 +3,9 @@ import {
   ApproveErc20Spending,
   ApproveNftTransfer,
   AuctionBid,
-  CancelAuction,
+  CancelSettleAuction,
   CreateAuctionEvm,
   DeployNftAuction,
-  SettleAuction,
   UpdateAuctionFeeRecipient,
 } from '@tatumio/shared-blockchain-evm-based'
 import { GanacheAccount } from './ganacheHelper'
@@ -453,7 +452,7 @@ export interface SdkWithAuctionFunctions {
     auctionApproveNftTransferSignedTransaction(body: ApproveNftTransfer, provider?): Promise<string>
     auctionApproveErc20TransferSignedTransaction(body: ApproveErc20Spending, provider?): Promise<string>
     auctionBidSignedTransaction(body: AuctionBid, provider?): Promise<string>
-    auctionCancelSignedTransaction(body: CancelAuction, provider?): Promise<string>
-    auctionSettleSignedTransaction(body: SettleAuction, provider?): Promise<string>
+    auctionCancelSignedTransaction(body: CancelSettleAuction, provider?): Promise<string>
+    auctionSettleSignedTransaction(body: CancelSettleAuction, provider?): Promise<string>
   }
 }

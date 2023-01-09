@@ -4,11 +4,11 @@
 
 export type Erc20Response = {
     /**
-     * Account ID with the type of currency as created ERC20/BEP20 token symbol. Supply of ERC20/BEP20 token will be credited as soon as ERC20/BEP20 token is deployed to the Ethereum blockchain.
+     * The ID of the created virtual account with the currency set to the token name (the <code>symbol</code> parameter of the request body)<br/>The token supply will be created as soon as the token smart contract is deployed on the blockchain.
      */
     accountId?: string;
     /**
-     * Initial address of new created ERC20/BEP20 token. On this address, all tokens will be minted.
+     * The deposit address of the virtual account
      */
     address?: string;
 }

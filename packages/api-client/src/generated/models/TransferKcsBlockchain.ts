@@ -16,9 +16,9 @@ export type TransferKcsBlockchain = {
      */
     to: string;
     /**
-     * Currency to transfer from Kcs Blockchain Account. ERC20 tokens USDC and USDT are available only for mainnet use.
+     * Currency to transfer from Kcs Blockchain Account.
      */
-    currency: 'KCS' | 'USDC_KCS' | 'USDT_KCS';
+    currency: 'KCS';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */

@@ -21,7 +21,7 @@ export type MintNftKMS = {
      */
     contractAddress: string;
     /**
-     * The ID of the NFT.
+     * The ID of the NFT
      */
     tokenId: string;
     /**
