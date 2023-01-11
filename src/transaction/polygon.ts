@@ -72,7 +72,8 @@ const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?:
   if (signatureId) {
     return JSON.stringify(tx)
   }
-  tx.gas = gasLimit || await client.eth.estimateGas({ to, data: data || '', value: tx.value })
+  const estimatedGas = await client.eth.estimateGas({ to, data: data || '', value: tx.value })
+  tx.gas = gasLimit || estimatedGas
   return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string
 }
 
