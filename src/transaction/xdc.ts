@@ -164,7 +164,8 @@ const prepareErc20SignedTransactionAbstraction = async (
     return JSON.stringify(tx)
   }
 
-  tx.gas = fee?.gasLimit ?? await client.eth.estimateGas(tx)
+  const estimatedGas = await client.eth.estimateGas(tx)
+  tx.gas = fee?.gasLimit ?? estimatedGas
   return (await client.eth.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string
 }
 

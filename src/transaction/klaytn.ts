@@ -72,7 +72,9 @@ const prepareGeneralTx = async (client: Caver, testnet: boolean, fromPrivateKey?
     return JSON.stringify(tx)
   }
   tx.from = client.klay.accounts.wallet.getAccount(0).address
-  tx.gas = gasLimit || await client.klay.estimateGas({ to, data: data || '', value: tx.value as string })
+
+  const estimatedGas = await client.klay.estimateGas({ to, data: data || '', value: tx.value as string })
+  tx.gas = gasLimit || estimatedGas
   // @ts-ignore
   return (await client.klay.accounts.signTransaction(tx, fromPrivateKey as string)).rawTransaction as string
 }
