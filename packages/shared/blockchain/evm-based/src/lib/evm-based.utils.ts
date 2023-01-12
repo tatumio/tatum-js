@@ -199,6 +199,14 @@ export const evmBasedUtils = {
       throw new EvmBasedSdkError({ error: e as Error, code })
     }
   },
+  alreadyMinted: async (contract: any, tokenId: string) => {
+    try {
+      await contract.methods.ownerOf(tokenId).call()
+      return true
+    } catch (e) {
+      return false
+    }
+  }
 }
 
 export type StoreDataTransactionBody = WithoutChain<CreateRecord> & {
