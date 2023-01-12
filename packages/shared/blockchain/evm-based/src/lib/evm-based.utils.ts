@@ -206,7 +206,7 @@ export const evmBasedUtils = {
     } catch (e) {
       return false
     }
-  }
+  },
 }
 
 export type StoreDataTransactionBody = WithoutChain<CreateRecord> & {
