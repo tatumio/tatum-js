@@ -31,7 +31,7 @@
   "dependencies": {
     "@binance-chain/javascript-sdk": "^4.1.1",
     "@celo-tools/celo-ethers-wrapper": "^0.1.0",
-    "@elrondnetwork/erdjs": "^9.2.4",
+    "@elrondnetwork/erdjs": "^10.1.0",
     "@harmony-js/crypto": "^0.1.56",
     "@metaplex-foundation/mpl-auction-house": "^2.3.0",
     "@metaplex-foundation/mpl-token-metadata": "^2.5.0",
