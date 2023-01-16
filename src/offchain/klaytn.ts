@@ -69,5 +69,6 @@ export const sendKlaytntnOffchainTransaction = async (testnet: boolean, body: Tr
             console.log(e)
             return { id }
         }
+        throw e
     }
 }

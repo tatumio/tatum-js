@@ -69,5 +69,6 @@ export const sendCeloOffchainTransaction = async (testnet: boolean, body: Transf
             console.log(e)
             return {id}
         }
+        throw e
     }
 }

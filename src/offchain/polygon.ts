@@ -69,5 +69,6 @@ export const sendPolygonOffchainTransaction = async (testnet: boolean, body: Tra
             console.log(e)
             return {id}
         }
+        throw e
     }
 }

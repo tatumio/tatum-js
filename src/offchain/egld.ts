@@ -49,5 +49,6 @@ export const sendEgldOffchainTransaction = async (testnet: boolean, body: EgldTr
             console.log(e)
             return {id}
         }
+        throw e
     }
 }
