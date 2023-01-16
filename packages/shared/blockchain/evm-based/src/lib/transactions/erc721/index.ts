@@ -27,6 +27,8 @@ import {
 import { Erc721Token_General } from '../../contracts/erc721General'
 import { Erc721Token_Cashback } from '../../contracts/erc721Cashback'
 import { blockchainHelper, EvmBasedBlockchain } from '@tatumio/shared-core'
+import { EvmBasedSdkError } from '../../evm-based.sdk.errors'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const mintSignedTransactionMinter = async (body: MintNftMinter) => {
   const request = await NftErc721OrCompatibleService.nftMintErc721(body)
@@ -54,7 +56,7 @@ const mintSignedTransaction = async ({
 
   const alreadyMinted = await evmBasedUtils.alreadyMinted(contract, tokenId)
   if (alreadyMinted) {
-    throw new Error('NFT with given tokenId was already minted.')
+    throw new EvmBasedSdkError({ code: SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_ALREADY_MINTED })
   }
 
   if (contractAddress) {
@@ -103,7 +105,7 @@ const mintCashbackSignedTransaction = async ({
 
   const alreadyMinted = await evmBasedUtils.alreadyMinted(contract, tokenId)
   if (alreadyMinted) {
-    throw new Error('NFT with given tokenId was already minted.')
+    throw new EvmBasedSdkError({ code: SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_ALREADY_MINTED })
   }
 
   if (contractAddress) {
@@ -461,7 +463,7 @@ const mintProvenanceSignedTransaction = async ({
 
   const alreadyMinted = await evmBasedUtils.alreadyMinted(contract, tokenId)
   if (alreadyMinted) {
-    throw new Error('NFT with given tokenId was already minted.')
+    throw new EvmBasedSdkError({ code: SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_ALREADY_MINTED })
   }
 
   const data = erc20
