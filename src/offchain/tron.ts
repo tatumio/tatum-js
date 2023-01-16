@@ -78,5 +78,6 @@ export const sendTronOffchainTransaction = async (testnet: boolean, body: Transf
             console.log(e)
             return {id}
         }
+        throw e
     }
 }

@@ -51,5 +51,6 @@ export const sendXdcOffchainTransaction = async (testnet: boolean, body: Transfe
             console.log(e)
             return {id}
         }
+        throw e
     }
 }
