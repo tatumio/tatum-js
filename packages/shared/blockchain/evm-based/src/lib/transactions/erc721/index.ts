@@ -27,6 +27,8 @@ import {
 import { Erc721Token_General } from '../../contracts/erc721General'
 import { Erc721Token_Cashback } from '../../contracts/erc721Cashback'
 import { blockchainHelper, EvmBasedBlockchain } from '@tatumio/shared-core'
+import { EvmBasedSdkError } from '../../evm-based.sdk.errors'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 const mintSignedTransactionMinter = async (body: MintNftMinter) => {
   const request = await NftErc721OrCompatibleService.nftMintErc721(body)
@@ -51,6 +53,11 @@ const mintSignedTransaction = async ({
 
   const client = web3.getClient(provider, fromPrivateKey)
   const contract = new client.eth.Contract(Erc721Token_Cashback.abi as any, contractAddress)
+
+  const alreadyMinted = await evmBasedUtils.alreadyMinted(contract, tokenId)
+  if (alreadyMinted) {
+    throw new EvmBasedSdkError({ code: SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_ALREADY_MINTED })
+  }
 
   if (contractAddress) {
     const tx: TransactionConfig = {
@@ -95,6 +102,11 @@ const mintCashbackSignedTransaction = async ({
   const contract = new client.eth.Contract(Erc721Token_Cashback.abi as any, contractAddress)
   const cashbacks: string[] = cashbackValues!
   const cb = cashbacks.map((c) => `0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`)
+
+  const alreadyMinted = await evmBasedUtils.alreadyMinted(contract, tokenId)
+  if (alreadyMinted) {
+    throw new EvmBasedSdkError({ code: SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_ALREADY_MINTED })
+  }
 
   if (contractAddress) {
     const tx: TransactionConfig = {
@@ -447,6 +459,11 @@ const mintProvenanceSignedTransaction = async ({
     cashbackValues.forEach((c) => cb.push(`0x${new BigNumber(c).multipliedBy(100).toString(16)}`))
     fixedValues.forEach((c) => fval.push(`0x${new BigNumber(client.utils.toWei(c, 'ether')).toString(16)}`))
     authorAddresses?.map((a) => authors.push(a))
+  }
+
+  const alreadyMinted = await evmBasedUtils.alreadyMinted(contract, tokenId)
+  if (alreadyMinted) {
+    throw new EvmBasedSdkError({ code: SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_ALREADY_MINTED })
   }
 
   const data = erc20
