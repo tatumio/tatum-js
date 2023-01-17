@@ -4,7 +4,7 @@ import { TatumXdcSDK } from '@tatumio/xdc'
 const xdcSDK = TatumXdcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 export async function xdcTxWithGasPumpExample(): Promise<void> {
-  // Transfer an asset from a gas pump address
+  // Transfer an asset from a gas pump address.
   // https://apidoc.tatum.io/tag/Gas-pump#operation/TransferCustodialWallet
   const transferFromCustodialWallet = (await xdcSDK.custodial.send.transferFromCustodialWallet({
     chain: 'XDC',
@@ -17,7 +17,7 @@ export async function xdcTxWithGasPumpExample(): Promise<void> {
   })) as TransactionHash
   console.log(`Gas pump transaction sent with transaction ID: ${transferFromCustodialWallet.txId}`)
 
-  // Transfer multiple assets from a gas pum address
+  // Transfer multiple assets from a gas pump address.
   // https://apidoc.tatum.io/tag/Gas-pump#operation/TransferCustodialWalletBatch
   const sentBatchTransferFromCustodialWallet = (await xdcSDK.custodial.send.batchTransferFromCustodialWallet({
     chain: 'XDC',
@@ -41,7 +41,7 @@ export async function xdcTxWithGasPumpExample(): Promise<void> {
   })) as TransactionHash
   console.log(`Gas pump transaction sent with transaction ID: ${sentBatchTransferFromCustodialWallet.txId}`)
 
-  // Approve the transfer of an asset from a gas pump address
+  // Approve the transfer of an asset from a gas pump address.
   // https://apidoc.tatum.io/tag/Gas-pump#operation/ApproveTransferCustodialWallet
   const sentApproveFromCustodialWallet = (await xdcSDK.custodial.send.approveFromCustodialWallet({
     chain: 'XDC',
@@ -56,7 +56,7 @@ export async function xdcTxWithGasPumpExample(): Promise<void> {
     `Gas pump transaction Approve request with transaction ID: ${sentApproveFromCustodialWallet.txId}`,
   )
 
-  // Transfer multiple assets from a gas pump address
+  // Transfer multiple assets from a gas pump address.
   // https://apidoc.tatum.io/tag/Gas-pump#operation/TransferCustodialWalletBatch
   const sentCustodialWalletBatch = (await xdcSDK.custodial.send.custodialWalletBatch({
     chain: 'XDC',
