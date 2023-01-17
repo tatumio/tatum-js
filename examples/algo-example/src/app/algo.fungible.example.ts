@@ -6,19 +6,18 @@ const SLEEP_SECONDS = 10
 const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
 /**
- * In order for these examples to work you need to fund your address and use the address & private key combination that has coins
- * Fund your address here: https://bank.testnet.algorand.network
+ * Fund your account with ALGO using https://bank.testnet.algorand.network so that the account has sufficient funds to make transactions. 
  */
 export async function algoFungibleExample() {
-  // This address wil DEPLOY(and mint), TRANSFER fungible to Receiver Address and BURN it
+  // This address will deploy a fungible token smart contract, then will mint and transfer fungible tokens to the recipient address, and will finally burn them.
   const senderAddress = '<PUT SENDER ADDRESS HERE>'
   const senderSecret = '<PUT SENDER PRIVATE KEY HERE>'
 
-  // This address will RECEIVE fungible token
+  // This address will receive the fungible tokens.
   const receiverAddress = '<PUT RECEIVER ADDRESS HERE>'
   const receiverSecret = '<PUT RECEIVER PRIVATE KEY HERE>'
 
-  // deploy(mint) fungible token transaction
+  // Deploy a fungible token smart contract and mint the fungible tokens.
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy
   const fungibleDeployed = (await algoSDK.token.fungible.send.createFTSignedTransaction({
     symbol: 'FUNGIBLE_SYMBOL',
@@ -32,14 +31,14 @@ export async function algoFungibleExample() {
 
   console.log(`Deployed algo fungible token with txID ${fungibleDeployed.txId}`)
 
-  // If during this time the transaction is not confirmed, then the waiting time should be increased.
-  // In a real application, the wait mechanism must be implemented properly without using this
+  // If the transaction does not get confirmed within the specified waiting period, increase the waiting time.
+  // In a real-life application, implement the waiting mechanism properly, without using this example.
   console.log(
     `Waiting ${SLEEP_SECONDS} seconds for the transaction [${fungibleDeployed.txId}] to appear in a block`,
   )
   await sleepSeconds(SLEEP_SECONDS)
 
-  // fetch deployed contract address from transaction hash
+  // Fetch the address of the deployed smart contract from the hash of the deployment transaction.
   // https://apidoc.tatum.io/tag/Blockchain-utils#operation/SCGetContractAddress
   const { contractAddress } = await algoSDK.token.nft.getNFTContractAddress(
     Currency.ALGO,
@@ -48,7 +47,7 @@ export async function algoFungibleExample() {
 
   console.log(`Asset id`, contractAddress)
 
-  // Enable receiving asset on receiver account
+  // Allow the recipient address to receive the tokens.
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset
   const assetEnabled = (await algoSDK.token.receiveAsset(
     {
@@ -59,7 +58,7 @@ export async function algoFungibleExample() {
   )) as TransactionHash
   console.log(`Enabled asset id ${contractAddress} with transaction hash: ${assetEnabled.txId}`)
 
-  // send fungible token transaction
+  // Send some amount of the fungible tokens to the recipient address.
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Transfer
   const fungibleTransferred = (await algoSDK.token.fungible.send.transferFTSignedTransaction({
     to: receiverAddress,
@@ -75,7 +74,7 @@ export async function algoFungibleExample() {
   )
   await sleepSeconds(SLEEP_SECONDS)
 
-  // send back fungible tokens transaction (to later burn it)
+  // Send the fungible tokens from the recipient address back to the sender address so that the sender address could burn them.
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Transfer
   const fungibleTransferredBack = (await algoSDK.token.fungible.send.transferFTSignedTransaction({
     to: senderAddress,
@@ -91,7 +90,7 @@ export async function algoFungibleExample() {
   )
   await sleepSeconds(SLEEP_SECONDS)
 
-  // burn fungible tokens transaction
+  // Burn the fungible tokens.
   // https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Burn
   const fungibleBurned = (await algoSDK.token.fungible.send.burnFTSignedTransaction({
     contractAddress,

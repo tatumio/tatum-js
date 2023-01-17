@@ -4,16 +4,16 @@ import { TransactionHash } from '@tatumio/api-client'
 export async function algoTxExample() {
   const algoSDK = TatumAlgoSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
-  // generate "from" and "to" addresses for wallets
+  // Generate two Algorand accounts: one to send some ALGO and the other one to receive the ALGO.
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateWallet
   const { secret } = algoSDK.wallet.generateWallet()
   const fromPrivateKey = secret
   const recipientAddress = algoSDK.wallet.generateWallet()
   const to = recipientAddress.address
 
-  // FUND YOUR ACCOUNT WITH ALGOs FROM https://bank.testnet.algorand.network/
+  // Fund the sender Algorand account with ALGO using https://bank.testnet.algorand.network/.
 
-  // Send Algos to an Algorand account using private key
+  // Send some amount of ALGO from the sender account to the recipient account. Sign the transaction with your private key.
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainTransfer
   const txData = (await algoSDK.transaction.send.signedTransaction(
     {
