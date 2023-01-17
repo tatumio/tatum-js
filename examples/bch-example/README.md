@@ -1,41 +1,50 @@
-# How to use TatumSDK with BCH
+# Tatum JavaScript SDK for Bitcoin Cash (BCH)
 
-These examples should guide you through some basic operations of the BCH blockchain. You will be able to:
+We prepared a set of examples to help you complete some basic operations on Bitcoin Cash using the SDK. Using these examples, you will be able to do the following:
 
-- generate BCH wallet
-- send BCH to another wallet
-- check the balance of your wallet
+- Generate a Bitcoin Cash wallet.
+- Send BCH from your wallet to another Bitcoin Cash wallet.
+- Broadcast a transaction to the blockchain.
+- Get the current exchange rates.
+- Generate a virtual account for BCH.
+- Generate a deposit address to the virtual account.
+- Get information from the blockchain.
 
-- generate virtual account for BCH
-- assign deposit address to virtual account
+The examples are written in TypeScript, but you can use them in JavaScript too.
 
-## How to start
+## Before you start
 
-In order to start, you need to create an API Key at [Tatum Dashboard](https://dashboard.tatum.io).
+The examples follow the ECMAScript 6 (ES6) standard. Therefore, make sure that you have Node.js 10 or higher.
 
-You need to install the @tatum/bch package from npm.
+## Get the SDK ready
 
-```bash
-npm install @tatumio/bch
-```
+1. Get your API key from the Tatum Dashboard.
 
-or
+   [Log in with your Tatum account](https://dashboard.tatum.io) or [sign up for free](https://dashboard.tatum.io/sign-up).
 
-```bash
-yarn add @tatumio/bch
-```
+1. Install the `@tatum/bch` package.
 
-At the end, you need to initialize new SDK with your API Key.
+   ```bash
+   npm install @tatumio/bch
+   ```
 
-```typescript
-import { TatumBchSDK } from '@tatumio/bch'
-const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
-```
+   or
 
-Examples are written in TypeScript, but you can use them in JavaScript as well. We are following ES6 standard, so you
-need to have Node.js version 10 or higher.
+   ```bash
+   yarn add @tatumio/bch
+   ```
 
-### How to generate BCH wallet
+1. Initialize the newly installed SDK with your API key.
+
+   ```typescript
+   import { TatumBchSDK } from '@tatumio/bch'
+
+   const bchSDK = TatumBchSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+   ```
+
+## Review the examples
+
+Start with generating a Bitcoin Cash wallet:
 
 ```typescript
 import { TatumBchSDK } from '@tatumio/bch'
@@ -44,22 +53,11 @@ const { mnemonic, xpub } = await bchSDK.wallet.generateWallet()
 console.log(`Mnemonic: ${mnemonic} - xpub: ${xpub}`)
 ```
 
-### How to read information from the blockchain
+Check out more examples to see what you want to do next:
 
-You can find examples [here](./src/app/bch.blockchain.example.ts).
-
-### How to generate wallets, privatekeys, addresses for bch
-
-You can find examples [here](./src/app/bch.wallet.example.ts).
-
-### How to send transaction to another wallet
-
-You can find examples [here](./src/app/bch.tx.example.ts).
-
-### How to execute virtual accounts methods for bch
-
-You can find examples [here](./src/app/bch.virtualAccount.example.ts).
-
-### How to get exchange rates for bch
-
-You can find examples [here](./src/app/bch.root.example.ts).
+- [Generate an address and private key for a Bitcoin Cash wallet.](./src/app/bch.wallet.example.ts)
+- [Send BCH from your wallet to another Bitcoin Cash wallet.](./src/app/bch.tx.example.ts)
+- [Broadcast a transaction to the blockchain.](./src/app/bch.tx.broadcast.example.ts)
+- [Get the current exchange rates](./src/app/bch.root.example.ts)
+- [Generate a virtual account for BCH and transfer funds from this account to a blockchain address.](./src/app/bch.virtualAccount.example.ts)
+- [Get information from the blockchain.](./src/app/bch.blockchain.example.ts)
