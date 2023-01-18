@@ -9,5 +9,11 @@ export const xrpWallet = (): SdkWithXrpLikeWalletFunction => {
       const { address, secret } = api.generateAddress()
       return { address: address as string, secret }
     },
+    isValidAddress: (address: string): boolean => {
+      return new RippleAPI().isValidAddress(address)
+    },
+    isValidSecret: (secret: string): boolean => {
+      return new RippleAPI().isValidSecret(secret)
+    }
   }
 }

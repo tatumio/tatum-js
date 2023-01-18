@@ -8,5 +8,19 @@ export const xlmWallet = (): SdkWithXrpLikeWalletFunction => {
       const key = Keypair.random()
       return { address: key.publicKey(), secret: key.secret() }
     },
+    isValidAddress(address: string): boolean {
+      try {
+        return Keypair.fromPublicKey(address).publicKey() === address
+      } catch {
+        return false
+      }
+    },
+    isValidSecret(secret: string): boolean {
+      try {
+        return Keypair.fromSecret(secret).secret() === secret
+      } catch {
+        return false
+      }
+    },
   }
 }

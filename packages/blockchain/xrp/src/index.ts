@@ -6,3 +6,4 @@ export type XrpApiCallsType = {
 }
 
 export * from './lib/xrp.sdk'
+export * from './lib/services/xrp.sdk.wallet'

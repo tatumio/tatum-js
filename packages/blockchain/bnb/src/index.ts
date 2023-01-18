@@ -5,3 +5,4 @@ export type BnbApiCallsType = {
 }
 
 export * from './lib/bnb.sdk'
+export * from './lib/services/bnb.wallet'

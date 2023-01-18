@@ -84,6 +84,8 @@ export const abstractBlockchainSdk = (args: {
 
 export interface SdkWithXrpLikeWalletFunction {
   wallet(): XrpWallet | XlmWallet
+  isValidAddress(address: string): boolean
+  isValidSecret(secret: string): boolean
 }
 
 export type FromSecretOrSignatureId<T extends { fromSecret?: string }> = Omit<T, 'fromSecret'> &

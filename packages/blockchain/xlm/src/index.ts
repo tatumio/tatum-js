@@ -5,3 +5,4 @@ export type XlmApiCallsType = {
 }
 
 export * from './lib/xlm.sdk'
+export * from './lib/services/xlm.sdk.wallet'
