@@ -1,6 +1,6 @@
 {
   "name": "tatumio",
-  "version": "2.0.1-alpha.411",
+  "version": "2.0.1-alpha.412",
   "license": "MIT",
   "repository": "https://github.com/tatumio/tatum-js",
   "scripts": {
@@ -41,7 +41,7 @@
     "@onflow/types": "^1.0.5",
     "@onflow/util-encode-key": "^1.0.3",
     "@solana/spl-token": "0.3.6",
-    "@solana/web3.js": "^1.50.1",
+    "@solana/web3.js": "1.56.2",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "algosdk": "^1.13.1",
     "axios": "^0.26.0",
