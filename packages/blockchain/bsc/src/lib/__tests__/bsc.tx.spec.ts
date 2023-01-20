@@ -12,7 +12,6 @@ import {
   nativeTestFactory,
   smartContractTestFactory,
 } from '@tatumio/shared-testing-evm-based'
-import { Currency } from '@tatumio/api-client'
 
 describe('BscSDK - tx', () => {
   const sdk = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
