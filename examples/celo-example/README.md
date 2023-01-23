@@ -76,7 +76,7 @@ You can find examples [here](./src/app/celo.blockchain.example.ts).
 
 ### How to send native transactions to another wallet
 
-You can find examples [here](./src/app/celo.tx.example.ts).
+You can find examples [here](./src/app/celo.tx.example.ts).123
 
 ### How to work with fungible tokens (ERC20)
 
