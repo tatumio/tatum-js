@@ -15,9 +15,9 @@ export const EvmBasedErrorCodesFromNode = {
     substring: 'gas required exceeds allowance',
     error({ e, address }: { e: Error; address?: string }) {
       const errorMsg = address
-        ? `Insufficient funds to send transaction from account ${address}, returned with error ${e}`
-        : `Insufficient funds to send transaction, returned with error ${e}`
-      new EvmBasedSdkError({
+        ? `Insufficient funds to send transaction from account ${address}, ${e}`
+        : `Insufficient funds to send transaction, ${e}`
+      return new EvmBasedSdkError({
         code: SdkErrorCode.EVM_TRANSACTION_ERROR,
         error: new Error(errorMsg),
       })
