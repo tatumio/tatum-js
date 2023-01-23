@@ -10,7 +10,7 @@ import { BigNumber as BN } from '@ethersproject/bignumber'
 import BigNumber from 'bignumber.js'
 import { Erc20Token } from './contracts'
 import { EvmBasedWeb3 } from './services/evm-based.web3'
-import { EvmBasedSdkError } from './evm-based.sdk.errors'
+import { EvmBasedErrorCodesFromNode, EvmBasedSdkError } from './evm-based.sdk.errors'
 
 export const evmBasedUtils = {
   generateAddressFromXPub: (xpub: string, i: number, prefix = ADDRESS_PREFIX.EVM): string => {
@@ -76,7 +76,7 @@ export const evmBasedUtils = {
     }
 
     tx.from = tx.from || client.eth.defaultAccount || 0
-    tx.gas = tx.gas ?? (await client.eth.estimateGas(tx))
+    tx.gas = tx.gas ?? (await evmBasedUtils.estimateGasLimit({ client, tx, fromPrivateKey }))
 
     if (!fromPrivateKey) {
       throw new Error('signatureId or fromPrivateKey has to be defined')
@@ -92,7 +92,31 @@ export const evmBasedUtils = {
 
     return signedTransaction.rawTransaction
   },
-
+  estimateGasLimit: async ({
+    client,
+    tx,
+    fromPrivateKey,
+  }: {
+    client: Web3
+    tx: TransactionConfig
+    fromPrivateKey?: string
+  }) => {
+    try {
+      return await client.eth.estimateGas(tx)
+    } catch (e) {
+      if (
+        e instanceof Error &&
+        e.message.includes(EvmBasedErrorCodesFromNode.GAS_REQUIRED_EXCEEDS_ALLOWANCE.substring)
+      ) {
+        if (fromPrivateKey) {
+          const { address } = client.eth.accounts.privateKeyToAccount(fromPrivateKey)
+          throw EvmBasedErrorCodesFromNode.GAS_REQUIRED_EXCEEDS_ALLOWANCE.error({ e, address })
+        }
+        throw EvmBasedErrorCodesFromNode.GAS_REQUIRED_EXCEEDS_ALLOWANCE.error({ e })
+      }
+      throw e
+    }
+  },
   validateErc20Balance: async (client: Web3, privateKey: string, contractAddress: string, amount: string) => {
     const account = client.eth.accounts.privateKeyToAccount(privateKey)
     const contract = new client.eth.Contract(Erc20Token.abi as any, contractAddress)

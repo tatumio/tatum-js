@@ -1,4 +1,4 @@
-import { EvmBasedKMSServiceArgs, EvmBasedSdkError } from '@tatumio/shared-blockchain-evm-based'
+import { EvmBasedKMSServiceArgs, EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import { Currency, PendingTransaction } from '@tatumio/api-client'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
@@ -14,9 +14,13 @@ export const kcsKmsService = (args: EvmBasedKMSServiceArgs) => {
       const transactionConfig = JSON.parse(tx.serializedTransaction)
 
       if (!transactionConfig.gas) {
-        transactionConfig.gas = await client.eth.estimateGas({
-          to: transactionConfig.to,
-          data: transactionConfig.data,
+        transactionConfig.gas = await evmBasedUtils.estimateGasLimit({
+          client,
+          tx: {
+            to: transactionConfig.to,
+            data: transactionConfig.data,
+          },
+          fromPrivateKey,
         })
       }
 
