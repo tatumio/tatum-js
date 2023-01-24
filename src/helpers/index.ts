@@ -28,6 +28,8 @@ import {
   prepareXdcSmartContractWriteMethodInvocation,
 } from '../transaction';
 import Caver from 'caver-js'
+import { isNil, isEmpty } from 'lodash';
+import { HarmonyAddress } from '@harmony-js/crypto'
 
 export const helperBroadcastTx = async (chain: Currency, txData: string, signatureId?: string) => {
   switch (chain) {
@@ -115,3 +117,16 @@ export const helperPrepareSCCall = async (testnet: boolean, body: any, clazz: Cl
       throw new Error('Unsupported combination of inputs.');
   }
 };
+
+export const normalizeAddress = (chain: Currency, address: string) => {
+    if (isNil(chain) || isEmpty(address)) return address
+    switch (chain) {
+        case Currency.ONE:
+            return address?.startsWith('one') ? new HarmonyAddress(address).basicHex : address
+        case Currency.XDC:
+            if (!address?.startsWith('xdc')) return address
+            return address?.trim()?.replace('xdc', '0x')
+        default:
+            return address
+    }
+}

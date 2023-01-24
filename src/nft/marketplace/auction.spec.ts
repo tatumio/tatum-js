@@ -7,7 +7,8 @@ import {
     sendCeloSmartContractReadMethodInvocationTransaction
 } from '../../transaction';
 import {mintNFTWithUri} from '../nft';
-import {deployAuction, sendAuctionApproveErc20Transfer, sendAuctionApproveNftTransfer, sendAuctionBid, sendAuctionCreate, sendAuctionSettle} from './auction';
+import {deployAuction,
+    existsAuction, sendAuctionApproveErc20Transfer, sendAuctionApproveNftTransfer, sendAuctionBid, sendAuctionCreate, sendAuctionSettle} from './auction';
 
 const sleep = async (time = 7000) => new Promise(r => setTimeout(r, time));
 
@@ -402,4 +403,17 @@ describe('Auction  tests', () => {
             console.log(await sendAuctionSettle(true, settle, 'https://rpc-mumbai.maticvigil.com'));
         });
     });
+
+    describe('Exists', () => {
+        it('true', async () => {
+            const result = await existsAuction(true, Currency.CELO, '1', '0x9788B3e257ACDA8E772f111D8A70984390181b23', 'https://alfajores-forno.celo-testnet.org');
+            expect(result).toEqual(true);
+        });
+
+        it('false', async () => {
+            const result = await existsAuction(true, Currency.CELO, '19595', '0x9788B3e257ACDA8E772f111D8A70984390181b23', 'https://alfajores-forno.celo-testnet.org');
+            expect(result).toEqual(false);
+        });
+    });
+
 });
