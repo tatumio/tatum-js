@@ -150,6 +150,10 @@ const transferSignedTransaction = async ({
     nonce: body.nonce,
   }
 
+  if (body.fromPrivateKey) {
+    await evmBasedUtils.validateErc20Balance(client, body.fromPrivateKey, contractAddress, body.amount)
+  }
+
   return evmBasedUtils.prepareSignedTransactionAbstraction(
     client,
     tx,
