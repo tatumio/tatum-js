@@ -4,7 +4,7 @@ import erc1155_abi from '../../contracts/erc1155/erc1155_abi';
 import erc721_abi from '../../contracts/erc721Cashback/erc721_abi';
 import { auction } from '../../contracts/marketplace';
 import { getErc20Decimals, prepareApproveErc20 } from '../../fungible';
-import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall } from '../../helpers';
+import { helperBroadcastTx, helperGetWeb3Client, helperPrepareSCCall, normalizeAddress } from '../../helpers';
 import {
   ApproveErc20,
   ApproveNftTransfer,
@@ -24,6 +24,7 @@ import {
   preparePolygonDeployAuctionSignedTransaction,
 } from '../../transaction';
 import Caver from 'caver-js'
+import { ZERO_ADDRESS } from '../../constants'
 
 export interface Auction {
   /*
@@ -208,12 +209,34 @@ export const prepareAuctionApproveErc20Transfer = async (testnet: boolean, body:
  */
 export const prepareAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) => {
   await validateBody(body, CreateAuction);
+
+  if (await existsAuction(testnet, body.chain, body.id, body.contractAddress, provider )) {
+    throw new Error(`Auction with id ${body.id} already exist`);
+  }
+
   const params = [body.id, body.isErc721, body.nftAddress.trim(), `0x${new BigNumber(body.tokenId).toString(16)}`,
     body.seller.trim(), `0x${new BigNumber(body.amount || 0).toString(16)}`,
     `0x${new BigNumber(body.endedAt).toString(16)}`, body.erc20Address || '0x0000000000000000000000000000000000000000'];
   body.amount = undefined;
   return await helperPrepareSCCall(testnet, body, CreateAuction, 'createAuction', params, undefined, provider, auction.abi);
 };
+
+export const existsAuction = async (testnet: boolean, chain: Currency, id: string, contractAddress: string, provider?: string) => {
+    let data = []
+    try {
+        const web3 = helperGetWeb3Client(testnet, chain, provider);
+        const c = web3 instanceof Caver ? web3.klay : web3.eth
+        // @ts-ignore
+        const contract = new c.Contract(auction.abi, normalizeAddress(chain, contractAddress))
+        data = await contract.methods.getAuction(id).call()
+        if (data[0] === ZERO_ADDRESS.ZERO_ADDRESS_42_CHARS) {
+            return false
+        }
+    } catch (e) {
+        return false
+    }
+    return true
+}
 
 /**
  * Bid on the auction. Buyer must either send native assets with this operation, or approve ERC20 token spending before.
