@@ -11,7 +11,7 @@ import {
 } from '@tatumio/api-client'
 import { amountUtils, SdkErrorCode, toHexString } from '@tatumio/shared-abstract-sdk'
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
-import { Erc20Token, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
+import { Erc20Token, evmBasedUtils, EvmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
 import {
@@ -284,8 +284,14 @@ const prepareApproveSignedTransaction = async (
   return celoUtils.prepareSignedTransactionAbstraction(wallet, tx)
 }
 
-export const erc20 = (args: { broadcastFunction: BroadcastFunction }) => {
+export const erc20 = (args: { broadcastFunction: BroadcastFunction; web3: EvmBasedWeb3 }) => {
   return {
+    decimals: async (contractAddress: string, provider?: string) => {
+      const web3Client = args.web3.getClient(provider)
+
+      // TODO: any type
+      return new web3Client.eth.Contract(Erc20Token.abi as any, contractAddress).methods.decimals().call()
+    },
     prepare: {
       /**
        * Prepare a signed Celo deploy erc20 transaction with the private key locally. Nothing is broadcasted to the blockchain.
