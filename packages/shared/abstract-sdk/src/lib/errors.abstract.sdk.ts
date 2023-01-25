@@ -262,8 +262,5 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
   ],
 
   // ERC721
-  [
-    SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_ALREADY_MINTED,
-    `Token with provided tokenId already minted`,
-  ],
+  [SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_ALREADY_MINTED, `Token with provided tokenId already minted`],
 ])
