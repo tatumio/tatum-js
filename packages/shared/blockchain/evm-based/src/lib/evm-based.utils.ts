@@ -57,14 +57,14 @@ export const evmBasedUtils = {
     gasPrice?: string,
     provider?: string,
   ) => {
-    const gasPriceDefined = gasPrice
-      ? client.utils.toWei(gasPrice, 'gwei')
-      : await web3.getGasPriceInWei(provider)
     const tx: TransactionConfig = {
       from: 0,
       ...transaction,
       gas: gasLimit,
-      gasPrice: gasPriceDefined,
+    }
+
+    if (gasPrice) {
+      tx.gasPrice = client.utils.toWei(gasPrice, 'gwei')
     }
 
     if (signatureId) {
