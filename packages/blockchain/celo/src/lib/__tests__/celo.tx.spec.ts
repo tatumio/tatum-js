@@ -1,6 +1,6 @@
 import { expectHexString, REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumCeloSDK } from '../celo.sdk'
-import { smartContractTestFactory } from '@tatumio/shared-testing-evm-based'
+import { erc20TestFactory, smartContractTestFactory } from '@tatumio/shared-testing-evm-based'
 import { CeloFeeCurrency } from '../utils/celo.utils'
 import { SdkErrorCode, SdkErrorMessage } from '@tatumio/shared-abstract-sdk'
 import { EvmBasedSdkError } from '@tatumio/shared-blockchain-evm-based'
@@ -163,6 +163,16 @@ describe('CeloSDK - tx', () => {
   })
 
   describe('erc20', () => {
+    describe('decimals', () => {
+      it('valid', async () => {
+        const result = await sdk.erc20.decimals(
+          TEST_DATA.CELO.TESTNET.ERC_20!.CONTRACT_ADDRESS,
+          TEST_DATA.CELO.TESTNET.PROVIDER,
+        )
+        expect(result).toBeDefined()
+      })
+    })
+
     describe('prepare', () => {
       describe('deploy', () => {
         celoTestFactory.testSign({
