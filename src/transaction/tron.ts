@@ -421,7 +421,7 @@ export const prepareTronTrc20SignedTransaction = async (testnet: boolean, body: 
         ? body.from
         : tronWeb.address.fromHex(tronWeb.address.fromPrivateKey(body.fromPrivateKey))
 
-    const balance = new BigNumber( ((await contractInstance.balanceOf(from).call()) as BigNumber).toNumber() || 0)
+    const balance = new BigNumber( ((await contractInstance.balanceOf(from).call()) as BigNumber)?.toString() || 0)
     const valueToSend = new BigNumber(amount).multipliedBy(new BigNumber(10).pow(decimals))
     if (valueToSend.isGreaterThan(balance)) {
         const balanceInTrx = balance.dividedBy(new BigNumber(10).pow(decimals))
