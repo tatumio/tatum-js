@@ -260,4 +260,7 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
     SdkErrorCode.EVM_INVALID_ADDRESS_ARRAY,
     `invalid address (argument="address", value="someinvalidaddress", code=INVALID_ARGUMENT, version=address/5.7.0) (argument=null, value="someinvalidaddress", code=INVALID_ARGUMENT, version=abi/5.7.0)`,
   ],
+
+  // ERC721
+  [SdkErrorCode.EVM_ERC721_CANNOT_PREPARE_MINT_ALREADY_MINTED, `Token with provided tokenId already minted`],
 ])
