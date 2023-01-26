@@ -206,18 +206,15 @@ export const celoUtils = {
   },
   checkCeloBalance: async (wallet: CeloWallet, amount: string) => {
     const balance = await wallet.getBalance()
-    const balanceInCelo = celoUtils.fromWeiToEther(new BigNumber(balance.toString()))
+    const balanceInCelo = new BigNumber(balance.toString())
     if (!balance || balanceInCelo.lt(amount)) {
       throw new EvmBasedSdkError({
         code: SdkErrorCode.INSUFFICIENT_FUNDS,
         error: new Error(
-          `Insufficient funds send transaction from account ${await wallet.getAddress()} -> available balance is ${balance}, required balance is ${amount}`,
+          `Insufficient funds send transaction from account ${await wallet.getAddress()} -> available balance is ${balance.toString()}, required balance is ${amount}`,
         ),
       })
     }
-  },
-  fromWeiToEther(amount: BigNumber) {
-    return new BigNumber(Web3.utils.fromWei(amount.toString(), 'ether'))
   },
   baseUnitToEther(amount: BigNumber, decimals: number) {
     return new BigNumber(amount).dividedBy(new BigNumber(10).pow(decimals))
