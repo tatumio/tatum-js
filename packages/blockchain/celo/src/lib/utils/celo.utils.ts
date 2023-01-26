@@ -30,7 +30,10 @@ import { BigNumber as BN } from '@ethersproject/bignumber'
 import { CeloProvider, CeloWallet } from '@celo-tools/celo-ethers-wrapper'
 import { SdkErrorCode, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, httpHelper } from '@tatumio/shared-core'
-import { EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
+import { Erc20Token, EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
+import BigNumber from 'bignumber.js'
+import { Eth } from 'web3-eth'
+import Web3 from 'web3'
 
 export interface CeloTransactionConfig {
   from?: string
@@ -133,16 +136,7 @@ export const celoUtils = {
       if (transaction.value) {
         threshold = threshold.add(transaction.value as string)
       }
-      const address = await wallet.getAddress()
-      const balance = await wallet.getBalance()
-      if (!balance || balance.lt(threshold)) {
-        throw new EvmBasedSdkError({
-          code: SdkErrorCode.INSUFFICIENT_FUNDS,
-          error: new Error(
-            `Insufficient funds send transaction from account ${address} -> available balance is ${balance}, required balance is ${threshold}`,
-          ),
-        })
-      }
+      await celoUtils.checkCeloBalance(wallet, threshold.toString())
     }
 
     return evmBasedUtils.tryCatch(
@@ -190,6 +184,43 @@ export const celoUtils = {
       default:
         return undefined
     }
+  },
+  balanceOf: async (contract: any, wallet: CeloWallet) => {
+    const address = await wallet.getAddress()
+    return contract.methods.balanceOf(address).call()
+  },
+  checkErc20Balance: async (contract: any, wallet: CeloWallet, amount: string) => {
+    const balance = await celoUtils.balanceOf(contract, wallet)
+    const decimals = await contract.methods.decimals().call()
+    const address = await wallet.getAddress()
+    if (!balance || celoUtils.baseUnitToEther(balance, decimals).isLessThan(amount)) {
+      throw new EvmBasedSdkError({
+        code: SdkErrorCode.INSUFFICIENT_FUNDS,
+        error: new Error(
+          `Insufficient funds erc20 transaction from account ${address} -> available balance is ${celoUtils
+            .baseUnitToEther(balance, decimals)
+            .toString()}, required balance is ${amount}`,
+        ),
+      })
+    }
+  },
+  checkCeloBalance: async (wallet: CeloWallet, amount: string) => {
+    const balance = await wallet.getBalance()
+    const balanceInCelo = celoUtils.fromWeiToEther(new BigNumber(balance.toString()))
+    if (!balance || balanceInCelo.lt(amount)) {
+      throw new EvmBasedSdkError({
+        code: SdkErrorCode.INSUFFICIENT_FUNDS,
+        error: new Error(
+          `Insufficient funds send transaction from account ${await wallet.getAddress()} -> available balance is ${balance}, required balance is ${amount}`,
+        ),
+      })
+    }
+  },
+  fromWeiToEther(amount: BigNumber) {
+    return new BigNumber(Web3.utils.fromWei(amount.toString(), 'ether'))
+  },
+  baseUnitToEther(amount: BigNumber, decimals: number) {
+    return new BigNumber(amount).dividedBy(new BigNumber(10).pow(decimals))
   },
 }
 
