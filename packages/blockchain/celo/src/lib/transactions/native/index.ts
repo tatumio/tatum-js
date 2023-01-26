@@ -49,6 +49,9 @@ const transferSignedTransaction = async (
     }
 
     const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+
+    await celoUtils.checkCeloBalance(wallet, amount)
+
     const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
       wallet,
       feeCurrencyContractAddress,
@@ -141,7 +144,7 @@ const prepareCeloOrCUsdSignedTransaction = async (
 
   // TODO: remove ts-ignore
   // @ts-ignore
-  const contract = new new Web3().eth.Contract([TRANSFER_METHOD_ABI], cUsdAddress.trim())
+  const contract = new new Web3().eth.Contract(Erc20Token.abi as any, cUsdAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({
