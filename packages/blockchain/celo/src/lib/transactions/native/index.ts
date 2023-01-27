@@ -11,7 +11,7 @@ import {
   ChainTransferCeloBlockchain,
   ChainTransferCeloOrCUsd,
 } from '../../utils/celo.utils'
-import { EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
+import { EvmBasedSdkError, evmBasedUtils, Erc20Token } from '@tatumio/shared-blockchain-evm-based'
 import { isHex, stringToHex, toHex } from 'web3-utils'
 import { ApiServices, CreateRecordCelo, Currency, TransferCeloBlockchainKMS } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
