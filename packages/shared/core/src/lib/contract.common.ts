@@ -106,27 +106,3 @@ export const CUSTODIAL_PROXY_ABI = {
   stateMutability: 'nonpayable',
   type: 'function',
 }
-
-export const TRANSFER_METHOD_ABI = {
-  constant: false,
-  inputs: [
-    {
-      name: 'to',
-      type: 'address',
-    },
-    {
-      name: 'value',
-      type: 'uint256',
-    },
-  ],
-  name: 'transfer',
-  outputs: [
-    {
-      name: '',
-      type: 'bool',
-    },
-  ],
-  payable: false,
-  stateMutability: 'nonpayable',
-  type: 'function',
-}

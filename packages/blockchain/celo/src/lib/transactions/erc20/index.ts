@@ -25,23 +25,6 @@ import {
 } from '../../utils/celo.utils'
 import { Blockchain } from '@tatumio/shared-core'
 
-const initialize = async (
-  args: Pick<ChainDeployErc20Celo, 'feeCurrency'>,
-  provider?: string,
-  testnet?: boolean,
-  contractAddress?: string,
-) => {
-  const celoProvider = celoUtils.getProvider(provider)
-
-  const web3 = new Web3(provider || `${OpenAPI.BASE}/v3/celo/web3/${TATUM_API_CONSTANTS.API_KEY}`)
-  return {
-    celoProvider,
-    network: await celoProvider.ready,
-    feeCurrencyContractAddress: celoUtils.getFeeCurrency(args.feeCurrency, testnet),
-    contract: new web3.eth.Contract(Erc20Token.abi as any, contractAddress),
-  }
-}
-
 const prepareDeploySignedTransaction = async (
   body: ChainDeployErc20Celo,
   provider?: string,
@@ -49,7 +32,7 @@ const prepareDeploySignedTransaction = async (
 ) => {
   const { fromPrivateKey, name, symbol, supply, address, digits, nonce, fee, signatureId, totalCap } = body
 
-  const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
+  const { celoProvider, network, feeCurrencyContractAddress, contract } = await celoUtils.initErc20Contract(
     body,
     provider,
     testnet,
@@ -103,7 +86,7 @@ const prepareMintSignedTransaction = async (
 ) => {
   const { fromPrivateKey, amount, to, contractAddress, nonce, fee, signatureId } = body
 
-  const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
+  const { celoProvider, network, feeCurrencyContractAddress, contract } = await celoUtils.initErc20Contract(
     body,
     provider,
     testnet,
@@ -149,7 +132,7 @@ const prepareTransferSignedTransaction = async (
 ) => {
   const { fromPrivateKey, to, amount, contractAddress, nonce, signatureId, fee } = body
 
-  const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
+  const { celoProvider, network, feeCurrencyContractAddress, contract } = await celoUtils.initErc20Contract(
     body,
     provider,
     testnet,
@@ -196,7 +179,7 @@ const prepareBurnSignedTransaction = async (
 ) => {
   const { fromPrivateKey, amount, contractAddress, nonce, fee, signatureId } = body
 
-  const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
+  const { celoProvider, network, feeCurrencyContractAddress, contract } = await celoUtils.initErc20Contract(
     body,
     provider,
     testnet,
@@ -242,7 +225,7 @@ const prepareApproveSignedTransaction = async (
 ) => {
   const { fromPrivateKey, amount, spender, contractAddress, nonce, fee, signatureId } = body
 
-  const { celoProvider, network, feeCurrencyContractAddress, contract } = await initialize(
+  const { celoProvider, network, feeCurrencyContractAddress, contract } = await celoUtils.initErc20Contract(
     body,
     provider,
     testnet,

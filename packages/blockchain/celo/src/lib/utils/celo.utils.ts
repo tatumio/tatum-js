@@ -219,6 +219,22 @@ export const celoUtils = {
   baseUnitToEther(amount: BigNumber, decimals: number) {
     return new BigNumber(amount).dividedBy(new BigNumber(10).pow(decimals))
   },
+  initErc20Contract: async (
+    args: Pick<ChainDeployErc20Celo, 'feeCurrency'>,
+    provider?: string,
+    testnet?: boolean,
+    contractAddress?: string,
+  ) => {
+    const celoProvider = celoUtils.getProvider(provider)
+
+    const web3 = new Web3(provider || `${OpenAPI.BASE}/v3/celo/web3/${TATUM_API_CONSTANTS.API_KEY}`)
+    return {
+      celoProvider,
+      network: await celoProvider.ready,
+      feeCurrencyContractAddress: celoUtils.getFeeCurrency(args.feeCurrency, testnet),
+      contract: new web3.eth.Contract(Erc20Token.abi as any, contractAddress),
+    }
+  },
 }
 
 export interface CeloTestMethod {
