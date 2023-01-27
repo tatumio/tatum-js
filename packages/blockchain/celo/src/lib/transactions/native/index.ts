@@ -1,8 +1,7 @@
 import { BroadcastFunction } from '@tatumio/shared-blockchain-abstract'
 import BigNumber from 'bignumber.js'
-import { EvmBasedBlockchain, TRANSFER_METHOD_ABI } from '@tatumio/shared-core'
+import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { CeloWallet } from '@celo-tools/celo-ethers-wrapper'
-import Web3 from 'web3'
 import {
   CELO_CONSTANTS,
   CeloTransactionConfig,
@@ -11,7 +10,7 @@ import {
   ChainTransferCeloBlockchain,
   ChainTransferCeloOrCUsd,
 } from '../../utils/celo.utils'
-import { EvmBasedSdkError, evmBasedUtils, Erc20Token } from '@tatumio/shared-blockchain-evm-based'
+import { EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import { isHex, stringToHex, toHex } from 'web3-utils'
 import { ApiServices, CreateRecordCelo, Currency, TransferCeloBlockchainKMS } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
@@ -142,9 +141,7 @@ const prepareCeloOrCUsdSignedTransaction = async (
       recipient = to.trim()
   }
 
-  // TODO: remove ts-ignore
-  // @ts-ignore
-  const contract = new new Web3().eth.Contract(Erc20Token.abi as any, cUsdAddress.trim())
+  const { contract } = await celoUtils.initErc20Contract(body, provider, testnet, cUsdAddress.trim())
 
   if (signatureId) {
     return JSON.stringify({
