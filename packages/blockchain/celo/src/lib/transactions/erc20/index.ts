@@ -153,6 +153,7 @@ const prepareTransferSignedTransaction = async (
   }
 
   const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
+  await celoUtils.checkErc20Balance(contract, wallet, amount)
   const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
     wallet,
     feeCurrencyContractAddress,
