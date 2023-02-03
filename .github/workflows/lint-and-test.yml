@@ -1,0 +1,25 @@
+name: Lint and test
+
+on: [push, pull_request]
+
+jobs:
+  build_and_test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        nodejs: [12, 14]
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # https://github.com/actions/setup-node
+    - uses: actions/setup-node@v2-beta
+      with:
+        node-version: ${{ matrix.nodejs }}
+
+    - run: yarn install
+    - run: yarn add -D esbuild
+    - run: yarn test
+    - run: yarn lint
+    - run: yarn build-all

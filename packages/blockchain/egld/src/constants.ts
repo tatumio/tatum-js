@@ -1,2 +1,0 @@
-export const ESDT_SYSTEM_SMART_CONTRACT_ADDRESS =
-  'erd1qqqqqqqqqqqqqqqpqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqzllls8a5w6u'
