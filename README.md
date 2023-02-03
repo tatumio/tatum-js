@@ -28,6 +28,10 @@
 
 > **Are you looking for Tatum SDK v1? It has been moved to long living branch [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1)**.
 
+## Status
+
+V2 is currently under active development and considered alpha version. (you can still use LTS version [`v1`](https://github.com/tatumio/tatum-js/tree/v1))
+
 ## Installation
 
 This repository is a monorepo with multiple packages for each blockchain.
@@ -157,8 +161,7 @@ Currently supported blockchain sdks
 
 ### Full package
 
-It is possible to install the full package with all supported blockchain modules, although this is not recommended for
-browser environments due to the size of the dependencies.
+It is possible to install the full package with all supported blockchain modules, although this is not recommended for browser environments due to the size of the dependencies.
 
 ```console
 npm install @tatumio/sdk
@@ -166,11 +169,9 @@ npm install @tatumio/sdk
 
 ### Node.JS & Browser support
 
-Installing package you also need to check if selected package is supported in your environment. Not all packages are
-supported both in node and browser environments.
+Installing package you also need to check if selected package is supported in your environment. Not all packages are supported both in node and browser environments.
 
-Library is written in TypeScript with ES2017 as the target JS version. Library should work in Node.JS (current LTS) and
-in web.
+Library is written in TypeScript with ES2017 as the target JS version. Library should work in Node.JS (current LTS) and in web.
 
 ## Configuration and setup
 
@@ -184,37 +185,43 @@ in web.
 ```js
 // es6
 // import blockchain subpackage or full sdk package
-import {TatumEthSDK} from '@tatumio/eth'
+import { TatumEthSDK } from '@tatumio/eth'
 
 // pass API key from Tatum account available for free at https://dashboard.tatum.io/
-const ethSDK = TatumEthSDK({apiKey: '<Your API Key>'})
+const ethSDK = TatumEthSDK({ apiKey: '<Your API Key>' })
 
 // pick Tatum service available from API docs
 const generatedWallet = await ethSDK.api.ethGenerateWallet('<mnemonic phrase>')
 console.log(generatedWallet)
 ```
 
-Examples | Service type | Path example | Description | ----------- | ----------- |----------- | Api |
-ethSDK.api.ethGenerateAddress | Blockchain native services | Custodial |
-ethSDK.custodial.prepare.generateCustodialWalletSignedTransaction | Custodial wallet services | Fungible tokens |
-ethSDK.fungible.deployToken | ERC20, TRC20, etc. | NFT | ethSDK.nft.deployToken | ERC721, TRC721, etc. | NFT Marketplace
-| ethSDK.auction.bid | NFT Marketplaces services | NFT Auctions | ethSDK.marketplace.getMarketplaceListing | NFT
-Auctions services | Multi tokens | ethSDK.multiToken.deployToken | ERC-1155 services | httpDriver | ethSDK.httpDriver |
-Connect directly to Node | KMS | ethSDK.kms.getAllPending | Tatum KMS | Ledger | ethSDK.ledger.orderBook.newTrade |
-Tatum private Ledger | Virtual accounts | ethSDK.virtualAccount.storeTokenAddress | Tatum Virtual Account services |
-Record | ethSDK.record.storeLog | Blockchain log | Security | ethSDK.security.checkMaliciousAddress | Security utilities
-| Subscriptions | ethSDK.subscriptions.createSubscription | Notification services | Tatum | ethSDK.tatum.freezeApiKey |
-Tatum Ledger custody services | Transaction | ethSDK.transaction.prepare.transferSignedTransaction | Blockchain native
-transfer | Wallet | ethSDK.wallet.generateWallet | Create blockchain wallet and address
+Examples
+| Service type | Path example | Description
+| ----------- | ----------- |-----------
+| Api | ethSDK.api.ethGenerateAddress | Blockchain native services
+| Custodial | ethSDK.custodial.prepare.generateCustodialWalletSignedTransaction | Custodial wallet services
+| Fungible tokens | ethSDK.fungible.deployToken | ERC20, TRC20, etc.
+| NFT | ethSDK.nft.deployToken | ERC721, TRC721, etc.
+| NFT Marketplace | ethSDK.auction.bid | NFT Marketplaces services
+| NFT Auctions | ethSDK.marketplace.getMarketplaceListing | NFT Auctions services
+| Multi tokens | ethSDK.multiToken.deployToken | ERC-1155 services
+| httpDriver | ethSDK.httpDriver | Connect directly to Node
+| KMS | ethSDK.kms.getAllPending | Tatum KMS
+| Ledger | ethSDK.ledger.orderBook.newTrade | Tatum private Ledger
+| Virtual accounts | ethSDK.virtualAccount.storeTokenAddress | Tatum Virtual Account services
+| Record | ethSDK.record.storeLog | Blockchain log
+| Security | ethSDK.security.checkMaliciousAddress | Security utilities
+| Subscriptions | ethSDK.subscriptions.createSubscription | Notification services
+| Tatum | ethSDK.tatum.freezeApiKey | Tatum Ledger custody services
+| Transaction | ethSDK.transaction.prepare.transferSignedTransaction | Blockchain native transfer
+| Wallet | ethSDK.wallet.generateWallet | Create blockchain wallet and address
 
 All examples of SDK usage will be found after completion at https://github.com/tatumio/tatum-js/tree/master/examples
 
 <details>
   <summary style='font-size: 16px; font-weight: bold'>Usage with create-react-app (which uses Webpack 5)</summary>
 
-Webpack v5 introduced breaking changes to Web3 library used in Tatum blockchain services. To enable Tatum SDK in React
-apps you need to follow workaround as
-per [stackoverflow discussion](https://stackoverflow.com/questions/66952972/cannot-add-web3-to-react-project)
+Webpack v5 introduced breaking changes to Web3 library used in Tatum blockchain services. To enable Tatum SDK in React apps you need to follow workaround as per [stackoverflow discussion](https://stackoverflow.com/questions/66952972/cannot-add-web3-to-react-project)
 
 #### 1. Install additional dependencies
 
@@ -243,10 +250,10 @@ yarn add -D react-app-rewired
 
 ```json
 "scripts": {
-"start": "react-app-rewired start",
-"build": "react-app-rewired build",
-"test": "react-app-rewired test",
-"eject": "react-app-rewired eject"
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test",
+    "eject": "react-app-rewired eject"
 },
 ```
 
@@ -254,11 +261,10 @@ yarn add -D react-app-rewired
 
 ## Contributing
 
-Contributions to the Tatum SDK are welcome. Please ensure that you have tested your changes with a local client and have
-added unit test coverage for your code.
+Contributions to the Tatum SDK are welcome. Please ensure
+that you have tested your changes with a local client and have added unit test
+coverage for your code.
 
 ### Bugs and feature requests
 
-Have a bug or a feature request? Please first read the issue guidelines and search for existing and closed issues. If
-your problem or idea is not addressed yet, please open
-a [new issue]( [please open a new issue](https://github.com/tatumio/tatum-js/issues/new/choose)).
+Have a bug or a feature request? Please first read the issue guidelines and search for existing and closed issues. If your problem or idea is not addressed yet, please open a [new issue]( [please open a new issue](https://github.com/tatumio/tatum-js/issues/new/choose)).

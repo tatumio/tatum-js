@@ -131,6 +131,14 @@ export const celoUtils = {
       throw new EvmBasedSdkError({ error: e as Error, code: SdkErrorCode.EVM_CANNOT_ESTIMATE_GAS_LIMIT })
     }
 
+    if (transaction.gasPrice) {
+      let threshold = BN.from(transaction.gasLimit).mul(BN.from(transaction.gasPrice as string))
+      if (transaction.value) {
+        threshold = threshold.add(transaction.value as string)
+      }
+      await celoUtils.checkCeloBalance(wallet, threshold.toString())
+    }
+
     return evmBasedUtils.tryCatch(
       () => wallet.signTransaction(transaction),
       SdkErrorCode.EVM_CANNOT_SIGN_TRANSACTION,
@@ -180,6 +188,33 @@ export const celoUtils = {
   balanceOf: async (contract: any, wallet: CeloWallet) => {
     const address = await wallet.getAddress()
     return contract.methods.balanceOf(address).call()
+  },
+  checkErc20Balance: async (contract: any, wallet: CeloWallet, amount: string) => {
+    const balance = await celoUtils.balanceOf(contract, wallet)
+    const decimals = await contract.methods.decimals().call()
+    const address = await wallet.getAddress()
+    if (!balance || celoUtils.baseUnitToEther(balance, decimals).isLessThan(amount)) {
+      throw new EvmBasedSdkError({
+        code: SdkErrorCode.INSUFFICIENT_FUNDS,
+        error: new Error(
+          `Insufficient funds erc20 transaction from account ${address} -> available balance is ${celoUtils
+            .baseUnitToEther(balance, decimals)
+            .toString()}, required balance is ${amount}`,
+        ),
+      })
+    }
+  },
+  checkCeloBalance: async (wallet: CeloWallet, amount: string) => {
+    const balance = await wallet.getBalance()
+    const balanceInCelo = new BigNumber(balance.toString())
+    if (!balance || balanceInCelo.lt(amount)) {
+      throw new EvmBasedSdkError({
+        code: SdkErrorCode.INSUFFICIENT_FUNDS,
+        error: new Error(
+          `Insufficient funds send transaction from account ${await wallet.getAddress()} -> available balance is ${balance.toString()}, required balance is ${amount}`,
+        ),
+      })
+    }
   },
   baseUnitToEther(amount: BigNumber, decimals: number) {
     return new BigNumber(amount).dividedBy(new BigNumber(10).pow(decimals))
