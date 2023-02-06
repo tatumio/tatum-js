@@ -46,4 +46,27 @@ describe('Tatum', () => {
       expect(collection).toHaveLength(1)
     })
   })
+
+  describe('notification', () => {
+    it('createSubscription', async () => {
+      const response = await tatum.notification.createSubscription({
+        url: 'https://tatum.io',
+        chain: Chain.ETH,
+        address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
+      })
+      expect(response.id).toBeDefined()
+    })
+
+    it('deleteSubscription', async () => {
+      const subscriptions = await tatum.notification.getSubscriptions()
+      const subscription = subscriptions[0]
+      await tatum.notification.deleteSubscription(subscription.id)
+    })
+
+    it('getSubscriptions', async () => {
+      const subscriptions = await tatum.notification.getSubscriptions()
+      expect(subscriptions).toHaveLength(6)
+    })
+
+  })
 })

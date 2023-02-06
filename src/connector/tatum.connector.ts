@@ -17,6 +17,11 @@ export class TatumConnector {
     return data
   }
 
+  public async delete({ path, params }: GetUrl) {
+    const { data } = await axios.delete(this.getUrl({ path, params }), { headers: this.headers() })
+    return data
+  }
+
   private getUrl({ path, params }: GetUrl) {
     const url = new URL(path, Constant.TATUM_API_URL)
     if (params) {
