@@ -7,4 +7,7 @@ module.exports = {
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest"
   },
+  moduleNameMapper: {
+    "axios": "axios/dist/node/axios.cjs"
+  }
 }
