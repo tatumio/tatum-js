@@ -3,12 +3,33 @@ import { TestConst } from './utils/test.constant'
 import { Chain } from './utils/enum'
 
 describe('Tatum', () => {
+  let tatum: Tatum
+  beforeAll(() => {
+    tatum = new Tatum(TestConst.API_KEY)
+  })
+
   describe('nft', () => {
     it('getBalance', async () => {
-        const tatum = new Tatum(TestConst.API_KEY)
-        const balance = await tatum.nft.getBalance({ chain: Chain.ETH, address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F' })
-        console.log(balance.data)
-        expect(balance.data).toHaveLength(1)
+      const balance = await tatum.nft.getBalance({
+        chain: Chain.ETH,
+        address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
+      })
+      console.log(balance)
+      expect(balance).toHaveLength(1)
+    })
+
+    it('getNftTransactions', async () => {
+      try {
+      const transactions = await tatum.nft.getNftTransactions({
+        chain: Chain.ETH,
+        contractAddress: '0x0e4b1a84b504660e0fa473da1f491e5baeb43897',
+        tokenId: '1',
+      })
+      console.log(transactions)
+      expect(transactions).toHaveLength(1)
+      } catch (e) {
+        console.log(e)
+      }
     })
   })
 })

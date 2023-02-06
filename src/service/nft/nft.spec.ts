@@ -13,6 +13,7 @@ describe('NftService', () => {
       chain: Chain.ETH,
       address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
     })
-    expect(response.data).toHaveLength(1)
+
+    expect(response).toHaveLength(1)
   })
 })

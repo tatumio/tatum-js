@@ -11,15 +11,18 @@ describe('TatumConnector', () => {
   })
 
   it('get', async () => {
-    const response = await tatum.get('ethereum/block/current')
-    expect(response.data).toBeGreaterThan(0)
+    const response = await tatum.get({ path: 'ethereum/block/current' })
+    expect(response).toBeGreaterThan(0)
   })
 
   it('post', async () => {
-    const response = await tatum.post('ethereum/wallet/priv', {
-      index: 1,
-      mnemonic: 'inch napkin clap please diet piano belt benefit clever release cherry injury sail faint monitor focus mixed approve around dose method logic concert observe',
+    const response = await tatum.post({
+      path: 'ethereum/wallet/priv',
+      body: {
+        index: 1,
+        mnemonic: 'inch napkin clap please diet piano belt benefit clever release cherry injury sail faint monitor focus mixed approve around dose method logic concert observe',
+      },
     })
-    expect(response.data).toBeDefined()
+    expect(response).toBeDefined()
   })
 })
