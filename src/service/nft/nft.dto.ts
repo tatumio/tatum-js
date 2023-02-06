@@ -1,5 +1,10 @@
 import { Chain } from '../../utils/enum'
 
+export interface TokenIdContractAddress {
+  tokenId: string
+  contractAddress: string
+}
+
 export interface GetBalance {
   address: string
   chain: Chain
@@ -8,27 +13,42 @@ export interface GetBalance {
 export interface GetBalanceResponse {
   contractAddress: string
   balances: string[]
-  metadata: BalanceMetadataResponse[]
+  metadata: MetadataResponse[]
 }
 
-export interface BalanceMetadataResponse {
+export interface MetadataResponse {
   url: string
   metadata: object
   tokenId: string
 }
 
-export interface GetNftTransactions {
+export interface GetNftTransactions extends TokenIdContractAddress {
   chain: Chain
-  tokenId: string
+  pageSize?: string
+}
+
+export interface GetNftTransactionResponse extends TokenIdContractAddress {
+  blockNumber: number
+  txId: string
+  from: string
+  to: string
+}
+
+export interface GetNftMetadata extends TokenIdContractAddress {
+  chain: Chain
+}
+
+export interface GetNftMetadataResponse {
+  data: string
+}
+
+export interface GetCollection {
+  chain: Chain
   contractAddress: string
   pageSize?: string
 }
 
-export interface GetNftTransactionResponse {
-  blockNumber: number
-  txId: string
-  contractAddress: string
+export interface GetCollectionResponse {
   tokenId: string
-  from: string
-  to: string
+  metadata: MetadataResponse
 }

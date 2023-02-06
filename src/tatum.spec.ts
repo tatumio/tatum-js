@@ -19,7 +19,6 @@ describe('Tatum', () => {
     })
 
     it('getNftTransactions', async () => {
-      try {
       const transactions = await tatum.nft.getNftTransactions({
         chain: Chain.ETH,
         contractAddress: '0x0e4b1a84b504660e0fa473da1f491e5baeb43897',
@@ -27,9 +26,24 @@ describe('Tatum', () => {
       })
       console.log(transactions)
       expect(transactions).toHaveLength(1)
-      } catch (e) {
-        console.log(e)
-      }
+    })
+
+    it('getNftMetadata', async () => {
+      const metadata = await tatum.nft.getNftMetadata({
+        chain: Chain.ETH,
+        contractAddress: '0x0e4b1a84b504660e0fa473da1f491e5baeb43897',
+        tokenId: '1',
+      })
+      expect(metadata.data).toBeDefined()
+    })
+
+    it('getCollection', async () => {
+      const collection = await tatum.nft.getCollection({
+        chain: Chain.ETH,
+        contractAddress: '0x0e4b1a84b504660e0fa473da1f491e5baeb43897',
+      })
+      console.log(collection)
+      expect(collection).toHaveLength(1)
     })
   })
 })
