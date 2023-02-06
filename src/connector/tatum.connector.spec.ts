@@ -1,9 +1,13 @@
 import { TatumConnector } from './tatum.connector'
+import { Container } from 'typedi'
+import { API_KEY } from '../utils/di.tokens'
+import { TestConst } from '../utils/test.constant'
 
 describe('TatumConnector', () => {
+  Container.set(API_KEY, TestConst.API_KEY)
   let tatum: TatumConnector
   beforeAll(() => {
-    tatum = new TatumConnector('c53da34e-114d-4961-9030-d1a720a0ec38')
+    tatum = new TatumConnector()
   })
 
   it('get', async () => {

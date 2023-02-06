@@ -8,3 +8,4 @@ out
 gen
 .eslintrc.js
 jest.config.js
+jest.setup.ts

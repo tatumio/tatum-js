@@ -1,17 +1,11 @@
 import axios from 'axios'
 import { Constant } from '../utils/constant'
-import { Service } from 'typedi'
+import { Container, Service } from 'typedi'
 import { version } from '../../package.json'
+import { API_KEY } from '../utils/di.tokens'
 
 @Service()
 export class TatumConnector {
-
-  private apiKey: string
-
-  constructor(apiKey: string) {
-    this.apiKey = apiKey
-  }
-
   public async get(url: string) {
     return axios.get(`${Constant.TATUM_API_URL}${url}`, { headers: this.headers() })
   }
@@ -22,7 +16,7 @@ export class TatumConnector {
 
   private headers() {
     return {
-      'x-api-key': this.apiKey,
+      'x-api-key': Container.get(API_KEY),
       'Content-Type': 'application/json',
       'User-Agent': `Tatum_SDK_JS/${version}`,
     }
