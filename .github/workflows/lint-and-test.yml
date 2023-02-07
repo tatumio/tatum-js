@@ -1,6 +1,9 @@
-name: Lint and test
+name: Build
 
 on: [push, pull_request]
+
+env:
+  SDK_ERROR_MESSAGES_VERSION: "master"
 
 jobs:
   build_and_test:
@@ -9,17 +12,22 @@ jobs:
       fail-fast: false
       matrix:
         nodejs: [12, 14]
-
     steps:
-    - uses: actions/checkout@v2
+    - uses: actions/checkout@v3
+
+    - name: Download SDK error messages
+      uses: wei/curl@v1.1.1
+      with:
+        args: https://raw.githubusercontent.com/tatumio/tatum-sdk-error-mesages/$SDK_ERROR_MESSAGES_VERSION/error-messages.json --output resources/error-messages.json
 
     # https://github.com/actions/setup-node
-    - uses: actions/setup-node@v2-beta
+    - uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.nodejs }}
+        cache: 'yarn'
 
     - run: yarn install
     - run: yarn add -D esbuild
-    - run: yarn test
     - run: yarn lint
+    - run: yarn test
     - run: yarn build-all
