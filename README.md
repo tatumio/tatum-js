@@ -1,3 +1,3 @@
 # TATUM SDK
 
-[![Build](https://img.shields.io/github/actions/workflow/status/tatumio/tatum-js/build.yml?branch=v3)](https://img.shields.io/github/actions/workflow/status/tatumio/tatum-js/build.yml?branch=v3)
+[![Build](https://github.com/tatumio/tatum-js/actions/workflows/build.yml/badge.svg?branch=v3)](https://github.com/tatumio/tatum-js/actions/workflows/build.yml)
