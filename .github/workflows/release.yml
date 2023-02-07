@@ -1,0 +1,42 @@
+name: Release
+
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Git config
+        run: |
+          git config --local user.name github-actions
+          git config --local user.email github-actions@github.com
+      - name: Get package version
+        id: get_version
+        run: |
+          version=$(jq -r '.version' package.json)
+          echo "PKG_VERSION=$version" >> $GITHUB_ENV
+      - name: Get latest release
+        id: get_latest_release
+        run: |
+          latest_tag=$(curl -s --max-time 5 https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest | jq -r '.tag_name')
+          echo "LATEST_RELEASE_TAG=$latest_tag" >> $GITHUB_ENV
+      - name: Ensure package version is updated
+        run: |
+          [ "${{env.PKG_VERSION}}" = "${{env.LATEST_RELEASE_TAG}}" ] && echo "Error: Package version is the same as the latest release" && exit 1 || exit 0
+      # TAG the repo
+      - name: Create tag ${{env.PKG_VERSION}}
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "${{ env.PKG_VERSION }}"
+      - name: "Create a GitHub release v${{ steps.package-version.outputs.current-version }}"
+      # Create release using the tag above
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{ env.PKG_VERSION }}"
+          name: "${{ env.PKG_VERSION }}"
