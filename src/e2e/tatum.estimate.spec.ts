@@ -1,12 +1,11 @@
 import { TatumSdk } from '../service/tatum/tatum'
-import { TestConst } from './e2e.constant'
 import { Chain } from '../service/tatum/tatum.dto'
 
 describe('estimate', () => {
   let tatum: TatumSdk
   beforeAll(async () => {
     tatum = await TatumSdk.init({
-      apiKey: TestConst.TESTNET_API_KEY,
+      apiKey: process.env.TESTNET_API_KEY,
       testnet: true,
     })
   })

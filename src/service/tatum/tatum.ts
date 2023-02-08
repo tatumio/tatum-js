@@ -1,6 +1,6 @@
 import { Container, Service } from 'typedi'
 import { Nft } from '../nft/nft'
-import { API_KEY } from '../../util/di.tokens'
+import { CONFIG } from '../../util/di.tokens'
 import { Notification } from '../notification/notification'
 import { Fee } from '../fee/fee'
 import { TatumConnector } from '../../connector/tatum.connector'
@@ -8,43 +8,45 @@ import { ApiInfoResponse, TatumConfig } from './tatum.dto'
 
 @Service()
 export class TatumSdk {
-  nft: Nft = Container.get(Nft);
-  notification: Notification = Container.get(Notification);
-  fee: Fee = Container.get(Fee);
-  connector: TatumConnector = Container.get(TatumConnector);
+  nft: Nft = Container.get(Nft)
+  notification: Notification = Container.get(Notification)
+  fee: Fee = Container.get(Fee)
+  connector: TatumConnector = Container.get(TatumConnector)
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private constructor() {}
+  private constructor() {
+  }
 
-  static getApiInfo(apiKey?: string): Promise<ApiInfoResponse> {
-    Container.set(API_KEY, apiKey);
-    const connector = Container.get(TatumConnector);
-    return connector.get({ path: 'tatum/version' });
+  static getApiInfo(): Promise<ApiInfoResponse> {
+    const connector = Container.get(TatumConnector)
+    return connector.get({ path: 'tatum/version' })
   }
 
   getApiInfo(): Promise<ApiInfoResponse> {
-    return this.connector.get({ path: 'tatum/version' });
+    return this.connector.get({ path: 'tatum/version' })
   }
-
 
   public static async init(config?: TatumConfig): Promise<TatumSdk> {
     const defaultConfig: TatumConfig = {
       validate: true,
+      testnet: false,
     }
 
-    config = { ...defaultConfig, ...config }
+    const finalConfig = { ...defaultConfig, ...config }
 
-    if (config.apiKey && config.validate) {
-      if(config.testnet === undefined) {
+    if (finalConfig.apiKey && finalConfig.validate) {
+      if (config?.testnet === undefined) {
         throw new Error('Testnet flag is required when apiKey is set. Please set it to true or false.')
       }
-
-      const { testnet } = await this.getApiInfo(config.apiKey);
-      if(testnet !== config.testnet) {
-        throw new Error(`Tatum API key is not valid for ${config.testnet ? 'testnet' : 'mainnet'}`);
+      Container.set(CONFIG, { apiKey: config.apiKey, testnet: finalConfig.testnet })
+      const { testnet } = await this.getApiInfo()
+      if (testnet !== finalConfig.testnet) {
+        throw new Error(`Tatum API key is not valid for ${finalConfig.testnet ? 'testnet' : 'mainnet'}`)
       }
-      return new TatumSdk();
+      return new TatumSdk()
     }
-    return new TatumSdk();
+
+    Container.set(CONFIG, { testnet: finalConfig.testnet })
+    return new TatumSdk()
   }
 }
