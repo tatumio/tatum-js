@@ -1,6 +1,7 @@
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
 
 env:
   SDK_ERROR_MESSAGES_VERSION: "master"
@@ -10,8 +11,6 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
-      matrix:
-        nodejs: [14, 16, 18]
     steps:
     - uses: actions/checkout@v3
 
@@ -23,7 +22,7 @@ jobs:
     # https://github.com/actions/setup-node
     - uses: actions/setup-node@v3
       with:
-        node-version: ${{ matrix.nodejs }}
+        node-version: 14
         cache: 'yarn'
 
     - run: yarn install
