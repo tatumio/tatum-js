@@ -9,6 +9,9 @@
     "Tatum",
     "Blockchain"
   ],
+  "engines": {
+    "node": ">=14.0.0"
+  },
   "main": "./dist/tsc/main.js",
   "types": "./dist/tsc/main.d.ts",
   "browser": "./dist/esbuild/browser.js",
