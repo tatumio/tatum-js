@@ -1,0 +1,28 @@
+name: Release PR
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout current
+        uses: actions/checkout@v3
+      - name: Calculate changelog hash
+        run: |
+          hash=$(sha1sum CHANGELOG.md | cut -f1 -d' ')
+          echo "pr_changelog_hash=$hash" >> $GITHUB_ENV
+      - name: Checkout master
+        uses: actions/checkout@v3
+        with:
+          ref: master
+      - name: Calculate changelog master
+        run: |
+          hash=$(sha1sum CHANGELOG.md | cut -f1 -d' ')
+          echo "master_changelog_hash=$hash" >> $GITHUB_ENV
+      - name: Ensure changelog updated
+        run: |
+          [ "${{ env.pr_changelog_hash }}" = "${{ env.master_changelog_hash }}" ] && echo "Error: no changes in changelog detected for the release" && exit 1 || exit 0  
