@@ -14,6 +14,10 @@ export enum EthereumTestnetChains {
   goerli = 'goerli',
 }
 
+export enum Chain {
+  ETH = 'ETH',
+}
+
 export interface ApiInfoResponse {
   version: string;
   status: string;

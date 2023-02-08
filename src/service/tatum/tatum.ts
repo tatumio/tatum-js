@@ -11,17 +11,23 @@ export class TatumSdk {
   nft: Nft = Container.get(Nft);
   notification: Notification = Container.get(Notification);
   fee: Fee = Container.get(Fee);
+  connector: TatumConnector = Container.get(TatumConnector);
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {}
 
-  static getApiInfo(apiKey: string): Promise<ApiInfoResponse> {
+  static getApiInfo(apiKey?: string): Promise<ApiInfoResponse> {
     Container.set(API_KEY, apiKey);
     const connector = Container.get(TatumConnector);
     return connector.get({ path: 'tatum/version' });
   }
 
-  public static async init(config: TatumConfig): Promise<TatumSdk> {
+  getApiInfo(): Promise<ApiInfoResponse> {
+    return this.connector.get({ path: 'tatum/version' });
+  }
+
+
+  public static async init(config?: TatumConfig): Promise<TatumSdk> {
     const defaultConfig: TatumConfig = {
       validate: true,
     }
@@ -30,7 +36,7 @@ export class TatumSdk {
 
     if (config.apiKey && config.validate) {
       if(config.testnet === undefined) {
-        throw new Error('Testnet flag is not set. Please set it to true or false.')
+        throw new Error('Testnet flag is required when apiKey is set. Please set it to true or false.')
       }
 
       const { testnet } = await this.getApiInfo(config.apiKey);

@@ -1,4 +1,4 @@
-import { Chain } from '../../util/enum'
+import { Chain } from '../tatum/tatum.dto'
 
 export interface PageSize {
   pageSize?: string

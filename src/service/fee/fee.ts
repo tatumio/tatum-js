@@ -1,8 +1,8 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
-import { Chain } from '../../util/enum'
 import Web3 from 'web3'
 import { EstimateGas, EstimationsApi } from './fee.dto'
+import { Chain } from '../tatum/tatum.dto'
 
 @Service()
 export class Fee {
