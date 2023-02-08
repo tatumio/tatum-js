@@ -1,7 +1,7 @@
 import { TatumConnector } from './tatum.connector'
 import { Container } from 'typedi'
-import { API_KEY } from '../utils/di.tokens'
-import { TestConst } from '../utils/test.constant'
+import { API_KEY } from '../util/di.tokens'
+import { TestConst } from '../util/test.constant'
 
 describe('TatumConnector', () => {
   Container.set(API_KEY, TestConst.API_KEY)

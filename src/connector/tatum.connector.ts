@@ -1,8 +1,8 @@
 import axios from 'axios'
-import { Constant } from '../utils/constant'
+import { Constant } from '../util/constant'
 import { Container, Service } from 'typedi'
 import { version } from '../../package.json'
-import { API_KEY } from '../utils/di.tokens'
+import { API_KEY } from '../util/di.tokens'
 import { GetUrl, Post } from './connector.dto'
 
 @Service()

@@ -1,10 +1,13 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
-import { CreateSubscription, CreateSubscriptionResponse, PageSize } from './notification.dto'
+import { PageSize } from './notification.dto'
+import { Subscribe } from './subscribe'
 
 @Service()
 export class Notification {
   private connector: TatumConnector = Container.get(TatumConnector)
+
+  public subscribe: Subscribe = Container.get(Subscribe)
 
   getSubscriptions(pageSize?: PageSize) {
     return this.connector.get({
@@ -17,17 +20,5 @@ export class Notification {
     await this.connector.delete({ path: `subscription/${id}` })
   }
 
-  createSubscription({ chain, address, url }: CreateSubscription): Promise<CreateSubscriptionResponse> {
-    return this.connector.post({
-      path: 'subscription',
-      body: {
-        type: 'ADDRESS_TRANSACTION',
-        attr: {
-          chain,
-          address,
-          url,
-        },
-      },
-    })
-  }
+
 }

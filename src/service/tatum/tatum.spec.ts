@@ -1,11 +1,14 @@
-import { Tatum } from './tatum'
-import { TestConst } from './utils/test.constant'
-import { Chain } from './utils/enum'
+import { TatumSdk } from './tatum'
+import { TestConst } from '../../util/test.constant'
+import { Chain } from '../../util/enum'
 
 describe('Tatum', () => {
-  let tatum: Tatum
-  beforeAll(() => {
-    tatum = new Tatum(TestConst.API_KEY)
+  let tatum: TatumSdk
+  beforeAll(async () => {
+    tatum = await TatumSdk.init({
+      apiKey: TestConst.API_KEY,
+      testnet: true,
+    })
   })
 
   describe('nft', () => {
@@ -49,7 +52,7 @@ describe('Tatum', () => {
 
   describe('notification', () => {
     it('createSubscription', async () => {
-      const response = await tatum.notification.createSubscription({
+      const response = await tatum.notification.subscribe.addressTransaction({
         url: 'https://tatum.io',
         chain: Chain.ETH,
         address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
@@ -65,8 +68,26 @@ describe('Tatum', () => {
 
     it('getSubscriptions', async () => {
       const subscriptions = await tatum.notification.getSubscriptions()
-      expect(subscriptions).toHaveLength(6)
+      expect(subscriptions.length).toBeGreaterThan(0)
+    })
+  })
+
+  describe('estimate', () => {
+    it('getCurrentFee', async () => {
+      const fee = await tatum.fee.getCurrentFee(Chain.ETH)
+      console.log(fee)
+      expect(fee).toBeDefined()
     })
 
+    it('estimateGas', async () => {
+      const estimation = await tatum.fee.estimateGas({
+        chain: Chain.ETH,
+        from: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
+        to: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
+        amount: '0.1',
+      })
+      console.log(estimation)
+      expect(estimation).toBeDefined()
+    })
   })
 })

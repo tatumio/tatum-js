@@ -1,4 +1,4 @@
-import { Chain } from '../../utils/enum'
+import { Chain } from '../../util/enum'
 
 export interface TokenIdContractAddress {
   tokenId: string

@@ -1,10 +1,10 @@
-import { Chain } from '../../utils/enum'
+import { Chain } from '../../util/enum'
 
 export interface PageSize {
   pageSize?: string
 }
 
-export interface CreateSubscription {
+export interface AddressNotification {
   address: string
   chain: Chain
   url: string

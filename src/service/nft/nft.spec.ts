@@ -1,8 +1,8 @@
 import { Nft } from './nft'
-import { Chain } from '../../utils/enum'
-import { TestConst } from '../../utils/test.constant'
+import { Chain } from '../../util/enum'
+import { TestConst } from '../../util/test.constant'
 import { Container } from 'typedi'
-import { API_KEY } from '../../utils/di.tokens'
+import { API_KEY } from '../../util/di.tokens'
 
 describe('NftService', () => {
   Container.set(API_KEY, TestConst.API_KEY)
