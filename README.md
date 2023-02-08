@@ -28,10 +28,6 @@
 
 > **Are you looking for Tatum SDK v1? It has been moved to long living branch [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1)**.
 
-## Status
-
-V2 is currently under active development and considered alpha version. (you can still use LTS version [`v1`](https://github.com/tatumio/tatum-js/tree/v1))
-
 ## Installation
 
 This repository is a monorepo with multiple packages for each blockchain.
