@@ -7,7 +7,7 @@ env:
   SDK_ERROR_MESSAGES_VERSION: "master"
 
 jobs:
-  build_and_test:
+  build:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -29,9 +29,22 @@ jobs:
 
     - run: yarn install
     - run: yarn add -D esbuild
+    - run: yarn build-all
+
+  test:
+   steps:
+    - uses: actions/checkout@v3
+
+    # https://github.com/actions/setup-node
+    - uses: actions/setup-node@v3
+      with:
+        node-version: 14
+        cache: 'yarn'
+
+    - run: yarn install
+
     - run: yarn lint
     - run: yarn test
       env:
         TESTNET_API_KEY: ${{ secrets.TESTNET_API_KEY }}
         MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
-    - run: yarn build-all
