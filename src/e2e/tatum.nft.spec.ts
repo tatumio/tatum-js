@@ -12,7 +12,7 @@ describe('nft', () => {
 
   it('getBalance', async () => {
     const balance = await tatum.nft.getBalance({
-      chain: Chain.ETH,
+      chain: Chain.ethereum,
       address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
     })
     expect(balance).toHaveLength(1)
@@ -20,7 +20,7 @@ describe('nft', () => {
 
   it('getNftTransactions', async () => {
     const transactions = await tatum.nft.getNftTransactions({
-      chain: Chain.ETH,
+      chain: Chain.ethereum,
       contractAddress: '0x0e4b1a84b504660e0fa473da1f491e5baeb43897',
       tokenId: '1',
     })
@@ -29,7 +29,7 @@ describe('nft', () => {
 
   it('getNftMetadata', async () => {
     const metadata = await tatum.nft.getNftMetadata({
-      chain: Chain.ETH,
+      chain: Chain.ethereum,
       contractAddress: '0x0e4b1a84b504660e0fa473da1f491e5baeb43897',
       tokenId: '1',
     })
@@ -38,7 +38,7 @@ describe('nft', () => {
 
   it('getCollection', async () => {
     const collection = await tatum.nft.getCollection({
-      chain: Chain.ETH,
+      chain: Chain.ethereum,
       contractAddress: '0x0e4b1a84b504660e0fa473da1f491e5baeb43897',
     })
     expect(collection).toHaveLength(1)

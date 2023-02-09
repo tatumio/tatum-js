@@ -11,13 +11,13 @@ describe('estimate', () => {
   })
 
   it('getCurrentFee', async () => {
-    const fee = await tatum.fee.getCurrentFee(Chain.ETH)
-    expect(fee).toBeDefined()
+    const fee = await tatum.fees.getCurrentFee([Chain.ethereum])
+    expect(fee.ethereum).toBeDefined()
   })
 
   it('estimateGas', async () => {
-    const estimation = await tatum.fee.estimateGas({
-      chain: Chain.ETH,
+    const estimation = await tatum.fees.estimateGas({
+      chain: Chain.ethereum,
       from: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
       to: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
       amount: '0.1',

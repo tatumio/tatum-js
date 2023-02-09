@@ -1,6 +1,7 @@
 import { AddressNotification, CreateSubscriptionResponse } from './notification.dto'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { Container, Service } from 'typedi'
+import { Utils } from '../../util/util.shared'
 
 @Service()
 export class Subscribe {
@@ -12,7 +13,7 @@ export class Subscribe {
       body: {
         type: 'ADDRESS_TRANSACTION',
         attr: {
-          chain,
+          chain: Utils.mapChain(chain),
           address,
           url,
         },

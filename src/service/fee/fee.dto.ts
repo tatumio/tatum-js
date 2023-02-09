@@ -16,3 +16,17 @@ export interface EstimationsApi {
     gasLimit: string
   }
 }
+
+export type CurrentFee = {
+  [key in Chain]: {
+    gasPrice: {
+      slow: string
+      medium: string
+      fast: string
+      baseFee: string
+      unit: string
+    },
+    lastRecalculated: string
+    basedOnBlockNumber: string
+  }
+}
