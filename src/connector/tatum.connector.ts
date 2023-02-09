@@ -43,8 +43,8 @@ export class TatumConnector {
 
     const config = Container.get(CONFIG)
 
-    if (config.testnet) {
-      url.searchParams.append('testnet', config.testnet.toString())
+    if (!config.apiKey && config.testnet === true) {
+      url.searchParams.append('type', 'testnet')
     }
 
     return url.toString()
