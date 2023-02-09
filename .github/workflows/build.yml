@@ -11,6 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
+      matrix:
+        nodejs: [ 14, 16, 18 ]
     steps:
     - uses: actions/checkout@v3
 
@@ -22,7 +24,7 @@ jobs:
     # https://github.com/actions/setup-node
     - uses: actions/setup-node@v3
       with:
-        node-version: 14
+        node-version: ${{ matrix.nodejs }}
         cache: 'yarn'
 
     - run: yarn install
