@@ -1,3 +1,8 @@
 import { Token } from 'typedi'
 
-export const API_KEY = new Token<string>('API_KEY')
+export const CONFIG = new Token<TatumContainerConfig>('TATUM_CONFIG')
+
+export interface TatumContainerConfig {
+  apiKey?: string
+  testnet?: boolean
+}

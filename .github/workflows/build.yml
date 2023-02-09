@@ -1,6 +1,7 @@
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
 
 env:
   SDK_ERROR_MESSAGES_VERSION: "master"
@@ -11,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        nodejs: [14, 16, 18]
+        nodejs: [ 14, 16, 18 ]
     steps:
     - uses: actions/checkout@v3
 
@@ -30,4 +31,7 @@ jobs:
     - run: yarn add -D esbuild
     - run: yarn lint
     - run: yarn test
+      env:
+        TESTNET_API_KEY: ${{ secrets.TESTNET_API_KEY }}
+        MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
     - run: yarn build-all
