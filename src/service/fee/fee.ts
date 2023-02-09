@@ -9,7 +9,11 @@ import { Utils } from '../../util/util.shared'
 export class Fee {
   private connector: TatumConnector = Container.get(TatumConnector)
 
-  async getCurrentFee(chains: Chain[]): Promise<CurrentFee> {
+  async getCurrentFee(chains: Chain[]): Promise<CurrentFee | Record<string, never>> {
+    if (!chains.length) {
+      return {}
+    }
+
     const uniqueChains = [...new Set(chains)]
     const fees = await Promise.all(uniqueChains.map(chain => this.connector.get({ path: `blockchain/fee/${Utils.mapChain(chain)}` })))
     return chains.reduce((obj, chain) => {

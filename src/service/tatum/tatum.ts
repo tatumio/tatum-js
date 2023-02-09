@@ -38,7 +38,7 @@ export class TatumSdk {
       if (config?.testnet === undefined) {
         throw new Error('Testnet flag is required when apiKey is set. Please set it to true or false.')
       }
-      Container.set(CONFIG, { apiKey: config.apiKey, testnet: finalConfig.testnet })
+      Container.set(CONFIG, finalConfig)
       const { testnet } = await this.getApiInfo()
       if (testnet !== finalConfig.testnet) {
         throw new Error(`Tatum API key is not valid for ${finalConfig.testnet ? 'testnet' : 'mainnet'}`)
@@ -46,7 +46,7 @@ export class TatumSdk {
       return new TatumSdk()
     }
 
-    Container.set(CONFIG, { testnet: finalConfig.testnet })
+    Container.set(CONFIG, finalConfig)
     return new TatumSdk()
   }
 }
