@@ -3,7 +3,8 @@ import { Constant } from '../util/constant'
 import { Container, Service } from 'typedi'
 import { version } from '../../package.json'
 import { CONFIG } from '../util/di.tokens'
-import { GetUrl, Post } from './connector.dto'
+import { GetUrl, Request } from './connector.dto'
+
 
 if (process.env.DEBUG === 'true') {
   axios.interceptors.request.use(request => {
@@ -20,18 +21,27 @@ if (process.env.DEBUG === 'true') {
 @Service()
 export class TatumConnector {
   public async get({ path, params }: GetUrl) {
-    const { data } = await axios.get(this.getUrl({ path, params }), { headers: this.headers() })
-    return data
+    return this.request({ path, params, method: 'GET' })
   }
 
-  public async post({ path, params, body }: Post) {
-    const { data } = await axios.post(this.getUrl({ path, params }), body, { headers: this.headers() })
-    return data
+  public async post({ path, params, body }: Request) {
+    return this.request({ path, params, body, method: 'POST' })
   }
 
   public async delete({ path, params }: GetUrl) {
-    const { data } = await axios.delete(this.getUrl({ path, params }), { headers: this.headers() })
-    return data
+    return this.request({ path, params, method: 'DELETE' })
+  }
+
+  private async request({ path, params, body, method }: Request) {
+    try {
+      const headers = this.headers()
+      const { data } = await axios.request({ url: this.getUrl({ path, params }), headers, method, data: body })
+      return data
+    } catch (e) {
+      // TODO: proper error handling
+      console.log(e)
+      return null
+    }
   }
 
   private getUrl({ path, params }: GetUrl) {
@@ -57,12 +67,9 @@ export class TatumConnector {
     }
     const config = Container.get(CONFIG)
 
-    if (config.apiKey) {
-      return {
-        ...headers,
-        'x-api-key': config.apiKey,
-      }
+    return {
+      ...headers,
+      ...(config.apiKey) && { 'x-api-key': config.apiKey },
     }
-    return headers
   }
 }

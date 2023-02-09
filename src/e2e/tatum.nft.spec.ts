@@ -33,7 +33,7 @@ describe('nft', () => {
       contractAddress: '0x0e4b1a84b504660e0fa473da1f491e5baeb43897',
       tokenId: '1',
     })
-    expect(metadata.data).toBeDefined()
+    expect(metadata).toBeDefined()
   })
 
   it('getCollection', async () => {

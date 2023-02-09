@@ -1,17 +1,7 @@
 export interface TatumConfig {
     apiKey?: string
     testnet?: boolean
-    testnetConfig?: TestnetConfig
     validate?: boolean
-}
-
-export interface TestnetConfig {
-  ethereum: EthereumTestnetChains;
-}
-
-export enum EthereumTestnetChains {
-  sepolia = 'sepolia',
-  goerli = 'goerli',
 }
 
 export enum Chain {
