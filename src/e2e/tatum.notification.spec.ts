@@ -13,7 +13,7 @@ describe('notification',  () => {
   it('createSubscription', async () => {
     const response = await tatum.notification.subscribe.addressTransaction({
       url: 'https://tatum.io',
-      chain: Chain.ETH,
+      chain: Chain.ethereum,
       address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
     })
     expect(response.id).toBeDefined()

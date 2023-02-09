@@ -15,7 +15,15 @@ export enum EthereumTestnetChains {
 }
 
 export enum Chain {
+  ethereum = 'ethereum',
+}
+
+export enum TatumChain {
   ETH = 'ETH',
+}
+
+export const ChainMap = {
+  [Chain.ethereum]: TatumChain.ETH,
 }
 
 export interface ApiInfoResponse {

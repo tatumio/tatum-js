@@ -10,7 +10,7 @@ import { ApiInfoResponse, TatumConfig } from './tatum.dto'
 export class TatumSdk {
   nft: Nft = Container.get(Nft)
   notification: Notification = Container.get(Notification)
-  fee: Fee = Container.get(Fee)
+  fees: Fee = Container.get(Fee)
   connector: TatumConnector = Container.get(TatumConnector)
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
