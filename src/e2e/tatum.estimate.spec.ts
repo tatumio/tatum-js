@@ -10,18 +10,50 @@ describe('estimate', () => {
     })
   })
 
-  it('getCurrentFee', async () => {
-    const fee = await tatum.fees.getCurrentFee([Chain.ethereum])
-    expect(fee.ethereum).toBeDefined()
+  describe('getCurrentFee', () => {
+    it('ethereum', async () => {
+      const fee = await tatum.fees.getCurrentFee([Chain.ethereum])
+      expect(fee.ethereum).toBeDefined()
+      expect(fee.ethereum.gasPrice).toBeDefined()
+      expect(fee.ethereum.gasPrice.slow).toBeDefined()
+      expect(fee.ethereum.gasPrice.medium).toBeDefined()
+      expect(fee.ethereum.gasPrice.fast).toBeDefined()
+      expect(fee.ethereum.gasPrice.baseFee).toBeDefined()
+      expect(fee.ethereum.gasPrice.unit).toBeDefined()
+      expect(fee.ethereum.lastRecalculated).toBeDefined()
+      expect(fee.ethereum.basedOnBlockNumber).toBeDefined()
+    })
+
+    it('empty', async () => {
+      const fee = await tatum.fees.getCurrentFee([])
+      expect(fee).toEqual({})
+    })
   })
 
-  it('estimateGas', async () => {
-    const estimation = await tatum.fees.estimateGas({
-      chain: Chain.ethereum,
-      from: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
-      to: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
-      amount: '0.1',
+
+  describe('estimate', () => {
+    it('ethereum', async () => {
+      const estimation = await tatum.fees.estimate([{
+        chain: Chain.ethereum,
+        from: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
+        to: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
+        amount: '0.1',
+      }])
+      expect(estimation).toBeDefined()
+      expect(estimation.ethereum).toBeDefined()
+      expect(estimation.ethereum[0].gasLimit).toBeDefined()
+      expect(estimation.ethereum[0].gasPrice).toBeDefined()
+      expect(estimation.ethereum[0].gasPrice.slow).toBeDefined()
+      expect(estimation.ethereum[0].gasPrice.medium).toBeDefined()
+      expect(estimation.ethereum[0].gasPrice.fast).toBeDefined()
+      expect(estimation.ethereum[0].gasPrice.unit).toBeDefined()
+      expect(estimation.ethereum[0].gasPrice.baseFee).toBeDefined()
     })
-    expect(estimation).toBeDefined()
+
+    it('empty', async () => {
+      const estimation = await tatum.fees.estimate([])
+      expect(estimation).toEqual({})
+    })
   })
+
 })

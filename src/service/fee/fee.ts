@@ -1,7 +1,13 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import Web3 from 'web3'
-import { CurrentFee, EstimateGas, EstimationsApi } from './fee.dto'
+import {
+  CurrentFee,
+  NativeTransferFeeEstimationDetails,
+  EstimationsApi,
+  EmptyObject,
+  NativeTransferFeeEstimation,
+} from './fee.dto'
 import { Chain } from '../tatum/tatum.dto'
 import { Utils } from '../../util/util.shared'
 
@@ -9,7 +15,7 @@ import { Utils } from '../../util/util.shared'
 export class Fee {
   private connector: TatumConnector = Container.get(TatumConnector)
 
-  async getCurrentFee(chains: Chain[]): Promise<CurrentFee | Record<string, never>> {
+  async getCurrentFee(chains: Chain[]): Promise<CurrentFee | EmptyObject> {
     if (!chains.length) {
       return {}
     }
@@ -28,33 +34,23 @@ export class Fee {
     }, {} as CurrentFee)
   }
 
-  async estimateGas(estimate: EstimateGas) {
-    const { gasLimit, estimations } = await this.connector.post({ path: 'ethereum/gas', body: estimate })
+  async estimate(estimate: NativeTransferFeeEstimationDetails[]): Promise<NativeTransferFeeEstimation | EmptyObject> {
+    if (!estimate.length) {
+      return {}
+    }
+
+    const { result } = await this.connector.post({ path: 'ethereum/gas/batch', body: { estimations: estimate } })
     return {
-      gasLimit: gasLimit.toString(),
-      gasPrice: this.mapGasPrice({
-        slow: estimations.safe,
-        medium: estimations.standard,
-        fast: estimations.fast,
-        baseFee: estimations.baseFee,
-      }),
+      ethereum: (result as EstimationsApi[]).map(estimation => {
+        const gasPrice = estimation.data.estimations
+        return ({
+          gasLimit: estimation.data.gasLimit,
+          gasPrice: this.mapGasPrice({ slow: gasPrice.safe, medium: gasPrice.standard, fast: gasPrice.fast, baseFee: gasPrice.baseFee }),
+        })
+      })
     }
   }
 
-
-  async estimateGasBatch(estimate: EstimateGas[]) {
-    const { estimations, error } = await this.connector.post({ path: 'ethereum/gas/batch', body: estimate })
-
-    return {
-      error,
-      result: (estimations as EstimationsApi[]).map(estimation => ({
-        error: estimation.error,
-        contractAddress: estimation.contractAddress,
-        gasLimit: estimation.data.gasLimit,
-        gasPrice: estimation,
-      })),
-    }
-  }
 
   private mapGasPrice({
                         slow,
