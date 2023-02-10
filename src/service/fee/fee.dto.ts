@@ -1,6 +1,6 @@
 import { Chain } from '../tatum/tatum.dto'
 
-export interface EstimateGas {
+export interface NativeTransferFeeEstimationDetails {
   chain: Chain
   from: string
   to: string
@@ -14,6 +14,12 @@ export interface EstimationsApi {
   contractAddress: string
   data: {
     gasLimit: string
+    estimations: {
+      safe: string
+      standard: string
+      fast: string,
+      baseFee: string
+    }
   }
 }
 
@@ -29,4 +35,20 @@ export type CurrentFee = {
     lastRecalculated: string
     basedOnBlockNumber: string
   }
+}
+
+
+export type EmptyObject = Record<string, never>
+
+export type NativeTransferFeeEstimation = {
+  [key in Chain]: {
+    gasPrice: {
+      slow: string
+      medium: string
+      fast: string
+      baseFee: string
+      unit: string
+    },
+    gasLimit: string,
+  }[]
 }
