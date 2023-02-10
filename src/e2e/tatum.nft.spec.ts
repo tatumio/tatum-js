@@ -60,7 +60,7 @@ describe('nft', () => {
   })
 
   it('getNftTransactions', async () => {
-    const transactions = await tatum.nft.getNftTransactions({
+    const transactions = await tatum.nft.getAllNftTransactions({
       offset: 0,
       pageSize: 20,
       nftTransactionsDetails: [

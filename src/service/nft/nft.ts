@@ -57,8 +57,7 @@ export class Nft {
       result[detailsRequest.chain] = balancesByChain
     }
   }
-
-  async getNftTransactions({
+  async getAllNftTransactions({
     nftTransactionsDetails,
     offset = 0,
     pageSize = 10,
