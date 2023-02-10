@@ -1,6 +1,7 @@
 import { TatumSdk } from '../service/tatum/tatum'
 import { Chain } from '../service/tatum/tatum.dto'
 import { AddressTransactionNotification } from '../service/notification/notification.dto'
+import { TestConst } from './e2e.constant'
 
 describe('notification',  () => {
   let tatum: TatumSdk
@@ -12,21 +13,28 @@ describe('notification',  () => {
   })
 
   it('createSubscription', async () => {
-      const response = await tatum.notification.subscribe.addressTransaction({
+      const { id, url, chain, address } = await tatum.notification.subscribe.addressTransaction({
         url: 'https://tatum.io',
         chain: Chain.ethereum,
-        address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
+        address: TestConst.ETH_ADDRESS,
       })
-      expect(response.id).toBeDefined()
-      expect(response.chain).toBeDefined()
-      expect(response.address).toBeDefined()
-      expect(response.url).toBeDefined()
+      expect(id).toBeDefined()
+      expect(chain).toBeDefined()
+      expect(address).toBeDefined()
+      expect(url).toBeDefined()
+      await tatum.notification.unsubscribe(id)
   })
 
   it('deleteSubscription', async () => {
+    const { id } = await tatum.notification.subscribe.addressTransaction({
+      url: 'https://tatum.io',
+      chain: Chain.ethereum,
+      address: TestConst.ETH_ADDRESS,
+    })
+    await tatum.notification.unsubscribe(id)
     const { addressTransactions } = await tatum.notification.getAll()
-    const subscription = addressTransactions.find(s => s.chain === Chain.ethereum && s.address.toLowerCase() === '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F'.toLowerCase()) as AddressTransactionNotification
-    await tatum.notification.unsubscribe(subscription.id)
+    const subscriptions = addressTransactions.find(s => s.chain === Chain.ethereum && s.address.toLowerCase() === TestConst.ETH_ADDRESS.toLowerCase()) as AddressTransactionNotification
+    expect(subscriptions).toEqual(undefined)
   })
 
   it('getAll', async () => {
