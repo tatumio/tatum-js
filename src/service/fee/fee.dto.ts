@@ -31,7 +31,7 @@ export type CurrentFee = {
       fast: string
       baseFee: string
       unit: string
-    },
+    }
     lastRecalculated: string
     basedOnBlockNumber: string
   }

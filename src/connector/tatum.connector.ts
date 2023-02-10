@@ -5,50 +5,51 @@ import { version } from '../../package.json'
 import { CONFIG } from '../util/di.tokens'
 import { GetUrl, Request } from './connector.dto'
 
-
 if (process.env.DEBUG === 'true') {
-  axios.interceptors.request.use(request => {
-    console.log('Request', request.url, request.method, JSON.stringify(request.data))
+  axios.interceptors.request.use((request) => {
+    console.log('Request', request.method?.toUpperCase(), request.url, JSON.stringify(request.data))
     return request
   })
 
-  axios.interceptors.response.use(response => {
-    console.log('Response:', JSON.stringify(response.data), response.status, response.statusText)
+  axios.interceptors.response.use((response) => {
+    console.log('Response:', response.status, JSON.stringify(response.data))
     return response
   })
 }
 
 @Service()
+/* eslint-disable */ //TODO implement correct typings and remove any
 export class TatumConnector {
-  public async get({ path, params }: GetUrl) {
-    return this.request({ path, params, method: 'GET' })
+  public async get<T = any>({ path, params }: GetUrl) {
+    return this.request<T>({ path, params, method: 'GET' })
   }
 
-  public async post({ path, params, body }: Request) {
-    return this.request({ path, params, body, method: 'POST' })
+  public async post<T = any>({ path, params, body }: Request) {
+    return this.request<T>({ path, params, body, method: 'POST' })
   }
 
-  public async delete({ path, params }: GetUrl) {
-    return this.request({ path, params, method: 'DELETE' })
+  public async delete<T = any>({ path, params }: GetUrl) {
+    return this.request<T>({ path, params, method: 'DELETE' })
   }
 
-  private async request({ path, params, body, method }: Request) {
-    try {
-      const headers = this.headers()
-      const { data } = await axios.request({ url: this.getUrl({ path, params }), headers, method, data: body })
-      return data
-    } catch (e) {
-      // TODO: proper error handling
-      console.log(e)
-      return null
-    }
+  private async request<T>({ path, params, body, method }: Request): Promise<T> {
+    const headers = this.headers()
+    const { data } = await axios.request<T>({
+      url: this.getUrl({ path, params }),
+      headers,
+      method,
+      data: body,
+    })
+    return data
   }
 
   private getUrl({ path, params }: GetUrl) {
     const url = new URL(path, Constant.TATUM_API_URL)
 
     if (params) {
-      Object.keys(params).forEach(key => url.searchParams.append(key, params[key]))
+      Object.keys(params)
+        .filter((key) => params[key] !== undefined && params[key] !== null)
+        .forEach((key) => url.searchParams.append(key, params[key]!))
     }
 
     const config = Container.get(CONFIG)
@@ -69,7 +70,7 @@ export class TatumConnector {
 
     return {
       ...headers,
-      ...(config.apiKey) && { 'x-api-key': config.apiKey },
+      ...(config.apiKey && { 'x-api-key': config.apiKey }),
     }
   }
 }
