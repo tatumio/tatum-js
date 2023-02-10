@@ -15,6 +15,9 @@ export enum TatumChain {
 export const ChainMap = {
   [Chain.ethereum]: TatumChain.ETH,
 }
+export const ChainMapInverse = {
+  [TatumChain.ETH]: Chain.ethereum
+}
 
 export interface ApiInfoResponse {
   version: string;

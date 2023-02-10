@@ -1,17 +1,18 @@
-import { AddressNotification, CreateSubscriptionResponse } from './notification.dto'
+import { AddressNotificationDetail, AddressNotification, NotificationType } from './notification.dto'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { Container, Service } from 'typedi'
 import { Utils } from '../../util/util.shared'
+import { IdDto } from '../../dto/shared.dto'
 
 @Service()
 export class Subscribe {
   private connector: TatumConnector = Container.get(TatumConnector)
 
-  addressTransaction({ chain, address, url }: AddressNotification): Promise<CreateSubscriptionResponse> {
-    return this.connector.post({
+  async addressTransaction({ chain, address, url }: AddressNotificationDetail): Promise<AddressNotification> {
+    const { id } = await this.connector.post<IdDto>({
       path: 'subscription',
       body: {
-        type: 'ADDRESS_TRANSACTION',
+        type: NotificationType.ADDRESS_TRANSACTION,
         attr: {
           chain: Utils.mapChain(chain),
           address,
@@ -19,5 +20,11 @@ export class Subscribe {
         },
       },
     })
+    return {
+      id,
+      address,
+      chain,
+      url,
+    }
   }
 }

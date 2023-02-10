@@ -1,5 +1,7 @@
 import { TatumSdk } from '../service/tatum/tatum'
 import { Chain } from '../service/tatum/tatum.dto'
+import { AddressTransactionNotification } from '../service/notification/notification.dto'
+import { TestConst } from './e2e.constant'
 
 describe('notification',  () => {
   let tatum: TatumSdk
@@ -11,22 +13,37 @@ describe('notification',  () => {
   })
 
   it('createSubscription', async () => {
-    const response = await tatum.notification.subscribe.addressTransaction({
-      url: 'https://tatum.io',
-      chain: Chain.ethereum,
-      address: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
-    })
-    expect(response.id).toBeDefined()
+      const { id, url, chain, address } = await tatum.notification.subscribe.addressTransaction({
+        url: 'https://tatum.io',
+        chain: Chain.ethereum,
+        address: TestConst.ETH_ADDRESS,
+      })
+      expect(id).toBeDefined()
+      expect(chain).toBeDefined()
+      expect(address).toBeDefined()
+      expect(url).toBeDefined()
+      await tatum.notification.unsubscribe(id)
   })
 
   it('deleteSubscription', async () => {
-    const subscriptions = await tatum.notification.getSubscriptions()
-    const subscription = subscriptions[0]
-    await tatum.notification.deleteSubscription(subscription.id)
+    const { id } = await tatum.notification.subscribe.addressTransaction({
+      url: 'https://tatum.io',
+      chain: Chain.ethereum,
+      address: TestConst.ETH_ADDRESS,
+    })
+    await tatum.notification.unsubscribe(id)
+    const { addressTransactions } = await tatum.notification.getAll()
+    const subscriptions = addressTransactions.find(s => s.chain === Chain.ethereum && s.address.toLowerCase() === TestConst.ETH_ADDRESS.toLowerCase()) as AddressTransactionNotification
+    expect(subscriptions).toEqual(undefined)
   })
 
-  it('getSubscriptions', async () => {
-    const subscriptions = await tatum.notification.getSubscriptions()
-    expect(subscriptions.length).toBeGreaterThan(0)
+  it('getAll', async () => {
+    const { addressTransactions } = await tatum.notification.getAll()
+    expect(addressTransactions[0].id).toBeDefined()
+    expect(addressTransactions[0].chain).toBeDefined()
+    expect(addressTransactions[0].address).toBeDefined()
+    expect(addressTransactions[0].url).toBeDefined()
+    expect(addressTransactions[0].type).toBeDefined()
+    expect(addressTransactions.length).toBeGreaterThan(0)
   })
 })

@@ -1,5 +1,6 @@
 import { TatumSdk } from '../service/tatum/tatum'
 import { Chain } from '../service/tatum/tatum.dto'
+import { TestConst } from './e2e.constant'
 
 describe('estimate', () => {
   let tatum: TatumSdk
@@ -35,8 +36,8 @@ describe('estimate', () => {
     it('ethereum', async () => {
       const estimation = await tatum.fees.estimate([{
         chain: Chain.ethereum,
-        from: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
-        to: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
+        from: TestConst.ETH_ADDRESS,
+        to: TestConst.ETH_ADDRESS,
         amount: '0.1',
       }])
       expect(estimation).toBeDefined()
