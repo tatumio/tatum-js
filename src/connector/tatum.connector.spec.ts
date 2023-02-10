@@ -1,10 +1,9 @@
 import { TatumConnector } from './tatum.connector'
 import { Container } from 'typedi'
 import { CONFIG } from '../util/di.tokens'
-import { TestConst } from '../e2e/e2e.constant'
 
 describe('TatumConnector', () => {
-  Container.set(CONFIG, { apiKey: TestConst.TESTNET_API_KEY })
+  Container.set(CONFIG, { apiKey: process.env.TESTNET_API_KEY, testnet: true })
   let tatum: TatumConnector
   beforeAll(() => {
     tatum = new TatumConnector()
