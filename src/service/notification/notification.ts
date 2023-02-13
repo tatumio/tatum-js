@@ -8,8 +8,10 @@ import {
 } from './notification.dto'
 import { Subscribe } from './subscribe'
 import { ChainMapInverse, TatumChain } from '../tatum/tatum.dto'
+import { log } from '../../util/decorators/try-catch.decorator'
 
 @Service()
+@log
 export class Notification {
   private connector: TatumConnector = Container.get(TatumConnector)
 

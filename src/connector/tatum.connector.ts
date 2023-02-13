@@ -4,6 +4,7 @@ import { Container, Service } from 'typedi'
 import { version } from '../../package.json'
 import { CONFIG } from '../util/di.tokens'
 import { GetUrl, Request } from './connector.dto'
+import { Network } from '../service/tatum/tatum.dto'
 
 if (process.env.DEBUG === 'true') {
   axios.interceptors.request.use((request) => {
@@ -54,7 +55,7 @@ export class TatumConnector {
 
     const config = Container.get(CONFIG)
 
-    if (!config.apiKey && config.testnet === true) {
+    if (!config.apiKey && config.network === Network.Testnet) {
       url.searchParams.append('type', 'testnet')
     }
 

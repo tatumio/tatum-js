@@ -3,6 +3,7 @@ import { TatumConnector } from '../../connector/tatum.connector'
 import { Container, Service } from 'typedi'
 import { Utils } from '../../util/util.shared'
 import { IdDto } from '../../dto/shared.dto'
+// import { ErrorUtils } from '../../util/error'
 
 @Service()
 export class Subscribe {
@@ -27,4 +28,27 @@ export class Subscribe {
       url,
     }
   }
+
+  // async addressTransaction({ chain, address, url }: AddressNotificationDetail): Promise<ResponseDto<AddressNotification>> {
+  //   return ErrorUtils.tryFail(async () => {
+  //     const { id } = await this.connector.post<IdDto>({
+  //       path: 'subscription',
+  //       body: {
+  //         type: NotificationType.ADDRESS_TRANSACTION,
+  //         attr: {
+  //           chain: Utils.mapChain(chain),
+  //           address,
+  //           url,
+  //         },
+  //       },
+  //     })
+  //     return {
+  //       id,
+  //       address,
+  //       chain,
+  //       url,
+  //     }
+  //   })
+  //
+  // }
 }

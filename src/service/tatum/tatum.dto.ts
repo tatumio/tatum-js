@@ -1,7 +1,12 @@
 export interface TatumConfig {
     apiKey?: string
-    testnet?: boolean
+    network?: Network
     validate?: boolean
+}
+
+export enum Network {
+  Mainnet = 'Mainnet',
+  Testnet = 'Testnet',
 }
 
 export enum Chain {
