@@ -5,7 +5,6 @@ on:
 
 env:
   SDK_ERROR_MESSAGES_VERSION: "master"
-  ACTIONS_STEP_DEBUG: "true"
 
 jobs:
   build:
@@ -50,9 +49,11 @@ jobs:
       env:
         TESTNET_API_KEY: ${{ secrets.TESTNET_API_KEY }}
         MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
+    - run: ls -R dist
     - run: yarn build-all
-    - name: Build artifacts
+    - name: Upload build artifacts
       uses: actions/upload-artifact@v3
+    - run: ls -R dist
       with:
         name: build
         path: dist/
