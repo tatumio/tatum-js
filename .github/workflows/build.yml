@@ -5,6 +5,7 @@ on:
 
 env:
   SDK_ERROR_MESSAGES_VERSION: "master"
+  ACTIONS_STEP_DEBUG: "true"
 
 jobs:
   build:
