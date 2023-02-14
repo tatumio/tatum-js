@@ -19,7 +19,7 @@ export const algoWallet = () => {
       return {
         address: account.addr,
         secret,
-        mnemonic: algosdk.secretKeyToMnemonic(secret),
+        mnemonic: algosdk.secretKeyToMnemonic(account.sk),
       }
     },
     /**
