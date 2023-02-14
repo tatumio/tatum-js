@@ -11,7 +11,7 @@ export const algoWallet = () => {
      * @param mnemonic optional mnemonic seed to use. If not present, new one will be generated
      * @returns wallet or a combination of address and private key
      */
-    generateWallet(mnemonic?: string): AlgoWallet {
+    generateWallet(mnemonic?: string): AlgoWallet & { mnemonic: string } {
       const account = mnemonic ? algosdk.mnemonicToSecretKey(mnemonic) : algosdk.generateAccount()
       const encoder = new base32.Encoder({ type: 'rfc4648' })
       const secret = encoder.write(account.sk).finalize()
@@ -19,6 +19,7 @@ export const algoWallet = () => {
       return {
         address: account.addr,
         secret,
+        mnemonic: algosdk.secretKeyToMnemonic(secret),
       }
     },
     /**
