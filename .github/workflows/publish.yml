@@ -1,13 +1,11 @@
 name: 'Publish packages - manual run for alpha'
 
 on:
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   publish:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
       - name: List
         run: ls -al
