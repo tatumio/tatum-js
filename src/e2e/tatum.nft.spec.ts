@@ -1,12 +1,12 @@
 import { TatumSdk } from '../service/tatum/tatum'
-import { Chain } from '../service/tatum/tatum.dto'
+import { Chain, Network } from '../service/tatum/tatum.dto'
 
 describe('nft', () => {
   let tatum: TatumSdk
   beforeAll(async () => {
     tatum = await TatumSdk.init({
       apiKey: process.env.TESTNET_API_KEY,
-      testnet: true,
+      network: Network.Testnet,
     })
   })
 

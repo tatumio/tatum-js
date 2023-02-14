@@ -2,12 +2,13 @@ import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
   AddressTransactionNotificationApi,
-  GetAllNotificationsQuery,
-  Notifications,
+  GetAllNotificationsQuery, Notifications,
   NotificationType,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
 import { ChainMapInverse, TatumChain } from '../tatum/tatum.dto'
+import { ErrorUtils } from '../../util/error'
+import { ResponseDto } from '../../dto/shared.dto'
 
 @Service()
 export class Notification {
@@ -15,30 +16,30 @@ export class Notification {
 
   public subscribe: Subscribe = Container.get(Subscribe)
 
-  async getAll(pageSize?: GetAllNotificationsQuery): Promise<Notifications> {
-    const notifications = await this.connector.get<AddressTransactionNotificationApi[]>({
-      path: 'subscription',
-      params: {
-        pageSize: pageSize?.pageSize ?? '50',
-        offset: pageSize?.offset ?? '0',
-        address: pageSize?.address,
-      },
+  async getAll(pageSize?: GetAllNotificationsQuery): Promise<ResponseDto<Notifications>> {
+    return ErrorUtils.tryFail(async () => {
+      const notifications = await this.connector.get<AddressTransactionNotificationApi[]>({
+        path: 'subscription',
+        params: {
+          pageSize: pageSize?.pageSize ?? '50',
+          offset: pageSize?.offset ?? '0',
+          address: pageSize?.address,
+        },
+      })
+      const addressTransactions = notifications.filter(n => (n.type === NotificationType.ADDRESS_TRANSACTION) && n.attr.chain === TatumChain.ETH)
+      return {
+        addressTransactions: addressTransactions.map((notification) => ({
+          id: notification.id,
+          chain: ChainMapInverse[notification.attr.chain],
+          address: notification.attr.address,
+          url: notification.attr.url,
+          type: notification.type,
+        })),
+      }
     })
-    const addressTransactions =  notifications.filter(n => (n.type === NotificationType.ADDRESS_TRANSACTION) && n.attr.chain === TatumChain.ETH)
-    return {
-      addressTransactions: addressTransactions.map((notification) => ({
-        id: notification.id,
-        chain: ChainMapInverse[notification.attr.chain],
-        address: notification.attr.address,
-        url: notification.attr.url,
-        type: notification.type,
-      })),
-    }
   }
 
-  async unsubscribe(id: string): Promise<void> {
-    await this.connector.delete({ path: `subscription/${id}` })
+  async unsubscribe(id: string) {
+    return ErrorUtils.tryFail(async () => this.connector.delete({ path: `subscription/${id}` }))
   }
-
-
 }
