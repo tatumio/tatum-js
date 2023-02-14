@@ -51,9 +51,9 @@ jobs:
         MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
     - run: ls -R dist
     - run: yarn build-all
+    - run: ls -R dist
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
-    - run: ls -R dist
       with:
         name: build
         path: dist/
