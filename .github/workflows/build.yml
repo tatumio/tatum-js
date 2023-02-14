@@ -49,7 +49,6 @@ jobs:
       env:
         TESTNET_API_KEY: ${{ secrets.TESTNET_API_KEY }}
         MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
-    - run: ls -R dist
     - run: yarn build-all
     - run: ls -R dist
     - name: Upload build artifacts
