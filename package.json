@@ -15,8 +15,8 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "main": "./dist/tsc/main.js",
-  "types": "./dist/tsc/main.d.ts",
+  "main": "./dist/main.js",
+  "types": "./dist/main.d.ts",
   "browser": "./dist/esbuild/browser.js",
   "bin": {
     "my-cli-tool": "./dist/esbuild/cli.js"
