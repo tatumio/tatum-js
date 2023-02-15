@@ -50,7 +50,6 @@ jobs:
         TESTNET_API_KEY: ${{ secrets.TESTNET_API_KEY }}
         MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
     - run: yarn build-all
-    - run: ls -R dist
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
