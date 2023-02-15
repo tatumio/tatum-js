@@ -16,6 +16,7 @@ jobs:
         with:
           node-version: 14
           always-auth: true
+          scope: '@tatumcom'
       - run: npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_TATUM_COM }}
