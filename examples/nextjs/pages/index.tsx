@@ -1,82 +1,108 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
+import { useFetch } from './utils'
 
 const Home: NextPage = () => {
+  const { data, error } = useFetch('/api/hello')
+  console.log(data)
   return (
-    <div className="flex min-h-screen flex-col items-center justify-center py-2">
+    <div className='flex min-h-screen flex-col items-center justify-center py-2'>
       <Head>
         <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
+        <link rel='icon' href='/favicon.ico' />
       </Head>
 
-      <main className="flex w-full flex-1 flex-col items-center justify-center px-20 text-center">
-        <h1 className="text-6xl font-bold">
-          Welcome to{' '}
-          <a className="text-blue-600" href="https://tatum.io">
-            Tatum & Next.js!
-          </a>
-        </h1>
+      <main className='flex w-full flex-1 flex-col items-center justify-center px-20 text-center'>
 
-        <p className="mt-3 text-2xl">
-          Get started by editing{' '}
-          <code className="rounded-md bg-gray-100 p-3 font-mono text-lg">
-            pages/index.tsx
-          </code>
-        </p>
-
-        <div className="mt-6 flex max-w-4xl flex-wrap items-center justify-around sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and its API.
-            </p>
-          </a>
-
-          <a
-            href="https://nextjs.org/learn"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Learn &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Learn about Next.js in an interactive course with quizzes!
-            </p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Examples &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Discover and deploy boilerplate example Next.js projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className="mt-6 w-96 rounded-xl border p-6 text-left hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Deploy &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+        <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
+          <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
+            <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
+            <tr>
+              <th scope='col' className='px-6 py-3'>
+                Id
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Chain
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Url
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Address
+              </th>
+              <th scope='col' className='px-6 py-3'>
+                Action
+              </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+              <th scope='row' className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                Apple MacBook Pro 17"
+              </th>
+              <td className='px-6 py-4'>
+                Sliver
+              </td>
+              <td className='px-6 py-4'>
+                Laptop
+              </td>
+              <td className='px-6 py-4'>
+                $2999
+              </td>
+              <td className='px-6 py-4'>
+                <a href='#' className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>Edit</a>
+              </td>
+            </tr>
+            <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
+              <th scope='row' className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                Microsoft Surface Pro
+              </th>
+              <td className='px-6 py-4'>
+                White
+              </td>
+              <td className='px-6 py-4'>
+                Laptop PC
+              </td>
+              <td className='px-6 py-4'>
+                $1999
+              </td>
+              <td className='px-6 py-4'>
+                <a href='#' className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>Edit</a>
+              </td>
+            </tr>
+            <tr className='bg-white dark:bg-gray-800'>
+              <th scope='row' className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                Magic Mouse 2
+              </th>
+              <td className='px-6 py-4'>
+                Black
+              </td>
+              <td className='px-6 py-4'>
+                Accessories
+              </td>
+              <td className='px-6 py-4'>
+                $99
+              </td>
+              <td className='px-6 py-4'>
+                <a href='#' className='font-medium text-blue-600 dark:text-blue-500 hover:underline'>Edit</a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
+
       </main>
 
-      <footer className="flex h-24 w-full items-center justify-center border-t">
+      <footer className='flex h-24 w-full items-center justify-center border-t'>
         <a
-          className="flex items-center justify-center gap-2"
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
+          className='flex items-center justify-center gap-2'
+          href='https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app'
+          target='_blank'
+          rel='noopener noreferrer'
         >
           Powered by{' '}
-          <Image src="/vercel.svg" alt="Vercel Logo" width={72} height={16} />
+          <Image src='/vercel.svg' alt='Vercel Logo' width={72} height={16} />
         </a>
       </footer>
     </div>

@@ -20,6 +20,7 @@ describe('notification',  () => {
         chain: Chain.ethereum,
         address: TestConst.ETH_ADDRESS,
       })
+      console.log(data)
       const { id, url, chain, address } = data
       expect(id).toBeDefined()
       expect(chain).toBeDefined()

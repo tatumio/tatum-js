@@ -6,9 +6,14 @@
     "start": "next start"
   },
   "dependencies": {
+    "@tatumcom/js": "^3.0.0-alpha.5",
+    "axios": "^1.3.3",
+    "flowbite": "^1.6.3",
+    "flowbite-react": "^0.3.8",
     "next": "latest",
     "react": "18.2.0",
-    "react-dom": "18.2.0"
+    "react-dom": "18.2.0",
+    "swr": "^2.0.3"
   },
   "devDependencies": {
     "@types/node": "18.11.3",
