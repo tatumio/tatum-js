@@ -1,1 +1,2 @@
-import 'reflect-metadata';
+import 'reflect-metadata'
+export * from './index'
