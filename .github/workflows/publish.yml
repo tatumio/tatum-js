@@ -17,4 +17,4 @@ jobs:
           node-version: 14
       - run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.TATUM_COM_NPM_TOKEN }}
+          NPM_AUTH_TOKEN: ${{ secrets.TATUM_COM_NPM_TOKEN }}
