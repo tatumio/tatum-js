@@ -11,6 +11,7 @@ jobs:
       - uses: actions/download-artifact@v3
         with:
           name: build-14
+          path: dist
       - uses: actions/setup-node@v3
         with:
           node-version: 14
