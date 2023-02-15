@@ -1,9 +1,12 @@
 {
   "name": "@tatumcom/js",
-  "version": "3.0.0-alpha.1",
+  "version": "3.0.0-alpha.2",
   "description": "Tatum JS SDK",
   "author": "Tatum",
   "repository": "https://github.com/tatumio/tatum-js",
+  "files": [
+    "dist/"
+  ],
   "license": "MIT",
   "keywords": [
     "Tatum",
