@@ -18,6 +18,6 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
           scope: '@tatumcom'
           always-auth: true
-      - run: yarn publish --access public
+      - run: [ ! -z "$NODE_AUTH_TOKEN" ] && echo "Not empty"  ;yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.TATUM_COM_NPM_TOKEN }}

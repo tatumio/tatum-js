@@ -52,7 +52,7 @@ jobs:
     - run: yarn install
 
     - run: yarn lint
-    - run: yarn test || true
+    - run: true || yarn test
       env:
         TESTNET_API_KEY: ${{ secrets.TESTNET_API_KEY }}
         MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
