@@ -15,13 +15,15 @@
     "importHelpers": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "inlineSourceMap": true,
     "allowSyntheticDefaultImports": true,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "sourceMap": true,
-    "outDir": "./dist/tsc/",
+    "baseUrl": "./",
+    "outDir": "./dist",
     "types": [
       "node",
       "jest"
@@ -36,6 +38,7 @@
   ],
   "exclude": [
     "node_modules",
-    "**/*.test.ts"
+    "**/*.test.ts",
+    "dist"
   ]
 }
