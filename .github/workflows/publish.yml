@@ -17,4 +17,4 @@ jobs:
           registry-url: 'https://registry.npmjs.org/'
       - run: npm publish --access public
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.TATUM_COM_NPM_TOKEN }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN_TATUM_COM }}
