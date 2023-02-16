@@ -57,8 +57,14 @@ const { data } = await tatum.notification.subscribe.addressTransaction({
 
 // 🎉  Now your address is subscribed for any events!
 ```
+Visit https://tatum-technology.readme.io/reference/getting-started-1 to get started with Tatum Sdk.
+
 ## Documentation
 Visit https://tatum-technology.readme.io/reference/getting-started-1 to view the full documentation.
+
+## Examples
+
+We have several examples in the [examples](https://github.com/tatumio/tatum-js/tree/v3/examples) directory.
 
 ## Legacy versions
 Older versions of the Tatum Sdk has been moved to long living branches [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1) and [`Tatum SDK V2`](https://github.com/tatumio/tatum-js/tree/v2).
@@ -71,4 +77,4 @@ coverage for your code.
 
 ### Bugs and feature requests
 
-Have a bug or a feature request? Please first read the issue guidelines and search for existing and closed issues. If your problem or idea is not addressed yet, please open a [new issue]( [please open a new issue](https://github.com/tatumio/tatum-js/issues/new/choose)).
+Have a bug or a feature request? Please first read the issue guidelines and search for existing and closed issues. If your problem or idea is not addressed yet, please open a [new issue](https://github.com/tatumio/tatum-js/issues/new/choose).
