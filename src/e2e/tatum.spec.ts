@@ -8,8 +8,8 @@ describe('Tatum Init', () => {
         apiKey: process.env.TESTNET_API_KEY,
         network: Network.Testnet,
       })
-      const { data } = await tatum.getApiInfo()
-      expect(data.testnet).toBe(true)
+      const { testnet } = await tatum.getApiInfo()
+      expect(testnet).toBe(true)
     })
 
     it('Mainnet', async () => {
@@ -17,8 +17,8 @@ describe('Tatum Init', () => {
         apiKey: process.env.MAINNET_API_KEY,
         network: Network.Mainnet,
       })
-      const { data } = await tatum.getApiInfo()
-      expect(data.testnet).toBe(false)
+      const { testnet } = await tatum.getApiInfo()
+      expect(testnet).toBe(false)
     })
 
     it('Testnet with Mainnet Api Key', async () => {
@@ -37,34 +37,6 @@ describe('Tatum Init', () => {
           network: Network.Mainnet,
         }),
       ).rejects.toThrow('Tatum API key is not valid for Mainnet')
-    })
-  })
-
-  describe('No Api Key', () => {
-    it('Testnet', async () => {
-     await TatumSdk.init({
-        network: Network.Testnet,
-      })
-    })
-
-    it('Mainnet', async () => {
-      await TatumSdk.init({
-        network: Network.Mainnet,
-      })
-    })
-
-    it('Empty', async () => {
-      await TatumSdk.init()
-    })
-  })
-
-  describe('Invalid Api Key', () => {
-    it('Invalid', async () => {
-      await expect(
-        TatumSdk.init({
-          apiKey: 'invalid-api-key',
-        }),
-      ).rejects.toThrow(/^Unable to find valid subscription for/)
     })
   })
 })

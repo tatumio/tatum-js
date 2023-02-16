@@ -10,17 +10,17 @@ export enum Network {
 }
 
 export enum Chain {
-  Ethereum = 'Ethereum',
-  Solana = 'Solana',
-  Polygon = 'Polygon',
-  Celo = 'Celo',
-  Klaytn = 'Klaytn',
-  Bitcoin = 'Bitcoin',
-  Litecoin = 'Litecoin',
-  BitcoinCash = 'BitcoinCash',
-  Dogecoin = 'Dogecoin',
-  Tron = 'Tron',
-  BinanceSmartChain = 'BinanceSmartChain',
+  ethereum = 'ethereum',
+  solana = 'solana',
+  polygon = 'polygon',
+  celo = 'celo',
+  klaytn = 'klaytn',
+  bitcoin = 'bitcoin',
+  litecoin = 'litecoin',
+  bitcoinCash = 'bitcoinCash',
+  dogecoin = 'dogecoin',
+  tron = 'tron',
+  binanceSmartChain = 'binanceSmartChain',
 }
 
 export enum TatumChain {
@@ -38,30 +38,30 @@ export enum TatumChain {
 }
 
 export const ChainMap = {
-  [Chain.Ethereum]: TatumChain.ETH,
-  [Chain.Solana]: TatumChain.SOL,
-  [Chain.Polygon]: TatumChain.MATIC,
-  [Chain.Celo]: TatumChain.CELO,
-  [Chain.Klaytn]: TatumChain.KLAY,
-  [Chain.Bitcoin]: TatumChain.BTC,
-  [Chain.Litecoin]: TatumChain.LTC,
-  [Chain.BitcoinCash]: TatumChain.BCH,
-  [Chain.Dogecoin]: TatumChain.DOGE,
-  [Chain.Tron]: TatumChain.TRON,
-  [Chain.BinanceSmartChain]: TatumChain.BSC,
+  [Chain.ethereum]: TatumChain.ETH,
+  [Chain.solana]: TatumChain.SOL,
+  [Chain.polygon]: TatumChain.MATIC,
+  [Chain.celo]: TatumChain.CELO,
+  [Chain.klaytn]: TatumChain.KLAY,
+  [Chain.bitcoin]: TatumChain.BTC,
+  [Chain.litecoin]: TatumChain.LTC,
+  [Chain.bitcoinCash]: TatumChain.BCH,
+  [Chain.dogecoin]: TatumChain.DOGE,
+  [Chain.tron]: TatumChain.TRON,
+  [Chain.binanceSmartChain]: TatumChain.BSC,
 }
 export const ChainMapInverse = {
-  [TatumChain.ETH]: Chain.Ethereum,
-  [TatumChain.SOL]: Chain.Solana,
-  [TatumChain.MATIC]: Chain.Polygon,
-  [TatumChain.CELO]: Chain.Celo,
-  [TatumChain.KLAY]: Chain.Klaytn,
-  [TatumChain.BTC]: Chain.Bitcoin,
-  [TatumChain.LTC]: Chain.Litecoin,
-  [TatumChain.BCH]: Chain.BitcoinCash,
-  [TatumChain.DOGE]: Chain.Dogecoin,
-  [TatumChain.TRON]: Chain.Tron,
-  [TatumChain.BSC]: Chain.BinanceSmartChain,
+  [TatumChain.ETH]: Chain.ethereum,
+  [TatumChain.SOL]: Chain.solana,
+  [TatumChain.MATIC]: Chain.polygon,
+  [TatumChain.CELO]: Chain.celo,
+  [TatumChain.KLAY]: Chain.klaytn,
+  [TatumChain.BTC]: Chain.bitcoin,
+  [TatumChain.LTC]: Chain.litecoin,
+  [TatumChain.BCH]: Chain.bitcoinCash,
+  [TatumChain.DOGE]: Chain.dogecoin,
+  [TatumChain.TRON]: Chain.tron,
+  [TatumChain.BSC]: Chain.binanceSmartChain,
 }
 
 export interface ApiInfoResponse {

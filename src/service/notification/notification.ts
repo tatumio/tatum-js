@@ -2,12 +2,13 @@ import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
   AddressTransactionNotificationApi,
-  GetAllNotificationsQuery, GetAllExecutedWebhooksQuery,
-  NotificationType, Webhook, AddressTransactionNotification,
+  GetAllNotificationsQuery, Notifications,
+  NotificationType,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
 import { ChainMapInverse } from '../tatum/tatum.dto'
-import { ErrorUtils, ResponseDto } from '../../util/error'
+import { ErrorUtils } from '../../util/error'
+import { ResponseDto } from '../../dto/shared.dto'
 
 @Service()
 export class Notification {
@@ -15,41 +16,30 @@ export class Notification {
 
   public subscribe: Subscribe = Container.get(Subscribe)
 
-  async getAll(body?: GetAllNotificationsQuery): Promise<ResponseDto<AddressTransactionNotification[]>> {
+  async getAll(pageSize?: GetAllNotificationsQuery): Promise<ResponseDto<Notifications>> {
     return ErrorUtils.tryFail(async () => {
       const notifications = await this.connector.get<AddressTransactionNotificationApi[]>({
         path: 'subscription',
         params: {
-          pageSize: body?.pageSize?.toString() ?? '10',
-          ...(body?.offset && { offset: body.offset.toString() }),
-          ...(body?.address && { address: body.address }),
+          pageSize: pageSize?.pageSize ?? '50',
+          offset: pageSize?.offset ?? '0',
+          address: pageSize?.address,
         },
       })
       const addressTransactions = notifications.filter(n => (n.type === NotificationType.ADDRESS_TRANSACTION))
-      return addressTransactions.map((notification) => ({
-        id: notification.id,
-        chain: ChainMapInverse[notification.attr.chain],
-        address: notification.attr.address,
-        url: notification.attr.url,
-        type: notification.type,
-      }))
+      return {
+        addressTransactions: addressTransactions.map((notification) => ({
+          id: notification.id,
+          chain: ChainMapInverse[notification.attr.chain],
+          address: notification.attr.address,
+          url: notification.attr.url,
+          type: notification.type,
+        })),
+      }
     })
   }
 
-  async unsubscribe(id: string): Promise<ResponseDto<void>> {
+  async unsubscribe(id: string) {
     return ErrorUtils.tryFail(async () => this.connector.delete({ path: `subscription/${id}` }))
-  }
-
-  async getAllExecutedWebhooks(body?: GetAllExecutedWebhooksQuery): Promise<ResponseDto<Webhook[]>> {
-    return ErrorUtils.tryFail(async () =>
-      this.connector.get<Webhook[]>({
-        path: 'subscription/webhook',
-        params: {
-          pageSize: body?.pageSize?.toString() ?? '10',
-          ...(body?.offset && { offset: body.offset.toString() }),
-          ...(body?.direction && { direction: body.direction }),
-          ...(body?.filterFailed && { failed: body.filterFailed.toString() }),
-        },
-      }))
   }
 }
