@@ -1,17 +1,13 @@
 import { Container, Service } from 'typedi'
-import { Nft } from '../nft/nft'
 import { CONFIG } from '../../util/di.tokens'
 import { Notification } from '../notification/notification'
-import { Fee } from '../fee/fee'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { ApiInfoResponse, Network, TatumConfig } from './tatum.dto'
 
 @Service()
 export class TatumSdk {
-  nft: Nft = Container.get(Nft)
   notification: Notification = Container.get(Notification)
-  fees: Fee = Container.get(Fee)
-  connector: TatumConnector = Container.get(TatumConnector)
+  private connector: TatumConnector = Container.get(TatumConnector)
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
   private constructor() {

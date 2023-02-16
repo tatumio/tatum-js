@@ -6,7 +6,7 @@ import {
   NotificationType,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
-import { ChainMapInverse, TatumChain } from '../tatum/tatum.dto'
+import { ChainMapInverse } from '../tatum/tatum.dto'
 import { ErrorUtils } from '../../util/error'
 import { ResponseDto } from '../../dto/shared.dto'
 
@@ -26,7 +26,7 @@ export class Notification {
           address: pageSize?.address,
         },
       })
-      const addressTransactions = notifications.filter(n => (n.type === NotificationType.ADDRESS_TRANSACTION) && n.attr.chain === TatumChain.ETH)
+      const addressTransactions = notifications.filter(n => (n.type === NotificationType.ADDRESS_TRANSACTION))
       return {
         addressTransactions: addressTransactions.map((notification) => ({
           id: notification.id,

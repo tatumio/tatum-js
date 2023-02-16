@@ -3,30 +3,20 @@ import { Chain, Network } from '../service/tatum/tatum.dto'
 import { AddressTransactionNotification } from '../service/notification/notification.dto'
 import { TestConst } from './e2e.constant'
 import { Status } from '../dto/shared.dto'
+import { e2eUtil } from './e2e.util'
 
 describe('notification',  () => {
   let tatum: TatumSdk
   beforeAll(async () => {
     tatum = await TatumSdk.init({
-      apiKey: process.env.TESTNET_API_KEY,
-      network: Network.Testnet,
+      apiKey: process.env.MAINNET_API_KEY,
+      network: Network.Mainnet,
     })
   })
 
   describe('createSubscription',() => {
-    it('OK', async () => {
-      const { data } = await tatum.notification.subscribe.addressTransaction({
-        url: 'https://tatum.io',
-        chain: Chain.ethereum,
-        address: TestConst.ETH_ADDRESS,
-      })
-      console.log(data)
-      const { id, url, chain, address } = data
-      expect(id).toBeDefined()
-      expect(chain).toBeDefined()
-      expect(address).toBeDefined()
-      expect(url).toBeDefined()
-      await tatum.notification.unsubscribe(id)
+    it.each(Object.values(Chain))('OK - %s', async (chain: Chain) => {
+      await e2eUtil.subscriptions.testCreateSubscription(tatum, chain, TestConst.TEST_ADDRESSES[chain])
     })
 
     it('NOK', async () => {
@@ -41,15 +31,16 @@ describe('notification',  () => {
   })
 
   it('deleteSubscription', async () => {
+    const address = TestConst.TEST_ADDRESSES[Chain.ethereum]
     const { data: subscribeData } = await tatum.notification.subscribe.addressTransaction({
       url: 'https://tatum.io',
       chain: Chain.ethereum,
-      address: TestConst.ETH_ADDRESS,
+      address
     })
     const { id } = subscribeData
     await tatum.notification.unsubscribe(id)
     const { data } = await tatum.notification.getAll()
-    const subscriptions = data.addressTransactions.find(s => s.chain === Chain.ethereum && s.address.toLowerCase() === TestConst.ETH_ADDRESS.toLowerCase()) as AddressTransactionNotification
+    const subscriptions = data.addressTransactions.find(s => s.chain === Chain.ethereum && s.address.toLowerCase() === address.toLowerCase()) as AddressTransactionNotification
     expect(subscriptions).toEqual(undefined)
   })
 
