@@ -2,8 +2,8 @@ import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
   AddressTransactionNotificationApi,
-  GetAllNotificationsQuery, Notifications,
-  NotificationType,
+  GetAllNotificationsQuery, GetAllExecutedWebhooksQuery, Notifications,
+  NotificationType, Webhook,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
 import { ChainMapInverse } from '../tatum/tatum.dto'
@@ -16,14 +16,14 @@ export class Notification {
 
   public subscribe: Subscribe = Container.get(Subscribe)
 
-  async getAll(pageSize?: GetAllNotificationsQuery): Promise<ResponseDto<Notifications>> {
+  async getAll(body?: GetAllNotificationsQuery): Promise<ResponseDto<Notifications>> {
     return ErrorUtils.tryFail(async () => {
       const notifications = await this.connector.get<AddressTransactionNotificationApi[]>({
         path: 'subscription',
         params: {
-          pageSize: pageSize?.pageSize ?? '50',
-          offset: pageSize?.offset ?? '0',
-          address: pageSize?.address,
+          pageSize: body?.pageSize ?? '50',
+          ...(body?.offset && { offset: body.offset }),
+          ...(body?.address && { address: body.address }),
         },
       })
       const addressTransactions = notifications.filter(n => (n.type === NotificationType.ADDRESS_TRANSACTION))
@@ -39,7 +39,20 @@ export class Notification {
     })
   }
 
-  async unsubscribe(id: string) {
+  async unsubscribe(id: string): Promise<ResponseDto<void>> {
     return ErrorUtils.tryFail(async () => this.connector.delete({ path: `subscription/${id}` }))
+  }
+
+  async getAllExecutedWebhooks(body?: GetAllExecutedWebhooksQuery): Promise<ResponseDto<Webhook[]>> {
+    return ErrorUtils.tryFail(async () =>
+      this.connector.get<Webhook[]>({
+        path: 'subscription/webhook',
+        params: {
+          pageSize: body?.pageSize ?? '50',
+          ...(body?.offset && { offset: body.offset }),
+          ...(body?.direction && { direction: body.direction }),
+          ...(body?.filterFailed && { failed: body.filterFailed.toString() }),
+        },
+      }))
   }
 }

@@ -53,4 +53,18 @@ describe('notification',  () => {
     expect(data.addressTransactions[0].type).toBeDefined()
     expect(data.addressTransactions.length).toBeGreaterThan(0)
   })
+
+  it('getAllExecutedWebhooks', async () => {
+    const { data } = await tatum.notification.getAllExecutedWebhooks()
+    expect(data[0].type).toBeDefined()
+    expect(data[0].id).toBeDefined()
+    expect(data[0].subscriptionId).toBeDefined()
+    expect(data[0].url).toBeDefined()
+    expect(data[0].data).toBeDefined()
+    expect(data[0].nextTime).toBeDefined()
+    expect(data[0].timestamp).toBeDefined()
+    expect(data[0].retryCount).toBeDefined()
+    expect(data[0].failed).toBeDefined()
+    expect(data[0].response).toBeDefined()
+  })
 })
