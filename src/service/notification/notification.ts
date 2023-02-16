@@ -7,8 +7,7 @@ import {
 } from './notification.dto'
 import { Subscribe } from './subscribe'
 import { ChainMapInverse } from '../tatum/tatum.dto'
-import { ErrorUtils } from '../../util/error'
-import { ResponseDto } from '../../dto/shared.dto'
+import { ErrorUtils, ResponseDto } from '../../util/error'
 
 @Service()
 export class Notification {

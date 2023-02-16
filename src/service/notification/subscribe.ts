@@ -2,8 +2,8 @@ import { AddressNotificationDetail, AddressNotification, NotificationType } from
 import { TatumConnector } from '../../connector/tatum.connector'
 import { Container, Service } from 'typedi'
 import { Utils } from '../../util/util.shared'
-import { IdDto, ResponseDto } from '../../dto/shared.dto'
-import { ErrorUtils } from '../../util/error'
+import { IdDto } from '../../dto/shared.dto'
+import { ErrorUtils, ResponseDto } from '../../util/error'
 
 @Service()
 export class Subscribe {
