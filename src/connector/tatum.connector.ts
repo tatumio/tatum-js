@@ -39,7 +39,7 @@ export class TatumConnector {
       url: this.getUrl({ path, params }),
       headers,
       method,
-      data: body,
+      data: body
     })
     return data
   }
