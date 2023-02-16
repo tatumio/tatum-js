@@ -25,6 +25,7 @@
 <hr>
 
 ## Installation
+
 #### Install using [npm](https://www.npmjs.com/)
 
 ```console
@@ -38,6 +39,7 @@ yarn add @tatumcom/js
 ```
 
 #### Install using [pnpm](https://pnpm.io/)
+
 ```console
 pnpm install @tatumcom/js
 ```
