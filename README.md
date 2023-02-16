@@ -47,12 +47,12 @@ pnpm install @tatumcom/js
 ## Getting started
 Subscribe for any transaction on Ethereum address.
 ```js
-import { TatumSdk } from '@tatumcom/js'
+import { TatumSdk, Chain, Network } from '@tatumcom/js'
 
-const tatum = await TatumSdk({ apiKey: '<Your API Key>', mainnet: true }).init()
+const tatum = await TatumSdk({ apiKey: '<YOUR_API_KEY>', network: Network.Mainnet }).init()
 
 const { data } = await tatum.notification.subscribe.addressTransaction({
-  url: '<Your Webhook URL>',
+  url: 'https://<YOUR_WEBHOOK_URL>',
   chain: Chain.ethereum,
   address: '0x690B9A9E9aa1C9dB991C7721a92d351Db4FaC990',
 })
