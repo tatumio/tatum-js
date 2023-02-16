@@ -56,6 +56,7 @@ describe('notification',  () => {
 
   it('getAllExecutedWebhooks', async () => {
     const { data } = await tatum.notification.getAllExecutedWebhooks()
+    console.log(data)
     expect(data[0].type).toBeDefined()
     expect(data[0].id).toBeDefined()
     expect(data[0].subscriptionId).toBeDefined()
