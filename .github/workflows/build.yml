@@ -7,6 +7,22 @@ env:
   SDK_ERROR_MESSAGES_VERSION: "master"
 
 jobs:
+  metadata:
+    runs-on: ubuntu-latest
+    outputs:
+      current_branch: ${{ steps.branch-name.outputs.current_branch }}
+      package_version: ${{ env.package_version }}
+    steps:
+      - name: Get branch name
+        id: branch-name
+        uses: tj-actions/branch-names@v6
+      - uses: actions/checkout@v3
+      - name: Get package version
+        id: package-version
+        run: |
+          version=$(jq -r '.version' package.json)
+          echo "package_version=$version" >> "$GITHUB_ENV"
+
   build:
     runs-on: ubuntu-latest
     strategy:
@@ -30,13 +46,16 @@ jobs:
     - run: yarn install
     - run: yarn add -D esbuild
     - run: yarn build-all
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
         name: build-${{ matrix.nodejs }}
         path: dist/
         retention-days: 7
-      if: "(contains(github.event.head_commit.message, 'release alpha') && matrix.nodejs == 14)"
+      if: |
+        matrix.nodejs == 14 &&
+        contains(github.event.head_commit.message, 'release alpha')
 
   test:
     runs-on: ubuntu-latest
@@ -50,17 +69,53 @@ jobs:
         cache: 'yarn'
 
     - run: yarn install
-
     - run: yarn lint
     - run: yarn test
       env:
         TESTNET_API_KEY: ${{ secrets.TESTNET_API_KEY }}
         MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
 
-  npm:
-    if: "contains(github.event.head_commit.message, 'release alpha')"
+  release:
     runs-on: ubuntu-latest
-    needs: [ build, test ]
+    if: needs.metadata.outputs.current_branch == 'master'
+    needs: [ metadata, build, test ]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Git config
+        run: |
+          git config --local user.name github-actions
+          git config --local user.email github-actions@github.com
+      - name: Get latest release
+        id: get_latest_release
+        run: |
+          latest_tag=$(curl -s --max-time 5 https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/latest | jq -r '.tag_name')
+          echo "LATEST_RELEASE_TAG=$latest_tag" >> $GITHUB_ENV
+      - name: Ensure package version is updated
+        run: |
+          [ "${{needs.metadata.outputs.package_version}}" = "${{env.LATEST_RELEASE_TAG}}" ] && echo "Error: Package version is the same as the latest release" && exit 1 || exit 0
+      - name: Get release notes
+        id: get_release_notes
+        uses: ffurrer2/extract-release-notes@v1
+      # TAG the repo
+      - name: Create tag ${{needs.metadata.outputs.package_version}}
+        uses: rickstaa/action-create-tag@v1
+        with:
+          tag: "${{needs.metadata.outputs.package_version}}"
+      - name: "Create a GitHub release v${{ steps.package-version.outputs.current-version }}"
+      # Create release using the tag above
+        uses: ncipollo/release-action@v1
+        with:
+          tag: "${{needs.metadata.outputs.package_version}}"
+          name: "${{needs.metadata.outputs.package_version}}"
+          body: |
+            ${{ steps.get_release_notes.outputs.release_notes }}
+  npm:
+    runs-on: ubuntu-latest
+    if: |
+      needs.metadata.outputs.current_branch == 'master' ||
+      (contains(needs.metadata.outputs.package_version, '1.0.0-alpha') && contains(github.event.head_commit.message, 'release alpha'))
+    needs: [ metadata, build, test ]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
