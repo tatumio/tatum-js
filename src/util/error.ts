@@ -1,9 +1,19 @@
-import { ResponseDto, Status } from '../dto/shared.dto'
 import axios from 'axios'
 
+export enum Status {
+  SUCCESS = 'SUCCESS',
+  ERROR = 'ERROR'
+}
+
+export interface ResponseDto<T> {
+  data: T
+  status: Status,
+  error?: ErrorWithMessage
+}
+
 type ErrorWithMessage = {
-  message: string
-  errorCode?: string
+  message: string | object
+  code?: string
 }
 
 export const ErrorUtils = {
@@ -20,15 +30,22 @@ export const ErrorUtils = {
       return {
         data: null as unknown as T,
         status: Status.ERROR,
-        error: ErrorUtils.getErrorMsg(e),
+        error: ErrorUtils.toErrorWithMessage(e),
       }
     }
   },
   toErrorWithMessage: (maybeError: unknown): ErrorWithMessage => {
     if (axios.isAxiosError(maybeError)) {
+      if (maybeError.response?.data?.data instanceof Array && maybeError.response?.data?.data.length > 0) {
+        return {
+          message: maybeError.response?.data?.data,
+          code: maybeError.response?.data?.errorCode,
+        }
+      }
+
       return {
         message: maybeError.response?.data?.message ?? maybeError.message,
-        errorCode: maybeError.response?.data?.errorCode,
+        code: maybeError.response?.data?.errorCode,
       }
     }
 
@@ -52,5 +69,4 @@ export const ErrorUtils = {
       typeof (e as Record<string, unknown>).message === 'string'
     )
   },
-  getErrorMsg: (e: unknown): string => ErrorUtils.toErrorWithMessage(e).message,
 }
