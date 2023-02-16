@@ -3,10 +3,7 @@ import { TatumConnector } from '../../connector/tatum.connector'
 import Web3 from 'web3'
 import {
   CurrentFee,
-  NativeTransferFeeEstimationDetails,
-  EstimationsApi,
   EmptyObject,
-  NativeTransferFeeEstimation,
 } from './fee.dto'
 import { Chain } from '../tatum/tatum.dto'
 import { Utils } from '../../util/util.shared'
@@ -32,23 +29,6 @@ export class Fee {
         },
       })
     }, {} as CurrentFee)
-  }
-
-  async estimate(estimate: NativeTransferFeeEstimationDetails[]): Promise<NativeTransferFeeEstimation | EmptyObject> {
-    if (!estimate.length) {
-      return {}
-    }
-
-    const { result } = await this.connector.post({ path: 'ethereum/gas/batch', body: { estimations: estimate } })
-    return {
-      ethereum: (result as EstimationsApi[]).map(estimation => {
-        const gasPrice = estimation.data.estimations
-        return ({
-          gasLimit: estimation.data.gasLimit,
-          gasPrice: this.mapGasPrice({ slow: gasPrice.safe, medium: gasPrice.standard, fast: gasPrice.fast, baseFee: gasPrice.baseFee }),
-        })
-      })
-    }
   }
 
 
