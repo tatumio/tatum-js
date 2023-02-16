@@ -53,7 +53,7 @@ const tatum = await TatumSdk({ apiKey: '<YOUR_API_KEY>', network: Network.Mainne
 
 const { data } = await tatum.notification.subscribe.addressTransaction({
   url: 'https://<YOUR_WEBHOOK_URL>',
-  chain: Chain.ethereum,
+  chain: Chain.Ethereum,
   address: '0x690B9A9E9aa1C9dB991C7721a92d351Db4FaC990',
 })
 
