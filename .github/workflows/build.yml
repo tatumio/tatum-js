@@ -46,7 +46,7 @@ jobs:
     - run: yarn install
     - run: yarn add -D esbuild
     - run: yarn build-all
-    
+
     - name: Upload build artifacts
       uses: actions/upload-artifact@v3
       with:
@@ -120,7 +120,7 @@ jobs:
     if: |
       needs.metadata.outputs.current_branch == 'master' ||
       (contains(needs.metadata.outputs.package_version, '1.0.0-alpha') && contains(github.event.head_commit.message, 'release alpha'))
-    needs: [ build, test ]
+    needs: [ metadata, build, test ]
     steps:
       - uses: actions/checkout@v3
       - uses: actions/download-artifact@v3
