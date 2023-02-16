@@ -1,11 +1,12 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
-import { useFetch } from './utils'
+import { useFetch } from '../utils/utils'
+import React from 'react'
+import { SubscriptionModal } from '../components/modal'
 
 const Home: NextPage = () => {
-  const { data, error } = useFetch('/api/hello')
-  console.log(data)
+  const { data, error } = useFetch('/api/subscription')
   return (
     <div className='flex min-h-screen flex-col items-center justify-center py-2'>
       <Head>
@@ -57,10 +58,11 @@ const Home: NextPage = () => {
                 </td>
               </tr>
             ))}
+
             </tbody>
           </table>
         </div>
-
+        <SubscriptionModal />
       </main>
 
       <footer className='flex h-24 w-full items-center justify-center border-t'>
