@@ -22,7 +22,7 @@ describe('notification',  () => {
     it('NOK - existing subscription ', async () => {
       const { status, error } = await tatum.notification.subscribe.addressTransaction({
         url: 'https://tatum.io',
-        chain: Chain.ethereum,
+        chain: Chain.Ethereum,
         address: TestConst.EXISTING_SUBSCRIPTION_ETH_ADDRESS,
       })
       expect(status).toEqual(Status.ERROR)
@@ -33,7 +33,7 @@ describe('notification',  () => {
     it('NOK - invalid address', async () => {
       const { status, error } = await tatum.notification.subscribe.addressTransaction({
         url: 'https://tatum.io',
-        chain: Chain.ethereum,
+        chain: Chain.Ethereum,
         address: TestConst.INVALID_ETH_ADDRESS,
       })
       console.log(error)
@@ -44,16 +44,16 @@ describe('notification',  () => {
   })
 
   it('deleteSubscription', async () => {
-    const address = TestConst.TEST_ADDRESSES[Chain.ethereum]
+    const address = TestConst.TEST_ADDRESSES[Chain.Ethereum]
     const { data: subscribeData } = await tatum.notification.subscribe.addressTransaction({
       url: 'https://tatum.io',
-      chain: Chain.ethereum,
+      chain: Chain.Ethereum,
       address
     })
     const { id } = subscribeData
     await tatum.notification.unsubscribe(id)
     const { data } = await tatum.notification.getAll()
-    const subscriptions = data.addressTransactions.find(s => s.chain === Chain.ethereum && s.address.toLowerCase() === address.toLowerCase()) as AddressTransactionNotification
+    const subscriptions = data.addressTransactions.find(s => s.chain === Chain.Ethereum && s.address.toLowerCase() === address.toLowerCase()) as AddressTransactionNotification
     expect(subscriptions).toEqual(undefined)
   })
 
