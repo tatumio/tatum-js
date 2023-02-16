@@ -41,3 +41,36 @@ export interface AddressTransactionNotificationApi {
     url: string
   }
 }
+
+export interface GetAllExecutedWebhooksQuery {
+  pageSize?: string
+  offset?: string
+  direction?: 'asc' | 'desc'
+  filterFailed?: boolean
+}
+
+export interface Webhook {
+  type: NotificationType,
+  id: string,
+  subscriptionId: string,
+  url: string
+  data: {
+    address: string,
+    amount: string,
+    asset: string,
+    blockNumber: number,
+    txId: string,
+    type: string,
+    chain: string,
+    subscriptionType: NotificationType
+  }
+  nextTime: number
+  timestamp: number
+  retryCount: number
+  failed: boolean
+  response: {
+    code: number
+    data: string
+    networkError: boolean
+  }
+}
