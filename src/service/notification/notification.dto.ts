@@ -1,13 +1,9 @@
 import { Chain, TatumChain } from '../tatum/tatum.dto'
 
 export interface GetAllNotificationsQuery {
-  pageSize?: string
-  offset?: string
+  pageSize?: number
+  offset?: number
   address?: string
-}
-
-export type Notifications = {
-  addressTransactions: AddressTransactionNotification[]
 }
 
 export type AddressTransactionNotification = {
@@ -43,8 +39,8 @@ export interface AddressTransactionNotificationApi {
 }
 
 export interface GetAllExecutedWebhooksQuery {
-  pageSize?: string
-  offset?: string
+  pageSize?: number
+  offset?: number
   direction?: 'asc' | 'desc'
   filterFailed?: boolean
 }

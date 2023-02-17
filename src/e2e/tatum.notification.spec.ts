@@ -36,40 +36,47 @@ describe('notification',  () => {
         chain: Chain.Ethereum,
         address: TestConst.INVALID_ETH_ADDRESS,
       })
-      console.log(error)
       expect(status).toEqual(Status.ERROR)
       expect(error?.message).toEqual(["attr.address must be a valid ETH address. Address must start with 0x and must contain 40 hexadecimal characters after and have the correct checksum. "])
       expect(error?.code).toEqual('validation.failed')
     })
   })
 
-  it('deleteSubscription', async () => {
-    const address = TestConst.TEST_ADDRESSES[Chain.Ethereum]
-    const { data: subscribeData } = await tatum.notification.subscribe.addressTransaction({
-      url: 'https://tatum.io',
-      chain: Chain.Ethereum,
-      address
+  describe('deleteSubscription',() => {
+    it('OK', async () => {
+      const address = TestConst.TEST_ADDRESSES[Chain.Ethereum]
+      const { data: subscribeData } = await tatum.notification.subscribe.addressTransaction({
+        url: 'https://tatum.io',
+        chain: Chain.Ethereum,
+        address
+      })
+      const { id } = subscribeData
+      await tatum.notification.unsubscribe(id)
+      const { data } = await tatum.notification.getAll()
+      const subscriptions = data.find(s => s.chain === Chain.Ethereum && s.address.toLowerCase() === address.toLowerCase()) as AddressTransactionNotification
+      expect(subscriptions).toEqual(undefined)
     })
-    const { id } = subscribeData
-    await tatum.notification.unsubscribe(id)
-    const { data } = await tatum.notification.getAll()
-    const subscriptions = data.addressTransactions.find(s => s.chain === Chain.Ethereum && s.address.toLowerCase() === address.toLowerCase()) as AddressTransactionNotification
-    expect(subscriptions).toEqual(undefined)
+
+    it('NOK - invalid subscription', async () => {
+      const { data, status, error } = await tatum.notification.unsubscribe('invalid-subscription-id')
+      expect(data).toEqual(null)
+      expect(status).toEqual(Status.ERROR)
+      expect((error?.message as object[])[0]).toEqual('id should be valid id and 24 characters long, e.g. 6398ded68bfa23a9709b1b17')
+    })
   })
 
   it('getAll', async () => {
     const { data } = await tatum.notification.getAll()
-    expect(data.addressTransactions[0].id).toBeDefined()
-    expect(data.addressTransactions[0].chain).toBeDefined()
-    expect(data.addressTransactions[0].address).toBeDefined()
-    expect(data.addressTransactions[0].url).toBeDefined()
-    expect(data.addressTransactions[0].type).toBeDefined()
-    expect(data.addressTransactions.length).toBeGreaterThan(0)
+    expect(data[0].id).toBeDefined()
+    expect(data[0].chain).toBeDefined()
+    expect(data[0].address).toBeDefined()
+    expect(data[0].url).toBeDefined()
+    expect(data[0].type).toBeDefined()
+    expect(data.length).toBeGreaterThan(0)
   })
 
   it('getAllExecutedWebhooks', async () => {
     const { data } = await tatum.notification.getAllExecutedWebhooks()
-    console.log(data)
     expect(data[0].type).toBeDefined()
     expect(data[0].id).toBeDefined()
     expect(data[0].subscriptionId).toBeDefined()
