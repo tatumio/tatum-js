@@ -40,6 +40,24 @@ describe('Tatum Init', () => {
     })
   })
 
+  describe('No Api Key', () => {
+    it('Testnet', async () => {
+     await TatumSdk.init({
+        network: Network.Testnet,
+      })
+    })
+
+    it('Mainnet', async () => {
+      await TatumSdk.init({
+        network: Network.Mainnet,
+      })
+    })
+
+    it('Empty', async () => {
+      await TatumSdk.init()
+    })
+  })
+
   describe('Invalid Api Key', () => {
     it('Invalid', async () => {
       await expect(
