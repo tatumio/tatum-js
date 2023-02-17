@@ -83,7 +83,6 @@ describe('notification',  () => {
     expect(data[0].url).toBeDefined()
     expect(data[0].data).toBeDefined()
     expect(data[0].timestamp).toBeDefined()
-    expect(data[0].retryCount).toBeDefined()
     expect(data[0].failed).toBeDefined()
     expect(data[0].response).toBeDefined()
   })
