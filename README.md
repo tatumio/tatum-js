@@ -4,10 +4,10 @@
   </a>
 </p>
 
-<h3 align="center">Tatum Sdk</h3>
+<h3 align="center">Tatum SDK</h3>
 
 <p align="center">
-  Tatum Sdk allows browsers and Node.js clients to interact Blockchain.
+  Tatum SDK allows browsers and Node.js clients to interact Blockchain.
   <br>
   <a href="https://tatum.io/apidoc"><strong>Documentation</strong></a>
   <br>
