@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme")
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: [
@@ -8,7 +10,12 @@ module.exports = {
     "./public/**/*.html",
   ],
   theme: {
-    extend: {},
+    extend: {
+      fontFamily: {
+        "Poppins": ["Poppins", ...defaultTheme.fontFamily.sans],
+      },
+
+    },
   },
   plugins: [require("flowbite/plugin")],
 }
