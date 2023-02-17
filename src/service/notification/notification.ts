@@ -2,8 +2,8 @@ import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
   AddressTransactionNotificationApi,
-  GetAllNotificationsQuery, GetAllExecutedWebhooksQuery, Notifications,
-  NotificationType, Webhook,
+  GetAllNotificationsQuery, GetAllExecutedWebhooksQuery,
+  NotificationType, Webhook, AddressTransactionNotification,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
 import { ChainMapInverse } from '../tatum/tatum.dto'
@@ -15,26 +15,24 @@ export class Notification {
 
   public subscribe: Subscribe = Container.get(Subscribe)
 
-  async getAll(body?: GetAllNotificationsQuery): Promise<ResponseDto<Notifications>> {
+  async getAll(body?: GetAllNotificationsQuery): Promise<ResponseDto<AddressTransactionNotification[]>> {
     return ErrorUtils.tryFail(async () => {
       const notifications = await this.connector.get<AddressTransactionNotificationApi[]>({
         path: 'subscription',
         params: {
-          pageSize: body?.pageSize ?? '50',
-          ...(body?.offset && { offset: body.offset }),
+          pageSize: body?.pageSize?.toString() ?? '10',
+          ...(body?.offset && { offset: body.offset.toString() }),
           ...(body?.address && { address: body.address }),
         },
       })
       const addressTransactions = notifications.filter(n => (n.type === NotificationType.ADDRESS_TRANSACTION))
-      return {
-        addressTransactions: addressTransactions.map((notification) => ({
-          id: notification.id,
-          chain: ChainMapInverse[notification.attr.chain],
-          address: notification.attr.address,
-          url: notification.attr.url,
-          type: notification.type,
-        })),
-      }
+      return addressTransactions.map((notification) => ({
+        id: notification.id,
+        chain: ChainMapInverse[notification.attr.chain],
+        address: notification.attr.address,
+        url: notification.attr.url,
+        type: notification.type,
+      }))
     })
   }
 
@@ -47,8 +45,8 @@ export class Notification {
       this.connector.get<Webhook[]>({
         path: 'subscription/webhook',
         params: {
-          pageSize: body?.pageSize ?? '50',
-          ...(body?.offset && { offset: body.offset }),
+          pageSize: body?.pageSize?.toString() ?? '10',
+          ...(body?.offset && { offset: body.offset.toString() }),
           ...(body?.direction && { direction: body.direction }),
           ...(body?.filterFailed && { failed: body.filterFailed.toString() }),
         },

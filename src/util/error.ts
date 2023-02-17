@@ -12,7 +12,7 @@ export interface ResponseDto<T> {
 }
 
 type ErrorWithMessage = {
-  message: string | object
+  message: string | object | object[]
   code?: string
 }
 
