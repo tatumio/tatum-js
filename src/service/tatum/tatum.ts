@@ -3,6 +3,7 @@ import { CONFIG } from '../../util/di.tokens'
 import { Notification } from '../notification/notification'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { ApiInfoResponse, Network, TatumConfig } from './tatum.dto'
+import { ErrorUtils, ResponseDto, Status } from '../../util'
 
 @Service()
 export class TatumSdk {
@@ -13,13 +14,17 @@ export class TatumSdk {
   private constructor() {
   }
 
-  static getApiInfo(): Promise<ApiInfoResponse> {
-    const connector = Container.get(TatumConnector)
-    return connector.get({ path: 'tatum/version' })
+  static getApiInfo(): Promise<ResponseDto<ApiInfoResponse>> {
+    return ErrorUtils.tryFail(async () => {
+      const connector = Container.get(TatumConnector)
+      return connector.get({ path: 'tatum/version' })
+    })
   }
 
-  getApiInfo(): Promise<ApiInfoResponse> {
-    return this.connector.get({ path: 'tatum/version' })
+  getApiInfo(): Promise<ResponseDto<ApiInfoResponse>> {
+    return ErrorUtils.tryFail(async () => {
+      return this.connector.get({ path: 'tatum/version' })
+    })
   }
 
   public static async init(config?: TatumConfig): Promise<TatumSdk> {
@@ -32,8 +37,13 @@ export class TatumSdk {
 
     if (finalConfig.apiKey && finalConfig.validate) {
       Container.set(CONFIG, finalConfig)
-      const { testnet } = await this.getApiInfo()
-      const testnetType = testnet ? Network.Testnet : Network.Mainnet
+      const { data, status, error } = await this.getApiInfo()
+
+      if(status === Status.ERROR) {
+        throw new Error(error?.message.toString())
+      }
+
+      const testnetType = data.testnet ? Network.Testnet : Network.Mainnet
       if (testnetType !== finalConfig.network) {
         throw new Error(`Tatum API key is not valid for ${finalConfig.network}`)
       }

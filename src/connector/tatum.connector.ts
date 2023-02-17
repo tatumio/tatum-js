@@ -6,7 +6,7 @@ import { CONFIG } from '../util/di.tokens'
 import { GetUrl, Request } from './connector.dto'
 import { Network } from '../service/tatum/tatum.dto'
 
-if (process.env.DEBUG === 'true') {
+if (process.env.TATUM_DEBUG === 'true') {
   axios.interceptors.request.use((request) => {
     console.log('Request', request.method?.toUpperCase(), request.url, JSON.stringify(request.data))
     return request
