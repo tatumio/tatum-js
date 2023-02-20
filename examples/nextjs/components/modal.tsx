@@ -1,5 +1,5 @@
 'use client'
-import React, { useRef, useState } from 'react'
+import React, { Dispatch, useRef, useState } from 'react'
 import { Chain } from '@tatumcom/js'
 import { useOnClickOutside } from 'usehooks-ts'
 import { Status } from '../../../src'
@@ -31,9 +31,9 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
 
     const data = {
       // @ts-ignore
-      address: e.target.address.value,
+      address: address,
       // @ts-ignore
-      url: e.target.url.value,
+      url: url,
       // @ts-ignore
       chain: e.target.chain.value,
     }
@@ -98,7 +98,7 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
                         fill='currentColor' />
                     </svg>}
                 </button>
-                {response?.error && <div
+                {!loading && response?.error && <div
                   className='flex p-4 mb-4 text-sm text-red-800 rounded-lg bg-red-50 dark:bg-gray-800 dark:text-red-400'
                   role='alert'>
                   <svg aria-hidden='true' className='flex-shrink-0 inline w-5 h-5 mr-3' fill='currentColor'
@@ -112,11 +112,11 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
                     <span className='font-medium'>Ensure that these requirements are met:</span>
                     <ul className='mt-1.5 ml-4 list-disc'>
                       {/*// @ts-ignore*/}
-                      {response.error.message.map((m: string) => <li className='text-left'>{m}</li>)}
+                      {response.error.message.map((m: string) => <li className='text-left break-all'>{m}</li>)}
                     </ul>
                   </div>
                 </div>}
-                {response?.data && <div>
+                {!loading && response?.data && <div>
                   <div
                     className='p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400'
                     role='alert'>
