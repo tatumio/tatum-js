@@ -11,7 +11,7 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
       <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap' rel='stylesheet' />
     </head>
     <body>
-    <div className='flex flex-col h-screen justify-between'>
+    <div className='font-Poppins flex flex-col h-screen justify-between'>
       <main className='flex h-screen flex-col justify-center items-center'>{children}</main>
       <footer className='flex h-24 w-full items-center justify-center border-t'>
         <a

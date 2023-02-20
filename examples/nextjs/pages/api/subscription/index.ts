@@ -10,6 +10,12 @@ export default async function handler(
     const tatum = await initTatum()
     const { data } = await tatum.notification.getAll()
     return res.status(200).json(data)
+  } else if (req.method === 'POST') {
+    console.log(req.body)
+    const tatum = await initTatum()
+    const result = await tatum.notification.subscribe.addressTransaction(req.body)
+    return res.status(200).json(result)
+  } else {
+    return res.status(405).send({ message: 'Method not allowed.' })
   }
-  return res.status(405).send({ message: 'Method not allowed.' })
 }

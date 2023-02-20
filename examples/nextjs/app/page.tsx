@@ -5,9 +5,9 @@ import Link from 'next/link'
 
 const Home: NextPage = () => {
   return (
-      <div className='font-Poppins flex w-full flex-1 flex-col items-center justify-center px-20 text-center'>
+      <div className='flex w-full flex-1 flex-col items-center justify-center px-20 text-center'>
         <h1
-          className='text-8xl'>
+          className='text-8xl my-5'>
           Tatum SDK
         </h1>
         <div className='flex gap-5 max-w-5xl sm:grid-cols-3 justify-center'>

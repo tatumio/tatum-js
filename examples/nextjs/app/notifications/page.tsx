@@ -6,12 +6,12 @@ import { SubscriptionModal } from '../../components/modal'
 import { Spinner } from 'flowbite-react'
 
 const Notifications: NextPage = () => {
-  const { data, isLoading } = useFetch('/api/subscription')
+  const { data, isLoading, mutate } = useFetch('/api/subscription')
   return (
     <div>
       <div className='font-Poppins flex w-full flex-1 flex-col items-center justify-center px-20 text-center'>
         <h1
-          className='text-8xl'>
+          className='text-8xl my-5'>
           Notifications
         </h1>
         {!isLoading ? <div className='relative overflow-x-auto shadow-md sm:rounded-lg'>
@@ -60,7 +60,7 @@ const Notifications: NextPage = () => {
             </tbody>
           </table>
         </div> : <Spinner />}
-        <SubscriptionModal />
+        <SubscriptionModal refreshSubscriptions={mutate} />
       </div>
     </div>
   )
