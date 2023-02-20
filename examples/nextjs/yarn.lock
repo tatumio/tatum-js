@@ -353,10 +353,10 @@
   dependencies:
     defer-to-connect "^2.0.1"
 
-"@tatumcom/js@^1.0.0-alpha.7":
-  version "1.0.0-alpha.7"
-  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.0.0-alpha.7.tgz#8bb20d20d652d4add1cedda879f0564eb18743dc"
-  integrity sha512-AZ8xa28t6ZGqKJE0mLVa9jVrGbc2ug6G1DZ3txltBZot09D+rlG51RZL25gu6mGR6jWktWFF2WhrljhCtwpwwA==
+"@tatumcom/js@^1.0.0-alpha.8":
+  version "1.0.0-alpha.8"
+  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.0.0-alpha.8.tgz#37c124b8a328363b47f4d81bbc58c5a1910f3048"
+  integrity sha512-Lq+QPCd2MGpWxizgYQG0vK5Oj0HUdqOFWnmwl0x++SLoU3BTA+HuZlReRK60SU5sZlckIGlddYEAhQwNJGIoUA==
   dependencies:
     axios "^1.3.2"
     reflect-metadata "^0.1.13"
