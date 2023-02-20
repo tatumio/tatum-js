@@ -12,7 +12,7 @@ export interface ResponseDto<T> {
 }
 
 type ErrorWithMessage = {
-  message: string | object | object[]
+  message: string[] | object[]
   code?: string
 }
 
@@ -44,21 +44,23 @@ export const ErrorUtils = {
       }
 
       return {
-        message: maybeError.response?.data?.message ?? maybeError.message,
+        message: [maybeError.response?.data?.message ?? maybeError.message],
         code: maybeError.response?.data?.errorCode,
       }
     }
 
     if (ErrorUtils.isErrorWithMessage(maybeError)) {
-      return maybeError
+      return { message: [maybeError.message] }
     }
 
     try {
-      return new Error(JSON.stringify(maybeError))
+      return {
+        message: [JSON.stringify(maybeError, null, 2)],
+      }
     } catch {
       // fallback in case there's an error stringifying the maybeError
       // like with circular references for example.
-      return new Error(String(maybeError))
+      return { message: [String(maybeError)] }
     }
   },
   isErrorWithMessage(e: unknown): e is ErrorWithMessage {
