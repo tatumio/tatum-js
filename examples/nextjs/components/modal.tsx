@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from 'react'
+'use client'
+import React, { useRef, useState } from 'react'
 import { Chain } from '@tatumcom/js'
 import { useOnClickOutside } from 'usehooks-ts'
 
