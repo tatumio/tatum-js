@@ -6,17 +6,21 @@ import { CONFIG } from '../util/di.tokens'
 import { GetUrl, Request } from './connector.dto'
 import { Network } from '../service/tatum/tatum.dto'
 
-if (process.env.TATUM_DEBUG === 'true') {
-  axios.interceptors.request.use((request) => {
+axios.interceptors.request.use((request) => {
+  const config = Container.get(CONFIG)
+  if (config.debug) {
     console.log('Request', request.method?.toUpperCase(), request.url, JSON.stringify(request.data))
-    return request
-  })
+  }
+  return request
+})
 
-  axios.interceptors.response.use((response) => {
+axios.interceptors.response.use((response) => {
+  const config = Container.get(CONFIG)
+  if (config.debug) {
     console.log('Response:', response.status, JSON.stringify(response.data))
-    return response
-  })
-}
+  }
+  return response
+})
 
 @Service()
 /* eslint-disable */ //TODO implement correct typings and remove any
@@ -39,7 +43,7 @@ export class TatumConnector {
       url: this.getUrl({ path, params }),
       headers,
       method,
-      data: body
+      data: body,
     })
     return data
   }

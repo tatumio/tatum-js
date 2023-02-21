@@ -31,6 +31,7 @@ export class TatumSdk {
     const defaultConfig: TatumConfig = {
       validate: true,
       network: Network.Mainnet,
+      debug: false
     }
 
     const finalConfig = { ...defaultConfig, ...config }
