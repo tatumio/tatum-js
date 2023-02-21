@@ -59,10 +59,9 @@ const { data } = await tatum.notification.subscribe.addressTransaction({
 
 // 🎉  Now your address is subscribed for any events!
 ```
-Visit https://tatum-technology.readme.io/reference/getting-started-1 to get started with Tatum Sdk.
 
 ## Documentation
-Visit https://tatum-technology.readme.io/reference/getting-started-1 to view the full documentation.
+Visit [Documentation](https://docs.tatum.com) to get started with Tatum Sdk.
 
 ## Examples
 
