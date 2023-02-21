@@ -9,3 +9,4 @@ gen
 .eslintrc.js
 jest.config.js
 jest.setup.ts
+src/e2e
