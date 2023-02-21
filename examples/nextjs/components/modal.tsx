@@ -26,33 +26,38 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
   const [response, setResponse] = useState<ResponseDto<{ id: string }>>()
 
   const handleSubmit = async (e: React.FormEvent) => {
-    setLoading(true)
-    e.preventDefault()
+    try {
+      setLoading(true)
+      e.preventDefault()
 
-    const data = {
-      // @ts-ignore
-      address: address,
-      // @ts-ignore
-      url: url,
-      // @ts-ignore
-      chain: e.target.chain.value,
+      const data = {
+        // @ts-ignore
+        address: e.target.address.value,
+        // @ts-ignore
+        url: e.target.url.value,
+        // @ts-ignore
+        chain: e.target.chain.value,
+      }
+      console.log(data)
+      const JSONdata = JSON.stringify(data)
+
+      const endpoint = '/api/subscription'
+
+      const options = {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSONdata,
+      }
+      const response = await (await fetch(endpoint, options)).json()
+      setResponse(response)
+      await refreshSubscriptions()
+      setLoading(false)
+    } catch (e) {
+      setLoading(false)
+      console.log(e)
     }
-
-    const JSONdata = JSON.stringify(data)
-
-    const endpoint = '/api/subscription'
-
-    const options = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSONdata,
-    }
-    const response = await (await fetch(endpoint, options)).json()
-    setResponse(response)
-    await refreshSubscriptions()
-    setLoading(false)
   }
 
   return (

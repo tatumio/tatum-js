@@ -1,12 +1,14 @@
 'use client'
 import type { NextPage } from 'next'
 import { useFetch } from '../../utils/utils'
-import React from 'react'
+import React, { useState } from 'react'
 import { SubscriptionModal } from '../../components/modal'
 import { Table } from '../../components/table'
 
 const Notifications: NextPage = () => {
-  const { data, isLoading, mutate } = useFetch('/api/subscription')
+  const [subscriptionOffset, setSubscriptionOffset] = useState(0)
+  const [webhookOffset, setWebhookOffset] = useState(0)
+  const { data, isLoading, mutate } = useFetch(`/api/subscription?pageSize=10&offset=${subscriptionOffset}`)
 
   const subscriptionTable = [
     {
@@ -64,7 +66,7 @@ const Notifications: NextPage = () => {
 
   ]
 
-  const { data: webhooks, isLoading: webhooksLoading, mutate: webhooksRefresh } = useFetch('/api/webhook')
+  const { data: webhooks, isLoading: webhooksLoading, mutate: webhooksRefresh } = useFetch(`/api/webhook?pageSize=10&offset=${webhookOffset}`)
 
   const deleteSubscription = async (id: string) => {
     await fetch(`/api/subscription/${id}`, {
@@ -80,10 +82,20 @@ const Notifications: NextPage = () => {
           className='text-8xl my-5'>
           Notifications
         </h1>
-        <Table attributes={subscriptionTable} isLoading={isLoading} actions={{ delete: deleteSubscription }}
+
+        <h4
+          className='text-3xl my-5'>
+          Subscriptions
+        </h4>
+        <Table attributes={subscriptionTable} isLoading={isLoading} actions={{ delete: deleteSubscription }} offset={subscriptionOffset} setOffset={setSubscriptionOffset}
                data={data} />
-        <Table attributes={webhookTable} isLoading={webhooksLoading} data={webhooks} />
         <SubscriptionModal refreshSubscriptions={mutate} />
+        <h4
+          className='text-3xl my-5'>
+          Webhooks
+        </h4>
+        <Table attributes={webhookTable} isLoading={webhooksLoading} data={webhooks} offset={webhookOffset}  setOffset={setWebhookOffset} />
+
       </div>
     </div>
   )

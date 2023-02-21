@@ -2,7 +2,7 @@ import useSWR from 'swr'
 
 export const fetcher = async <JSON = any>(
   input: RequestInfo,
-  init?: RequestInit
+  init?: RequestInit,
 ): Promise<JSON> => {
   const res = await fetch(input, init)
   return res.json()
@@ -10,6 +10,3 @@ export const fetcher = async <JSON = any>(
 
 export const useFetch = <JSON = any>(url: string) => useSWR<JSON>(url, fetcher)
 
-export const hasWindow = () => {
-  return typeof window !== 'undefined';
-};

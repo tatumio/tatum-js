@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     const tatum = await initTatum()
-    const { data } = await tatum.notification.getAll()
+    const { data } = await tatum.notification.getAll({ pageSize: Number(req.query.pageSize), offset: Number(req.query.offset) })
     return res.status(200).json(data)
   } else if (req.method === 'POST') {
     const tatum = await initTatum()

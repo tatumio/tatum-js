@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     const tatum = await initTatum()
-    const { data } = await tatum.notification.getAllExecutedWebhooks()
+    const { data } = await tatum.notification.getAllExecutedWebhooks({ pageSize: Number(req.query.pageSize), offset: Number(req.query.offset) })
     return res.status(200).json(data)
   } else {
     return res.status(405).send({ message: 'Method not allowed.' })
