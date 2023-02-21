@@ -38,7 +38,7 @@ describe('notification',  () => {
         address: TestConst.INVALID_ETH_ADDRESS,
       })
       expect(status).toEqual(Status.ERROR)
-      expect(error?.message).toEqual(["attr.address must be a valid ETH address. Address must start with 0x and must contain 40 hexadecimal characters after and have the correct checksum. "])
+      expect(error?.message).toEqual(["address must be a valid ETH address. Address must start with 0x and must contain 40 hexadecimal characters after and have the correct checksum. "])
       expect(error?.code).toEqual('validation.failed')
     })
   })

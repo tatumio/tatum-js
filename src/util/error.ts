@@ -34,11 +34,14 @@ export const ErrorUtils = {
       }
     }
   },
+  formatErrorMsg: (message: string) => {
+    return message.replace('attr.', '')
+  },
   toErrorWithMessage: (maybeError: unknown): ErrorWithMessage => {
     if (axios.isAxiosError(maybeError)) {
       if (maybeError.response?.data?.data instanceof Array && maybeError.response?.data?.data.length > 0) {
         return {
-          message: maybeError.response?.data?.data,
+          message: (maybeError.response?.data?.data as string[]).map(message => ErrorUtils.formatErrorMsg(message)),
           code: maybeError.response?.data?.errorCode,
         }
       }
