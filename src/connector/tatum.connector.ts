@@ -9,18 +9,50 @@ import { Network } from '../service/tatum/tatum.dto'
 axios.interceptors.request.use((request) => {
   const config = Container.get(CONFIG)
   if (config.debug) {
-    console.log('Request', request.method?.toUpperCase(), request.url, JSON.stringify(request.data))
+    console.log('Request', request.method?.toUpperCase(), request.url, request.data !== undefined ? JSON.stringify(request.data) : '')
   }
   return request
 })
 
-axios.interceptors.response.use((response) => {
-  const config = Container.get(CONFIG)
-  if (config.debug) {
-    console.log('Response:', response.status, JSON.stringify(response.data))
-  }
-  return response
-})
+axios.interceptors.response.use(
+  (response) => {
+    const config = Container.get(CONFIG)
+    if (config.debug) {
+      console.log('Response:', response.status, JSON.stringify(response.data))
+    }
+    return response
+  }, (error) => {
+    const { config, message, response } = error
+
+    const { debug } = Container.get(CONFIG)
+
+    if (debug) {
+      console.warn('Error: ', message, JSON.stringify(response.data))
+    }
+
+    if (!config || !config.retry) {
+      return Promise.reject(error)
+    }
+
+    // retry while Network timeout or Network Error
+    if (!(message.includes('timeout') || message.includes('Network Error') || response.status === 429)) {
+      return Promise.reject(error)
+    }
+
+    config.retry -= 1
+    const delayRetryRequest = new Promise<void>((resolve) => {
+      setTimeout(() => {
+
+        if (debug) {
+          console.warn('Retry the request: ', config.url, JSON.stringify(config.data))
+        }
+
+        resolve()
+      }, config.retryDelay || 1000)
+    })
+    return delayRetryRequest.then(() => axios(config))
+
+  })
 
 @Service()
 /* eslint-disable */ //TODO implement correct typings and remove any
@@ -38,14 +70,19 @@ export class TatumConnector {
   }
 
   private async request<T>({ path, params, body, method }: Request): Promise<T> {
+    const { retryDelay, retryCount } = Container.get(CONFIG)
+
     const headers = this.headers()
-    const { data } = await axios.request<T>({
+    const { data } = await axios.request({
       url: this.getUrl({ path, params }),
       headers,
       method,
       data: body,
+      // @ts-ignore
+      retry: retryCount,
+      retryDelay: retryDelay,
     })
-    return data
+    return data as T
   }
 
   private getUrl({ path, params }: GetUrl) {

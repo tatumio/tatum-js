@@ -3,6 +3,8 @@ export interface TatumConfig {
     network?: Network
     validate?: boolean
     debug?: boolean
+    retryDelay?: number,
+    retryCount?: number
 }
 
 export enum Network {

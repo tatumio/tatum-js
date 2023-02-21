@@ -31,7 +31,9 @@ export class TatumSdk {
     const defaultConfig: TatumConfig = {
       validate: true,
       network: Network.Mainnet,
-      debug: false
+      debug: false,
+      retryCount: 5,
+      retryDelay: 1000
     }
 
     const finalConfig = { ...defaultConfig, ...config }
@@ -41,7 +43,7 @@ export class TatumSdk {
       const { data, status, error } = await this.getApiInfo()
 
       if(status === Status.ERROR) {
-        throw new Error(error?.message.toString())
+        throw new Error(error?.message[0].toString())
       }
 
       const testnetType = data.testnet ? Network.Testnet : Network.Mainnet
@@ -52,6 +54,7 @@ export class TatumSdk {
     }
 
     Container.set(CONFIG, finalConfig)
+
     return new TatumSdk()
   }
 }
