@@ -74,6 +74,8 @@ export interface Webhook {
 export interface Listen {
   chain: Chain
   address: string
-  handleWebhook:  () => Promise<void> | void
+  handle:  () => Promise<void> | void
   interval: number
 }
+
+export interface OnTransaction { intervalId: NodeJS.Timeout, subscriptionId: string }

@@ -5,7 +5,7 @@ import {
   AddressTransactionNotification,
   AddressTransactionNotificationApi,
   GetAllExecutedWebhooksQuery,
-  GetAllNotificationsQuery, Listen,
+  GetAllNotificationsQuery, Listen, OnTransaction,
   Webhook,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
@@ -55,7 +55,12 @@ export class Notification {
       }))
   }
 
-  async listen({ address, chain, handleWebhook, interval }: Listen): Promise<ResponseDto<{ intervalId: NodeJS.Timeout, subscriptionId: string }>> {
+  async onTransaction({
+                 address,
+                 chain,
+                 handle,
+                 interval,
+               }: Listen): Promise<ResponseDto<OnTransaction>> {
     return ErrorUtils.tryFail(async () => {
       const { data: subscription, error } = await this.subscribe.addressTransaction({
         url: 'https://dashboard.tatum.io/webhook-handler',
@@ -63,7 +68,6 @@ export class Notification {
         address,
       })
       const now = Date.now()
-      console.log(now)
       const executedWebhooks: string[] = []
 
       if (error) {
@@ -71,27 +75,25 @@ export class Notification {
       }
 
       const run = async (executedWebhooks: string[], now: number, subscription: AddressNotification) => {
-        try {
-          const { data } = await this.getAllExecutedWebhooks()
-          const filteredWebhook = data.find(webhook => webhook.timestamp > now && webhook.subscriptionId === subscription.id && !executedWebhooks.includes(webhook.id))
-          if (filteredWebhook) {
-            try {
-              console.log(`Found webhook ${filteredWebhook.id}`)
-              executedWebhooks.push(filteredWebhook.id)
-              await handleWebhook()
-            } catch (e) {
-              console.log(`Webhook execution failed.`)
-            }
-          }
-        } catch (e) {
-          console.log(e)
+        const { data } = await this.getAllExecutedWebhooks()
+        const filteredWebhook = data.find(webhook => webhook.timestamp > now && webhook.subscriptionId === subscription.id && !executedWebhooks.includes(webhook.id))
+        if (filteredWebhook) {
+          executedWebhooks.push(filteredWebhook.id)
+          await handle()
         }
       }
       const intervalId = setInterval(() => run(executedWebhooks, now, subscription), interval)
       return {
         intervalId,
-        subscriptionId: subscription.id
+        subscriptionId: subscription.id,
       }
+    })
+  }
+
+  async removeHandler(onTransaction: OnTransaction) {
+    return ErrorUtils.tryFail( async () => {
+      await this.unsubscribe(onTransaction.subscriptionId)
+      clearInterval(onTransaction.intervalId)
     })
   }
 }

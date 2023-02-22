@@ -91,36 +91,45 @@ describe('notification', () => {
     expect(data[0].response).toBeDefined()
   })
 
-  describe('Listen', () => {
+  describe('onTransaction', () => {
     it('OK', async () => {
 
       const fn = {
-        testingFn: () => console.log('calling inner function'),
+        testingFn: () => console.log('calling handler'),
       }
       jest.spyOn(fn, 'testingFn')
-      const { error, data } = await tatum.notification.listen({
+
+      const { data: subscriptions } = await tatum.notification.getAll({ address: TestConst.TEST_ADDRESSES[Chain.Polygon].toLowerCase() })
+      const removedSubscriptions = await Promise.all(subscriptions.map(subscription => tatum.notification.unsubscribe(subscription.id)))
+      console.log('Removed subscriptions')
+      console.log(removedSubscriptions)
+
+      const { error, data } = await tatum.notification.onTransaction({
         address: TestConst.TEST_ADDRESSES[Chain.Polygon],
         chain: Chain.Polygon,
         interval: 5000,
-        handleWebhook: fn.testingFn,
+        handle: fn.testingFn,
       })
 
-      if (error && (error.message[0] as string).startsWith('Subscription for type ADDRESS_TRANSACTION on the address')) {
-        const { data } = await tatum.notification.getAll({ address: TestConst.TEST_ADDRESSES[Chain.Polygon] })
-        const removedSubscriptions = await Promise.all(data.map(subscription => tatum.notification.unsubscribe(subscription.id)))
-        console.log('Removed subscriptions')
-        console.log(removedSubscriptions)
+      if (error) {
+        console.log(error)
+        throw new Error(error.message[0] as string)
       }
 
       const tatumSdk = TatumPolygonSDK({ apiKey: process.env.TESTNET_API_KEY as string })
-      const txId = await tatumSdk.transaction.send.transferSignedTransaction({ fromPrivateKey: process.env.TESTNET_POLYGON_PK as string, currency: Currency.MATIC, to: TestConst.TEST_ADDRESSES[Chain.Polygon], amount: '0.0000001'  })
+      const txId = await tatumSdk.transaction.send.transferSignedTransaction({
+        fromPrivateKey: process.env.TESTNET_POLYGON_PK as string,
+        currency: Currency.MATIC,
+        to: TestConst.TEST_ADDRESSES[Chain.Polygon],
+        amount: '0.0000001',
+      })
       console.log(txId)
 
-      for(let i = 0; i < 20; i++) {
+      for (let i = 0; i < 20; i++) {
         await new Promise(res => setTimeout(res, 5000))
         // @ts-ignore
-        if(fn.testingFn.mock.calls.length >= 2) {
-          break;
+        if (fn.testingFn.mock.calls.length >= 2) {
+          break
         }
       }
       expect(fn.testingFn).toHaveBeenCalledTimes(2)
@@ -129,4 +138,18 @@ describe('notification', () => {
     }, 90000000)
   })
 
+  describe('removeHandler', () => {
+    it('OK', async () => {
+      const { data: handler } = await tatum.notification.onTransaction({
+        address: TestConst.TEST_ADDRESSES[Chain.Polygon],
+        chain: Chain.Polygon,
+        interval: 5000,
+        handle: () => console.log('Test fn'),
+      })
+      const { status, error, data } = await tatum.notification.removeHandler(handler)
+      expect(data).toEqual(undefined)
+      expect(error).toEqual(undefined)
+      expect(status).toEqual(Status.SUCCESS)
+    })
+  })
 })
