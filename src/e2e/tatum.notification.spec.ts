@@ -1,6 +1,6 @@
 import { TatumSdk } from '../service/tatum/tatum'
 import { Chain, Network } from '../service/tatum/tatum.dto'
-import { AddressTransactionNotification } from '../service/notification/notification.dto'
+import { AddressTransactionNotification, Webhook } from '../service/notification/notification.dto'
 import { TestConst } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 import { Status } from '../util'
@@ -95,7 +95,7 @@ describe('notification', () => {
     it('OK', async () => {
 
       const fn = {
-        testingFn: () => console.log('calling handler'),
+        testingFn: (webhook: Webhook) => console.log(webhook),
       }
       jest.spyOn(fn, 'testingFn')
 

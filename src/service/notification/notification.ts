@@ -76,10 +76,10 @@ export class Notification {
 
       const run = async (executedWebhooks: string[], now: number, subscription: AddressNotification) => {
         const { data } = await this.getAllExecutedWebhooks()
-        const filteredWebhook = data.find(webhook => webhook.timestamp > now && webhook.subscriptionId === subscription.id && !executedWebhooks.includes(webhook.id))
-        if (filteredWebhook) {
-          executedWebhooks.push(filteredWebhook.id)
-          await handle()
+        const webhook = data.find(webhook => webhook.timestamp > now && webhook.subscriptionId === subscription.id && !executedWebhooks.includes(webhook.id))
+        if (webhook) {
+          executedWebhooks.push(webhook.id)
+          await handle(webhook)
         }
       }
       const intervalId = setInterval(() => run(executedWebhooks, now, subscription), interval)

@@ -74,7 +74,7 @@ export interface Webhook {
 export interface Listen {
   chain: Chain
   address: string
-  handle:  () => Promise<void> | void
+  handle:  (webhook: Webhook) => Promise<void> | void
   interval: number
 }
 
