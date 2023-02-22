@@ -70,3 +70,10 @@ export interface Webhook {
     networkError: boolean
   }
 }
+
+export interface Listen {
+  chain: Chain
+  address: string
+  handleWebhook:  () => Promise<void> | void
+  interval: number
+}

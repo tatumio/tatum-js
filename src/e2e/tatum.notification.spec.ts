@@ -4,17 +4,20 @@ import { AddressTransactionNotification } from '../service/notification/notifica
 import { TestConst } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 import { Status } from '../util'
+jest.useFakeTimers()
+jest.spyOn(global, 'setInterval')
 
-describe('notification',  () => {
+describe('notification', () => {
   let tatum: TatumSdk
   beforeAll(async () => {
     tatum = await TatumSdk.init({
       apiKey: process.env.MAINNET_API_KEY,
       network: Network.Mainnet,
+      debug: true
     })
   })
 
-  describe('createSubscription',() => {
+  describe('createSubscription', () => {
     it.each(Object.values(Chain))('OK - %s', async (chain: Chain) => {
       await e2eUtil.subscriptions.testCreateSubscription(tatum, chain, TestConst.TEST_ADDRESSES[chain])
     })
@@ -38,18 +41,18 @@ describe('notification',  () => {
         address: TestConst.INVALID_ETH_ADDRESS,
       })
       expect(status).toEqual(Status.ERROR)
-      expect(error?.message).toEqual(["address must be a valid ETH address. Address must start with 0x and must contain 40 hexadecimal characters after and have the correct checksum. "])
+      expect(error?.message).toEqual(['address must be a valid ETH address. Address must start with 0x and must contain 40 hexadecimal characters after and have the correct checksum. '])
       expect(error?.code).toEqual('validation.failed')
     })
   })
 
-  describe('deleteSubscription',() => {
+  describe('deleteSubscription', () => {
     it('OK', async () => {
       const address = TestConst.TEST_ADDRESSES[Chain.Ethereum]
       const { data: subscribeData } = await tatum.notification.subscribe.addressTransaction({
         url: 'https://tatum.io',
         chain: Chain.Ethereum,
-        address
+        address,
       })
       const { id } = subscribeData
       await tatum.notification.unsubscribe(id)
@@ -87,4 +90,33 @@ describe('notification',  () => {
     expect(data[0].failed).toBeDefined()
     expect(data[0].response).toBeDefined()
   })
+
+  describe('Listen', () => {
+    it('OK', async () => {
+
+
+      const fn = {
+        testingFn: () => console.log('calling inner function'),
+      }
+
+      jest.spyOn(fn, 'testingFn')
+      const listener = await tatum.notification.listen({
+        address: '0x258e0a771E2063508DE155ABd6A9062c7d13aBdB',
+        chain: Chain.Ethereum,
+        interval: 2000,
+        handleWebhook: fn.testingFn,
+      })
+      console.log(listener)
+
+      jest.useFakeTimers().setTimeout(1000).retryTimes(5)
+      // jest.advanceTimersByTime(2000);
+      jest.runOnlyPendingTimers()
+
+      // jest.useFakeTimers().setTimeout(1000).retryTimes(8).runAllTimers()
+      // expect(setInterval).toHaveBeenCalledTimes(1)
+      // expect(fn.testingFn).toHaveBeenCalledTimes(1)
+      await tatum.notification.unsubscribe(listener.data.subscriptionId)
+    })
+  })
+
 })

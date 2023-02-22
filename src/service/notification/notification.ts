@@ -1,9 +1,13 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
+  AddressNotification,
+  AddressTransactionNotification,
   AddressTransactionNotificationApi,
-  GetAllNotificationsQuery, GetAllExecutedWebhooksQuery,
-  NotificationType, Webhook, AddressTransactionNotification,
+  GetAllExecutedWebhooksQuery,
+  GetAllNotificationsQuery, Listen,
+  NotificationType,
+  Webhook,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
 import { ChainMapInverse } from '../tatum/tatum.dto'
@@ -51,5 +55,44 @@ export class Notification {
           ...(body?.filterFailed && { failed: body.filterFailed.toString() }),
         },
       }))
+  }
+
+  async listen({ address, chain, handleWebhook, interval }: Listen): Promise<ResponseDto<{ intervalId: NodeJS.Timeout, subscriptionId: string }>> {
+    return ErrorUtils.tryFail(async () => {
+      const { data: subscription, error } = await this.subscribe.addressTransaction({
+        url: 'https://dashboard.tatum.io/webhook-handler',
+        chain,
+        address,
+      })
+      const now = Date.now()
+      const executedWebhooks: string[] = []
+
+      if (error) {
+        throw new Error(error.message.toString())
+      }
+
+      const poll = async (executedWebhooks: string[], now: number, subscription: AddressNotification) => {
+        try {
+          console.log('testing')
+          const { data } = await this.getAllExecutedWebhooks()
+          const filteredWebhooks = data.filter(webhook => now > webhook.timestamp && webhook.subscriptionId === subscription.id && !executedWebhooks.includes(webhook.id))
+          console.log(filteredWebhooks)
+          if (filteredWebhooks.length > 0) {
+            try {
+              await handleWebhook()
+            } catch (e) {
+              console.log(`Webhook execution failed.`)
+            }
+          }
+        } catch (e) {
+          console.log(e)
+        }
+      }
+      const intervalId = setInterval(() => poll(executedWebhooks, now, subscription), interval)
+      return {
+        intervalId,
+        subscriptionId: subscription.id
+      }
+    })
   }
 }
