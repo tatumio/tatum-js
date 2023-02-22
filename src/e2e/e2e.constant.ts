@@ -6,7 +6,7 @@ export const TestConst = {
   TEST_ADDRESSES : {
     [Chain.Ethereum]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
     [Chain.Celo]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
-    [Chain.Polygon]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
+    [Chain.Polygon]: '0xaB90F4f1f9716cc60FA16D02abC3272D09de415c',
     [Chain.Klaytn]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
     [Chain.BinanceSmartChain]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
     [Chain.Solana]: '53U8WBbpjfwMprZ9YQr5frU5DtY1gNRBwzxkcPHtxQP8',

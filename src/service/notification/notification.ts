@@ -6,7 +6,6 @@ import {
   AddressTransactionNotificationApi,
   GetAllExecutedWebhooksQuery,
   GetAllNotificationsQuery, Listen,
-  NotificationType,
   Webhook,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
@@ -29,8 +28,7 @@ export class Notification {
           ...(body?.address && { address: body.address }),
         },
       })
-      const addressTransactions = notifications.filter(n => (n.type === NotificationType.ADDRESS_TRANSACTION))
-      return addressTransactions.map((notification) => ({
+      return notifications.map((notification) => ({
         id: notification.id,
         chain: ChainMapInverse[notification.attr.chain],
         address: notification.attr.address,
@@ -65,20 +63,21 @@ export class Notification {
         address,
       })
       const now = Date.now()
+      console.log(now)
       const executedWebhooks: string[] = []
 
       if (error) {
         throw new Error(error.message.toString())
       }
 
-      const poll = async (executedWebhooks: string[], now: number, subscription: AddressNotification) => {
+      const run = async (executedWebhooks: string[], now: number, subscription: AddressNotification) => {
         try {
-          console.log('testing')
           const { data } = await this.getAllExecutedWebhooks()
-          const filteredWebhooks = data.filter(webhook => now > webhook.timestamp && webhook.subscriptionId === subscription.id && !executedWebhooks.includes(webhook.id))
-          console.log(filteredWebhooks)
-          if (filteredWebhooks.length > 0) {
+          const filteredWebhook = data.find(webhook => webhook.timestamp > now && webhook.subscriptionId === subscription.id && !executedWebhooks.includes(webhook.id))
+          if (filteredWebhook) {
             try {
+              console.log(`Found webhook ${filteredWebhook.id}`)
+              executedWebhooks.push(filteredWebhook.id)
               await handleWebhook()
             } catch (e) {
               console.log(`Webhook execution failed.`)
@@ -88,7 +87,7 @@ export class Notification {
           console.log(e)
         }
       }
-      const intervalId = setInterval(() => poll(executedWebhooks, now, subscription), interval)
+      const intervalId = setInterval(() => run(executedWebhooks, now, subscription), interval)
       return {
         intervalId,
         subscriptionId: subscription.id

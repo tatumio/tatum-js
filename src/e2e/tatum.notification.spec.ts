@@ -4,16 +4,16 @@ import { AddressTransactionNotification } from '../service/notification/notifica
 import { TestConst } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 import { Status } from '../util'
-jest.useFakeTimers()
-jest.spyOn(global, 'setInterval')
+import { TatumPolygonSDK } from '@tatumio/polygon'
+import * as process from 'process'
+import { Currency } from '@tatumio/api-client'
 
 describe('notification', () => {
   let tatum: TatumSdk
   beforeAll(async () => {
     tatum = await TatumSdk.init({
-      apiKey: process.env.MAINNET_API_KEY,
-      network: Network.Mainnet,
-      debug: true
+      apiKey: process.env.TESTNET_API_KEY,
+      network: Network.Testnet,
     })
   })
 
@@ -94,29 +94,39 @@ describe('notification', () => {
   describe('Listen', () => {
     it('OK', async () => {
 
-
       const fn = {
         testingFn: () => console.log('calling inner function'),
       }
-
       jest.spyOn(fn, 'testingFn')
-      const listener = await tatum.notification.listen({
-        address: '0x258e0a771E2063508DE155ABd6A9062c7d13aBdB',
-        chain: Chain.Ethereum,
-        interval: 2000,
+      const { error, data } = await tatum.notification.listen({
+        address: TestConst.TEST_ADDRESSES[Chain.Polygon],
+        chain: Chain.Polygon,
+        interval: 5000,
         handleWebhook: fn.testingFn,
       })
-      console.log(listener)
 
-      jest.useFakeTimers().setTimeout(1000).retryTimes(5)
-      // jest.advanceTimersByTime(2000);
-      jest.runOnlyPendingTimers()
+      if (error && (error.message[0] as string).startsWith('Subscription for type ADDRESS_TRANSACTION on the address')) {
+        const { data } = await tatum.notification.getAll({ address: TestConst.TEST_ADDRESSES[Chain.Polygon] })
+        const removedSubscriptions = await Promise.all(data.map(subscription => tatum.notification.unsubscribe(subscription.id)))
+        console.log('Removed subscriptions')
+        console.log(removedSubscriptions)
+      }
 
-      // jest.useFakeTimers().setTimeout(1000).retryTimes(8).runAllTimers()
-      // expect(setInterval).toHaveBeenCalledTimes(1)
-      // expect(fn.testingFn).toHaveBeenCalledTimes(1)
-      await tatum.notification.unsubscribe(listener.data.subscriptionId)
-    })
+      const tatumSdk = TatumPolygonSDK({ apiKey: process.env.TESTNET_API_KEY as string })
+      const txId = await tatumSdk.transaction.send.transferSignedTransaction({ fromPrivateKey: process.env.TESTNET_POLYGON_PK as string, currency: Currency.MATIC, to: TestConst.TEST_ADDRESSES[Chain.Polygon], amount: '0.0000001'  })
+      console.log(txId)
+
+      for(let i = 0; i < 20; i++) {
+        await new Promise(res => setTimeout(res, 5000))
+        // @ts-ignore
+        if(fn.testingFn.mock.calls.length >= 2) {
+          break;
+        }
+      }
+      expect(fn.testingFn).toHaveBeenCalledTimes(2)
+      await tatum.notification.unsubscribe(data.subscriptionId)
+
+    }, 90000000)
   })
 
 })
