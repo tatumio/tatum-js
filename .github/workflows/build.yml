@@ -74,6 +74,7 @@ jobs:
     - run: yarn test
       env:
         TESTNET_API_KEY: ${{ secrets.TESTNET_API_KEY }}
+        TESTNET_POLYGON_PK: ${{ secrets.TESTNET_POLYGON_PK }}
         MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
 
   release:
