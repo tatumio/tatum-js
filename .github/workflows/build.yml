@@ -76,6 +76,7 @@ jobs:
         TESTNET_API_KEY: ${{ secrets.TESTNET_API_KEY }}
         TESTNET_POLYGON_PK: ${{ secrets.TESTNET_POLYGON_PK }}
         MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
+      timeout-minutes: 3
 
   release:
     runs-on: ubuntu-latest
