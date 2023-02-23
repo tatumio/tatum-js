@@ -86,7 +86,7 @@ export class TatumConnector {
   }
 
   private getUrl({ path, params }: GetUrl) {
-    const url = new URL(path, Constant.TATUM_API_URL)
+    const url = new URL(path, process.env.TATUM_API_URL ?? Constant.TATUM_API_URL)
 
     if (params) {
       Object.keys(params)

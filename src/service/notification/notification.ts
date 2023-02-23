@@ -3,7 +3,7 @@ import { TatumConnector } from '../../connector/tatum.connector'
 import {
   AddressTransactionNotificationApi,
   GetAllNotificationsQuery, GetAllExecutedWebhooksQuery,
-  NotificationType, Webhook, AddressTransactionNotification,
+  Webhook, AddressTransactionNotification,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
 import { ChainMapInverse } from '../tatum/tatum.dto'
@@ -17,7 +17,7 @@ export class Notification {
 
   async getAll(body?: GetAllNotificationsQuery): Promise<ResponseDto<AddressTransactionNotification[]>> {
     return ErrorUtils.tryFail(async () => {
-      const notifications = await this.connector.get<AddressTransactionNotificationApi[]>({
+      const subscriptions = await this.connector.get<AddressTransactionNotificationApi[]>({
         path: 'subscription',
         params: {
           pageSize: body?.pageSize?.toString() ?? '10',
@@ -25,8 +25,7 @@ export class Notification {
           ...(body?.address && { address: body.address }),
         },
       })
-      const addressTransactions = notifications.filter(n => (n.type === NotificationType.ADDRESS_TRANSACTION))
-      return addressTransactions.map((notification) => ({
+      return subscriptions.map((notification) => ({
         id: notification.id,
         chain: ChainMapInverse[notification.attr.chain],
         address: notification.attr.address,

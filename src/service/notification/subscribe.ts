@@ -14,7 +14,7 @@ export class Subscribe {
       const { id } = await this.connector.post<IdDto>({
         path: 'subscription',
         body: {
-          type: NotificationType.ADDRESS_TRANSACTION,
+          type: NotificationType.ADDRESS_EVENT,
           attr: {
             chain: Utils.mapChain(chain),
             address,

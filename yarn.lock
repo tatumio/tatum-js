@@ -4597,11 +4597,6 @@ responselike@^2.0.0:
   dependencies:
     lowercase-keys "^2.0.0"
 
-retry-axios@^3.0.0:
-  version "3.0.0"
-  resolved "https://registry.yarnpkg.com/retry-axios/-/retry-axios-3.0.0.tgz#5fd54f65330d155c36d01e3685238889375b9aa0"
-  integrity sha512-/jRv4nCDytusFZIY+zD6aKP29+wpgnbjfap5B76rqvgROWfONG5Bf7vCXx7grhxJwYGLlumraKZQUMzNgfXNCg==
-
 reusify@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/reusify/-/reusify-1.0.4.tgz#90da382b1e126efc02146e90845a88db12925d76"

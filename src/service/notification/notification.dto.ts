@@ -11,7 +11,7 @@ export type AddressTransactionNotification = {
   chain: Chain
   address: string
   url: string
-  type: NotificationType.ADDRESS_TRANSACTION,
+  type: NotificationType.ADDRESS_EVENT,
 }
 
 export interface AddressNotificationDetail {
@@ -25,12 +25,12 @@ export interface AddressNotification extends AddressNotificationDetail {
 }
 
 export enum NotificationType {
-  ADDRESS_TRANSACTION = 'ADDRESS_TRANSACTION',
+  ADDRESS_EVENT = 'ADDRESS_EVENT',
 }
 
 export interface AddressTransactionNotificationApi {
   id: string
-  type: NotificationType.ADDRESS_TRANSACTION
+  type: NotificationType.ADDRESS_EVENT
   attr: {
     chain: TatumChain
     address: string
