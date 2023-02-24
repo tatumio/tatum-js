@@ -1,60 +1,75 @@
 import { TatumSdk } from '../service/tatum/tatum'
 import { Chain, Network } from '../service/tatum/tatum.dto'
-import { AddressTransactionNotification } from '../service/notification/notification.dto'
+import { AddressEventNotification } from '../service/notification/notification.dto'
 import { TestConst } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 import { Status } from '../util'
 
-describe('notification',  () => {
+describe('notification', () => {
   let tatum: TatumSdk
+  let ip: TatumSdk
+
   beforeAll(async () => {
     tatum = await TatumSdk.init({
-      apiKey: process.env.MAINNET_API_KEY,
-      network: Network.Mainnet,
+      apiKey: process.env.TESTNET_API_KEY,
+      network: Network.Testnet,
     })
+
+    ip = await TatumSdk.init({ network: Network.Testnet })
   })
 
-  describe('createSubscription',() => {
-    it.each(Object.values(Chain))('OK - %s', async (chain: Chain) => {
-      await e2eUtil.subscriptions.testCreateSubscription(tatum, chain, TestConst.TEST_ADDRESSES[chain])
+  describe('createSubscription', () => {
+    describe('API key auth', () => {
+      it.each(Object.values(Chain))('OK - %s', async (chain: Chain) => {
+        await e2eUtil.subscriptions.testCreateSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain])
+      })
     })
 
+    describe('IP auth', () => {
+      it.each(Object.values(Chain))('OK %s', async (chain: Chain) => {
+        await e2eUtil.subscriptions.testCreateSubscription(ip, chain, TestConst.ADDRESSES.TESTNET[chain])
+      })
+    })
+
+
     it('NOK - existing subscription ', async () => {
-      const { status, error } = await tatum.notification.subscribe.addressTransaction({
+      const { status, error } = await tatum.notification.subscribe.addressEvent({
         url: 'https://tatum.io',
         chain: Chain.Ethereum,
         address: TestConst.EXISTING_SUBSCRIPTION_ETH_ADDRESS,
       })
 
       expect(status).toEqual(Status.ERROR)
-      expect(error?.message[0]).toEqual('Subscription for type ADDRESS_EVENT on the address id 0xbaf6dc2e647aeb6f510f9e318856a1bcd66c5e19 and currency ETH already exists.')
+      expect(error?.message[0]).toMatch(/^Subscription for type ADDRESS_EVENT on the address id 0xbaf6dc2e647aeb6f510f9e318856a1bcd66c5e19 and currency ETH already exists./)
       expect(error?.code).toEqual('subscription.exists.on.address-and-currency')
     })
 
     it('NOK - invalid address', async () => {
-      const { status, error } = await tatum.notification.subscribe.addressTransaction({
+      const { status, error } = await tatum.notification.subscribe.addressEvent({
         url: 'https://tatum.io',
         chain: Chain.Ethereum,
         address: TestConst.INVALID_ETH_ADDRESS,
       })
       expect(status).toEqual(Status.ERROR)
-      expect(error?.message).toEqual(["address must be a valid ETH address. Address must start with 0x and must contain 40 hexadecimal characters after and have the correct checksum. "])
+      expect(error?.message).toEqual(['address must be a valid ETH address. Address must start with 0x and must contain 40 hexadecimal characters after and have the correct checksum. '])
       expect(error?.code).toEqual('validation.failed')
     })
+
+
   })
 
-  describe('deleteSubscription',() => {
+  describe('deleteSubscription', () => {
     it('OK', async () => {
-      const address = TestConst.TEST_ADDRESSES[Chain.Ethereum]
-      const { data: subscribeData } = await tatum.notification.subscribe.addressTransaction({
+      const address = TestConst.ADDRESSES.TESTNET[Chain.Ethereum]
+      const { data: subscribeData } = await tatum.notification.subscribe.addressEvent({
         url: 'https://tatum.io',
         chain: Chain.Ethereum,
-        address
+        address,
       })
       const { id } = subscribeData
       await tatum.notification.unsubscribe(id)
       const { data } = await tatum.notification.getAll()
-      const subscriptions = data.find(s => s.chain === Chain.Ethereum && s.address.toLowerCase() === address.toLowerCase()) as AddressTransactionNotification
+      const subscriptions = data.find(s => s.chain === Chain.Ethereum && s.address.toLowerCase() === address.toLowerCase()) as AddressEventNotification
       expect(subscriptions).toEqual(undefined)
     })
 

@@ -5,11 +5,22 @@ import { Utils } from '../../util/util.shared'
 import { IdDto } from '../../dto/shared.dto'
 import { ErrorUtils, ResponseDto } from '../../util/error'
 
-@Service()
+@Service({
+  factory: (data: { id: string }) => {
+    return new Subscribe(data.id)
+  }, transient: true,
+})
 export class Subscribe {
-  private connector: TatumConnector = Container.get(TatumConnector)
+  private id: string
+  private connector: TatumConnector
 
-  async addressTransaction({ chain, address, url }: AddressNotificationDetail): Promise<ResponseDto<AddressNotification>> {
+
+  constructor(id: string) {
+    this.id = id
+    this.connector = Container.of(this.id).get(TatumConnector)
+  }
+
+  async addressEvent({ chain, address, url }: AddressNotificationDetail): Promise<ResponseDto<AddressNotification>> {
     return ErrorUtils.tryFail(async () => {
       const { id } = await this.connector.post<IdDto>({
         path: 'subscription',

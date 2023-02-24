@@ -6,7 +6,7 @@ export interface GetAllNotificationsQuery {
   address?: string
 }
 
-export type AddressTransactionNotification = {
+export type AddressEventNotification = {
   id: string
   chain: Chain
   address: string
@@ -28,7 +28,7 @@ export enum NotificationType {
   ADDRESS_EVENT = 'ADDRESS_EVENT',
 }
 
-export interface AddressTransactionNotificationApi {
+export interface AddressEventNotificationApi {
   id: string
   type: NotificationType.ADDRESS_EVENT
   attr: {

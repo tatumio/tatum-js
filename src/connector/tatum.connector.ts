@@ -5,9 +5,12 @@ import { version } from '../../package.json'
 import { CONFIG } from '../util/di.tokens'
 import { GetUrl, Request } from './connector.dto'
 import { Network } from '../service/tatum/tatum.dto'
+import { address } from  'ip'
 
 axios.interceptors.request.use((request) => {
-  const config = Container.get(CONFIG)
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  const config = Container.of(request.prefix).get(CONFIG)
   if (config.debug) {
     console.log('Request', request.method?.toUpperCase(), request.url, request.data !== undefined ? JSON.stringify(request.data) : '')
   }
@@ -16,7 +19,9 @@ axios.interceptors.request.use((request) => {
 
 axios.interceptors.response.use(
   (response) => {
-    const config = Container.get(CONFIG)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
+    const config = Container.of(response.config.prefix).get(CONFIG)
     if (config.debug) {
       console.log('Response:', response.status, JSON.stringify(response.data))
     }
@@ -24,7 +29,7 @@ axios.interceptors.response.use(
   }, (error) => {
     const { config, message, response } = error
 
-    const { debug } = Container.get(CONFIG)
+    const { debug } = Container.of(config.prefix).get(CONFIG)
 
     if (debug) {
       console.warn('Error: ', message, JSON.stringify(response.data))
@@ -54,9 +59,17 @@ axios.interceptors.response.use(
 
   })
 
-@Service()
+@Service({factory: (data: {id: string}) => {
+    return new TatumConnector(data.id)
+  }, transient: true})
 /* eslint-disable */ //TODO implement correct typings and remove any
 export class TatumConnector {
+  private id: string
+
+  constructor(id: string) {
+    this.id = id
+  }
+
   public async get<T = any>({ path, params }: GetUrl) {
     return this.request<T>({ path, params, method: 'GET' })
   }
@@ -70,10 +83,10 @@ export class TatumConnector {
   }
 
   private async request<T>({ path, params, body, method }: Request): Promise<T> {
-    const { retryDelay, retryCount } = Container.get(CONFIG)
+    const { retryDelay, retryCount } = Container.of(this.id).get(CONFIG)
 
     const headers = this.headers()
-    const { data } = await axios.request({
+    const response = await axios.request({
       url: this.getUrl({ path, params }),
       headers,
       method,
@@ -81,12 +94,13 @@ export class TatumConnector {
       // @ts-ignore
       retry: retryCount,
       retryDelay: retryDelay,
+      prefix: this.id,
     })
-    return data as T
+    return (response.data) as T
   }
 
   private getUrl({ path, params }: GetUrl) {
-    const url = new URL(path, process.env.TATUM_API_URL ?? Constant.TATUM_API_URL)
+    const url = new URL(path, Constant.TATUM_API_URL)
 
     if (params) {
       Object.keys(params)
@@ -94,7 +108,7 @@ export class TatumConnector {
         .forEach((key) => url.searchParams.append(key, params[key]!))
     }
 
-    const config = Container.get(CONFIG)
+    const config = Container.of(this.id).get(CONFIG)
 
     if (!config.apiKey && config.network === Network.Testnet) {
       url.searchParams.append('type', 'testnet')
@@ -107,9 +121,10 @@ export class TatumConnector {
     const headers = {
       'Content-Type': 'application/json',
       'User-Agent': `Tatum_SDK_JS/${version}`,
+      'cf-connecting-ip': address(),
     }
-    const config = Container.get(CONFIG)
 
+    const config = Container.of(this.id).get(CONFIG)
     return {
       ...headers,
       ...(config.apiKey && { 'x-api-key': config.apiKey }),
