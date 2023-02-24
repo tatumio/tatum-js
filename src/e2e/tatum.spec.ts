@@ -1,13 +1,15 @@
-import { TatumSdk } from '../service'
-import { Network } from '../service'
+import { Chain, Network, TatumSdk } from '../service'
+import { e2eUtil } from './e2e.util'
+import { TestConst } from './e2e.constant'
 
 describe('Tatum Init', () => {
-  describe('Api Key Auth', () => {
+  describe('API Key Auth', () => {
     it('Testnet', async () => {
       const tatum: TatumSdk = await TatumSdk.init({
         apiKey: process.env.TESTNET_API_KEY,
         network: Network.Testnet,
       })
+
       const { data } = await tatum.getApiInfo()
       expect(data.testnet).toBe(true)
     })
@@ -40,21 +42,62 @@ describe('Tatum Init', () => {
     })
   })
 
-  describe('No Api Key', () => {
+  describe('IP auth', () => {
     it('Testnet', async () => {
-     await TatumSdk.init({
+      const tatum = await TatumSdk.init({
         network: Network.Testnet,
       })
+      await e2eUtil.subscriptions.testCreateSubscription(tatum, Chain.Bitcoin, TestConst.ADDRESSES.TESTNET[Chain.Bitcoin])
     })
 
     it('Mainnet', async () => {
-      await TatumSdk.init({
+      const tatum = await TatumSdk.init({
         network: Network.Mainnet,
       })
+      await e2eUtil.subscriptions.testCreateSubscription(tatum, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin])
     })
 
     it('Empty', async () => {
-      await TatumSdk.init()
+      const tatum = await TatumSdk.init()
+      await e2eUtil.subscriptions.testCreateSubscription(tatum, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin])
+    })
+  })
+
+  describe('Multiple Instances', () => {
+    it('IP auth', async () => {
+      const mainnet = await TatumSdk.init({
+        network: Network.Mainnet,
+      })
+      const testnet = await TatumSdk.init({
+        network: Network.Testnet,
+      })
+      await e2eUtil.subscriptions.testCreateSubscription(mainnet, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin])
+      await e2eUtil.subscriptions.testCreateSubscription(testnet, Chain.Bitcoin, TestConst.ADDRESSES.TESTNET[Chain.Bitcoin])
+    })
+
+    it('API Key auth', async () => {
+      const mainnet = await TatumSdk.init({
+        apiKey: process.env.MAINNET_API_KEY,
+        network: Network.Mainnet,
+      })
+      const testnet = await TatumSdk.init({
+        apiKey: process.env.TESTNET_API_KEY,
+        network: Network.Testnet,
+      })
+      await e2eUtil.subscriptions.testCreateSubscription(mainnet, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin])
+      await e2eUtil.subscriptions.testCreateSubscription(testnet, Chain.Bitcoin, TestConst.ADDRESSES.TESTNET[Chain.Bitcoin])
+    })
+
+    it('IP auth and API Key auth', async () => {
+      const mainnet = await TatumSdk.init({
+        apiKey: process.env.MAINNET_API_KEY,
+        network: Network.Mainnet,
+      })
+      const testnet = await TatumSdk.init({
+        network: Network.Testnet,
+      })
+      await e2eUtil.subscriptions.testCreateSubscription(mainnet, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin])
+      await e2eUtil.subscriptions.testCreateSubscription(testnet, Chain.Bitcoin, TestConst.ADDRESSES.TESTNET[Chain.Bitcoin])
     })
   })
 

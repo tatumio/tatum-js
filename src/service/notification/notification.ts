@@ -1,23 +1,32 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
-  AddressTransactionNotificationApi,
+  AddressEventNotificationApi,
   GetAllNotificationsQuery, GetAllExecutedWebhooksQuery,
-  NotificationType, Webhook, AddressTransactionNotification,
+  Webhook, AddressEventNotification,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
 import { ChainMapInverse } from '../tatum/tatum.dto'
 import { ErrorUtils, ResponseDto } from '../../util/error'
 
-@Service()
+@Service({factory: (data: {id: string}) => {
+    return new Notification(data.id)
+  }, transient: true})
 export class Notification {
-  private connector: TatumConnector = Container.get(TatumConnector)
 
-  public subscribe: Subscribe = Container.get(Subscribe)
+  private id: string
+  private connector: TatumConnector
+  public subscribe: Subscribe
 
-  async getAll(body?: GetAllNotificationsQuery): Promise<ResponseDto<AddressTransactionNotification[]>> {
+  constructor(id: string) {
+    this.id = id
+    this.subscribe = Container.of(this.id).get(Subscribe)
+    this.connector = Container.of(this.id).get(TatumConnector)
+  }
+
+  async getAll(body?: GetAllNotificationsQuery): Promise<ResponseDto<AddressEventNotification[]>> {
     return ErrorUtils.tryFail(async () => {
-      const notifications = await this.connector.get<AddressTransactionNotificationApi[]>({
+      const subscriptions = await this.connector.get<AddressEventNotificationApi[]>({
         path: 'subscription',
         params: {
           pageSize: body?.pageSize?.toString() ?? '10',
@@ -25,8 +34,7 @@ export class Notification {
           ...(body?.address && { address: body.address }),
         },
       })
-      const addressTransactions = notifications.filter(n => (n.type === NotificationType.ADDRESS_TRANSACTION))
-      return addressTransactions.map((notification) => ({
+      return subscriptions.map((notification) => ({
         id: notification.id,
         chain: ChainMapInverse[notification.attr.chain],
         address: notification.attr.address,

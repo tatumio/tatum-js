@@ -4,19 +4,24 @@ import { Notification } from '../notification/notification'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { ApiInfoResponse, Network, TatumConfig } from './tatum.dto'
 import { ErrorUtils, ResponseDto, Status } from '../../util'
+import crypto from 'crypto'
 
-@Service()
+@Service({ transient: true })
 export class TatumSdk {
-  notification: Notification = Container.get(Notification)
-  private connector: TatumConnector = Container.get(TatumConnector)
+  notification: Notification
+  private connector: TatumConnector
+  private id: string
 
   // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private constructor() {
+  private constructor(id: string) {
+    this.id = id
+    this.connector = Container.of(this.id).get(TatumConnector)
+    this.notification = Container.of(this.id).get(Notification)
   }
 
-  static getApiInfo(): Promise<ResponseDto<ApiInfoResponse>> {
+  static getApiInfo(id: string): Promise<ResponseDto<ApiInfoResponse>> {
     return ErrorUtils.tryFail(async () => {
-      const connector = Container.get(TatumConnector)
+      const connector = Container.of(id).get(TatumConnector)
       return connector.get({ path: 'tatum/version' })
     })
   }
@@ -33,16 +38,17 @@ export class TatumSdk {
       network: Network.Mainnet,
       debug: false,
       retryCount: 5,
-      retryDelay: 1000
+      retryDelay: 1000,
     }
 
     const finalConfig = { ...defaultConfig, ...config }
+    const id = crypto.randomBytes(64).toString('hex')
 
     if (finalConfig.apiKey && finalConfig.validate) {
-      Container.set(CONFIG, finalConfig)
-      const { data, status, error } = await this.getApiInfo()
+      Container.of(id).set(CONFIG, finalConfig)
+      const { data, status, error } = await this.getApiInfo(id)
 
-      if(status === Status.ERROR) {
+      if (status === Status.ERROR) {
         throw new Error(error?.message[0].toString())
       }
 
@@ -50,11 +56,10 @@ export class TatumSdk {
       if (testnetType !== finalConfig.network) {
         throw new Error(`Tatum API key is not valid for ${finalConfig.network}`)
       }
-      return new TatumSdk()
+      return new TatumSdk(id)
     }
 
-    Container.set(CONFIG, finalConfig)
-
-    return new TatumSdk()
+    Container.of(id).set(CONFIG, finalConfig)
+    return new TatumSdk(id)
   }
 }
