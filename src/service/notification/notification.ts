@@ -9,9 +9,12 @@ import { Subscribe } from './subscribe'
 import { ChainMapInverse } from '../tatum/tatum.dto'
 import { ErrorUtils, ResponseDto } from '../../util/error'
 
-@Service({factory: (data: {id: string}) => {
+@Service({
+  factory: (data: { id: string }) => {
     return new Notification(data.id)
-  }, transient: true})
+  },
+  transient: true,
+})
 export class Notification {
 
   private id: string
