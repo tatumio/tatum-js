@@ -73,6 +73,7 @@ jobs:
     - run: yarn lint
     - run: yarn test
       env:
+        TATUM_API_URL: ${{ secrets.TATUM_API_URL }}
         TESTNET_API_KEY: ${{ secrets.TESTNET_API_KEY }}
         MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
 
