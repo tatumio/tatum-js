@@ -1,21 +1,28 @@
-'use client'
-import React, { Dispatch, useRef, useState } from 'react'
-import { Chain } from '@tatumcom/js'
+import React, { useRef, useState } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
-import { Status } from '../../../src'
+import { ResponseDto } from '../dto'
+import { Button } from './button'
 
-type ErrorWithMessage = {
-  message: string | object | object[]
-  code?: string
+export interface UseModalProps {
+  handleSubmit: (e: React.FormEvent) => Promise<void>
+  response?: ResponseDto<any>
+  inputs: {
+    select: {
+      options: SelectOptionsProps[]
+      label: string
+      id: string
+    }[]
+    text: {
+      label: string
+      id: string
+      placeholder: string
+    }[]
+  }
+  buttonText: string
+  modalTitle: string
 }
 
-export interface ResponseDto<T> {
-  data: T
-  status: Status,
-  error?: ErrorWithMessage
-}
-
-export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptions: () => Promise<void> }) => {
+export const useModal = ({ response, handleSubmit, inputs, modalTitle, buttonText }: UseModalProps) => {
   const [loading, setLoading] = useState(false)
   const [show, setShow] = useState(false)
 
@@ -23,58 +30,15 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
 
   useOnClickOutside(ref, () => setShow(false))
 
-  const [response, setResponse] = useState<ResponseDto<{ id: string }>>()
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    try {
-      setLoading(true)
-      e.preventDefault()
-
-      const data = {
-        // @ts-ignore
-        address: e.target.address.value,
-        // @ts-ignore
-        url: e.target.url.value,
-        // @ts-ignore
-        chain: e.target.chain.value,
-      }
-      console.log(data)
-      const JSONdata = JSON.stringify(data)
-
-      const endpoint = '/api/subscription'
-
-      const options = {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSONdata,
-      }
-      const response = await (await fetch(endpoint, options)).json()
-      setResponse(response)
-      await refreshSubscriptions()
-      setLoading(false)
-    } catch (e) {
-      setLoading(false)
-      console.log(e)
-    }
-  }
-
-  return (
+  const Modal =
     <div className='mt-5'>
-      <button onClick={() => setShow(prevState => !prevState)} data-modal-target='authentication-modal'
-              data-modal-toggle='authentication-modal'
-              className='block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'
-              type='button'>
-        Create Subscription
-      </button>
-      <div id='authentication-modal' tabIndex={-1} aria-hidden='true'
+      <Button text={buttonText} onClick={() => setShow(true)}/>
+      <div tabIndex={-1} aria-hidden='true'
            className={`fixed flex items-center justify-center h-screen top-0 left-0 right-0 z-50 ${!show ? 'hidden' : ''} w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full`}>
         <div className='relative w-full h-full max-w-md md:h-auto'>
           <div className='relative bg-white rounded-lg shadow dark:bg-gray-700'>
             <button onClick={() => setShow(false)} type='button'
-                    className='absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white'
-                    data-modal-hide='authentication-modal'>
+                    className='absolute top-3 right-2.5 text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm p-1.5 ml-auto inline-flex items-center dark:hover:bg-gray-800 dark:hover:text-white'>
               <svg aria-hidden='true' className='w-5 h-5' fill='currentColor' viewBox='0 0 20 20'
                    xmlns='http://www.w3.org/2000/svg'>
                 <path fillRule='evenodd'
@@ -84,15 +48,15 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
               <span className='sr-only'>Close modal</span>
             </button>
             <div className='px-6 py-6 lg:px-8' ref={ref}>
-              <h3 className='mb-4 text-xl font-medium text-gray-900 dark:text-white'>Subscribe to transactions</h3>
-              <form className='space-y-6' action='#' onSubmit={handleSubmit}>
-                <TextInputModal label='Address' placeholder='0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F' id='address' />
-                <TextInputModal label='Url' placeholder='https://example.com' id='url' />
-                <SelectInputModal label='Chain' id='chain'
-                                  options={Object.values(Chain).map(c => ({ value: c, label: c }))} />
+              <h3 className='mb-4 text-xl font-medium text-gray-900 dark:text-white'>{modalTitle}</h3>
+              <form className='space-y-6' action='modal#' onSubmit={handleSubmit}>
+                {inputs.text.map((input, i) => <TextInputModal key={i.toString()} label={input.label}
+                                                               placeholder={input.placeholder} id={input.id} />)}
+                {inputs.select.map((input, i) => <SelectInputModal key={i.toString()} label={input.label} id={input.id}
+                                                                   options={input.options} />)}
                 <button type='submit'
                         className='w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
-                  {!loading ? <div>Create subscription</div> :
+                  {!loading ? <div>Add</div> :
                     <svg aria-hidden='true' role='status' className='inline w-4 h-4 mr-3 text-white animate-spin'
                          viewBox='0 0 100 101' fill='none' xmlns='http://www.w3.org/2000/svg'>
                       <path
@@ -125,7 +89,7 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
                   <div
                     className='p-4 mb-4 text-sm text-green-800 rounded-lg bg-green-50 dark:bg-gray-800 dark:text-green-400'
                     role='alert'>
-                    <span className='font-medium'>Subscription {response.data.id} created.</span>
+                    <span className='font-medium'>Created</span>
                   </div>
                 </div>}
               </form>
@@ -134,7 +98,10 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
         </div>
       </div>
     </div>
-  )
+  return {
+    Modal,
+    setLoading,
+  }
 }
 
 const TextInputModal = ({ id, label, placeholder }: { label: string, placeholder: string, id: string }) =>
@@ -145,14 +112,20 @@ const TextInputModal = ({ id, label, placeholder }: { label: string, placeholder
            placeholder={placeholder} required />
   </div>
 
+export interface SelectOptionsProps {
+  value: string
+  label: string
+}
+
 const SelectInputModal = ({
                             options,
                             label,
                             id,
-                          }: { options: { value: string, label: string }[], label: string, id: string }) => <>
+                          }: { options: SelectOptionsProps[], label: string, id: string }) => <div>
   <label htmlFor={id} className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>{label}</label>
   <select id={id}
           className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
     {options.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
   </select>
-</>
+</div>
+

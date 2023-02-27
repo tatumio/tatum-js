@@ -1,6 +1,6 @@
 import { Network, TatumSdk } from '@tatumcom/js'
 
 export const initTatum  = async () => await TatumSdk.init({
-  apiKey: 'c53da34e-114d-4961-9030-d1a720a0ec38',
+  apiKey: '452826a8-5cd4-4c46-b710-e130934b5102',
   network: Network.Testnet
 })

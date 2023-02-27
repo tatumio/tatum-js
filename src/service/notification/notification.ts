@@ -27,6 +27,10 @@ export class Notification {
     this.connector = Container.of(this.id).get(TatumConnector)
   }
 
+  /**
+   * Get all notifications for given address.
+   *
+   */
   async getAll(body?: GetAllNotificationsQuery): Promise<ResponseDto<AddressEventNotification[]>> {
     return ErrorUtils.tryFail(async () => {
       const subscriptions = await this.connector.get<AddressEventNotificationApi[]>({
@@ -47,10 +51,16 @@ export class Notification {
     })
   }
 
+  /**
+   * Unsubscribe from notification.
+   */
   async unsubscribe(id: string): Promise<ResponseDto<void>> {
     return ErrorUtils.tryFail(async () => this.connector.delete({ path: `subscription/${id}` }))
   }
 
+  /**
+   * Get all executed webhooks.
+   */
   async getAllExecutedWebhooks(body?: GetAllExecutedWebhooksQuery): Promise<ResponseDto<Webhook[]>> {
     return ErrorUtils.tryFail(async () =>
       this.connector.get<Webhook[]>({

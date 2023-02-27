@@ -80,10 +80,12 @@ describe('Tatum Init', () => {
         apiKey: process.env.MAINNET_API_KEY,
         network: Network.Mainnet,
       })
+
       const testnet = await TatumSdk.init({
         apiKey: process.env.TESTNET_API_KEY,
         network: Network.Testnet,
       })
+
       await e2eUtil.subscriptions.testCreateSubscription(mainnet, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin])
       await e2eUtil.subscriptions.testCreateSubscription(testnet, Chain.Bitcoin, TestConst.ADDRESSES.TESTNET[Chain.Bitcoin])
     })

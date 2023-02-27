@@ -20,6 +20,9 @@ export class Subscribe {
     this.connector = Container.of(this.id).get(TatumConnector)
   }
 
+  /**
+   * Subscribe to address event.
+   */
   async addressEvent({ chain, address, url }: AddressNotificationDetail): Promise<ResponseDto<AddressNotification>> {
     return ErrorUtils.tryFail(async () => {
       const { id } = await this.connector.post<IdDto>({

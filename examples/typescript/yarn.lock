@@ -247,12 +247,13 @@
   dependencies:
     defer-to-connect "^2.0.1"
 
-"@tatumcom/js@^1.0.0-alpha.8":
-  version "1.0.0-alpha.8"
-  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.0.0-alpha.8.tgz#37c124b8a328363b47f4d81bbc58c5a1910f3048"
-  integrity sha512-Lq+QPCd2MGpWxizgYQG0vK5Oj0HUdqOFWnmwl0x++SLoU3BTA+HuZlReRK60SU5sZlckIGlddYEAhQwNJGIoUA==
+"@tatumcom/js@^1.0.0-alpha.14":
+  version "1.0.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.0.0-alpha.14.tgz#b88789b56413c6ebfe5277a29798146e8f2d367d"
+  integrity sha512-d1K0pquABODgNFz6YlwMckX9BK0/yoT9uhGhCU7RRu9Aiwc2FGZpwAYoI7l7s1OAFxuFMcgAzibx9beZR1nEPA==
   dependencies:
     axios "^1.3.2"
+    ip "^1.1.8"
     reflect-metadata "^0.1.13"
     tslib "^2.5.0"
     typedi "^0.10.0"
@@ -1323,6 +1324,11 @@ inherits@2.0.4, inherits@^2.0.1, inherits@^2.0.3, inherits@^2.0.4:
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/inherits/-/inherits-2.0.4.tgz#0fa2c64f932917c3433a0ded55363aae37416b7c"
   integrity sha512-k/vGaX4/Yla3WzyMCvTQOXYeIHvqOKtnqBduzTHpzpQZzAskKMhZ2K+EnBiSM9zGSoIFeMpXKxa4dYeZIQqewQ==
+
+ip@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/ip/-/ip-1.1.8.tgz#ae05948f6b075435ed3307acce04629da8cdbf48"
+  integrity sha512-PuExPYUiu6qMBQb4l06ecm6T6ujzhmh+MeJcW9wa89PoAz5pvd4zPgN5WJV104mb6S2T1AwNIAaB70JNrLQWhg==
 
 ipaddr.js@1.9.1:
   version "1.9.1"

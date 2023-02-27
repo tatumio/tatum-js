@@ -9,4 +9,3 @@ export const fetcher = async <JSON = any>(
 }
 
 export const useFetch = <JSON = any>(url: string) => useSWR<JSON>(url, fetcher)
-
