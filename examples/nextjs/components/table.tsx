@@ -6,10 +6,10 @@ import { Button } from './button'
 import { isSSR } from '../utils/utils'
 
 export interface TableInterface {
-  attributes: { name: string, label: string, popover?: boolean, format?: (item: any) => any }[]
+  cols: { name: string, label: string, popover?: boolean, format?: (item: any) => any }[]
   isLoading: boolean
   actions?: { delete?: (id: string) => Promise<void> | void, activate?: (config: any) => Promise<void> | void }
-  data: { [index: string]: object | boolean | string }[]
+  rows: { [index: string]: object | boolean | string }[]
   setOffset: Dispatch<SetStateAction<number>>
   offset: number
   hidePagination?: boolean
@@ -17,9 +17,9 @@ export interface TableInterface {
 }
 
 export const Table = ({
-                        attributes,
+                        cols,
                         isLoading,
-                        data,
+                        rows,
                         setOffset,
                         offset,
                         actions,
@@ -29,7 +29,7 @@ export const Table = ({
   return (
     <div className='w-full my-8'>
       {isLoading ? <Spinner /> :
-        <TableContent attributes={attributes} isLoading={isLoading} data={data} setOffset={setOffset}
+        <TableContent cols={cols} isLoading={isLoading} rows={rows} setOffset={setOffset}
                       offset={offset} actions={actions} hidePagination={hidePagination}
                       dontWaitForData={dontWaitForData} />}
     </div>
@@ -37,9 +37,9 @@ export const Table = ({
 }
 
 const TableContent = ({
-                        attributes,
+                        cols,
                         actions,
-                        data,
+                        rows,
                         setOffset,
                         offset,
                         hidePagination,
@@ -57,12 +57,12 @@ const TableContent = ({
   return (
     <div>
 
-      {!dontWaitForData && data &&
-        <DataTable data={data} isLoading={isLoading} setOffset={setOffset} offset={offset} attributes={attributes}
+      {!dontWaitForData && rows &&
+        <DataTable rows={rows} isLoading={isLoading} setOffset={setOffset} offset={offset} cols={cols}
                    actions={actions} hidePagination={hidePagination} />}
 
       {dontWaitForData &&
-        <DataTable data={data} isLoading={isLoading} setOffset={setOffset} offset={offset} attributes={attributes}
+        <DataTable rows={rows} isLoading={isLoading} setOffset={setOffset} offset={offset} cols={cols}
                    actions={actions} hidePagination={hidePagination} />}
 
 
@@ -97,9 +97,9 @@ const TableContent = ({
 }
 
 const Row = ({
-               attributes,
+               cols,
                actions,
-               data,
+               rows,
                item,
                index: i,
              }: TableInterface & { item: { [index: string]: object | boolean | string }, index: number }) => {
@@ -107,15 +107,15 @@ const Row = ({
   const [, copy] = useCopyToClipboard()
 
   useEffect(() => {
-    if (data && data.length > 0) {
-      setIsShown(data.map(item => false))
+    if (rows && rows.length > 0) {
+      setIsShown(rows.map(item => false))
     }
-  }, [data])
+  }, [rows])
 
 
   return (
     <tr className='bg-white border-b dark:bg-gray-800 dark:border-gray-700'>
-      {attributes.map((attribute, index) => {
+      {cols.map((attribute, index) => {
         // @ts-ignore
         if (typeof item[attribute.name] === 'object') {
           return (
@@ -172,20 +172,20 @@ const Row = ({
 }
 
 const DataTable = ({
-                     attributes,
+                     cols,
                      actions,
-                     data,
+                     rows,
                      setOffset,
                      offset,
                      isLoading,
                    }: TableInterface) => {
-  if (data.length > 0) {
+  if (rows.length > 0) {
     return (
       <div className='relative shadow-md sm:rounded-lg'>
         <table className='w-full text-sm text-left text-gray-500 dark:text-gray-400'>
           <thead className='text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400'>
           <tr>
-            {attributes.map((attribute, index) => (
+            {cols.map((attribute, index) => (
               <th key={index} scope='col' className='px-6 py-3 text-center'>
                 {attribute.label}
               </th>
@@ -196,8 +196,8 @@ const DataTable = ({
           </tr>
           </thead>
           <tbody>
-          {data.map((item, i) => <Row data={data} isLoading={isLoading} setOffset={setOffset} offset={offset}
-                                      attributes={attributes} actions={actions} key={i} index={i} item={item} />)}
+          {rows.map((item, i) => <Row rows={rows} isLoading={isLoading} setOffset={setOffset} offset={offset}
+                                      cols={cols} actions={actions} key={i} index={i} item={item} />)}
           </tbody>
         </table>
 

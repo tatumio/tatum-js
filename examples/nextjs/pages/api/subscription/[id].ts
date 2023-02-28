@@ -1,14 +1,14 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiResponse } from 'next'
 import { initTatum } from '../../../utils/tatum'
+import { DeleteSubscriptionRequest } from '../../../dto'
 
 export default async function handler(
-  req: NextApiRequest,
+  req: DeleteSubscriptionRequest,
   res: NextApiResponse,
 ) {
   if (req.method === 'DELETE') {
     const { id } = req.query
     console.log(req.query)
-    // @ts-ignore
     const tatum = await initTatum({ apiKey: req.query.apiKey, network: req.query.network })
     await tatum.notification.unsubscribe(id as string)
     return res.status(200).end()

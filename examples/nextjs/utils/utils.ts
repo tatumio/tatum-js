@@ -1,6 +1,7 @@
 import useSWR from 'swr'
 import { TatumConfig } from '../dto'
-import { Dispatch, useEffect, useState } from 'react'
+import { Dispatch, useContext, useEffect, useState } from 'react'
+import { ApiKeyContext } from '../app/layout'
 
 export const fetcher = async <JSON = any>(
   input: RequestInfo,
@@ -10,31 +11,37 @@ export const fetcher = async <JSON = any>(
   return res.json()
 }
 
-export const useFetch = <JSON = any>(url: string) => useSWR<JSON>(url, fetcher)
+export const useFetch = <JSON = any>(url: string) => {
+  const apiKey = useContext(ApiKeyContext)
+  const fullUrl = new URL(`${window.location.origin}${url}`)
+  fullUrl.searchParams.append('apiKey', apiKey.apiKey)
+  fullUrl.searchParams.append('network', apiKey.network)
+  return useSWR<JSON>(fullUrl.toString(), fetcher)
+}
 
 export const isSSR = typeof window === 'undefined'
 
 const getStorageValue = <T>(key: string, defaultValue: T) => {
   // getting stored value
   if (!isSSR) {
-    const saved = localStorage.getItem(key);
-    const initial = saved !== null ? JSON.parse(saved) : defaultValue;
-    return initial;
+    const saved = localStorage.getItem(key)
+    const initial = saved !== null ? JSON.parse(saved) : defaultValue
+    return initial
   }
 }
 
-export const useLocalStorage = <T>(key: string, defaultValue: T): [T, Dispatch<T> ] => {
+export const useLocalStorage = <T>(key: string, defaultValue: T): [T, Dispatch<T>] => {
   const [value, setValue] = useState(() => {
-    return getStorageValue(key, defaultValue);
-  });
+    return getStorageValue(key, defaultValue)
+  })
 
   useEffect(() => {
     // storing input name
-    localStorage.setItem(key, JSON.stringify(value));
-  }, [key, value]);
+    localStorage.setItem(key, JSON.stringify(value))
+  }, [key, value])
 
-  return [value, setValue];
-};
+  return [value, setValue]
+}
 
 export const useApiKeys = () => {
   const [apiKeys, setApiKeys] = useLocalStorage<TatumConfig[]>('apiKeys', [])
@@ -73,7 +80,7 @@ export const useApiKeys = () => {
 
   return {
     apiKeys,
-    apiKey,
+    apiKey: apiKey as TatumConfig,
     add,
     activate,
     remove,

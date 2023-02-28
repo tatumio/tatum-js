@@ -1,9 +1,17 @@
 'use client'
 import './globals.css'
-import React from 'react'
+import React, { createContext } from 'react'
 import Image from 'next/image'
+import { useApiKeys } from '../utils/utils'
+import { Spinner } from '../components/spinner'
+import NoSSRWrapper from '../components/nossr'
+import { TatumConfig } from '../dto'
+
+// @ts-ignore
+export const ApiKeyContext = createContext<TatumConfig>(null)
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
+  const { apiKey } = useApiKeys()
   return (
     <html lang='en'>
     <head>
@@ -13,7 +21,13 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     </head>
     <body>
     <div className='font-Poppins flex flex-col h-screen justify-between'>
-      <main className='flex h-screen flex-col justify-center items-center'>{children}</main>
+      <main className='flex h-screen flex-col justify-center items-center'>
+        <NoSSRWrapper>
+          <ApiKeyContext.Provider value={apiKey}>
+            {apiKey !== undefined ? children : <Spinner />}
+          </ApiKeyContext.Provider>
+        </NoSSRWrapper>
+      </main>
       <footer className='flex h-24 w-full items-center justify-center border-t'>
         <a
           className='flex items-center justify-center gap-2'

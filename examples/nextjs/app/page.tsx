@@ -20,7 +20,6 @@ const Home: NextPage = () => {
         <Well link='fees' title='Fees' description='Estimate fees!' inactive={true} />
       </div>
       <ApiKeys />
-
     </div>
   )
 }
@@ -35,15 +34,13 @@ const ApiKeys = () => {
     const data = new FormData(e.target as HTMLFormElement)
     const apiKey = data.get('apiKey') as string
     const network = data.get('network') as Network
-
     add({ apiKey, network, active: false })
     setLoading(false)
   }
 
   const { setLoading, Modal } = useModal({
     handleSubmit,
-    buttonText: 'Add Api Key',
-    modalTitle: 'Add Api Key',
+    title: 'Add Api Key',
     inputs: {
       text: [
         {
@@ -70,7 +67,7 @@ const ApiKeys = () => {
     },
   })
 
-  const apiKeysTable = [
+  const cols = [
     {
       name: 'apiKey',
       label: 'Api Key',
@@ -91,7 +88,7 @@ const ApiKeys = () => {
         Api Keys
       </h3>
       <div className='w-1/2'>
-        <Table attributes={apiKeysTable} data={apiKeys.map( apiKey => ({ ...apiKey, id: apiKey.apiKey}))} offset={0}
+        <Table cols={cols} rows={apiKeys.map(apiKey => ({ ...apiKey, id: apiKey.apiKey}))} offset={0}
                setOffset={() => {
                }} isLoading={false} hidePagination={true} actions={{ activate, delete: remove }} dontWaitForData={true} />
       </div>

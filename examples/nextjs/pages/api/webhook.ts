@@ -1,12 +1,12 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import type { NextApiResponse } from 'next'
 import { initTatum } from '../../utils/tatum'
+import { GetAllQueryRequest } from '../../dto'
 
 export default async function handler(
-  req: NextApiRequest,
+  req: GetAllQueryRequest,
   res: NextApiResponse,
 ) {
   if (req.method === 'GET') {
-    // @ts-ignore
     const tatum = await initTatum({ apiKey: req.query.apiKey, network: req.query.network })
     const { data } = await tatum.notification.getAllExecutedWebhooks({ pageSize: Number(req.query.pageSize), offset: Number(req.query.offset) })
     return res.status(200).json(data)

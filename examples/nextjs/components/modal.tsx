@@ -18,11 +18,10 @@ export interface UseModalProps {
       placeholder: string
     }[]
   }
-  buttonText: string
-  modalTitle: string
+  title: string
 }
 
-export const useModal = ({ response, handleSubmit, inputs, modalTitle, buttonText }: UseModalProps) => {
+export const useModal = ({ response, handleSubmit, inputs, title }: UseModalProps) => {
   const [loading, setLoading] = useState(false)
   const [show, setShow] = useState(false)
 
@@ -32,7 +31,7 @@ export const useModal = ({ response, handleSubmit, inputs, modalTitle, buttonTex
 
   const Modal =
     <div className='mt-5'>
-      <Button text={buttonText} onClick={() => setShow(true)}/>
+      <Button text={title} onClick={() => setShow(true)}/>
       <div tabIndex={-1} aria-hidden='true'
            className={`fixed flex items-center justify-center h-screen top-0 left-0 right-0 z-50 ${!show ? 'hidden' : ''} w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-modal md:h-full`}>
         <div className='relative w-full h-full max-w-md md:h-auto'>
@@ -48,7 +47,7 @@ export const useModal = ({ response, handleSubmit, inputs, modalTitle, buttonTex
               <span className='sr-only'>Close modal</span>
             </button>
             <div className='px-6 py-6 lg:px-8' ref={ref}>
-              <h3 className='mb-4 text-xl font-medium text-gray-900 dark:text-white'>{modalTitle}</h3>
+              <h3 className='mb-4 text-xl font-medium text-gray-900 dark:text-white'>{<title></title>}</h3>
               <form className='space-y-6' action='modal#' onSubmit={handleSubmit}>
                 {inputs.text.map((input, i) => <TextInputModal key={i.toString()} label={input.label}
                                                                placeholder={input.placeholder} id={input.id} />)}

@@ -11,9 +11,7 @@ const Notifications: NextPage = () => {
   const [subscriptionOffset, setSubscriptionOffset] = useState(0)
   const [webhookOffset, setWebhookOffset] = useState(0)
 
-  const { apiKey } = useApiKeys()
-
-  const { data, isLoading, mutate } = useFetch(`/api/subscription?pageSize=10&offset=${subscriptionOffset}&apiKey=${apiKey?.apiKey}&network=${apiKey?.network}`)
+  const { data, isLoading, mutate } = useFetch(`/api/subscription?pageSize=10&offset=${subscriptionOffset}`)
 
   const subscriptionTable = [
     {
@@ -66,11 +64,10 @@ const Notifications: NextPage = () => {
   const {
     data: webhooks,
     isLoading: webhooksLoading,
-    mutate: webhooksRefresh,
-  } = useFetch(`/api/webhook?pageSize=10&offset=${webhookOffset}&apiKey=${apiKey?.apiKey}&network=${apiKey?.network}`)
+  } = useFetch(`/api/webhook?pageSize=10&offset=${webhookOffset}`)
 
   const deleteSubscription = async (id: string) => {
-    await fetch(`/api/subscription/${id}?apiKey=${apiKey?.apiKey}&network=${apiKey?.network}`, {
+    await fetch(`/api/subscription/${id}`, {
       method: 'DELETE',
     })
     await mutate()
@@ -88,15 +85,15 @@ const Notifications: NextPage = () => {
           className='text-3xl my-5'>
           Subscriptions
         </h4>
-        <Table attributes={subscriptionTable} isLoading={isLoading} actions={{ delete: deleteSubscription }}
+        <Table cols={subscriptionTable} isLoading={isLoading} actions={{ delete: deleteSubscription }}
                offset={subscriptionOffset} setOffset={setSubscriptionOffset}
-               data={data} />
+               rows={data} />
         <SubscriptionModal refreshSubscriptions={mutate} />
         <h4
           className='text-3xl my-5'>
           Webhooks
         </h4>
-        <Table attributes={webhookTable} isLoading={webhooksLoading} data={webhooks} offset={webhookOffset}
+        <Table cols={webhookTable} isLoading={webhooksLoading} rows={webhooks} offset={webhookOffset}
                setOffset={setWebhookOffset} />
 
       </div>
@@ -172,8 +169,7 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
 
   const { setLoading, Modal } = useModal({
     handleSubmit,
-    buttonText: 'Add Subscription',
-    modalTitle: 'Add Subscription',
+    title: 'Add Subscription',
     inputs,
     response,
   })
