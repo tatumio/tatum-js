@@ -7,7 +7,9 @@ export default async function handler(
 ) {
   if (req.method === 'DELETE') {
     const { id } = req.query
-    const tatum = await initTatum()
+    console.log(req.query)
+    // @ts-ignore
+    const tatum = await initTatum({ apiKey: req.query.apiKey, network: req.query.network })
     await tatum.notification.unsubscribe(id as string)
     return res.status(200).end()
   } else {

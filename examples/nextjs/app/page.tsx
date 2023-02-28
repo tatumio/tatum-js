@@ -2,11 +2,10 @@
 import type { NextPage } from 'next'
 import React from 'react'
 import Link from 'next/link'
-import { useLocalStorage } from 'usehooks-ts'
-import { TatumConfig } from '../dto'
 import { Network } from '@tatumcom/js'
 import { Table } from '../components/table'
 import { useModal } from '../components/modal'
+import { useApiKeys } from '../utils/utils'
 
 const Home: NextPage = () => {
   return (
@@ -28,13 +27,7 @@ const Home: NextPage = () => {
 
 const ApiKeys = () => {
 
-  const [apiKeys, setApiKeys] = useLocalStorage<TatumConfig[]>('apiKeys', [
-    {
-      apiKey: '452826a8-5cd4-4c46-b710-e130934b5102',
-      network: Network.Testnet,
-      active: true,
-    },
-  ])
+  const { add, remove, apiKeys, activate } = useApiKeys()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -42,7 +35,8 @@ const ApiKeys = () => {
     const data = new FormData(e.target as HTMLFormElement)
     const apiKey = data.get('apiKey') as string
     const network = data.get('network') as Network
-    setApiKeys([...apiKeys, { apiKey, network, active: false }])
+
+    add({ apiKey, network, active: false })
     setLoading(false)
   }
 
@@ -76,22 +70,6 @@ const ApiKeys = () => {
     },
   })
 
-  const activate = (config: TatumConfig) => {
-    console.log(config)
-    setApiKeys(apiKeys.map(key => {
-      if (key.apiKey === config.apiKey) {
-        return {
-          ...key,
-          active: true,
-        }
-      }
-      return {
-        ...key,
-        active: false,
-      }
-    }))
-  }
-
   const apiKeysTable = [
     {
       name: 'apiKey',
@@ -104,7 +82,7 @@ const ApiKeys = () => {
     {
       name: 'active',
       label: 'Active',
-    }
+    },
   ]
   return (
     <>
@@ -113,8 +91,9 @@ const ApiKeys = () => {
         Api Keys
       </h3>
       <div className='w-1/2'>
-        <Table attributes={apiKeysTable} data={apiKeys} offset={0} setOffset={() => {
-        }} isLoading={false} hidePagination={true} actions={{activate}} />
+        <Table attributes={apiKeysTable} data={apiKeys.map( apiKey => ({ ...apiKey, id: apiKey.apiKey}))} offset={0}
+               setOffset={() => {
+               }} isLoading={false} hidePagination={true} actions={{ activate, delete: remove }} dontWaitForData={true} />
       </div>
       {Modal}
     </>

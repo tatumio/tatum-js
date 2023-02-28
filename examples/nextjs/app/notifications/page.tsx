@@ -1,9 +1,8 @@
 'use client'
 import type { NextPage } from 'next'
-import { useFetch } from '../../utils/utils'
+import { useApiKeys, useFetch } from '../../utils/utils'
 import React, { useState } from 'react'
 import { Table } from '../../components/table'
-import { Status } from '../../../../src'
 import { Chain } from '@tatumcom/js'
 import { useModal } from '../../components/modal'
 import { ResponseDto } from '../../dto'
@@ -11,7 +10,10 @@ import { ResponseDto } from '../../dto'
 const Notifications: NextPage = () => {
   const [subscriptionOffset, setSubscriptionOffset] = useState(0)
   const [webhookOffset, setWebhookOffset] = useState(0)
-  const { data, isLoading, mutate } = useFetch(`/api/subscription?pageSize=10&offset=${subscriptionOffset}`)
+
+  const { apiKey } = useApiKeys()
+
+  const { data, isLoading, mutate } = useFetch(`/api/subscription?pageSize=10&offset=${subscriptionOffset}&apiKey=${apiKey?.apiKey}&network=${apiKey?.network}`)
 
   const subscriptionTable = [
     {
@@ -65,10 +67,10 @@ const Notifications: NextPage = () => {
     data: webhooks,
     isLoading: webhooksLoading,
     mutate: webhooksRefresh,
-  } = useFetch(`/api/webhook?pageSize=10&offset=${webhookOffset}`)
+  } = useFetch(`/api/webhook?pageSize=10&offset=${webhookOffset}&apiKey=${apiKey?.apiKey}&network=${apiKey?.network}`)
 
   const deleteSubscription = async (id: string) => {
-    await fetch(`/api/subscription/${id}`, {
+    await fetch(`/api/subscription/${id}?apiKey=${apiKey?.apiKey}&network=${apiKey?.network}`, {
       method: 'DELETE',
     })
     await mutate()
@@ -104,6 +106,8 @@ const Notifications: NextPage = () => {
 
 
 export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptions: () => Promise<void> }) => {
+  const { apiKey } = useApiKeys()
+
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       setLoading(true)
@@ -116,8 +120,9 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
         url: e.target.url.value,
         // @ts-ignore
         chain: e.target.chain.value,
+        apiKey,
       }
-      console.log(data)
+
       const JSONdata = JSON.stringify(data)
 
       const endpoint = '/api/subscription'

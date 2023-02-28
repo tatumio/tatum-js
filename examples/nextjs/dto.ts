@@ -1,5 +1,5 @@
-import { Network } from '@tatumcom/js'
 import { Status } from '../../src'
+import { Network } from '@tatumcom/js'
 
 export interface TatumConfig {
   apiKey: string
