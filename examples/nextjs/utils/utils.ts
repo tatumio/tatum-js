@@ -2,6 +2,7 @@ import useSWR from 'swr'
 import { TatumConfig } from '../dto'
 import { Dispatch, useContext, useEffect, useState } from 'react'
 import { ApiKeyContext } from '../app/layout'
+import { Network } from '@tatumcom/js'
 
 export const fetcher = async <JSON = any>(
   input: RequestInfo,
@@ -12,7 +13,7 @@ export const fetcher = async <JSON = any>(
 }
 
 export const useFetch = <JSON = any>(url: string) => {
-  const apiKey = useContext(ApiKeyContext)
+  const { apiKey } = useContext(ApiKeyContext)
   const fullUrl = new URL(`${window.location.origin}${url}`)
   fullUrl.searchParams.append('apiKey', apiKey.apiKey)
   fullUrl.searchParams.append('network', apiKey.network)
@@ -44,8 +45,14 @@ export const useLocalStorage = <T>(key: string, defaultValue: T): [T, Dispatch<T
 }
 
 export const useApiKeys = () => {
-  const [apiKeys, setApiKeys] = useLocalStorage<TatumConfig[]>('apiKeys', [])
-  const [apiKey, setApiKey] = useState<TatumConfig>()
+  const defaultApiKey = {
+    apiKey: '452826a8-5cd4-4c46-b710-e130934b5102',
+    network: Network.Testnet,
+    active: true,
+  }
+
+  const [apiKeys, setApiKeys] = useLocalStorage<TatumConfig[]>('apiKeys', [defaultApiKey])
+  const [apiKey, setApiKey] = useState<TatumConfig>(defaultApiKey)
 
 
   useEffect(() => {
@@ -74,7 +81,9 @@ export const useApiKeys = () => {
   }
 
   const remove = (id: string) => {
-    setApiKeys(apiKeys.filter(key => key.apiKey !== id))
+    if (apiKeys.length > 1) {
+      setApiKeys(apiKeys.filter(key => key.apiKey !== id))
+    }
   }
 
 

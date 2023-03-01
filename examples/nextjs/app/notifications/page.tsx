@@ -1,11 +1,12 @@
 'use client'
 import type { NextPage } from 'next'
 import { useApiKeys, useFetch } from '../../utils/utils'
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Table } from '../../components/table'
 import { Chain } from '@tatumcom/js'
 import { useModal } from '../../components/modal'
 import { ResponseDto } from '../../dto'
+import { ApiKeyContext } from '../layout'
 
 const Notifications: NextPage = () => {
   const [subscriptionOffset, setSubscriptionOffset] = useState(0)
@@ -74,8 +75,7 @@ const Notifications: NextPage = () => {
   }
 
   return (
-    <div>
-      <div className='font-Poppins flex w-full flex-1 flex-col items-center justify-center px-20 text-center'>
+      <div className='flex w-full flex-1 flex-col items-center justify-center px-20 text-center'>
         <h1
           className='text-8xl my-5'>
           Notifications
@@ -97,13 +97,12 @@ const Notifications: NextPage = () => {
                setOffset={setWebhookOffset} />
 
       </div>
-    </div>
   )
 }
 
 
 export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptions: () => Promise<void> }) => {
-  const { apiKey } = useApiKeys()
+  const { apiKey } = useContext(ApiKeyContext)
 
   const handleSubmit = async (e: React.FormEvent) => {
     try {

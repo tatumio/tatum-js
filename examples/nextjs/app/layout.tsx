@@ -1,17 +1,32 @@
 'use client'
 import './globals.css'
 import React, { createContext } from 'react'
-import Image from 'next/image'
 import { useApiKeys } from '../utils/utils'
 import { Spinner } from '../components/spinner'
 import NoSSRWrapper from '../components/nossr'
 import { TatumConfig } from '../dto'
+import { Network } from '@tatumcom/js'
+
+
+interface ApiKeyContextInterface {
+  add: (apiKey: TatumConfig) => void;
+  apiKey: TatumConfig;
+  apiKeys: TatumConfig[];
+  activate: (config: TatumConfig) => void;
+  remove: (id: string) => void
+}
+
+const apiKey = {
+  apiKey: '452826a8-5cd4-4c46-b710-e130934b5102',
+  network: Network.Testnet,
+  active: true,
+}
 
 // @ts-ignore
-export const ApiKeyContext = createContext<TatumConfig>(null)
+export const ApiKeyContext = createContext<ApiKeyContextInterface>(null)
 
 const RootLayout = ({ children }: { children: React.ReactNode }) => {
-  const { apiKey } = useApiKeys()
+  const apiKeyContext = useApiKeys()
   return (
     <html lang='en'>
     <head>
@@ -23,22 +38,11 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <div className='font-Poppins flex flex-col h-screen justify-between'>
       <main className='flex h-screen flex-col justify-center items-center'>
         <NoSSRWrapper>
-          <ApiKeyContext.Provider value={apiKey}>
-            {apiKey !== undefined ? children : <Spinner />}
+          <ApiKeyContext.Provider value={apiKeyContext}>
+            {apiKeyContext.apiKey !== undefined ? children : <Spinner />}
           </ApiKeyContext.Provider>
         </NoSSRWrapper>
       </main>
-      <footer className='flex h-24 w-full items-center justify-center border-t'>
-        <a
-          className='flex items-center justify-center gap-2'
-          href='https://tatum.com'
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Powered by{' '}
-          <Image src='https://tatum.io/images/Light.svg' alt='Tatum Logo' width={72} height={16} />
-        </a>
-      </footer>
     </div>
     </body>
     </html>

@@ -1,11 +1,13 @@
 'use client'
 import type { NextPage } from 'next'
-import React from 'react'
+import React, { useContext } from 'react'
 import Link from 'next/link'
 import { Network } from '@tatumcom/js'
 import { Table } from '../components/table'
 import { useModal } from '../components/modal'
 import { useApiKeys } from '../utils/utils'
+import Image from 'next/image'
+import { ApiKeyContext } from './layout'
 
 const Home: NextPage = () => {
   return (
@@ -14,6 +16,7 @@ const Home: NextPage = () => {
         className='text-8xl my-5'>
         Tatum SDK
       </h1>
+      <Logo/>
       <div className='flex gap-5 max-w-5xl sm:grid-cols-3 justify-center py-10'>
         <Well link='notifications' title='Notifications' description='Subscribe to notifications for an address!' />
         <Well link='nfts' title='NFTs' description='Mint NFTs in seconds!' inactive={true} />
@@ -24,9 +27,21 @@ const Home: NextPage = () => {
   )
 }
 
+const Logo = () => (
+  <a
+    className='flex items-center justify-center gap-2'
+    href='https://tatum.com'
+    target='_blank'
+    rel='noopener noreferrer'
+  >
+    Powered by{' '}
+    <Image src='https://tatum.io/images/Light.svg' alt='Tatum Logo' width={72} height={16} />
+  </a>
+)
+
 const ApiKeys = () => {
 
-  const { add, remove, apiKeys, activate } = useApiKeys()
+  const { add, remove, apiKeys, activate } = useContext(ApiKeyContext)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
