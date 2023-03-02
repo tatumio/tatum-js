@@ -4,7 +4,7 @@ import { Notification } from '../notification/notification'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { ApiInfoResponse, Network, TatumConfig } from './tatum.dto'
 import { ErrorUtils, ResponseDto, Status } from '../../util'
-import crypto from 'crypto'
+import { v4 as uuidv4 } from 'uuid';
 
 @Service({ transient: true })
 export class TatumSdk {
@@ -42,7 +42,8 @@ export class TatumSdk {
     }
 
     const finalConfig = { ...defaultConfig, ...config }
-    const id = crypto.randomBytes(64).toString('hex')
+
+    const id = uuidv4()
 
     if (finalConfig.apiKey && finalConfig.validate) {
       Container.of(id).set(CONFIG, finalConfig)

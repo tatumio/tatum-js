@@ -10,3 +10,4 @@ gen
 jest.config.js
 jest.setup.ts
 src/e2e
+src/browser.ts

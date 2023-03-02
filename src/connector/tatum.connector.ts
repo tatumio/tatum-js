@@ -1,11 +1,10 @@
 import axios from 'axios'
 import { Constant } from '../util/constant'
 import { Container, Service } from 'typedi'
-import { version } from '../../package.json'
+// import { version } from '../../package.json'
 import { CONFIG } from '../util/di.tokens'
 import { GetUrl, Request } from './connector.dto'
 import { Network } from '../service/tatum/tatum.dto'
-import { address } from  'ip'
 
 axios.interceptors.request.use((request) => {
   // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -85,7 +84,7 @@ export class TatumConnector {
   private async request<T>({ path, params, body, method }: Request): Promise<T> {
     const { retryDelay, retryCount } = Container.of(this.id).get(CONFIG)
 
-    const headers = this.headers()
+    const headers = await this.headers()
     const response = await axios.request({
       url: this.getUrl({ path, params }),
       headers,
@@ -117,13 +116,11 @@ export class TatumConnector {
     return url.toString()
   }
 
-  private headers() {
+  private async headers() {
     const headers = {
       'Content-Type': 'application/json',
-      'User-Agent': `Tatum_SDK_JS/${version}`,
-      'cf-connecting-ip': address(),
+      // TODO: 'x-user-agent': `Tatum_SDK_JS/${version}`,
     }
-
     const config = Container.of(this.id).get(CONFIG)
     return {
       ...headers,

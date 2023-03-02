@@ -1,2 +1,5 @@
 import 'reflect-metadata'
-export * from './index'
+import * as TatumSdk from './index'
+
+(window as any).TatumSdk = TatumSdk
+
