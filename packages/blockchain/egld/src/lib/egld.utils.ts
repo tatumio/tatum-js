@@ -71,7 +71,9 @@ export const egldUtils = {
   getConfig: async () => {
     const gasStationUrl = await egldUtils.getClient()
     try {
-      const response = await httpHelper.get(`${gasStationUrl}/d341d8f5-5f6a-43ca-a57c-c67839d1a1cb/network/config`)
+      const response = await httpHelper.get(
+        `${gasStationUrl}/d341d8f5-5f6a-43ca-a57c-c67839d1a1cb/network/config`,
+      )
       return response?.data
     } catch (e) {
       console.error(e)
