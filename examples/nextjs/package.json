@@ -6,7 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
-    "@tatumcom/js": "1.0.0-alpha.25",
+    "@tatumcom/js": "1.0.0-alpha.26",
     "axios": "^1.3.3",
     "flowbite": "^1.6.3",
     "flowbite-react": "^0.3.8",
