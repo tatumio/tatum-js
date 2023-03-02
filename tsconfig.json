@@ -38,8 +38,6 @@
   "exclude": [
     "node_modules",
     "**/*.test.ts",
-    "**/*.spec.ts",
-    "src/e2e",
     "dist"
   ]
 }
