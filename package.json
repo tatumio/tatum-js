@@ -1,6 +1,6 @@
 {
   "name": "@tatumcom/js",
-  "version": "1.0.0-alpha.18",
+  "version": "1.0.0-alpha.19",
   "description": "Tatum JS SDK",
   "author": "Tatum",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -15,8 +15,8 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "main": "./dist/main.js",
-  "types": "./dist/main.d.ts",
+  "main": "./dist/src/main.js",
+  "types": "./dist/src/main.d.ts",
   "browser": "./dist/esbuild/browser.js",
   "bin": {
     "my-cli-tool": "./dist/src/cli.js"
