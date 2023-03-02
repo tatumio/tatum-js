@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { Network } from '@tatumcom/js'
 import { Table } from '../components/table'
 import { useModal } from '../components/modal'
-import { useApiKeys } from '../utils/utils'
 import Image from 'next/image'
 import { ApiKeyContext } from './layout'
 

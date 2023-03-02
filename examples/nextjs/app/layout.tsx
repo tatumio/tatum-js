@@ -5,7 +5,6 @@ import { useApiKeys } from '../utils/utils'
 import { Spinner } from '../components/spinner'
 import NoSSRWrapper from '../components/nossr'
 import { TatumConfig } from '../dto'
-import { Network } from '@tatumcom/js'
 
 
 interface ApiKeyContextInterface {
@@ -14,12 +13,6 @@ interface ApiKeyContextInterface {
   apiKeys: TatumConfig[];
   activate: (config: TatumConfig) => void;
   remove: (id: string) => void
-}
-
-const apiKey = {
-  apiKey: '452826a8-5cd4-4c46-b710-e130934b5102',
-  network: Network.Testnet,
-  active: true,
 }
 
 // @ts-ignore
