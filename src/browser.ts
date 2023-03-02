@@ -3,4 +3,4 @@ import * as TatumSdk from './index'
 
 (window as any).TatumSdk = TatumSdk
 
-export default TatumSdk
+export * from './index'
