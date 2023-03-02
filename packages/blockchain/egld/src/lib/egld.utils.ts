@@ -1,22 +1,22 @@
 import { ApiServices, EgldTx, TATUM_API_CONSTANTS, TransferEgldBlockchain } from '@tatumio/api-client'
-import axios from 'axios'
 import * as bech32 from 'bech32'
 import BigNumber from 'bignumber.js'
 import { getPublicKey } from 'ed25519-hd-key'
 import { TransactionConfig } from 'web3-core'
 import {
-  UserSigner,
-  UserSecretKey,
-  Transaction,
-  Nonce,
+  Address,
   Balance,
   GasLimit,
   GasPrice,
+  Nonce,
+  Transaction,
   TransactionPayload,
-  Address,
+  UserSecretKey,
+  UserSigner,
 } from '@elrondnetwork/erdjs'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import { EsdtData } from './services/egld.tx'
+import { httpHelper } from '@tatumio/shared-core'
 
 const ELROND_V3_ENDPOINT = () => `${process.env['TATUM_API_URL'] || TATUM_API_CONSTANTS.URL}/v3/egld/node`
 
@@ -71,7 +71,7 @@ export const egldUtils = {
   getConfig: async () => {
     const gasStationUrl = await egldUtils.getClient()
     try {
-      const response = await axios.get(`${gasStationUrl}/d341d8f5-5f6a-43ca-a57c-c67839d1a1cb/network/config`)
+      const response = await httpHelper.get(`${gasStationUrl}/d341d8f5-5f6a-43ca-a57c-c67839d1a1cb/network/config`)
       return response?.data
     } catch (e) {
       console.error(e)
@@ -88,7 +88,7 @@ export const egldUtils = {
   },
   getGasLimit: async (tx: EgldTx): Promise<number> => {
     const gasStationUrl = await egldUtils.getClient()
-    const { data } = await axios.post(
+    const { data } = await httpHelper.post(
       `${gasStationUrl}/d341d8f5-5f6a-43ca-a57c-c67839d1a1cb/transaction/cost`,
       tx,
     )

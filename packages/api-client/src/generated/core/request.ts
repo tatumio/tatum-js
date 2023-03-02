@@ -8,10 +8,18 @@ import FormData from 'form-data'
 import { ApiError } from './ApiError'
 import type { ApiRequestOptions } from './ApiRequestOptions'
 import type { ApiResult } from './ApiResult'
-import { CancelablePromise } from './CancelablePromise'
 import type { OnCancel } from './CancelablePromise'
+import { CancelablePromise } from './CancelablePromise'
 import { OpenAPI } from './OpenAPI'
 import { version } from '../../../package.json'
+import { fetchAdapter } from '@tatumio/api-client'
+
+const isWebWorker =
+  typeof self === 'object' &&
+  self.constructor &&
+  self.constructor.name === 'DedicatedWorkerGlobalScope'
+
+const axiosInstance = axios.create({ adapter: isWebWorker ? fetchAdapter : undefined })
 
 function isDefined<T>(value: T | null | undefined): value is Exclude<T, null | undefined> {
   return value !== undefined && value !== null
@@ -191,7 +199,7 @@ async function sendRequest(
   if (onCancel) onCancel(() => source.cancel('The user aborted a request.'))
 
   try {
-    return await axios.request(config)
+    return await axiosInstance.request(config)
   } catch (error) {
     const axiosError = error as AxiosError
     if (axiosError.response) {

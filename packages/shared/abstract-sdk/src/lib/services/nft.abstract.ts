@@ -5,7 +5,7 @@ import {
   NftMetadataErc721,
   NftMetadataErc721OnchainSolana,
 } from '@tatumio/api-client'
-import axios from 'axios'
+import { httpHelper } from '@tatumio/shared-core'
 
 type ChainAddMinter = AddNftMinter | AddNftMinterKMS
 
@@ -51,7 +51,7 @@ export const abstractSdkNftService = () => {
       if (!metadata) return null
 
       const metadataUrl = `https://gateway.pinata.cloud/ipfs/${metadata?.replace('ipfs://', '')}`
-      const { data } = await axios.get(metadataUrl)
+      const { data } = await httpHelper.get(metadataUrl)
       const imageUrl = data.image
       return {
         originalUrl: imageUrl,

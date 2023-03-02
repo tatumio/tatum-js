@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { Blockchain, EvmBasedBlockchain } from './models/Blockchain'
-import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import { fetchAdapter, TATUM_API_CONSTANTS } from '@tatumio/api-client'
 import { blockchainHelper } from './blockchain.common'
 
 const EndpointsMapping: Record<Blockchain, string> = {
@@ -29,9 +29,16 @@ const EndpointsMapping: Record<Blockchain, string> = {
   BNB: 'bnb',
 }
 
+const isWebWorker =
+  typeof self === 'object' &&
+  self.constructor &&
+  self.constructor.name === 'DedicatedWorkerGlobalScope'
+
 export const httpHelper = {
   get: axios.get,
   post: axios.post,
+  axios: axios.create({ adapter: isWebWorker ? fetchAdapter : undefined }),
+  CancelToken: axios.CancelToken,
   web3Endpoint: (blockchain: EvmBasedBlockchain, url: string, apiKey: string) => {
     return `${url}/${TATUM_API_CONSTANTS.API_VERSION}/${EndpointsMapping[blockchain]}/web3/${apiKey}`
   },
