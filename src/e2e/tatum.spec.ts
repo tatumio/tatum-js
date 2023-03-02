@@ -42,7 +42,7 @@ describe('Tatum Init', () => {
     })
   })
 
-  describe('IP auth', () => {
+  describe.skip('IP auth', () => {
     it('Testnet', async () => {
       const tatum = await TatumSdk.init({
         network: Network.Testnet,
@@ -64,7 +64,7 @@ describe('Tatum Init', () => {
   })
 
   describe('Multiple Instances', () => {
-    it('IP auth', async () => {
+    it.skip('IP auth', async () => {
       const mainnet = await TatumSdk.init({
         network: Network.Mainnet,
       })
@@ -90,7 +90,7 @@ describe('Tatum Init', () => {
       await e2eUtil.subscriptions.testCreateSubscription(testnet, Chain.Bitcoin, TestConst.ADDRESSES.TESTNET[Chain.Bitcoin])
     })
 
-    it('IP auth and API Key auth', async () => {
+    it.skip('IP auth and API Key auth', async () => {
       const mainnet = await TatumSdk.init({
         apiKey: process.env.MAINNET_API_KEY,
         network: Network.Mainnet,

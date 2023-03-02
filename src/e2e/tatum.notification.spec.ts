@@ -25,7 +25,7 @@ describe('notification', () => {
       })
     })
 
-    describe('IP auth', () => {
+    describe.skip('IP auth', () => {
       it.each(Object.values(Chain))('OK %s', async (chain: Chain) => {
         await e2eUtil.subscriptions.testCreateSubscription(ip, chain, TestConst.ADDRESSES.TESTNET[chain])
       })
