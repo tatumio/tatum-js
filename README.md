@@ -7,9 +7,9 @@
 <h3 align="center">Tatum SDK</h3>
 
 <p align="center">
-  Tatum SDK allows browsers and Node.js clients to interact Blockchain.
+  Tatum SDK allows browsers and Node.js clients to interact with Blockchain.
   <br>
-  <a href="https://tatum.io/apidoc"><strong>Documentation</strong></a>
+  <a href="https://docs.tatum.com/"><strong>Documentation</strong></a>
   <br>
   <br>
   <a href="https://github.com/tatumio/tatum-js/issues/new?assignees=-&labels=bug&template=bug_report.yml">Report bug</a>
@@ -69,14 +69,14 @@ const { data } = await tatum.notification.subscribe.addressEvent({
 ```
 
 ## Documentation
-Visit [Documentation](https://docs.tatum.com) to get started with Tatum Sdk.
+Visit [Documentation](https://docs.tatum.com) to get started with Tatum SDK.
 
 ## Examples
 
 We have several examples in the [examples](https://github.com/tatumio/tatum-js/tree/v3/examples) directory.
 
 ## Legacy versions
-Older versions of the Tatum Sdk has been moved to long living branches [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1) and [`Tatum SDK V2`](https://github.com/tatumio/tatum-js/tree/v2).
+Older versions of the Tatum SDK has been moved to long living branches [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1) and [`Tatum SDK V2`](https://github.com/tatumio/tatum-js/tree/v2).
 
 ## Contributing
 
