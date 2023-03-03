@@ -933,10 +933,10 @@
   dependencies:
     defer-to-connect "^2.0.1"
 
-"@tatumcom/js@^1.0.0-alpha.30":
-  version "1.0.0-alpha.30"
-  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.0.0-alpha.30.tgz#af1970dcaa8635974d2ba9f813689f57b7346268"
-  integrity sha512-9qGYJPMAGPE7rfQmSRPQ2ea2slasa0i2EG9XXncds0vZH+mUybCSseZf2GnAaqPjvNzBbOdubzBkpnkiUcer2Q==
+"@tatumcom/js@^1.0.0-alpha.31":
+  version "1.0.0-alpha.31"
+  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.0.0-alpha.31.tgz#d9e7e0c970c9eb3281153958ddbf3fe153233978"
+  integrity sha512-6m8KuldyDkPArphbVfDROEqcclaHVrt+3GbxcYHt6EwBDQBnLGs6+gBDWn/DoZhgN2PPDcsuWomypa/Ze1aSFQ==
   dependencies:
     axios "^1.3.2"
     reflect-metadata "^0.1.13"
@@ -980,9 +980,9 @@
     "@types/node" "*"
 
 "@types/node@*":
-  version "18.14.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.14.4.tgz#0e64ec0b35a772e1e3d849f9a0ff61782d0cb647"
-  integrity sha512-VhCw7I7qO2X49+jaKcAUwi3rR+hbxT5VcYF493+Z5kMLI0DL568b7JI4IDJaxWFH0D/xwmGJNoXisyX+w7GH/g==
+  version "18.14.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.14.5.tgz#4a13a6445862159303fc38586598a9396fc408b3"
+  integrity sha512-CRT4tMK/DHYhw1fcCEBwME9CSaZNclxfzVMe7GsO6ULSwsttbj70wSiX6rZdIjGblu93sTJxLdhNIT85KKI7Qw==
 
 "@types/node@^12.12.6":
   version "12.20.55"
@@ -1320,9 +1320,9 @@ callsites@^3.0.0:
   integrity sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ==
 
 caniuse-lite@^1.0.30001449:
-  version "1.0.30001458"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001458.tgz#871e35866b4654a7d25eccca86864f411825540c"
-  integrity sha512-lQ1VlUUq5q9ro9X+5gOEyH7i3vm+AYVT1WDCVB69XOZ17KZRhnZ9J0Sqz7wTHQaLBJccNCHq8/Ww5LlOIZbB0w==
+  version "1.0.30001460"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001460.tgz#31d2e26f0a2309860ed3eff154e03890d9d851a7"
+  integrity sha512-Bud7abqjvEjipUkpLs4D7gR0l8hBYBHoa+tGtKJHvT2AYzLp1z7EmVkUT4ERpVUfca8S2HGIVs883D8pUH1ZzQ==
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -1679,9 +1679,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.284:
-  version "1.4.315"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.315.tgz#b60a6676b3a1db332cfc8919118344aa06b9ac99"
-  integrity sha512-ndBQYz3Eyy3rASjjQ9poMJGoAlsZ/aZnq6GBsGL4w/4sWIAwiUHVSsMuADbxa8WJw7pZ0oxLpGbtoDt4vRTdCg==
+  version "1.4.317"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.317.tgz#9a3d38a1a37f26a417d3d95dafe198ff11ed072b"
+  integrity sha512-JhCRm9v30FMNzQSsjl4kXaygU+qHBD0Yh7mKxyjmF0V8VwYVB6qpBRX28GyAucrM9wDCpSUctT6FpMUQxbyKuA==
 
 elliptic@6.5.4, elliptic@^6.4.0, elliptic@^6.5.4:
   version "6.5.4"

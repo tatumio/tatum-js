@@ -9,7 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@tatumcom/js": "^1.0.0-alpha.30"
+    "@tatumcom/js": "^1.0.0-alpha.31"
   },
   "devDependencies": {
     "ts-node": "^10.9.1"

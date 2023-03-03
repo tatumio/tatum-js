@@ -353,10 +353,10 @@
   dependencies:
     defer-to-connect "^2.0.1"
 
-"@tatumcom/js@1.0.0-alpha.30":
-  version "1.0.0-alpha.30"
-  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.0.0-alpha.30.tgz#af1970dcaa8635974d2ba9f813689f57b7346268"
-  integrity sha512-9qGYJPMAGPE7rfQmSRPQ2ea2slasa0i2EG9XXncds0vZH+mUybCSseZf2GnAaqPjvNzBbOdubzBkpnkiUcer2Q==
+"@tatumcom/js@1.0.0-alpha.31":
+  version "1.0.0-alpha.31"
+  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.0.0-alpha.31.tgz#d9e7e0c970c9eb3281153958ddbf3fe153233978"
+  integrity sha512-6m8KuldyDkPArphbVfDROEqcclaHVrt+3GbxcYHt6EwBDQBnLGs6+gBDWn/DoZhgN2PPDcsuWomypa/Ze1aSFQ==
   dependencies:
     axios "^1.3.2"
     reflect-metadata "^0.1.13"
@@ -395,9 +395,9 @@
     "@types/node" "*"
 
 "@types/node@*":
-  version "18.14.4"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.14.4.tgz#0e64ec0b35a772e1e3d849f9a0ff61782d0cb647"
-  integrity sha512-VhCw7I7qO2X49+jaKcAUwi3rR+hbxT5VcYF493+Z5kMLI0DL568b7JI4IDJaxWFH0D/xwmGJNoXisyX+w7GH/g==
+  version "18.14.5"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-18.14.5.tgz#4a13a6445862159303fc38586598a9396fc408b3"
+  integrity sha512-CRT4tMK/DHYhw1fcCEBwME9CSaZNclxfzVMe7GsO6ULSwsttbj70wSiX6rZdIjGblu93sTJxLdhNIT85KKI7Qw==
 
 "@types/node@18.11.3":
   version "18.11.3"
@@ -797,9 +797,9 @@ camelcase-css@^2.0.1:
   integrity sha512-QOSvevhslijgYwRx6Rv7zKdMF8lbRmx+uQGx2+vDc+KI/eBnsy9kit5aj23AgGu3pa4t9AgwbnXWqS+iOY+2aA==
 
 caniuse-lite@^1.0.30001406, caniuse-lite@^1.0.30001426, caniuse-lite@^1.0.30001449:
-  version "1.0.30001458"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001458.tgz#871e35866b4654a7d25eccca86864f411825540c"
-  integrity sha512-lQ1VlUUq5q9ro9X+5gOEyH7i3vm+AYVT1WDCVB69XOZ17KZRhnZ9J0Sqz7wTHQaLBJccNCHq8/Ww5LlOIZbB0w==
+  version "1.0.30001460"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001460.tgz#31d2e26f0a2309860ed3eff154e03890d9d851a7"
+  integrity sha512-Bud7abqjvEjipUkpLs4D7gR0l8hBYBHoa+tGtKJHvT2AYzLp1z7EmVkUT4ERpVUfca8S2HGIVs883D8pUH1ZzQ==
 
 caseless@~0.12.0:
   version "0.12.0"
@@ -1082,9 +1082,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.4.284:
-  version "1.4.315"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.315.tgz#b60a6676b3a1db332cfc8919118344aa06b9ac99"
-  integrity sha512-ndBQYz3Eyy3rASjjQ9poMJGoAlsZ/aZnq6GBsGL4w/4sWIAwiUHVSsMuADbxa8WJw7pZ0oxLpGbtoDt4vRTdCg==
+  version "1.4.317"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.4.317.tgz#9a3d38a1a37f26a417d3d95dafe198ff11ed072b"
+  integrity sha512-JhCRm9v30FMNzQSsjl4kXaygU+qHBD0Yh7mKxyjmF0V8VwYVB6qpBRX28GyAucrM9wDCpSUctT6FpMUQxbyKuA==
 
 elliptic@6.5.4, elliptic@^6.4.0, elliptic@^6.5.4:
   version "6.5.4"
@@ -1839,9 +1839,9 @@ keyv@^4.0.0:
     json-buffer "3.0.1"
 
 lilconfig@^2.0.5, lilconfig@^2.0.6:
-  version "2.0.6"
-  resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-2.0.6.tgz#32a384558bd58af3d4c6e077dd1ad1d397bc69d4"
-  integrity sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/lilconfig/-/lilconfig-2.1.0.tgz#78e23ac89ebb7e1bfbf25b18043de756548e7f52"
+  integrity sha512-utWOt/GHzuUxnLKxB6dk81RoOeoNeHgbrXiuGk4yyF5qlRz+iIVWu56E2fqGHFrXz0QNUhLB/8nKqvRH66JKGQ==
 
 loose-envify@^1.1.0:
   version "1.4.0"
@@ -2412,9 +2412,9 @@ react-dom@18.2.0:
     scheduler "^0.23.0"
 
 react-icons@^4.6.0:
-  version "4.7.1"
-  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.7.1.tgz#0f4b25a5694e6972677cb189d2a72eabea7a8345"
-  integrity sha512-yHd3oKGMgm7zxo3EA7H2n7vxSoiGmHk5t6Ou4bXsfcgWyhfDKMpyKfhHR6Bjnn63c+YXBLBPUql9H4wPJM6sXw==
+  version "4.8.0"
+  resolved "https://registry.yarnpkg.com/react-icons/-/react-icons-4.8.0.tgz#621e900caa23b912f737e41be57f27f6b2bff445"
+  integrity sha512-N6+kOLcihDiAnj5Czu637waJqSnwlMNROzVZMhfX68V/9bu9qHaMIJC4UdozWoOk57gahFCNHwVvWzm0MTzRjg==
 
 react-indiana-drag-scroll@^2.2.0:
   version "2.2.0"
