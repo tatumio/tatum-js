@@ -54,10 +54,7 @@ import {
   Network
 } from '@tatumcom/js'
 
-const tatum = await TatumSdk({
-  apiKey: '<YOUR_API_KEY>',
-  network: Network.Mainnet
-}).init()
+const tatum = await TatumSdk().init()
 
 const { data } = await tatum.notification.subscribe.addressEvent({
   url: 'https://<YOUR_WEBHOOK_URL>',
