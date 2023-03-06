@@ -1,6 +1,6 @@
 {
   "name": "@tatumcom/js",
-  "version": "1.0.0-alpha.33",
+  "version": "1.0.0-alpha.34",
   "description": "Tatum JS SDK",
   "author": "Tatum",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -15,8 +15,8 @@
   "engines": {
     "node": ">=14.0.0"
   },
-  "main": "./dist/main.js",
-  "types": "./dist/main.d.ts",
+  "main": "./dist/src/main.js",
+  "types": "./dist/src/main.d.ts",
   "scripts": {
     "cli": "ts-node src/cli.ts",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx",
