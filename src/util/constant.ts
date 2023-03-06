@@ -1,3 +1,3 @@
 export const Constant = {
-  TATUM_API_URL: 'https://api-acceptance.sandbox.tatum.dev/v1/',
+  TATUM_API_URL: 'https://api.tatum.com/v1/',
 }

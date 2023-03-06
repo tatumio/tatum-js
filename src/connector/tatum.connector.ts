@@ -1,7 +1,7 @@
 import axios from 'axios'
 import { Constant } from '../util/constant'
 import { Container, Service } from 'typedi'
-// import { version } from '../../package.json'
+import { version } from '../../package.json'
 import { CONFIG } from '../util/di.tokens'
 import { GetUrl, Request } from './connector.dto'
 import { Network } from '../service/tatum/tatum.dto'
@@ -109,7 +109,7 @@ export class TatumConnector {
 
     const config = Container.of(this.id).get(CONFIG)
 
-    if (!config.apiKey && config.network === Network.Testnet) {
+    if (config.network === Network.Testnet) {
       url.searchParams.append('type', 'testnet')
     }
 
@@ -117,14 +117,12 @@ export class TatumConnector {
   }
 
   private async headers() {
-    const headers = {
-      'Content-Type': 'application/json',
-      // TODO: 'x-user-agent': `Tatum_SDK_JS/${version}`,
-    }
     const config = Container.of(this.id).get(CONFIG)
     return {
-      ...headers,
-      ...(config.apiKey && { 'x-api-key': config.apiKey }),
+      'Content-Type': 'application/json',
+      'x-ttm-sdk-version': version,
+      'x-ttm-sdk-product': 'JS',
+      'x-ttm-sdk-debug': config.debug
     }
   }
 }

@@ -7,30 +7,18 @@ import { Status } from '../util'
 
 describe('notification', () => {
   let tatum: TatumSdk
-  let ip: TatumSdk
 
   beforeAll(async () => {
-    tatum = await TatumSdk.init({
-      apiKey: process.env.TESTNET_API_KEY,
-      network: Network.Testnet,
-    })
-
-    ip = await TatumSdk.init({ network: Network.Testnet })
+    tatum = await TatumSdk.init({ network: Network.Testnet })
   })
 
   describe('createSubscription', () => {
-    describe('API key auth', () => {
-      it.each(Object.values(Chain))('OK - %s', async (chain: Chain) => {
+
+    describe('IP auth', () => {
+      it.each(Object.values(Chain))('OK %s', async (chain: Chain) => {
         await e2eUtil.subscriptions.testCreateSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain])
       })
     })
-
-    describe.skip('IP auth', () => {
-      it.each(Object.values(Chain))('OK %s', async (chain: Chain) => {
-        await e2eUtil.subscriptions.testCreateSubscription(ip, chain, TestConst.ADDRESSES.TESTNET[chain])
-      })
-    })
-
 
     it('NOK - existing subscription ', async () => {
       const { status, error } = await tatum.notification.subscribe.addressEvent({
@@ -82,7 +70,8 @@ describe('notification', () => {
   })
 
   it('getAll', async () => {
-    const { data } = await tatum.notification.getAll()
+    const { data, error } = await tatum.notification.getAll()
+    console.log(error)
     expect(data[0].id).toBeDefined()
     expect(data[0].chain).toBeDefined()
     expect(data[0].address).toBeDefined()

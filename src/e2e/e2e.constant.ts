@@ -5,7 +5,7 @@ export const TestConst = {
   INVALID_ETH_ADDRESS: 'TLduuX5NWFucPPafLbj9eab6Znwrdm72Qv',
   ADDRESSES: {
     TESTNET: {
-      [Chain.Ethereum]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
+      [Chain.Ethereum]: '0xC3bB8b3F623e3E3a6Fea8A02B0F79c7E21e467b0',
       [Chain.Celo]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
       [Chain.Polygon]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
       [Chain.Klaytn]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
@@ -18,7 +18,7 @@ export const TestConst = {
       [Chain.Dogecoin]: 'npMHRfj9bdR7bBdQe7RNQNK1QM2nRAN8Sh',
     },
     MAINNET: {
-      [Chain.Ethereum]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
+      [Chain.Ethereum]: '0xC3bB8b3F623e3E3a6Fea8A02B0F79c7E21e467b0',
       [Chain.Celo]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
       [Chain.Polygon]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',
       [Chain.Klaytn]: '0x9B38fFBaB4Acb7A9FD15a7B3BBAb5796724166EF',

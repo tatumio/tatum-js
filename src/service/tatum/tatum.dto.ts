@@ -1,5 +1,4 @@
 export interface TatumConfig {
-    apiKey?: string
     network?: Network
     validate?: boolean
     debug?: boolean
