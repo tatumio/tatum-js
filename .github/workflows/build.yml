@@ -45,7 +45,6 @@ jobs:
         cache: 'yarn'
 
     - run: yarn install
-    - run: yarn add -D esbuild
     - run: yarn build-all
 
     - name: Upload build artifacts
