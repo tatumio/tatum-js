@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse,
 ) {
   if (req.method === 'GET') {
-    const tatum = await initTatum({ apiKey: req.query.apiKey, network: req.query.network })
+    const tatum = await initTatum()
     const { data } = await tatum.notification.getAllExecutedWebhooks({ pageSize: Number(req.query.pageSize), offset: Number(req.query.offset) })
     return res.status(200).json(data)
   } else {
