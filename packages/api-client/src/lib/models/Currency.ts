@@ -10,6 +10,7 @@ export enum Currency {
   LTC = 'LTC',
   ONE = 'ONE',
   ETH = 'ETH',
+  ETC = 'ETC',
   EGLD = 'EGLD',
   MATIC = 'MATIC',
   GAMEE = 'GAMEE',

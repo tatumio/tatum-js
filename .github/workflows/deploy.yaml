@@ -3,7 +3,7 @@ name: Publish all packages
 on:
   push:
     branches:
-      - master
+      - v2
 
 jobs:
   #  agents:
