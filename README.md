@@ -70,7 +70,7 @@ Visit [Documentation](https://docs.tatum.com) to get started with Tatum SDK.
 
 ## Examples
 
-We have several examples in the [examples](https://github.com/tatumio/tatum-js/tree/v3/examples) directory.
+We have several examples in the [examples](https://github.com/tatumio/tatum-js/tree/master/examples) directory.
 
 ## Legacy versions
 Older versions of the Tatum SDK has been moved to long living branches [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1) and [`Tatum SDK V2`](https://github.com/tatumio/tatum-js/tree/v2).
