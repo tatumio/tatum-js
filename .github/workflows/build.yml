@@ -53,9 +53,7 @@ jobs:
         name: build-${{ matrix.nodejs }}
         path: dist/
         retention-days: 7
-      if: |
-        needs.metadata.outputs.current_branch == 'master' ||
-        (matrix.nodejs == 14 && contains(github.event.head_commit.message, 'release alpha'))
+      if: needs.metadata.outputs.current_branch == 'master'
 
   test:
     runs-on: ubuntu-latest
@@ -113,9 +111,7 @@ jobs:
             ${{ steps.get_release_notes.outputs.release_notes }}
   npm:
     runs-on: ubuntu-latest
-    if: |
-      needs.metadata.outputs.current_branch == 'master' ||
-      (contains(needs.metadata.outputs.package_version, '1.0.0-alpha') && contains(github.event.head_commit.message, 'release alpha'))
+    if: needs.metadata.outputs.current_branch == 'master'
     needs: [ metadata, build, test ]
     steps:
       - uses: actions/checkout@v3
