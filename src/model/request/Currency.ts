@@ -8,6 +8,7 @@ export enum Currency {
   CUSD = 'CUSD',
   CEUR = 'CEUR',
   ETH = 'ETH',
+  ETC = 'ETC',
   XRP = 'XRP',
   XLM = 'XLM',
   DOGE = 'DOGE',

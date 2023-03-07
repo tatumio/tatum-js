@@ -2,7 +2,6 @@ name: Pull request
 on:
   pull_request:
     branches:
-      - master
       - v1
 jobs:
   build:
