@@ -17,7 +17,7 @@ import { fetchAdapter } from '@tatumio/api-client'
 const isWebWorker =
   typeof self === 'object' &&
   self.constructor &&
-  self.constructor.name === 'DedicatedWorkerGlobalScope'
+  ['DedicatedWorkerGlobalScope', 'ServiceWorkerGlobalScope'].includes(self.constructor.name)
 
 const axiosInstance = axios.create({ adapter: isWebWorker ? fetchAdapter : undefined })
 
