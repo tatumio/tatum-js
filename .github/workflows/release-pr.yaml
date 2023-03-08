@@ -17,6 +17,9 @@ jobs:
           version=$(jq -r '.version' package.json)
           echo "pr_pkg_version=$version" >> $GITHUB_ENV 
           echo "pr_changelog_hash=$hash" >> $GITHUB_ENV
+      - name: Check if release exists
+        run: |
+          curl --fail --silent --max-time 5 "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/${{ env.pr_pkg_version }}" && echo "release_exists=true" >> $GITHUB_ENV || echo "release_exists=false" >> $GITHUB_ENV
       - name: Checkout master
         uses: actions/checkout@v3
         with:
@@ -27,10 +30,6 @@ jobs:
           version=$(jq -r '.version' package.json)
           echo "master_pkg_version=$version" >> $GITHUB_ENV
           echo "master_changelog_hash=$hash" >> $GITHUB_ENV
-      - name: Ensure changelog updated
+      - name: Ensure changelog updated if version changed
         run: |
-          [ "${{ env.pr_changelog_hash }}" = "${{ env.master_changelog_hash }}" ] && echo "Error: no changes in changelog detected for the release" && exit 1 || exit 0  
-      - name: Ensure package version updated
-        run: |
-           [ "${{ env.pr_pkg_version }}" = "${{ env.master_pkg_version }}" ] && echo "Error: package version not updated" && exit 1 || exit 0
-          
+          [ "${{ env.release_exists }}" == "false" ] && [ "${{ env.pr_changelog_hash }}" = "${{ env.master_changelog_hash }}" ] && echo "Error: no changes in changelog detected for the release" && exit 1 || exit 0            
