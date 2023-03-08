@@ -51,8 +51,7 @@ Subscribe for any transaction on Ethereum address.
 ```js
 import {
   TatumSdk,
-  Chain,
-  Network
+  Chain
 } from '@tatumcom/js'
 
 const tatum = await TatumSdk().init()
