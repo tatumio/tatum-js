@@ -12,14 +12,19 @@ import type { OnCancel } from './CancelablePromise'
 import { CancelablePromise } from './CancelablePromise'
 import { OpenAPI } from './OpenAPI'
 import { version } from '../../../package.json'
-import { fetchAdapter } from '@tatumio/api-client'
+import fetchAdapter from '@vespaiach/axios-fetch-adapter'
 
 const isWebWorker =
   typeof self === 'object' &&
   self.constructor &&
   ['DedicatedWorkerGlobalScope', 'ServiceWorkerGlobalScope'].includes(self.constructor.name)
 
-const axiosInstance = axios.create({ adapter: isWebWorker ? fetchAdapter : undefined })
+const axiosConfig: AxiosRequestConfig = {}
+
+if (isWebWorker) {
+  axiosConfig.adapter = isWebWorker ? fetchAdapter : undefined
+}
+const axiosInstance = axios.create(axiosConfig)
 
 function isDefined<T>(value: T | null | undefined): value is Exclude<T, null | undefined> {
   return value !== undefined && value !== null
