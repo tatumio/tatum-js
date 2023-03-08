@@ -320,7 +320,4 @@ export const httpFetch = async ({ options, url, formData, body, headers, onCance
   return result
 }
 
-export const http = async (http: Http) => {
-  console.log(isWebWorker, 'isWebWorker')
-  return isWebWorker ? httpFetch(http) : httpAxios(http)
-}
+export const http = async (http: Http) => isWebWorker ? httpFetch(http) : httpAxios(http)
