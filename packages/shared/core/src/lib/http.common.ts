@@ -2,7 +2,6 @@ import axios, { AxiosRequestConfig } from 'axios'
 import { Blockchain, EvmBasedBlockchain } from './models/Blockchain'
 import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
 import { blockchainHelper } from './blockchain.common'
-import fetchAdapter from '@vespaiach/axios-fetch-adapter'
 
 const EndpointsMapping: Record<Blockchain, string> = {
   HARMONY: 'one',
@@ -35,16 +34,10 @@ const isWebWorker =
   self.constructor &&
   ['DedicatedWorkerGlobalScope', 'ServiceWorkerGlobalScope'].includes(self.constructor.name)
 
-const axiosConfig: AxiosRequestConfig = {}
-
-if (isWebWorker) {
-  axiosConfig.adapter = isWebWorker ? fetchAdapter : undefined
-}
-
 export const httpHelper = {
   get: axios.get,
   post: axios.post,
-  axios: axios.create(axiosConfig),
+  axios: axios.create(),
   CancelToken: axios.CancelToken,
   web3Endpoint: (blockchain: EvmBasedBlockchain, url: string, apiKey: string) => {
     return `${url}/${TATUM_API_CONSTANTS.API_VERSION}/${EndpointsMapping[blockchain]}/web3/${apiKey}`

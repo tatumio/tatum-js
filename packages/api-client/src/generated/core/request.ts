@@ -12,19 +12,13 @@ import type { OnCancel } from './CancelablePromise'
 import { CancelablePromise } from './CancelablePromise'
 import { OpenAPI } from './OpenAPI'
 import { version } from '../../../package.json'
-import fetchAdapter from '@vespaiach/axios-fetch-adapter'
 
 const isWebWorker =
   typeof self === 'object' &&
   self.constructor &&
   ['DedicatedWorkerGlobalScope', 'ServiceWorkerGlobalScope'].includes(self.constructor.name)
 
-const axiosConfig: AxiosRequestConfig = {}
-
-if (isWebWorker) {
-  axiosConfig.adapter = isWebWorker ? fetchAdapter : undefined
-}
-const axiosInstance = axios.create(axiosConfig)
+const axiosInstance = axios.create()
 
 function isDefined<T>(value: T | null | undefined): value is Exclude<T, null | undefined> {
   return value !== undefined && value !== null
@@ -214,9 +208,19 @@ async function sendRequest(
   }
 }
 
-function getResponseHeader(response: AxiosResponse<any>, responseHeader?: string): string | undefined {
+function getResponseHeaderAxios(response: AxiosResponse<any>, responseHeader?: string): string | undefined {
   if (responseHeader) {
     const content = response.headers[responseHeader]
+    if (isString(content)) {
+      return content
+    }
+  }
+  return
+}
+
+function getResponseHeaderFetch(response: Response, responseHeader?: string): string | undefined {
+  if (responseHeader) {
+    const content = response.headers.get(responseHeader)
     if (isString(content)) {
       return content
     }
@@ -264,7 +268,7 @@ export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
       if (!onCancel.isCancelled) {
         const response = await sendRequest(options, url, formData, body, headers, onCancel)
         const responseBody = getResponseBody(response)
-        const responseHeader = getResponseHeader(response, options.responseHeader)
+        const responseHeader = getResponseHeaderAxios(response, options.responseHeader)
         const result: ApiResult = {
           url,
           ok: isSuccess(response.status),
@@ -280,4 +284,53 @@ export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
       reject(error)
     }
   })
+}
+
+interface Http {
+  options: ApiRequestOptions,
+  url: string,
+  formData: FormData,
+  body: any,
+  headers: any,
+  onCancel: OnCancel
+}
+
+export const httpAxios = async ({ options, url, formData, body, headers, onCancel }: Http) => {
+  const response = await sendRequest(options, url, formData, body, headers, onCancel)
+  const responseBody = getResponseBody(response)
+  const responseHeader = getResponseHeaderAxios(response, options.responseHeader)
+  const result: ApiResult = {
+    url,
+    ok: isSuccess(response.status),
+    status: response.status,
+    statusText: response.statusText,
+    body: responseHeader || responseBody,
+  }
+  return result
+}
+
+export const httpFetch = async ({ options, url, formData, body, headers, onCancel }: Http) => {
+  const response = await fetch(url, {
+    method: options.method,
+    headers,
+    body: body || formData,
+    credentials: OpenAPI.WITH_CREDENTIALS ? 'include' : 'omit',
+  })
+
+  const responseBody = await response.json()
+
+  const responseHeader = getResponseHeaderFetch(response, options.responseHeader)
+  const result: ApiResult = {
+    url,
+    ok: isSuccess(response.status),
+    status: response.status,
+    statusText: response.statusText,
+    body: responseHeader || responseBody,
+  }
+  return result
+}
+
+export const http = async (http: Http) => {
+  console.log(isWebWorker, 'isWebWorker')
+  return isWebWorker ? httpFetch(http) : httpAxios(http)
 }
