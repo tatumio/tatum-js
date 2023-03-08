@@ -1,6 +1,6 @@
 {
   "name": "tatumio",
-  "version": "2.1.8",
+  "version": "2.1.10",
   "license": "MIT",
   "repository": "https://github.com/tatumio/tatum-js",
   "scripts": {
@@ -43,6 +43,7 @@
     "@solana/spl-token": "0.3.6",
     "@solana/web3.js": "1.56.2",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
+    "@vespaiach/axios-fetch-adapter": "^0.3.1",
     "algosdk": "^1.13.1",
     "axios": "^0.26.0",
     "base-58": "^0.0.1",
