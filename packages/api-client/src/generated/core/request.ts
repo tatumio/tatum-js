@@ -266,17 +266,7 @@ export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
       const headers = await getHeaders(options, formData)
 
       if (!onCancel.isCancelled) {
-        const response = await sendRequest(options, url, formData, body, headers, onCancel)
-        const responseBody = getResponseBody(response)
-        const responseHeader = getResponseHeaderAxios(response, options.responseHeader)
-        const result: ApiResult = {
-          url,
-          ok: isSuccess(response.status),
-          status: response.status,
-          statusText: response.statusText,
-          body: responseHeader || responseBody,
-        }
-
+        const result = await http({ options, url, formData, body, headers, onCancel })
         catchErrors(options, result)
         resolve(result.body)
       }
@@ -289,7 +279,7 @@ export function request<T>(options: ApiRequestOptions): CancelablePromise<T> {
 interface Http {
   options: ApiRequestOptions,
   url: string,
-  formData: FormData,
+  formData: FormData | undefined,
   body: any,
   headers: any,
   onCancel: OnCancel
