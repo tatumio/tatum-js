@@ -254,6 +254,22 @@ yarn add -D react-app-rewired
 ```
 
 </details>
+<details>
+  <summary style='font-size: 16px; font-weight: bold'>Usage with Vite and browser extension support</summary>
+
+To allow usage of Tatum SDK in browser extensions, you need to add additional esbuild plugins to your `vite.config.js` file.
+
+#### 1. Install additional dependencies
+
+```console
+yarn add -D @esbuild-plugins/node-globals-polyfill
+yarn add -D @esbuild-plugins/node-modules-polyfill
+```
+
+#### 2. Copy [vite.config.js](https://github.com/tatumio/tatum-js/tree/v2/documentation/vite.config.ts) to your project
+
+🎉 You are ready to use Tatum SDK in your browser extension.
+</details>
 
 ## Contributing
 
