@@ -302,8 +302,8 @@ export const httpAxios = async ({ options, url, formData, body, headers, onCance
 export const httpFetch = async ({ options, url, formData, body, headers, onCancel }: Http) => {
   const response = await fetch(url, {
     method: options.method,
-    headers,
-    body: body || formData,
+    headers: { ...headers, 'Content-Type': 'application/json' },
+    body: JSON.stringify(body) || JSON.stringify(formData),
     credentials: OpenAPI.WITH_CREDENTIALS ? 'include' : 'omit',
   })
 
