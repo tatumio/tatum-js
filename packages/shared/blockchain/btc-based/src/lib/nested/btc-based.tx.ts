@@ -112,7 +112,7 @@ export const btcBasedTransactions = (
       const utxos: BtcUTXO[] | LtcUTXO[] = []
 
       for (const item of body.fromAddress) {
-        const txs = await apiCalls.getTxByAddress(item.address, 50) // @TODO OPENAPI remove pageSize
+        const txs = await apiCalls.getTxByAddress(item.address, 50, 0, 'incoming') // @TODO OPENAPI remove pageSize
 
         for (const tx of txs) {
           if (!tx.outputs || !tx.hash) continue
