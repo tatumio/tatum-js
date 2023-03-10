@@ -204,6 +204,7 @@ export class BitcoinService {
      * @param address Address
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain the next page of data.
+     * @param txType
      * @returns BtcTx OK
      * @throws ApiError
      */
@@ -211,6 +212,7 @@ export class BitcoinService {
         address: string,
         pageSize: number,
         offset?: number,
+        txType?: 'incoming' | 'outgoing',
     ): CancelablePromise<Array<BtcTx>> {
         return __request({
             method: 'GET',
@@ -218,6 +220,7 @@ export class BitcoinService {
             query: {
                 'pageSize': pageSize,
                 'offset': offset,
+              ...(txType && { txType })
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
