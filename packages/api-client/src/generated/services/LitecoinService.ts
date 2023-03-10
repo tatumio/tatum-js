@@ -229,6 +229,7 @@ export class LitecoinService {
         address: string,
         pageSize: number,
         offset?: number,
+        txType?: 'incoming' | 'outgoing',
     ): CancelablePromise<Array<LtcTx>> {
         return __request({
             method: 'GET',
@@ -236,6 +237,7 @@ export class LitecoinService {
             query: {
                 'pageSize': pageSize,
                 'offset': offset,
+                 ...(txType && { txType })
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
