@@ -91,6 +91,7 @@ export enum Currency {
   EURTENT = 'EURTENT',
   GOLDAX = 'GOLDAX',
   ZCASH = 'ZCASH',
+  ZEC = 'ZEC',
   ZIL = 'ZIL',
 }
 
