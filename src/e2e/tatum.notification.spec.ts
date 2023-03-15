@@ -1,6 +1,15 @@
-import { TatumSdk } from '../service/tatum/tatum'
-import { Chain, Network } from '../service/tatum/tatum.dto'
-import { AddressEventNotification } from '../service/notification/notification.dto'
+import {
+  IncomingFungibleTxChain,
+  IncomingInternalTxChain,
+  IncomingMultitokenTxChain,
+  IncomingNativeTxChain,
+  IncomingNftTxChain, OutgoingFailedTxChain, OutgoingFungibleTxChain,
+  OutgoingInternalTxChain, OutgoingMultitokenTxChain,
+  OutgoingNativeTxChain, OutgoingNftTxChain, PaidFeeChain,
+  TatumSdk
+} from '../service'
+import { Chain, Network } from '../service'
+import {AddressEventNotification, FailedTxPerBlockChain} from '../service'
 import { TestConst } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 import { Status } from '../util'
@@ -9,16 +18,98 @@ describe('notification', () => {
   let tatum: TatumSdk
 
   beforeAll(async () => {
-    tatum = await TatumSdk.init({ network: Network.Testnet })
+    tatum = await TatumSdk.init({ network: Network.Testnet, debug: true })
   })
 
   describe('createSubscription', () => {
 
     describe('IP auth', () => {
-      it.each(Object.values(Chain))('OK %s', async (chain: Chain) => {
-        await e2eUtil.subscriptions.testCreateSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain])
+      describe('Address Event', () => {
+        it.each(Object.values(Chain))('OK %s', async (chain: Chain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.addressEvent)
+        })
+      })
+
+      describe('Incoming Native Tx', () => {
+        it.each(Object.values(IncomingNativeTxChain))('OK %s', async (chain: IncomingNativeTxChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.incomingNativeTx)
+        })
+      })
+
+      describe('Outgoing Native Tx', () => {
+        it.each(Object.values(OutgoingNativeTxChain))('OK %s', async (chain: OutgoingNativeTxChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.outgoingNativeTx)
+        })
+      })
+
+      describe('Outgoing Failed Tx', () => {
+        it.each(Object.values(OutgoingFailedTxChain))('OK %s', async (chain: OutgoingFailedTxChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.outgoingFailedTx)
+        })
+      })
+
+      describe('Paid Fee', () => {
+        it.each(Object.values(PaidFeeChain))('OK %s', async (chain: PaidFeeChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.paidFee)
+        })
+      })
+
+      describe('Incoming Internal Tx', () => {
+        it.each(Object.values(IncomingInternalTxChain))('OK %s', async (chain: IncomingInternalTxChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.incomingInternalTx)
+        })
+      })
+
+      describe('Outgoing Internal Tx', () => {
+        it.each(Object.values(OutgoingInternalTxChain))('OK %s', async (chain: OutgoingInternalTxChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.outgoingInternalTx)
+        })
+      })
+
+      describe('Incoming Fungible Tx', () => {
+        it.each(Object.values(IncomingFungibleTxChain))('OK %s', async (chain: IncomingFungibleTxChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.incomingFungibleTx)
+        })
+      })
+
+      describe('Outgoing Fungible Tx', () => {
+        it.each(Object.values(OutgoingFungibleTxChain))('OK %s', async (chain: OutgoingFungibleTxChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.outgoingFungibleTx)
+        })
+      })
+
+      describe('Incoming Nft Tx', () => {
+        it.each(Object.values(IncomingNftTxChain))('OK %s', async (chain: IncomingNftTxChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.incomingNftTx)
+        })
+      })
+
+      describe('Outgoing Nft Tx', () => {
+        it.each(Object.values(OutgoingNftTxChain))('OK %s', async (chain: OutgoingNftTxChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.outgoingNftTx)
+        })
+      })
+
+      describe('Incoming Multitoken Tx', () => {
+        it.each(Object.values(IncomingMultitokenTxChain))('OK %s', async (chain: IncomingMultitokenTxChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.incomingMultitokenTx)
+        })
+      })
+
+      describe('Outgoing Multitoken Tx', () => {
+        it.each(Object.values(OutgoingMultitokenTxChain))('OK %s', async (chain: OutgoingMultitokenTxChain) => {
+          await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, chain, TestConst.ADDRESSES.TESTNET[chain], tatum.notification.subscribe.outgoingMultitokenTx)
+        })
+      })
+
+      describe('Failed Txs Per Block', () => {
+        it.each(Object.values(FailedTxPerBlockChain))('OK %s', async (chain: FailedTxPerBlockChain) => {
+          await e2eUtil.subscriptions.testBlockBasedSubscription(tatum, chain, tatum.notification.subscribe.failedTxsPerBlock)
+        })
       })
     })
+
+
 
     it('NOK - existing subscription ', async () => {
       await tatum.notification.subscribe.addressEvent({

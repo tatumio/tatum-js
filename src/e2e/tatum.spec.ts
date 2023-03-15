@@ -9,19 +9,19 @@ describe('Tatum Init', () => {
       const tatum = await TatumSdk.init({
         network: Network.Testnet,
       })
-      await e2eUtil.subscriptions.testCreateSubscription(tatum, Chain.Bitcoin, TestConst.ADDRESSES.TESTNET[Chain.Bitcoin])
+      await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, Chain.Bitcoin, TestConst.ADDRESSES.TESTNET[Chain.Bitcoin], tatum.notification.subscribe.addressEvent)
     })
 
     it('Mainnet', async () => {
       const tatum = await TatumSdk.init({
         network: Network.Mainnet,
       })
-      await e2eUtil.subscriptions.testCreateSubscription(tatum, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin])
+      await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin], tatum.notification.subscribe.addressEvent)
     })
 
     it('Empty', async () => {
       const tatum = await TatumSdk.init()
-      await e2eUtil.subscriptions.testCreateSubscription(tatum, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin])
+      await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin], tatum.notification.subscribe.addressEvent)
     })
   })
 
@@ -33,8 +33,8 @@ describe('Tatum Init', () => {
       const testnet = await TatumSdk.init({
         network: Network.Testnet,
       })
-      await e2eUtil.subscriptions.testCreateSubscription(mainnet, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin])
-      await e2eUtil.subscriptions.testCreateSubscription(testnet, Chain.Bitcoin, TestConst.ADDRESSES.TESTNET[Chain.Bitcoin])
+      await e2eUtil.subscriptions.testAddressBasedSubscription(mainnet, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin], mainnet.notification.subscribe.addressEvent)
+      await e2eUtil.subscriptions.testAddressBasedSubscription(testnet, Chain.Bitcoin, TestConst.ADDRESSES.TESTNET[Chain.Bitcoin], testnet.notification.subscribe.addressEvent)
     })
   })
 })
