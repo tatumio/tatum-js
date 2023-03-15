@@ -37,15 +37,14 @@ export class Subscribe {
     this.connector = Container.of(this.id).get(TatumConnector)
   }
 
-  private async addressBasedNotification<TChainEnum>({address, chain, url}: AddressBasedNotificationDetail<TChainEnum>, type: NotificationType): Promise<ResponseDto<AddressBasedNotification<TChainEnum>>> {
+  private async addressBasedNotification<TChainEnum extends keyof typeof Chain>({address, chain, url}: AddressBasedNotificationDetail<TChainEnum>, type: NotificationType): Promise<ResponseDto<AddressBasedNotification<TChainEnum>>> {
     return ErrorUtils.tryFail(async () => {
-      const chainToMap = Utils.getChainFromNotificationChain(chain);
       const { id } = await this.connector.post<IdDto>({
         path: 'subscription',
         body: {
           type: type,
           attr: {
-            chain: Utils.mapChain(chainToMap),
+            chain: Utils.mapChain(Chain[chain]),
             address,
             url,
           },
@@ -60,15 +59,14 @@ export class Subscribe {
     })
   }
 
-  private async blockBasedNotification<TChainEnum>({ chain, url }: BlockBasedNotificationDetail<TChainEnum>, type: NotificationType): Promise<ResponseDto<BlockBasedNotification<TChainEnum>>> {
+  private async blockBasedNotification<TChainEnum extends keyof typeof Chain>({ chain, url }: BlockBasedNotificationDetail<TChainEnum>, type: NotificationType): Promise<ResponseDto<BlockBasedNotification<TChainEnum>>> {
     return ErrorUtils.tryFail(async () => {
-      const chainToMap = Utils.getChainFromNotificationChain(chain);
       const { id } = await this.connector.post<IdDto>({
         path: 'subscription',
         body: {
           type: type,
           attr: {
-            chain: Utils.mapChain(chainToMap),
+            chain: Utils.mapChain(Chain[chain]),
             url,
           },
         },

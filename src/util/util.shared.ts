@@ -8,11 +8,4 @@ export const Utils = {
     }
     return mappedChain
   },
-  getChainFromNotificationChain: <TChainEnum>(notificationChain: TChainEnum): Chain => {
-    const chain = Chain[notificationChain as unknown as keyof typeof Chain];
-    if (!chain) {
-      throw new Error(`Notification specific chain: ${notificationChain} is not castable to Chain enum`)
-    }
-    return chain
-  },
 }

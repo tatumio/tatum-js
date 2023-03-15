@@ -2,14 +2,14 @@ import {
   AddressBasedNotification,
   AddressBasedNotificationDetail,
   BlockBasedNotification,
-  BlockBasedNotificationDetail,
+  BlockBasedNotificationDetail, Chain,
   TatumSdk
 } from '../service'
 import {ResponseDto} from "../util";
 
 export const e2eUtil = {
   subscriptions: {
-    testAddressBasedSubscription: async <TChainEnum>(
+    testAddressBasedSubscription: async <TChainEnum extends keyof typeof Chain>(
       tatum: TatumSdk,
       chain: TChainEnum,
       address: string,
@@ -27,7 +27,7 @@ export const e2eUtil = {
       expect(data.address.toLowerCase()).toEqual(address.toLowerCase())
       expect(url).toBeDefined()
     },
-    testBlockBasedSubscription: async <TChainEnum>(
+    testBlockBasedSubscription: async <TChainEnum extends keyof typeof Chain>(
       tatum: TatumSdk,
       chain: TChainEnum,
       func: (blockBasedNotificationDetail: BlockBasedNotificationDetail<TChainEnum>) => Promise<ResponseDto<BlockBasedNotification<TChainEnum>>>) => {

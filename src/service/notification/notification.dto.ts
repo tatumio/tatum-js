@@ -14,22 +14,22 @@ export type AddressEventNotification = {
   type: NotificationType.ADDRESS_EVENT,
 }
 
-export interface AddressBasedNotificationDetail<TChainEnum> {
+export interface AddressBasedNotificationDetail<TChainEnum extends keyof typeof Chain> {
   address: string
   chain: TChainEnum
   url: string
 }
 
-export interface AddressBasedNotification<TChainEnum> extends AddressBasedNotificationDetail<TChainEnum> {
+export interface AddressBasedNotification<TChainEnum extends keyof typeof Chain> extends AddressBasedNotificationDetail<TChainEnum> {
   id: string
 }
 
-export interface BlockBasedNotificationDetail<TChainEnum> {
+export interface BlockBasedNotificationDetail<TChainEnum extends keyof typeof Chain> {
   chain: TChainEnum
   url: string
 }
 
-export interface BlockBasedNotification<TChainEnum> extends BlockBasedNotificationDetail<TChainEnum> {
+export interface BlockBasedNotification<TChainEnum extends keyof typeof Chain> extends BlockBasedNotificationDetail<TChainEnum> {
   id: string
 }
 
