@@ -14,7 +14,9 @@ import {
   IncomingNativeTxChain,
   OutgoingNftTxChain,
   IncomingFungibleTxChain,
-  PaidFeeChain, OutgoingMultitokenTxChain, IncomingInternalTxChain
+  PaidFeeChain,
+  OutgoingMultitokenTxChain,
+  IncomingInternalTxChain
 } from './notification.dto'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { Container, Service } from 'typedi'

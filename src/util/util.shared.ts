@@ -1,4 +1,4 @@
-import { Chain, ChainMap, TatumChain } from '../service'
+import { Chain, ChainMap, TatumChain } from '../service/tatum/tatum.dto'
 
 export const Utils = {
   mapChain: (chain: Chain): TatumChain => {

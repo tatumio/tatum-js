@@ -3,9 +3,14 @@ import {
   IncomingInternalTxChain,
   IncomingMultitokenTxChain,
   IncomingNativeTxChain,
-  IncomingNftTxChain, OutgoingFailedTxChain, OutgoingFungibleTxChain,
-  OutgoingInternalTxChain, OutgoingMultitokenTxChain,
-  OutgoingNativeTxChain, OutgoingNftTxChain, PaidFeeChain,
+  IncomingNftTxChain,
+  OutgoingFailedTxChain,
+  OutgoingFungibleTxChain,
+  OutgoingInternalTxChain,
+  OutgoingMultitokenTxChain,
+  OutgoingNativeTxChain,
+  OutgoingNftTxChain,
+  PaidFeeChain,
   TatumSdk
 } from '../service'
 import { Chain, Network } from '../service'

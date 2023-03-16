@@ -31,7 +31,7 @@ export const e2eUtil = {
       tatum: TatumSdk,
       chain: TChainEnum,
       func: (blockBasedNotificationDetail: BlockBasedNotificationDetail<TChainEnum>) => Promise<ResponseDto<BlockBasedNotification<TChainEnum>>>) => {
-      const url = 'https://tatum.io'
+      const url = 'https://webhook.site/'
 
       const { data, error } = await func({
         chain,
