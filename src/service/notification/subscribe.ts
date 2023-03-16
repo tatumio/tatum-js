@@ -22,7 +22,7 @@ import { TatumConnector } from '../../connector/tatum.connector'
 import { Container, Service } from 'typedi'
 import { Utils, ErrorUtils, ResponseDto } from '../../util'
 import { IdDto } from '../../dto/shared.dto'
-import {Chain} from "../tatum";
+import { Chain } from '../tatum'
 
 @Service({
   factory: (data: { id: string }) => {

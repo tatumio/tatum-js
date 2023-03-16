@@ -2,7 +2,8 @@ import {
   AddressBasedNotification,
   AddressBasedNotificationDetail,
   BlockBasedNotification,
-  BlockBasedNotificationDetail, Chain,
+  BlockBasedNotificationDetail,
+  Chain,
   TatumSdk
 } from '../service'
 import {ResponseDto} from "../util";

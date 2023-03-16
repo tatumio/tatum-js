@@ -1,4 +1,4 @@
-import {Chain} from '../service';
+import { Chain } from '../service'
 
 export const TestConst = {
   EXISTING_SUBSCRIPTION_ETH_ADDRESS: '0xbaf6dc2e647aeb6f510f9e318856a1bcd66c5e19',
