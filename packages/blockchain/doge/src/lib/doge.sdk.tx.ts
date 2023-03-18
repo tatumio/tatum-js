@@ -1,11 +1,6 @@
 // @ts-ignore
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-doge'
-import {
-  ApiServices,
-  DogeTransactionUTXO,
-  DogeTransactionUTXOKMS,
-  TransactionHash,
-} from '@tatumio/api-client'
+import { ApiServices, DogeTransactionUTXO, DogeTransactionUTXOKMS, TransactionHash } from '@tatumio/api-client'
 import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 import { amountUtils } from '@tatumio/shared-abstract-sdk'
 import { DogeSdkError } from './doge.sdk.errors'
@@ -23,7 +18,7 @@ export const dogeTransactions = (
   const prepareSignedTransaction = async (body: DogeTransactionTypes): Promise<string> => {
     try {
       const { fromUTXO, to, fee, changeAddress } = body
-      const tx = new Transaction().fee(amountUtils.toSatoshis(fee!)).change(changeAddress)
+      const tx = new Transaction()
 
       const privateKeysToSign = []
       for (const item of fromUTXO) {
@@ -40,6 +35,7 @@ export const dogeTransactions = (
       for (const item of to) {
         tx.to(item.address, amountUtils.toSatoshis(item.value))
       }
+      tx.fee(amountUtils.toSatoshis(fee!)).change(changeAddress)
 
       if (fromUTXO && 'signatureId' in fromUTXO[0] && fromUTXO[0].signatureId) {
         return JSON.stringify(tx)

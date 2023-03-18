@@ -10,9 +10,6 @@ import {
   LtcTransactionUTXOKMS,
   TransactionHash,
 } from '@tatumio/api-client'
-import { PrivateKey, Script, Transaction } from 'bitcore-lib'
-import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
-import { BtcBasedSdkError } from '../btc-based.sdk.errors'
 
 export type BtcBasedTx<T> = {
   sendTransaction: (body: T, options: { testnet: boolean }) => Promise<TransactionHash>

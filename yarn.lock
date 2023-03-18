@@ -3924,11 +3924,6 @@ bech32@1.1.4, bech32@^1.1.2, bech32@^1.1.3:
   resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.4.tgz#e38c9f37bf179b8eb16ae3a772b40c356d4832e9"
   integrity sha512-s0IrSOzLlbvX7yp4WBfPITzpAU8sqQcpsmwXDiKwrG4r491vwCO/XpejasRNl0piBMe/DvP4Tz0mIS/X1DPJBQ==
 
-bech32@=1.1.3:
-  version "1.1.3"
-  resolved "https://registry.yarnpkg.com/bech32/-/bech32-1.1.3.tgz#bd47a8986bbb3eec34a56a097a84b8d3e9a2dfcd"
-  integrity sha512-yuVFUvrNcoJi0sv5phmqc6P+Fl1HjRDRNOOkHY2X/3LBy2bIGNSFx4fZ95HMaXHupuS7cZR15AsvtmCIF4UEyg==
-
 before-after-hook@^2.2.0:
   version "2.2.3"
   resolved "https://registry.yarnpkg.com/before-after-hook/-/before-after-hook-2.2.3.tgz#c51e809c81a4e354084422b9b26bad88249c517c"
@@ -4103,12 +4098,12 @@ bitcoinjs-lib@^5.2.0:
     varuint-bitcoin "^1.0.4"
     wif "^2.0.1"
 
-bitcore-lib-cash@^8.25.40:
-  version "8.25.40"
-  resolved "https://registry.yarnpkg.com/bitcore-lib-cash/-/bitcore-lib-cash-8.25.40.tgz#c406308c99b02cf2db32ed40499e6f88959e1207"
-  integrity sha512-Pb2JGinBe1YH37+MFb3TMXD4MKNzWFDAXVnP7PPxI1du91AfAfTLOby0FpUqzSqWmiC2tkNyyynuBE+68c1JIQ==
+bitcore-lib-cash@10.0.2:
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/bitcore-lib-cash/-/bitcore-lib-cash-10.0.2.tgz#9fc823de3c177c520a95c87454c138769b276df0"
+  integrity sha512-k4WkisK/OBD4CKl5r+GvOf3Hdw9W6UGviYUj6zNQujuyT/3eAgCs3QdhjLLVkauszg5pLXHezMV6C/UVLjBctQ==
   dependencies:
-    bitcore-lib "^8.25.40"
+    bitcore-lib "^10.0.2"
     bn.js "=4.11.8"
     bs58 "^4.0.1"
     buffer-compare "=1.1.1"
@@ -4116,12 +4111,11 @@ bitcore-lib-cash@^8.25.40:
     inherits "=2.0.1"
     lodash "^4.17.20"
 
-bitcore-lib-doge@8.25.7:
-  version "8.25.7"
-  resolved "https://registry.yarnpkg.com/bitcore-lib-doge/-/bitcore-lib-doge-8.25.7.tgz#2d134fabd5e27c105778333c93b0db8acb7046cc"
-  integrity sha512-11R2/RSMeCvlnMXpqoRbff1D8Ivvw3poAZf3SOjlH8clkfw7nqGKPU1USowpezPWxQ+29l4lEsmN3ZbxLWDJbg==
+bitcore-lib-doge@10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/bitcore-lib-doge/-/bitcore-lib-doge-10.0.0.tgz#78adce96e75968640bd0fcad178cdea715c6b59f"
+  integrity sha512-NHBcw6yt+jBUHBr2bikuuo1QM9XxcP0M8zGQuH+LhUGf/9khaGJ3DF2RSVUzbslzeTdj1zhE8eU6B9W/i8Ly1g==
   dependencies:
-    bech32 "=1.1.3"
     bn.js "=4.11.8"
     bs58 "^4.0.1"
     buffer-compare "=1.1.1"
@@ -4130,10 +4124,10 @@ bitcore-lib-doge@8.25.7:
     lodash "^4.17.20"
     scryptsy "2.1.0"
 
-bitcore-lib-ltc@8.25.27:
-  version "8.25.27"
-  resolved "https://registry.yarnpkg.com/bitcore-lib-ltc/-/bitcore-lib-ltc-8.25.27.tgz#1d4bd2f718eb8763a864ac43f1feb4778a37da1b"
-  integrity sha512-Vmy9+07f1rZPilOUZ/0tjBZqdQTutwQQ0/nILB2m6Rv59R9FkqBi37p/QBZXZe5kxJ5GzSNPn8Dqkn303YMB/g==
+bitcore-lib-ltc@10.0.0:
+  version "10.0.0"
+  resolved "https://registry.yarnpkg.com/bitcore-lib-ltc/-/bitcore-lib-ltc-10.0.0.tgz#6809d967a3230c398e3979d5f7947b564849c3fc"
+  integrity sha512-AOTvO98RLcyOg4jrsiwwnQ5mJhQiADCKN0iKbHDyvsvTJGjCw6hI2vxweZNUgcIC8LLFEkWUy4GqQxATwtS0VQ==
   dependencies:
     bech32 "=2.0.0"
     bn.js "=4.11.8"
@@ -4144,23 +4138,10 @@ bitcore-lib-ltc@8.25.27:
     lodash "^4.17.20"
     scryptsy "2.1.0"
 
-bitcore-lib@8.25.8:
-  version "8.25.8"
-  resolved "https://registry.yarnpkg.com/bitcore-lib/-/bitcore-lib-8.25.8.tgz#b4a9d6cd715596297d958d2ad12fdf09e54a16d7"
-  integrity sha512-vxNJ+DLAeC2V8iPa6dRvUbb/Nm3Vr/cXKhCKSIxj8YPU2tP0QiwEz2Lu9sbqhtsmIerS+F1eeHulzS21MpS2GQ==
-  dependencies:
-    bech32 "=1.1.3"
-    bn.js "=4.11.8"
-    bs58 "^4.0.1"
-    buffer-compare "=1.1.1"
-    elliptic "^6.5.3"
-    inherits "=2.0.1"
-    lodash "^4.17.20"
-
-bitcore-lib@^8.25.40:
-  version "8.25.40"
-  resolved "https://registry.yarnpkg.com/bitcore-lib/-/bitcore-lib-8.25.40.tgz#b26981a61dd41683a08ed56140742a884394fcef"
-  integrity sha512-mb6kvfhoiIdoyFsDlhIFVst3HpeGjGYBf0XDxTdZ+H07EC4JuiViA3bnQ5uZbZjHFngEl0GTPaoK1Zaolutw4A==
+bitcore-lib@10.0.2, bitcore-lib@^10.0.2:
+  version "10.0.2"
+  resolved "https://registry.yarnpkg.com/bitcore-lib/-/bitcore-lib-10.0.2.tgz#7ba3a90e014584933893a7f8facebf9b9ce5e953"
+  integrity sha512-x7bWAqZdk5B/aVM8ppcenErhjQ2Q8q+SIwqNkB+iKPDsYUCgx7Yvl2SCyQriU23HEJlfqkzBdsFm6tO0DbCikw==
   dependencies:
     bech32 "=2.0.0"
     bip-schnorr "=0.6.4"

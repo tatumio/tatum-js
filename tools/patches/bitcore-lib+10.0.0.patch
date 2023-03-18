@@ -1,5 +1,5 @@
 diff --git a/node_modules/bitcore-lib/lib/transaction/transaction.js b/node_modules/bitcore-lib/lib/transaction/transaction.js
-index dee9dec..5e19af8 100644
+index 3d61478..d131e06 100644
 --- a/node_modules/bitcore-lib/lib/transaction/transaction.js
 +++ b/node_modules/bitcore-lib/lib/transaction/transaction.js
 @@ -184,8 +184,6 @@ Transaction.prototype.uncheckedSerialize = Transaction.prototype.toString = func
@@ -7,7 +7,7 @@ index dee9dec..5e19af8 100644
    var serializationError = this.getSerializationError(opts);
    if (serializationError) {
 -    serializationError.message += ' - For more information please see: ' +
--      'https://bitcore.io/api/lib/transaction#serialization-checks';
+-      'https://github.com/bitpay/bitcore/blob/master/packages/bitcore-lib/docs/transaction.md#serialization-checks';
      throw serializationError;
    }
    return this.uncheckedSerialize();
