@@ -92,7 +92,6 @@ export const oldBtcBasedTxTestFactory = {
     transactions: BtcBasedTx<T>
     getRequestBodyFromAddress: (amount: number) => T
     data: {
-      utxoAmount: number
       validAmount: number
       validTxData: string
     }
@@ -146,7 +145,7 @@ export const oldBtcBasedTxTestFactory = {
         args.mock.requestGetTxByAddress()
 
         await expect(
-          args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(args.data.utxoAmount), {
+          args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(args.data.validAmount + 1), {
             testnet: true,
           }),
         ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_FEE_TOO_SMALL)

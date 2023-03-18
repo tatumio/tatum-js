@@ -3,38 +3,38 @@
 /* eslint-disable */
 
 export type EstimateFeeFromUTXO = {
+  /**
+   * Blockchain to estimate fee for.
+   */
+  chain: 'BTC' | 'LTC' | 'DOGE';
+  /**
+   * Type of transaction
+   */
+  type: 'TRANSFER';
+  /**
+   * Array of transaction hashes, index of UTXO in it and corresponding private keys. Use this option if you want to calculate amount to send manually. Either fromUTXO or fromAddress must be present.
+   */
+  fromUTXO: Array<{
     /**
-     * Blockchain to estimate fee for.
+     * Transaction hash of the UTXO to be spent.
      */
-    chain: 'BTC' | 'LTC';
+    txHash: string;
     /**
-     * Type of transaction
+     * Index of the UTXO to be spent.
      */
-    type: 'TRANSFER';
+    index: number;
+  }>;
+  /**
+   * Array of addresses and values to send bitcoins to. Values must be set in BTC. Difference between from and to is transaction fee.
+   */
+  to: Array<{
     /**
-     * Array of transaction hashes, index of UTXO in it and corresponding private keys. Use this option if you want to calculate amount to send manually. Either fromUTXO or fromAddress must be present.
+     * Destination address.
      */
-    fromUTXO: Array<{
-        /**
-         * Transaction hash of the UTXO to be spent.
-         */
-        txHash: string;
-        /**
-         * Index of the UTXO to be spent.
-         */
-        index: number;
-    }>;
+    address: string;
     /**
-     * Array of addresses and values to send bitcoins to. Values must be set in BTC. Difference between from and to is transaction fee.
+     * Amount to be sent, in BTC.
      */
-    to: Array<{
-        /**
-         * Destination address.
-         */
-        address: string;
-        /**
-         * Amount to be sent, in BTC.
-         */
-        value: number;
-    }>;
+    value: number;
+  }>;
 }

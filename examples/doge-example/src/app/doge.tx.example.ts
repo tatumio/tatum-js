@@ -1,5 +1,5 @@
 import { DogeTransactionUTXO } from '@tatumio/api-client'
-import { TatumDogeSDK } from '@tatumio/doge'
+import { DogeTransactionAddress, TatumDogeSDK } from '@tatumio/doge'
 
 const dogeSDK = TatumDogeSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 
@@ -54,5 +54,26 @@ export async function dogeTransactionExample() {
     } as DogeTransactionUTXO,
     options,
   )
-  console.log(`Sent tx with hash ${txId}`)
+  console.log(`Sent tx from UTXO with hash ${txId}`)
+
+  const { txId: txIdAddress } = await dogeSDK.transaction.sendTransaction(
+    {
+      fromAddress: [
+        {
+          privateKey: privateKey,
+          address: address,
+        },
+      ],
+      to: [
+        {
+          address: recipientAddress,
+          value: valueToSend,
+        },
+      ],
+      fee: fee,
+      changeAddress: changeAddress,
+    } as DogeTransactionAddress,
+    options,
+  )
+  console.log(`Sent tx from address with hash ${txIdAddress}`)
 }
