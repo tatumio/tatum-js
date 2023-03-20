@@ -64,7 +64,7 @@ export const useModal = ({ response, handleSubmit, inputs, title }: UseModalProp
               <form className='space-y-6' action='modal#' onSubmit={handleSubmit}>
                 {inputs.select.map((input, i) => {
                   const options =
-                    input.id === 'chain' ? getChainEnumForNotificationType(selectedNotificationType) : input.options;
+                    input.id === 'chain' ? getChainOptions(selectedNotificationType) : input.options;
                   return (
                     <SelectInputModal
                       key={i.toString()}
@@ -167,38 +167,45 @@ const SelectInputModal = ({
   </div>
 );
 
-function getChainEnumForNotificationType(type: string) {
-  switch (type) {
+const enumToSelectOptions = (enumeration: any): SelectOptionsProps[] => {
+  return Object.entries(enumeration).map(([key, value]) => ({
+    value: value as string,
+    label: key,
+  }));
+};
+
+const getChainOptions = (notificationType: string): SelectOptionsProps[] => {
+  switch (notificationType) {
     case NotificationType.INCOMING_NATIVE_TX:
-      return IncomingNativeTxChain;
+      return enumToSelectOptions(IncomingNativeTxChain);
     case NotificationType.OUTGOING_NATIVE_TX:
-      return OutgoingNativeTxChain;
+      return enumToSelectOptions(OutgoingNativeTxChain);
     case NotificationType.OUTGOING_FAILED_TX:
-      return OutgoingFailedTxChain;
+      return enumToSelectOptions(OutgoingFailedTxChain);
     case NotificationType.PAID_FEE:
-      return PaidFeeChain;
+      return enumToSelectOptions(PaidFeeChain);
     case NotificationType.INCOMING_INTERNAL_TX:
-      return IncomingInternalTxChain;
+      return enumToSelectOptions(IncomingInternalTxChain);
     case NotificationType.OUTGOING_INTERNAL_TX:
-      return OutgoingInternalTxChain;
+      return enumToSelectOptions(OutgoingInternalTxChain);
     case NotificationType.INCOMING_FUNGIBLE_TX:
-      return IncomingFungibleTxChain;
+      return enumToSelectOptions(IncomingFungibleTxChain);
     case NotificationType.OUTGOING_FUNGIBLE_TX:
-      return OutgoingFungibleTxChain;
+      return enumToSelectOptions(OutgoingFungibleTxChain);
     case NotificationType.INCOMING_NFT_TX:
-      return IncomingNftTxChain;
+      return enumToSelectOptions(IncomingNftTxChain);
     case NotificationType.OUTGOING_NFT_TX:
-      return OutgoingNftTxChain;
+      return enumToSelectOptions(OutgoingNftTxChain);
     case NotificationType.INCOMING_MULTITOKEN_TX:
-      return IncomingMultitokenTxChain;
+      return enumToSelectOptions(IncomingMultitokenTxChain);
     case NotificationType.OUTGOING_MULTITOKEN_TX:
-      return OutgoingMultitokenTxChain;
+      return enumToSelectOptions(OutgoingMultitokenTxChain);
     case NotificationType.FAILED_TXS_PER_BLOCK:
-      return FailedTxPerBlockChain;
+      return enumToSelectOptions(FailedTxPerBlockChain);
     case NotificationType.ADDRESS_EVENT:
-      return Chain;
+      return enumToSelectOptions(Chain);
     default:
-      return null;
+      return [];
   }
 }
 
