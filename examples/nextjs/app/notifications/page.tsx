@@ -143,15 +143,6 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
   }
 
   const inputs = {
-    selectType: [
-
-      {
-        label: 'Type',
-        id: 'type',
-        type: 'select',
-        options: Object.values(NotificationType).map(c => ({ value: c, label: c })),
-      },
-    ],
     text: [{
       label: 'Address',
       placeholder: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
@@ -164,13 +155,17 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
         id: 'url',
         type: 'text',
       }],
-    select: [
-
-      {
+    select: [{
         label: 'Chain',
         id: 'chain',
         type: 'select',
         options: Object.values(Chain).map(c => ({ value: c, label: c })),
+      },
+      {
+        label: 'Type',
+        id: 'type',
+        type: 'select',
+        options: Object.values(NotificationType).map(c => ({ value: c, label: c })),
       },
     ],
   }
