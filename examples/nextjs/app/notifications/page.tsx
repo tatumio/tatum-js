@@ -3,14 +3,7 @@ import type { NextPage } from 'next'
 import { useFetch } from '../../utils/utils'
 import React, { useContext, useState } from 'react'
 import { Table } from '../../components/table'
-import {
-  Chain, FailedTxPerBlockChain, IncomingFungibleTxChain, IncomingInternalTxChain, IncomingMultitokenTxChain,
-  IncomingNativeTxChain, IncomingNftTxChain,
-  NotificationType,
-  OutgoingFailedTxChain, OutgoingFungibleTxChain, OutgoingInternalTxChain, OutgoingMultitokenTxChain,
-  OutgoingNativeTxChain, OutgoingNftTxChain,
-  PaidFeeChain
-} from '@tatumcom/js'
+import { Chain, NotificationType } from '@tatumcom/js'
 import { useModal } from '../../components/modal'
 import { ResponseDto } from '../../dto'
 import { ApiKeyContext } from '../layout'
@@ -111,45 +104,6 @@ const Notifications: NextPage = () => {
 export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptions: () => Promise<void> }) => {
   const { apiKey } = useContext(ApiKeyContext)
 
-  const [selectedNotificationType, setSelectedNotificationType] = useState<NotificationType>(NotificationType.ADDRESS_EVENT);
-
-  function getChainEnumForNotificationType(type: NotificationType) {
-    switch (type) {
-      case NotificationType.INCOMING_NATIVE_TX:
-        return IncomingNativeTxChain;
-      case NotificationType.OUTGOING_NATIVE_TX:
-        return OutgoingNativeTxChain;
-      case NotificationType.OUTGOING_FAILED_TX:
-        return OutgoingFailedTxChain;
-      case NotificationType.PAID_FEE:
-        return PaidFeeChain;
-      case NotificationType.INCOMING_INTERNAL_TX:
-        return IncomingInternalTxChain;
-      case NotificationType.OUTGOING_INTERNAL_TX:
-        return OutgoingInternalTxChain;
-      case NotificationType.INCOMING_FUNGIBLE_TX:
-        return IncomingFungibleTxChain;
-      case NotificationType.OUTGOING_FUNGIBLE_TX:
-        return OutgoingFungibleTxChain;
-      case NotificationType.INCOMING_NFT_TX:
-        return IncomingNftTxChain;
-      case NotificationType.OUTGOING_NFT_TX:
-        return OutgoingNftTxChain;
-      case NotificationType.INCOMING_MULTITOKEN_TX:
-        return IncomingMultitokenTxChain;
-      case NotificationType.OUTGOING_MULTITOKEN_TX:
-        return OutgoingMultitokenTxChain;
-      case NotificationType.FAILED_TXS_PER_BLOCK:
-        return FailedTxPerBlockChain;
-      case NotificationType.ADDRESS_EVENT:
-        return Chain;
-      default:
-        return null;
-    }
-  }
-
-  const chainEnum = getChainEnumForNotificationType(selectedNotificationType);
-
   const handleSubmit = async (e: React.FormEvent) => {
     try {
       setLoading(true)
@@ -189,18 +143,12 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
   }
 
   const inputs = {
-    text: [
-      // Conditionally render the Address input
-      ...(selectedNotificationType !== NotificationType.FAILED_TXS_PER_BLOCK
-        ? [
-          {
-            label: 'Address',
-            placeholder: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
-            id: 'address',
-            type: 'text',
-          },
-        ]
-        : []),
+    text: [{
+      label: 'Address',
+      placeholder: '0x51abC4c9e7BFfaA99bBE4dDC33d75067EBD0384F',
+      id: 'address',
+      type: 'text',
+    },
       {
         label: 'Url',
         placeholder: 'https://example.com',
@@ -208,19 +156,16 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
         type: 'text',
       }],
     select: [{
-        label: 'Type',
-        id: 'type',
-        type: 'select',
-        options: Object.values(NotificationType).map((c) => ({ value: c, label: c })),
-        onChange: (event: React.ChangeEvent<HTMLSelectElement>) => {
-          setSelectedNotificationType(event.target.value as NotificationType);
-        },
+      label: 'Type',
+      id: 'type',
+      type: 'select',
+      options: Object.values(NotificationType).map(c => ({ value: c, label: c })),
       },
       {
         label: 'Chain',
         id: 'chain',
         type: 'select',
-        options: chainEnum ? Object.values(chainEnum).map((c) => ({ value: c, label: c })) : [],
+        options: Object.values(Chain).map(c => ({ value: c, label: c })),
       },
     ],
   }
