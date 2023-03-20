@@ -13,6 +13,7 @@ jobs:
       current_branch: ${{ steps.branch-name.outputs.current_branch }}
       package_version: ${{ env.package_version }}
       release_exists: ${{ env.release_exists }}
+      release_prerelease: ${{ steps.semver-utils.outputs.prerelease }}
     steps:
       - name: Get branch name
         id: branch-name
@@ -27,7 +28,12 @@ jobs:
         id: release-exists
         run: |
           curl --fail --silent --max-time 5 "https://api.github.com/repos/${GITHUB_REPOSITORY}/releases/tags/${{ env.package_version }}" && echo "release_exists=true" >> $GITHUB_ENV || echo "release_exists=false" >> $GITHUB_ENV
-
+      - name: Get semver data
+        uses: madhead/semver-utils@v3
+        id: semver-utils
+        with:
+          lenient: false
+          version: ${{ env.package_version }}
 
   build:
     runs-on: ubuntu-latest
@@ -59,7 +65,9 @@ jobs:
         name: build-${{ matrix.nodejs }}
         path: dist/
         retention-days: 7
-      if: needs.metadata.outputs.current_branch == 'master'
+      if: |
+        needs.metadata.outputs.current_branch == 'master' ||
+        contains(github.event.head_commit.message, 'release prerelase')
 
   test:
     runs-on: ubuntu-latest
@@ -109,7 +117,9 @@ jobs:
             ${{ steps.get_release_notes.outputs.release_notes }}
   npm:
     runs-on: ubuntu-latest
-    if: needs.metadata.outputs.current_branch == 'master' && needs.metadata.outputs.release_exists == 'false'
+    if: |
+      (needs.metadata.outputs.current_branch == 'master' && needs.metadata.outputs.release_exists == 'false') ||
+      (needs.metadata.outputs.current_branch != 'master' && needs.metadata.outputs.release_prerelease != '' && contains(github.event.head_commit.message, 'release prerelase'))
     needs: [ metadata, build, test ]
     steps:
       - uses: actions/checkout@v3
