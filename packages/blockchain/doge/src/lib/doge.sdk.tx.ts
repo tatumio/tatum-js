@@ -52,14 +52,18 @@ export const dogeTransactions = (
     getUtxo: ApiServices.blockchain.doge.dogeGetUtxo,
   },
 ): BtcBasedTx<DogeTransactionTypes> => {
-  // @TODO add support - by address
   const prepareSignedTransaction = async (body: DogeTransactionTypes): Promise<string> => {
     try {
       const { to, fee, changeAddress } = body
       const transaction = new Transaction()
 
       const privateKeysToSign = []
-
+      let totalOutputs = amountUtils.toSatoshis(fee!)
+      for (const item of to) {
+        const amount = amountUtils.toSatoshis(item.value)
+        totalOutputs += amount
+        transaction.to(item.address, amount)
+      }
       if ('fromUTXO' in body) {
         for (const item of body.fromUTXO) {
           transaction.from({
@@ -72,16 +76,26 @@ export const dogeTransactions = (
           else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
         }
       } else if ('fromAddress' in body) {
+        let totalInputs = 0
         for (const item of body.fromAddress) {
           const utxos: DogeUTXO[] = []
           const txs = await apiCalls.getTxByAddress(item.address, 50, 0, 'incoming')
 
+          if (totalInputs >= totalOutputs) {
+            break
+          }
           for (const tx of txs) {
+            if (totalInputs >= totalOutputs) {
+              break
+            }
             if (!tx.outputs || !tx.hash) continue
 
             for (const [i, o] of tx.outputs.entries()) {
               if (o.address !== item.address) {
                 continue
+              }
+              if (totalInputs >= totalOutputs) {
+                break
               }
 
               const utxo = await getUtxoSilent(tx.hash, i)
@@ -90,12 +104,14 @@ export const dogeTransactions = (
               }
               utxos.push(utxo)
 
+              const satoshis = amountUtils.toSatoshis(utxo.value)
+              totalInputs += satoshis
               transaction.from([
                 Transaction.UnspentOutput.fromObject({
                   txId: tx.hash,
                   outputIndex: i,
                   script: Script.fromAddress(o.address).toString(),
-                  satoshis: amountUtils.toSatoshis(utxo.value),
+                  satoshis,
                 }),
               ])
 
@@ -104,10 +120,6 @@ export const dogeTransactions = (
             }
           }
         }
-      }
-
-      for (const item of to) {
-        transaction.to(item.address, amountUtils.toSatoshis(item.value))
       }
       transaction.fee(amountUtils.toSatoshis(fee!)).change(changeAddress)
 
