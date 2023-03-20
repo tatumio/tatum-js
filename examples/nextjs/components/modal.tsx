@@ -72,7 +72,7 @@ export const useModal = ({ response, handleSubmit, inputs, title }: UseModalProp
                       id={input.id}
                       options={options}
                       onChange={(value) => {
-                        if (input.id === 'notificationType') {
+                        if (input.id === 'type') {
                           setSelectedNotificationType(value);
                         }
                       }}
