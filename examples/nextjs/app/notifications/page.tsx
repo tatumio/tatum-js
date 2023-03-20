@@ -3,11 +3,10 @@ import type { NextPage } from 'next'
 import { useFetch } from '../../utils/utils'
 import React, { useContext, useState } from 'react'
 import { Table } from '../../components/table'
-import { Chain } from '@tatumcom/js'
+import { Chain, NotificationType } from '@tatumcom/js'
 import { useModal } from '../../components/modal'
 import { ResponseDto } from '../../dto'
 import { ApiKeyContext } from '../layout'
-import { NotificationType } from "../../../../src";
 
 const Notifications: NextPage = () => {
   const [subscriptionOffset, setSubscriptionOffset] = useState(0)
