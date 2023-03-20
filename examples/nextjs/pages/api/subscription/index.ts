@@ -1,7 +1,7 @@
 import type { NextApiResponse } from 'next'
 import { initTatum } from '../../../utils/tatum'
 import { GetAllQueryRequest } from '../../../dto'
-import { NotificationType } from "../../../../../src";
+import { NotificationType } from "@tatumcom/js";
 
 export default async function handler(
   req: GetAllQueryRequest,
