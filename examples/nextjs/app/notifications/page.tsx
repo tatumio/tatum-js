@@ -113,7 +113,7 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
         // @ts-ignore
         type: e.target.type.value,
         // @ts-ignore
-        address: e.target.address.value,
+        address: e.target.address ? e.target.address.value : '',
         // @ts-ignore
         url: e.target.url.value,
         // @ts-ignore
