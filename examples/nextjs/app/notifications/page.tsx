@@ -1,9 +1,9 @@
 'use client'
 import type { NextPage } from 'next'
-import { useApiKeys, useFetch } from '../../utils/utils'
+import { useFetch } from '../../utils/utils'
 import React, { useContext, useState } from 'react'
 import { Table } from '../../components/table'
-import { Chain } from '@tatumcom/js'
+import { Chain, NotificationType } from '@tatumcom/js'
 import { useModal } from '../../components/modal'
 import { ResponseDto } from '../../dto'
 import { ApiKeyContext } from '../layout'
@@ -111,7 +111,9 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
 
       const data = {
         // @ts-ignore
-        address: e.target.address.value,
+        type: e.target.type.value,
+        // @ts-ignore
+        address: e.target.address ? e.target.address.value : '',
         // @ts-ignore
         url: e.target.url.value,
         // @ts-ignore
@@ -153,8 +155,12 @@ export const SubscriptionModal = ({ refreshSubscriptions }: { refreshSubscriptio
         id: 'url',
         type: 'text',
       }],
-    select: [
-
+    select: [{
+      label: 'Type',
+      id: 'type',
+      type: 'select',
+      options: Object.values(NotificationType).map(c => ({ value: c, label: c })),
+      },
       {
         label: 'Chain',
         id: 'chain',

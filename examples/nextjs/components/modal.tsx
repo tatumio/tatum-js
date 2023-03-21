@@ -2,6 +2,17 @@ import React, { useRef, useState } from 'react'
 import { useOnClickOutside } from 'usehooks-ts'
 import { ResponseDto } from '../dto'
 import { Button } from './button'
+import {
+  Chain,
+  FailedTxPerBlockChain,
+  IncomingFungibleTxChain,
+  IncomingInternalTxChain, IncomingMultitokenTxChain,
+  IncomingNativeTxChain, IncomingNftTxChain,
+  NotificationType,
+  OutgoingFailedTxChain, OutgoingFungibleTxChain, OutgoingInternalTxChain, OutgoingMultitokenTxChain,
+  OutgoingNativeTxChain, OutgoingNftTxChain,
+  PaidFeeChain
+} from "@tatumcom/js";
 
 export interface UseModalProps {
   handleSubmit: (e: React.FormEvent) => Promise<void>
@@ -24,6 +35,8 @@ export interface UseModalProps {
 export const useModal = ({ response, handleSubmit, inputs, title }: UseModalProps) => {
   const [loading, setLoading] = useState(false)
   const [show, setShow] = useState(false)
+
+  const [selectedNotificationType, setSelectedNotificationType] = useState('ADDRESS_EVENT');
 
   const ref = useRef(null)
 
@@ -49,10 +62,34 @@ export const useModal = ({ response, handleSubmit, inputs, title }: UseModalProp
             <div className='px-6 py-6 lg:px-8' ref={ref}>
               <h3 className='mb-4 text-xl font-medium text-gray-900 dark:text-white'>{<title></title>}</h3>
               <form className='space-y-6' action='modal#' onSubmit={handleSubmit}>
-                {inputs.text.map((input, i) => <TextInputModal key={i.toString()} label={input.label}
-                                                               placeholder={input.placeholder} id={input.id} />)}
-                {inputs.select.map((input, i) => <SelectInputModal key={i.toString()} label={input.label} id={input.id}
-                                                                   options={input.options} />)}
+                {inputs.select.map((input, i) => {
+                  const options =
+                    input.id === 'chain' ? getChainOptions(selectedNotificationType) : input.options;
+                  return (
+                    <SelectInputModal
+                      key={i.toString()}
+                      label={input.label}
+                      id={input.id}
+                      options={options}
+                      onChange={(value) => {
+                        if (input.id === 'type') {
+                          setSelectedNotificationType(value);
+                        }
+                      }}
+                    />
+                  );
+                })}
+                {inputs.text.map((input, i) =>
+                  selectedNotificationType !== 'FAILED_TXS_PER_BLOCK' || input.id !== 'address' ? (
+                    <TextInputModal
+                      key={i.toString()}
+                      label={input.label}
+                      placeholder={input.placeholder}
+                      id={input.id}
+                      isRequired={selectedNotificationType !== 'FAILED_TXS_PER_BLOCK' || input.id !== 'address'}
+                    />
+                  ) : null
+                )}
                 <button type='submit'
                         className='w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800'>
                   {!loading ? <div>Add</div> :
@@ -103,12 +140,12 @@ export const useModal = ({ response, handleSubmit, inputs, title }: UseModalProp
   }
 }
 
-const TextInputModal = ({ id, label, placeholder }: { label: string, placeholder: string, id: string }) =>
+const TextInputModal = ({ id, label, placeholder, isRequired }: { label: string, placeholder: string, id: string, isRequired?: boolean }) =>
   <div>
     <label htmlFor={id} className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>{label}</label>
     <input type='text' name={id} id={id}
            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white'
-           placeholder={placeholder} required />
+           placeholder={placeholder} required={isRequired} />
   </div>
 
 export interface SelectOptionsProps {
@@ -120,11 +157,64 @@ const SelectInputModal = ({
                             options,
                             label,
                             id,
-                          }: { options: SelectOptionsProps[], label: string, id: string }) => <div>
-  <label htmlFor={id} className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>{label}</label>
-  <select id={id} name={id}
-          className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'>
-    {options.map(option => <option key={option.value} value={option.value}>{option.label}</option>)}
-  </select>
-</div>
+                            onChange,
+                          }: { options: SelectOptionsProps[], label: string, id: string, onChange?: (value: string) => void }) => (
+  <div>
+    <label htmlFor={id} className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>{label}</label>
+    <select
+      id={id}
+      name={id}
+      onChange={(e) => onChange && onChange(e.target.value)}
+      className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+    >
+      {options.map(option => (
+        <option key={option.value} value={option.value}>
+          {option.label}
+        </option>
+      ))}
+    </select>
+  </div>
+);
+
+const enumToSelectOptions = (enumeration: any): SelectOptionsProps[] => {
+  return Object.entries(enumeration).map(([key, value]) => ({
+    value: value as string,
+    label: key,
+  }));
+};
+
+const getChainOptions = (notificationType: string): SelectOptionsProps[] => {
+  switch (notificationType) {
+    case NotificationType.INCOMING_NATIVE_TX:
+      return enumToSelectOptions(IncomingNativeTxChain);
+    case NotificationType.OUTGOING_NATIVE_TX:
+      return enumToSelectOptions(OutgoingNativeTxChain);
+    case NotificationType.OUTGOING_FAILED_TX:
+      return enumToSelectOptions(OutgoingFailedTxChain);
+    case NotificationType.PAID_FEE:
+      return enumToSelectOptions(PaidFeeChain);
+    case NotificationType.INCOMING_INTERNAL_TX:
+      return enumToSelectOptions(IncomingInternalTxChain);
+    case NotificationType.OUTGOING_INTERNAL_TX:
+      return enumToSelectOptions(OutgoingInternalTxChain);
+    case NotificationType.INCOMING_FUNGIBLE_TX:
+      return enumToSelectOptions(IncomingFungibleTxChain);
+    case NotificationType.OUTGOING_FUNGIBLE_TX:
+      return enumToSelectOptions(OutgoingFungibleTxChain);
+    case NotificationType.INCOMING_NFT_TX:
+      return enumToSelectOptions(IncomingNftTxChain);
+    case NotificationType.OUTGOING_NFT_TX:
+      return enumToSelectOptions(OutgoingNftTxChain);
+    case NotificationType.INCOMING_MULTITOKEN_TX:
+      return enumToSelectOptions(IncomingMultitokenTxChain);
+    case NotificationType.OUTGOING_MULTITOKEN_TX:
+      return enumToSelectOptions(OutgoingMultitokenTxChain);
+    case NotificationType.FAILED_TXS_PER_BLOCK:
+      return enumToSelectOptions(FailedTxPerBlockChain);
+    case NotificationType.ADDRESS_EVENT:
+      return enumToSelectOptions(Chain);
+    default:
+      return [];
+  }
+}
 
