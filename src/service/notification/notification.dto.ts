@@ -50,7 +50,6 @@ export enum IncomingNativeTxChain {
   Bitcoin = 'Bitcoin',
   Litecoin = 'Litecoin',
   Dogecoin = 'Dogecoin',
-  Tron = 'Tron',
 }
 
 export enum OutgoingNativeTxChain {
