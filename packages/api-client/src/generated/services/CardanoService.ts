@@ -22,9 +22,8 @@ import { request as __request } from '../core/request';
 export class CardanoService {
 
     /**
-     * @deprecated
      * Get Blockchain information
-     * <p><b>Support for Cardano is deprecated.<br/>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/><h4>1 credit per API call.</h4><p>Gets Ada blockchain information. Obtains basic info like the testnet / mainnet version of the chain, the current block number and its hash.</p>
+     * <p><b>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/><h4>1 credit per API call.</h4><p>Gets Ada blockchain information. Obtains basic info like the testnet / mainnet version of the chain, the current block number and its hash.</p>
      * @returns AdaInfo OK
      * @throws ApiError
      */
@@ -41,9 +40,8 @@ export class CardanoService {
     }
 
     /**
-     * @deprecated
      * Generate Ada wallet
-     * <p><b>Support for Cardano is deprecated.<br/>
+     * <p><b>
      * You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/>
      * <h4>1 credit per API call.</h4><p>Tatum supports BIP44 HD wallets. Because they can generate 2^31 addresses from 1 mnemonic phrase, they are very convenient and secure. A mnemonic phrase consists of 24 special words in a defined order and can restore access to all generated addresses and private keys.<br/>Each address is identified by 3 main values:<ul><li>Private Key - your secret value, which should never be revealed</li><li>Public Key - public address to be published</li><li>Derivation index - index of generated address</li></ul></p><p>Tatum follows BIP44 specification and generates for ADA wallet with derivation path m/1852'/1815'/0'. More about BIP44 HD wallets can be found here - <a target="_blank" href="https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki">https://github.com/bitcoin/bips/blob/master/bip-0044.mediawiki</a>.
      * Generate BIP44 compatible Ada wallet.</p>
@@ -71,9 +69,8 @@ export class CardanoService {
     }
 
     /**
-     * @deprecated
      * Generate Ada deposit address from Extended public key
-     * <p><b>Support for Cardano is deprecated.<br/>
+     * <p><b>
      * You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/>
      * <h4>1 credit per API call.</h4>
      * <p>Generates a Ada deposit address from an Extended public key. The deposit address is generated for the specific index - each extended public key can generate
@@ -106,9 +103,8 @@ export class CardanoService {
     }
 
     /**
-     * @deprecated
      * Generate Ada private key
-     * <p><b>Support for Cardano is deprecated.<br/>
+     * <p><b>
      * You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/>
      * <h4>1 credit per API call.</h4>
      * <p>Generates a private key for an address from a mnemonic for a given derivation path index. The private key is generated for the specific index - each mnemonic
@@ -136,9 +132,8 @@ export class CardanoService {
     }
 
     /**
-     * @deprecated
      * Get Block by hash or height
-     * <p><b>Support for Cardano is deprecated.<br/>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/><h4>1 credit per API call.</h4><p>Gets Ada block detail by block hash or height.</p>
+     * <p><b>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/><h4>1 credit per API call.</h4><p>Gets Ada block detail by block hash or height.</p>
      * @param hash Block hash or height.
      * @returns AdaBlock OK
      * @throws ApiError
@@ -159,9 +154,8 @@ export class CardanoService {
     }
 
     /**
-     * @deprecated
      * Get transaction by hash
-     * <p><b>Support for Cardano is deprecated.<br/>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/><h4>1 credit per API call.</h4><p>Get Ada Transaction detail by transaction hash.</p>
+     * <p><b>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/><h4>1 credit per API call.</h4><p>Get Ada Transaction detail by transaction hash.</p>
      * @param hash Transaction hash
      * @returns AdaTx OK
      * @throws ApiError
@@ -182,9 +176,8 @@ export class CardanoService {
     }
 
     /**
-     * @deprecated
      * Get transactions by address
-     * <p><b>Support for Cardano is deprecated.<br/>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/><h4>1 credit per API call.</h4><p>Gets a Ada transaction by address.</p>
+     * <p><b>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/><h4>1 credit per API call.</h4><p>Gets a Ada transaction by address.</p>
      * @param address Address
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain the next page of data.
@@ -213,9 +206,8 @@ export class CardanoService {
     }
 
     /**
-     * @deprecated
      * Get UTXOs by address
-     * <p><b>Support for Cardano is deprecated.<br/>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/><h4>1 credit per API call.</h4><p>Gets a Ada UTXOs by address.</p>
+     * <p><b>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/><h4>1 credit per API call.</h4><p>Gets a Ada UTXOs by address.</p>
      * @param address Address
      * @returns AdaUTXO OK
      * @throws ApiError
@@ -236,10 +228,9 @@ export class CardanoService {
     }
 
     /**
-     * @deprecated
      * Send ADA to Cardano addresses
-     * <p><b>Support for Cardano is deprecated.<br/>
-     * You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/>
+     * <p><b>Cardano transfers are in maintenance mode. For the time being, it's not possible to perform blockchain transaction due to a recent hard fork. We are working on the fix for this. Thank you for your patience.</b></p><br/>
+     * <p>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/>
      * <p><b>2 credits per API call</b></p>
      * <p>Send ADA to blockchain addresses.</p>
      * <p>Cardano transactions are based on UTXOs. "UTXO" stands for "Unspent Transaction Output". A UTXO is the amount of ADA that remains at a Cardano address after a cryptocurrency transaction involving this address has been performed. The UTXO can then be used as input for a new cryptocurrency transaction. For more information about the UTXO, see the <a href="https://developer.bitcoin.org/devguide/transactions.html" target="_blank">Bitcoin user documentation</a>.</p>
@@ -255,7 +246,7 @@ export class CardanoService {
      * <p><b>Signing a transaction</b><br/>
      * When sending ADA, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
-     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -279,9 +270,8 @@ export class CardanoService {
     }
 
     /**
-     * @deprecated
      * Broadcast signed Ada transaction
-     * <p><b>Support for Cardano is deprecated.<br/>
+     * <p><b>
      * You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/>
      * <h4>2 credits per API call.</h4>
      * <p>Broadcasts a signed transaction to the Ada blockchain. This method is used internally from Tatum KMS or Tatum Client Libraries.
@@ -309,9 +299,8 @@ export class CardanoService {
     }
 
     /**
-     * @deprecated
      * Gets a Ada account by address
-     * <p><b>Support for Cardano is deprecated.<br/>
+     * <p><b>
      * You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/>
      * <h4>2 credits per API call.</h4>
      * <p>Gets a Ada account by address.</p>

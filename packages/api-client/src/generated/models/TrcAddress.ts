@@ -32,10 +32,6 @@ export type TrcAddress = {
      */
     address: string;
     /**
-     * (TRC-10 tokens only) The URL of the project that the token is created for<br/>Use this parameter only with TRC-10 tokens. Do <b>not</b> use this parameter with TRC-20 tokens.
-     */
-    url: string;
-    /**
      * The base pair for the virtual currency that represents the token; used to calculate the value of a transaction
      */
     basePair: FiatOrCryptoCurrency;
@@ -43,6 +39,10 @@ export type TrcAddress = {
      * The exchange rate for the base pair; one unit of the created virtual currency equals 1 unit of <code>basePair</code>*<code>baseRate</code>
      */
     baseRate?: number;
+    /**
+     * (TRC-10 tokens only) The URL of the project that the token is created for<br/>Use this parameter only with TRC-10 tokens. Do <b>not</b> use this parameter with TRC-20 tokens.
+     */
+    url?: string;
     customer?: CustomerRegistration;
     /**
      * The ISO 4217 code of the currency in which all transactions for the created virtual account will be billed

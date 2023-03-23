@@ -7,35 +7,36 @@ import type { FiatOrCryptoCurrency } from './FiatOrCryptoCurrency';
 
 export type DeployAlgoErc20OffchainKMSAddress = {
     /**
-     * Name of the ERC20 token - stored as a symbol on Blockchain
+     * The name of the token; used as an identifier within the Tatum platform and as a currency symbol on the blockchain
      */
     symbol: string;
     /**
-     * max supply of ERC20 token.
+     * The supply of the token
      */
     supply: string;
     /**
-     * Description of the ERC20 token
+     * The description of the token; used as a description within the Tatum platform and as a currency name on the blockchain
      */
     description: string;
     /**
-     * Base pair for ERC20 token. 1 token will be equal to 1 unit of base pair. Transaction value will be calculated according to this base pair.
-     */
-    basePair: FiatOrCryptoCurrency;
-    /**
-     * Exchange rate of the base pair. Each unit of the created curency will represent value of baseRate*1 basePair.
-     */
-    baseRate?: number;
-    customer?: CustomerRegistration;
-    /**
-     * Address on Ethereum blockchain, where all initial supply will be stored. Either xpub and derivationIndex, or address must be present, not both.
+     * The blockchain address to be assigned to the virtual account as a deposit address
      */
     address: string;
     /**
-     * Identifier of the mnemonic / private key associated in signing application.
-     * When hash identifies mnemonic, index must be present to represent specific account to pay from.
-     * Private key, mnemonic or signature Id must be present.
-     *
+     * The KMS identifier of either the <b>private key</b> of the blockchain address from which the fee for deploying the smart contract will be deducted, or the <b>mnemonic</b> to generate the private key for the blockchain address from which the fee will be deducted
      */
     signatureId: string;
+    /**
+     * (Only if the signature ID is mnemonic-based) The index of the address from which the fee will be deducted that was generated from the mnemonic
+     */
+    index?: number;
+    /**
+     * The base pair for the virtual currency that represents the token; used to calculate the value of a transaction
+     */
+    basePair: FiatOrCryptoCurrency;
+    /**
+     * The exchange rate for the base pair; one unit of the created virtual currency equals 1 unit of <code>basePair</code>*<code>baseRate</code>
+     */
+    baseRate?: number;
+    customer?: CustomerRegistration;
 }

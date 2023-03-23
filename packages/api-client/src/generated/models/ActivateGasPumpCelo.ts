@@ -20,7 +20,7 @@ export type ActivateGasPumpCelo = {
      */
     to: number;
     /**
-     * The currency to pay for the gas fee; if not set, defaults to CELO
+     * The currency in which the gas fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**

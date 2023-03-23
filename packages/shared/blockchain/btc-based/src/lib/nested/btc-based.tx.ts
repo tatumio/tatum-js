@@ -6,7 +6,9 @@ import {
   BtcTransactionFromUTXO,
   BtcTransactionFromUTXOKMS,
   BtcUTXO,
+  ChainUtxoEnum,
   Currency,
+  DataApiService,
   EstimateFeeFromUTXO,
   FeeBtcBased,
   LtcTransactionAddress,
@@ -57,10 +59,6 @@ export type BtcBasedFromWithKmsChange = BtcTransactionFromAddressKMS | LtcTransa
 export type BtcBasedUtxoWithChange = BtcTransactionFromUTXO | LtcTransactionUTXO
 export type BtcBasedUtxoKMSWithChange = BtcTransactionFromUTXOKMS | LtcTransactionUTXOKMS
 
-type GetTxByAddressType =
-  | typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
-  | typeof ApiServices.blockchain.ltc.ltcGetTxByAddress
-
 type GetUtxoType =
   | typeof ApiServices.blockchain.bitcoin.btcGetUtxo
   | typeof ApiServices.blockchain.ltc.ltcGetUtxo
@@ -75,7 +73,7 @@ export const btcBasedTransactions = (
   currency: Currency.BTC | Currency.LTC,
   utils: BtcBasedWalletUtils,
   apiCalls: {
-    getTxByAddress: GetTxByAddressType
+    getUTXOsByAddress: typeof DataApiService.getUtxosByAddress
     getUtxo: GetUtxoType
     broadcast: BroadcastType
     estimateFee: typeof BlockchainFeesService.estimateFeeBlockchain
@@ -114,52 +112,37 @@ export const btcBasedTransactions = (
     try {
       const privateKeysToSign = []
 
-      const utxos: BtcUTXO[] | LtcUTXO[] = []
-
       for (const item of body.fromAddress) {
         if (totalInputs >= totalOutputs) {
           break
         }
-        const txs = await apiCalls.getTxByAddress(item.address, 50, 0, 'incoming') // @TODO OPENAPI remove pageSize
-
-        for (const tx of txs) {
-          if (!tx.outputs || !tx.hash) continue
-          if (totalInputs >= totalOutputs) {
-            break
+        let chain: ChainUtxoEnum = 'bitcoin'
+        if (currency === Currency.LTC) {
+          if (options.testnet) {
+            chain = 'litecoin-testnet'
+          } else {
+            chain = 'litecoin'
           }
-
-          for (const [i, o] of tx.outputs.entries()) {
-            if (o.address !== item.address) {
-              continue
-            }
-            if (totalInputs >= totalOutputs) {
-              break
-            }
-
-            const utxo = await getUtxoSilent(tx.hash, i)
-            if (utxo === null) {
-              continue
-            }
-            utxos.push(utxo)
-
-            totalInputs += utxo.value
-            transaction.from([
-              prepareUnspentOutput({
-                txId: tx.hash,
-                outputIndex: i,
-                script: scriptFromAddress(o.address).toString(),
-                satoshis: utxo.value,
-              }),
-            ])
-
-            if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
-            else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
+        } else {
+          if (options.testnet) {
+            chain = 'bitcoin-testnet'
           }
         }
-      }
+        const utxos = await apiCalls.getUTXOsByAddress(chain, item.address, totalOutputs - totalInputs)
+        for (const utxo of utxos) {
+          totalInputs += utxo.value
+          transaction.from([
+            prepareUnspentOutput({
+              txId: utxo.txHash,
+              outputIndex: utxo.index,
+              script: scriptFromAddress(utxo.address).toString(),
+              satoshis: amountUtils.toSatoshis(utxo.value),
+            }),
+          ])
 
-      if (!options.skipAllChecks) {
-        await validateBalanceFromUTXO(body, utxos)
+          if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
+          else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
+        }
       }
 
       return privateKeysToSign

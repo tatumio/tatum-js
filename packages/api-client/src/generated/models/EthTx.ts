@@ -10,6 +10,10 @@ export type EthTx = {
      */
     blockHash?: string;
     /**
+     * Time of the transaction, in UTC seconds.
+     */
+    timestamp?: number;
+    /**
      * TRUE if the transaction was successful, FALSE, if the EVM reverted the transaction.
      */
     status?: boolean;

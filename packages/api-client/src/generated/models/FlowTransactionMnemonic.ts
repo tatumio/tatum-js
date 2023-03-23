@@ -16,7 +16,7 @@ export type FlowTransactionMnemonic = {
      */
     to: string;
     /**
-     * Amount to be sent, in Flow.
+     * Amount to be sent
      */
     amount: string;
     /**

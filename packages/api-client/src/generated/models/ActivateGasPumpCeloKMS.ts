@@ -20,7 +20,7 @@ export type ActivateGasPumpCeloKMS = {
      */
     to: number;
     /**
-     * The currency to pay for the gas fee; if not set, defaults to CELO
+     * The currency in which the gas fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
@@ -28,7 +28,7 @@ export type ActivateGasPumpCeloKMS = {
      */
     signatureId: string;
     /**
-     * (Only if the signature ID is mnemonic-based) The index of the specific address from the mnemonic
+     * (Only if the signature ID is mnemonic-based) The index of the address that will pay the gas fee that was generated from the mnemonic
      */
     index?: number;
 }

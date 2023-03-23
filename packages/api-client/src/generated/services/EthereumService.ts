@@ -2,6 +2,7 @@
 /* tslint:disable */
 /* eslint-disable */
 import type { BroadcastKMS } from '../models/BroadcastKMS';
+import type { CallEthSmartContractMethodCaller } from '../models/CallEthSmartContractMethodCaller';
 import type { CallReadSmartContractMethod } from '../models/CallReadSmartContractMethod';
 import type { CallSmartContractMethod } from '../models/CallSmartContractMethod';
 import type { CallSmartContractMethodKMS } from '../models/CallSmartContractMethodKMS';
@@ -231,7 +232,9 @@ export class EthereumService {
 
     /**
      * Get Ethereum Transaction
-     * <h4>1 credit per API call.</h4><br/><p>Get Ethereum transaction by transaction hash.</p>
+     * <p><b>1 credit per API call</b></p>
+     * <p>Get Ethereum transaction by transaction hash.</p>
+     *
      * @param hash Transaction hash
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
      * @returns EthTx OK
@@ -330,13 +333,14 @@ export class EthereumService {
     }
 
     /**
-     * Send Ethereum / ERC20 from account to account
+     * Send ETH or fungible tokens (ERC-20) from account to account
      * <p><b>2 credits per API call</b></p>
-     * <p>Send Ethereum or Tatum supported ERC20 token from account to account.<br/><br/>
-     * <p><b>Signing a transaction</b></p>
-     * <p>When sending ETH, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Send ETH or Tatum-supported fungible tokens (ERC-20) from account to account.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> Sending the fungible tokens is supported only on the mainnet.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When sending ETH, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
-     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
@@ -379,8 +383,9 @@ export class EthereumService {
      * <p>For more information about invoking methods in smart contracts, see <a href="https://support.tatum.io/support/solutions/articles/80001052441" target="_blank">this article</a> on our Support Portal.</p>
      * <p><b>Signing a transaction</b><br/>
      * When invoking a method in a smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>If <b>caller</b> field is present instead of the private key, Tatum will sign the transaction with the managed private key connected to the caller address. This is applicable only for paid mainnet plans and all testnet plans. Keep in mind that the caller address must have enough access right to perform the action in the smart contract method.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
-     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
@@ -388,7 +393,7 @@ export class EthereumService {
      * @throws ApiError
      */
     public static ethBlockchainSmartContractInvocation(
-        requestBody: (CallSmartContractMethod | CallReadSmartContractMethod | CallSmartContractMethodKMS),
+        requestBody: (CallSmartContractMethod | CallReadSmartContractMethod | CallEthSmartContractMethodCaller | CallSmartContractMethodKMS),
         xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
     ): CancelablePromise<(TransactionHash | SignatureId | Data)> {
         return __request({
@@ -428,7 +433,7 @@ export class EthereumService {
     ): CancelablePromise<Array<EthTxInternal>> {
         return __request({
             method: 'GET',
-            path: `/v3/ethereum/account/transaction/erc20/internal/${address}`,
+            path: `/v3/ethereum/account/transaction/internal/${address}`,
             headers: {
                 'x-testnet-type': xTestnetType,
             },

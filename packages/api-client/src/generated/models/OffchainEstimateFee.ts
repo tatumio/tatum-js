@@ -8,7 +8,7 @@ export type OffchainEstimateFee = {
      */
     senderAccountId: string;
     /**
-     * Blockchain address to send assets to. For BTC, LTC, DOGE and BCH, it is possible to enter list of multiple recipient blockchain addresses as a comma separated string.
+     * Blockchain address to send assets to. For BTC, LTC, and DOGE, it is possible to enter list of multiple recipient blockchain addresses as a comma separated string.
      */
     address: string;
     /**
@@ -16,7 +16,7 @@ export type OffchainEstimateFee = {
      */
     amount: string;
     /**
-     * For BTC, LTC, DOGE and BCH, it is possible to enter list of multiple recipient blockchain amounts. List of recipient addresses must be present in the address field and total sum of amounts must be equal to the amount field.
+     * For BTC, LTC, and DOGE, it is possible to enter list of multiple recipient blockchain amounts. List of recipient addresses must be present in the address field and total sum of amounts must be equal to the amount field.
      */
     multipleAmounts?: Array<string>;
     /**

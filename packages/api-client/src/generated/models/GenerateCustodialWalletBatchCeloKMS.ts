@@ -10,7 +10,7 @@ export type GenerateCustodialWalletBatchCeloKMS = {
      */
     chain: 'CELO';
     /**
-     * The currency in which the transaction fee will be paid
+     * The currency in which the gas fee will be paid
      */
     feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
     /**

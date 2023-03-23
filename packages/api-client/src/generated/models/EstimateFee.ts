@@ -4,27 +4,27 @@
 
 export type EstimateFee = {
     /**
-     * Blockchain to estimate fee for.
+     * The blockchain to estimate the fee for
      */
     chain: 'CELO' | 'ETH' | 'BSC' | 'XDC' | 'ONE' | 'MATIC' | 'KLAY';
     /**
-     * Type of transaction
+     * The type of the transaction
      */
     type: 'DEPLOY_ERC20' | 'DEPLOY_NFT' | 'MINT_NFT' | 'BURN_NFT' | 'TRANSFER_NFT' | 'TRANSFER_ERC20' | 'DEPLOY_AUCTION' | 'DEPLOY_MARKETPLACE';
     /**
-     * Sender address, if type is TRANSFER_ERC20
+     * (Only if <code>type=TRANSFER_ERC20</code>) The blockchain address of the sender address
      */
     sender?: string;
     /**
-     * Blockchain address to send assets, if type is TRANSFER_ERC20
+     * (Only if <code>type=TRANSFER_ERC20</code>) The blockchain address of the recipient address
      */
     recipient?: string;
     /**
-     * Contract address of ERC20 token, if type is TRANSFER_ERC20
+     * (Only if <code>type=TRANSFER_ERC20</code>) The blockchain address of the smart address of the fungible token
      */
     contractAddress?: string;
     /**
-     * Amount to be sent in ERC20, if type is TRANSFER_ERC20
+     * (Only if <code>type=TRANSFER_ERC20</code>) The amount of the fungible token to be sent
      */
     amount?: string;
 }

@@ -1,5 +1,5 @@
-import { DogeTransactionUTXO } from '@tatumio/api-client'
-import { DogeTransactionAddress, TatumDogeSDK } from '@tatumio/doge'
+import { DogeTransactionAddress, DogeTransactionUTXO } from '@tatumio/api-client'
+import { TatumDogeSDK } from '@tatumio/doge'
 
 const dogeSDK = TatumDogeSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
 

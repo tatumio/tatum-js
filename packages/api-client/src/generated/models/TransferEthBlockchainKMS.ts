@@ -3,8 +3,30 @@
 /* eslint-disable */
 
 import type { CustomFee } from './CustomFee';
+import type { Erc20Currency } from './Erc20Currency';
 
 export type TransferEthBlockchainKMS = {
+    /**
+     * The blockchain address of the recipient
+     */
+    to: string;
+    /**
+     * The amount to be sent
+     */
+    amount: string;
+    /**
+     * The currency in which the amount will be sent<br/>Fungible tokens (ERC-20) are available only on the mainnet.
+     */
+    currency: Erc20Currency;
+    /**
+     * The KMS identifier of the private key of the sender's blockchain address; the fee will be deducted from this address
+     */
+    signatureId: string;
+    /**
+     * (Only if the signature ID is mnemonic-based) The index of the address from which the fee will be deducted that was generated from the mnemonic
+     */
+    index?: number;
+    fee?: CustomFee;
     /**
      * Additional data that can be passed to a blockchain transaction as a data property; must be in the hexadecimal format
      */
@@ -13,25 +35,4 @@ export type TransferEthBlockchainKMS = {
      * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * Blockchain address to send assets
-     */
-    to: string;
-    /**
-     * Currency to transfer from Ethereum Blockchain Account.
-     */
-    currency: 'USDT' | 'LEO' | 'LINK' | 'UNI' | 'FREE' | 'GMC' | 'GMC_BSC' | 'RMD' | 'MKR' | 'USDC' | 'BAT' | 'TUSD' | 'BUSD' | 'PAX' | 'PAXG' | 'MMY' | 'WBTC' | 'XCON' | 'ETH';
-    fee?: CustomFee;
-    /**
-     * Amount to be sent in Ether.
-     */
-    amount: string;
-    /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
-     */
-    signatureId: string;
-    /**
-     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
-     */
-    index?: number;
 }

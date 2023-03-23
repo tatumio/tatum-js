@@ -4,36 +4,45 @@
 
 export type FlowBlock = {
     /**
-     * Hash of the block.
+     * The hash of the block
      */
     id?: string;
     /**
-     * Hash of the parent block.
+     * The hash of the parent block
      */
     parentId?: string;
     /**
-     * The block number.
+     * The number of the block
      */
     height?: number;
     /**
-     * Timestamp of the block.
+     * The timestamp of the block
      */
     timestamp?: string;
     /**
-     * Array of transaction IDs.
+     * Collection guaranties
      */
-    transactions?: Array<string>;
+    collectionGuarantees?: Array<{
+        /**
+         * The collection guarantee
+         */
+        collectionId?: string;
+    }>;
     /**
-     * Array of signatures.
-     */
-    signatures?: Array<string>;
-    /**
-     * Array of block seals.
+     * Block seals
      */
     blockSeals?: Array<{
+        /**
+         * The ID of the block being sealed
+         */
         blockId?: string;
-        executionReceiptSignatures?: Array<string>;
+        /**
+         * The ID of the execution receipt being sealed
+         */
         executionReceiptId?: string;
-        resultApprovalSignatures?: Array<string>;
     }>;
+    /**
+     * The IDs of transactions
+     */
+    transactions?: Array<string>;
 }

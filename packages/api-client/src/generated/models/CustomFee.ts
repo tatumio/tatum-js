@@ -7,11 +7,11 @@
  */
 export type CustomFee = {
     /**
-     * Gas limit for transaction in gas price.
-     */
-    gasLimit: string;
-    /**
-     * Gas price in Gwei.
+     * The price for one gas unit (in Gwei)
      */
     gasPrice: string;
+    /**
+     * The maximum number of gas units that you are willing to spend on processing the transaction at the provided gas price
+     */
+    gasLimit: string;
 }

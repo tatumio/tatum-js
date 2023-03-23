@@ -2,6 +2,9 @@
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-doge'
 import {
   ApiServices,
+  DataApiService,
+  DogeTransactionAddress,
+  DogeTransactionAddressKMS,
   DogeTransactionUTXO,
   DogeTransactionUTXOKMS,
   DogeUTXO,
@@ -11,48 +14,26 @@ import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 import { amountUtils } from '@tatumio/shared-abstract-sdk'
 import { DogeSdkError } from './doge.sdk.errors'
 
-interface DogeTransactionBase {
-  to: Array<{
-    address: string;
-    value: number;
-  }>;
-  fee?: string;
-  changeAddress?: string;
-}
-
-export interface DogeTransactionAddress extends DogeTransactionBase {
-  fromAddress: {
-    address: string,
-    privateKey: string,
-  }[]
-}
-
-interface DogeTransactionAddressKMS extends DogeTransactionBase {
-  fromAddress: {
-    address: string,
-    signatureId: string,
-    index?: number,
-  }[]
-}
-
 export type DogeTransactionTypes =
   DogeTransactionUTXO
   | DogeTransactionUTXOKMS
   | DogeTransactionAddress
   | DogeTransactionAddressKMS
 
+type DogeTxOptions = { testnet: boolean }
+
 export const dogeTransactions = (
   apiCalls: {
     dogeBroadcast: typeof ApiServices.blockchain.doge.dogeBroadcast
-    getTxByAddress: typeof ApiServices.blockchain.doge.dogeGetTxByAddress,
+    getUTXOsByAddress: typeof DataApiService.getUtxosByAddress,
     getUtxo: typeof ApiServices.blockchain.doge.dogeGetUtxo,
   } = {
     dogeBroadcast: ApiServices.blockchain.doge.dogeBroadcast,
-    getTxByAddress: ApiServices.blockchain.doge.dogeGetTxByAddress,
+    getUTXOsByAddress: DataApiService.getUtxosByAddress,
     getUtxo: ApiServices.blockchain.doge.dogeGetUtxo,
   },
 ): BtcBasedTx<DogeTransactionTypes> => {
-  const prepareSignedTransaction = async (body: DogeTransactionTypes): Promise<string> => {
+  const prepareSignedTransaction = async (body: DogeTransactionTypes, options: DogeTxOptions): Promise<string> => {
     try {
       const { to, fee, changeAddress } = body
       const transaction = new Transaction()
@@ -66,58 +47,38 @@ export const dogeTransactions = (
       }
       if ('fromUTXO' in body) {
         for (const item of body.fromUTXO) {
-          transaction.from({
-            txId: item.txHash,
-            outputIndex: item.index,
-            script: Script.fromAddress(item.address).toString(),
-            satoshis: amountUtils.toSatoshis(item.value),
-          })
+          transaction.from([
+            Transaction.UnspentOutput.fromObject({
+              txId: item.txHash,
+              outputIndex: item.index,
+              script: Script.fromAddress(item.address).toString(),
+              satoshis: amountUtils.toSatoshis(item.value),
+            }),
+          ])
           if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
           else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
         }
       } else if ('fromAddress' in body) {
         let totalInputs = 0
         for (const item of body.fromAddress) {
-          const utxos: DogeUTXO[] = []
-          const txs = await apiCalls.getTxByAddress(item.address, 50, 0, 'incoming')
-
           if (totalInputs >= totalOutputs) {
             break
           }
-          for (const tx of txs) {
-            if (totalInputs >= totalOutputs) {
-              break
-            }
-            if (!tx.outputs || !tx.hash) continue
+          const utxos = await apiCalls.getUTXOsByAddress(options.testnet ? 'doge-testnet' : 'doge', item.address, totalOutputs - totalInputs)
+          for (const utxo of utxos) {
+            const satoshis = amountUtils.toSatoshis(utxo.value)
+            totalInputs += satoshis
+            transaction.from([
+              Transaction.UnspentOutput.fromObject({
+                txId: utxo.txHash,
+                outputIndex: utxo.index,
+                script: Script.fromAddress(utxo.address).toString(),
+                satoshis,
+              }),
+            ])
 
-            for (const [i, o] of tx.outputs.entries()) {
-              if (o.address !== item.address) {
-                continue
-              }
-              if (totalInputs >= totalOutputs) {
-                break
-              }
-
-              const utxo = await getUtxoSilent(tx.hash, i)
-              if (utxo === null) {
-                continue
-              }
-              utxos.push(utxo)
-
-              const satoshis = amountUtils.toSatoshis(utxo.value)
-              totalInputs += satoshis
-              transaction.from([
-                Transaction.UnspentOutput.fromObject({
-                  txId: tx.hash,
-                  outputIndex: i,
-                  script: Script.fromAddress(o.address).toString(),
-                  satoshis,
-                }),
-              ])
-
-              if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
-              else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
-            }
+            if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
+            else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
           }
         }
       }
@@ -148,9 +109,9 @@ export const dogeTransactions = (
     }
   }
 
-  const sendTransaction = async (body: DogeTransactionTypes): Promise<TransactionHash> => {
+  const sendTransaction = async (body: DogeTransactionTypes, options: DogeTxOptions): Promise<TransactionHash> => {
     return apiCalls.dogeBroadcast({
-      txData: await prepareSignedTransaction(body),
+      txData: await prepareSignedTransaction(body, options),
     })
   }
 

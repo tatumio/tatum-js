@@ -13,8 +13,8 @@ export class WithdrawalService {
 
     /**
      * Store withdrawal
-     * <h4>2 credits per API call.</h4><br/><p>
-     * <p>Create a withdrawal from Tatum Ledger account to the blockchain.<br/>
+     * <h4>2 credits per API call</h4>
+     * <p>Create a withdrawal from Tatum Ledger account to the blockchain.</p>
      * <h4>BTC, LTC, DOGE, BCH</h4>
      * <p>
      * When withdrawal from Tatum is executed, all deposits, which are not processed yet are used as an input and
@@ -43,9 +43,9 @@ export class WithdrawalService {
      * XLM withdrawal can contain memo except of address, which is placed in attr parameter of withdrawal request. XLM blockchain does not have possibility to enter source account information.
      * It is possible to create memo in format 'destination|source', which is supported way of memo in Tatum and also there is information about the sender account in the blockchain.
      * </p>
-     * <br/>
-     * When withdrawal is created, all other withdrawals with the same currency are pending, unless the current one is marked as complete or cancelled.<br/>
-     * Tatum ledger transaction is created for every withdrawal request with operation type WITHDRAWAL. The value of the transaction is the withdrawal amount + blockchain fee, which should be paid.
+     * <p>
+     * When withdrawal is created, all other withdrawals with the same currency are pending, unless the current one is marked as complete or cancelled.</p>
+     * <p>Tatum ledger transaction is created for every withdrawal request with operation type WITHDRAWAL. The value of the transaction is the withdrawal amount + blockchain fee, which should be paid.
      * In the situation, when there is withdrawal for ERC20, XLM, or XRP based custom assets, the fee is not included in the transaction because it is paid in different assets than the withdrawal itself.
      * </p>
      *

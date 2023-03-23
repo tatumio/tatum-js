@@ -8,7 +8,7 @@ import type { FiatOrCryptoCurrency } from './FiatOrCryptoCurrency';
 
 export type Erc20Address = {
     /**
-     * The name of the token; used as an identifier within the Tatum platform and as a currency symbol on the blockchain
+     * The name of the token; used as an identifier within the Tatum platform and as a currency symbol on the blockchain<br/>The token name that you specify here must be the same as the token name in the <code>symbol</code> parameter of the smart contract that you <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy" target="_blank">are going to deploy or have already deployed</a> for this token.
      */
     symbol: string;
     /**

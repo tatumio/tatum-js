@@ -17,6 +17,7 @@ export type TransferCeloBlockchainKMS = {
      * Currency of the transaction.
      */
     currency: 'CELO' | 'CUSD' | 'CEUR';
+    fee?: CustomFee;
     /**
      * Blockchain address to send assets
      */
@@ -25,7 +26,6 @@ export type TransferCeloBlockchainKMS = {
      * Currency to pay for transaction gas
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
-    fee?: CustomFee;
     /**
      * Amount to be sent.
      */

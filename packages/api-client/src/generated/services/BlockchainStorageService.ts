@@ -3,6 +3,7 @@
 /* eslint-disable */
 import type { CreateRecord } from '../models/CreateRecord';
 import type { CreateRecordCelo } from '../models/CreateRecordCelo';
+import type { CreateRecordKMS } from '../models/CreateRecordKMS';
 import type { TransactionHash } from '../models/TransactionHash';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -24,6 +25,7 @@ export class BlockchainStorageService {
      * <li>Harmony</li>
      * <li>Klaytn</li>
      * <li>Polygon</li>
+     * <li>XDC</li>
      * </ul>
      *
      * @param requestBody
@@ -31,7 +33,7 @@ export class BlockchainStorageService {
      * @throws ApiError
      */
     public static storeLog(
-        requestBody: (CreateRecord | CreateRecordCelo),
+        requestBody: (CreateRecord | CreateRecordKMS | CreateRecordCelo),
     ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',

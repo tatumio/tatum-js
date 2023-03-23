@@ -11,4 +11,8 @@ export type AlgoWallet = {
      * secretKey can generate Mnemonic, similar to private Key.
      */
     secret?: string;
+    /**
+     * Mnemonic of the wallet.
+     */
+    mnemonic?: string;
 }

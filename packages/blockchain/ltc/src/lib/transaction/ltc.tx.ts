@@ -7,17 +7,17 @@ import {
 } from '@tatumio/shared-blockchain-btc-based'
 import { Blockchain } from '@tatumio/shared-core'
 // @ts-ignore
-import { Transaction, Script, PrivateKey } from 'bitcore-lib-ltc'
+import { PrivateKey, Script, Transaction } from 'bitcore-lib-ltc'
 
 export const ltcTransactions = (
   apiCalls: {
-    getTxByAddress: typeof ApiServices.blockchain.ltc.ltcGetTxByAddress
+    getUTXOsByAddress: typeof ApiServices.data.getUtxosByAddress
     broadcast: typeof ApiServices.blockchain.ltc.ltcBroadcast
     getRawTransaction: typeof ApiServices.blockchain.ltc.ltcGetRawTransaction
     getUtxo: typeof ApiServices.blockchain.ltc.ltcGetUtxo
     estimateFee: typeof BlockchainFeesService.estimateFeeBlockchain
   } = {
-    getTxByAddress: ApiServices.blockchain.ltc.ltcGetTxByAddress,
+    getUTXOsByAddress: ApiServices.data.getUtxosByAddress,
     broadcast: ApiServices.blockchain.ltc.ltcBroadcast,
     getRawTransaction: ApiServices.blockchain.ltc.ltcGetRawTransaction,
     getUtxo: ApiServices.blockchain.ltc.ltcGetUtxo,

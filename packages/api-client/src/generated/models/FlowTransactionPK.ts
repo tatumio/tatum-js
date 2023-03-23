@@ -16,7 +16,7 @@ export type FlowTransactionPK = {
      */
     to: string;
     /**
-     * Amount to be sent, in Flow.
+     * Amount to be sent
      */
     amount: string;
     /**

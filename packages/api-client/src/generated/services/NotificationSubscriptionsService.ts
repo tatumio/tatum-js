@@ -533,7 +533,7 @@ export class NotificationSubscriptionsService {
                                                                         }
 
                                                                         /**
-                                                                         * Count of found entities for get webhook request
+                                                                         * Count of subscriptions
                                                                          * <h4>1 credit per API call.</h4><br/><p>Count of subscriptions that were found from /v3/subscription</p>
                                                                          * @param pageSize Max number of items per page is 50.
                                                                          * @param offset Offset to obtain next page of the data.

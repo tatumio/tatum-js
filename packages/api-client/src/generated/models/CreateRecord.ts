@@ -12,7 +12,7 @@ export type CreateRecord = {
     /**
      * The blockchain to store the data on
      */
-    chain: 'BSC' | 'EGLD' | 'ETH' | 'KLAY' | 'MATIC' | 'ONE';
+    chain: 'BSC' | 'EGLD' | 'ETH' | 'KLAY' | 'MATIC' | 'ONE' | 'XDC';
     /**
      * The private key of the blockchain address from which the transaction will be made and the transaction fee will be deducted
      */

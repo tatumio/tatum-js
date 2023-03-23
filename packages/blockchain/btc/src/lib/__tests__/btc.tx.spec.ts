@@ -74,7 +74,7 @@ describe('BTC transactions', () => {
     requestGetUtxo: mockRequestGetUtxo,
     requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
     requestGetTransactionsNotFound: mockRequestGetTransactionsNotFound,
-    requestGetTxByAddress: mockRequestGetTxByAddress,
+    requestGetUTXOsByAddress: mockRequestGetUTXOsByAddress,
     requestEstimateFee: mockRequestEstimateFee,
     broadcast: mockedApi.blockchain.bitcoin.btcBroadcast,
   }
@@ -145,22 +145,20 @@ describe('BTC transactions', () => {
     mockedApi.blockchain.bitcoin.btcGetTxByAddress.mockResolvedValue([])
   }
 
-  function mockRequestGetTxByAddress(
-    obj: BtcTx = {
-      hash: TX_HASH,
-      outputs: [
-        {
-          value: 17.61910726,
-          address: 'tb1qm2ltp8mnz0vj84kvslhflaedj53p0srf6vdvh8',
-        },
-        {
-          value: UTXO_AMOUNT,
-          address: ADDRESS_0,
-        },
-      ],
+  function mockRequestGetUTXOsByAddress(
+    obj: any = {
+      'txHash': TX_HASH,
+      'index': 1,
+      'value': UTXO_AMOUNT,
+      'address': ADDRESS_0,
+      'chain': 'bitcoin-testnet',
     },
   ) {
-    mockedApi.blockchain.bitcoin.btcGetTxByAddress.mockResolvedValue([obj])
+    if (obj === -1) {
+      mockedApi.data.getUtxosByAddress.mockResolvedValue([])
+    } else {
+      mockedApi.data.getUtxosByAddress.mockResolvedValue([obj])
+    }
   }
 
   function mockRequestEstimateFee(

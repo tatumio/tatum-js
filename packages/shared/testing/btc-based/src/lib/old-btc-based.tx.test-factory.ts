@@ -96,7 +96,6 @@ export const oldBtcBasedTxTestFactory = {
       validTxData: string
     }
     mock: {
-      requestGetTxByAddress: (obj?: { outputs: [] }) => void
       requestGetUtxo: (obj?: unknown) => void
       requestGetUtxoNotFound: () => void
       broadcast: ((requestBody: BroadcastKMS) => CancelablePromise<TransactionHash>) & jest.Mock
@@ -105,7 +104,6 @@ export const oldBtcBasedTxTestFactory = {
     const options = { testnet: true }
     describe('sendTransaction', () => {
       it('valid', async () => {
-        args.mock.requestGetTxByAddress()
         args.mock.requestGetUtxo()
 
         args.mock.broadcast.mockReturnValue(Promise.resolve({ txId: '12345' }))
@@ -123,7 +121,6 @@ export const oldBtcBasedTxTestFactory = {
 
     describe('prepareSignedTransaction', () => {
       it('valid', async () => {
-        args.mock.requestGetTxByAddress()
         const txData = await args.transactions.prepareSignedTransaction(
           args.getRequestBodyFromAddress(args.data.validAmount),
           options,
@@ -132,7 +129,6 @@ export const oldBtcBasedTxTestFactory = {
       })
 
       it('not enough money on balance', async () => {
-        args.mock.requestGetTxByAddress()
 
         await expect(
           args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(100500), {
@@ -142,7 +138,6 @@ export const oldBtcBasedTxTestFactory = {
       })
 
       it('fee = 0', async () => {
-        args.mock.requestGetTxByAddress()
 
         await expect(
           args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(args.data.validAmount + 1), {

@@ -31,7 +31,7 @@ export type BtcBasedValidation = {
 export type BtcBasedMocks = {
   requestGetRawTx: (obj?: unknown) => void
   requestGetUtxo: (obj?: unknown) => void
-  requestGetTxByAddress: (obj?: { outputs: [] }) => void
+  requestGetUTXOsByAddress: (obj?: any) => void
   requestGetUtxoNotFound: () => void
   requestGetTransactionsNotFound: () => void
   requestEstimateFee: (obj?: unknown) => void
@@ -190,7 +190,7 @@ const definedChangeAddressFromKmsBody = (
 
 const EXPECTED_TX_ID = '1111111111111111111111111111111'
 const mockRequestsFromAddress = (mock: BtcBasedMocks) => {
-  mock.requestGetTxByAddress()
+  mock.requestGetUTXOsByAddress()
   mock.requestGetUtxo()
   mock.requestEstimateFee()
   mock.broadcast.mockReturnValue(Promise.resolve({ txId: EXPECTED_TX_ID }))
@@ -426,8 +426,7 @@ export const btcBasedTxTestFactory = {
       ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_NO_INPUTS)
     })
     it('no inputs - balance', async () => {
-      args.mock.requestGetTransactionsNotFound()
-      args.mock.requestGetUtxoNotFound()
+      args.mock.requestGetUTXOsByAddress(-1)
 
       await expect(
         args.transactions.prepareSignedTransaction(definedChangeAddressFromBody(args.data), options),

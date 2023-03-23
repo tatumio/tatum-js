@@ -8,7 +8,7 @@ import type { FiatOrCryptoCurrency } from './FiatOrCryptoCurrency';
 
 export type Erc20 = {
     /**
-     * The name of the token; used as an identifier within the Tatum platform and as a currency symbol on the blockchain
+     * The name of the token; used as an identifier within the Tatum platform and as a currency symbol on the blockchain<br/>The token name that you specify here must be the same as the token name in the <code>symbol</code> parameter of the smart contract that you <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy" target="_blank">are going to deploy or have already deployed</a> for this token.
      */
     symbol: string;
     /**
@@ -24,7 +24,7 @@ export type Erc20 = {
      */
     description: string;
     /**
-     * The extended public key of the wallet from which a deposit address for the virtual account will be generated; the supply of the token will be stored on this address<br/><b>NOTE:</b>On Solana, you only can assign an existing address to the virtual account; use the <code>Erc20Address</code> schema of this API.
+     * The extended public key of the wallet from which a deposit address for the virtual account will be generated<br/><b>NOTE:</b> On Solana, you only can assign an existing address to the virtual account; use the <code>Erc20Address</code> schema of this API.
      */
     xpub: string;
     /**

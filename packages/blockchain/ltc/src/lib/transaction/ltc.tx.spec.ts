@@ -68,7 +68,7 @@ describe('LTC transactions', () => {
     requestGetUtxo: mockRequestGetUtxo,
     requestGetUtxoNotFound: mockRequestGetUtxoNotFound,
     requestGetTransactionsNotFound: mockRequestGetTransactionsNotFound,
-    requestGetTxByAddress: mockRequestGetTxByAddress,
+    requestGetUTXOsByAddress: mockRequestGetUTXOsByAddress,
     requestEstimateFee: mockRequestEstimateFee,
     broadcast: mockedApi.blockchain.ltc.ltcBroadcast,
   }
@@ -148,24 +148,19 @@ describe('LTC transactions', () => {
     mockedApi.blockchain.ltc.ltcGetTxByAddress.mockResolvedValue([])
   }
 
-  function mockRequestGetTxByAddress(
-    obj: LtcTx = {
-      hash: TX_HASH,
-      outputs: [
-        {
-          value: UTXO_AMOUNT.toString(),
-          script: '76a91401ece42befef00eb643febc32cb0764563fb4e6988ac',
-          address: ADDRESS_0,
-        },
-        {
-          value: '11254.98177740',
-          script: 'a914c15acd1ea3f16a6d9dd02b5dc6964dc01294ca9387',
-          address: 'QeEMJJZKbP4XLG8XoM82vsoMBnUbj6cYLb',
-        },
-      ],
+  function mockRequestGetUTXOsByAddress(
+    obj: any = {
+      txHash: TX_HASH,
+      index: 0,
+      address: ADDRESS_0,
+      value: UTXO_AMOUNT,
     },
   ) {
-    mockedApi.blockchain.ltc.ltcGetTxByAddress.mockResolvedValue([obj])
+    if (obj === -1) {
+      mockedApi.data.getUtxosByAddress.mockResolvedValue([])
+    } else {
+      mockedApi.data.getUtxosByAddress.mockResolvedValue([obj])
+    }
   }
 
   function mockRequestEstimateFee(

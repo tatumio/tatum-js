@@ -68,7 +68,7 @@ export type TransferCustodialWalletBatchKMS = {
      */
     signatureId: string;
     /**
-     * (Only if the signature ID is mnemonic-based) The index of the "master address" that was generated from the mnemonic
+     * (Only if the signature ID is mnemonic-based) The index of the "master address"
      */
     index?: number;
     /**

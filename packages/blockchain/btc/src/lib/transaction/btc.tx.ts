@@ -4,12 +4,12 @@ import { btcWalletUtils } from '../btc.wallet.utils'
 
 export const btcTransactions = (
   apiCalls: {
-    getTxByAddress: typeof ApiServices.blockchain.bitcoin.btcGetTxByAddress
+    getUTXOsByAddress: typeof ApiServices.data.getUtxosByAddress
     getUtxo: typeof ApiServices.blockchain.bitcoin.btcGetUtxo
     broadcast: typeof ApiServices.blockchain.bitcoin.btcBroadcast
     estimateFee: typeof BlockchainFeesService.estimateFeeBlockchain
   } = {
-    getTxByAddress: ApiServices.blockchain.bitcoin.btcGetTxByAddress,
+    getUTXOsByAddress: ApiServices.data.getUtxosByAddress,
     getUtxo: ApiServices.blockchain.bitcoin.btcGetUtxo,
     broadcast: ApiServices.blockchain.bitcoin.btcBroadcast,
     estimateFee: BlockchainFeesService.estimateFeeBlockchain,

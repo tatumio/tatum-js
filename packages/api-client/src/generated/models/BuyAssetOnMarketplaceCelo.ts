@@ -6,37 +6,37 @@ import type { CustomFee } from './CustomFee';
 
 export type BuyAssetOnMarketplaceCelo = {
     /**
-     * Blockchain to work with.
+     * The blockchain to work with
      */
     chain: 'CELO';
+    /**
+     * The blockchain address of the marketplace smart contract
+     */
+    contractAddress: string;
+    /**
+     * The ID of the listing with the asset that you want to buy
+     */
+    listingId: string;
     /**
      * The currency in which the transaction fee will be paid
      */
     feeCurrency: 'CELO' | 'CUSD' | 'CEUR';
     /**
-     * Address of the marketplace smart contract.
+     * The private key of the blockchain address from which the fee will be deducted
      */
-    contractAddress: string;
+    fromPrivateKey: string;
     /**
-     * Optional address of the ERC20 token, which will be used as a selling currency of the NFT.
+     * (Only if you pay with the native blockchain currency) The price of the asset that you want to buy plus the marketplace fee. Do not use if you pay with fungible tokens.
+     */
+    amount?: string;
+    /**
+     * (Only if you pay with the fungible tokens) The blockchain address of the fungible tokens. Do not use if you pay with the native blockchain currency.
      */
     erc20Address?: string;
     /**
-     * ID of the listing.
-     */
-    listingId: string;
-    /**
-     * In case of the ERC20 listing, it's possible to buy on behalf of someone else. This value is the address of the buyer, which should approve spending of the ERC20 tokens for the Marketplace contract. This could be used for a buying from the custodial wallet address.
+     * (Only if you want to buy the asset on behalf of someone else and this person wants to pay with the fungible tokens; for example, for buying the asset from a custodial wallet address) The blockchain address of the buyer on whose behalf you are buying the asset<br/>The buyer must <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Approve" target="_blank">allow the marketplace smart contract to access their tokens</a> before you make the purchase.
      */
     buyer?: string;
-    /**
-     * Amount of the assets to be sent for buying.
-     */
-    amount: string;
-    /**
-     * Private key of sender address. Private key, or signature Id must be present.
-     */
-    fromPrivateKey: string;
     /**
      * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */

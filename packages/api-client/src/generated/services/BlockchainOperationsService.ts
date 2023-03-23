@@ -23,12 +23,6 @@ import type { DeployErc20OffchainPKAddress } from '../models/DeployErc20Offchain
 import type { DeployErc20OffchainPKXpub } from '../models/DeployErc20OffchainPKXpub';
 import type { DeployErc20Response } from '../models/DeployErc20Response';
 import type { DeployErc20SignatureResponse } from '../models/DeployErc20SignatureResponse';
-import type { DeployKCSErc20OffchainKMSAddress } from '../models/DeployKCSErc20OffchainKMSAddress';
-import type { DeployKCSErc20OffchainKMSXpub } from '../models/DeployKCSErc20OffchainKMSXpub';
-import type { DeployKCSErc20OffchainMnemonicAddress } from '../models/DeployKCSErc20OffchainMnemonicAddress';
-import type { DeployKCSErc20OffchainMnemXpub } from '../models/DeployKCSErc20OffchainMnemXpub';
-import type { DeployKCSErc20OffchainPKAddress } from '../models/DeployKCSErc20OffchainPKAddress';
-import type { DeployKCSErc20OffchainPKXpub } from '../models/DeployKCSErc20OffchainPKXpub';
 import type { DeployTrcOffchainKMSAddress } from '../models/DeployTrcOffchainKMSAddress';
 import type { DeployTrcOffchainKMSXpub } from '../models/DeployTrcOffchainKMSXpub';
 import type { DeployTrcOffchainMnemonicAddress } from '../models/DeployTrcOffchainMnemonicAddress';
@@ -525,16 +519,14 @@ export class BlockchainOperationsService {
 
     /**
      * Deploy an Ethereum ERC-20 smart contract to the blockchain and a virtual account
-     * <h4>4 credits per API call.</h4><br/>
+     * <p><b>4 credits per API call</b></p>
      * <p>Deploy an Ethereum ERC-20 smart contract. This is a helper method, which is combination of
-     * <a href="#operation/registerErc20Token">Register new ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
-     * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <a href="#operation/registerErc20Token">Register new ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.</p>
+     * <p>After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When deploying an Ethereum ERC-20 smart contract to the blockchain and a virtual account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -640,18 +632,14 @@ export class BlockchainOperationsService {
 
     /**
      * Deploy a BNB Smart Chain BEP-20 smart contract to the blockchain and a virtual account
-     * <h4>4 credits per API call.</h4><br/>
+     * <p><b>4 credits per API call</b></p>
      * <p>Deploy a BNB Smart Chain BEP-20 smart contract. This is a helper method, which is combination of
-     * <a href="#operation/registerErc20Token">Register new BEP20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
-     * <br/>
-     * <br/>
-     * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <a href="#operation/registerErc20Token">Register new BEP20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.</p>
+     * <p>After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When deploying a BNB Smart Chain BEP-20 smart contract to the blockchain and a virtual account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -715,18 +703,14 @@ export class BlockchainOperationsService {
 
     /**
      * Deploy a Klaytn ERC-20-equivalent smart contract to the blockchain and a virtual account
-     * <h4>4 credits per API call.</h4><br/>
+     * <p><b>4 credits per API call</b></p>
      * <p>Deploy a Klaytn ERC-20-equivalent smart contract. This is a helper method, which is combination of
-     * <a href="#operation/registerErc20Token">Register new ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
-     * <br/>
-     * <br/>
-     * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <a href="#operation/registerErc20Token">Register new ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.</p>
+     * <p>After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When deploying a Klaytn ERC-20-equivalent smart contract to the blockchain and a virtual account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -830,18 +814,14 @@ export class BlockchainOperationsService {
 
     /**
      * Deploy a XinFin ERC-20-equivalent smart contract to the blockchain and a virtual account
-     * <h4>4 credits per API call.</h4><br/>
+     * <p><b>4 credits per API call</b></p>
      * <p>Deploy a XinFin ERC-20-equivalent smart contract. This is a helper method, which is combination of
-     * <a href="#operation/registerErc20Token">Register new ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
-     * <br/>
-     * <br/>
-     * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <a href="#operation/registerErc20Token">Register new ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.</p>
+     * <p>After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When deploying a XinFin ERC-20-equivalent smart contract to the blockchain and a virtual account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -952,21 +932,17 @@ export class BlockchainOperationsService {
 
     /**
      * Deploy a Harmony HRM-20 smart contract to the blockchain and a virtual account
-     * <h4>4 credits per API call.</h4><br/>
+     * <p><b>4 credits per API call</b></p>
      * <p>Deploy a Harmony HRM-20 smart contract. This is a helper method, which is combination of
-     * <a href="#operation/registerErc20Token">Register new HRM20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
-     * <br/>
-     * <br/>
-     * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <a href="#operation/registerErc20Token">Register new HRM20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.</p>
+     * <p>After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When deploying a Harmony HRM-20 smart contract to the blockchain and a virtual account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param shardId Shard to operate on
+     * @param shardId The ID of the shard to operate
      * @returns any OK
      * @throws ApiError
      */
@@ -1002,7 +978,7 @@ export class BlockchainOperationsService {
      * Newly created account is frozen until the specific smart contract address is linked with the Tatum virtual currency, representing the token.<br/>
      * Order of the steps to create smart contract with Tatum private ledger support:
      * <ol>
-     * <li>Register token</a> (this API) - creates a virtual currency within Tatum</li>
+     * <li>Register token (this API) - creates a virtual currency within Tatum</li>
      * <li><a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy smart contract</a> - create new smart contract on the blockchain</li>
      * <li><a href="#operation/storeTokenAddress">Store smart contract address</a> - link newly created smart contract address with Tatum virtual currency - this operation enables frozen account and enables ledger synchronization for Tatum accounts</li>
      * </ol>
@@ -1147,18 +1123,14 @@ export class BlockchainOperationsService {
 
     /**
      * Deploy a Celo ERC-20-equivalent smart contract to the blockchain and a virtual account
-     * <h4>4 credits per API call.</h4><br/>
+     * <p><b>4 credits per API call</b></p>
      * <p>Deploy a Celo ERC-20-equivalent smart contract. This is a helper method, which is combination of
-     * <a href="#operation/registerErc20Token">Register new Celo ERC-20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
-     * <br/>
-     * <br/>
-     * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <a href="#operation/registerErc20Token">Register new Celo ERC-20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.</p>
+     * <p>After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When deploying a Celo ERC-20-equivalent smart contract to the blockchain and a virtual account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -1183,25 +1155,21 @@ export class BlockchainOperationsService {
 
     /**
      * Deploy a KuCoin Community Chain (KCC) ERC-20-equivalent smart contract to the blockchain and a virtual account
-     * <h4>4 credits per API call.</h4><br/>
+     * <p><b>4 credits per API call</b></p>
      * <p>Deploy a KuCoin Community Chain (KCC) ERC-20-equivalent smart contract. This is a helper method, which is combination of
-     * <a href="#operation/registerErc20Token">Register new Kcs ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
-     * <br/>
-     * <br/>
-     * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <a href="#operation/registerErc20Token">Register new Kcs ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.</p>
+     * <p>After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When deploying a KCC ERC-20-equivalent smart contract to the blockchain and a virtual account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
      * @throws ApiError
      */
     public static kcsDeployErc20Ledger(
-        requestBody: (DeployKCSErc20OffchainMnemonicAddress | DeployKCSErc20OffchainMnemXpub | DeployKCSErc20OffchainPKAddress | DeployKCSErc20OffchainPKXpub | DeployKCSErc20OffchainKMSAddress | DeployKCSErc20OffchainKMSXpub),
+        requestBody: (DeployErc20OffchainMnemonicAddress | DeployErc20OffchainMnemXpub | DeployErc20OffchainPKAddress | DeployErc20OffchainPKXpub | DeployErc20OffchainKMSAddress | DeployErc20OffchainKMSXpub),
     ): CancelablePromise<(DeployErc20Response | DeployErc20SignatureResponse)> {
         return __request({
             method: 'POST',
@@ -1246,15 +1214,15 @@ export class BlockchainOperationsService {
 
     /**
      * Send SOL from a virtual account to the blockchain
-     * <h4>10 credits per API call.</h4><br/><p>
+     * <p><b>10 credits per API call</b></p>
      * <p>Send SOL (Solana), USDC_SOL, or custom SPL tokens from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected,
-     * withdrawal request is marked as complete and transaction id is assigned to it.
+     * withdrawal request is marked as complete and transaction id is assigned to it.</p>
      * <ul>
      * <li>If SOL server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
      * </ul>
-     * It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+     * <p>It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.</p>
+     * <p>This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
      * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
      * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
@@ -1284,15 +1252,15 @@ export class BlockchainOperationsService {
 
     /**
      * Send XLM from a virtual account to the blockchain
-     * <h4>10 credits per API call.</h4><br/><p>
+     * <p><b>10 credits per API call</b></p>
      * <p>Send XLM (Stellar) or XLM-based assets from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected,
-     * withdrawal request is marked as complete and transaction id is assigned to it.
+     * withdrawal request is marked as complete and transaction id is assigned to it.</p>
      * <ul>
      * <li>If XLM server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be completed manually, otherwise all other withdrawals will be pending.</li>
      * </ul>
-     * It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
+     * <p>It is possible to perform ledger to blockchain transaction for ledger accounts without blockchain address assigned to them.</p>
+     * <p>This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
      * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
      * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
      * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
@@ -1350,7 +1318,7 @@ export class BlockchainOperationsService {
     /**
      * Send XRP from a virtual account to the blockchain
      * <h4>10 credits per API call.</h4><br/><p>
-     * <p>Send XRP (Ripple) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
+     * <p>Send XRP from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. When every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If XRP server connection is unavailable, withdrawal request is cancelled.</li>
      * <li>If blockchain transfer is successful, but is it not possible to reach Tatum, transaction id of blockchain transaction is returned and withdrawal request must be
@@ -1388,7 +1356,7 @@ export class BlockchainOperationsService {
     /**
      * Create XRP based Asset
      * <h4>2 credits per API call.</h4><br/><p>
-     * <p>Create an XRP-based asset in a virtual account. The asset must be created and configured on the Ripple blockchain before <a href="https://apidoc.tatum.io/tag/XRP#operation/XrpTrustLineBlockchain">creating a trust line</a>.</p>
+     * <p>Create an XRP-based asset in a virtual account. The asset must be created and configured on the XRPL blockchain before <a href="https://apidoc.tatum.io/tag/XRP#operation/XrpTrustLineBlockchain">creating a trust line</a>.</p>
      * <p>This API call will create an internal virtual currency. You can create virtual accounts with off-chain support.</p>
      *
      * @param requestBody
@@ -1481,7 +1449,7 @@ export class BlockchainOperationsService {
     /**
      * @deprecated
      * Send ADA from a virtual account to the blockchain
-     * <p><b>Support for Cardano is deprecated.</b></p><br/>
+     * <p><b>Cardano transfers are in maintenance mode. For the time being, it's not possible to perform blockchain transaction due to a recent hard fork. We are working on the fix for this. Thank you for your patience.</b></p><br/>
      * <h4>10 credits per API call.</h4><p>Send ADA (Cardano) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If ADA server connection is unavailable, withdrawal request is cancelled.</li>
@@ -1592,16 +1560,14 @@ export class BlockchainOperationsService {
 
     /**
      * Deploy a TRON TRC-10 or TRC-20 smart contract to the blockchain and a virtual account
-     * <h4>10 credits per API call.</h4><br/>
+     * <p><b>10 credits per API call</b></p>
      * <p>Deploy a TRON TRC-10 or TRC-20 smart contract. This is a helper method, which is combination of
-     * <a href="#operation/createTrc">Register new TRC-10/20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Tron#operation/TronCreateTrc20">Deploy blockchain TRC20</a> or <a href="https://apidoc.tatum.io/tag/Tron#operation/TronCreateTrc10">Deploy blockchain TRC10</a>.<br/>
-     * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <a href="#operation/createTrc">Register new TRC-10/20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Tron#operation/TronCreateTrc20">Deploy blockchain TRC20</a> or <a href="https://apidoc.tatum.io/tag/Tron#operation/TronCreateTrc10">Deploy blockchain TRC10</a>.</p>
+     * <p>After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When deploying a TRON TRC-10 or TRC-20 smart contract to the blockchain and a virtual account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -1692,18 +1658,14 @@ export class BlockchainOperationsService {
 
     /**
      * Deploy an Algorand ERC-20-equivalent smart contract to the blockchain and a virtual account
-     * <h4>4 credits per API call.</h4><br/>
+     * <p><b>4 credits per API call</b></p>
      * <p>Deploy an Algorand ERC-20-equivalent smart contract. This is a helper method, which is combination of
-     * <a href="#operation/registerErc20Token">Register new Algorand ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.<br/>
-     * <br/>
-     * <br/>
-     * After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.<br/>
-     * This operation needs the private key of the blockchain address. Every time the funds are transferred, the transaction must be signed with the corresponding private key.
-     * No one should ever send it's own private keys to the internet because there is a strong possibility of stealing keys and losing funds. In this method, it is possible to enter privateKey
-     * or signatureId. PrivateKey should be used only for quick development on testnet versions of blockchain when there is no risk of losing funds. In production,
-     * <a href="https://github.com/tatumio/tatum-kms" target="_blank">Tatum KMS</a> should be used for the highest security standards, and signatureId should be present in the request.
-     * Alternatively, using the Tatum client library for supported languages.
-     * </p>
+     * <a href="#operation/registerErc20Token">Register new Algorand ERC20 token in the ledger</a> and <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20Deploy">Deploy blockchain ERC20</a>.</p>
+     * <p>After deploying a contract to blockchain, the contract address will become available and must be stored within Tatum. Otherwise, it will not be possible to interact with it and starts automatic blockchain synchronization.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When deploying an Algorand ERC-20-equivalent smart contract to the blockchain and a virtual account, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -1739,7 +1701,7 @@ export class BlockchainOperationsService {
      * <p><b>Signing a transaction</b><br/>
      * When sending Algos or ERC-20-equivalent Algorand tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
-     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js" target="_blank">Tatum JavaScript client</a>.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
      * @returns any OK

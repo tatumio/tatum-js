@@ -4,19 +4,19 @@
 
 export type BuyAssetOnMarketplaceSolana = {
     /**
-     * Blockchain to work with.
+     * The blockchain to work with
      */
     chain: 'SOL';
     /**
-     * Blockchain address of the smart contract
+     * The blockchain address of the marketplace smart contract
      */
     contractAddress: string;
     /**
-     * Blockchain address of the listing
+     * The blockchain address of the listing with the asset that you want to buy
      */
     listingId: any;
     /**
-     * Blockchain address of the buyer
+     * The blockchain address of the buyer
      */
     from: any;
     /**

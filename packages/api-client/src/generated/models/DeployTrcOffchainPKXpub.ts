@@ -7,48 +7,48 @@ import type { FiatOrCryptoCurrency } from './FiatOrCryptoCurrency';
 
 export type DeployTrcOffchainPKXpub = {
     /**
-     * Name of the TRC token - stored as a symbol on Blockchain
+     * The name of the token; used as an identifier within the Tatum platform and as a currency symbol on the blockchain
      */
     symbol: string;
     /**
-     * max supply of TRC token.
+     * The supply of the token
      */
     supply: string;
     /**
-     * Number of decimal points of the token.
+     * The number of decimal places that the token has
      */
     decimals: number;
     /**
-     * Type of TRC token to create.
+     * The type of the token
      */
     type: 'TRC10' | 'TRC20';
     /**
-     * Description of the TRC token
+     * The description of the token; used as a description within the Tatum platform and as a currency name on the blockchain
      */
     description: string;
     /**
-     * URL of the project. Applicable for TRC-10 only.
-     */
-    url?: string;
-    /**
-     * Base pair for TRC token. 1 token will be equal to 1 unit of base pair. Transaction value will be calculated according to this base pair.
-     */
-    basePair: FiatOrCryptoCurrency;
-    /**
-     * Exchange rate of the base pair. Each unit of the created curency will represent value of baseRate*1 basePair.
-     */
-    baseRate?: number;
-    customer?: CustomerRegistration;
-    /**
-     * Extended public key (xpub), from which address, where all initial supply will be stored, will be generated. Either xpub and derivationIndex, or address must be present, not both.
+     * The extended public key of the TRON wallet from which a deposit address for the virtual account will be generated
      */
     xpub: string;
     /**
-     * Derivation index for xpub to generate specific deposit address.
+     * The derivation index to use together with the extended public key to generate the deposit address
      */
     derivationIndex: number;
     /**
-     * Private key of Tron account address, from which gas for deployment of TRC will be paid. Private key, mnemonic or signature Id must be present.
+     * The private key of the blockchain address from which the fee for deploying the smart contract will be deducted
      */
     privateKey: string;
+    /**
+     * The base pair for the virtual currency that represents the token; used to calculate the value of a transaction
+     */
+    basePair: FiatOrCryptoCurrency;
+    /**
+     * The exchange rate for the base pair; one unit of the created virtual currency equals 1 unit of <code>basePair</code>*<code>baseRate</code>
+     */
+    baseRate?: number;
+    /**
+     * (TRC-10 tokens only) The URL of the project that the token is created for<br/>Use this parameter only with TRC-10 tokens. Do <b>not</b> use this parameter with TRC-20 tokens.
+     */
+    url?: string;
+    customer?: CustomerRegistration;
 }

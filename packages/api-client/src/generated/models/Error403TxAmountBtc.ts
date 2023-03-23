@@ -8,7 +8,7 @@ export type Error403TxAmountBtc = {
      */
     errorCode: string;
     /**
-     * BTC|LTC|BCH payment amount must be at least 0.00000000000001, not ${transaction.amount}.
+     * BTC|LTC|BCH|DOGE payment amount must be at least 0.00000001, not ${transaction.amount}.
      */
     message: string;
     /**

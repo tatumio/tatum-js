@@ -68,7 +68,7 @@ export type TransferCustodialWalletBatchCelo = {
      */
     fromPrivateKey: string;
     /**
-     * The currency to pay for the gas fee.
+     * The currency in which the gas fee will be paid
      */
     feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
     /**

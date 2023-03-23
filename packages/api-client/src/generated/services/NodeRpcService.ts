@@ -1,6 +1,9 @@
 /* istanbul ignore file */
 /* tslint:disable */
 /* eslint-disable */
+import type { NodeRpcGetChains } from '../models/NodeRpcGetChains';
+import type { NodeRpcPostChains } from '../models/NodeRpcPostChains';
+import type { NodeRpcPutChains } from '../models/NodeRpcPutChains';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
@@ -46,7 +49,7 @@ export class NodeRpcService {
                      * <ul>
                      * <li><a href="https://developer.algorand.org/docs/rest-apis/restendpoints/" target="_blank">Algorand</a></li>
                      * <li><a href="https://ethereum.org/en/developers/docs/apis/json-rpc/" target="_blank">Arbitrum</a></li>
-                     * <li><a href="https://doc.aurora.dev/compat/rpc/" target="_blank">Aurora</a></li>
+                     * <li><a href="https://doc.aurora.dev/evm/rpc/" target="_blank">Aurora</a></li>
                      * <li><a href="https://docs.avax.network/apis/avalanchego/apis/c-chain" target="_blank">Avalanche C-Chain</a></li>
                      * <li><a href="https://docs.avax.network/apis/avalanchego/apis/p-chain" target="_blank">Avalanche P-Chain</a></li>
                      * <li><a href="https://docs.avax.network/apis/avalanchego/apis/x-chain" target="_blank">Avalanche X-Chain</a></li>
@@ -55,6 +58,7 @@ export class NodeRpcService {
                      * <li><a href="https://docs.bnbchain.org/docs/beaconchain/develop/api-reference/node-rpc#5-rpc-endpoint-list" target="_blank">BNB Beacon Chain</a></li>
                      * <li><a href="https://docs.bnbchain.org/docs/rpc" target="_blank">BNB Smart Chain</a></li>
                      * <li><a href="https://docs.cardano.org/cardano-components/cardano-rosetta" target="_blank">Cardano</a></li>
+                     * <li><a href="https://ethereumclassic.org/development/guides" target="_blank">Ethereum Classic</a></li>
                      * <li><a href="https://explorer.celo.org/api-docs" target="_blank">Celo</a></li>
                      * <li><a href="https://cronos.org/docs/resources/chain-integration.html" target="_blank">Cronos</a></li>
                      * <li><a href="https://dogecoin.com/" target="_blank">Dogecoin</a></li>
@@ -71,7 +75,6 @@ export class NodeRpcService {
                      * <li><a href="https://lisk.com/documentation/lisk-service/references/api.html" target="_blank">Lisk</a></li>
                      * <li><a href="https://litecoin.org/" target="_blank">Litecoin</a></li>
                      * <li><a href="https://docs.near.org/api/rpc/introduction" target="_blank">NEAR</a></li>
-                     * <li><a href="https://docs.neo.org/docs/en-us/reference/rpc/latest-version/api.html" target="_blank">Neo</a></li>
                      * <li><a href="https://docs.oasis.dev/oasis-core/oasis-node/rpc/" target="_blank">Oasis Network</a></li>
                      * <li><a href="https://community.optimism.io/docs/developers/build/json-rpc/" target="_blank">Optimism</a></li>
                      * <li><a href="https://docs.palm.io/Get-Started/Connect/Overview/" target="_blank">Palm</a></li>
@@ -92,30 +95,19 @@ export class NodeRpcService {
                      * @param chain Blockchain to communicate with.
                      * @param requestBody
                      * @param xApiKey Tatum X-API-Key used for authorization. You can omit this path parameter and either use the X-Api-Key header, or the API key tied to your IP address without any header.
-                     * @param nodeType Type of the node to access for Algorand.
-                     * @param testnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
-                     * @param chainType Type of Avalanche network. Defaults to Avalanche C-Chain.
                      * @param rpcPath Optional path of rpc call for non EVM nodes, e.g. Algorand or Stellar.
                      * @returns any OK
                      * @throws ApiError
                      */
                     public static nodeJsonPostRpcDriver(
-                        chain: 'ADA' | 'ALGO' | 'ARB' | 'AURORA' | 'AVAX' | 'BCH' | 'BNB' | 'BSC' | 'BTC' | 'CELO' | 'CRO' | 'DOGE' | 'DOT' | 'EGLD' | 'EOS' | 'ETH' | 'FLOW' | 'FTM' | 'GNO' | 'KCS' | 'KSM' | 'KLAY' | 'LISK' | 'LTC' | 'NEAR' | 'NEO' | 'MATIC' | 'OASIS' | 'ONE' | 'OPTIMISM' | 'PALM' | 'RSK' | 'SOL' | 'TEZOS' | 'TRON' | 'VET' | 'XDC' | 'XLM' | 'XRP' | 'ZCASH' | 'ZIL',
+                        chain: NodeRpcPostChains,
                         requestBody: any,
                         xApiKey?: string,
-                        nodeType?: 'ALGOD' | 'INDEXER',
-                        testnetType: 'ethereum-sepolia' | 'ethereum-goerli' = 'ethereum-sepolia',
-                        chainType: 'avax-c' | 'avax-p' | 'avax-x' = 'avax-c',
                         rpcPath?: string,
                     ): CancelablePromise<any> {
                         return __request({
                             method: 'POST',
                             path: `/v3/blockchain/node/${chain}/${xApiKey}/${rpcPath}`,
-                            query: {
-                                'nodeType': nodeType,
-                                'testnetType': testnetType,
-                                'chainType': chainType,
-                            },
                             body: requestBody,
                             mediaType: 'application/json',
                             errors: {
@@ -169,24 +161,19 @@ export class NodeRpcService {
                                      * @param chain Blockchain to communicate with.
                                      * @param requestBody
                                      * @param xApiKey Tatum X-API-Key used for authorization. You can omit this path parameter and either use the X-Api-Key header, or the API key tied to your IP address without any header.
-                                     * @param nodeType Type of the node to access for Algorand.
                                      * @param rpcPath Optional path of rpc call for non EVM nodes, e.g. Algorand or Stellar.
                                      * @returns any OK
                                      * @throws ApiError
                                      */
                                     public static nodeJsonRpcPutDriver(
-                                        chain: 'ALGO' | 'BNB' | 'EGLD' | 'XLM',
+                                        chain: NodeRpcPutChains,
                                         requestBody: any,
                                         xApiKey?: string,
-                                        nodeType?: 'ALGOD' | 'INDEXER',
                                         rpcPath?: string,
                                     ): CancelablePromise<any> {
                                         return __request({
                                             method: 'PUT',
                                             path: `/v3/blockchain/node/${chain}/${xApiKey}/${rpcPath}`,
-                                            query: {
-                                                'nodeType': nodeType,
-                                            },
                                             body: requestBody,
                                             mediaType: 'application/json',
                                             errors: {
@@ -216,23 +203,18 @@ export class NodeRpcService {
                                      *
                                      * @param chain Blockchain to communicate with.
                                      * @param xApiKey Tatum X-API-Key used for authorization. You can omit this path parameter and either use the X-Api-Key header, or the API key tied to your IP address without any header.
-                                     * @param nodeType Type of the node to access for Algorand.
                                      * @param rpcPath Optional path of rpc call for non EVM nodes, e.g. Algorand or Stellar.
                                      * @returns any OK
                                      * @throws ApiError
                                      */
                                     public static nodeJsonRpcGetDriver(
-                                        chain: 'ALGO' | 'EGLD' | 'LISK' | 'XLM' | 'TEZOS' | 'TRON' | 'FLOW' | 'BNB',
+                                        chain: NodeRpcGetChains,
                                         xApiKey?: string,
-                                        nodeType?: 'ALGOD' | 'INDEXER',
                                         rpcPath?: string,
                                     ): CancelablePromise<any> {
                                         return __request({
                                             method: 'GET',
                                             path: `/v3/blockchain/node/${chain}/${xApiKey}/${rpcPath}`,
-                                            query: {
-                                                'nodeType': nodeType,
-                                            },
                                             errors: {
                                                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                                                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,

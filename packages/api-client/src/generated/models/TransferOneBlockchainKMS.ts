@@ -6,32 +6,32 @@ import type { CustomFee } from './CustomFee';
 
 export type TransferOneBlockchainKMS = {
     /**
+     * The amount to transfer
+     */
+    amount: string;
+    /**
+     * The currency of the amount to transfer
+     */
+    currency: 'ONE';
+    /**
+     * The blockchain address to transfer the amount to
+     */
+    to: string;
+    /**
+     * The KMS identifier of the private key of the blockchain address from which the fee will be deducted
+     */
+    signatureId: string;
+    /**
+     * (Only if the signature ID is mnemonic-based) The index of the address from which the fee will be deducted that was generated from the mnemonic
+     */
+    index?: number;
+    fee?: CustomFee;
+    /**
      * Additional data that can be passed to a blockchain transaction as a data property; must be in the hexadecimal format
      */
     data?: string;
     /**
-     * Currency of the transfer.
-     */
-    currency: 'ONE';
-    /**
-     * Nonce to be set to ONE transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
-    /**
-     * Blockchain address to send assets
-     */
-    to: string;
-    fee?: CustomFee;
-    /**
-     * Amount to be sent in One.
-     */
-    amount: string;
-    /**
-     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
-     */
-    index?: number;
-    /**
-     * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
-     */
-    signatureId: string;
 }

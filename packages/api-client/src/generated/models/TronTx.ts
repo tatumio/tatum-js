@@ -36,6 +36,10 @@ export type TronTx = {
                     /**
                      * The amount transferred within the transaction.
                      */
+                    data?: string;
+                    /**
+                     * The amount transferred within the transaction.
+                     */
                     amount?: number;
                     /**
                      * Address of the sender.

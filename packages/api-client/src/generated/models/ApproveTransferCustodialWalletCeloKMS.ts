@@ -38,11 +38,11 @@ export type ApproveTransferCustodialWalletCeloKMS = {
      */
     signatureId: string;
     /**
-     * (Only if the signature ID is mnemonic-based) The index of the "master address" that was generated from the mnemonic
+     * (Only if the signature ID is mnemonic-based) The index of the "master address"
      */
     index?: number;
     /**
-     * The currency to pay for the gas fee.
+     * The currency in which the gas fee will be paid
      */
     feeCurrency?: 'CELO' | 'CUSD' | 'CEUR';
     /**

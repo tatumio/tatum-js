@@ -12,7 +12,7 @@ export type FreezeTron = {
      */
     receiver: string;
     /**
-     * Duration of frozen funds, in days.
+     * Duration of frozen funds, in days<br/>Set this parameter to 3.
      */
     duration: number;
     /**

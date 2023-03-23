@@ -14,11 +14,11 @@ export type AddNftMinter = {
      */
     contractAddress: string;
     /**
-     * The blockchain address to add to the smart contract as an NFT minter
+     * The blockchain address to add to the smart contract as an NFT minter<br/>To find the address of the Tatum NFT minter for your blockchain, see the table in "Use your own smart contract to mint NFTs" in <a href="#operation/NftMintErc721">Mint an NFT</a>.<br/>This address will cover your NFT minting fees. The number of credits equivalent to the fees will be then deducted from the credit allowance of your paid pricing plan.
      */
     minter: string;
     /**
-     * The private key of the blockchain address from which the fee will be deducted
+     * The private key of the blockchain address that has priviledges to add an NFT minter to the NFT smart contract (the owner of the smart contract or a blockchain address that was granted such priviledges)
      */
     fromPrivateKey: string;
     /**

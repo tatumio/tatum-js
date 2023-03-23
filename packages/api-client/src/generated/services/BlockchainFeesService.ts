@@ -16,6 +16,7 @@ import type { EthGasEstimation } from '../models/EthGasEstimation';
 import type { EthGasEstimationBatch } from '../models/EthGasEstimationBatch';
 import type { FeeBtcBased } from '../models/FeeBtcBased';
 import type { FeeEvmBased } from '../models/FeeEvmBased';
+import type { GasEstimated } from '../models/GasEstimated';
 import type { KcsEstimateGas } from '../models/KcsEstimateGas';
 import type { KlaytnEstimateGas } from '../models/KlaytnEstimateGas';
 import type { OneEstimateGas } from '../models/OneEstimateGas';
@@ -29,9 +30,16 @@ import { request as __request } from '../core/request';
 export class BlockchainFeesService {
 
     /**
-     * Get recommended blockchain fee / gas price
+     * Get the recommended fee/gas price for a blockchain
      * <p><b>1 credit per API call</b></p>
-     * <p>Get recommended blockchain fee / gas price</p>
+     * <p>Get the recommended fee/gas price for a blockchain.</p>
+     * <p>This API is supported for the following blockchains:</p>
+     * <ul>
+     * <li>Bitcoin</li>
+     * <li>Dogecoin</li>
+     * <li>Ethereum</li>
+     * <li>Litecoin</li>
+     * </ul>
      *
      * @param chain Chain
      * @returns BlockchainFee OK
@@ -52,22 +60,22 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate the fee for a transaction
-     * <h4>10 credits per API call.</h4><br/>
-     * <p>Estimate current transaction fee for different operations.<br/>
-     * Supported blockchains:
+     * Estimate the fee for a transaction on a blockchain
+     * <p><b>10 credits per API call</b></p>
+     * <p>Estimate the current fee for different types of transactions.</p>
+     * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>Bitcoin</li>
-     * <li>Litecoin</li>
-     * <li>Harmony.ONE</li>
-     * <li>The XDC Network</li>
-     * <li>Ethereum</li>
+     * <li>BNB Smart Chain</li>
      * <li>Celo</li>
+     * <li>Dogecoin</li>
+     * <li>Ethereum</li>
+     * <li>Harmony</li>
      * <li>Klaytn</li>
-     * <li>Binance Smart Chain</li>
+     * <li>Litecoin</li>
      * <li>Polygon</li>
+     * <li>XinFin</li>
      * </ul>
-     * </p>
      *
      * @param requestBody
      * @returns any OK
@@ -91,10 +99,100 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate Ethereum transaction fees
-     * <h4>10 credits per API call.</h4><br/>
-     * <p>Estimate gasLimit and gasPrice of the Ethereum transaction. Gas price is obtained from multiple sources + calculated based on the latest N blocks and the current mempool state. The <b>fast</b> one is used by default.
-     * </p>
+     * Estimate the fee for a BNB Smart Chain transaction
+     * <p><b>2 credits per API call</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for a BNB Smart Chain transaction. The gas price is obtained from <a href="https://explorer.bitquery.io/bsc/gas" target="_blank">https://explorer.bitquery.io/bsc/gas</a>.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/BNB-Smart-Chain#operation/BscBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
+     *
+     * @param requestBody
+     * @returns GasEstimated OK
+     * @throws ApiError
+     */
+    public static bscEstimateGas(
+        requestBody: BscEstimateGas,
+    ): CancelablePromise<GasEstimated> {
+        return __request({
+            method: 'POST',
+            path: `/v3/bsc/gas`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Estimate the fee for a Celo transaction
+     * <p><b>2 credits per API call</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for a Celo transaction. The gas price is obtained from <a href="https://explorer.bitquery.io/celo_rc1/gas" target="_blank">https://explorer.bitquery.io/celo_rc1/gas</a>.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/Celo#operation/CeloBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
+     *
+     * @param requestBody
+     * @returns GasEstimated OK
+     * @throws ApiError
+     */
+    public static celoEstimateGas(
+        requestBody: CeloEstimateGas,
+    ): CancelablePromise<GasEstimated> {
+        return __request({
+            method: 'POST',
+            path: `/v3/celo/gas`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Estimate the fee for an Elrond transaction
+     * <p><b>2 credits per API call</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for an Elrond transaction. The gas price is obtained from <a href="https://gateway.elrond.com/network/config" target="_blank">https://gateway.elrond.com/network/config</a>. The gas limit is obtains from <a href="https://gateway.elrond.com/transaction/cost" target="_blank">https://gateway.elrond.com/transaction/cost</a>.</p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static egldEstimateGas(
+        requestBody: TransactionFeeEgldBlockchain,
+    ): CancelablePromise<{
+        /**
+         * The estimated price for one gas unit
+         */
+        gasPrice: number;
+        /**
+         * The number of the gas units needed to process the transaction at the estimated gas price
+         */
+        gasLimit: number;
+    }> {
+        return __request({
+            method: 'POST',
+            path: `/v3/egld/gas`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Estimate the fee for an Ethereum transaction
+     * <p><b>10 credits per API call</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for an Ethereum transaction. The gas price is obtained from multiple sources and calculated based on the latest N blocks and the current mempool state.</p>
+     * <p>The <code>fast</code> gas price is used by default.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/Ethereum#operation/EthBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
      *
      * @param requestBody
      * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
@@ -123,11 +221,12 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate multiple Ethereum transaction fees
-     * <h4>10 credits per API call + 10 credits per each gas estimation.</h4><br/>
-     * <p>Estimate gasLimit and gasPrice of the Ethereum transaction. Gas price is obtained from multiple sources + calculated based on the latest N blocks and the current mempool state.
-     * The <b>fast</b> one is used by default.<br/>
-     * Result is calculated  in the order of the request array items.
+     * Estimate the fee for multiple Ethereum transactions
+     * <p><b>10 credits per API call + 10 credits per each gas estimation</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for multiple Ethereum transactions. The gas price is obtained from multiple sources and calculated based on the latest N blocks and the current mempool state.</p>
+     * <p>The estimations are returned in the same order as the transactions were submitted in the request.</p>
+     * <p>The <code>fast</code> gas price is used by default.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/Ethereum#operation/EthBlockchainTransfer" target="_blank">making a transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
      * </p>
      *
      * @param requestBody
@@ -157,118 +256,10 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate Polygon transaction fees
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Estimate gasLimit and gasPrice of the Polygon transaction. Gas price is obtained from <a href="https://gasstation-mainnet.matic.network/" target="_blank">https://gasstation-mainnet.matic.network/</a>.
-     * </p>
-     *
-     * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static polygonEstimateGas(
-        requestBody: PolygonEstimateGas,
-    ): CancelablePromise<{
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in wei.
-         */
-        gasPrice: string;
-    }> {
-        return __request({
-            method: 'POST',
-            path: `/v3/polygon/gas`,
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
-            },
-        });
-    }
-
-    /**
-     * Estimate Celo Chain transaction fees
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Estimate gasLimit and gasPrice of the CELO transaction. Gas price is obtained from <a href="https://explorer.bitquery.io/celo_rc1/gas" target="_blank">https://explorer.bitquery.io/celo_rc1/gas</a>.
-     * </p>
-     *
-     * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static celoEstimateGas(
-        requestBody: CeloEstimateGas,
-    ): CancelablePromise<{
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: number;
-        /**
-         * Gas price in wei.
-         */
-        gasPrice: string;
-    }> {
-        return __request({
-            method: 'POST',
-            path: `/v3/celo/gas`,
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
-            },
-        });
-    }
-
-    /**
-     * Estimate BNB Smart Chain transaction fees
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Estimate gasLimit and gasPrice of the BSC transaction. Gas price is obtained from <a href="https://explorer.bitquery.io/bsc/gas" target="_blank">https://explorer.bitquery.io/bsc/gas</a>.
-     * </p>
-     *
-     * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static bscEstimateGas(
-        requestBody: BscEstimateGas,
-    ): CancelablePromise<{
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in wei.
-         */
-        gasPrice: string;
-    }> {
-        return __request({
-            method: 'POST',
-            path: `/v3/bsc/gas`,
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
-            },
-        });
-    }
-
-    /**
      * Estimate Harmony transaction fees
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Estimate gasLimit and gasPrice of the ONE transaction.
-     * </p>
+     * <p><b>2 credits per API call</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for a Harmony transaction.</p>
+     * <p><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/Harmony#operation/OneBlockchainTransfer" target="_blank">making the transaction itself</a>, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -278,11 +269,11 @@ export class BlockchainFeesService {
         requestBody: OneEstimateGas,
     ): CancelablePromise<{
         /**
-         * Gas limit for transaction in gas price.
+         * The number of the gas units needed to process the transaction at the estimated gas price
          */
         gasLimit: string;
         /**
-         * Gas price in wei.
+         * The estimated price for one gas unit (in wei)
          */
         gasPrice: string;
     }> {
@@ -301,10 +292,10 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate Klaytn transaction fees
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Estimate gasLimit and gasPrice of the Klaytn transaction. Gas price is obtained from <a href="https://explorer.bitquery.io/klaytn/gas" target="_blank">https://explorer.bitquery.io/klaytn/gas</a>.
-     * </p>
+     * Estimate the fee for a Klaytn transaction
+     * <p><b>2 credits per API call</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for a Klaytn transaction. The gas price is obtained from <a href="https://explorer.bitquery.io/klaytn/gas" target="_blank">https://explorer.bitquery.io/klaytn/gas</a>.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>peb</b>. However, when <a href="https://apidoc.tatum.io/tag/Klaytn#operation/KlaytnBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gpeb</b>. Make sure to convert the estimated gas price from peb to Gpeb before submitting your transaction.</p>
      *
      * @param requestBody
      * @returns any OK
@@ -314,13 +305,13 @@ export class BlockchainFeesService {
         requestBody: KlaytnEstimateGas,
     ): CancelablePromise<{
         /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in peb.
+         * The estimated price for one gas unit (in peb)
          */
         gasPrice: string;
+        /**
+         * The number of the gas units needed to process the transaction at the estimated gas price
+         */
+        gasLimit: number;
     }> {
         return __request({
             method: 'POST',
@@ -337,63 +328,18 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate XinFin transaction fees
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Estimate gasLimit and gasPrice of the XDC transaction. Gas price is obtained from <a href="https://rpc.xinfin.network/gasPrice" target="_blank">https://rpc.xinfin.network/gasPrice</a>.
-     * </p>
+     * Estimate the fee for a KuCoin Community Chain transaction
+     * <p><b>2 credits per API call</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for a KuCoin Community Chain transaction.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/KuCoin#operation/KcsBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
      *
      * @param requestBody
-     * @returns any OK
-     * @throws ApiError
-     */
-    public static xdcEstimateGas(
-        requestBody: XdcEstimateGas,
-    ): CancelablePromise<{
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in wei.
-         */
-        gasPrice: string;
-    }> {
-        return __request({
-            method: 'POST',
-            path: `/v3/xdc/gas`,
-            body: requestBody,
-            mediaType: 'application/json',
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
-            },
-        });
-    }
-
-    /**
-     * Estimate KuCoin Community Chain transaction fees
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Estimate gasLimit and gasPrice of the Kcs transaction.
-     * </p>
-     *
-     * @param requestBody
-     * @returns any OK
+     * @returns GasEstimated OK
      * @throws ApiError
      */
     public static kcsEstimateGas(
         requestBody: KcsEstimateGas,
-    ): CancelablePromise<{
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: string;
-        /**
-         * Gas price in wei.
-         */
-        gasPrice: string;
-    }> {
+    ): CancelablePromise<GasEstimated> {
         return __request({
             method: 'POST',
             path: `/v3/kcs/gas`,
@@ -409,18 +355,21 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate VeChain Gas for transaction
-     * <h4>5 credits per API call.</h4><br/><p>Estimate gas required for transaction.</p>
+     * Estimate the fee for a Polygon transaction
+     * <p><b>2 credits per API call</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for a Polygon transaction. The gas price is obtained from <a href="https://gasstation-mainnet.matic.network/" target="_blank">https://gasstation-mainnet.matic.network/</a>.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/Polygon#operation/PolygonBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
+     *
      * @param requestBody
-     * @returns number OK
+     * @returns GasEstimated OK
      * @throws ApiError
      */
-    public static vetEstimateGas(
-        requestBody: VetEstimateGas,
-    ): CancelablePromise<number> {
+    public static polygonEstimateGas(
+        requestBody: PolygonEstimateGas,
+    ): CancelablePromise<GasEstimated> {
         return __request({
             method: 'POST',
-            path: `/v3/vet/transaction/gas`,
+            path: `/v3/polygon/gas`,
             body: requestBody,
             mediaType: 'application/json',
             errors: {
@@ -433,31 +382,47 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate EGLD transaction fees
-     * <h4>2 credits per API call.</h4><br/>
-     * <p>Estimate gasLimit and gasPrice of the EGLD transaction. Gas limit is obtained from <a href="https://gateway.elrond.com/transaction/cost" target="_blank">https://gateway.elrond.com/transaction/cost</a>.
-     * Gas price is obtained from <a href="https://gateway.elrond.com/network/config" target="_blank">https://gateway.elrond.com/network/config</a>.
-     * </p>
+     * Estimate the fee for a XinFin transaction
+     * <p><b>2 credits per API call</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for a XinFin transaction. The gas price is obtained from <a href="https://rpc.xinfin.network/gasPrice" target="_blank">https://rpc.xinfin.network/gasPrice</a>.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/XinFin#operation/XdcBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
      *
      * @param requestBody
-     * @returns any OK
+     * @returns GasEstimated OK
      * @throws ApiError
      */
-    public static egldEstimateGas(
-        requestBody: TransactionFeeEgldBlockchain,
-    ): CancelablePromise<{
-        /**
-         * Gas limit for transaction in gas price.
-         */
-        gasLimit: number;
-        /**
-         * Gas price.
-         */
-        gasPrice: number;
-    }> {
+    public static xdcEstimateGas(
+        requestBody: XdcEstimateGas,
+    ): CancelablePromise<GasEstimated> {
         return __request({
             method: 'POST',
-            path: `/v3/egld/gas`,
+            path: `/v3/xdc/gas`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Estimate the gas needed for a VeChain transaction
+     * <p><b>5 credits per API call</b></p>
+     * <p>Get an estimated amount of gas needed for a VeChain transaction.</p>
+     *
+     * @param requestBody
+     * @returns number OK
+     * @throws ApiError
+     */
+    public static vetEstimateGas(
+        requestBody: VetEstimateGas,
+    ): CancelablePromise<number> {
+        return __request({
+            method: 'POST',
+            path: `/v3/vet/transaction/gas`,
             body: requestBody,
             mediaType: 'application/json',
             errors: {
