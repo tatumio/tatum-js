@@ -128,7 +128,7 @@ export const btcBasedTransactions = (
             chain = 'bitcoin-testnet'
           }
         }
-        const utxos = await apiCalls.getUTXOsByAddress(chain, item.address, totalOutputs - totalInputs)
+        const utxos = await apiCalls.getUTXOsByAddress(chain, item.address, amountUtils.fromSatoshis(totalOutputs - totalInputs))
         for (const utxo of utxos) {
           totalInputs += utxo.value
           transaction.from([

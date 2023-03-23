@@ -64,7 +64,7 @@ export const dogeTransactions = (
           if (totalInputs >= totalOutputs) {
             break
           }
-          const utxos = await apiCalls.getUTXOsByAddress(options.testnet ? 'doge-testnet' : 'doge', item.address, totalOutputs - totalInputs)
+          const utxos = await apiCalls.getUTXOsByAddress(options.testnet ? 'doge-testnet' : 'doge', item.address, amountUtils.fromSatoshis(totalOutputs - totalInputs))
           for (const utxo of utxos) {
             const satoshis = amountUtils.toSatoshis(utxo.value)
             totalInputs += satoshis

@@ -18,14 +18,14 @@ export const amountUtils = {
     }
     return Number(satoshis)
   },
+  fromSatoshis: (amount: number | string): number => new BigNumber(amount).dividedBy(10 ** 8).toNumber(),
   amountToHexString: (amount: string, decimals: number) =>
     toHexString(new BigNumber(amount).multipliedBy(10 ** decimals)),
 }
 
-export function isWithSignatureId<
-  P extends { fromPrivateKey: string },
+export function isWithSignatureId<P extends { fromPrivateKey: string },
   K extends SignatureId & { from?: string },
->(input: P | K): input is K {
+  >(input: P | K): input is K {
   return (input as K).signatureId !== undefined
 }
 
