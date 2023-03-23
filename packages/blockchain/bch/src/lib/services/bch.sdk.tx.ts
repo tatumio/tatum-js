@@ -79,7 +79,7 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
         try {
           transactionBuilder.addOutput(bcashAddressHelper.getAddress(body.changeAddress), change)
         } catch (e: any) {
-          const address = new bitcoreLibCash.Address.fromString(body.changeAddress)
+          const address = Address.fromString(body.changeAddress)
           transactionBuilder.addOutput(address.toLegacyAddress(), change)
         }
       }
