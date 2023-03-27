@@ -12,6 +12,8 @@
     "bsc-example": "examples/bsc-example",
     "btc": "packages/blockchain/btc",
     "btc-example": "examples/btc-example",
+    "cardano": "packages/blockchain/cardano",
+    "cardano-example": "examples/cardano-example",
     "celo": "packages/blockchain/celo",
     "celo-example": "examples/celo-example",
     "doge": "packages/blockchain/doge",

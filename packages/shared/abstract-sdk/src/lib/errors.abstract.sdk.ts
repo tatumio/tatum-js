@@ -67,8 +67,8 @@ export class SdkError extends Error {
         if (args.errorSubstringMapping) {
           const errorCodeFromMapping = args.errorSubstringMapping
             ? Object.keys(args.errorSubstringMapping).find(
-                (k) => errorMessageAsString && errorMessageAsString.indexOf(k) !== -1,
-              )
+              (k) => errorMessageAsString && errorMessageAsString.indexOf(k) !== -1,
+            )
             : undefined
           errorCode = errorCodeFromMapping
             ? args.errorSubstringMapping[errorCodeFromMapping]
@@ -116,6 +116,9 @@ export enum SdkErrorCode {
   VALIDATION_TO_ADDRESS = 'validation.to-address',
 
   TX_PREPARATION_FAILED = 'tx.preparation',
+
+  // CARDANO
+  FEE_CHANGE_ADDRESS = 'fee.change-address',
 
   // XLM
   XLM_NO_SEQUENCE = 'xlm.account.no-sequence',
@@ -250,6 +253,9 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
 
   // ALGO
   [SdkErrorCode.ALGO_TOKEN_NAME_TOO_LONG, 'Token name should not be more than 8 characters long'],
+
+  // CARDANO
+  [SdkErrorCode.FEE_CHANGE_ADDRESS, 'Fee and change address must be both set or both unset.'],
 
   // EVM
   [

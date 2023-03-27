@@ -19,6 +19,16 @@ export const amountUtils = {
     return Number(satoshis)
   },
   fromSatoshis: (amount: number | string): number => new BigNumber(amount).dividedBy(10 ** 8).toNumber(),
+  toLovelace: (amount: number | string): number => {
+    const amountBigNumber = new BigNumber(amount)
+    const satoshiValue = amountBigNumber.multipliedBy(10 ** 6)
+    const satoshis = satoshiValue.integerValue()
+    if (satoshis.toFixed() !== satoshiValue.toFixed() || satoshis.lt(0)) {
+      throw new SdkError({ code: SdkErrorCode.BTC_BASED_AMOUNT, messageArgs: [amountBigNumber.toString()] })
+    }
+    return Number(satoshis)
+  },
+  fromLovelace: (amount: number | string): number => new BigNumber(amount).dividedBy(10 ** 6).toNumber(),
   amountToHexString: (amount: string, decimals: number) =>
     toHexString(new BigNumber(amount).multipliedBy(10 ** decimals)),
 }

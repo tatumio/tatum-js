@@ -1,0 +1,38 @@
+{
+  "sourceRoot": "examples/cardano-example/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/examples/cardano-example",
+        "main": "examples/cardano-example/src/index.ts",
+        "tsConfig": "examples/cardano-example/tsconfig.app.json",
+        "packageJson": "examples/cardano-example/package.json"
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "cardano-example:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "examples/cardano-example/**/*.ts"
+        ]
+      }
+    }
+  },
+  "tags": [
+    "type:example"
+  ]
+}

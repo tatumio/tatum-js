@@ -17,6 +17,7 @@ export const walletTestFactory = {
     sdk: SdkWithWalletFunctions,
     testData: BlockchainTestData,
     givenMnemonic = TEST_DATA.MNEMONIC,
+    skipInvalidMnemonic = false,
   ) => {
     describe('mainnet', () => {
       it('valid', async () => {

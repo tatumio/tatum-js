@@ -1,0 +1,48 @@
+{
+  "sourceRoot": "packages/blockchain/cardano/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/blockchain/cardano",
+        "main": "packages/blockchain/cardano/src/index.ts",
+        "tsConfig": "packages/blockchain/cardano/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/cardano/package.json"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
+      "options": {
+        "lintFilePatterns": [
+          "packages/blockchain/cardano/**/*.ts"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "coverage/packages/blockchain/cardano"
+      ],
+      "options": {
+        "jestConfig": "packages/blockchain/cardano/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": [
+    "type:sdk"
+  ]
+}

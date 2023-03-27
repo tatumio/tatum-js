@@ -50,6 +50,5 @@ export async function virtualAccountExample() {
     txData: 'Raw signed transaction to be published to network.',
   })
 
-  // @TODO what is what here?
   await tatumSDK.virtualAccount.withdrawal.complete(withdrawalResult.id!, withdrawalResult.reference!)
 }
