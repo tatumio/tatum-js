@@ -24,7 +24,7 @@ export const amountUtils = {
     const satoshiValue = amountBigNumber.multipliedBy(10 ** 6)
     const satoshis = satoshiValue.integerValue()
     if (satoshis.toFixed() !== satoshiValue.toFixed() || satoshis.lt(0)) {
-      throw new SdkError({ code: SdkErrorCode.BTC_BASED_AMOUNT, messageArgs: [amountBigNumber.toString()] })
+      throw new SdkError({ code: SdkErrorCode.ADA_BASED_AMOUNT, messageArgs: [amountBigNumber.toString()] })
     }
     return Number(satoshis)
   },

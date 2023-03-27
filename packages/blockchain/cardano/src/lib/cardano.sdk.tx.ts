@@ -192,10 +192,11 @@ export const cardanoTransactions = (
           metadata: {},
         })
       }
-      if ((!fee && changeAddress) || (fee && !changeAddress)) {
+      if (!(fee && changeAddress)) {
         throw new CardanoSdkError(SdkErrorCode.FEE_CHANGE_ADDRESS)
       }
-      if (fee && changeAddress) {
+      if (totalInputs > totalOutputs + amountUtils.toLovelace(fee)) {
+        const rest = Math.abs(totalOutputs + amountUtils.toLovelace(fee) - totalInputs)
         operations.push({
           operation_identifier: {
             index: opIndex++,
@@ -209,7 +210,7 @@ export const cardanoTransactions = (
             metadata: {},
           },
           amount: {
-            value: (totalOutputs - amountUtils.toLovelace(fee)).toString(),
+            value: `${rest}`,
             currency: {
               symbol: 'ADA',
               decimals: 6,

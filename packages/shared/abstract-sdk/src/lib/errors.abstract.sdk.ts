@@ -102,6 +102,7 @@ export enum SdkErrorCode {
   XRP_SECRET_DOES_NOT_MATCH = 'xrp.secret.does-not-match',
   FEE_TOO_SMALL = 'fee.too-small',
   TX_NOT_FOUND = 'tx.not.found',
+  ADA_BASED_AMOUNT = 'ada.validation.amount',
   BTC_BASED_AMOUNT = 'btc-based.validation.amount',
   BTC_BASED_MISSING_PRIVATE_KEY = 'btc-based.validation.private-key.missing',
   BTC_BASED_WRONG_BODY = 'btc-based.validation.body.wrong-body',
@@ -222,6 +223,10 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
   [
     SdkErrorCode.BTC_BASED_AMOUNT,
     `Amount {0} is incorrect btc-based amount. Should be positive integer and have 8 decimal numbers max`,
+  ],
+  [
+    SdkErrorCode.ADA_BASED_AMOUNT,
+    `Amount {0} is incorrect ADA amount. Should be positive integer and have 6 decimal numbers max`,
   ],
   [SdkErrorCode.BTC_BASED_MISSING_PRIVATE_KEY, `Some of private keys is wrong or missing`],
 
