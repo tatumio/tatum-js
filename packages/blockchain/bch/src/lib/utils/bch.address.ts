@@ -4,8 +4,6 @@ import coininfo from 'coininfo'
 import bcash from '@tatumio/bitcoincashjs2-lib'
 import { networks } from 'bitcoinjs-lib'
 import { Buffer } from 'buffer'
-import cashaddr from 'cashaddrjs';
-
 
 interface Hash {
   hash: Buffer
@@ -30,7 +28,7 @@ export const bcashAddressHelper = {
     }
   },
   toLegacyAddress: (address: string) => {
-    const { prefix, type, hash }: Decoded = cashaddr.decode(address)
+    const { prefix, type, hash }: Decoded = bcashAddressHelper.decode(address)
     let bitcoincash = coininfo.bitcoincash.main
     switch (prefix) {
       case 'bitcoincash':
