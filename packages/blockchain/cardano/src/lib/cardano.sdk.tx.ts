@@ -124,8 +124,14 @@ export const cardanoTransactions = (
         }
       } else if ('fromAddress' in body) {
         for (const item of body.fromAddress) {
+          if (totalInputs >= totalOutputs) {
+            break
+          }
           const utxos = await apiCalls.getUTXOsByAddress(options.testnet ? 'cardano-preprod' : 'cardano', item.address, amountUtils.fromLovelace(totalOutputs - totalInputs))
           for (const utxo of utxos) {
+            if (totalInputs >= totalOutputs) {
+              break
+            }
             const value = amountUtils.toLovelace(utxo.value)
             totalInputs += value
             operations.push({
