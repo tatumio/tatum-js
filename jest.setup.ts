@@ -7,6 +7,4 @@ global.fetch = fetch
 // @ts-ignore
 global.Headers = Headers
 
-console.log(global.fetch)
-
 dotenv.config({ path: './.env' });
