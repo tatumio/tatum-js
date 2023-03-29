@@ -116,12 +116,12 @@ export const btcBasedTransactions = (
         if (totalInputs >= totalOutputs) {
           break
         }
-        let chain: ChainUtxoEnum = 'bitcoin'
+        let chain: ChainUtxoEnum = 'bitcoin-mainnet'
         if (currency === Currency.LTC) {
           if (options.testnet) {
             chain = 'litecoin-testnet'
           } else {
-            chain = 'litecoin'
+            chain = 'litecoin-mainnet'
           }
         } else {
           if (options.testnet) {
