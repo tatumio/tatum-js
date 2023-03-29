@@ -33,7 +33,6 @@
     "types": [
       "node",
       "jest",
-      "./src/types/global"
     ],
     "lib": [
       "ESNext",
