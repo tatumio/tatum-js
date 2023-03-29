@@ -1,4 +1,4 @@
-import { Chain, ChainMap, TatumChain } from '../service/tatum/tatum.dto'
+import { Chain, ChainMap, TatumChain } from '../service'
 
 export const Utils = {
   mapChain: (chain: Chain): TatumChain => {
@@ -8,4 +8,5 @@ export const Utils = {
     }
     return mappedChain
   },
+  delay: (t: number) => new Promise((resolve) => setTimeout(resolve, t)),
 }

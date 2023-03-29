@@ -1,9 +1,22 @@
 export interface TatumConfig {
-    network?: Network
-    validate?: boolean
-    debug?: boolean
-    retryDelay?: number,
-    retryCount?: number
+  /**
+   * Blockchain to use, mainnet or testnet. Mainnet is the default one.
+   */
+  network?: Network
+
+  /**
+   * Verbose logging is disabled by default.
+   */
+  verbose?: boolean
+
+  /**
+   * Delay between retries, defaults to 1000ms.
+   */
+  retryDelay?: number,
+  /**
+   * Number of retries in case of failed requests, defaults to 1.
+   */
+  retryCount?: number
 }
 
 export enum Network {

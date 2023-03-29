@@ -1,5 +1,3 @@
-import axios from 'axios'
-
 export enum Status {
   SUCCESS = 'SUCCESS',
   ERROR = 'ERROR'
@@ -38,19 +36,19 @@ export const ErrorUtils = {
     return message.replace('attr.', '')
   },
   toErrorWithMessage: (maybeError: unknown): ErrorWithMessage => {
-    if (axios.isAxiosError(maybeError)) {
-      if (maybeError.response?.data?.data instanceof Array && maybeError.response?.data?.data.length > 0) {
-        return {
-          message: (maybeError.response?.data?.data as string[]).map(message => ErrorUtils.formatErrorMsg(message)),
-          code: maybeError.response?.data?.errorCode,
-        }
-      }
-
-      return {
-        message: [maybeError.response?.data?.message ?? maybeError.message],
-        code: maybeError.response?.data?.errorCode,
-      }
-    }
+    // if (axios.isAxiosError(maybeError)) {
+    //   if (maybeError.response?.data?.data instanceof Array && maybeError.response?.data?.data.length > 0) {
+    //     return {
+    //       message: (maybeError.response?.data?.data as string[]).map(message => ErrorUtils.formatErrorMsg(message)),
+    //       code: maybeError.response?.data?.errorCode,
+    //     }
+    //   }
+    //
+    //   return {
+    //     message: [maybeError.response?.data?.message ?? maybeError.message],
+    //     code: maybeError.response?.data?.errorCode,
+    //   }
+    // }
 
     if (ErrorUtils.isErrorWithMessage(maybeError)) {
       return { message: [maybeError.message] }

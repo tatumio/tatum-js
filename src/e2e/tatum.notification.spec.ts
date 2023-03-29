@@ -1,9 +1,13 @@
 import {
+  AddressEventNotification,
+  Chain,
+  FailedTxPerBlockChain,
   IncomingFungibleTxChain,
   IncomingInternalTxChain,
   IncomingMultitokenTxChain,
   IncomingNativeTxChain,
   IncomingNftTxChain,
+  Network,
   OutgoingFailedTxChain,
   OutgoingFungibleTxChain,
   OutgoingInternalTxChain,
@@ -11,10 +15,8 @@ import {
   OutgoingNativeTxChain,
   OutgoingNftTxChain,
   PaidFeeChain,
-  TatumSdk
+  TatumSdk,
 } from '../service'
-import { Chain, Network } from '../service'
-import {AddressEventNotification, FailedTxPerBlockChain} from '../service'
 import { TestConst } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 import { Status } from '../util'
@@ -23,7 +25,7 @@ describe('notification', () => {
   let tatum: TatumSdk
 
   beforeAll(async () => {
-    tatum = await TatumSdk.init({ network: Network.Testnet, debug: true })
+    tatum = await TatumSdk.init({ network: Network.Testnet, verbose: true })
   })
 
   describe('createSubscription', () => {
@@ -113,7 +115,6 @@ describe('notification', () => {
         })
       })
     })
-
 
 
     it('NOK - existing subscription ', async () => {

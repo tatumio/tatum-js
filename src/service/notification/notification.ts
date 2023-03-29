@@ -1,13 +1,15 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
+  AddressEventNotification,
   AddressEventNotificationApi,
-  GetAllNotificationsQuery, GetAllExecutedWebhooksQuery,
-  Webhook, AddressEventNotification,
+  GetAllExecutedWebhooksQuery,
+  GetAllNotificationsQuery,
+  Webhook,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
-import { ChainMapInverse } from '../tatum/tatum.dto'
-import { ErrorUtils, ResponseDto } from '../../util/error'
+import { ChainMapInverse } from '../tatum'
+import { ErrorUtils, ResponseDto } from '../../util'
 
 @Service({
   factory: (data: { id: string }) => {

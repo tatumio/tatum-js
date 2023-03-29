@@ -13,7 +13,7 @@ import {
   NftBalances,
   NftTransactions,
 } from './nft.dto'
-import { Utils } from '../../util/util.shared'
+import { Utils } from '../../util'
 
 @Service()
 export class Nft {
@@ -57,11 +57,12 @@ export class Nft {
       result[detailsRequest.chain] = balancesByChain
     }
   }
+
   async getAllNftTransactions({
-    nftTransactionsDetails,
-    offset = 0,
-    pageSize = 10,
-  }: GetAllNftTransactionsQuery): Promise<NftTransactions> {
+                                nftTransactionsDetails,
+                                offset = 0,
+                                pageSize = 10,
+                              }: GetAllNftTransactionsQuery): Promise<NftTransactions> {
     const result: NftTransactions = {}
 
     for (const { chain, contractAddress, fromBlock, toBlock, tokenId } of nftTransactionsDetails) {
@@ -94,18 +95,18 @@ export class Nft {
   }
 
   async getNftMetadata({
-    chain,
-    contractAddress,
-    tokenId,
-  }: GetNftMetadata): Promise<GetNftMetadataResponse | null> {
+                         chain,
+                         contractAddress,
+                         tokenId,
+                       }: GetNftMetadata): Promise<GetNftMetadataResponse | null> {
     return this.connector.get({ path: `nft/metadata/${Utils.mapChain(chain)}/${contractAddress}/${tokenId}` })
   }
 
   async getCollection({
-    chain,
-    contractAddress,
-    pageSize,
-  }: GetCollection): Promise<GetCollectionResponse[] | null> {
+                        chain,
+                        contractAddress,
+                        pageSize,
+                      }: GetCollection): Promise<GetCollectionResponse[] | null> {
     return this.connector.get({
       path: `nft/collection/${Utils.mapChain(chain)}/${contractAddress}`,
       params: { pageSize: pageSize ?? '50' },
