@@ -50,6 +50,7 @@ export const ErrorUtils = {
           message: [error.message ?? maybeError],
           code: error.errorCode,
         }
+        // eslint-disable-next-line no-empty
       } catch (_) {
       }
     }
