@@ -36,19 +36,23 @@ export const ErrorUtils = {
     return message.replace('attr.', '')
   },
   toErrorWithMessage: (maybeError: unknown): ErrorWithMessage => {
-    // if (axios.isAxiosError(maybeError)) {
-    //   if (maybeError.response?.data?.data instanceof Array && maybeError.response?.data?.data.length > 0) {
-    //     return {
-    //       message: (maybeError.response?.data?.data as string[]).map(message => ErrorUtils.formatErrorMsg(message)),
-    //       code: maybeError.response?.data?.errorCode,
-    //     }
-    //   }
-    //
-    //   return {
-    //     message: [maybeError.response?.data?.message ?? maybeError.message],
-    //     code: maybeError.response?.data?.errorCode,
-    //   }
-    // }
+    if (typeof maybeError === 'string') {
+      try {
+        const error = JSON.parse(maybeError as string)
+        if (error.data instanceof Array && error.data.length > 0) {
+          return {
+            message: (error.data as string[]).map(message => ErrorUtils.formatErrorMsg(message)),
+            code: error.errorCode,
+          }
+        }
+
+        return {
+          message: [error.message ?? maybeError],
+          code: error.errorCode,
+        }
+      } catch (_) {
+      }
+    }
 
     if (ErrorUtils.isErrorWithMessage(maybeError)) {
       return { message: [maybeError.message] }
