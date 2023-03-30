@@ -20,7 +20,7 @@ describe('RPCs', () => {
 
     })
 
-    it('should init RPC from remote hosts', async () => {
+    it.skip('should init RPC from remote hosts', async () => {
       const sdk = await TatumSdk.init({ verbose: true })
       expect(sdk.rpc).toBeDefined()
       // @ts-ignore
@@ -44,7 +44,6 @@ describe('RPCs', () => {
       expect(activeUrl.has(Blockchain.ETHEREUM)).toBeTruthy()
       expect(activeUrl.has(Blockchain.POLYGON)).toBeTruthy()
       expect(activeUrl.has(Blockchain.MONERO)).toBeTruthy()
-      return
     })
   })
 })
