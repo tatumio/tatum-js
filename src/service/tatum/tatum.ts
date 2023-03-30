@@ -1,5 +1,5 @@
 import { Container, Service } from 'typedi'
-import { CONFIG } from '../../util'
+import { CONFIG, Constant } from '../../util'
 import { Notification } from '../notification'
 import { Network, TatumConfig } from './tatum.dto'
 import { v4 as uuidv4 } from 'uuid';
@@ -23,12 +23,18 @@ export class TatumSdk {
       verbose: false,
       retryCount: 1,
       retryDelay: 1000,
+      rpc: {
+        ignoreLoadBalancing: false,
+        allowedBlocksBehind: Constant.OPEN_RPC.ALLOWED_BLOCKS_BEHIND,
+      },
     }
 
     const finalConfig = { ...defaultConfig, ...config }
-
     const id = uuidv4()
     Container.of(id).set(CONFIG, finalConfig)
-    return new TatumSdk(id)
+    const tatumSdk = new TatumSdk(id)
+    await tatumSdk.rpc.init()
+    return tatumSdk
   }
+
 }

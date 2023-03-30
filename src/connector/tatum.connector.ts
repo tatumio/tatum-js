@@ -9,12 +9,9 @@ import { Network } from '../service'
     return new TatumConnector(data.id)
   }, transient: true,
 })
-
 export class TatumConnector {
-  private id: string
 
-  constructor(id: string) {
-    this.id = id
+  constructor(private readonly id: string) {
   }
 
   public async get<T>({ path, params }: GetUrl) {
