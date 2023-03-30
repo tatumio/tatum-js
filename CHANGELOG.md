@@ -1,8 +1,14 @@
 ## [1.1.0] - 2023.04.01
 
+### Added
+- Added support for [OpenRPC network](https://openrpc.io)
+
 ### Removed
 - Removed dependency on Axios - replaced with Fetch API
 - Due to above, minimum Node version is now >= 18
+
+### Changed
+- `debug` config field was renamed to `verbose`
 
 ## [1.0.1] - 2023.03.16
 
