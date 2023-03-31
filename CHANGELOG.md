@@ -1,4 +1,4 @@
-## [1.1.0] - 2023.04.01
+## [1.1.0] - 2023.04.03
 
 ### Added
 - Added support for [OpenRPC network](https://openrpc.io)

@@ -1,3 +1,3 @@
-import { TatumSdk } from '@tatumcom/js'
+import { TatumSDK } from '@tatumcom/js'
 
-export const initTatum = async () => await TatumSdk.init({ rpc: { ignoreLoadBalancing: true }, verbose: true })
+export const initTatum = async () => await TatumSDK.init({ rpc: { ignoreLoadBalancing: true }, verbose: true })

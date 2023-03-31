@@ -5,7 +5,7 @@ import { Network, TatumConfig } from './tatum.dto'
 import { Rpc } from '../rpc'
 
 @Service({ transient: true })
-export class TatumSdk {
+export class TatumSDK {
   notification: Notification
   rpc: Rpc
   private id: string
@@ -16,7 +16,7 @@ export class TatumSdk {
     this.rpc = Container.of(this.id).get(Rpc)
   }
 
-  public static async init(config?: TatumConfig): Promise<TatumSdk> {
+  public static async init(config?: TatumConfig): Promise<TatumSDK> {
     const defaultConfig: TatumConfig = {
       network: Network.Mainnet,
       verbose: false,
@@ -31,9 +31,9 @@ export class TatumSdk {
     }
 
     const finalConfig = { ...defaultConfig, ...config }
-    const id = TatumSdk.generateRandomString()
+    const id = TatumSDK.generateRandomString()
     Container.of(id).set(CONFIG, finalConfig)
-    const tatumSdk = new TatumSdk(id)
+    const tatumSdk = new TatumSDK(id)
     await tatumSdk.rpc.init()
     return tatumSdk
   }

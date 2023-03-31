@@ -1,7 +1,7 @@
-import { Network, TatumSdk } from '@tatumcom/js'
+import { Network, TatumSDK } from '@tatumcom/js'
 
 export const initTatum = async () => {
-  return await TatumSdk.init({
+  return await TatumSDK.init({
     network: Network.Testnet,
   })
 }

@@ -1,4 +1,4 @@
-import { TatumSdk } from '../service'
+import { TatumSDK } from '../service'
 import { Blockchain } from '../dto'
 import { Utils } from '../util'
 
@@ -8,7 +8,7 @@ describe('RPCs', () => {
   describe('RPC init tests', () => {
 
     it('should init RPC from local hosts', async () => {
-      const sdk = await TatumSdk.init({
+      const sdk = await TatumSDK.init({
         verbose: true,
         rpc: { ignoreLoadBalancing: true, bitcoin: { url: ['https://123.com'] } },
       })
@@ -21,7 +21,7 @@ describe('RPCs', () => {
     })
 
     it('should init RPC from remote hosts', async () => {
-      const sdk = await TatumSdk.init({
+      const sdk = await TatumSDK.init({
         verbose: true, rpc: {
           oneTimeLoadBalancing: true,
           waitForFastestNode: true,

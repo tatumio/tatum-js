@@ -15,17 +15,17 @@ import {
   OutgoingNativeTxChain,
   OutgoingNftTxChain,
   PaidFeeChain,
-  TatumSdk,
+  TatumSDK,
 } from '../service'
 import { TestConst } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 import { Status } from '../util'
 
 describe('notification', () => {
-  let tatum: TatumSdk
+  let tatum: TatumSDK
 
   beforeAll(async () => {
-    tatum = await TatumSdk.init({ network: Network.Testnet, verbose: true, rpc: { ignoreLoadBalancing: true } })
+    tatum = await TatumSDK.init({ network: Network.Testnet, verbose: true, rpc: { ignoreLoadBalancing: true } })
   })
 
   describe('createSubscription', () => {
