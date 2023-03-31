@@ -27,10 +27,10 @@
     "@jridgewell/resolve-uri" "^3.0.3"
     "@jridgewell/sourcemap-codec" "^1.4.10"
 
-"@tatumcom/js@^1.1.0-alpha.13":
-  version "1.1.0-alpha.13"
-  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.1.0-alpha.13.tgz#2cf5dfe0a3ee9c5517cff05eaf1a58c4edb6b59c"
-  integrity sha512-fSbnEqji7JxlKbxUvmNnocNY/6okEBwI1/i8tSnAQBaoG28qZp1/OR4Y0Of3ffhvbrqfoJ9e2oTqmlJPlEIq/w==
+"@tatumcom/js@^1.1.0-alpha.15":
+  version "1.1.0-alpha.15"
+  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.1.0-alpha.15.tgz#d6f83826a37a3db4af3003c159033c11fa35f38e"
+  integrity sha512-fTY5pKTxquj0JgNIQWs+D2n6DTDqy/Aj8WdIH+XT4AzAjAKIU+u2sgQ30BFLvNDgFXXQDt4LhXy1fj6k8JeO3Q==
   dependencies:
     bignumber.js "^9.1.1"
     reflect-metadata "^0.1.13"

@@ -14,7 +14,6 @@ interface RpcStatus {
   lastBlock: number
   lastResponseTime: number
   failed: boolean
-  active: boolean
 }
 
 @Service({
@@ -24,7 +23,7 @@ interface RpcStatus {
 })
 export class Rpc {
   private readonly rpcUrlMap = new Map<Blockchain, RpcStatus[]>()
-  private readonly activeUrl = new Map<Blockchain, string>()
+  private readonly activeUrl = new Map<Blockchain, { url: string, index: number }>()
   private interval: NodeJS.Timeout
 
   public readonly bitcoin: RpcInvocation
@@ -47,53 +46,21 @@ export class Rpc {
     const config = Container.of(this.id).get(CONFIG)
     if (config.rpc?.ignoreLoadBalancing) {
       if (config.verbose) {
-        console.debug('Initializing RPC module from static URLs')
+        console.debug(new Date().toISOString(), 'Initializing RPC module from static URLs')
       }
       // we are ignoring load balancing, getting static URLs from the chains they provided configuration for
       for (const blockchain of Object.values(Blockchain)) {
         const urls = config.rpc[blockchain]?.url
         if (urls?.length) {
-          this.activeUrl.set(blockchain, urls[0])
+          this.activeUrl.set(blockchain, { url: urls[0], index: -1 })
           if (config.verbose) {
-            console.debug(`Using static URL ${urls[0]} for ${blockchain}`)
+            console.debug(new Date().toISOString(), `Using static URL ${urls[0]} for ${blockchain}`)
           }
         }
       }
     } else {
       if (config.verbose) {
-        console.debug('Initializing RPC module from remote hosts')
-      }
-      const all = []
-      for (const blockchain of Object.values(Blockchain)) {
-        if (config.verbose) {
-          console.debug(`Fetching response from ${Constant.OPEN_RPC.CONFIG_URL[blockchain]}`)
-        }
-        all.push(fetch(Constant.OPEN_RPC.CONFIG_URL[blockchain]).then(async (res) => {
-          if (res.ok) {
-            const servers: Array<{ url: string }> = await res.json()
-            const randomIndex = Math.floor(Math.random() * servers.length)
-            if (config.verbose) {
-              console.debug(`Using random URL ${servers[randomIndex].url} for ${blockchain} blockchain during the initialization`)
-            }
-            this.activeUrl.set(blockchain, servers[randomIndex].url)
-            this.rpcUrlMap.set(blockchain, servers.map((s, index) => ({
-              node: { url: s.url },
-              lastBlock: 0,
-              lastResponseTime: 0,
-              failed: false,
-              active: index === randomIndex,
-            })))
-          } else {
-            console.error(`Failed to fetch RPC configuration for ${blockchain} blockchain`)
-            process.exit(1)
-          }
-        }))
-      }
-      try {
-        await Promise.all(all)
-      } catch (e) {
-        console.error('Failed to initialize RPC module', e)
-        process.exit(1)
+        console.debug(new Date().toISOString(), 'Initializing RPC module from remote hosts')
       }
       if (config.rpc?.oneTimeLoadBalancing && config.rpc?.waitForFastestNode) {
         await this.checkStatus()
@@ -121,61 +88,126 @@ export class Rpc {
           server.lastResponseTime = responseTime
           const response = await res.json()
           if (verbose) {
-            console.debug(`Response time of ${server.node.url} for ${blockchain} blockchain is ${server.lastResponseTime}ms with response: `, response)
+            console.debug(new Date().toISOString(), `Response time of ${server.node.url} for ${blockchain} blockchain is ${server.lastResponseTime}ms with response: `, response)
           }
           if (res.ok && response.result) {
             server.failed = false
             server.lastBlock = Utils.statusPayloadExtractor(blockchain, response)
           } else {
             if (verbose) {
-              console.warn(`Failed to check status of ${server.node.url} for ${blockchain} blockchain.`, response)
+              console.warn(new Date().toISOString(), `Failed to check status of ${server.node.url} for ${blockchain} blockchain.`, response)
             }
             server.failed = true
-            server.active = false
           }
         }).catch((e) => {
           if (verbose) {
-            console.warn(`Failed to check status of ${server.node.url} for ${blockchain} blockchain.`, e)
-            console.warn(`Server ${server.node.url} for ${blockchain} will be marked as failed and will be removed from the pool.`)
+            console.warn(new Date().toISOString(), `Failed to check status of ${server.node.url} for ${blockchain} blockchain.`, e)
+            console.warn(new Date().toISOString(), `Server ${server.node.url} for ${blockchain} will be marked as failed and will be removed from the pool.`)
           }
           server.failed = true
-          server.active = false
         }))
       }
-      allChains.push(Promise.all(all).then(() => {
-        const { fastestServer, index } = servers.reduce((result, item, index) => {
-          if (item.lastBlock > result.fastestServer.lastBlock ||
-            (item.lastBlock === result.fastestServer.lastBlock && item.lastResponseTime < result.fastestServer.lastResponseTime)) {
-            return { fastestServer: item, index: index };
-          } else {
-            return result;
-          }
-        }, { fastestServer: { lastBlock: -Infinity, lastResponseTime: Infinity, node: { url: '' } }, index: -1 })
+      allChains.push(Promise.allSettled(all).then(() => {
+        const { fastestServer, index } = Rpc.getFastestServer(servers)
         if (fastestServer && index !== -1) {
           if (verbose) {
-            console.debug(`Server ${fastestServer.node.url} for ${blockchain} blockchain is the active server.`)
+            console.debug(new Date().toISOString(), `Server ${fastestServer.node.url} for ${blockchain} blockchain is the active server.`)
           }
-          servers[index].active = true
-          this.activeUrl.set(blockchain, fastestServer.node.url)
+          this.activeUrl.set(blockchain, { url: fastestServer.node.url, index })
         }
       }))
     }
     await Promise.allSettled(allChains)
   }
 
+  private create(blockchain: Blockchain): RpcInvocation {
+    const { verbose } = Container.of(this.id).get(CONFIG)
+    return {
+      callRpc: (request: JsonRpcCall) => callRpc(request, this),
+    }
+
+    async function callRpc(request: JsonRpcCall, rpc: Rpc): Promise<JsonRpcResponse> {
+      if (!rpc.rpcUrlMap.has(blockchain)) {
+        await rpc.initChainMap(blockchain)
+      }
+      const url = rpc.getActiveUrl(blockchain)
+      try {
+        return await rpc.connector.rpcCall(url, request)
+      } catch (e) {
+        const activeIndex = rpc.getActiveIndex(blockchain)
+        if (activeIndex !== -1) {
+          /// we are using static URL, so we don't need to do anything
+          throw  e
+        }
+        if (verbose) {
+          console.warn(new Date().toISOString(), `Failed to call RPC ${request.method} on ${url} for ${blockchain} blockchain.`, e)
+          console.log(new Date().toISOString(), `Switching to another server for ${blockchain} blockchain, marking this as unstable.`)
+        }
+        const servers = rpc.rpcUrlMap.get(blockchain) as RpcStatus[]
+        servers[activeIndex].failed = true
+        const { index, fastestServer } = Rpc.getFastestServer(servers)
+        if (index === -1) {
+          console.error(`All servers for ${blockchain} blockchain are unavailable.`)
+          throw e
+        }
+        rpc.activeUrl.set(blockchain, { url: fastestServer.node.url, index })
+        return callRpc(request, rpc)
+      }
+    }
+  }
+
+  private static getFastestServer(servers: RpcStatus[]) {
+    const { fastestServer, index } = servers.reduce((result, item, index) => {
+      if (!item.failed &&
+        (item.lastBlock > result.fastestServer.lastBlock ||
+          (item.lastBlock === result.fastestServer.lastBlock && item.lastResponseTime < result.fastestServer.lastResponseTime))) {
+        return { fastestServer: item, index: index };
+      } else {
+        return result
+      }
+    }, { fastestServer: { lastBlock: -Infinity, lastResponseTime: Infinity, node: { url: '' } }, index: -1 })
+    return { fastestServer, index }
+  }
+
   private getActiveUrl(blockchain: Blockchain): string {
     if (this.activeUrl.has(blockchain)) {
-      return this.activeUrl.get(blockchain) as string
+      return this.activeUrl.get(blockchain)?.url as string
     }
     throw new Error(`No active URL for ${blockchain} blockchain`)
   }
 
-  private create(blockchain: Blockchain): RpcInvocation {
-    return {
-      callRpc: async (request: JsonRpcCall): Promise<JsonRpcResponse> => {
-        const url = this.getActiveUrl(blockchain)
-        return this.connector.rpcCall(url, request)
-      },
+  private getActiveIndex(blockchain: Blockchain): number {
+    if (this.activeUrl.has(blockchain)) {
+      return this.activeUrl.get(blockchain)?.index as number
+    }
+    throw new Error(`No active URL for ${blockchain} blockchain`)
+  }
+
+  private async initChainMap(blockchain: Blockchain) {
+    const { verbose } = Container.of(this.id).get(CONFIG)
+    if (verbose) {
+      console.debug(new Date().toISOString(), `Fetching response from ${Constant.OPEN_RPC.CONFIG_URL[blockchain]}`)
+    }
+    try {
+      const res = await fetch(Constant.OPEN_RPC.CONFIG_URL[blockchain])
+      if (res.ok) {
+        const servers: Array<{ url: string }> = await res.json()
+        const randomIndex = Math.floor(Math.random() * servers.length)
+        if (verbose) {
+          console.debug(new Date().toISOString(), `Using random URL ${servers[randomIndex].url} for ${blockchain} blockchain during the initialization`)
+        }
+        this.activeUrl.set(blockchain, { url: servers[randomIndex].url, index: randomIndex })
+        this.rpcUrlMap.set(blockchain, servers.map((s) => ({
+          node: { url: s.url },
+          lastBlock: 0,
+          lastResponseTime: 0,
+          failed: false,
+        })))
+      } else {
+        console.error(new Date().toISOString(), `Failed to fetch RPC configuration for ${blockchain} blockchain`)
+      }
+    } catch (e) {
+      console.error(new Date().toISOString(), 'Failed to initialize RPC module', e)
     }
   }
 }

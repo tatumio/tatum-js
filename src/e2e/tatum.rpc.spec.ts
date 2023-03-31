@@ -1,6 +1,5 @@
 import { TatumSDK } from '../service'
 import { Blockchain } from '../dto'
-import { Utils } from '../util'
 
 jest.setTimeout(50_000)
 
@@ -14,7 +13,7 @@ describe('RPCs', () => {
       })
       expect(sdk.rpc).toBeDefined()
       // @ts-ignore
-      expect(sdk.rpc.activeUrl.get(Blockchain.BITCOIN)).toBe('https://123.com')
+      expect(sdk.rpc.activeUrl.get(Blockchain.BITCOIN)).toMatchObject({ url: 'https://123.com', index: -1 })
       // @ts-ignore
       expect(sdk.rpc.activeUrl.has(Blockchain.LITECOIN)).toBeFalsy()
 
@@ -30,25 +29,25 @@ describe('RPCs', () => {
       expect(sdk.rpc).toBeDefined()
       // @ts-ignore
       let activeUrl: Map = sdk.rpc.activeUrl
-      expect(activeUrl.has(Blockchain.BITCOIN)).toBeTruthy()
-      expect(activeUrl.has(Blockchain.LITECOIN)).toBeTruthy()
-      expect(activeUrl.has(Blockchain.ETHEREUM)).toBeTruthy()
-      expect(activeUrl.has(Blockchain.POLYGON)).toBeTruthy()
-      expect(activeUrl.has(Blockchain.MONERO)).toBeTruthy()
+      expect(activeUrl.has(Blockchain.BITCOIN)).toBeFalsy()
+      expect(activeUrl.has(Blockchain.LITECOIN)).toBeFalsy()
+      expect(activeUrl.has(Blockchain.ETHEREUM)).toBeFalsy()
+      expect(activeUrl.has(Blockchain.POLYGON)).toBeFalsy()
+      expect(activeUrl.has(Blockchain.MONERO)).toBeFalsy()
       // @ts-ignore
       const urlMap: Map = sdk.rpc.rpcUrlMap
-      expect(urlMap.get(Blockchain.BITCOIN)).not.toHaveLength(0)
-      expect(urlMap.get(Blockchain.LITECOIN)).not.toHaveLength(0)
-      expect(urlMap.get(Blockchain.ETHEREUM)).not.toHaveLength(0)
-      expect(urlMap.get(Blockchain.POLYGON)).not.toHaveLength(0)
-      expect(urlMap.get(Blockchain.MONERO)).not.toHaveLength(0)
+      expect(urlMap.has(Blockchain.BITCOIN)).toBeFalsy()
+      expect(urlMap.has(Blockchain.LITECOIN)).toBeFalsy()
+      expect(urlMap.has(Blockchain.ETHEREUM)).toBeFalsy()
+      expect(urlMap.has(Blockchain.POLYGON)).toBeFalsy()
+      expect(urlMap.has(Blockchain.MONERO)).toBeFalsy()
 
-      await Utils.delay(5_000)
+      await sdk.rpc.bitcoin.callRpc({ method: 'getblockchaininfo', params: [], id: 1, jsonrpc: '2.0' })
       expect(activeUrl.has(Blockchain.BITCOIN)).toBeTruthy()
-      expect(activeUrl.has(Blockchain.LITECOIN)).toBeTruthy()
-      expect(activeUrl.has(Blockchain.ETHEREUM)).toBeTruthy()
-      expect(activeUrl.has(Blockchain.POLYGON)).toBeTruthy()
-      expect(activeUrl.has(Blockchain.MONERO)).toBeTruthy()
+      expect(activeUrl.has(Blockchain.LITECOIN)).toBeFalsy()
+      expect(activeUrl.has(Blockchain.ETHEREUM)).toBeFalsy()
+      expect(activeUrl.has(Blockchain.POLYGON)).toBeFalsy()
+      expect(activeUrl.has(Blockchain.MONERO)).toBeFalsy()
     })
   })
 })

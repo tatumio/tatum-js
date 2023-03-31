@@ -42,13 +42,15 @@ export class TatumConnector {
       body: body ? JSON.stringify(body) : null,
     }
 
+    const start = Date.now()
     if (verbose) {
-      console.debug('Request: ', request.method, url, request.body)
+      console.debug(new Date().toISOString(), 'Request: ', request.method, url, request.body)
     }
     try {
       return await fetch(url, request).then(async (res) => {
+        const end = Date.now() - start
         if (verbose) {
-          console.log('Response: ', res.status, await res.clone().text())
+          console.log(new Date().toISOString(), `Response responded in ${end}ms: `, res.status, await res.clone().text())
         }
         if (res.ok) {
           return res.json()
@@ -58,7 +60,7 @@ export class TatumConnector {
       })
     } catch (error) {
       if (verbose) {
-        console.warn('Error: ', error)
+        console.warn(new Date().toISOString(), 'Error: ', error)
       }
       return Promise.reject(error)
     }
@@ -97,20 +99,20 @@ export class TatumConnector {
     const { retryDelay, retryCount, verbose } = Container.of(this.id).get(CONFIG)
     if (!retryCount) {
       if (verbose) {
-        console.warn(`Not retrying the request - no max retry count defined: `, url, request.body)
+        console.warn(new Date().toISOString(), `Not retrying the request - no max retry count defined: `, url, request.body)
       }
       return Promise.reject(await response.text())
     }
     const retry = parseInt(response.headers.get('x-ttm-sdk-retry') || `${retryCount}`) + 1
     if (retry >= retryCount) {
       if (verbose) {
-        console.warn(`Not retrying the request for the '${retry}' time - exceeded max retry count ${retryCount}: `, url, request.body)
+        console.warn(new Date().toISOString(), `Not retrying the request for the '${retry}' time - exceeded max retry count ${retryCount}: `, url, request.body)
       }
       return Promise.reject(await response.text())
     }
 
     if (verbose) {
-      console.warn(`Retrying the request for the '${retry}' time: `, url, request.body)
+      console.warn(new Date().toISOString(), `Retrying the request for the '${retry}' time: `, url, request.body)
     }
     await Utils.delay(retryDelay || 1000)
     return this.request({

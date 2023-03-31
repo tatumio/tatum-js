@@ -6,14 +6,14 @@ const run = async () => {
    */
   const sdk = await TatumSDK.init({ rpc: { waitForFastestNode: true, oneTimeLoadBalancing: true } })
 
-  console.log(JSON.stringify(await sdk.rpc.bitcoin.callRpc({
+  console.log(new Date().toISOString(), JSON.stringify(await sdk.rpc.bitcoin.callRpc({
     method: 'getblockchaininfo',
     params: [],
     jsonrpc: '2.0',
     id: 1,
   }), null, 2))
 
-  console.log(JSON.stringify(await sdk.rpc.litecoin.callRpc({
+  console.log(new Date().toISOString(), JSON.stringify(await sdk.rpc.litecoin.callRpc({
     method: 'getblockchaininfo',
     params: [],
     jsonrpc: '2.0',

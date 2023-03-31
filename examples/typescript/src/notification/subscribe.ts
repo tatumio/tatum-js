@@ -10,8 +10,8 @@ export const subscribe = async () => {
   })
 
   if (status === Status.ERROR) {
-    console.log(error)
+    console.log(new Date().toISOString(), error)
   } else {
-    console.log(data)
+    console.log(new Date().toISOString(), data)
   }
 }

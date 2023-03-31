@@ -174,7 +174,7 @@ describe('notification', () => {
 
   it('getAll', async () => {
     const { data, error } = await tatum.notification.getAll()
-    console.log(error)
+    console.log(new Date().toISOString(), error)
     expect(data[0].id).toBeDefined()
     expect(data[0].chain).toBeDefined()
     expect(data[0].address).toBeDefined()
