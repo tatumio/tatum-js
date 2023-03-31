@@ -77,9 +77,12 @@ export class Rpc {
         console.error('Failed to initialize RPC module', e)
         process.exit(1)
       }
-      this.checkStatus()
-      this.interval = setInterval(() => this.checkStatus(), Constant.OPEN_RPC.LB_INTERVAL)
-      process.on('exit', () => clearInterval(this.interval))
+      if (config.rpc?.oneTimeLoadBalancing && config.rpc?.waitForFastestNode) {
+        await this.checkStatus()
+      } else if (!config.rpc?.oneTimeLoadBalancing) {
+        this.interval = setInterval(() => this.checkStatus(), Constant.OPEN_RPC.LB_INTERVAL)
+        process.on('exit', () => clearInterval(this.interval))
+      }
     }
   }
 

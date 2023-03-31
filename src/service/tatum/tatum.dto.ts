@@ -28,10 +28,21 @@ export interface TatumConfig {
      * How many blocks behind the head of the blockchain to tolerate before considering the node to be unhealthy. Defaults to `2`.
      */
     allowedBlocksBehind?: number
+
     /**
      * In case this is set to `true`, the SDK will not automatically load balance and failover between the available OpenRPC nodes and will use static URLs defined bellow. Defaults to `false`.
      */
     ignoreLoadBalancing?: boolean
+
+    /**
+     * Wait for the load balance check to find the nearest node during the initialization. Defaults to `false`.
+     */
+    waitForFastestNode?: boolean
+
+    /**
+     * If this is set to `true`, the SDK will not automatically load balance and failover between the available OpenRPC nodes and will use the fastest URL fetched during the startup. Defaults to `false`.
+     */
+    oneTimeLoadBalancing?: boolean
 
     /**
      * In case this url is set, all the requests to Bitcoin will be proxied to this url without automatic load balancing and failover. For now, only first elements of the array is used as a default URL.

@@ -22,7 +22,7 @@ describe('Tatum Init', () => {
     })
 
     it('Empty', async () => {
-      const tatum = await TatumSdk.init()
+      const tatum = await TatumSdk.init({ rpc: { ignoreLoadBalancing: true } })
       await e2eUtil.subscriptions.testAddressBasedSubscription(tatum, Chain.Bitcoin, TestConst.ADDRESSES.MAINNET[Chain.Bitcoin], tatum.notification.subscribe.addressEvent)
     })
   })

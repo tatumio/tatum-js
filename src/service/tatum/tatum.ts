@@ -25,6 +25,8 @@ export class TatumSdk {
       retryDelay: 1000,
       rpc: {
         ignoreLoadBalancing: false,
+        oneTimeLoadBalancing: false,
+        waitForFastestNode: false,
         allowedBlocksBehind: Constant.OPEN_RPC.ALLOWED_BLOCKS_BEHIND,
       },
     }

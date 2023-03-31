@@ -20,8 +20,13 @@ describe('RPCs', () => {
 
     })
 
-    it.skip('should init RPC from remote hosts', async () => {
-      const sdk = await TatumSdk.init({ verbose: true })
+    it('should init RPC from remote hosts', async () => {
+      const sdk = await TatumSdk.init({
+        verbose: true, rpc: {
+          oneTimeLoadBalancing: true,
+          waitForFastestNode: true,
+        },
+      })
       expect(sdk.rpc).toBeDefined()
       // @ts-ignore
       let activeUrl: Map = sdk.rpc.activeUrl
