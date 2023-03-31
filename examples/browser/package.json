@@ -8,9 +8,10 @@
     "build": "parcel build"
   },
   "dependencies": {
-    "@tatumcom/js": "^1.0.0"
+    "@tatumcom/js": "^1.1.0-alpha.10"
   },
   "devDependencies": {
-    "parcel": "^2.8.3"
+    "parcel": "^2.8.3",
+    "process": "^0.11.10"
   }
 }
