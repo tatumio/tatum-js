@@ -9,6 +9,7 @@
 
 ### Changed
 - `debug` config field was renamed to `verbose`
+- renamed `TatumSdk` to `TatumSDK` as a main entry point
 
 ## [1.0.1] - 2023.03.16
 
