@@ -1,5 +1,5 @@
 import { TatumSdk } from '../service'
-import { Blockchain } from '../dto/Blockchain.dto'
+import { Blockchain } from '../dto'
 import { Utils } from '../util'
 
 jest.setTimeout(50_000)

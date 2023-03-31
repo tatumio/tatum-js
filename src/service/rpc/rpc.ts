@@ -1,6 +1,11 @@
-import { Container, Service } from 'typedi'
+import { Container, Inject, Service } from 'typedi'
 import { CONFIG, Constant, Utils } from '../../util'
-import { Blockchain } from '../../dto/Blockchain.dto'
+import { TatumConnector } from '../../connector/tatum.connector'
+import { Blockchain, JsonRpcCall, JsonRpcResponse } from '../../dto'
+
+interface RpcInvocation {
+  callRpc(request: JsonRpcCall): Promise<JsonRpcResponse>
+}
 
 interface RpcStatus {
   node: {
@@ -22,7 +27,20 @@ export class Rpc {
   private readonly activeUrl = new Map<Blockchain, string>()
   private interval: NodeJS.Timeout
 
+  public readonly bitcoin: RpcInvocation
+  public readonly litecoin: RpcInvocation
+  public readonly ethereum: RpcInvocation
+  public readonly polygon: RpcInvocation
+  public readonly monero: RpcInvocation
+  @Inject()
+  readonly connector: TatumConnector
+
   constructor(private readonly id: string) {
+    this.bitcoin = this.create(Blockchain.BITCOIN)
+    this.litecoin = this.create(Blockchain.LITECOIN)
+    this.polygon = this.create(Blockchain.POLYGON)
+    this.ethereum = this.create(Blockchain.ETHEREUM)
+    this.monero = this.create(Blockchain.MONERO)
   }
 
   async init() {
@@ -145,5 +163,21 @@ export class Rpc {
       }))
     }
     await Promise.allSettled(allChains)
+  }
+
+  private getActiveUrl(blockchain: Blockchain): string {
+    if (this.activeUrl.has(blockchain)) {
+      return this.activeUrl.get(blockchain) as string
+    }
+    throw new Error(`No active URL for ${blockchain} blockchain`)
+  }
+
+  private create(blockchain: Blockchain): RpcInvocation {
+    return {
+      callRpc: async (request: JsonRpcCall): Promise<JsonRpcResponse> => {
+        const url = this.getActiveUrl(blockchain)
+        return this.connector.rpcCall(url, request)
+      },
+    }
   }
 }
