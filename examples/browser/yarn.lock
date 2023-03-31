@@ -713,10 +713,10 @@
   dependencies:
     tslib "^2.4.0"
 
-"@tatumcom/js@^1.1.0-alpha.13":
-  version "1.1.0-alpha.13"
-  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.1.0-alpha.13.tgz#2cf5dfe0a3ee9c5517cff05eaf1a58c4edb6b59c"
-  integrity sha512-fSbnEqji7JxlKbxUvmNnocNY/6okEBwI1/i8tSnAQBaoG28qZp1/OR4Y0Of3ffhvbrqfoJ9e2oTqmlJPlEIq/w==
+"@tatumcom/js@^1.1.0-alpha.14":
+  version "1.1.0-alpha.14"
+  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.1.0-alpha.14.tgz#f0178c48522a2c23720f39a56de597ef31938d88"
+  integrity sha512-ZY4WGN6me+Sfi+hUYYWCSc5tWhcOX3zyaqRXsV2cLNdsVbMq5CLHt42MBUF85dlHf0uKXGs+posilXNbk9gOeQ==
   dependencies:
     bignumber.js "^9.1.1"
     reflect-metadata "^0.1.13"

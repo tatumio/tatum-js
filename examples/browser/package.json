@@ -8,7 +8,7 @@
     "build": "parcel build"
   },
   "dependencies": {
-    "@tatumcom/js": "^1.1.0-alpha.13"
+    "@tatumcom/js": "^1.1.0-alpha.14"
   },
   "devDependencies": {
     "buffer": "^5.5.0",
