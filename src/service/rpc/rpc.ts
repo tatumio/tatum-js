@@ -112,16 +112,13 @@ export class Rpc {
         continue
       }
       const servers: RpcStatus[] = this.rpcUrlMap.get(blockchain) as RpcStatus[]
-      let fastestServer: RpcStatus | undefined
-      let fastestServerIndex: number | undefined
       const all = []
-      for (const [index, server] of servers.entries()) {
-        const start = Date.now()
+      for (const server of servers) {
         all.push(Utils.fetchWithTimeout(server.node.url, {
           method: 'POST',
           body: JSON.stringify(Constant.OPEN_RPC.STATUS_PAYLOAD[blockchain]),
-        }).then(async (res) => {
-          server.lastResponseTime = Date.now() - start
+        }).then(async ({ response: res, responseTime }) => {
+          server.lastResponseTime = responseTime
           const response = await res.json()
           if (verbose) {
             console.debug(`Response time of ${server.node.url} for ${blockchain} blockchain is ${server.lastResponseTime}ms with response: `, response)
@@ -129,13 +126,6 @@ export class Rpc {
           if (res.ok && response.result) {
             server.failed = false
             server.lastBlock = Utils.statusPayloadExtractor(blockchain, response)
-            if (!fastestServer || server.lastResponseTime < fastestServer.lastResponseTime) {
-              if (verbose) {
-                console.debug(`Server ${server.node.url} for ${blockchain} blockchain is now the fastest server.`)
-              }
-              fastestServer = server
-              fastestServerIndex = index
-            }
           } else {
             if (verbose) {
               console.warn(`Failed to check status of ${server.node.url} for ${blockchain} blockchain.`, response)
@@ -152,12 +142,20 @@ export class Rpc {
           server.active = false
         }))
       }
-      allChains.push(Promise.allSettled(all).then(() => {
-        if (fastestServer && fastestServerIndex) {
+      allChains.push(Promise.all(all).then(() => {
+        const { fastestServer, index } = servers.reduce((result, item, index) => {
+          if (item.lastBlock > result.fastestServer.lastBlock ||
+            (item.lastBlock === result.fastestServer.lastBlock && item.lastResponseTime < result.fastestServer.lastResponseTime)) {
+            return { fastestServer: item, index: index };
+          } else {
+            return result;
+          }
+        }, { fastestServer: { lastBlock: -Infinity, lastResponseTime: Infinity, node: { url: '' } }, index: -1 })
+        if (fastestServer && index !== -1) {
           if (verbose) {
             console.debug(`Server ${fastestServer.node.url} for ${blockchain} blockchain is the active server.`)
           }
-          servers[fastestServerIndex].active = true
+          servers[index].active = true
           this.activeUrl.set(blockchain, fastestServer.node.url)
         }
       }))

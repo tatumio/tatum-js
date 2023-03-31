@@ -23,14 +23,16 @@ export const Utils = {
         return (payload.result as { count: number } | undefined)?.count || -1
     }
   },
-  fetchWithTimeout: async (url: string, config: RequestInit, timeout = 5000) => {
+  fetchWithTimeout: async (url: string, config: RequestInit, timeout = 5000): Promise<{ response: Response, responseTime: number }> => {
     const controller = new AbortController();
     const id = setTimeout(() => controller.abort(), timeout);
+    const start = Date.now()
     const response = await fetch(url, {
       ...config,
       signal: controller.signal,
     });
+    const responseTime = Date.now() - start
     clearTimeout(id);
-    return response;
+    return { responseTime, response };
   },
 }
