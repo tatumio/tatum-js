@@ -3,7 +3,6 @@ import { CONFIG, Constant } from '../../util'
 import { Notification } from '../notification'
 import { Network, TatumConfig } from './tatum.dto'
 import { Rpc } from '../rpc'
-import { webcrypto } from 'crypto'
 
 @Service({ transient: true })
 export class TatumSdk {
@@ -42,9 +41,8 @@ export class TatumSdk {
   private static generateRandomString() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';
-    const buffer = webcrypto.getRandomValues(new Uint8Array(40))
-    for (let i = 0; i < 40; i++) {
-      result += characters.charAt(buffer[i] % characters.length);
+    for (let i = 0; i < 60; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
     }
     return result;
   }
