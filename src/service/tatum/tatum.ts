@@ -2,8 +2,8 @@ import { Container, Service } from 'typedi'
 import { CONFIG, Constant } from '../../util'
 import { Notification } from '../notification'
 import { Network, TatumConfig } from './tatum.dto'
-import { v4 as uuidv4 } from 'uuid';
 import { Rpc } from '../rpc'
+import { webcrypto } from 'crypto'
 
 @Service({ transient: true })
 export class TatumSdk {
@@ -32,11 +32,20 @@ export class TatumSdk {
     }
 
     const finalConfig = { ...defaultConfig, ...config }
-    const id = uuidv4()
+    const id = TatumSdk.generateRandomString()
     Container.of(id).set(CONFIG, finalConfig)
     const tatumSdk = new TatumSdk(id)
     await tatumSdk.rpc.init()
     return tatumSdk
   }
 
+  private static generateRandomString() {
+    const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    const buffer = webcrypto.getRandomValues(new Uint8Array(40))
+    for (let i = 0; i < 40; i++) {
+      result += characters.charAt(buffer[i] % characters.length);
+    }
+    return result;
+  }
 }
