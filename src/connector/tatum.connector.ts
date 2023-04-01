@@ -50,7 +50,7 @@ export class TatumConnector {
       return await fetch(url, request).then(async (res) => {
         const end = Date.now() - start
         if (verbose) {
-          console.log(new Date().toISOString(), `Response responded in ${end}ms: `, res.status, await res.clone().text())
+          console.log(new Date().toISOString(), `Response received in ${end}ms: `, res.status, await res.clone().text())
         }
         if (res.ok) {
           return res.json()
