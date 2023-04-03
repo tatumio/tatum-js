@@ -1,9 +1,13 @@
 import {
+  AddressEventNotification,
+  Chain,
+  FailedTxPerBlockChain,
   IncomingFungibleTxChain,
   IncomingInternalTxChain,
   IncomingMultitokenTxChain,
   IncomingNativeTxChain,
   IncomingNftTxChain,
+  Network,
   OutgoingFailedTxChain,
   OutgoingFungibleTxChain,
   OutgoingInternalTxChain,
@@ -11,19 +15,17 @@ import {
   OutgoingNativeTxChain,
   OutgoingNftTxChain,
   PaidFeeChain,
-  TatumSdk
+  TatumSDK,
 } from '../service'
-import { Chain, Network } from '../service'
-import {AddressEventNotification, FailedTxPerBlockChain} from '../service'
 import { TestConst } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 import { Status } from '../util'
 
 describe('notification', () => {
-  let tatum: TatumSdk
+  let tatum: TatumSDK
 
   beforeAll(async () => {
-    tatum = await TatumSdk.init({ network: Network.Testnet, debug: true })
+    tatum = await TatumSDK.init({ network: Network.Testnet, verbose: true, rpc: { ignoreLoadBalancing: true } })
   })
 
   describe('createSubscription', () => {
@@ -115,7 +117,6 @@ describe('notification', () => {
     })
 
 
-
     it('NOK - existing subscription ', async () => {
       await tatum.notification.subscribe.addressEvent({
         url: 'https://tatum.com',
@@ -173,7 +174,7 @@ describe('notification', () => {
 
   it('getAll', async () => {
     const { data, error } = await tatum.notification.getAll()
-    console.log(error)
+    console.log(new Date().toISOString(), error)
     expect(data[0].id).toBeDefined()
     expect(data[0].chain).toBeDefined()
     expect(data[0].address).toBeDefined()

@@ -7,9 +7,6 @@ module.exports = {
   transform: {
     "^.+\\.(ts|tsx)$": "ts-jest"
   },
-  moduleNameMapper: {
-    "axios": "axios/dist/node/axios.cjs"
-  },
   testTimeout: 30000,
   setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']
 }

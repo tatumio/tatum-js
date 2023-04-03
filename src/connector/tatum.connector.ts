@@ -1,110 +1,78 @@
-import axios from 'axios'
-import { Constant } from '../util/constant'
+import { CONFIG, Constant, Utils } from '../util'
 import { Container, Service } from 'typedi'
 import { version } from '../../package.json'
-import { CONFIG } from '../util/di.tokens'
-import { GetUrl, Request } from './connector.dto'
-import { Network } from '../service/tatum/tatum.dto'
+import { GetUrl, SdkRequest } from './connector.dto'
+import { Network } from '../service'
+import { JsonRpcCall } from '../dto'
 
-axios.interceptors.request.use((request) => {
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // @ts-ignore
-  const config = Container.of(request.prefix).get(CONFIG)
-  if (config.debug) {
-    console.log('Request', request.method?.toUpperCase(), request.url, request.data !== undefined ? JSON.stringify(request.data) : '')
-  }
-  return request
-})
-
-axios.interceptors.response.use(
-  (response) => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    const config = Container.of(response.config.prefix).get(CONFIG)
-    if (config.debug) {
-      console.log('Response:', response.status, JSON.stringify(response.data))
-    }
-    return response
-  }, (error) => {
-    const { config, message, response } = error
-
-    const { debug } = Container.of(config.prefix).get(CONFIG)
-
-    if (debug) {
-      console.warn('Error: ', message, JSON.stringify(response.data))
-    }
-
-    if (!config || !config.retry) {
-      return Promise.reject(error)
-    }
-
-    // retry while Network timeout or Network Error
-    if (!(message.includes('timeout') || message.includes('Network Error') || response.status === 429)) {
-      return Promise.reject(error)
-    }
-
-    config.retry -= 1
-    const delayRetryRequest = new Promise<void>((resolve) => {
-      setTimeout(() => {
-
-        if (debug) {
-          console.warn('Retry the request: ', config.url, JSON.stringify(config.data))
-        }
-
-        resolve()
-      }, config.retryDelay || 1000)
-    })
-    return delayRetryRequest.then(() => axios(config))
-
-  })
-
-@Service({factory: (data: {id: string}) => {
+@Service({
+  factory: (data: { id: string }) => {
     return new TatumConnector(data.id)
-  }, transient: true})
-/* eslint-disable */ //TODO implement correct typings and remove any
+  }, transient: true,
+})
 export class TatumConnector {
-  private id: string
 
-  constructor(id: string) {
-    this.id = id
+  constructor(private readonly id: string) {
   }
 
-  public async get<T = any>({ path, params }: GetUrl) {
+  public async get<T>({ path, params }: GetUrl) {
     return this.request<T>({ path, params, method: 'GET' })
   }
 
-  public async post<T = any>({ path, params, body }: Request) {
+  public async rpcCall<T>(url: string, body: JsonRpcCall) {
+    return this.request<T>({ body, method: 'POST' }, 0, url)
+  }
+
+  public async post<T>({ path, params, body }: SdkRequest) {
     return this.request<T>({ path, params, body, method: 'POST' })
   }
 
-  public async delete<T = any>({ path, params }: GetUrl) {
+  public async delete<T>({ path, params }: GetUrl) {
     return this.request<T>({ path, params, method: 'DELETE' })
   }
 
-  private async request<T>({ path, params, body, method }: Request): Promise<T> {
-    const { retryDelay, retryCount } = Container.of(this.id).get(CONFIG)
+  private async request<T>({ path, params, body, method }: SdkRequest, retry = 0, externalUrl?: string): Promise<T> {
+    const { verbose } = Container.of(this.id).get(CONFIG)
 
-    const headers = await this.headers()
-    const response = await axios.request({
-      url: this.getUrl({ path, params }),
+    const url = externalUrl || this.getUrl({ path, params })
+    const headers = await this.headers(retry)
+    const request: RequestInit = {
       headers,
       method,
-      data: body,
-      // @ts-ignore
-      retry: retryCount,
-      retryDelay: retryDelay,
-      prefix: this.id,
-    })
-    return (response.data) as T
+      body: body ? JSON.stringify(body) : null,
+    }
+
+    const start = Date.now()
+    if (verbose) {
+      console.debug(new Date().toISOString(), 'Request: ', request.method, url, request.body)
+    }
+    try {
+      return await fetch(url, request).then(async (res) => {
+        const end = Date.now() - start
+        if (verbose) {
+          console.log(new Date().toISOString(), `Response received in ${end}ms: `, res.status, await res.clone().text())
+        }
+        if (res.ok) {
+          return res.json()
+        }
+
+        return this.retry(url, request, res)
+      })
+    } catch (error) {
+      if (verbose) {
+        console.warn(new Date().toISOString(), 'Error: ', error)
+      }
+      return Promise.reject(error)
+    }
   }
 
   private getUrl({ path, params }: GetUrl) {
-    const url = new URL(path, Constant.TATUM_API_URL)
+    const url = new URL(path || '', Constant.TATUM_API_URL)
 
     if (params) {
       Object.keys(params)
-        .filter((key) => params[key] !== undefined && params[key] !== null)
-        .forEach((key) => url.searchParams.append(key, params[key]!))
+        .filter((key) => !!params[key])
+        .forEach((key) => url.searchParams.append(key, params[key] as string))
     }
 
     const config = Container.of(this.id).get(CONFIG)
@@ -116,13 +84,40 @@ export class TatumConnector {
     return url.toString()
   }
 
-  private async headers() {
+  private async headers(retry: number) {
     const config = Container.of(this.id).get(CONFIG)
-    return {
+    return new Headers({
       'Content-Type': 'application/json',
       'x-ttm-sdk-version': version,
       'x-ttm-sdk-product': 'JS',
-      'x-ttm-sdk-debug': config.debug
+      'x-ttm-sdk-debug': `${config.verbose}`,
+      'x-ttm-sdk-retry': `${retry}`,
+    })
+  }
+
+  private async retry(url: string, request: RequestInit, response: Response) {
+    const { retryDelay, retryCount, verbose } = Container.of(this.id).get(CONFIG)
+    if (!retryCount) {
+      if (verbose) {
+        console.warn(new Date().toISOString(), `Not retrying the request - no max retry count defined: `, url, request.body)
+      }
+      return Promise.reject(await response.text())
     }
+    const retry = parseInt(response.headers.get('x-ttm-sdk-retry') || `${retryCount}`) + 1
+    if (retry >= retryCount) {
+      if (verbose) {
+        console.warn(new Date().toISOString(), `Not retrying the request for the '${retry}' time - exceeded max retry count ${retryCount}: `, url, request.body)
+      }
+      return Promise.reject(await response.text())
+    }
+
+    if (verbose) {
+      console.warn(new Date().toISOString(), `Retrying the request for the '${retry}' time: `, url, request.body)
+    }
+    await Utils.delay(retryDelay || 1000)
+    return this.request({
+      method: request.method as string,
+      body: request.body ? JSON.parse(request.body as string) : null,
+    }, retry, url)
   }
 }

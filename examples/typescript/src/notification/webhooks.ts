@@ -6,8 +6,8 @@ export const getAllWebhooks = async () => {
   const { data, status, error } = await tatum.notification.getAllExecutedWebhooks()
 
   if (status === Status.ERROR) {
-    console.log(error)
+    console.log(new Date().toISOString(), error)
   } else {
-    console.log(data)
+    console.log(new Date().toISOString(), data)
   }
 }

@@ -1,12 +1,9 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
-import Web3 from 'web3'
-import {
-  CurrentFee,
-  EmptyObject,
-} from './fee.dto'
-import { Chain } from '../tatum/tatum.dto'
-import { Utils } from '../../util/util.shared'
+import { CurrentFee, EmptyObject } from './fee.dto'
+import { Chain } from '../tatum'
+import { Utils } from '../../util'
+import BigNumber from 'bignumber.js'
 
 @Service()
 export class Fee {
@@ -18,12 +15,19 @@ export class Fee {
     }
 
     const uniqueChains = [...new Set(chains)]
-    const fees = await Promise.all(uniqueChains.map(chain => this.connector.get({ path: `blockchain/fee/${Utils.mapChain(chain)}` })))
+    const fees = await Promise.all(uniqueChains.map(chain => this.connector.get<{
+      slow: string,
+      baseFee: string,
+      fast: string,
+      medium: string,
+      time: number,
+      block: number,
+    }>({ path: `blockchain/fee/${Utils.mapChain(chain)}` })))
     return chains.reduce((obj, chain) => {
       const fee = fees[uniqueChains.indexOf(chain)]
       return ({
         ...obj, [chain]: {
-          gasPrice: this.mapGasPrice(fee),
+          gasPrice: Fee.mapGasPrice(fee),
           lastRecalculated: fee.time,
           basedOnBlockNumber: fee.block,
         },
@@ -32,18 +36,18 @@ export class Fee {
   }
 
 
-  private mapGasPrice({
-                        slow,
-                        baseFee,
-                        fast,
-                        medium,
-                      }: { slow: string, medium: string, fast: string, baseFee: string }) {
+  private static mapGasPrice({
+                               slow,
+                               baseFee,
+                               fast,
+                               medium,
+                             }: { slow: string, medium: string, fast: string, baseFee: string }) {
     return {
-      slow: Web3.utils.fromWei(slow.toString(), 'gwei'),
-      medium: Web3.utils.fromWei(medium.toString(), 'gwei'),
-      fast: Web3.utils.fromWei(fast.toString(), 'gwei'),
+      slow: new BigNumber(slow.toString()).dividedBy(1e9).toFixed(),
+      medium: new BigNumber(medium.toString()).dividedBy(1e9).toFixed(),
+      fast: new BigNumber(fast.toString()).dividedBy(1e9).toFixed(),
       unit: 'Gwei',
-      baseFee: Web3.utils.fromWei(baseFee.toString(), 'gwei'),
+      baseFee: new BigNumber(baseFee.toString()).dividedBy(1e9).toFixed(),
     }
   }
 
