@@ -25,7 +25,7 @@ describe('notification', () => {
   let tatum: TatumSDK
 
   beforeAll(async () => {
-    tatum = await TatumSDK.init({ network: Network.Testnet, verbose: true, rpc: { ignoreLoadBalancing: true } })
+    tatum = await TatumSDK.init({ network: Network.Testnet, verbose: true, rpc: { ignoreLoadBalancing: true, useStaticUrls: true } })
   })
 
   describe('createSubscription', () => {
