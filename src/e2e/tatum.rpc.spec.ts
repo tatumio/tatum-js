@@ -9,7 +9,7 @@ describe('RPCs', () => {
     it('should init RPC from local hosts', async () => {
       const sdk = await TatumSDK.init({
         verbose: true,
-        rpc: { ignoreLoadBalancing: true, bitcoin: { url: ['https://123.com'] } },
+        rpc: { ignoreLoadBalancing: true, useStaticUrls: true, bitcoin: { url: ['https://123.com'] } },
       })
       expect(sdk.rpc).toBeDefined()
       // @ts-ignore
