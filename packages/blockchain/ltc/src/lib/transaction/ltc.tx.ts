@@ -3,6 +3,7 @@ import {
   btcBasedTransactions,
   BtcBasedTx,
   btcBasedWalletUtils,
+  GetUtxoBatchType,
   LtcTransactionTypes,
 } from '@tatumio/shared-blockchain-btc-based'
 import { Blockchain } from '@tatumio/shared-core'
@@ -15,6 +16,7 @@ export const ltcTransactions = (
     broadcast: typeof ApiServices.blockchain.ltc.ltcBroadcast
     getRawTransaction: typeof ApiServices.blockchain.ltc.ltcGetRawTransaction
     getUtxo: typeof ApiServices.blockchain.ltc.ltcGetUtxo
+    getUtxoBatch?: GetUtxoBatchType
     estimateFee: typeof BlockchainFeesService.estimateFeeBlockchain
   } = {
     getUTXOsByAddress: ApiServices.data.getUtxosByAddress,

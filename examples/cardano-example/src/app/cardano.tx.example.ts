@@ -17,14 +17,15 @@ export async function cardanoTransactionExample() {
   const index = 1
 
   // Private key for utxo address
-  const privateKey = '8873d5e84af86978f03b63d9ffc9c6f940bd8501d32e91980c904e8d81c305507dc95992faa5aefccb263b28b411eda2dde7882d922742663804a69d78182e34'
+  const privateKey =
+    '8873d5e84af86978f03b63d9ffc9c6f940bd8501d32e91980c904e8d81c305507dc95992faa5aefccb263b28b411eda2dde7882d922742663804a69d78182e34'
 
   // Set recipient values, amount and address where to send. Because of internal structure of cardano chain it is possible
   // to pass several input and output address-value pairs. We will work with one recipient
   const valueToSend = 0.0015
   const recipientAddress = 'addr_test1vzfp68vn36ze5yz7x7evracmasuptjmz99qk4j23gun3pcqhlevq5'
 
-  const fee = '0.00001'
+  const fee = 0.00001
   const changeAddress = address // we expect to receive change from transaction to sender address back
 
   const options = { testnet: true }

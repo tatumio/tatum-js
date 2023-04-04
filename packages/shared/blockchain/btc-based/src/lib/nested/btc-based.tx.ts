@@ -63,11 +63,20 @@ type GetUtxoType =
   | typeof ApiServices.blockchain.bitcoin.btcGetUtxo
   | typeof ApiServices.blockchain.ltc.ltcGetUtxo
 
+export type GetUtxoBatchType =
+  | ((chain: ChainUtxoEnum, utxos: BtcBasedUtxo[]) => Promise<BtcUTXO[]>)
+  | ((chain: ChainUtxoEnum, utxos: BtcBasedUtxo[]) => Promise<LtcUTXO[]>)
+
 type BroadcastType =
   | typeof ApiServices.blockchain.bitcoin.btcBroadcast
   | typeof ApiServices.blockchain.ltc.ltcBroadcast
 
 type BtcBasedTxOptions = { testnet: boolean; skipAllChecks?: boolean }
+
+export type BtcBasedUtxo = {
+  txHash: string
+  index: number
+}
 
 export const btcBasedTransactions = (
   currency: Currency.BTC | Currency.LTC,
@@ -75,6 +84,7 @@ export const btcBasedTransactions = (
   apiCalls: {
     getUTXOsByAddress: typeof DataApiService.getUtxosByAddress
     getUtxo: GetUtxoType
+    getUtxoBatch?: GetUtxoBatchType
     broadcast: BroadcastType
     estimateFee: typeof BlockchainFeesService.estimateFeeBlockchain
   },
@@ -95,6 +105,22 @@ export const btcBasedTransactions = (
     scriptFromAddress: Script.fromAddress,
   },
 ): BtcBasedTx<BtcBasedTransactionTypes> => {
+  const getChain = (options: BtcBasedTxOptions) => {
+    if (currency === Currency.LTC) {
+      if (options.testnet) {
+        return 'litecoin-testnet'
+      } else {
+        return 'litecoin-mainnet'
+      }
+    } else {
+      if (options.testnet) {
+        return 'bitcoin-testnet'
+      } else {
+        return 'bitcoin-mainnet'
+      }
+    }
+  }
+
   const privateKeysFromAddress = async (
     transaction: BtcBasedTransaction,
     body: BtcFromAddressTypes | LtcFromAddressTypes,
@@ -116,19 +142,12 @@ export const btcBasedTransactions = (
         if (totalInputs >= totalOutputs) {
           break
         }
-        let chain: ChainUtxoEnum = 'bitcoin-mainnet'
-        if (currency === Currency.LTC) {
-          if (options.testnet) {
-            chain = 'litecoin-testnet'
-          } else {
-            chain = 'litecoin-mainnet'
-          }
-        } else {
-          if (options.testnet) {
-            chain = 'bitcoin-testnet'
-          }
-        }
-        const utxos = await apiCalls.getUTXOsByAddress(chain, item.address, amountUtils.fromSatoshis(totalOutputs - totalInputs))
+
+        const utxos = await apiCalls.getUTXOsByAddress(
+          getChain(options),
+          item.address,
+          amountUtils.fromSatoshis(totalOutputs - totalInputs),
+        )
         for (const utxo of utxos) {
           totalInputs += utxo.value
           transaction.from([
@@ -154,6 +173,30 @@ export const btcBasedTransactions = (
     }
   }
 
+  async function getUtxoBatch(
+    chain: ChainUtxoEnum,
+    body: BtcTransactionFromUTXO | BtcTransactionFromUTXOKMS | LtcTransactionUTXO | LtcTransactionUTXOKMS,
+  ) {
+    const fromUTXO = body.fromUTXO
+    if (apiCalls.getUtxoBatch) {
+      return apiCalls.getUtxoBatch(
+        chain,
+        fromUTXO.map((item) => ({ txHash: item.txHash, index: item.index })),
+      )
+    } else {
+      const utxos: (BtcUTXO | null)[] | (LtcUTXO | null)[] = []
+      for (const utxoItem of fromUTXO) {
+        const utxo = await getUtxoSilent(utxoItem.txHash, utxoItem.index)
+        if (utxo === null || !utxo.address) {
+          utxos.push(null)
+        } else {
+          utxos.push(utxo)
+        }
+      }
+      return utxos
+    }
+  }
+
   const privateKeysFromUTXO = async (
     transaction: Transaction,
     body: BtcFromUtxoTypes | LtcFromUtxoTypes,
@@ -165,20 +208,23 @@ export const btcBasedTransactions = (
 
     try {
       const privateKeysToSign = []
-      const utxos = []
+      const utxos: BtcUTXO[] = []
 
-      for (const utxoItem of body.fromUTXO) {
-        const utxo = await getUtxoSilent(utxoItem.txHash, utxoItem.index)
+      const filteredUtxos = await getUtxoBatch(getChain(options), body)
+
+      for (let i = 0; i < filteredUtxos.length; i++) {
+        const utxo = filteredUtxos[i]
         if (utxo === null || !utxo.address) continue
+
+        const utxoItem = body.fromUTXO[i]
 
         utxos.push(utxo)
 
-        const address = utxo.address
         transaction.from([
           prepareUnspentOutput({
-            txId: utxoItem.txHash,
+            txId: utxo.hash,
             outputIndex: utxo.index,
-            script: scriptFromAddress(address).toString(),
+            script: scriptFromAddress(utxo.address).toString(),
             satoshis: utxo.value,
           }),
         ])
