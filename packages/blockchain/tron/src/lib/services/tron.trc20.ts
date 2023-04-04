@@ -17,8 +17,11 @@ const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronW
   const { to, tokenAddress, amount, feeLimit } = body
 
   const client = tronWeb.getClient(provider)
-  client.setAddress(tokenAddress)
-  const contractInstance = await client.contract().at(tokenAddress)
+
+  const destinationContractAddress = getProxyTokenAddress(tokenAddress)
+
+  client.setAddress(destinationContractAddress)
+  const contractInstance = await client.contract().at(destinationContractAddress)
   const decimals = await contractInstance.decimals().call()
 
   const from = body.signatureId
@@ -30,7 +33,7 @@ const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronW
     throw new Error('Insufficient TRC20 balance')
   }
 
-  const tokenAddressHex = client.address.toHex(tokenAddress)
+  const tokenAddressHex = client.address.toHex(destinationContractAddress)
   const methodName = 'transfer(address,uint256)'
   const params = [
     { type: 'address', value: client.address.toHex(to) },
@@ -66,6 +69,16 @@ const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronW
     )
     return JSON.stringify(await client.trx.sign(transaction, body.fromPrivateKey))
   }
+}
+/*
+  We need to hardcode some proxy contracts for some tokens, because they are not automatically resolved to the destination contract.
+ */
+const getProxyTokenAddress = (tokenAddress: string) => {
+  const proxyContract = {
+    // BUSD https://tronscan.org/#/token20/TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH
+    'TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH': 'TTtQQxmhZTnpKhdVVJpANpX12vRjc16TxZ'
+  }
+  return proxyContract[tokenAddress] || tokenAddress
 }
 
 const prepareCreateSignedTransaction = async (
