@@ -25,12 +25,17 @@ export interface TatumConfig {
   rpc?: {
 
     /**
-     * How many blocks behind the head of the blockchain to tolerate before considering the node to be unhealthy. Defaults to `2`.
+     * How many blocks behind the head of the blockchain to tolerate before considering the node to be unhealthy. Defaults to `0`.
      */
     allowedBlocksBehind?: number
 
     /**
-     * In case this is set to `true`, the SDK will not automatically load balance and failover between the available OpenRPC nodes and will use static URLs defined bellow. Defaults to `false`.
+     * In case this is set to `true`, the SDK will use list of provided URL addresses from the configuration instead of OpenRCP ones. Defaults to `false`.
+     */
+    useStaticUrls?: boolean
+
+    /**
+     * In case this is set to `true`, the SDK will not automatically load balance and failover between available nodes and will use fixed first available URL. Defaults to `false`.
      */
     ignoreLoadBalancing?: boolean
 

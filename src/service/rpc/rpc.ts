@@ -44,7 +44,7 @@ export class Rpc {
 
   async init() {
     const config = Container.of(this.id).get(CONFIG)
-    if (config.rpc?.ignoreLoadBalancing) {
+    if (config.rpc?.useStaticUrls) {
       if (config.verbose) {
         console.debug(new Date().toISOString(), 'Initializing RPC module from static URLs')
       }
@@ -52,9 +52,21 @@ export class Rpc {
       for (const blockchain of Object.values(Blockchain)) {
         const urls = config.rpc[blockchain]?.url
         if (urls?.length) {
-          this.activeUrl.set(blockchain, { url: urls[0], index: -1 })
-          if (config.verbose) {
-            console.debug(new Date().toISOString(), `Using static URL ${urls[0]} for ${blockchain}`)
+          for (const url of urls) {
+            this.rpcUrlMap.set(blockchain, [{ node: { url }, lastBlock: 0, lastResponseTime: 0, failed: false }])
+          }
+          if (config.rpc?.ignoreLoadBalancing) {
+            this.activeUrl.set(blockchain, { url: urls[0], index: -1 })
+            if (config.verbose) {
+              console.debug(new Date().toISOString(), `Using static URL ${urls[0]} for ${blockchain}`)
+            }
+          } else {
+            if (config.rpc?.oneTimeLoadBalancing && config.rpc?.waitForFastestNode) {
+              await this.checkStatus()
+            } else if (!config.rpc?.oneTimeLoadBalancing) {
+              this.interval = setInterval(() => this.checkStatus(), Constant.OPEN_RPC.LB_INTERVAL)
+              process.on('exit', () => clearInterval(this.interval))
+            }
           }
         }
       }
@@ -72,7 +84,7 @@ export class Rpc {
   }
 
   private async checkStatus() {
-    const { verbose } = Container.of(this.id).get(CONFIG)
+    const { verbose, rpc } = Container.of(this.id).get(CONFIG)
     const allChains = []
     for (const blockchain of Object.values(Blockchain)) {
       if (!this.rpcUrlMap.has(blockchain)) {
@@ -108,7 +120,7 @@ export class Rpc {
         }))
       }
       allChains.push(Promise.allSettled(all).then(() => {
-        const { fastestServer, index } = Rpc.getFastestServer(servers)
+        const { fastestServer, index } = Rpc.getFastestServer(servers, rpc?.allowedBlocksBehind as number)
         if (fastestServer && index !== -1) {
           if (verbose) {
             console.debug(new Date().toISOString(), `Server ${fastestServer.node.url} for ${blockchain} blockchain is the active server.`)
@@ -121,7 +133,7 @@ export class Rpc {
   }
 
   private create(blockchain: Blockchain): RpcInvocation {
-    const { verbose } = Container.of(this.id).get(CONFIG)
+    const { verbose, rpc: rpcConfig} = Container.of(this.id).get(CONFIG)
     return {
       callRpc: (request: JsonRpcCall) => callRpc(request, this),
     }
@@ -145,7 +157,7 @@ export class Rpc {
         }
         const servers = rpc.rpcUrlMap.get(blockchain) as RpcStatus[]
         servers[activeIndex].failed = true
-        const { index, fastestServer } = Rpc.getFastestServer(servers)
+        const { index, fastestServer } = Rpc.getFastestServer(servers, rpcConfig?.allowedBlocksBehind as number)
         if (index === -1) {
           console.error(`All servers for ${blockchain} blockchain are unavailable.`)
           throw e
@@ -156,10 +168,10 @@ export class Rpc {
     }
   }
 
-  private static getFastestServer(servers: RpcStatus[]) {
+  private static getFastestServer(servers: RpcStatus[], allowedBlocksBehind: number) {
     const { fastestServer, index } = servers.reduce((result, item, index) => {
       if (!item.failed &&
-        (item.lastBlock > result.fastestServer.lastBlock ||
+        ((item.lastBlock - allowedBlocksBehind) > result.fastestServer.lastBlock ||
           (item.lastBlock === result.fastestServer.lastBlock && item.lastResponseTime < result.fastestServer.lastResponseTime))) {
         return { fastestServer: item, index: index };
       } else {

@@ -1,7 +1,12 @@
+## [1.1.1] - 2023.04.04
+
+### Added
+- Added support for block difference to Open Network
+- Added support for multiple static URLs with load balancing to Open Network
 ## [1.1.0] - 2023.04.03
 
 ### Added
-- Added support for [OpenRPC network](https://openrpc.io)
+- Added support for [OpenNetwork network](https://openrpc.io)
 
 ### Removed
 - Removed dependency on Axios - replaced with Fetch API

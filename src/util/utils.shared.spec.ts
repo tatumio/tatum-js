@@ -1,5 +1,5 @@
 import { Utils } from './util.shared'
-import { Blockchain } from '../dto/Blockchain.dto'
+import { Blockchain } from '../dto'
 
 describe('Utils tests', function () {
   describe('statusPayloadExtractor', function () {
