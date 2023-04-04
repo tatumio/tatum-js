@@ -23,6 +23,7 @@ export class TatumSDK {
       retryCount: 1,
       retryDelay: 1000,
       rpc: {
+        useStaticUrls: false,
         ignoreLoadBalancing: false,
         oneTimeLoadBalancing: false,
         waitForFastestNode: false,

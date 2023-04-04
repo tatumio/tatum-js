@@ -4,7 +4,7 @@ export const Constant = {
   TATUM_API_URL: 'https://api.tatum.com/v1/',
   OPEN_RPC: {
     LB_INTERVAL: 60_000,
-    ALLOWED_BLOCKS_BEHIND: 2,
+    ALLOWED_BLOCKS_BEHIND: 0,
     CONFIG_URL: {
       [Blockchain.BITCOIN]: 'https://bitcoin.cdn.openrpc.io',
       [Blockchain.LITECOIN]: 'https://litecoin.cdn.openrpc.io',
