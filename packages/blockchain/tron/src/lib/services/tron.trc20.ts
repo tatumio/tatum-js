@@ -74,9 +74,9 @@ const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronW
   We need to hardcode some proxy contracts for some tokens, because they are not automatically resolved to the destination contract.
  */
 const getProxyTokenAddress = (tokenAddress: string) => {
-  const proxyContract = {
+  const proxyContract: Record<string, string> = {
     // BUSD https://tronscan.org/#/token20/TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH
-    'TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH': 'TTtQQxmhZTnpKhdVVJpANpX12vRjc16TxZ'
+    TMz2SWatiAtZVVcH2ebpsbVtYwUPT9EdjH: 'TTtQQxmhZTnpKhdVVJpANpX12vRjc16TxZ',
   }
   return proxyContract[tokenAddress] || tokenAddress
 }
