@@ -1,4 +1,5 @@
 export * from './lib/utils'
+export * from './lib/logger'
 export * from './lib/abstract.sdk'
 export * from './lib/services/kms.abstract'
 export * from './lib/services/virtualAccount.abstract'

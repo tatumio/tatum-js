@@ -1,7 +1,11 @@
 import { TatumBtcSDK } from '@tatumio/btc'
+import { LoggerDefaultConfigs } from '@tatumio/shared-abstract-sdk'
 
 export async function btcWalletExample() {
-  const btcSDK = TatumBtcSDK({ apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab' })
+  const btcSDK = TatumBtcSDK({
+    apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab',
+    logger: LoggerDefaultConfigs.consoleLogger,
+  })
 
   // Generate a BTC wallet
   // You can find more details in https://apidoc.tatum.io/tag/Bitcoin#operation/BtcGenerateWallet

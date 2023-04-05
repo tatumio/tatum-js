@@ -4,6 +4,7 @@ import { ECPair, payments } from 'bitcoinjs-lib'
 import hdkey from 'hdkey'
 import { Wallet } from '@tatumio/api-client'
 import { BtcBasedBlockchain, blockchainUtils } from '@tatumio/shared-core'
+import { logger } from '@tatumio/shared-abstract-sdk'
 
 export type BtcBasedWalletUtils = {
   generateAddressFromXPub: (xpub: string, i: number, options?: { testnet: boolean }) => string

@@ -10,15 +10,19 @@ import {
 import { abstractSdkKms } from './services/kms.abstract'
 import { abstractSdkNftService } from './services/nft.abstract'
 import { abstractSdkLedgerService } from './services/ledger.abstract'
+import { logger, SdkLoggerConfig } from './logger'
 
 export interface SDKArguments {
   apiKey: string
   url?: TatumUrlArg
   provider?: string
+  logger?: SdkLoggerConfig
 }
 
 export const abstractSdk = (args: SDKArguments) => {
   TatumApi(args.apiKey, args.url)
+
+  logger.useLogger(args?.logger)
 
   return {
     subscriptions: NotificationSubscriptionsService,
