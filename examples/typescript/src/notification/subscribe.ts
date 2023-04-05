@@ -14,4 +14,5 @@ export const subscribe = async () => {
   } else {
     console.log(new Date().toISOString(), data)
   }
+  tatum.destroy()
 }

@@ -19,6 +19,8 @@ const run = async () => {
     jsonrpc: '2.0',
     id: 1,
   }), null, 2))
+
+  sdk.destroy()
 }
 
 run()
