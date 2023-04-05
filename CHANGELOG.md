@@ -1,8 +1,14 @@
+## [1.1.2] - 2023.04.05
+
+### Added
+- Added graceful shutdown of the SDK
+
 ## [1.1.1] - 2023.04.04
 
 ### Added
 - Added support for block difference to Open Network
 - Added support for multiple static URLs with load balancing to Open Network
+
 ## [1.1.0] - 2023.04.03
 
 ### Added
