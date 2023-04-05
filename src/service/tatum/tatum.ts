@@ -39,6 +39,10 @@ export class TatumSDK {
     return tatumSdk
   }
 
+  public destroy() {
+    this.rpc.destroy()
+  }
+
   private static generateRandomString() {
     const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     let result = '';

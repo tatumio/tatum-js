@@ -48,6 +48,8 @@ describe('RPCs', () => {
       expect(activeUrl.has(Blockchain.ETHEREUM)).toBeFalsy()
       expect(activeUrl.has(Blockchain.POLYGON)).toBeFalsy()
       expect(activeUrl.has(Blockchain.MONERO)).toBeFalsy()
+
+      sdk.destroy()
     })
   })
 })

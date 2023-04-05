@@ -24,7 +24,7 @@ interface RpcStatus {
 export class Rpc {
   private readonly rpcUrlMap = new Map<Blockchain, RpcStatus[]>()
   private readonly activeUrl = new Map<Blockchain, { url: string, index: number }>()
-  private interval: NodeJS.Timeout
+  private timeout: unknown
 
   public readonly bitcoin: RpcInvocation
   public readonly litecoin: RpcInvocation
@@ -61,11 +61,12 @@ export class Rpc {
               console.debug(new Date().toISOString(), `Using static URL ${urls[0]} for ${blockchain}`)
             }
           } else {
-            if (config.rpc?.oneTimeLoadBalancing && config.rpc?.waitForFastestNode) {
+            if (config.rpc?.waitForFastestNode) {
               await this.checkStatus()
-            } else if (!config.rpc?.oneTimeLoadBalancing) {
-              this.interval = setInterval(() => this.checkStatus(), Constant.OPEN_RPC.LB_INTERVAL)
-              process.on('exit', () => clearInterval(this.interval))
+            }
+            if (!config.rpc?.oneTimeLoadBalancing) {
+              this.timeout = setTimeout(() => this.checkStatus(), Constant.OPEN_RPC.LB_INTERVAL)
+              process.on('exit', () => clearInterval(this.timeout as number))
             }
           }
         }
@@ -77,10 +78,13 @@ export class Rpc {
       if (config.rpc?.oneTimeLoadBalancing && config.rpc?.waitForFastestNode) {
         await this.checkStatus()
       } else if (!config.rpc?.oneTimeLoadBalancing) {
-        this.interval = setInterval(() => this.checkStatus(), Constant.OPEN_RPC.LB_INTERVAL)
-        process.on('exit', () => clearInterval(this.interval))
+        this.timeout = setTimeout(() => this.checkStatus(), Constant.OPEN_RPC.LB_INTERVAL)
       }
     }
+  }
+
+  destroy() {
+    clearTimeout(this.timeout as number)
   }
 
   private async checkStatus() {
@@ -130,6 +134,12 @@ export class Rpc {
       }))
     }
     await Promise.allSettled(allChains)
+    if (!rpc?.oneTimeLoadBalancing) {
+      if (this.timeout) {
+        clearTimeout(this.timeout as number)
+      }
+      this.timeout = setTimeout(() => this.checkStatus(), Constant.OPEN_RPC.LB_INTERVAL)
+    }
   }
 
   private create(blockchain: Blockchain): RpcInvocation {
