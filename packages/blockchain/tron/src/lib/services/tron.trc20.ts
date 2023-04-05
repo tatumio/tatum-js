@@ -27,7 +27,7 @@ const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronW
   const from = body.signatureId
     ? body.from
     : client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
-  const balance = ((await contractInstance.balanceOf(from).call()) as BigNumber).toNumber()
+  const balance = ((await contractInstance.balanceOf(from).call()) as BigNumber).toString()
   const valueToSend = new BigNumber(amount).multipliedBy(new BigNumber(10).pow(decimals))
   if (valueToSend.isGreaterThan(new BigNumber(balance || 0))) {
     throw new Error('Insufficient TRC20 balance')
