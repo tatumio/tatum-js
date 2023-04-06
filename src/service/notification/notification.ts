@@ -30,8 +30,8 @@ export class Notification {
   }
 
   /**
-   * Get all notifications for given address.
-   *
+   * Get all existing subscriptions for given address.
+   * @param body
    */
   async getAll(body?: GetAllNotificationsQuery): Promise<ResponseDto<AddressEventNotification[]>> {
     return ErrorUtils.tryFail(async () => {
@@ -54,14 +54,16 @@ export class Notification {
   }
 
   /**
-   * Unsubscribe from notification.
+   * Unsubscribe from monitoring of the specific address.
+   * @param id ID of a subscription.
    */
   async unsubscribe(id: string): Promise<ResponseDto<void>> {
     return ErrorUtils.tryFail(async () => this.connector.delete({ path: `subscription/${id}` }))
   }
 
   /**
-   * Get all executed webhooks.
+   * Get all fired webhook notifications.
+   * @param body
    */
   async getAllExecutedWebhooks(body?: GetAllExecutedWebhooksQuery): Promise<ResponseDto<Webhook[]>> {
     return ErrorUtils.tryFail(async () =>

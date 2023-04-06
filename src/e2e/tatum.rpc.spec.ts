@@ -17,6 +17,7 @@ describe('RPCs', () => {
       // @ts-ignore
       expect(sdk.rpc.activeUrl.has(Blockchain.LITECOIN)).toBeFalsy()
 
+      expect(await sdk.rpc.bitcoin.getFastestUrl()).toBe('https://123.com')
     })
 
     it('should init RPC from remote hosts', async () => {
@@ -48,6 +49,8 @@ describe('RPCs', () => {
       expect(activeUrl.has(Blockchain.ETHEREUM)).toBeFalsy()
       expect(activeUrl.has(Blockchain.POLYGON)).toBeFalsy()
       expect(activeUrl.has(Blockchain.MONERO)).toBeFalsy()
+
+      expect(await sdk.rpc.bitcoin.getFastestUrl()).toBeDefined()
 
       sdk.destroy()
     })

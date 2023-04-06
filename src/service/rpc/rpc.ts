@@ -5,6 +5,7 @@ import { Blockchain, JsonRpcCall, JsonRpcResponse } from '../../dto'
 
 interface RpcInvocation {
   callRpc(request: JsonRpcCall): Promise<JsonRpcResponse>
+  getFastestUrl(): Promise<string>
 }
 
 interface RpcStatus {
@@ -42,6 +43,11 @@ export class Rpc {
     this.monero = this.create(Blockchain.MONERO)
   }
 
+  /**
+   * Initialize RPC module.
+   * Based on the configuration, it will either use static URLs provided by the user or it will use remote hosts.
+   * If remote hosts are used, it will perform load balancing and will use the fastest available node.
+   */
   async init() {
     const config = Container.of(this.id).get(CONFIG)
     if (config.rpc?.useStaticUrls) {
@@ -96,6 +102,11 @@ export class Rpc {
       }
       const servers: RpcStatus[] = this.rpcUrlMap.get(blockchain) as RpcStatus[]
       const all = []
+      /**
+       * Check status of all nodes for the given blockchain.
+       * If the node is not responding, it will be marked as failed.
+       * If the node is responding, it will be marked as not failed and the last block will be updated.
+       */
       for (const server of servers) {
         all.push(Utils.fetchWithTimeout(server.node.url, {
           method: 'POST',
@@ -123,6 +134,9 @@ export class Rpc {
           server.failed = true
         }))
       }
+      /**
+       * The fastest node will be selected and will be used for the given blockchain.
+       */
       allChains.push(Promise.allSettled(all).then(() => {
         const { fastestServer, index } = Rpc.getFastestServer(servers, rpc?.allowedBlocksBehind as number)
         if (fastestServer && index !== -1) {
@@ -146,6 +160,15 @@ export class Rpc {
     const { verbose, rpc: rpcConfig} = Container.of(this.id).get(CONFIG)
     return {
       callRpc: (request: JsonRpcCall) => callRpc(request, this),
+      getFastestUrl: () => getFastestUrl(this),
+    }
+
+    async function getFastestUrl(rpc: Rpc) {
+      if (rpcConfig?.ignoreLoadBalancing) {
+        return rpc.getActiveUrl(blockchain)
+      }
+      await rpc.checkStatus()
+      return rpc.getActiveUrl(blockchain)
     }
 
     async function callRpc(request: JsonRpcCall, rpc: Rpc): Promise<JsonRpcResponse> {
@@ -165,6 +188,10 @@ export class Rpc {
           console.warn(new Date().toISOString(), `Failed to call RPC ${request.method} on ${url} for ${blockchain} blockchain.`, e)
           console.log(new Date().toISOString(), `Switching to another server for ${blockchain} blockchain, marking this as unstable.`)
         }
+        /**
+         * If the node is not responding, it will be marked as failed.
+         * New node will be selected and will be used for the given blockchain.
+         */
         const servers = rpc.rpcUrlMap.get(blockchain) as RpcStatus[]
         servers[activeIndex].failed = true
         const { index, fastestServer } = Rpc.getFastestServer(servers, rpcConfig?.allowedBlocksBehind as number)
