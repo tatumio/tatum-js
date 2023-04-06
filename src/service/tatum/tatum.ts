@@ -16,6 +16,11 @@ export class TatumSDK {
     this.rpc = Container.of(this.id).get(Rpc)
   }
 
+  /**
+   * Initialize Tatum SDK. This method must be called before any other method.
+   * Default configuration is used if no configuration is provided.
+   * @param config
+   */
   public static async init(config?: TatumConfig): Promise<TatumSDK> {
     const defaultConfig: TatumConfig = {
       network: Network.Mainnet,
@@ -39,6 +44,10 @@ export class TatumSDK {
     return tatumSdk
   }
 
+  /**
+   * Destroy Tatum SDK. This method must be called after all other methods.
+   * This method will destroy all the background tasks.
+   */
   public destroy() {
     this.rpc.destroy()
   }

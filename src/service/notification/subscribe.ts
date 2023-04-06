@@ -21,7 +21,7 @@ import {
 import { TatumConnector } from '../../connector/tatum.connector'
 import { Container, Service } from 'typedi'
 import { Utils, ErrorUtils, ResponseDto } from '../../util'
-import { IdDto } from '../../dto/shared.dto'
+import { IdDto } from '../../dto'
 import { Chain } from '../tatum'
 
 @Service({

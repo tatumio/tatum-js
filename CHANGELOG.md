@@ -1,3 +1,8 @@
+## [1.1.3] - 2023.04.06
+
+### Added
+- Added get fastest URL method for a specific blockchain from Open Network
+
 ## [1.1.2] - 2023.04.05
 
 ### Added
