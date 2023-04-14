@@ -1,8 +1,18 @@
+import { Network } from '../../dto/Network'
+
 export interface TatumConfig {
+  network: Network
   /**
-   * Blockchain to use, mainnet or testnet. Mainnet is the default one.
+   * API Version of Tatum. Use V1 for api.tatum.io/v3 API keys and V2 for api.tatum.com/v1 API keys. Defaults to V2.
    */
-  network?: Network
+  version?: ApiVersion
+
+  /**
+   * Enter your API Key here. You can get it from https://tatum.com.
+   * API Key is optional, but your data will by tied to the IP address you are using. If you want to store your data like address notifications, webhooks, etc. you need to use API Key.
+   * If you are using Tatum API Key, you can use Tatum SDK without any limitations.
+   */
+  apiKey?: string
 
   /**
    * Verbose logging is disabled by default.
@@ -12,149 +22,28 @@ export interface TatumConfig {
   /**
    * Delay between retries, defaults to 1000ms.
    */
-  retryDelay?: number,
+  retryDelay?: number
 
   /**
    * Number of retries in case of failed requests, defaults to 1.
    */
   retryCount?: number
-
-  /**
-   * Optional configuration for an OpenRPC network support.
-   */
-  rpc?: {
-
-    /**
-     * How many blocks behind the head of the blockchain to tolerate before considering the node to be unhealthy. Defaults to `0`.
-     */
-    allowedBlocksBehind?: number
-
-    /**
-     * In case this is set to `true`, the SDK will use list of provided URL addresses from the configuration instead of OpenRCP ones. Defaults to `false`.
-     */
-    useStaticUrls?: boolean
-
-    /**
-     * In case this is set to `true`, the SDK will not automatically load balance and failover between available nodes and will use fixed first available URL. Defaults to `false`.
-     */
-    ignoreLoadBalancing?: boolean
-
-    /**
-     * Wait for the load balance check to find the nearest node during the initialization. Defaults to `false`.
-     */
-    waitForFastestNode?: boolean
-
-    /**
-     * If this is set to `true`, the SDK will not automatically load balance and failover between the available OpenRPC nodes and will use the fastest URL fetched during the startup. Defaults to `false`.
-     */
-    oneTimeLoadBalancing?: boolean
-
-    /**
-     * In case this url is set, all the requests to Bitcoin will be proxied to this url without automatic load balancing and failover. For now, only first elements of the array is used as a default URL.
-     */
-    bitcoin?: {
-      url: string[]
-    }
-
-    /**
-     * In case this url is set, all the requests to Litecoin will be proxied to this url without automatic load balancing and failover. For now, only first elements of the array is used as a default URL.
-     */
-    litecoin?: {
-      url: string[]
-    }
-
-    /**
-     * In case this url is set, all the requests to Ethereum will be proxied to this url without automatic load balancing and failover. For now, only first elements of the array is used as a default URL.
-     */
-    ethereum?: {
-      url: string[]
-    }
-
-    /**
-     * In case this url is set, all the requests to Polygon will be proxied to this url without automatic load balancing and failover. For now, only first elements of the array is used as a default URL.
-     */
-    polygon?: {
-      url: string[]
-    }
-
-    /**
-     * In case this url is set, all the requests to Monero will be proxied to this url without automatic load balancing and failover. For now, only first elements of the array is used as a default URL.
-     */
-    monero?: {
-      url: string[]
-    }
-  }
 }
 
-export enum Network {
-  Mainnet = 'Mainnet',
-  Testnet = 'Testnet',
-}
-
-export enum Chain {
-  Ethereum = 'Ethereum',
-  Solana = 'Solana',
-  Polygon = 'Polygon',
-  Celo = 'Celo',
-  Klaytn = 'Klaytn',
-  Bitcoin = 'Bitcoin',
-  Litecoin = 'Litecoin',
-  BitcoinCash = 'BitcoinCash',
-  Dogecoin = 'Dogecoin',
-  Tron = 'Tron',
-  BinanceSmartChain = 'BinanceSmartChain',
-}
-
-export enum TatumChain {
-  ETH = 'ETH',
-  SOL = 'SOL',
-  MATIC = 'MATIC',
-  CELO = 'CELO',
-  KLAY = 'KLAY',
-  BTC = 'BTC',
-  LTC = 'LTC',
-  BCH = 'BCH',
-  DOGE = 'DOGE',
-  TRON = 'TRON',
-  BSC = 'BSC',
-}
-
-export const ChainMap = {
-  [Chain.Ethereum]: TatumChain.ETH,
-  [Chain.Solana]: TatumChain.SOL,
-  [Chain.Polygon]: TatumChain.MATIC,
-  [Chain.Celo]: TatumChain.CELO,
-  [Chain.Klaytn]: TatumChain.KLAY,
-  [Chain.Bitcoin]: TatumChain.BTC,
-  [Chain.Litecoin]: TatumChain.LTC,
-  [Chain.BitcoinCash]: TatumChain.BCH,
-  [Chain.Dogecoin]: TatumChain.DOGE,
-  [Chain.Tron]: TatumChain.TRON,
-  [Chain.BinanceSmartChain]: TatumChain.BSC,
-}
-export const ChainMapInverse = {
-  [TatumChain.ETH]: Chain.Ethereum,
-  [TatumChain.SOL]: Chain.Solana,
-  [TatumChain.MATIC]: Chain.Polygon,
-  [TatumChain.CELO]: Chain.Celo,
-  [TatumChain.KLAY]: Chain.Klaytn,
-  [TatumChain.BTC]: Chain.Bitcoin,
-  [TatumChain.LTC]: Chain.Litecoin,
-  [TatumChain.BCH]: Chain.BitcoinCash,
-  [TatumChain.DOGE]: Chain.Dogecoin,
-  [TatumChain.TRON]: Chain.Tron,
-  [TatumChain.BSC]: Chain.BinanceSmartChain,
+export enum ApiVersion {
+  V1 = 'V1',
+  V2 = 'V2',
 }
 
 export interface ApiInfoResponse {
-  version: string;
-  status: string;
-  testnet: boolean;
-  planName: string;
-  planCode: string;
-  price: number;
-  expiration: number;
-  creditLimit: number;
-  usage: number;
-  rolloverDay: number;
+  version: string
+  status: string
+  testnet: boolean
+  planName: string
+  planCode: string
+  price: number
+  expiration: number
+  creditLimit: number
+  usage: number
+  rolloverDay: number
 }

@@ -1,3 +1,5 @@
+export { AddressEventNotificationChain } from '../../dto/AddressEventNotificationChain'
+export { Chain } from '../../dto/Chain'
 export * from './notification'
 export * from './notification.dto'
 export * from './subscribe'

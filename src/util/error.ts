@@ -1,11 +1,11 @@
 export enum Status {
   SUCCESS = 'SUCCESS',
-  ERROR = 'ERROR'
+  ERROR = 'ERROR',
 }
 
 export interface ResponseDto<T> {
   data: T
-  status: Status,
+  status: Status
   error?: ErrorWithMessage
 }
 
@@ -15,9 +15,7 @@ type ErrorWithMessage = {
 }
 
 export const ErrorUtils = {
-  tryFail: async <T>(
-    f: (() => Promise<T>) | (() => T),
-  ): Promise<ResponseDto<T>> => {
+  tryFail: async <T>(f: (() => Promise<T>) | (() => T)): Promise<ResponseDto<T>> => {
     try {
       const data = await f()
       return {
@@ -41,7 +39,7 @@ export const ErrorUtils = {
         const error = JSON.parse(maybeError as string)
         if (error.data instanceof Array && error.data.length > 0) {
           return {
-            message: (error.data as string[]).map(message => ErrorUtils.formatErrorMsg(message)),
+            message: (error.data as string[]).map((message) => ErrorUtils.formatErrorMsg(message)),
             code: error.errorCode,
           }
         }
@@ -51,8 +49,7 @@ export const ErrorUtils = {
           code: error.errorCode,
         }
         // eslint-disable-next-line no-empty
-      } catch (_) {
-      }
+      } catch (_) {}
     }
 
     if (ErrorUtils.isErrorWithMessage(maybeError)) {

@@ -1,5 +1,6 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
+import { ErrorUtils, ResponseDto, Utils } from '../../util'
 import {
   AddressEventNotification,
   AddressEventNotificationApi,
@@ -8,8 +9,6 @@ import {
   Webhook,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
-import { ChainMapInverse } from '../tatum'
-import { ErrorUtils, ResponseDto } from '../../util'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -18,7 +17,6 @@ import { ErrorUtils, ResponseDto } from '../../util'
   transient: true,
 })
 export class Notification {
-
   private id: string
   private connector: TatumConnector
   public subscribe: Subscribe
@@ -45,7 +43,7 @@ export class Notification {
       })
       return subscriptions.map((notification) => ({
         id: notification.id,
-        chain: ChainMapInverse[notification.attr.chain],
+        network: Utils.mapNotificationChainToNetwork(notification.attr.chain),
         address: notification.attr.address,
         url: notification.attr.url,
         type: notification.type,
@@ -75,6 +73,7 @@ export class Notification {
           ...(body?.direction && { direction: body.direction }),
           ...(body?.filterFailed && { failed: body.filterFailed.toString() }),
         },
-      }))
+      }),
+    )
   }
 }
