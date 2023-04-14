@@ -87,7 +87,7 @@ export class TatumConnector {
         .forEach((key) => url.searchParams.append(key, params[key] as string))
     }
 
-    if (Constant.RPC.TESTNETS.includes(config.network)) {
+    if (!config.apiKey && Constant.RPC.TESTNETS.includes(config.network)) {
       url.searchParams.append('type', 'testnet')
     }
 
