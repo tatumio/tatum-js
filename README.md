@@ -36,8 +36,8 @@ This guide will walk you through the basic setup, installation, and usage of Tat
 ## Prerequisites
 Before diving into TatumSDK, ensure that you have the following prerequisites installed:
 
-**Node.js**: Ensure you have the latest LTS version installed.
-**npm**: npm is bundled with Node.js, so installing Node.js should automatically install npm.
+* **Node.js**: Ensure you have the latest LTS version installed.
+* **npm**: npm is bundled with Node.js, so installing Node.js should automatically install npm.
 
 ## Installation
 To install TatumSDK, simply run the following command in your terminal or command prompt:

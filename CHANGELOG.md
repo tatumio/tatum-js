@@ -1,4 +1,9 @@
-## [1.2.0] - 2023.04.20
+## [1.2.1] - 2023.04.16
+
+### Changed
+- Fixed exports
+
+## [1.2.0] - 2023.04.16
 
 ### Added
 - Added support for native RPC calls to UTXO and EVM based blockchains
