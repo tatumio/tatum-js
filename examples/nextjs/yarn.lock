@@ -133,10 +133,10 @@
   dependencies:
     tslib "^2.4.0"
 
-"@tatumcom/js@^1.1.2":
-  version "1.1.2"
-  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.1.2.tgz#677d07cc3248595ac65a8227455b6600eebc7b50"
-  integrity sha512-l/r1+KfxatsrCTlqlw+4yE4Q05s5548dqwB13u2vZoQSmPq5OjxJHeJ38vpWNRqTYjfgDOUT3kTal0dKfsQR1Q==
+"@tatumcom/js@^1.2.2":
+  version "1.2.2"
+  resolved "https://registry.yarnpkg.com/@tatumcom/js/-/js-1.2.2.tgz#5e9918f6e98962c6d7db85eff018377a6d5e11d4"
+  integrity sha512-mHnWn4rPdr2xzaSEo28c4UmOKXqfbAMNReaq+H+fcPgy8txt3P4sQpHVw1vpYRLEXiJuNlz8YfMfPnAvk5X0MA==
   dependencies:
     bignumber.js "^9.1.1"
     reflect-metadata "^0.1.13"

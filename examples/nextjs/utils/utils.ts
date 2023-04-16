@@ -2,7 +2,6 @@ import useSWR from 'swr'
 import { TatumConfig } from '../dto'
 import { Dispatch, useContext, useEffect, useState } from 'react'
 import { ApiKeyContext } from '../app/layout'
-import { Network } from '@tatumcom/js'
 
 export const fetcher = async <JSON = any>(
   input: RequestInfo,
@@ -16,7 +15,6 @@ export const useFetch = <JSON = any>(url: string) => {
   const { apiKey } = useContext(ApiKeyContext)
   const fullUrl = new URL(`${window.location.origin}${url}`)
   fullUrl.searchParams.append('apiKey', apiKey.apiKey)
-  fullUrl.searchParams.append('network', apiKey.network)
   return useSWR<JSON>(fullUrl.toString(), fetcher)
 }
 
@@ -47,7 +45,6 @@ export const useLocalStorage = <T>(key: string, defaultValue: T): [T, Dispatch<T
 export const useApiKeys = () => {
   const defaultApiKey = {
     apiKey: '452826a8-5cd4-4c46-b710-e130934b5102',
-    network: Network.Testnet,
     active: true,
   }
 
