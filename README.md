@@ -49,25 +49,20 @@ pnpm install @tatumcom/js
 
 ## Getting started
 
-Subscribe
-for
-any
-transaction
-on
-Ethereum
-address.
+Subscribe for any transaction on Ethereum address.
 
 ```js
 import {
   TatumSDK,
-  Chain
+  Chain,
+  Network,
+  Ethereum,
 } from '@tatumcom/js'
 
-const tatum = await TatumSDK().init()
+const tatum = await TatumSDK().init<Ethereum>({ network: Network.ETHEREUM })
 
 const { data } = await tatum.notification.subscribe.addressEvent({
   url: 'https://<YOUR_WEBHOOK_URL>',
-  chain: Chain.Ethereum,
   address: '0x690B9A9E9aa1C9dB991C7721a92d351Db4FaC990',
 })
 
@@ -76,105 +71,19 @@ const { data } = await tatum.notification.subscribe.addressEvent({
 
 ## Documentation
 
-Visit [Documentation](https://docs.tatum.com)
-to
-get
-started
-with
-Tatum
-SDK.
+Visit [Documentation](https://docs.tatum.com) to get started with Tatum SDK.
 
 ## Examples
 
-We
-have
-several
-examples
-in
-the [examples](https://github.com/tatumio/tatum-js/tree/master/examples)
-directory.
+We have several examples in the [examples](https://github.com/tatumio/tatum-js/tree/master/examples) directory.
 
 ## Legacy versions
 
-Older
-versions
-of
-the
-Tatum
-SDK
-has
-been
-moved
-to
-long
-living
-branches [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1)
-and [`Tatum SDK V2`](https://github.com/tatumio/tatum-js/tree/v2)
-.
+Older versions of the Tatum SDK has been moved to long living branches [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1) and [`Tatum SDK V2`](https://github.com/tatumio/tatum-js/tree/v2).
 
 ## Contributing
 
-Contributions
-to
-the
-Tatum
-SDK
-are
-welcome.
-Please
-ensure
-that
-you
-have
-tested
-your
-changes
-with
-a
-local
-client
-and
-have
-added
-unit
-test
-coverage
-for
-your
-code.
-
+Contributions to the Tatum SDK are welcome. Please ensure that you have tested your changes with a local client and have added unit test coverage for your code.
 ### Bugs and feature requests
 
-Have
-a
-bug
-or
-a
-feature
-request?
-Please
-first
-read
-the
-issue
-guidelines
-and
-search
-for
-existing
-and
-closed
-issues.
-If
-your
-problem
-or
-idea
-is
-not
-addressed
-yet,
-please
-open
-a [new issue](https://github.com/tatumio/tatum-js/issues/new/choose)
-.
+Have a bug or a feature request? Please first read the issue guidelines and search for existing and closed issues. If your problem or idea is not addressed yet, please open a [new issue](https://github.com/tatumio/tatum-js/issues/new/choose).
