@@ -1,18 +1,18 @@
 import { Network, TatumSDK } from '../service'
-import { Bitcoin, BitcoinTestnet, Polygon, PolygonMumbai } from '../dto'
+import { Bitcoin, Polygon } from '../dto'
 
 describe('RPCs', () => {
 
   describe('Bitcoin', () => {
     describe('testnet', () => {
       it('should get chain info', async () => {
-        const sdk = await TatumSDK.init<BitcoinTestnet>({ network: Network.BITCOIN_TESTNET, verbose: true })
+        const sdk = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN_TESTNET, verbose: true })
         const info = await sdk.rpc.getBlockChainInfo()
         expect(info.chain).toBe('test')
       })
 
       it('should get chain info raw batch call', async () => {
-        const sdk = await TatumSDK.init<BitcoinTestnet>({ network: Network.BITCOIN_TESTNET, verbose: true })
+        const sdk = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN_TESTNET, verbose: true })
         const info = await sdk.rpc.rawRpcCall({
           method: 'getblockchaininfo',
           id: '1',
@@ -22,7 +22,7 @@ describe('RPCs', () => {
       })
 
       it('should get chain info raw batch call', async () => {
-        const sdk = await TatumSDK.init<BitcoinTestnet>({ network: Network.BITCOIN_TESTNET, verbose: true })
+        const sdk = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN_TESTNET, verbose: true })
         const [info1, info2] = await sdk.rpc.rawBatchRpcCall([
           {
             method: 'getblockchaininfo',
@@ -50,7 +50,7 @@ describe('RPCs', () => {
   describe('Polygon', () => {
     describe('testnet', () => {
       it('should get chain info', async () => {
-        const sdk = await TatumSDK.init<PolygonMumbai>({ network: Network.POLYGON_MUMBAI, verbose: true })
+        const sdk = await TatumSDK.init<Polygon>({ network: Network.POLYGON_MUMBAI, verbose: true })
         const info = await sdk.rpc.chainId()
         expect(info.toNumber()).toBe(80001)
       })

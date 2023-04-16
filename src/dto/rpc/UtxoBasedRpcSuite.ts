@@ -35,10 +35,6 @@ export interface UtxoBasedRpcSuite extends AbstractJsonRpcSuite {
 }
 
 export type Bitcoin = UtxoBasedRpcSuite
-export type BitcoinTestnet = UtxoBasedRpcSuite
 export type Litecoin = UtxoBasedRpcSuite
-export type LitecoinTestnet = UtxoBasedRpcSuite
 export type Dogecoin = UtxoBasedRpcSuite
-export type DogecoinTestnet = UtxoBasedRpcSuite
 export type BitcoinCash = UtxoBasedRpcSuite
-export type BitcoinCashTestnet = UtxoBasedRpcSuite
