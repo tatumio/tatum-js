@@ -1,58 +1,95 @@
-import { TatumSDK } from '../service'
-import { Blockchain } from '../dto'
-
-jest.setTimeout(50_000)
+import { Network, TatumSDK } from '../service'
+import { Bitcoin, Polygon } from '../dto'
 
 describe('RPCs', () => {
-  describe('RPC init tests', () => {
 
-    it('should init RPC from local hosts', async () => {
-      const sdk = await TatumSDK.init({
-        verbose: true,
-        rpc: { ignoreLoadBalancing: true, useStaticUrls: true, bitcoin: { url: ['https://123.com'] } },
+  describe('Bitcoin', () => {
+    describe('testnet', () => {
+      it('should get chain info', async () => {
+        const sdk = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN_TESTNET, verbose: true })
+        const info = await sdk.rpc.getBlockChainInfo()
+        expect(info.chain).toBe('test')
       })
-      expect(sdk.rpc).toBeDefined()
-      // @ts-ignore
-      expect(sdk.rpc.activeUrl.get(Blockchain.BITCOIN)).toMatchObject({ url: 'https://123.com', index: -1 })
-      // @ts-ignore
-      expect(sdk.rpc.activeUrl.has(Blockchain.LITECOIN)).toBeFalsy()
 
-      expect(await sdk.rpc.bitcoin.getFastestUrl()).toBe('https://123.com')
+      it('should get chain info raw batch call', async () => {
+        const sdk = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN_TESTNET, verbose: true })
+        const info = await sdk.rpc.rawRpcCall({
+          method: 'getblockchaininfo',
+          id: '1',
+          jsonrpc: '2.0',
+        })
+        expect(info.result.chain).toBe('test')
+      })
+
+      it('should get chain info raw batch call', async () => {
+        const sdk = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN_TESTNET, verbose: true })
+        const [info1, info2] = await sdk.rpc.rawBatchRpcCall([
+          {
+            method: 'getblockchaininfo',
+            id: '1',
+            jsonrpc: '2.0',
+          },
+          {
+            method: 'getblockchaininfo',
+            id: '2',
+            jsonrpc: '2.0',
+          },
+        ])
+        expect(info1.result.chain).toBe('test')
+        expect(info2.result.chain).toBe('test')
+      })
     })
-
-    it('should init RPC from remote hosts', async () => {
-      const sdk = await TatumSDK.init({
-        verbose: true, rpc: {
-          oneTimeLoadBalancing: true,
-          waitForFastestNode: true,
-        },
+    describe('mainnet', () => {
+      it('should get chain info', async () => {
+        const sdk = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN, verbose: true })
+        const info = await sdk.rpc.getBlockChainInfo()
+        expect(info.chain).toBe('main')
       })
-      expect(sdk.rpc).toBeDefined()
-      // @ts-ignore
-      let activeUrl: Map = sdk.rpc.activeUrl
-      expect(activeUrl.has(Blockchain.BITCOIN)).toBeFalsy()
-      expect(activeUrl.has(Blockchain.LITECOIN)).toBeFalsy()
-      expect(activeUrl.has(Blockchain.ETHEREUM)).toBeFalsy()
-      expect(activeUrl.has(Blockchain.POLYGON)).toBeFalsy()
-      expect(activeUrl.has(Blockchain.MONERO)).toBeFalsy()
-      // @ts-ignore
-      const urlMap: Map = sdk.rpc.rpcUrlMap
-      expect(urlMap.has(Blockchain.BITCOIN)).toBeFalsy()
-      expect(urlMap.has(Blockchain.LITECOIN)).toBeFalsy()
-      expect(urlMap.has(Blockchain.ETHEREUM)).toBeFalsy()
-      expect(urlMap.has(Blockchain.POLYGON)).toBeFalsy()
-      expect(urlMap.has(Blockchain.MONERO)).toBeFalsy()
+    })
+  })
+  describe('Polygon', () => {
+    describe('testnet', () => {
+      it('should get chain info', async () => {
+        const sdk = await TatumSDK.init<Polygon>({ network: Network.POLYGON_MUMBAI, verbose: true })
+        const info = await sdk.rpc.chainId()
+        expect(info.toNumber()).toBe(80001)
+      })
+    })
+    describe('mainnet', () => {
+      it('should get chain info', async () => {
+        const sdk = await TatumSDK.init<Polygon>({ network: Network.POLYGON, verbose: true })
+        const info = await sdk.rpc.chainId()
+        expect(info.toNumber()).toBe(137)
+      })
 
-      await sdk.rpc.bitcoin.callRpc({ method: 'getblockchaininfo', params: [], id: 1, jsonrpc: '2.0' })
-      expect(activeUrl.has(Blockchain.BITCOIN)).toBeTruthy()
-      expect(activeUrl.has(Blockchain.LITECOIN)).toBeFalsy()
-      expect(activeUrl.has(Blockchain.ETHEREUM)).toBeFalsy()
-      expect(activeUrl.has(Blockchain.POLYGON)).toBeFalsy()
-      expect(activeUrl.has(Blockchain.MONERO)).toBeFalsy()
+      it('should get chain info raw call', async () => {
+        const sdk = await TatumSDK.init<Polygon>({ network: Network.POLYGON, verbose: true })
+        const info = await sdk.rpc.rawRpcCall(
+          {
+            method: 'eth_chainId',
+            id: '1',
+            jsonrpc: '2.0',
+          })
+        expect(info.result).toBe('0x89')
+      })
 
-      expect(await sdk.rpc.bitcoin.getFastestUrl()).toBeDefined()
-
-      sdk.destroy()
+      it('should get chain info raw batch call', async () => {
+        const sdk = await TatumSDK.init<Polygon>({ network: Network.POLYGON, verbose: true })
+        const [info1, info2] = await sdk.rpc.rawBatchRpcCall([
+          {
+            method: 'eth_chainId',
+            id: '1',
+            jsonrpc: '2.0',
+          },
+          {
+            method: 'eth_chainId',
+            id: '2',
+            jsonrpc: '2.0',
+          },
+        ])
+        expect(info1.result).toBe('0x89')
+        expect(info2.result).toBe('0x89')
+      })
     })
   })
 })

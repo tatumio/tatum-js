@@ -1,3 +1,14 @@
+## [1.2.0] - 2023.04.20
+
+### Added
+- Added support for native RPC calls to UTXO and EVM based blockchains
+
+### Changed
+- Changed the way how the SDK is initialized. Now it is required to choose the blockchain and then initialize the SDK with the blockchain specific configuration.
+
+### Removed
+- Removed support for Open Network
+
 ## [1.1.3] - 2023.04.06
 
 ### Added
