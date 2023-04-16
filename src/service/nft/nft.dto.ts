@@ -1,4 +1,4 @@
-import { Chain } from '../notification'
+import { Chain } from '../../dto'
 
 export interface TokenIdContractAddress {
   tokenId: string

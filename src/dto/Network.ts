@@ -1,6 +1,6 @@
 export enum Network {
   // Mainnets
-  ALGORAND = 'algorand',
+  ALGORAND = 'algorand-mainnet',
   ARBITRUM_NOVA = 'arb-nova-mainnet',
   ARBITRUM_ONE = 'arb-one-mainnet',
   AURORA = 'aurora-mainnet',
@@ -15,7 +15,7 @@ export enum Network {
   CRONOS = 'cro-mainnet',
   DOGECOIN = 'doge-mainnet',
   EOS = 'eos-mainnet',
-  ETHEREUM = 'ethereum',
+  ETHEREUM = 'ethereum-mainnet',
   ETHEREUM_CLASSIC = 'ethereum-classic-mainnet',
   FANTOM = 'fantom-mainnet',
   FLOW = 'flow-mainnet',

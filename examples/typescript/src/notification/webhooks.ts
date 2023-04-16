@@ -10,5 +10,4 @@ export const getAllWebhooks = async () => {
   } else {
     console.log(new Date().toISOString(), data)
   }
-  tatum.destroy()
 }

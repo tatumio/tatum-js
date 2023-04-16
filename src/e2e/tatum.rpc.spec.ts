@@ -1,5 +1,5 @@
 import { Network, TatumSDK } from '../service'
-import { Bitcoin, Polygon } from '../dto'
+import { Bitcoin, Ethereum, Polygon } from '../dto'
 
 describe('RPCs', () => {
 
@@ -89,6 +89,51 @@ describe('RPCs', () => {
         ])
         expect(info1.result).toBe('0x89')
         expect(info2.result).toBe('0x89')
+      })
+    })
+  })
+  describe('Ethereum', () => {
+    describe('testnet', () => {
+      it('should get chain info', async () => {
+        const sdk = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA, verbose: true })
+        const info = await sdk.rpc.chainId()
+        expect(info.toNumber()).toBe(11155111)
+      })
+    })
+    describe('mainnet', () => {
+      it('should get chain info', async () => {
+        const sdk = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM, verbose: true })
+        const info = await sdk.rpc.chainId()
+        expect(info.toNumber()).toBe(1)
+      })
+
+      it('should get chain info raw call', async () => {
+        const sdk = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM, verbose: true })
+        const info = await sdk.rpc.rawRpcCall(
+          {
+            method: 'eth_chainId',
+            id: '1',
+            jsonrpc: '2.0',
+          })
+        expect(info.result).toBe('0x1')
+      })
+
+      it('should get chain info raw batch call', async () => {
+        const sdk = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM, verbose: true })
+        const [info1, info2] = await sdk.rpc.rawBatchRpcCall([
+          {
+            method: 'eth_chainId',
+            id: '1',
+            jsonrpc: '2.0',
+          },
+          {
+            method: 'eth_chainId',
+            id: '2',
+            jsonrpc: '2.0',
+          },
+        ])
+        expect(info1.result).toBe('0x1')
+        expect(info2.result).toBe('0x1')
       })
     })
   })
