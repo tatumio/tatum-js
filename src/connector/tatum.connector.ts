@@ -84,7 +84,7 @@ export class TatumConnector {
     if (params) {
       Object.keys(params)
         .filter((key) => !!params[key])
-        .forEach((key) => url.searchParams.append(key, params[key] as string))
+        .forEach((key) => url.searchParams.append(key, `${params[key]}`))
     }
 
     if (!config.apiKey && Constant.RPC.TESTNETS.includes(config.network)) {

@@ -1,31 +1,18 @@
-import { Chain } from '../../dto'
-
 export interface TokenIdContractAddress {
+  /**
+   * Token ID
+   */
   tokenId: string
-  contractAddress: string
-}
-
-export interface GetBalance {
-  address: string
-  chain: Chain
-}
-
-export interface GetBalanceResponse {
-  contractAddress: string
-  balances: string[]
-  blockNumber: number[]
-  metadata: MetadataResponse[]
+  /**
+   * Token contract address
+   */
+  tokenAddress: string
 }
 
 export interface MetadataResponse {
   url: string
   metadata: object
   tokenId: string
-}
-
-export interface GetNftTransactions extends TokenIdContractAddress {
-  chain: Chain
-  pageSize?: string
 }
 
 export interface GetNftTransactionResponse extends TokenIdContractAddress {
@@ -35,60 +22,160 @@ export interface GetNftTransactionResponse extends TokenIdContractAddress {
   to: string
 }
 
-export interface GetNftMetadata extends TokenIdContractAddress {
-  chain: Chain
+export type GetNftMetadata = TokenIdContractAddress
+
+export interface GetTokenOwner extends TokenIdContractAddress {
+  pageSize?: number
+  page?: number
 }
 
-export interface GetNftMetadataResponse {
-  data: string
+export interface CheckTokenOwner extends TokenIdContractAddress {
+  /**
+   * Owner address of the NFT token
+   */
+  owner: string
+}
+
+export interface NftTokenDetail {
+  /**
+   * Blockchain network
+   */
+  chain: string,
+  /**
+   * Token ID
+   */
+  tokenId: string
+  /**
+   * Token contract address
+   */
+  tokenAddress: string
+  /**
+   * Token type. Either 'nft' (ERC-721) or 'multitoken' (ERC-1155)
+   */
+  tokenType: 'nft' | 'multitoken'
+  /**
+   * Token URI
+   */
+  metadataURI: string
+  /**
+   * Token metadata
+   */
+  metadata?: {
+    name: string
+    description: string
+    image: string
+    [metadataKey: string]: unknown
+  }
 }
 
 export interface GetCollection {
-  chain: Chain
-  contractAddress: string
-  pageSize?: string
-}
-
-export interface GetCollectionResponse {
-  tokenId: string
-  metadata: MetadataResponse
+  /**
+   * Token contract address
+   */
+  tokenAddress: string
+  /**
+   * Optional flag to exclude metadata from the response. In this case, only token IDs are returned. Defaults to false.
+   */
+  excludeMetadata?: boolean
+  pageSize?: number
+  page?: number
 }
 
 export interface NftBalanceDetails {
-  chain: Chain
+  /**
+   * List of addresses to check.
+   */
   addresses: string[]
+  pageSize?: number
+  page?: number
 }
 
-export type NftBalances = Partial<Record<Chain, Record<string, NftBalance[]>>>
-
-export type NftBalance = {
-  contractAddress: string
-  tokenId: string
-  metadataUri: string
-  metadata: object
+export interface NftAddressBalance extends NftTokenDetail {
+  /**
+   * Balance of the address.
+   */
+  balance: string
+  /**
+   * Block number of the last balance update.
+   */
+  lastUpdatedBlock: number
 }
 
 export interface GetAllNftTransactionsQuery {
-  pageSize: number
-  offset: number
-  nftTransactionsDetails: NftTransactionsDetails[]
-}
-
-export interface NftTransactionsDetails {
-  chain: Chain
-  tokenId?: string
-  contractAddress?: string
+  /**
+   * Token ID
+   */
+  tokenId: string
+  /**
+   * Token contract address
+   */
+  tokenAddress: string
+  /**
+   * Optional transaction type. If not specified, both incoming and outgoing transactions are returned.
+   */
+  transactionType?: 'incoming' | 'outgoing'
+  /**
+   * Optional from block. If not specified, all transactions are returned from the beginning of the blockchain.
+   */
   fromBlock?: number
+  /**
+   * Optional to block. If not specified, all transactions are returned up till now.
+   */
   toBlock?: number
+  pageSize?: number
+  page?: number
 }
 
-export type NftTransactions = Partial<Record<Chain, NftTransaction[]>>
+export interface GetAllNftTransactionsByAddress extends GetAllNftTransactionsQuery {
+  /**
+   * Addresses to get NFT transactions from.
+   */
+  addresses: string[]
+}
 
 export type NftTransaction = {
+  /**
+   * Blockchain network
+   */
+  chain: string
+  /**
+   * Block number
+   */
   blockNumber: number
-  txId: string
-  contractAddress: string
+  /**
+   * Transaction hash
+   */
+  hash: string
+  /**
+   * Transaction type
+   */
+  transactionType: 'incoming' | 'outgoing' | 'zero-transfer'
+  /**
+   * Index of the transaction in the block
+   */
+  transactionIndex: number
+  /**
+   * Address of the token collection
+   */
+  tokenAddress: string
+  /**
+   * Token ID
+   */
   tokenId: string
-  from: string
-  to: string
+  /**
+   * Amount transferred. For outgoing transactions, it's a negative number. For zero-transfer transactions, it's always 0. For incoming transactions, it's a positive number.
+   */
+  amount: string
+  /**
+   * Transaction timestamp - UTC millis
+   */
+  timestamp: number
+  /**
+   * Address, on which transaction occurred. This is receiver address for incoming transactions and sender address for outgoing transactions.
+   */
+  address: string
+  /**
+   * Counter address of the transaction. This is sender address for incoming transactions on `address` and receiver address for outgoing transactions on `address`.
+   */
+  counterAddress: string
 }

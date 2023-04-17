@@ -1,18 +1,18 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
+  CheckTokenOwner, GetAllNftTransactionsByAddress,
   GetAllNftTransactionsQuery,
-  GetBalanceResponse,
   GetCollection,
-  GetCollectionResponse,
   GetNftMetadata,
-  GetNftMetadataResponse,
-  GetNftTransactionResponse,
-  NftBalance,
+  GetTokenOwner,
+  NftAddressBalance,
   NftBalanceDetails,
-  NftBalances,
-  NftTransactions,
+  NftTokenDetail,
+  NftTransaction,
 } from './nft.dto'
+import { TatumConfig } from '../tatum'
+import { CONFIG } from '../../util'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -22,103 +22,184 @@ import {
 })
 export class Nft {
   private readonly connector: TatumConnector
+  private readonly config: TatumConfig
 
-  private constructor(private readonly id: string) {
+  constructor(private readonly id: string) {
+    this.config = Container.of(this.id).get(CONFIG)
     this.connector = Container.of(this.id).get(TatumConnector)
   }
-  async getBalance(detailsRequests: NftBalanceDetails[]): Promise<NftBalances> {
-    const result: NftBalances = {}
-    for (const detailsRequest of detailsRequests) {
-      await this.processDetailsRequest(detailsRequest, result)
-    }
-    return result
+
+  /**
+   * Get balance of NFT for given address.
+   * You can get balance of multiple addresses in one call.
+   */
+  async getBalance({
+                     page = 0,
+                     pageSize = 50,
+                     addresses,
+                   }: NftBalanceDetails): Promise<NftAddressBalance[]> {
+    const chain = this.config.network
+    return this.connector.get<{ result: NftAddressBalance[] }>({
+      path: `data/balances`,
+      params: {
+        pageSize,
+        offset: page,
+        chain,
+        tokenTypes: 'nft,multitoken',
+        addresses: addresses.join(','),
+      },
+    }).then(r => r.result)
   }
 
-  private async processDetailsRequest(detailsRequest: NftBalanceDetails, result: NftBalances) {
-    for (const address of detailsRequest.addresses) {
-      const response = await this.connector.get<GetBalanceResponse[]>({
-        path: `nft/address/balance/${detailsRequest.chain}/${address}`,
-      })
-      if (!response) continue //TODO?
-
-      const balancesByChain = result[detailsRequest.chain] ?? {}
-
-      for (const balanceResult of response) {
-        const balanceByAddress = balancesByChain[address] ?? []
-
-        for (let i = 0; i < balanceResult.metadata.length; i++) {
-          const metadata = balanceResult.metadata[i]
-
-          const balanceEntry: NftBalance = {
-            contractAddress: balanceResult.contractAddress,
-            tokenId: metadata.tokenId,
-            metadataUri: metadata.url,
-            metadata: metadata.metadata,
-          }
-          balanceByAddress.push(balanceEntry)
-        }
-
-        balancesByChain[address] = balanceByAddress
-      }
-
-      result[detailsRequest.chain] = balancesByChain
-    }
-  }
-
+  /**
+   * Get all transactions for given NFT.
+   * @param nftTransactionsDetails  You can get multiple NFT transactions in one call.
+   * @param page
+   * @param pageSize
+   */
   async getAllNftTransactions({
-    nftTransactionsDetails,
-    offset = 0,
-    pageSize = 10,
-  }: GetAllNftTransactionsQuery): Promise<NftTransactions> {
-    const result: NftTransactions = {}
-
-    for (const { chain, contractAddress, fromBlock, toBlock, tokenId } of nftTransactionsDetails) {
-      const resultsByChain = result[chain] ?? []
-
-      const response = await this.connector.get<GetNftTransactionResponse[]>({
-        path: `nft/transaction/tokenId/${chain}/${contractAddress}/${tokenId}`,
-        params: {
-          from: fromBlock?.toString(),
-          to: toBlock?.toString(),
-          pageSize: pageSize.toString(),
-          offset: offset.toString(),
-        },
-      })
-
-      for (const responseTx of response) {
-        resultsByChain.push({
-          blockNumber: responseTx.blockNumber,
-          txId: responseTx.txId,
-          from: responseTx.from,
-          to: responseTx.to,
-          contractAddress: responseTx.contractAddress,
-          tokenId: responseTx.tokenId,
-        })
-      }
-
-      result[chain] = resultsByChain
-    }
-    return result
+                                page = 0,
+                                pageSize = 50,
+                                tokenId,
+                                tokenAddress,
+                                transactionType,
+                                fromBlock,
+                                toBlock,
+                              }: GetAllNftTransactionsQuery): Promise<NftTransaction[]> {
+    const chain = this.config.network
+    return this.connector.get<{ result: NftTransaction[] }>({
+      path: `data/transactions`,
+      params: {
+        pageSize,
+        offset: page,
+        chain,
+        tokenTypes: 'nft,multitoken',
+        transactionSubtype: transactionType,
+        tokenAddress,
+        tokenId,
+        fromBlock,
+        toBlock,
+      },
+    }).then(r => r.result)
   }
 
+  /**
+   * Get all transactions for given NFT.
+   * @param nftTransactionsDetails  You can get multiple NFT transactions in one call.
+   * @param page
+   * @param pageSize
+   */
+  async getAllNftTransactionsByAddress({
+                                         page = 0,
+                                         pageSize = 50,
+                                         addresses,
+                                         tokenId,
+                                         tokenAddress,
+                                         transactionType,
+                                         fromBlock,
+                                         toBlock,
+                                       }: GetAllNftTransactionsByAddress): Promise<NftTransaction[]> {
+    const chain = this.config.network
+    return this.connector.get<{ result: NftTransaction[] }>({
+      path: `data/transactions`,
+      params: {
+        pageSize,
+        offset: page,
+        chain,
+        addresses: addresses.join(','),
+        tokenTypes: 'nft,multitoken',
+        transactionSubtype: transactionType,
+        tokenAddress,
+        tokenId,
+        fromBlock,
+        toBlock,
+      },
+    }).then(r => r.result)
+  }
+
+  /**
+   * Get metadata of NFT.
+   */
   async getNftMetadata({
-    chain,
-    contractAddress,
-    tokenId,
-  }: GetNftMetadata): Promise<GetNftMetadataResponse | null> {
-    return this.connector.get({
-      path: `nft/metadata/${chain}/${contractAddress}/${tokenId}`,
+                         tokenAddress,
+                         tokenId,
+                       }: GetNftMetadata): Promise<NftTokenDetail | null> {
+    const chain = this.config.network
+    const response = await this.connector.get<Array<NftTokenDetail>>({
+      path: `data/metadata`,
+      params: {
+        chain,
+        tokenAddress,
+        tokenIds: tokenId,
+      },
+    })
+    if (response?.length) {
+      return response[0]
+    }
+    return null
+  }
+
+  /**
+   * Get owner of a specific NFT.
+   */
+  async getNftOwner({
+                      tokenAddress,
+                      tokenId,
+                      pageSize,
+                      page,
+                    }: GetTokenOwner): Promise<string[]> {
+    const chain = this.config.network
+    return this.connector.get<Array<string>>({
+      path: `data/owners`,
+      params: {
+        chain,
+        tokenAddress,
+        tokenId,
+        pageSize,
+        offset: page,
+      },
     })
   }
 
-  async getCollection({
-    chain,
-    contractAddress,
-    pageSize,
-  }: GetCollection): Promise<GetCollectionResponse[] | null> {
-    return this.connector.get({
-      path: `nft/collection/${chain}/${contractAddress}`,
-      params: { pageSize: pageSize ?? '50' },
+  /**
+   * Check if address is owner of a specific NFT.
+   */
+  async checkNftOwner({
+                        tokenAddress,
+                        tokenId,
+                        owner,
+                      }: CheckTokenOwner): Promise<boolean> {
+    const chain = this.config.network
+    return this.connector.get<boolean>({
+      path: `data/owners/address`,
+      params: {
+        chain,
+        tokenAddress,
+        address: owner,
+        tokenId,
+      },
+    })
+  }
+
+  /**
+   * Get all NFTs in collection.
+   */
+  async getNFtsInCollection({
+                              tokenAddress,
+                              pageSize,
+                              excludeMetadata = false,
+                              page,
+                            }: GetCollection): Promise<NftTokenDetail[]> {
+    const chain = this.config.network
+    return this.connector.get<Array<NftTokenDetail>>({
+      path: `data/collections`,
+      params: {
+        pageSize,
+        offset: page,
+        chain,
+        collectionAddresses: tokenAddress,
+        excludeMetadata,
+      },
     })
   }
 }

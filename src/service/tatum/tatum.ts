@@ -4,14 +4,17 @@ import { CONFIG } from '../../util'
 import { Notification } from '../notification'
 import { EvmBasedRpc, GenericRpc, UtxoBasedRpc } from '../rpc'
 import { ApiVersion, TatumConfig } from './tatum.dto'
+import { Nft } from '../nft'
 
 @Service({ transient: true })
 export class TatumSDK<T> {
   notification: Notification
+  nft: Nft
   rpc: T
 
   private constructor(private readonly id: string) {
     this.notification = Container.of(id).get(Notification)
+    this.nft = Container.of(id).get(Nft)
     this.rpc = this.createRpc<T>(Container.of(id).get(CONFIG).network)
   }
 

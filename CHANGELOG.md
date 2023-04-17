@@ -1,3 +1,8 @@
+## [1.2.3] - 2023.04.17
+
+### Added
+- Added support for **NFT** submodule. This submodule offers a comprehensive suite of tools for working with Non-Fungible Tokens (NFTs). With the NFT submodule, you can query the balance of NFTs on an address, retrieve NFT transactions associated with a specific address, explore NFTs within a collection or identify the owners of a particular NFT.
+
 ## [1.2.2] - 2023.04.16
 
 ### Changed
