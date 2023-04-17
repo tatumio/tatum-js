@@ -133,6 +133,12 @@ export class EvmBasedRpc extends AbstractJsonRpc implements EvmBasedRpcSuite {
       .then((r) => new BigNumber(r.result))
   }
 
+  maxPriorityFeePerGas(): Promise<BigNumber> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('eth_maxPriorityFeePerGas'))
+      .then((r) => new BigNumber(r.result))
+  }
+
   getBalance(address: string, blockNumber?: BlockNumber): Promise<BigNumber> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
@@ -401,9 +407,9 @@ export class EvmBasedRpc extends AbstractJsonRpc implements EvmBasedRpcSuite {
       .then((r) => r.result)
   }
 
-  txPoolStatus(): Promise<any> {
+  txPoolStatus(include = 'pending'): Promise<any> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('txpool_status'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('txpool_status', [include]))
       .then((r) => r.result)
   }
 }

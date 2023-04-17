@@ -1,3 +1,8 @@
+## [1.2.4] - 2023.04.17
+
+### Added
+- Added missing ETH RPC calls `maxPriorityFeePerGas` and add txPoolStatus `include` parameter
+
 ## [1.2.3] - 2023.04.17
 
 ### Added

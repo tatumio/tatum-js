@@ -78,6 +78,8 @@ export interface EvmBasedRpcSuite extends AbstractJsonRpcSuite {
 
   gasPrice(): Promise<BigNumber>
 
+  maxPriorityFeePerGas(): Promise<BigNumber>
+
   getBalance(address: string, blockNumber?: BlockNumber): Promise<BigNumber>
 
   getBlockByHash(blockHash: string, includeTransactions?: boolean): Promise<any>
@@ -156,7 +158,7 @@ export interface EvmBasedRpcSuite extends AbstractJsonRpcSuite {
   // txpool_ methods
   txPoolContent(): Promise<any>
 
-  txPoolStatus(): Promise<any>
+  txPoolStatus(include: 'pending' | 'queued'): Promise<any>
 
   txPoolInspect(): Promise<any>
 }
