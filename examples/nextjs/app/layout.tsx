@@ -25,7 +25,6 @@ const RootLayout = ({ children }: { children: React.ReactNode }) => {
     <head>
       <title>Create Next App</title>
       <link rel='icon' href='/favicon.ico' />
-      <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;700&display=swap' rel='stylesheet' />
     </head>
     <body>
     <div className='font-Poppins flex flex-col h-screen justify-between'>
