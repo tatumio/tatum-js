@@ -47,8 +47,7 @@ const ApiKeys = () => {
     setLoading(true)
     const data = new FormData(e.target as HTMLFormElement)
     const apiKey = data.get('apiKey') as string
-    const network = data.get('network') as Network
-    add({ apiKey, network, active: false })
+    add({ apiKey, active: false })
     setLoading(false)
   }
 
@@ -68,14 +67,14 @@ const ApiKeys = () => {
           id: 'network',
           label: 'Network',
           options: [
-            {
-              label: 'Testnet',
-              value: Network.Testnet,
-            },
-            {
-              label: 'Mainnet',
-              value: Network.Mainnet,
-            },
+            // {
+            //   label: 'Testnet',
+            //   value: Network.Testnet,
+            // },
+            // {
+            //   label: 'Mainnet',
+            //   value: Network.Mainnet,
+            // },
           ],
         }],
     },
