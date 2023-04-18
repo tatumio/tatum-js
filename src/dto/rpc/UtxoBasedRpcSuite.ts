@@ -33,8 +33,3 @@ export interface UtxoBasedRpcSuite extends AbstractJsonRpcSuite {
   validateAddress(address: string): Promise<any>
   verifyMessage(address: string, signature: string, message: string): Promise<boolean>
 }
-
-export type Bitcoin = UtxoBasedRpcSuite
-export type Litecoin = UtxoBasedRpcSuite
-export type Dogecoin = UtxoBasedRpcSuite
-export type BitcoinCash = UtxoBasedRpcSuite

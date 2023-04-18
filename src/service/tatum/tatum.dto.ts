@@ -1,6 +1,9 @@
 import { Network } from '../../dto/Network'
 
 export interface TatumConfig {
+  /**
+   * Blockchain network to use.
+   */
   network: Network
   /**
    * API Version of Tatum. Use V1 for api.tatum.io/v3 API keys and V2 for api.tatum.com/v1 API keys. Defaults to V2.

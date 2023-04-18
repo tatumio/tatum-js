@@ -29,7 +29,7 @@ SDK</h3>
 
 ## Welcome
 
-Welcome to TatumSDK, a powerful library designed to facilitate direct Remote Procedure Call (RPC) calls to the Ethereum, Polygon, Bitcoin and many more blockchains and provide real-time notifications for a wide range of events related to specified addresses. With TatumSDK, you can easily track incoming and outgoing transactions, NFT transfers, and much more, without the need for a third-party intermediary.
+Welcome to TatumSDK, a powerful library designed to facilitate direct Remote Procedure Call (RPC) calls to Ethereum, Polygon, Bitcoin and many more blockchains and provide real-time notifications for a wide range of events related to specified addresses. With TatumSDK, you can easily track incoming and outgoing transactions, NFT transfers, and much more, without the need for a third-party intermediary.
 
 This guide will walk you through the basic setup, installation, and usage of TatumSDK to help you harness the full potential of this library.
 
@@ -66,8 +66,7 @@ pnpm install @tatumcom/js
 Here's a brief overview of how to utilize TatumSDK for RPC calls and subscribing to notifications.
 
 ### Initialization
-Start by importing the TatumSDK library and initializing the Ethereum client as follows:
-Subscribe for any transaction on Ethereum address.
+Start by importing the TatumSDK library and initializing Ethereum client as follows:
 
 ```js
 import {
@@ -81,7 +80,7 @@ const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 ```
 
 ### RPC Calls
-To make RPC calls, use the available methods to interact with the Ethereum blockchain. For example, to fetch the balance of a specific Ethereum address:
+To make RPC calls, use the available methods to interact with Ethereum blockchain. For example, to fetch the balance of a specific Ethereum address:
 
 ```js
 import {
@@ -141,7 +140,7 @@ console.log(balances)
 ```
 
 ## Structure of the SDK
-TatumSDK is thoughtfully designed and organized into two primary submodules to provide a clean and efficient way of interacting with the Ethereum blockchain:
+TatumSDK is thoughtfully designed and organized into two primary submodules to provide a clean and efficient way of interacting with Ethereum blockchain:
 
 * **RPC submodule - `tatum.rpc.*`**: This submodule enables you to make direct Remote Procedure Call (RPC) calls to multiple blockchains, providing seamless access to various on-chain data and functionalities. With the RPC submodule, you can fetch account balances, send transactions, interact with smart contracts, and more.
 
@@ -149,7 +148,7 @@ TatumSDK is thoughtfully designed and organized into two primary submodules to p
 
 * **NFT submodule - `tatum.nft.*`**: This submodule offers a comprehensive suite of tools for working with Non-Fungible Tokens (NFTs). With the NFT submodule, you can query the balance of NFTs on an address, retrieve NFT transactions associated with a specific address, explore NFTs within a collection or identify the owners of a particular NFT.
 
-By dividing the library into these submodules, TatumSDK offers an organized, easy-to-use interface that makes interacting with the Ethereum and other blockchains a breeze. Both beginners and advanced developers can benefit from the streamlined architecture, enabling them to focus on building powerful blockchain applications.
+By dividing the library into these submodules, TatumSDK offers an organized, easy-to-use interface that makes interacting with Ethereum and other blockchains a breeze. Both beginners and advanced developers can benefit from the streamlined architecture, enabling them to focus on building powerful blockchain applications.
 
 
 ## Documentation
