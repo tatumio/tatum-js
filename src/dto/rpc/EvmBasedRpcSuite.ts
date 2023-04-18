@@ -90,6 +90,8 @@ export interface EvmBasedRpcSuite extends AbstractJsonRpcSuite {
 
   getLogs(filterObject: LogFilter): Promise<any>
 
+  getProof(address: string, storageKeys: string[], blockNumber?: BlockNumber): Promise<any>
+
   getStorageAt(address: string, position: string, blockNumber?: BlockNumber): Promise<string>
 
   getTransactionByBlockHashAndIndex(blockHash: string, index: number): Promise<any>
@@ -145,15 +147,15 @@ export interface EvmBasedRpcSuite extends AbstractJsonRpcSuite {
 
   traceCall(callObject: TxPayload, traceType: TraceType[], blockNumber: BlockNumber): Promise<any>
 
-  traceCallMany(callObject: TxPayload[], traceType: TraceType[], blockNumber: BlockNumber): Promise<any>
+  traceCallMany(callObject: TxPayload[], traceType: TraceType[][], blockNumber: BlockNumber): Promise<any>
 
-  traceRawTransaction(signedTransactionData: string, traceOptions: TraceOptions): Promise<any>
+  traceRawTransaction(signedTransactionData: string, traceOptions: TraceType[]): Promise<any>
 
-  traceReplayBlockTransactions(blockNumber: BlockNumber, traceOptions: TraceOptions): Promise<any>
+  traceReplayBlockTransactions(blockNumber: BlockNumber, traceOptions: TraceType[]): Promise<any>
 
-  traceReplayTransaction(txHash: string, traceOptions: TraceOptions): Promise<any>
+  traceReplayTransaction(txHash: string, traceOptions: TraceType[]): Promise<any>
 
-  traceTransaction(txHash: string, traceOptions: any): Promise<any>
+  traceTransaction(txHash: string): Promise<any>
 
   // txpool_ methods
   txPoolContent(): Promise<any>

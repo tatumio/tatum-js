@@ -1,3 +1,12 @@
+## [1.2.5] - 2023.04.18
+
+### Added
+- Added missing ETH RPC calls `eth_getProof`
+
+### Fixed
+- Fixed RPC call `trace_callMany` - wrong order of arguments were passed
+- Fixed all RPC calls `trace_*` - wrong naming of the method was used
+
 ## [1.2.4] - 2023.04.17
 
 ### Added

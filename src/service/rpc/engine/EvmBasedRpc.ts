@@ -187,6 +187,19 @@ export class EvmBasedRpc extends AbstractJsonRpc implements EvmBasedRpcSuite {
       .then((r) => r.result)
   }
 
+  getProof(address: string, storageKeys: string[], blockNumber?: BlockNumber): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('eth_getProof', [
+          address,
+          storageKeys,
+          typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
   getStorageAt(address: string, position: string, blockNumber?: BlockNumber): Promise<string> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
@@ -326,7 +339,7 @@ export class EvmBasedRpc extends AbstractJsonRpc implements EvmBasedRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('trace_traceBlock', [
+        this.prepareRpcCall('trace_block', [
           typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
         ]),
       )
@@ -337,7 +350,7 @@ export class EvmBasedRpc extends AbstractJsonRpc implements EvmBasedRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('trace_traceCall', [
+        this.prepareRpcCall('trace_call', [
           callObject,
           traceType,
           typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
@@ -346,51 +359,52 @@ export class EvmBasedRpc extends AbstractJsonRpc implements EvmBasedRpcSuite {
       .then((r) => r.result)
   }
 
-  traceCallMany(callObject: TxPayload[], traceType: TraceType[], blockNumber: BlockNumber): Promise<any> {
+  traceCallMany(callObject: TxPayload[], traceType: TraceType[][], blockNumber: BlockNumber): Promise<any> {
+    const params = callObject.map((call, index) => {
+      return [call, traceType[index]]
+    })
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('trace_traceCallMany', [
-          callObject,
-          traceType,
-          typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
+        this.prepareRpcCall('trace_callMany', [
+          params, typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
         ]),
       )
       .then((r) => r.result)
   }
 
-  traceRawTransaction(signedTransactionData: string, traceOptions: TraceOptions): Promise<any> {
+  traceRawTransaction(signedTransactionData: string, traceOptions: TraceType[]): Promise<any> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('trace_traceRawTransaction', [signedTransactionData, traceOptions]),
+        this.prepareRpcCall('trace_rawTransaction', [signedTransactionData, traceOptions]),
       )
       .then((r) => r.result)
   }
 
-  traceReplayBlockTransactions(blockNumber: BlockNumber, traceOptions: TraceOptions): Promise<any> {
+  traceReplayBlockTransactions(blockNumber: BlockNumber, traceOptions: TraceType[]): Promise<any> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('trace_traceReplayBlockTransactions', [blockNumber, traceOptions]),
+        this.prepareRpcCall('trace_replayBlockTransactions', [blockNumber, traceOptions]),
       )
       .then((r) => r.result)
   }
 
-  traceReplayTransaction(txHash: string, traceOptions: TraceOptions): Promise<any> {
+  traceReplayTransaction(txHash: string, traceOptions: TraceType[]): Promise<any> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('trace_traceReplayTransaction', [txHash, traceOptions]),
+        this.prepareRpcCall('trace_replayTransaction', [txHash, traceOptions]),
       )
       .then((r) => r.result)
   }
 
-  traceTransaction(txHash: string, traceOptions: any): Promise<any> {
+  traceTransaction(txHash: string): Promise<any> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('trace_traceTransaction', [txHash, traceOptions]),
+        this.prepareRpcCall('trace_transaction', [txHash]),
       )
       .then((r) => r.result)
   }
