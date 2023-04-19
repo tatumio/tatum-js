@@ -1,17 +1,41 @@
 import { AddressEventNotificationChain, Network } from '../../dto'
 
 export interface GetAllNotificationsQuery {
+  /**
+   * Number of records to return. The default is 10.
+   */
   pageSize?: number
+  /**
+   * Number of records to skip. The default is 0.
+   */
   offset?: number
+  /**
+   * Address to filter by.
+   */
   address?: string
 }
 
-export type AddressEventNotification = {
+export interface NotificationSubscription {
+  /**
+   * ID of a subscription.
+   */
   id: string
+  /**
+   * Blockchain network.
+   */
   network: Network
-  address: string
+  /**
+   * URL of the webhook listener.
+   */
   url: string
-  type: NotificationType.ADDRESS_EVENT
+  /**
+   * Type of notification subscription.
+   */
+  type: NotificationType
+  /**
+   * Address to monitor, valid for some of the types only.
+   */
+  address?: string
 }
 
 export interface AddressBasedNotificationDetail {
@@ -60,31 +84,61 @@ export interface AddressEventNotificationApi {
 }
 
 export interface GetAllExecutedWebhooksQuery {
+  /**
+   * The number of items to return per page. Defaults to 10.
+   */
   pageSize?: number
+  /**
+   * The page offset. Defaults to 0.
+   */
   offset?: number
+  /**
+   * Order of the returned items. 'desc' means the most recent items are returned first. Defaults to 'desc'.
+   */
   direction?: 'asc' | 'desc'
+  /**
+   * Filter failed notifications. If the present method will return only successful or failed results based on the filterFailed field.
+   */
   filterFailed?: boolean
 }
 
 export interface Webhook {
+  // Type of the subscription
   type: NotificationType
+  // Id of the notification
   id: string
+  // Id of the subscription
   subscriptionId: string
+  // The URL on which is notifications request sent
   url: string
+  // The webhook payload
   data: {
+    // Monitored address
     address: string
+    // Amount of the transaction
     amount: string
+    // The asset of the notification
     asset: string
+    // The number of the block in which the transaction occurs
     blockNumber: number
+    // Transaction hash
     txId: string
+    // Type of the notification
     type: string
+    // Network of the notification
     chain: string
+    // Type of the subscription
     subscriptionType: NotificationType
   }
+  // Next notification execution try time	- Unix timestamp
   nextTime: number
+  // Notification execution time - Unix timestamp
   timestamp: number
+  // Number of retries in case of the failed attempts in the past
   retryCount: number
+  // Flag indicating whether this notification was successful or not
   failed: boolean
+  // Response from the server in case the notification was unsuccessful
   response: {
     code: number
     data: string

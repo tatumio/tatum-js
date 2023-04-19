@@ -2,10 +2,10 @@ import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { ErrorUtils, ResponseDto, Utils } from '../../util'
 import {
-  AddressEventNotification,
   AddressEventNotificationApi,
   GetAllExecutedWebhooksQuery,
   GetAllNotificationsQuery,
+  NotificationSubscription,
   Webhook,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
@@ -31,7 +31,7 @@ export class Notification {
    * Get all existing subscriptions for given address.
    * @param body
    */
-  async getAll(body?: GetAllNotificationsQuery): Promise<ResponseDto<AddressEventNotification[]>> {
+  async getAll(body?: GetAllNotificationsQuery): Promise<ResponseDto<NotificationSubscription[]>> {
     return ErrorUtils.tryFail(async () => {
       const subscriptions = await this.connector.get<AddressEventNotificationApi[]>({
         path: 'subscription',

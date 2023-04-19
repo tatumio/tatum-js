@@ -140,7 +140,7 @@ console.log(balances)
 ```
 
 ## Structure of the SDK
-TatumSDK is thoughtfully designed and organized into two primary submodules to provide a clean and efficient way of interacting with Ethereum blockchain:
+TatumSDK is thoughtfully designed and organized into these submodules to provide a clean and efficient way of interacting with blockchains:
 
 * **RPC submodule - `tatum.rpc.*`**: This submodule enables you to make direct Remote Procedure Call (RPC) calls to multiple blockchains, providing seamless access to various on-chain data and functionalities. With the RPC submodule, you can fetch account balances, send transactions, interact with smart contracts, and more.
 

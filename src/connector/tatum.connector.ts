@@ -130,7 +130,7 @@ export class TatumConnector {
       }
       return Promise.reject(await response.text())
     }
-
+    await Utils.delay(retryDelay || 1000)
     if (verbose) {
       console.warn(
         new Date().toISOString(),
@@ -139,7 +139,6 @@ export class TatumConnector {
         request.body,
       )
     }
-    await Utils.delay(retryDelay || 1000)
     return this.request(
       {
         method: request.method as string,

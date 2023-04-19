@@ -367,7 +367,8 @@ export class EvmBasedRpc extends AbstractJsonRpc implements EvmBasedRpcSuite {
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         this.prepareRpcCall('trace_callMany', [
-          params, typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
+          params,
+          typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
         ]),
       )
       .then((r) => r.result)
@@ -402,10 +403,7 @@ export class EvmBasedRpc extends AbstractJsonRpc implements EvmBasedRpcSuite {
 
   traceTransaction(txHash: string): Promise<any> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall('trace_transaction', [txHash]),
-      )
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('trace_transaction', [txHash]))
       .then((r) => r.result)
   }
 

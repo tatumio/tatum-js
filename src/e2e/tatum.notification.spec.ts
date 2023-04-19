@@ -1,5 +1,5 @@
 import { Network } from '../dto'
-import { AddressEventNotification, TatumSDK } from '../service'
+import { NotificationSubscription, TatumSDK } from '../service'
 import { Status } from '../util'
 import { TestConst } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
@@ -296,8 +296,8 @@ describe('notification', () => {
       await tatum.notification.unsubscribe(id)
       const { data } = await tatum.notification.getAll()
       const subscriptions = data.find(
-        (s) => s.network === Network.ETHEREUM && s.address.toLowerCase() === address.toLowerCase(),
-      ) as AddressEventNotification
+        (s) => s.network === Network.ETHEREUM && s.address?.toLowerCase() === address.toLowerCase(),
+      ) as NotificationSubscription
       expect(subscriptions).toEqual(undefined)
     })
 
@@ -316,6 +316,7 @@ describe('notification', () => {
     const tatum = await TatumSDK.init({ network: Network.ETHEREUM, verbose: true })
     const { data, error } = await tatum.notification.getAll()
     console.log(new Date().toISOString(), error)
+    expect(data).not.toHaveLength(0)
     expect(data[0].id).toBeDefined()
     expect(data[0].network).toBeDefined()
     expect(data[0].address).toBeDefined()

@@ -40,7 +40,7 @@ export interface NftTokenDetail {
   /**
    * Blockchain network
    */
-  chain: string,
+  chain: string
   /**
    * Token ID
    */

@@ -1,3 +1,8 @@
+## [1.2.6] - 2023.04.19
+
+### Changed
+- Minor changes in the code - documentation, types moving between files etc.
+
 ## [1.2.5] - 2023.04.18
 
 ### Added

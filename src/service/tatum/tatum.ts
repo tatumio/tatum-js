@@ -1,10 +1,10 @@
 import { Container, Service } from 'typedi'
 import { Network } from '../../dto'
 import { CONFIG } from '../../util'
+import { Nft } from '../nft'
 import { Notification } from '../notification'
 import { EvmBasedRpc, GenericRpc, UtxoBasedRpc } from '../rpc'
 import { ApiVersion, TatumConfig } from './tatum.dto'
-import { Nft } from '../nft'
 
 @Service({ transient: true })
 export class TatumSDK<T> {
