@@ -143,7 +143,7 @@ export class EvmBasedRpc extends AbstractJsonRpc implements EvmBasedRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('eth_getBalance', [address, blockNumber || 'latest']),
+        this.prepareRpcCall('eth_getBalance', [address, blockNumber || 'pending']),
       )
       .then((r) => new BigNumber(r.result))
   }

@@ -1,6 +1,6 @@
 import { AddressEventNotificationChain, Network } from '../../dto'
 
-export interface GetAllNotificationsQuery {
+export interface GetAllSubscriptionsQuery {
   /**
    * Number of records to return. The default is 10.
    */

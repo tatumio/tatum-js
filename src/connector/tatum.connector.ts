@@ -14,30 +14,30 @@ import { GetUrl, SdkRequest } from './connector.dto'
 export class TatumConnector {
   constructor(private readonly id: string) {}
 
-  public async get<T>({ path, params }: GetUrl) {
-    return this.request<T>({ path, params, method: 'GET' })
+  public async get<T>(request: GetUrl) {
+    return this.request<T>({ ...request, method: 'GET' })
   }
 
   public async rpcCall<T>(url: string, body: JsonRpcCall | JsonRpcCall[]) {
     return this.request<T>({ body, method: 'POST' }, 0, url)
   }
 
-  public async post<T>({ path, params, body }: SdkRequest) {
-    return this.request<T>({ path, params, body, method: 'POST' })
+  public async post<T>(request: SdkRequest) {
+    return this.request<T>({...request, method: 'POST' })
   }
 
-  public async delete<T>({ path, params }: GetUrl) {
-    return this.request<T>({ path, params, method: 'DELETE' })
+  public async delete<T>(request: GetUrl) {
+    return this.request<T>({...request, method: 'DELETE' })
   }
 
   private async request<T>(
-    { path, params, body, method }: SdkRequest,
+    { path, params, body, method, basePath }: SdkRequest,
     retry = 0,
     externalUrl?: string,
   ): Promise<T> {
     const { verbose } = Container.of(this.id).get(CONFIG)
 
-    const url = externalUrl || this.getUrl({ path, params })
+    const url = externalUrl || this.getUrl({ path, params, basePath })
     const headers = await this.headers(retry)
     const request: RequestInit = {
       headers,
@@ -74,11 +74,11 @@ export class TatumConnector {
     }
   }
 
-  private getUrl({ path, params }: GetUrl) {
+  private getUrl({ path, params, basePath }: GetUrl) {
     const config = Container.of(this.id).get(CONFIG)
     const url = new URL(
       path || '',
-      config.version === ApiVersion.V1 ? Constant.TATUM_API_URL.V1 : Constant.TATUM_API_URL.V2,
+      basePath || (config.version === ApiVersion.V1 ? Constant.TATUM_API_URL.V1 : Constant.TATUM_API_URL.V2),
     )
 
     if (params) {

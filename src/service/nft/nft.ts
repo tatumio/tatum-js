@@ -1,6 +1,6 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
-import { CONFIG } from '../../util'
+import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
 import { TatumConfig } from '../tatum'
 import {
   CheckTokenOwner,
@@ -10,10 +10,10 @@ import {
   GetNftMetadata,
   GetTokenOwner,
   NftAddressBalance,
-  NftBalanceDetails,
   NftTokenDetail,
   NftTransaction,
 } from './nft.dto'
+import { AddressBalanceDetails } from '../../dto'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -34,9 +34,13 @@ export class Nft {
    * Get balance of NFT for given address.
    * You can get balance of multiple addresses in one call.
    */
-  async getBalance({ page = 0, pageSize = 50, addresses }: NftBalanceDetails): Promise<NftAddressBalance[]> {
+  async getBalance({
+                     page = 0,
+                     pageSize = 50,
+                     addresses,
+                   }: AddressBalanceDetails): Promise<ResponseDto<NftAddressBalance[]>> {
     const chain = this.config.network
-    return this.connector
+    return ErrorUtils.tryFail(() => this.connector
       .get<{ result: NftAddressBalance[] }>({
         path: `data/balances`,
         params: {
@@ -47,7 +51,7 @@ export class Nft {
           addresses: addresses.join(','),
         },
       })
-      .then((r) => r.result)
+      .then((r) => r.result))
   }
 
   /**
@@ -57,16 +61,16 @@ export class Nft {
    * @param pageSize
    */
   async getAllNftTransactions({
-    page = 0,
-    pageSize = 50,
-    tokenId,
-    tokenAddress,
-    transactionType,
-    fromBlock,
-    toBlock,
-  }: GetAllNftTransactionsQuery): Promise<NftTransaction[]> {
+                                page = 0,
+                                pageSize = 50,
+                                tokenId,
+                                tokenAddress,
+                                transactionType,
+                                fromBlock,
+                                toBlock,
+                              }: GetAllNftTransactionsQuery): Promise<ResponseDto<NftTransaction[]>> {
     const chain = this.config.network
-    return this.connector
+    return ErrorUtils.tryFail(() => this.connector
       .get<{ result: NftTransaction[] }>({
         path: `data/transactions`,
         params: {
@@ -81,7 +85,7 @@ export class Nft {
           toBlock,
         },
       })
-      .then((r) => r.result)
+      .then((r) => r.result))
   }
 
   /**
@@ -91,17 +95,17 @@ export class Nft {
    * @param pageSize
    */
   async getAllNftTransactionsByAddress({
-    page = 0,
-    pageSize = 50,
-    addresses,
-    tokenId,
-    tokenAddress,
-    transactionType,
-    fromBlock,
-    toBlock,
-  }: GetAllNftTransactionsByAddress): Promise<NftTransaction[]> {
+                                         page = 0,
+                                         pageSize = 50,
+                                         addresses,
+                                         tokenId,
+                                         tokenAddress,
+                                         transactionType,
+                                         fromBlock,
+                                         toBlock,
+                                       }: GetAllNftTransactionsByAddress): Promise<ResponseDto<NftTransaction[]>> {
     const chain = this.config.network
-    return this.connector
+    return ErrorUtils.tryFail(() => this.connector
       .get<{ result: NftTransaction[] }>({
         path: `data/transactions`,
         params: {
@@ -117,34 +121,36 @@ export class Nft {
           toBlock,
         },
       })
-      .then((r) => r.result)
+      .then((r) => r.result))
   }
 
   /**
    * Get metadata of NFT.
    */
-  async getNftMetadata({ tokenAddress, tokenId }: GetNftMetadata): Promise<NftTokenDetail | null> {
+  async getNftMetadata({ tokenAddress, tokenId }: GetNftMetadata): Promise<ResponseDto<NftTokenDetail | null>> {
     const chain = this.config.network
-    const response = await this.connector.get<Array<NftTokenDetail>>({
-      path: `data/metadata`,
-      params: {
-        chain,
-        tokenAddress,
-        tokenIds: tokenId,
-      },
+    return ErrorUtils.tryFail(async () => {
+      const response = await this.connector.get<Array<NftTokenDetail>>({
+        path: `data/metadata`,
+        params: {
+          chain,
+          tokenAddress,
+          tokenIds: tokenId,
+        },
+      })
+      if (response?.length) {
+        return response[0]
+      }
+      return null
     })
-    if (response?.length) {
-      return response[0]
-    }
-    return null
   }
 
   /**
    * Get owner of a specific NFT.
    */
-  async getNftOwner({ tokenAddress, tokenId, pageSize, page }: GetTokenOwner): Promise<string[]> {
+  async getNftOwner({ tokenAddress, tokenId, pageSize, page }: GetTokenOwner): Promise<ResponseDto<string[]>> {
     const chain = this.config.network
-    return this.connector.get<Array<string>>({
+    return ErrorUtils.tryFail(() => this.connector.get<Array<string>>({
       path: `data/owners`,
       params: {
         chain,
@@ -153,7 +159,7 @@ export class Nft {
         pageSize,
         offset: page,
       },
-    })
+    }))
   }
 
   /**
@@ -176,13 +182,13 @@ export class Nft {
    * Get all NFTs in collection.
    */
   async getNFtsInCollection({
-    tokenAddress,
-    pageSize,
-    excludeMetadata = false,
-    page,
-  }: GetCollection): Promise<NftTokenDetail[]> {
+                              tokenAddress,
+                              pageSize,
+                              excludeMetadata = false,
+                              page,
+                            }: GetCollection): Promise<ResponseDto<NftTokenDetail[]>> {
     const chain = this.config.network
-    return this.connector.get<Array<NftTokenDetail>>({
+    return ErrorUtils.tryFail(() => this.connector.get<Array<NftTokenDetail>>({
       path: `data/collections`,
       params: {
         pageSize,
@@ -191,6 +197,6 @@ export class Nft {
         collectionAddresses: tokenAddress,
         excludeMetadata,
       },
-    })
+    }))
   }
 }
