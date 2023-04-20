@@ -1,5 +1,6 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
+import { AddressBalanceDetails } from '../../dto'
 import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
 import { TatumConfig } from '../tatum'
 import {
@@ -13,7 +14,6 @@ import {
   NftTokenDetail,
   NftTransaction,
 } from './nft.dto'
-import { AddressBalanceDetails } from '../../dto'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -35,23 +35,25 @@ export class Nft {
    * You can get balance of multiple addresses in one call.
    */
   async getBalance({
-                     page = 0,
-                     pageSize = 50,
-                     addresses,
-                   }: AddressBalanceDetails): Promise<ResponseDto<NftAddressBalance[]>> {
+    page = 0,
+    pageSize = 50,
+    addresses,
+  }: AddressBalanceDetails): Promise<ResponseDto<NftAddressBalance[]>> {
     const chain = this.config.network
-    return ErrorUtils.tryFail(() => this.connector
-      .get<{ result: NftAddressBalance[] }>({
-        path: `data/balances`,
-        params: {
-          pageSize,
-          offset: page,
-          chain,
-          tokenTypes: 'nft,multitoken',
-          addresses: addresses.join(','),
-        },
-      })
-      .then((r) => r.result))
+    return ErrorUtils.tryFail(() =>
+      this.connector
+        .get<{ result: NftAddressBalance[] }>({
+          path: `data/balances`,
+          params: {
+            pageSize,
+            offset: page,
+            chain,
+            tokenTypes: 'nft,multitoken',
+            addresses: addresses.join(','),
+          },
+        })
+        .then((r) => r.result),
+    )
   }
 
   /**
@@ -61,31 +63,33 @@ export class Nft {
    * @param pageSize
    */
   async getAllNftTransactions({
-                                page = 0,
-                                pageSize = 50,
-                                tokenId,
-                                tokenAddress,
-                                transactionType,
-                                fromBlock,
-                                toBlock,
-                              }: GetAllNftTransactionsQuery): Promise<ResponseDto<NftTransaction[]>> {
+    page = 0,
+    pageSize = 50,
+    tokenId,
+    tokenAddress,
+    transactionType,
+    fromBlock,
+    toBlock,
+  }: GetAllNftTransactionsQuery): Promise<ResponseDto<NftTransaction[]>> {
     const chain = this.config.network
-    return ErrorUtils.tryFail(() => this.connector
-      .get<{ result: NftTransaction[] }>({
-        path: `data/transactions`,
-        params: {
-          pageSize,
-          offset: page,
-          chain,
-          tokenTypes: 'nft,multitoken',
-          transactionSubtype: transactionType,
-          tokenAddress,
-          tokenId,
-          fromBlock,
-          toBlock,
-        },
-      })
-      .then((r) => r.result))
+    return ErrorUtils.tryFail(() =>
+      this.connector
+        .get<{ result: NftTransaction[] }>({
+          path: `data/transactions`,
+          params: {
+            pageSize,
+            offset: page,
+            chain,
+            tokenTypes: 'nft,multitoken',
+            transactionSubtype: transactionType,
+            tokenAddress,
+            tokenId,
+            fromBlock,
+            toBlock,
+          },
+        })
+        .then((r) => r.result),
+    )
   }
 
   /**
@@ -95,39 +99,44 @@ export class Nft {
    * @param pageSize
    */
   async getAllNftTransactionsByAddress({
-                                         page = 0,
-                                         pageSize = 50,
-                                         addresses,
-                                         tokenId,
-                                         tokenAddress,
-                                         transactionType,
-                                         fromBlock,
-                                         toBlock,
-                                       }: GetAllNftTransactionsByAddress): Promise<ResponseDto<NftTransaction[]>> {
+    page = 0,
+    pageSize = 50,
+    addresses,
+    tokenId,
+    tokenAddress,
+    transactionType,
+    fromBlock,
+    toBlock,
+  }: GetAllNftTransactionsByAddress): Promise<ResponseDto<NftTransaction[]>> {
     const chain = this.config.network
-    return ErrorUtils.tryFail(() => this.connector
-      .get<{ result: NftTransaction[] }>({
-        path: `data/transactions`,
-        params: {
-          pageSize,
-          offset: page,
-          chain,
-          addresses: addresses.join(','),
-          tokenTypes: 'nft,multitoken',
-          transactionSubtype: transactionType,
-          tokenAddress,
-          tokenId,
-          fromBlock,
-          toBlock,
-        },
-      })
-      .then((r) => r.result))
+    return ErrorUtils.tryFail(() =>
+      this.connector
+        .get<{ result: NftTransaction[] }>({
+          path: `data/transactions`,
+          params: {
+            pageSize,
+            offset: page,
+            chain,
+            addresses: addresses.join(','),
+            tokenTypes: 'nft,multitoken',
+            transactionSubtype: transactionType,
+            tokenAddress,
+            tokenId,
+            fromBlock,
+            toBlock,
+          },
+        })
+        .then((r) => r.result),
+    )
   }
 
   /**
    * Get metadata of NFT.
    */
-  async getNftMetadata({ tokenAddress, tokenId }: GetNftMetadata): Promise<ResponseDto<NftTokenDetail | null>> {
+  async getNftMetadata({
+    tokenAddress,
+    tokenId,
+  }: GetNftMetadata): Promise<ResponseDto<NftTokenDetail | null>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(async () => {
       const response = await this.connector.get<Array<NftTokenDetail>>({
@@ -148,18 +157,25 @@ export class Nft {
   /**
    * Get owner of a specific NFT.
    */
-  async getNftOwner({ tokenAddress, tokenId, pageSize, page }: GetTokenOwner): Promise<ResponseDto<string[]>> {
+  async getNftOwner({
+    tokenAddress,
+    tokenId,
+    pageSize,
+    page,
+  }: GetTokenOwner): Promise<ResponseDto<string[]>> {
     const chain = this.config.network
-    return ErrorUtils.tryFail(() => this.connector.get<Array<string>>({
-      path: `data/owners`,
-      params: {
-        chain,
-        tokenAddress,
-        tokenId,
-        pageSize,
-        offset: page,
-      },
-    }))
+    return ErrorUtils.tryFail(() =>
+      this.connector.get<Array<string>>({
+        path: `data/owners`,
+        params: {
+          chain,
+          tokenAddress,
+          tokenId,
+          pageSize,
+          offset: page,
+        },
+      }),
+    )
   }
 
   /**
@@ -182,21 +198,23 @@ export class Nft {
    * Get all NFTs in collection.
    */
   async getNFtsInCollection({
-                              tokenAddress,
-                              pageSize,
-                              excludeMetadata = false,
-                              page,
-                            }: GetCollection): Promise<ResponseDto<NftTokenDetail[]>> {
+    tokenAddress,
+    pageSize,
+    excludeMetadata = false,
+    page,
+  }: GetCollection): Promise<ResponseDto<NftTokenDetail[]>> {
     const chain = this.config.network
-    return ErrorUtils.tryFail(() => this.connector.get<Array<NftTokenDetail>>({
-      path: `data/collections`,
-      params: {
-        pageSize,
-        offset: page,
-        chain,
-        collectionAddresses: tokenAddress,
-        excludeMetadata,
-      },
-    }))
+    return ErrorUtils.tryFail(() =>
+      this.connector.get<Array<NftTokenDetail>>({
+        path: `data/collections`,
+        params: {
+          pageSize,
+          offset: page,
+          chain,
+          collectionAddresses: tokenAddress,
+          excludeMetadata,
+        },
+      }),
+    )
   }
 }

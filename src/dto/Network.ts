@@ -135,7 +135,7 @@ export const UTXO_BASED_NETWORKS = [
   Network.ZCASH_TESTNET,
   Network.DOGECOIN,
   Network.DOGECOIN_TESTNET,
-  ]
+]
 
 export const DATA_API_UTXO_NETWORKS = [
   Network.BITCOIN,
@@ -146,7 +146,7 @@ export const DATA_API_UTXO_NETWORKS = [
   Network.CARDANO_PREPROD,
   Network.DOGECOIN,
   Network.DOGECOIN_TESTNET,
-  ]
+]
 
 export const DATA_API_EVM_NETWORKS = [
   Network.ETHEREUM,
@@ -158,7 +158,7 @@ export const DATA_API_EVM_NETWORKS = [
   Network.BINANCE_SMART_CHAIN_TESTNET,
   Network.CELO,
   Network.CELO_ALFAJORES,
-  ]
+]
 
 export const isEvmBasedNetwork = (network: Network) => {
   return EVM_BASED_NETWORKS.includes(network)

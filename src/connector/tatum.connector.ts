@@ -23,11 +23,11 @@ export class TatumConnector {
   }
 
   public async post<T>(request: SdkRequest) {
-    return this.request<T>({...request, method: 'POST' })
+    return this.request<T>({ ...request, method: 'POST' })
   }
 
   public async delete<T>(request: GetUrl) {
-    return this.request<T>({...request, method: 'DELETE' })
+    return this.request<T>({ ...request, method: 'DELETE' })
   }
 
   private async request<T>(

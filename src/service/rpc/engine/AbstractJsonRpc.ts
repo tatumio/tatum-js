@@ -34,7 +34,11 @@ export abstract class AbstractJsonRpc implements AbstractJsonRpcSuite {
     return this.connector.rpcCall(this.getRpcNodeUrl(), body)
   }
 
-  async rawUrlCall<T>(url: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE', body?: object | object[]): Promise<T> {
+  async rawUrlCall<T>(
+    url: string,
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    body?: object | object[],
+  ): Promise<T> {
     switch (method) {
       case 'GET':
         return this.connector.get<T>({ path: url, basePath: this.getRpcNodeUrl() })

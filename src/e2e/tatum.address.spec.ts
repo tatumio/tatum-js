@@ -34,17 +34,17 @@ describe('Address', () => {
           type: 'native',
         })
         expect(data[1]).toStrictEqual({
-          'balance': '1',
-          'tokenAddress': '0x211500d1960bdb7ba3390347ffd8ad486b897a18',
-          'tokenId': '31631000000000',
-          'type': 'nft',
+          balance: '1',
+          tokenAddress: '0x211500d1960bdb7ba3390347ffd8ad486b897a18',
+          tokenId: '31631000000000',
+          type: 'nft',
         })
         expect(data[2]).toStrictEqual({
-          'asset': 'TDT',
-          'balance': '100000000',
-          'decimals': 2,
-          'tokenAddress': '0x160bd7fba6f42f3b512bd08c827674fd25f15acc',
-          'type': 'fungible',
+          asset: 'TDT',
+          balance: '100000000',
+          decimals: 2,
+          tokenAddress: '0x160bd7fba6f42f3b512bd08c827674fd25f15acc',
+          type: 'fungible',
         })
       })
     })
@@ -178,16 +178,16 @@ describe('Address', () => {
         expect(txs.status === Status.SUCCESS)
         expect(txs.data).toHaveLength(1)
         expect(txs.data[0]).toStrictEqual({
-          'address': '0x514d547c8ac8ccbec29b5144810454bd7d3625ca',
-          'amount': '1',
-          'blockNumber': 3325299,
-          'chain': 'ethereum-sepolia',
-          'counterAddress': '0x39d2ba91296029afbe725436b4824ca803e27391',
-          'hash': '0xf4ef4715f9ba61f1fb606a32775a7bf281ddf7858092aeb3e0e0484d01957058',
-          'timestamp': 1681982316000,
-          'transactionIndex': 1,
-          'transactionSubtype': 'incoming',
-          'transactionType': 'native',
+          address: '0x514d547c8ac8ccbec29b5144810454bd7d3625ca',
+          amount: '1',
+          blockNumber: 3325299,
+          chain: 'ethereum-sepolia',
+          counterAddress: '0x39d2ba91296029afbe725436b4824ca803e27391',
+          hash: '0xf4ef4715f9ba61f1fb606a32775a7bf281ddf7858092aeb3e0e0484d01957058',
+          timestamp: 1681982316000,
+          transactionIndex: 1,
+          transactionSubtype: 'incoming',
+          transactionType: 'native',
         })
       })
 
@@ -198,31 +198,31 @@ describe('Address', () => {
         expect(txs.status === Status.SUCCESS)
         expect(txs.data).toHaveLength(2)
         expect(txs.data[0]).toStrictEqual({
-          'address': '0x514d547c8ac8ccbec29b5144810454bd7d3625cb',
-          'amount': '100000000',
-          'blockNumber': 3325316,
-          'chain': 'ethereum-sepolia',
-          'counterAddress': '0x0000000000000000000000000000000000000000',
-          'hash': '0x205d11d61bd00a4f2d079bf62df2d587a5c604a7082a5c17224d566d371a187a',
-          'timestamp': 1681982568000,
-          'tokenAddress': '0x160bd7fba6f42f3b512bd08c827674fd25f15acc',
-          'transactionIndex': 0,
-          'transactionSubtype': 'incoming',
-          'transactionType': 'fungible',
+          address: '0x514d547c8ac8ccbec29b5144810454bd7d3625cb',
+          amount: '100000000',
+          blockNumber: 3325316,
+          chain: 'ethereum-sepolia',
+          counterAddress: '0x0000000000000000000000000000000000000000',
+          hash: '0x205d11d61bd00a4f2d079bf62df2d587a5c604a7082a5c17224d566d371a187a',
+          timestamp: 1681982568000,
+          tokenAddress: '0x160bd7fba6f42f3b512bd08c827674fd25f15acc',
+          transactionIndex: 0,
+          transactionSubtype: 'incoming',
+          transactionType: 'fungible',
         })
         expect(txs.data[1]).toStrictEqual({
-          'address': '0x514d547c8ac8ccbec29b5144810454bd7d3625cb',
-          'amount': '1',
-          'blockNumber': 3325305,
-          'chain': 'ethereum-sepolia',
-          'counterAddress': '0x0000000000000000000000000000000000000000',
-          'hash': '0x06f2244b2650da68fd777da39d8cba5c0fb795ddd51d6c31aaca72fa1f76b3bd',
-          'timestamp': 1681982412000,
-          'tokenAddress': '0x211500d1960bdb7ba3390347ffd8ad486b897a18',
-          'tokenId': '31631000000000',
-          'transactionIndex': 0,
-          'transactionSubtype': 'incoming',
-          'transactionType': 'nft',
+          address: '0x514d547c8ac8ccbec29b5144810454bd7d3625cb',
+          amount: '1',
+          blockNumber: 3325305,
+          chain: 'ethereum-sepolia',
+          counterAddress: '0x0000000000000000000000000000000000000000',
+          hash: '0x06f2244b2650da68fd777da39d8cba5c0fb795ddd51d6c31aaca72fa1f76b3bd',
+          timestamp: 1681982412000,
+          tokenAddress: '0x211500d1960bdb7ba3390347ffd8ad486b897a18',
+          tokenId: '31631000000000',
+          transactionIndex: 0,
+          transactionSubtype: 'incoming',
+          transactionType: 'nft',
         })
       })
       it('should get transactions - NFT tokens only', async () => {
@@ -233,18 +233,18 @@ describe('Address', () => {
         expect(txs.status === Status.SUCCESS)
         expect(txs.data).toHaveLength(1)
         expect(txs.data[0]).toStrictEqual({
-          'address': '0x514d547c8ac8ccbec29b5144810454bd7d3625cb',
-          'amount': '1',
-          'blockNumber': 3325305,
-          'chain': 'ethereum-sepolia',
-          'counterAddress': '0x0000000000000000000000000000000000000000',
-          'hash': '0x06f2244b2650da68fd777da39d8cba5c0fb795ddd51d6c31aaca72fa1f76b3bd',
-          'timestamp': 1681982412000,
-          'tokenAddress': '0x211500d1960bdb7ba3390347ffd8ad486b897a18',
-          'tokenId': '31631000000000',
-          'transactionIndex': 0,
-          'transactionSubtype': 'incoming',
-          'transactionType': 'nft',
+          address: '0x514d547c8ac8ccbec29b5144810454bd7d3625cb',
+          amount: '1',
+          blockNumber: 3325305,
+          chain: 'ethereum-sepolia',
+          counterAddress: '0x0000000000000000000000000000000000000000',
+          hash: '0x06f2244b2650da68fd777da39d8cba5c0fb795ddd51d6c31aaca72fa1f76b3bd',
+          timestamp: 1681982412000,
+          tokenAddress: '0x211500d1960bdb7ba3390347ffd8ad486b897a18',
+          tokenId: '31631000000000',
+          transactionIndex: 0,
+          transactionSubtype: 'incoming',
+          transactionType: 'nft',
         })
       })
       it('should get transactions - pagination', async () => {
@@ -277,31 +277,31 @@ describe('Address', () => {
         expect(txs.status === Status.SUCCESS)
         expect(txs.data).toHaveLength(3)
         expect(txs.data[0]).toStrictEqual({
-          'address': 'tb1qrd9jz8ksy3qqm400vt296udlvk89z96p443mv0',
-          'amount': '0.001',
-          'blockNumber': 2427655,
-          'chain': 'bitcoin-testnet',
-          'hash': '954b246cdebf7338f561e2fdfb869fedd75302e2b233f339639b36d880e9c983',
-          'timestamp': 1680779879,
-          'transactionType': 'incoming',
+          address: 'tb1qrd9jz8ksy3qqm400vt296udlvk89z96p443mv0',
+          amount: '0.001',
+          blockNumber: 2427655,
+          chain: 'bitcoin-testnet',
+          hash: '954b246cdebf7338f561e2fdfb869fedd75302e2b233f339639b36d880e9c983',
+          timestamp: 1680779879,
+          transactionType: 'incoming',
         })
         expect(txs.data[1]).toStrictEqual({
-          'address': 'tb1qrd9jz8ksy3qqm400vt296udlvk89z96p443mv0',
-          'amount': '0.01796111',
-          'blockNumber': 2427335,
-          'chain': 'bitcoin-testnet',
-          'hash': 'ea428edd33dbadf1c9fc11320ab8d4cac4a3b52fc5f086ab46c8b02c71b1e53e',
-          'timestamp': 1680597327,
-          'transactionType': 'outgoing',
+          address: 'tb1qrd9jz8ksy3qqm400vt296udlvk89z96p443mv0',
+          amount: '0.01796111',
+          blockNumber: 2427335,
+          chain: 'bitcoin-testnet',
+          hash: 'ea428edd33dbadf1c9fc11320ab8d4cac4a3b52fc5f086ab46c8b02c71b1e53e',
+          timestamp: 1680597327,
+          transactionType: 'outgoing',
         })
         expect(txs.data[2]).toStrictEqual({
-          'address': 'tb1qrd9jz8ksy3qqm400vt296udlvk89z96p443mv0',
-          'amount': '0.01796111',
-          'blockNumber': 2427333,
-          'chain': 'bitcoin-testnet',
-          'hash': '74e2696c2009325ed39862d2e262bb2a0966d551ad0f1c37ac5cdfe8da937f2f',
-          'timestamp': 1680596473,
-          'transactionType': 'incoming',
+          address: 'tb1qrd9jz8ksy3qqm400vt296udlvk89z96p443mv0',
+          amount: '0.01796111',
+          blockNumber: 2427333,
+          chain: 'bitcoin-testnet',
+          hash: '74e2696c2009325ed39862d2e262bb2a0966d551ad0f1c37ac5cdfe8da937f2f',
+          timestamp: 1680596473,
+          transactionType: 'incoming',
         })
       })
     })
@@ -319,31 +319,31 @@ describe('Address', () => {
         expect(txs.status === Status.SUCCESS)
         expect(txs.data).toHaveLength(3)
         expect(txs.data[0]).toStrictEqual({
-          'address': 'nqNmVv1PCPFbNQLBMbeKhW4YrswqEgpVsr',
-          'amount': '100',
-          'blockNumber': 4373218,
-          'chain': 'doge-testnet',
-          'hash': 'ad7e5d792ab7e45390d77b83c018ce2b95bd256b3956e76a5e6957a99d6aa7f1',
-          'timestamp': 1680772129,
-          'transactionType': 'incoming',
+          address: 'nqNmVv1PCPFbNQLBMbeKhW4YrswqEgpVsr',
+          amount: '100',
+          blockNumber: 4373218,
+          chain: 'doge-testnet',
+          hash: 'ad7e5d792ab7e45390d77b83c018ce2b95bd256b3956e76a5e6957a99d6aa7f1',
+          timestamp: 1680772129,
+          transactionType: 'incoming',
         })
         expect(txs.data[1]).toStrictEqual({
-          'address': 'nqNmVv1PCPFbNQLBMbeKhW4YrswqEgpVsr',
-          'amount': '2',
-          'blockNumber': 4334638,
-          'chain': 'doge-testnet',
-          'hash': 'b417a1b5ffa6aec9d6f6ba2895876ac9036353efc555bdb660194a5af3b88036',
-          'timestamp': 1680110455,
-          'transactionType': 'outgoing',
+          address: 'nqNmVv1PCPFbNQLBMbeKhW4YrswqEgpVsr',
+          amount: '2',
+          blockNumber: 4334638,
+          chain: 'doge-testnet',
+          hash: 'b417a1b5ffa6aec9d6f6ba2895876ac9036353efc555bdb660194a5af3b88036',
+          timestamp: 1680110455,
+          transactionType: 'outgoing',
         })
         expect(txs.data[2]).toStrictEqual({
-          'address': 'nqNmVv1PCPFbNQLBMbeKhW4YrswqEgpVsr',
-          'amount': '2',
-          'blockNumber': 4334636,
-          'chain': 'doge-testnet',
-          'hash': '7fd8c504d5af06b840fa2a95a256b22bbbc72285d1962daacac097326d4f4450',
-          'timestamp': 1680110393,
-          'transactionType': 'outgoing',
+          address: 'nqNmVv1PCPFbNQLBMbeKhW4YrswqEgpVsr',
+          amount: '2',
+          blockNumber: 4334636,
+          chain: 'doge-testnet',
+          hash: '7fd8c504d5af06b840fa2a95a256b22bbbc72285d1962daacac097326d4f4450',
+          timestamp: 1680110393,
+          transactionType: 'outgoing',
         })
       })
     })
@@ -360,40 +360,40 @@ describe('Address', () => {
         expect(txs.status === Status.SUCCESS)
         expect(txs.data).toHaveLength(4)
         expect(txs.data[0]).toStrictEqual({
-          'address': 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
-          'amount': '0.0009',
-          'blockNumber': 2719828,
-          'chain': 'litecoin-testnet',
-          'hash': '7643cfd74bfd6cea2fc6f2b80ebbe03d3f1673125d445b63f23a32f83d1438c6',
-          'timestamp': 1680110627,
-          'transactionType': 'outgoing',
+          address: 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
+          amount: '0.0009',
+          blockNumber: 2719828,
+          chain: 'litecoin-testnet',
+          hash: '7643cfd74bfd6cea2fc6f2b80ebbe03d3f1673125d445b63f23a32f83d1438c6',
+          timestamp: 1680110627,
+          transactionType: 'outgoing',
         })
         expect(txs.data[1]).toStrictEqual({
-          'address': 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
-          'amount': '0.0009',
-          'blockNumber': 2710828,
-          'chain': 'litecoin-testnet',
-          'hash': '19dfefa327abb9d26c37d466803527df7d55db53250b4acaf91d5d21681dcea0',
-          'timestamp': 1679137321,
-          'transactionType': 'outgoing',
+          address: 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
+          amount: '0.0009',
+          blockNumber: 2710828,
+          chain: 'litecoin-testnet',
+          hash: '19dfefa327abb9d26c37d466803527df7d55db53250b4acaf91d5d21681dcea0',
+          timestamp: 1679137321,
+          transactionType: 'outgoing',
         })
         expect(txs.data[2]).toStrictEqual({
-          'address': 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
-          'amount': '0.0001',
-          'blockNumber': 2710828,
-          'chain': 'litecoin-testnet',
-          'hash': '7980700a7df3e48b2ded2515f67c733039d0214315f2d1e3985c7633fe0f8e9c',
-          'timestamp': 1679137321,
-          'transactionType': 'outgoing',
+          address: 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
+          amount: '0.0001',
+          blockNumber: 2710828,
+          chain: 'litecoin-testnet',
+          hash: '7980700a7df3e48b2ded2515f67c733039d0214315f2d1e3985c7633fe0f8e9c',
+          timestamp: 1679137321,
+          transactionType: 'outgoing',
         })
         expect(txs.data[3]).toStrictEqual({
-          'address': 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
-          'amount': '1',
-          'blockNumber': 2710828,
-          'chain': 'litecoin-testnet',
-          'hash': '472329bfef53408df028c3689ed31767d52aa5cf4469762dff0f494b2e5d854d',
-          'timestamp': 1679137321,
-          'transactionType': 'incoming',
+          address: 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
+          amount: '1',
+          blockNumber: 2710828,
+          chain: 'litecoin-testnet',
+          hash: '472329bfef53408df028c3689ed31767d52aa5cf4469762dff0f494b2e5d854d',
+          timestamp: 1679137321,
+          transactionType: 'incoming',
         })
       })
     })

@@ -1,5 +1,5 @@
-import { AddressEventNotificationChain, isEvmBasedNetwork, isUtxoBasedNetwork, Network } from '../dto'
 import { Container } from 'typedi'
+import { AddressEventNotificationChain, isEvmBasedNetwork, isUtxoBasedNetwork, Network } from '../dto'
 import { EvmBasedRpc, GenericRpc, UtxoBasedRpc } from '../service'
 
 export const Utils = {

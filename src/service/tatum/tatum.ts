@@ -1,9 +1,9 @@
 import { Container, Service } from 'typedi'
 import { CONFIG, Utils } from '../../util'
+import { Address } from '../address'
 import { Nft } from '../nft'
 import { Notification } from '../notification'
 import { ApiVersion, TatumConfig } from './tatum.dto'
-import { Address } from '../address'
 
 @Service({ transient: true })
 export class TatumSDK<T> {
