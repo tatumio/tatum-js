@@ -56,8 +56,9 @@ export class Address {
             .then((r) => r.result),
       ])
       const result: AddressBalance[] = []
-      for (const nativeBalance of nativeBalances) {
+      for (const [i, nativeBalance] of nativeBalances.entries()) {
         result.push({
+          address: addresses[i],
           asset: Constant.CURRENCY_NAMES[chain],
           decimals: Constant.DECIMALS[chain],
           balance: nativeBalance,
@@ -135,6 +136,7 @@ export class Address {
     for (let i = 0; i < tokenBalances.length; i++) {
       const tokenBalance = tokenBalances[i]
       const item: AddressBalance = {
+        address: tokenBalance.address,
         tokenAddress: tokenBalance.tokenAddress,
         balance: tokenBalance.balance,
         type: tokenBalance.type,

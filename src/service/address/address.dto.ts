@@ -1,6 +1,10 @@
 export interface AddressBalance {
   /**
-   * Asset of the balance. For native currencies, its always present. For tokens, only when readable from the contract `symbol()` method.
+   * Blockchain address of the balance.
+   */
+  address: string
+  /**
+   * Asset of the balance. For native currencies, it's always present. For tokens, only when readable from the contract `symbol()` method.
    */
   asset?: string
   /**

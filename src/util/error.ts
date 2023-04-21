@@ -4,8 +4,17 @@ export enum Status {
 }
 
 export interface ResponseDto<T> {
+  /**
+   * Actual payload of the response
+   */
   data: T
+  /**
+   * Status of the response
+   */
   status: Status
+  /**
+   * In case of ERROR status, this field contains the error message and detailed description
+   */
   error?: ErrorWithMessage
 }
 

@@ -39,11 +39,20 @@ export interface NotificationSubscription {
 }
 
 export interface AddressBasedNotificationDetail {
+  /**
+   * Monitored address.
+   */
   address: string
+  /**
+   * URL of a webhook listener.
+   */
   url: string
 }
 
 export interface AddressBasedNotification extends AddressBasedNotificationDetail {
+  /**
+   * ID of a subscription.
+   */
   id: string
 }
 

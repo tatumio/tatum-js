@@ -1,3 +1,8 @@
+## [1.3.1] - 2023.04.21
+
+### Added
+- Added parameter `address` to address.getBalance response to precisely identify the address for which the balance is returned.
+
 ## [1.3.0] - 2023.04.21
 
 ### Added

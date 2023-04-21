@@ -17,6 +17,28 @@ describe('Address', () => {
         expect(data[0]).toStrictEqual({
           asset: 'ETH',
           decimals: 18,
+          address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
+          balance: '1',
+          type: 'native',
+        })
+      })
+
+      it('should get balance with native assets only for 2 addresses', async () => {
+        const { data } = await tatumSDK.address.getBalance({
+          addresses: ['0x514D547c8aC8ccBEc29b5144810454BD7d3625CA', '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA'],
+        })
+        expect(data).toHaveLength(2)
+        expect(data[0]).toStrictEqual({
+          asset: 'ETH',
+          address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
+          decimals: 18,
+          balance: '1',
+          type: 'native',
+        })
+        expect(data[1]).toStrictEqual({
+          asset: 'ETH',
+          address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
+          decimals: 18,
           balance: '1',
           type: 'native',
         })
@@ -28,18 +50,21 @@ describe('Address', () => {
         })
         expect(data).toHaveLength(3)
         expect(data[0]).toStrictEqual({
+          address: '0x514D547c8aC8CCBEc29B5144810454BD7D3625cB',
           asset: 'ETH',
           decimals: 18,
           balance: '0',
           type: 'native',
         })
         expect(data[1]).toStrictEqual({
+          address: '0x514d547c8ac8ccbec29b5144810454bd7d3625cb',
           balance: '1',
           tokenAddress: '0x211500d1960bdb7ba3390347ffd8ad486b897a18',
           tokenId: '31631000000000',
           type: 'nft',
         })
         expect(data[2]).toStrictEqual({
+          address: '0x514d547c8ac8ccbec29b5144810454bd7d3625cb',
           asset: 'TDT',
           balance: '100000000',
           decimals: 2,
@@ -60,6 +85,7 @@ describe('Address', () => {
         })
         expect(data).toHaveLength(1)
         expect(data[0]).toStrictEqual({
+          address: '5RMd4Uy6LVyJqMqNPYmerZdzBPCtyq964WBfhPdT2SWi',
           asset: 'SOL',
           decimals: 9,
           balance: '2',
@@ -81,6 +107,7 @@ describe('Address', () => {
         expect(data[0]).toStrictEqual({
           asset: 'BTC',
           decimals: 8,
+          address: 'tb1qrd9jz8ksy3qqm400vt296udlvk89z96p443mv0',
           balance: '0.001',
           type: 'native',
         })
@@ -100,6 +127,7 @@ describe('Address', () => {
         expect(data[0]).toStrictEqual({
           asset: 'DOGE',
           decimals: 8,
+          address: 'nqNmVv1PCPFbNQLBMbeKhW4YrswqEgpVsr',
           balance: '433.53',
           type: 'native',
         })
@@ -119,6 +147,7 @@ describe('Address', () => {
         expect(data[0]).toStrictEqual({
           asset: 'LTC',
           decimals: 8,
+          address: 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
           balance: '0.9981',
           type: 'native',
         })
@@ -137,6 +166,7 @@ describe('Address', () => {
         expect(data).toHaveLength(1)
         expect(data[0]).toStrictEqual({
           asset: 'ADA',
+          address: 'addr_test1vzs4u97282u69c89p740fxnmkz6kyngxhspekkrlnun9udssd5p9l',
           decimals: 6,
           balance: '1053',
           type: 'native',
@@ -156,6 +186,7 @@ describe('Address', () => {
         expect(response.data).toHaveLength(1)
         expect(response.data[0]).toStrictEqual({
           asset: 'XRP',
+          address: 'rK2MUqCRuodSxyYjfregVuJyMgbVXgeyAG',
           decimals: 6,
           balance: '1000',
           type: 'native',

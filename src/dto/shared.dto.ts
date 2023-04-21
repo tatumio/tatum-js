@@ -18,7 +18,13 @@ export interface AddressBalanceDetails {
    * List of addresses to check.
    */
   addresses: string[]
+  /**
+   * Optional page size. If not specified, the default page size is used, which is 10.
+   */
   pageSize?: number
+  /**
+   * Optional page number. If not specified, the first page is returned.
+   */
   page?: number
 }
 
