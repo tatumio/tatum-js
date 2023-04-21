@@ -1,3 +1,8 @@
+## [1.3.2] - 2023.04.21
+
+### Changed
+- Fixed parameter names of nft.getNFTsInCollection
+
 ## [1.3.1] - 2023.04.21
 
 ### Added

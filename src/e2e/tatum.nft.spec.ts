@@ -143,8 +143,8 @@ describe('Tatum NFT', () => {
 
   describe('NFT collections', () => {
     it('should get small collection', async function () {
-      const { data: collection } = await tatum.nft.getNFtsInCollection({
-        tokenAddress: '0xf31a94466dd524a9e711d5599c470b1f65b3b4d8',
+      const { data: collection } = await tatum.nft.getNftsInCollection({
+        collectionAddress: '0xf31a94466dd524a9e711d5599c470b1f65b3b4d8',
       })
       expect(collection).toHaveLength(1)
       expect(collection[0]).toStrictEqual({
@@ -158,8 +158,8 @@ describe('Tatum NFT', () => {
     })
 
     it('should get small collection without metadata', async function () {
-      const { data: collection } = await tatum.nft.getNFtsInCollection({
-        tokenAddress: '0xf31a94466dd524a9e711d5599c470b1f65b3b4d8',
+      const { data: collection } = await tatum.nft.getNftsInCollection({
+        collectionAddress: '0xf31a94466dd524a9e711d5599c470b1f65b3b4d8',
         excludeMetadata: true,
       })
       expect(collection).toHaveLength(1)
@@ -173,14 +173,14 @@ describe('Tatum NFT', () => {
     })
 
     it('should get big collection with pagination', async function () {
-      const { data: collectionPage1 } = await tatum.nft.getNFtsInCollection({
-        tokenAddress: '0x55d5f0a37488d6734c33c6c3c6a2234a75f2e521',
+      const { data: collectionPage1 } = await tatum.nft.getNftsInCollection({
+        collectionAddress: '0x55d5f0a37488d6734c33c6c3c6a2234a75f2e521',
         excludeMetadata: true,
         pageSize: 10,
       })
       expect(collectionPage1).toHaveLength(10)
-      const { data: collectionPage2 } = await tatum.nft.getNFtsInCollection({
-        tokenAddress: '0x55d5f0a37488d6734c33c6c3c6a2234a75f2e521',
+      const { data: collectionPage2 } = await tatum.nft.getNftsInCollection({
+        collectionAddress: '0x55d5f0a37488d6734c33c6c3c6a2234a75f2e521',
         excludeMetadata: true,
         pageSize: 10,
         page: 1,

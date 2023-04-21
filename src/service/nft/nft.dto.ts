@@ -16,7 +16,13 @@ export interface GetNftTransactionResponse extends TokenIdContractAddress {
 export type GetNftMetadata = TokenIdContractAddress
 
 export interface GetTokenOwner extends TokenIdContractAddress {
+  /**
+   * Optional page size. If not specified, the default page size is used, which is 10.
+   */
   pageSize?: number
+  /**
+   * Optional page number. If not specified, the first page is returned.
+   */
   page?: number
 }
 
@@ -61,14 +67,20 @@ export interface NftTokenDetail {
 
 export interface GetCollection {
   /**
-   * Token contract address
+   * Collection contract address
    */
-  tokenAddress: string
+  collectionAddress: string
   /**
    * Optional flag to exclude metadata from the response. In this case, only token IDs are returned. Defaults to false.
    */
   excludeMetadata?: boolean
+  /**
+   * Optional page size. If not specified, the default page size is used, which is 10.
+   */
   pageSize?: number
+  /**
+   * Optional page number. If not specified, the first page is returned.
+   */
   page?: number
 }
 
@@ -104,7 +116,13 @@ export interface GetAllNftTransactionsQuery {
    * Optional to block. If not specified, all transactions are returned up till now.
    */
   toBlock?: number
+  /**
+   * Optional page size. If not specified, the default page size is used, which is 10.
+   */
   pageSize?: number
+  /**
+   * Optional page number. If not specified, the first page is returned.
+   */
   page?: number
 }
 

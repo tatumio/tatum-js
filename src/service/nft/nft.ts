@@ -197,8 +197,8 @@ export class Nft {
   /**
    * Get all NFTs in collection.
    */
-  async getNFtsInCollection({
-    tokenAddress,
+  async getNftsInCollection({
+    collectionAddress,
     pageSize,
     excludeMetadata = false,
     page,
@@ -211,7 +211,7 @@ export class Nft {
           pageSize,
           offset: page,
           chain,
-          collectionAddresses: tokenAddress,
+          collectionAddresses: collectionAddress,
           excludeMetadata,
         },
       }),
