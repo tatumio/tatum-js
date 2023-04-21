@@ -14,13 +14,13 @@ export abstract class AbstractJsonRpc implements AbstractJsonRpcSuite {
 
   protected getRpcNodeUrl() {
     const { apiKey } = Container.of(this.id).get(CONFIG)
-    return `https://api.tatum.io/v3/blockchain/node/${this.network}${apiKey ? `/${apiKey}` : ''}`
+    return `https://api.tatum.io/v3/blockchain/node/${this.network}${apiKey ? `/${apiKey}` : '/'}`
   }
 
-  protected prepareRpcCall(method: string, params?: unknown[]): JsonRpcCall {
+  prepareRpcCall(method: string, params?: unknown[], id = 1): JsonRpcCall {
     return {
       jsonrpc: '2.0',
-      id: 1,
+      id,
       method,
       params,
     }
@@ -32,5 +32,24 @@ export abstract class AbstractJsonRpc implements AbstractJsonRpcSuite {
 
   rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse> {
     return this.connector.rpcCall(this.getRpcNodeUrl(), body)
+  }
+
+  async rawUrlCall<T>(
+    url: string,
+    method: 'GET' | 'POST' | 'PUT' | 'DELETE',
+    body?: object | object[],
+  ): Promise<T> {
+    switch (method) {
+      case 'GET':
+        return this.connector.get<T>({ path: url, basePath: this.getRpcNodeUrl() })
+      case 'POST':
+        return this.connector.post<T>({ path: url, basePath: this.getRpcNodeUrl(), body })
+      case 'PUT':
+        return this.connector.post<T>({ path: url, basePath: this.getRpcNodeUrl(), body })
+      case 'DELETE':
+        return this.connector.delete<T>({ path: url, basePath: this.getRpcNodeUrl() })
+      default:
+        throw new Error('Unsupported method')
+    }
   }
 }

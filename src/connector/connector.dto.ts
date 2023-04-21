@@ -1,5 +1,6 @@
 export interface GetUrl {
   path?: string
+  basePath?: string
   params?: { [key: string]: string | number | boolean | undefined }
 }
 

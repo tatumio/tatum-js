@@ -1,13 +1,4 @@
-export interface TokenIdContractAddress {
-  /**
-   * Token ID
-   */
-  tokenId: string
-  /**
-   * Token contract address
-   */
-  tokenAddress: string
-}
+import { TokenIdContractAddress } from '../../dto'
 
 export interface MetadataResponse {
   url: string
@@ -77,15 +68,6 @@ export interface GetCollection {
    * Optional flag to exclude metadata from the response. In this case, only token IDs are returned. Defaults to false.
    */
   excludeMetadata?: boolean
-  pageSize?: number
-  page?: number
-}
-
-export interface NftBalanceDetails {
-  /**
-   * List of addresses to check.
-   */
-  addresses: string[]
   pageSize?: number
   page?: number
 }

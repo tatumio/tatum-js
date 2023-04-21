@@ -84,3 +84,94 @@ export enum Network {
   ZCASH_TESTNET = 'zcash-testnet',
   ZILLIQA_TESTNET = 'zilliqa-testnet',
 }
+
+export const EVM_BASED_NETWORKS = [
+  Network.ETHEREUM,
+  Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_CLASSIC,
+  Network.ETHEREUM_GOERLI,
+  Network.AVALANCHE_C,
+  Network.AVALANCHE_C_TESTNET,
+  Network.POLYGON,
+  Network.POLYGON_MUMBAI,
+  Network.GNOSIS,
+  Network.GNOSIS_TESTNET,
+  Network.FANTOM,
+  Network.FANTOM_TESTNET,
+  Network.AURORA,
+  Network.AURORA_TESTNET,
+  Network.CELO,
+  Network.CELO_ALFAJORES,
+  Network.BINANCE_SMART_CHAIN,
+  Network.BINANCE_SMART_CHAIN_TESTNET,
+  Network.VECHAIN,
+  Network.VECHAIN_TESTNET,
+  Network.XDC,
+  Network.XDC_TESTNET,
+  Network.PALM,
+  Network.PALM_TESTNET,
+  Network.CRONOS,
+  Network.CRONOS_TESTNET,
+  Network.KUCOIN,
+  Network.KUCOIN_TESTNET,
+  Network.OASIS,
+  Network.OASIS_TESTNET,
+  Network.OPTIMISM,
+  Network.OPTIMISM_TESTNET,
+  Network.HARMONY_ONE_SHARD_0,
+  Network.HARMONY_ONE_TESTNET_SHARD_0,
+  Network.KLAYTN,
+  Network.KLAYTN_BAOBAB,
+]
+
+export const UTXO_BASED_NETWORKS = [
+  Network.BITCOIN,
+  Network.BITCOIN_TESTNET,
+  Network.BITCOIN_CASH,
+  Network.BITCOIN_CASH_TESTNET,
+  Network.LITECOIN,
+  Network.LITECOIN_TESTNET,
+  Network.ZCASH,
+  Network.ZCASH_TESTNET,
+  Network.DOGECOIN,
+  Network.DOGECOIN_TESTNET,
+]
+
+export const DATA_API_UTXO_NETWORKS = [
+  Network.BITCOIN,
+  Network.BITCOIN_TESTNET,
+  Network.LITECOIN,
+  Network.LITECOIN_TESTNET,
+  Network.CARDANO,
+  Network.CARDANO_PREPROD,
+  Network.DOGECOIN,
+  Network.DOGECOIN_TESTNET,
+]
+
+export const DATA_API_EVM_NETWORKS = [
+  Network.ETHEREUM,
+  Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_GOERLI,
+  Network.POLYGON,
+  Network.POLYGON_MUMBAI,
+  Network.BINANCE_SMART_CHAIN,
+  Network.BINANCE_SMART_CHAIN_TESTNET,
+  Network.CELO,
+  Network.CELO_ALFAJORES,
+]
+
+export const isEvmBasedNetwork = (network: Network) => {
+  return EVM_BASED_NETWORKS.includes(network)
+}
+
+export const isUtxoBasedNetwork = (network: Network) => {
+  return UTXO_BASED_NETWORKS.includes(network)
+}
+
+export const isDataApiEvmEnabledNetwork = (network: Network) => {
+  return DATA_API_EVM_NETWORKS.includes(network)
+}
+
+export const isDataApiUtxoEnabledNetwork = (network: Network) => {
+  return DATA_API_UTXO_NETWORKS.includes(network)
+}

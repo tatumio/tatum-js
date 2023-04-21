@@ -1,6 +1,18 @@
-import { AddressEventNotificationChain, Network } from '../dto'
+import { Container } from 'typedi'
+import { AddressEventNotificationChain, isEvmBasedNetwork, isUtxoBasedNetwork, Network } from '../dto'
+import { EvmBasedRpc, GenericRpc, UtxoBasedRpc } from '../service'
 
 export const Utils = {
+  getRpc: <T>(id: string, network: Network): T => {
+    if (isEvmBasedNetwork(network)) {
+      return Container.of(id).get(EvmBasedRpc) as T
+    }
+    if (isUtxoBasedNetwork(network)) {
+      return Container.of(id).get(UtxoBasedRpc) as T
+    }
+    console.warn(`RPC Network ${network} is not supported.`)
+    return Container.of(id).get(GenericRpc) as T
+  },
   mapNotificationChainToNetwork: (chain: AddressEventNotificationChain): Network => {
     switch (chain) {
       case AddressEventNotificationChain.BTC:

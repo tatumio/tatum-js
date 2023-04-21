@@ -1,3 +1,8 @@
+## [1.3.0] - 2023.04.21
+
+### Added
+- Added support for **Address** submodule. This submodule simplifies wallet management across multiple blockchains by allowing you to fetch wallet balances and retrieve transactions for a given address. With the Address submodule, you can easily manage your wallets and monitor transactions, making your blockchain application development more efficient and user-friendly.
+
 ## [1.2.6] - 2023.04.19
 
 ### Changed
