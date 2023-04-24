@@ -5,6 +5,7 @@ export interface TatumConfig {
    * Blockchain network to use.
    */
   network: Network
+
   /**
    * API Version of Tatum. Use V1 for api.tatum.io/v3 API keys and V2 for api.tatum.com/v1 API keys. Defaults to V2.
    */
@@ -21,6 +22,11 @@ export interface TatumConfig {
    * Verbose logging is disabled by default.
    */
   verbose?: boolean
+
+  /**
+   * If this parameter is set, then the SDK will use this URL for all RPC calls. If this parameter is not set, then the SDK will RPC provisioned by Tatum. List of supported blockchains is available [here](https://docs.tatum.io/introduction/supported-blockchains).
+   */
+  rpcUrl?: string
 
   /**
    * Delay between retries, defaults to 1000ms.

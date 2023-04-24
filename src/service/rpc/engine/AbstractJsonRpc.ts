@@ -13,8 +13,8 @@ export abstract class AbstractJsonRpc implements AbstractJsonRpcSuite {
   }
 
   protected getRpcNodeUrl() {
-    const { apiKey } = Container.of(this.id).get(CONFIG)
-    return `https://api.tatum.io/v3/blockchain/node/${this.network}${apiKey ? `/${apiKey}` : '/'}`
+    const { apiKey, rpcUrl } = Container.of(this.id).get(CONFIG)
+    return rpcUrl || `https://api.tatum.io/v3/blockchain/node/${this.network}${apiKey ? `/${apiKey}` : '/'}`
   }
 
   prepareRpcCall(method: string, params?: unknown[], id = 1): JsonRpcCall {

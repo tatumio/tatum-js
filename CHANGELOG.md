@@ -1,3 +1,8 @@
+## [1.3.3] - 2023.04.24
+
+### Added
+- Added possibility to use custom RPC provider for any of the blockchain. Configuration parameter for this option is `rpcUrl`. If this parameter is set, then the SDK will use this URL for all RPC calls. If this parameter is not set, then the SDK will RPC provisioned by Tatum. List of supported blockchains is available [here](https://docs.tatum.io/introduction/supported-blockchains).
+
 ## [1.3.2] - 2023.04.21
 
 ### Changed
