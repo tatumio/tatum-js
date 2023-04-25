@@ -82,6 +82,8 @@ export interface EvmBasedRpcSuite extends AbstractJsonRpcSuite {
 
   getBalance(address: string, blockNumber?: BlockNumber): Promise<BigNumber>
 
+  getTokenDecimals(tokenAddress: string): Promise<BigNumber>
+
   getBlockByHash(blockHash: string, includeTransactions?: boolean): Promise<any>
 
   getBlockByNumber(blockNumber: string | number, includeTransactions?: boolean): Promise<any>

@@ -1,3 +1,8 @@
+## [1.3.4] - 2023.04.25
+
+### Added
+- Added support for **WalletProvider** submodule. This submodule enables seamless interaction with external wallets like Metamask or Phantom within the browser. The Wallet Provider submodule allows the SDK to communicate with various wallet providers, streamlining the process of signing transactions, querying account balances, and interacting with smart contracts directly through popular browser wallets.
+
 ## [1.3.3] - 2023.04.24
 
 ### Added

@@ -148,6 +148,15 @@ export class EvmBasedRpc extends AbstractJsonRpc implements EvmBasedRpcSuite {
       .then((r) => new BigNumber(r.result))
   }
 
+  getTokenDecimals(tokenAddress: string): Promise<BigNumber> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('eth_call', [{ to: tokenAddress, data: '0x313ce567' }, 'latest']),
+      )
+      .then((r) => new BigNumber(r.result))
+  }
+
   getBlockByHash(blockHash: string, includeTransactions = false): Promise<any> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
