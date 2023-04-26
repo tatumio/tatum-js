@@ -29,7 +29,7 @@ export interface TraceOptions {
 
 export interface TxPayload {
   //  - The string of the address to the transaction is directed to
-  to: string
+  to?: string
 
   //  - (optional) The string of the address the transaction is sent from
   from?: string
