@@ -16,7 +16,16 @@ export interface TatumConfig {
    * API Key is optional, but your data will by tied to the IP address you are using. If you want to store your data like address notifications, webhooks, etc. you need to use API Key.
    * If you are using Tatum API Key, you can use Tatum SDK without any limitations.
    */
-  apiKey?: string
+  apiKey?: {
+    /**
+     * API Key for ApiVersion.V1
+     */
+    v1?: string
+    /**
+     * API Key for ApiVersion.V2
+     */
+    v2?: string
+  }
 
   /**
    * Verbose logging is disabled by default.

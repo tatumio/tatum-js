@@ -87,7 +87,7 @@ export class TatumConnector {
         .forEach((key) => url.searchParams.append(key, `${params[key]}`))
     }
 
-    if (!config.apiKey && Constant.RPC.TESTNETS.includes(config.network)) {
+    if (!Object.keys(config.apiKey || {})?.length && Constant.RPC.TESTNETS.includes(config.network)) {
       url.searchParams.append('type', 'testnet')
     }
 
@@ -96,13 +96,21 @@ export class TatumConnector {
 
   private async headers(retry: number) {
     const config = Container.of(this.id).get(CONFIG)
-    return new Headers({
+    const headers = new Headers({
       'Content-Type': 'application/json',
       'x-ttm-sdk-version': version,
       'x-ttm-sdk-product': 'JS',
       'x-ttm-sdk-debug': `${config.verbose}`,
       'x-ttm-sdk-retry': `${retry}`,
     })
+    if (config.apiKey) {
+      if (config.version === ApiVersion.V1 && config.apiKey.v1) {
+        headers.append('x-api-key', config.apiKey.v1)
+      } else if (config.version === ApiVersion.V2 && config.apiKey.v2) {
+        headers.append('x-api-key', config.apiKey.v2)
+      }
+    }
+    return headers
   }
 
   private async retry(url: string, request: RequestInit, response: Response) {

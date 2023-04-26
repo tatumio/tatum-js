@@ -103,4 +103,5 @@ export const Utils = {
     clearTimeout(id)
     return { responseTime, response }
   },
+  padWithZero: (data: string, length = 64) => data.replace('0x', '').padStart(length, '0'),
 }

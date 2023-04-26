@@ -1,3 +1,9 @@
+## [1.4.0] - 2023.04.26
+
+### Added
+- Added support for transferNft using MetaMask WalletProvider.
+- Added support for multiple API Keys in the configuration (V1 and V2).
+
 ## [1.3.4] - 2023.04.25
 
 ### Added

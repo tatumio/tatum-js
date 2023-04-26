@@ -79,7 +79,35 @@ export class MetaMask<T extends EvmBasedRpc> {
     const payload: TxPayload = {
       to: tokenAddress,
       from: await this.connect(),
-      data: `0xa9059cbb${recipient.replace('0x', '').padStart(64, '0')}${new BigNumber(amount).dividedBy(10 ** decimals.toNumber()).toString(16).padStart(64, '0')}`,
+      data: `0xa9059cbb${Utils.padWithZero(recipient)}${new BigNumber(amount).dividedBy(10 ** decimals.toNumber()).toString(16).padStart(64, '0')}`,
+    }
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/return-await
+      return await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [payload],
+      })
+    } catch (e) {
+      console.error('User denied transaction signature:', e);
+      throw new Error(`User denied transaction signature. Error is ${e}`)
+    }
+  }
+
+  /**
+   * Sign ERC-721 non-fungible token `safeTransferFrom` transaction (https://ethereum.org/en/developers/docs/standards/tokens/erc-721/#methods) with MetaMask wallet. This method checks if MetaMask is installed and if it is connected to the browser.
+   * If so, it returns the signed transaction hash. If not, it throws an error.
+   * @param recipient recipient of the transaction
+   * @param tokenId ID of the NFT token
+   * @param tokenAddress address of the token contract
+   */
+  async transferNft(recipient: string, tokenId: string, tokenAddress: string): Promise<string> {
+    const from = await this.connect()
+    const payload: TxPayload = {
+      to: tokenAddress,
+      from: from,
+      data: `0x42842e0e${Utils.padWithZero(from)}${Utils.padWithZero(recipient)}${new BigNumber(tokenId).toString(16).padStart(64, '0')}`,
     }
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -107,7 +135,7 @@ export class MetaMask<T extends EvmBasedRpc> {
     const payload: TxPayload = {
       to: tokenAddress,
       from: await this.connect(),
-      data: `0x095ea7b3${spender.replace('0x', '').padStart(64, '0')}${new BigNumber(amount).dividedBy(10 ** decimals.toNumber()).toString(16).padStart(64, '0')}`,
+      data: `0x095ea7b3${Utils.padWithZero(spender)}${new BigNumber(amount).dividedBy(10 ** decimals.toNumber()).toString(16).padStart(64, '0')}`,
     }
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
