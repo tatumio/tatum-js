@@ -1,3 +1,8 @@
+## [1.4.2] - 2023.04.26
+
+### Added
+- Added missing `getchainstats` method to UTXO RPC calls
+
 ## [1.4.1] - 2023.04.26
 
 ### Fixed

@@ -15,11 +15,11 @@ export class UtxoBasedRpc extends AbstractJsonRpc implements UtxoBasedRpcSuite {
     super(id, Container.of(id).get(CONFIG).network)
   }
 
-  createRawTransaction(inputs: any[], outputs: any): Promise<string> {
+  createRawTransaction(inputs: any[], outputs: any, locktime = 0, replaceable = false): Promise<string> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('createrawtransaction', [inputs, outputs]),
+        this.prepareRpcCall('createrawtransaction', [inputs, outputs, locktime, replaceable]),
       )
       .then((r) => r.result)
   }
@@ -83,7 +83,13 @@ export class UtxoBasedRpc extends AbstractJsonRpc implements UtxoBasedRpcSuite {
 
   getBlockHeader(hash: string, verbose = true): Promise<any> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlockHeader', [hash, verbose]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getblockheader', [hash, verbose]))
+      .then((r) => r.result)
+  }
+
+  getBlockStats(hash: string): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getblockstats', [hash]))
       .then((r) => r.result)
   }
 
@@ -162,13 +168,6 @@ export class UtxoBasedRpc extends AbstractJsonRpc implements UtxoBasedRpcSuite {
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('gettxoutproof', params))
       .then((r) => r.result)
   }
-
-  getTxOutSetInfo(): Promise<any> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('gettxoutsetinfo'))
-      .then((r) => r.result)
-  }
-
   sendRawTransaction(hexstring: string): Promise<string> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('sendrawtransaction', [hexstring]))
