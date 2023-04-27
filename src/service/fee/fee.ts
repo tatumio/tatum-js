@@ -1,4 +1,4 @@
-import BigNumber from 'bignumber.js'
+import { BigNumber } from 'bignumber.js'
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { Chain } from '../../dto'

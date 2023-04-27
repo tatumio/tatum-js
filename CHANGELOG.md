@@ -1,3 +1,8 @@
+## [1.4.3] - 2023.04.27
+
+### Fixed
+- Fixed wrong BigNumber import
+
 ## [1.4.2] - 2023.04.26
 
 ### Added

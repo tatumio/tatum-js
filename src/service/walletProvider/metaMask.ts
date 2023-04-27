@@ -1,7 +1,7 @@
 import { Container, Service } from 'typedi'
 import { CONFIG, Constant, Utils } from '../../util'
 import { TxPayload } from '../../dto'
-import BigNumber from 'bignumber.js'
+import { BigNumber } from 'bignumber.js'
 import { TatumConfig } from '../tatum'
 import { EvmBasedRpc } from '../rpc'
 

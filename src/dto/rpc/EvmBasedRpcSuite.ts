@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import BigNumber from 'bignumber.js'
+import { BigNumber } from 'bignumber.js'
 import { AbstractJsonRpcSuite } from './AbstractJsonRpcSuite'
 
 /**
