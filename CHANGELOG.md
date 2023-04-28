@@ -1,4 +1,9 @@
-## [1.4.3] - 2023.04.27
+## [1.4.4] - 2023.04.28
+
+### Fixed
+- Fixed wrong decimals in WalletProvider MetaMask signing
+
+[1.4.3] - 2023.04.27
 
 ### Fixed
 - Fixed wrong BigNumber import

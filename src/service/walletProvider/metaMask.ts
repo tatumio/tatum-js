@@ -51,7 +51,7 @@ export class MetaMask<T extends EvmBasedRpc> {
     const payload: TxPayload = {
       to: recipient,
       from: await this.connect(),
-      value: `0x${new BigNumber(amount).dividedBy(10 ** Constant.DECIMALS[this.config.network]).toString(16)}`,
+      value: `0x${new BigNumber(amount).multipliedBy(10 ** Constant.DECIMALS[this.config.network]).toString(16)}`,
     }
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -79,7 +79,7 @@ export class MetaMask<T extends EvmBasedRpc> {
     const payload: TxPayload = {
       to: tokenAddress,
       from: await this.connect(),
-      data: `0xa9059cbb${Utils.padWithZero(recipient)}${new BigNumber(amount).dividedBy(10 ** decimals.toNumber()).toString(16).padStart(64, '0')}`,
+      data: `0xa9059cbb${Utils.padWithZero(recipient)}${new BigNumber(amount).multipliedBy(10 ** decimals.toNumber()).toString(16).padStart(64, '0')}`,
     }
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -135,7 +135,7 @@ export class MetaMask<T extends EvmBasedRpc> {
     const payload: TxPayload = {
       to: tokenAddress,
       from: await this.connect(),
-      data: `0x095ea7b3${Utils.padWithZero(spender)}${new BigNumber(amount).dividedBy(10 ** decimals.toNumber()).toString(16).padStart(64, '0')}`,
+      data: `0x095ea7b3${Utils.padWithZero(spender)}${new BigNumber(amount).multipliedBy(10 ** decimals.toNumber()).toString(16).padStart(64, '0')}`,
     }
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

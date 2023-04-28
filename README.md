@@ -68,10 +68,9 @@ Here's a brief overview of how to utilize TatumSDK for RPC calls and subscribing
 ### Initialization
 Start by importing the TatumSDK library and initializing Ethereum client as follows:
 
-```js
+```ts
 import {
   TatumSDK,
-  Chain,
   Network,
   Ethereum,
 } from '@tatumcom/js'
@@ -82,10 +81,9 @@ const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 ### RPC Calls
 To make RPC calls, use the available methods to interact with Ethereum blockchain. For example, to fetch the balance of a specific Ethereum address:
 
-```js
+```ts
 import {
   TatumSDK,
-  Chain,
   Network,
   Ethereum,
 } from '@tatumcom/js'
@@ -99,10 +97,9 @@ console.log(`Balance: ${balance}`);
 To subscribe to notifications for events related to a specified Ethereum address, choose a type of event you want to be notified about.
 We are going to use `addressEvent` as an example, which sends you notification about any transfer on the address - native ones, ERC20 tokens or NFTs. To subscribe to this event, use the following code:
 
-```js
+```ts
 import {
   TatumSDK,
-  Chain,
   Network,
   Ethereum,
 } from '@tatumcom/js'
@@ -121,10 +118,9 @@ console.log(response)
 ### Get NFT balance of a wallet
 Using TatumSDK, obtain the NFT balance of an address by calling the getNFTBalance method within the NFT submodule and passing the target address as an argument. This streamlined process efficiently retrieves the total number of NFTs owned by the specified address. To achieve this, use the following code:
 
-```js
+```ts
 import {
   TatumSDK,
-  Chain,
   Network,
   Ethereum,
   NftAddressBalance
@@ -138,6 +134,25 @@ const balances: NftAddressBalance[] = await tatum.nft.getBalance({
 
 console.log(balances)
 ```
+
+### Connect to MetaMask and send transaction
+Using TatumSDK, it's possible to connect your browser application to MetaMask and perform transactions using it. To achieve this, use the following code:
+
+```ts
+import {
+  TatumSDK,
+  Network,
+  Ethereum,
+} from '@tatumcom/js'
+
+const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
+
+const account: string = await tatum.walletProvider.metaMask.connect()
+const txId: string = await tatum.walletProvider.metaMask.transferNative('0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848', '1')
+
+console.log(txId)
+```
+
 ## Structure of the SDK
 TatumSDK is thoughtfully designed and organized into these submodules to provide a clean and efficient way of interacting with blockchains:
 
