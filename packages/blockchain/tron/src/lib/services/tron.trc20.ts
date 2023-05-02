@@ -7,8 +7,8 @@ import {
 } from '@tatumio/api-client'
 import BigNumber from 'bignumber.js'
 import { ITronWeb } from './tron.web'
-import { Trc20Token } from '@tatumio/shared-blockchain-evm-based'
 import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abstract'
+import { Erc20Token } from '@tatumio/shared-blockchain-evm-based'
 
 type TransferTronTrc20 = FromPrivateKeyOrSignatureIdTron<TransferTronTrc20Blockchain>
 type CreateTronTrc20 = FromPrivateKeyOrSignatureIdTron<CreateTronTrc20Blockchain>
@@ -19,7 +19,7 @@ const prepareSignedTransaction = async (body: TransferTronTrc20, tronWeb: ITronW
   const client = tronWeb.getClient(provider)
 
   client.setAddress(tokenAddress)
-  const contractInstance = await client.contract(Trc20Token.abi, tokenAddress)
+  const contractInstance = await client.contract(Erc20Token.abi, tokenAddress)
 
   const from = body.signatureId
     ? body.from
@@ -84,8 +84,8 @@ const prepareCreateSignedTransaction = async (
     callValue: 0,
     userFeePercentage: 100,
     originEnergyLimit: 1,
-    abi: JSON.stringify(Trc20Token.abi),
-    bytecode: Trc20Token.bytecode,
+    abi: JSON.stringify(Erc20Token.abi),
+    bytecode: Erc20Token.bytecode,
     parameters: [name, symbol, decimals, client.address.toHex(recipient), totalSupply],
     name,
   }
