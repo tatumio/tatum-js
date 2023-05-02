@@ -86,7 +86,7 @@ const prepareCreateSignedTransaction = async (
     originEnergyLimit: 1,
     abi: JSON.stringify(Trc20Token.abi),
     bytecode: Trc20Token.bytecode,
-    parameters: [name, symbol, decimals, client.address.toHex(recipient), totalSupply],
+    parameters: [name, symbol, client.address.toHex(recipient), decimals, totalSupply, totalSupply],
     name,
   }
 
