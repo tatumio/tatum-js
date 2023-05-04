@@ -9,8 +9,7 @@ Tatum
 SDK</h3>
 
 <p align="center">
-  Tatum SDK allows browsers and Node.js clients to interact with Blockchain.
-  <br>
+  Welcome to Tatum SDK - TypeScript/JavaScript Library for Simplifying Blockchain Development.<br>
   <a href="https://docs.tatum.com/"><strong>Documentation</strong></a>
   <br>
   <br>
@@ -29,7 +28,15 @@ SDK</h3>
 
 ## Welcome
 
-Welcome to TatumSDK, a powerful library designed to facilitate direct Remote Procedure Call (RPC) calls to Ethereum, Polygon, Bitcoin and many more blockchains and provide real-time notifications for a wide range of events related to specified addresses. With TatumSDK, you can easily track incoming and outgoing transactions, NFT transfers, and much more, without the need for a third-party intermediary.
+Tatum SDK is a powerful, feature-rich TypeScript/JavaScript library that streamlines the development of blockchain applications. Designed for developers looking to integrate various blockchain functionalities into their projects, Tatum SDK simplifies the process by providing a user-friendly and consistent interface to interact with a wide range of blockchains like Ethereum, Polygon, Bitcoin, and many more.
+
+With Tatum SDK, you can:
+
+* Perform native RPC calls: Easily interact with different blockchains through native RPC calls, abstracting away the complexities of managing separate RPC clients for each blockchain.
+* Create notifications: Monitor wallet activity with ease by setting up real-time notifications for events such as incoming and outgoing transactions, balance updates, and contract interactions.
+* Access wallet information: Retrieve vital wallet details, including balances, transaction history, and other relevant information, all through a single interface.
+And much more: Tatum SDK is constantly evolving, with new features and support for additional blockchains being added regularly.
+This comprehensive library is the ideal choice for developers who are keen on building robust, scalable, and efficient blockchain applications without getting bogged down by the intricacies of working with multiple blockchain protocols.
 
 This guide will walk you through the basic setup, installation, and usage of TatumSDK to help you harness the full potential of this library.
 
