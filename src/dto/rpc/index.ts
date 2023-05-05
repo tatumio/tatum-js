@@ -1,8 +1,10 @@
 import { EvmBasedRpcSuite } from './EvmBasedRpcSuite'
 import { UtxoBasedRpcSuite } from './UtxoBasedRpcSuite'
+import { XrpRpcSuite } from './XrpRpcSuite'
 
 export * from './EvmBasedRpcSuite'
 export * from './UtxoBasedRpcSuite'
+export * from './XrpRpcSuite'
 
 // EVM chains
 export type Ethereum = EvmBasedRpcSuite
@@ -34,3 +36,6 @@ export type Bitcoin = UtxoBasedRpcSuite
 export type Litecoin = UtxoBasedRpcSuite
 export type Dogecoin = UtxoBasedRpcSuite
 export type BitcoinCash = UtxoBasedRpcSuite
+
+// other chains
+export type Ripple = XrpRpcSuite

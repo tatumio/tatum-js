@@ -168,6 +168,10 @@ export const isUtxoBasedNetwork = (network: Network) => {
   return UTXO_BASED_NETWORKS.includes(network)
 }
 
+export const isXrpNetwork = (network: Network) => {
+  return [Network.XRP, Network.XRP_TESTNET].includes(network)
+}
+
 export const isDataApiEvmEnabledNetwork = (network: Network) => {
   return DATA_API_EVM_NETWORKS.includes(network)
 }
