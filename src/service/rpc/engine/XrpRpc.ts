@@ -1,7 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { BigNumber } from 'bignumber.js'
 import { Container, Service } from 'typedi'
-import { JsonRpcResponse, LedgerIndex, XrpRpcSuite } from '../../../dto'
+import {
+  Book,
+  Currency,
+  CurrencyAmount,
+  JsonRpcResponse,
+  LedgerIndex,
+  OrderBook,
+  XrpRpcSuite,
+} from '../../../dto'
 import { CONFIG } from '../../../util'
 import { AbstractJsonRpc } from './AbstractJsonRpc'
 
@@ -16,12 +23,636 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     super(id, Container.of(id).get(CONFIG).network)
   }
 
-  accountChannels(account: string, destinationAccount: string, ledgerIndex: LedgerIndex): Promise<any> {
+  accountChannels(
+    account: string,
+    destinationAccount?: string,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    limit?: number,
+    marker?: any,
+  ): Promise<any> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('account_channels', [account, destinationAccount, ledgerIndex]),
+        this.prepareRpcCall('account_channels', [
+          account,
+          destinationAccount,
+          ledgerHash,
+          ledgerIndex,
+          limit,
+          marker,
+        ]),
       )
-      .then((r) => new BigNumber(r.result))
+      .then((r) => r.result)
+  }
+
+  accountCurrencies(
+    account: string,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    strict?: boolean,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('account_currencies', [account, ledgerHash, ledgerIndex, strict]),
+      )
+      .then((r) => r.result)
+  }
+
+  accountInfo(
+    account: string,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    queue?: boolean,
+    signerLists?: boolean,
+    strict?: boolean,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('account_info', [account, ledgerHash, ledgerIndex, queue, signerLists, strict]),
+      )
+      .then((r) => r.result)
+  }
+
+  accountLines(
+    account: string,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    peer?: string,
+    limit?: number,
+    marker?: any,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('account_lines', [account, ledgerHash, ledgerIndex, peer, limit, marker]),
+      )
+      .then((r) => r.result)
+  }
+
+  accountNfts(
+    account: string,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    limit?: number,
+    marker?: any,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('account_nfts', [account, ledgerHash, ledgerIndex, limit, marker]),
+      )
+      .then((r) => r.result)
+  }
+
+  accountObjects(
+    account: string,
+    deletionBlockersOnly?: boolean,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    limit?: number,
+    marker?: any,
+    type?: string,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('account_objects', [
+          account,
+          deletionBlockersOnly,
+          ledgerHash,
+          ledgerIndex,
+          limit,
+          marker,
+          type,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
+  accountOffers(
+    account: string,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    limit?: number,
+    marker?: any,
+    strict?: boolean,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('account_offers', [account, ledgerHash, ledgerIndex, limit, marker, strict]),
+      )
+      .then((r) => r.result)
+  }
+
+  accountTx(
+    account: string,
+    ledgerIndexMin?: number,
+    ledgerIndexMax?: number,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    binary?: boolean,
+    forward?: boolean,
+    limit?: number,
+    marker?: any,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('account_tx', [
+          account,
+          ledgerIndexMin,
+          ledgerIndexMax,
+          ledgerHash,
+          ledgerIndex,
+          binary,
+          forward,
+          limit,
+          marker,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
+  gatewayBalances(
+    account: string,
+    strict?: boolean,
+    hotwallet?: string | string[],
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('gateway_balances', [account, strict, hotwallet, ledgerHash, ledgerIndex]),
+      )
+      .then((r) => r.result)
+  }
+
+  norippleCheck(
+    account: string,
+    role: string,
+    transactions?: boolean,
+    limit?: boolean,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('noripple_check', [account, role, transactions, limit, ledgerHash, ledgerIndex]),
+      )
+      .then((r) => r.result)
+  }
+
+  ledger(
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    full?: boolean,
+    accounts?: boolean,
+    transactions?: boolean,
+    expand?: boolean,
+    ownerFunds?: boolean,
+    binary?: boolean,
+    queue?: boolean,
+    type?: string,
+    diff?: boolean,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('ledger', [
+          ledgerHash,
+          ledgerIndex,
+          full,
+          accounts,
+          transactions,
+          expand,
+          ownerFunds,
+          binary,
+          queue,
+          type,
+          diff,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
+  ledgerClosed(): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('ledger_closed'))
+      .then((r) => r.result)
+  }
+
+  ledgerCurrent(): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('ledger_current'))
+      .then((r) => r.result)
+  }
+
+  ledgerData(
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    binary?: boolean,
+    limit?: number,
+    marker?: any,
+    type?: string,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('ledger_data', [ledgerHash, ledgerIndex, binary, limit, marker, type]),
+      )
+      .then((r) => r.result)
+  }
+
+  ledgerEntry(binary?: boolean, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('ledger_entry', [binary, ledgerHash, ledgerIndex]),
+      )
+      .then((r) => r.result)
+  }
+
+  submit(
+    txBlob?: string,
+    txJson?: Record<string, unknown>,
+    secret?: string,
+    seed?: string,
+    seedHex?: string,
+    passphrase?: string,
+    keyType?: string,
+    failHard?: boolean,
+    offline?: boolean,
+    buildPath?: boolean,
+    feeMultMax?: number,
+    feeDivMax?: number,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('submit', [
+          txBlob,
+          txJson,
+          secret,
+          seed,
+          seedHex,
+          passphrase,
+          keyType,
+          failHard,
+          offline,
+          buildPath,
+          feeMultMax,
+          feeDivMax,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
+  submitMultisigned(txJson: Record<string, unknown>, failHard?: boolean): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('submit_multisigned', [txJson, failHard]),
+      )
+      .then((r) => r.result)
+  }
+
+  transactionEntry(txHash: string, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('transaction_entry', [txHash, ledgerHash, ledgerIndex]),
+      )
+      .then((r) => r.result)
+  }
+
+  tx(transaction: string, binary?: boolean, minLedger?: number, maxLedger?: number): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('tx', [transaction, binary, minLedger, maxLedger]),
+      )
+      .then((r) => r.result)
+  }
+
+  txHistory(start: number): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('txHistory', [start]))
+      .then((r) => r.result)
+  }
+
+  sign(
+    txJson: Record<string, unknown>,
+    secret?: string,
+    seed?: string,
+    seedHex?: string,
+    passphrase?: string,
+    keyType?: string,
+    offline?: boolean,
+    buildPath?: boolean,
+    feeMultMax?: number,
+    feeDivMax?: number,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('sign', [
+          txJson,
+          secret,
+          seed,
+          seedHex,
+          passphrase,
+          keyType,
+          offline,
+          buildPath,
+          feeMultMax,
+          feeDivMax,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
+  signFor(
+    account: string,
+    txJson: Record<string, unknown>,
+    secret?: string,
+    seed?: string,
+    seedHex?: string,
+    passphrase?: string,
+    keyType?: string,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('sign_for', [account, txJson, secret, seed, seedHex, passphrase, keyType]),
+      )
+      .then((r) => r.result)
+  }
+
+  bookOffers(
+    takerGets: Record<string, unknown>,
+    takerPays: Record<string, unknown>,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    limit?: number,
+    taker?: string,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('book_offers', [takerGets, takerPays, ledgerHash, ledgerIndex, limit, taker]),
+      )
+      .then((r) => r.result)
+  }
+
+  depositAuthorized(
+    sourceAccount: string,
+    destinationAccount: string,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('deposit_authorized', [
+          sourceAccount,
+          destinationAccount,
+          ledgerHash,
+          ledgerIndex,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
+  nftBuyOffers(
+    nftId: string,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    limit?: number,
+    marker?: any,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('nft_buy_offers', [nftId, ledgerHash, ledgerIndex, limit, marker]),
+      )
+      .then((r) => r.result)
+  }
+
+  nftSellOffers(
+    nftId: string,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    limit?: number,
+    marker?: any,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('nft_sell_offers', [nftId, ledgerHash, ledgerIndex, limit, marker]),
+      )
+      .then((r) => r.result)
+  }
+
+  pathFind(
+    subcommand: string,
+    sourceAccount: string,
+    destinationAccount: string,
+    destinationAmount: CurrencyAmount,
+    sendMax?: CurrencyAmount,
+    paths?: Record<string, unknown>[],
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('path_find', [
+          subcommand,
+          sourceAccount,
+          destinationAccount,
+          destinationAmount,
+          sendMax,
+          paths,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
+  ripplePathFind(
+    sourceAccount: string,
+    destinationAccount: string,
+    destinationAmount: CurrencyAmount,
+    sendMax?: CurrencyAmount,
+    paths?: Record<string, unknown>[],
+    sourceCurrencies?: Currency[],
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('ripple_path_find', [
+          sourceAccount,
+          destinationAccount,
+          destinationAmount,
+          sendMax,
+          paths,
+          sourceCurrencies,
+          ledgerHash,
+          ledgerIndex,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
+  channelAuthorize(
+    amount: string,
+    channelId: string,
+    secret?: string,
+    seed?: string,
+    seedHex?: string,
+    passphrase?: string,
+    keyType?: string,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('channel_authorize', [
+          amount,
+          channelId,
+          secret,
+          seed,
+          seedHex,
+          passphrase,
+          keyType,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
+  channelVerify(amount: string, channelId: string, publicKey: string, signature: string): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('channel_verify', [amount, channelId, publicKey, signature]),
+      )
+      .then((r) => r.result)
+  }
+
+  subscribe(
+    streams?: string[],
+    accounts?: string[],
+    accountsProposed?: string[],
+    books?: OrderBook[],
+    url?: string,
+    urlUsername?: string,
+    urlPassword?: string,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('subscribe', [
+          streams,
+          accounts,
+          accountsProposed,
+          books,
+          url,
+          urlUsername,
+          urlPassword,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
+  unsubscribe(
+    streams?: string[],
+    accounts?: string[],
+    accountsProposed?: string[],
+    books?: Book[],
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('unsubscribe', [streams, accounts, accountsProposed, books]),
+      )
+      .then((r) => r.result)
+  }
+
+  fee(): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('fee'))
+      .then((r) => r.result)
+  }
+
+  serverInfo(publicKey: string): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('server_info', [publicKey]))
+      .then((r) => r.result)
+  }
+
+  serverState(): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('server_state'))
+      .then((r) => r.result)
+  }
+
+  manifest(publicKey: string): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('manifest', [publicKey]))
+      .then((r) => r.result)
+  }
+
+  nftHistory(
+    nftId: string,
+    ledgerIndexMin?: number,
+    ledgerIndexMax?: number,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    binary?: boolean,
+    forward?: boolean,
+    limit?: number,
+    marker?: any,
+  ): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('nft_history', [
+          nftId,
+          ledgerIndexMin,
+          ledgerIndexMax,
+          ledgerHash,
+          ledgerIndex,
+          binary,
+          forward,
+          limit,
+          marker,
+        ]),
+      )
+      .then((r) => r.result)
+  }
+
+  nftInfo(nftId: string, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('nft_info', [nftId, ledgerHash, ledgerIndex]),
+      )
+      .then((r) => r.result)
+  }
+
+  ping(): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('ping'))
+      .then((r) => r.result)
+  }
+
+  random(): Promise<any> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('random'))
+      .then((r) => r.result)
   }
 }
