@@ -5,7 +5,7 @@ import { AbstractJsonRpcSuite } from './AbstractJsonRpcSuite'
  * XRP RPC calls.
  */
 
-export type LedgerIndex = 'validated' | number
+export type LedgerIndex = 'validated' | 'closed' | 'current' | number
 
 export interface Currency {
   currency: string
@@ -116,7 +116,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     account: string,
     role: string,
     transactions?: boolean,
-    limit?: boolean,
+    limit?: number,
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
   ): Promise<any>
@@ -136,9 +136,9 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     diff?: boolean,
   ): Promise<any>
 
-  ledgerClosed(): Promise<any>
+  ledgerClosed(): Promise<{ ledger_hash: string; ledger_index: number }>
 
-  ledgerCurrent(): Promise<any>
+  ledgerCurrent(): Promise<number>
 
   ledgerData(
     ledgerHash?: string,
@@ -149,7 +149,22 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     type?: string,
   ): Promise<any>
 
-  ledgerEntry(binary?: boolean, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<any>
+  ledgerEntry(
+    binary?: boolean,
+    ledgerHash?: string,
+    ledgerIndex?: LedgerIndex,
+    index?: number,
+    accountRoot?: string,
+    directory?: string | Record<string, unknown>,
+    offer?: string | Record<string, unknown>,
+    rippleState?: string | Record<string, unknown>,
+    check?: string,
+    escrow?: string | Record<string, unknown>,
+    paymentChannel?: string,
+    depositPreauth?: string | Record<string, unknown>,
+    ticket?: string | Record<string, unknown>,
+    nftPage?: string,
+  ): Promise<any>
 
   // transaction methods
   submit(
@@ -260,9 +275,9 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     seedHex?: string,
     passphrase?: string,
     keyType?: string,
-  ): Promise<any>
+  ): Promise<string>
 
-  channelVerify(amount: string, channelId: string, publicKey: string, signature: string): Promise<any>
+  channelVerify(amount: string, channelId: string, publicKey: string, signature: string): Promise<boolean>
 
   // subscription methods
   subscribe(
@@ -280,7 +295,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     accounts?: string[],
     accountsProposed?: string[],
     books?: Book[],
-  ): Promise<any>
+  ): Promise<string>
 
   // server info methods
   fee(): Promise<any>
@@ -307,7 +322,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
   nftInfo(nftId: string, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<any>
 
   // utility methods
-  ping(): Promise<any>
+  ping(): Promise<string>
 
-  random(): Promise<any>
+  random(): Promise<string>
 }
