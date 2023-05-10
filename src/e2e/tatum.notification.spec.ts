@@ -16,6 +16,14 @@ import {
 import { e2eUtil } from './e2e.util'
 
 describe('notification', () => {
+  beforeAll(async () => {
+    const tatum = await TatumSDK.init({network: Network.ETHEREUM, verbose: true})
+    const notifications = await tatum.notification.getAll()
+
+    for (const notification of notifications.data as NotificationSubscription[]) {
+      await tatum.notification.unsubscribe(notification.id)
+    }
+  })
   describe('createSubscription', () => {
     describe('IP auth', () => {
       describe('Address Event', () => {
