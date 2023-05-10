@@ -1,98 +1,20 @@
 import { Network } from '../dto'
 import { NotificationSubscription, TatumSDK } from '../service'
 import { Status } from '../util'
-import { TestConst } from './e2e.constant'
+import {
+  AddressEventNetworks,
+  ContractAddressLogEventNetworks,
+  FailedTxPerBlockNetworks,
+  FungibleTxNetworks, IncomingNativeTxNetworks,
+  InternalTxNetworks,
+  MultitokenNetworks,
+  NftNetworks,
+  OutgoingFailedNetworks, OutgoingNativeTxNetworks,
+  PaidFeeNetworks,
+  TestConst
+} from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 
-const AddressEventNetworks = [
-  Network.BITCOIN,
-  Network.BITCOIN_TESTNET,
-  Network.BITCOIN_CASH,
-  Network.BITCOIN_CASH_TESTNET,
-  Network.LITECOIN,
-  Network.LITECOIN_TESTNET,
-  Network.DOGECOIN,
-  Network.DOGECOIN_TESTNET,
-  Network.ETHEREUM,
-  Network.ETHEREUM_SEPOLIA,
-  Network.POLYGON,
-  Network.POLYGON_MUMBAI,
-  Network.CELO,
-  Network.CELO_ALFAJORES,
-  Network.SOLANA,
-  Network.SOLANA_DEVNET,
-  Network.BINANCE_SMART_CHAIN,
-  Network.BINANCE_SMART_CHAIN_TESTNET,
-  Network.TRON,
-  Network.TRON_SHASTA,
-  Network.KLAYTN,
-  Network.KLAYTN_BAOBAB,
-]
-
-const NotificationV2Networks = [
-  Network.BITCOIN,
-  Network.BITCOIN_TESTNET,
-  Network.LITECOIN,
-  Network.LITECOIN_TESTNET,
-  Network.DOGECOIN,
-  Network.DOGECOIN_TESTNET,
-  Network.ETHEREUM,
-  Network.ETHEREUM_SEPOLIA,
-  Network.POLYGON,
-  Network.POLYGON_MUMBAI,
-  Network.CELO,
-  Network.CELO_ALFAJORES,
-  Network.BINANCE_SMART_CHAIN,
-  Network.BINANCE_SMART_CHAIN_TESTNET,
-  Network.XRP,
-  Network.XRP_TESTNET,
-  Network.KLAYTN,
-  Network.KLAYTN_BAOBAB,
-]
-
-const OutgoingNativeTxNetworks = [
-  Network.BITCOIN,
-  Network.BITCOIN_TESTNET,
-  Network.LITECOIN,
-  Network.LITECOIN_TESTNET,
-  Network.ETHEREUM,
-  Network.ETHEREUM_SEPOLIA,
-  Network.POLYGON,
-  Network.POLYGON_MUMBAI,
-  Network.CELO,
-  Network.CELO_ALFAJORES,
-  Network.BINANCE_SMART_CHAIN,
-  Network.BINANCE_SMART_CHAIN_TESTNET,
-  Network.XRP,
-  Network.XRP_TESTNET,
-  Network.KLAYTN,
-  Network.KLAYTN_BAOBAB,
-]
-const EvmOnlyNetworks = [
-  Network.ETHEREUM,
-  Network.ETHEREUM_SEPOLIA,
-  Network.POLYGON,
-  Network.POLYGON_MUMBAI,
-  Network.CELO,
-  Network.CELO_ALFAJORES,
-  Network.BINANCE_SMART_CHAIN,
-  Network.BINANCE_SMART_CHAIN_TESTNET,
-  Network.KLAYTN,
-  Network.KLAYTN_BAOBAB,
-]
-const FungibleNetworks = [
-  Network.ETHEREUM,
-  Network.ETHEREUM_SEPOLIA,
-  Network.POLYGON,
-  Network.POLYGON_MUMBAI,
-  Network.CELO,
-  Network.CELO_ALFAJORES,
-  Network.BINANCE_SMART_CHAIN,
-  Network.BINANCE_SMART_CHAIN_TESTNET,
-  Network.KLAYTN,
-  Network.KLAYTN_BAOBAB,
-]
-const InternalTxNetworks = [Network.ETHEREUM, Network.ETHEREUM_SEPOLIA, Network.CELO, Network.CELO_ALFAJORES]
 describe('notification', () => {
   describe('createSubscription', () => {
     describe('IP auth', () => {
@@ -108,7 +30,7 @@ describe('notification', () => {
       })
 
       describe('Incoming Native Tx', () => {
-        it.each(Object.values(NotificationV2Networks))('OK %s', async (network: Network) => {
+        it.each(Object.values(IncomingNativeTxNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init({ network, verbose: true })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
@@ -130,7 +52,7 @@ describe('notification', () => {
       })
 
       describe('Outgoing Failed Tx', () => {
-        it.each(Object.values(EvmOnlyNetworks))('OK %s', async (network: Network) => {
+        it.each(Object.values(OutgoingFailedNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init({ network, verbose: true })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
@@ -141,7 +63,7 @@ describe('notification', () => {
       })
 
       describe('Paid Fee', () => {
-        it.each(Object.values(EvmOnlyNetworks))('OK %s', async (network: Network) => {
+        it.each(Object.values(PaidFeeNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init({ network, verbose: true })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
@@ -174,7 +96,7 @@ describe('notification', () => {
       })
 
       describe('Incoming Fungible Tx', () => {
-        it.each(Object.values(FungibleNetworks))('OK %s', async (network: Network) => {
+        it.each(Object.values(FungibleTxNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init({ network, verbose: true })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
@@ -185,7 +107,7 @@ describe('notification', () => {
       })
 
       describe('Outgoing Fungible Tx', () => {
-        it.each(Object.values(FungibleNetworks))('OK %s', async (network: Network) => {
+        it.each(Object.values(FungibleTxNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init({ network, verbose: true })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
@@ -196,7 +118,7 @@ describe('notification', () => {
       })
 
       describe('Incoming Nft Tx', () => {
-        it.each(Object.values(EvmOnlyNetworks))('OK %s', async (network: Network) => {
+        it.each(Object.values(NftNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init({ network, verbose: true })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
@@ -206,8 +128,9 @@ describe('notification', () => {
         })
       })
 
+
       describe('Outgoing Nft Tx', () => {
-        it.each(Object.values(EvmOnlyNetworks))('OK %s', async (network: Network) => {
+        it.each(Object.values(NftNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init({ network, verbose: true })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
@@ -218,7 +141,7 @@ describe('notification', () => {
       })
 
       describe('Incoming Multitoken Tx', () => {
-        it.each(Object.values(EvmOnlyNetworks))('OK %s', async (network: Network) => {
+        it.each(Object.values(MultitokenNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init({ network, verbose: true })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
@@ -229,7 +152,7 @@ describe('notification', () => {
       })
 
       describe('Outgoing Multitoken Tx', () => {
-        it.each(Object.values(EvmOnlyNetworks))('OK %s', async (network: Network) => {
+        it.each(Object.values(MultitokenNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init({ network, verbose: true })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
@@ -240,11 +163,22 @@ describe('notification', () => {
       })
 
       describe('Failed Txs Per Block', () => {
-        it.each(Object.values(EvmOnlyNetworks))('OK %s', async (network: Network) => {
+        it.each(Object.values(FailedTxPerBlockNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init({ network, verbose: true })
           await e2eUtil.subscriptions.testBlockBasedSubscription(
             tatum,
             tatum.notification.subscribe.failedTxsPerBlock,
+          )
+        })
+      })
+
+      describe('Contract Address Log Event', () => {
+        it.each(Object.values(ContractAddressLogEventNetworks))('OK %s', async (network: Network) => {
+          const tatum = await TatumSDK.init({ network, verbose: true })
+          await e2eUtil.subscriptions.testContractBasedSubscription(
+            tatum,
+            e2eUtil.subscriptions.getAddress(network),
+            tatum.notification.subscribe.contractAddressLogEvent,
           )
         })
       })

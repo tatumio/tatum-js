@@ -38,6 +38,21 @@ export interface NotificationSubscription {
   address?: string
 }
 
+export interface ContractBasedNotificationDetail {
+  /**
+   * topic[0] event to be tracked.
+   */
+  event: string
+  /**
+   * Monitored contract address.
+   */
+  contractAddress: string
+  /**
+   * URL of a webhook listener.
+   */
+  url: string
+}
+
 export interface AddressBasedNotificationDetail {
   /**
    * Monitored address.
@@ -47,6 +62,13 @@ export interface AddressBasedNotificationDetail {
    * URL of a webhook listener.
    */
   url: string
+}
+
+export interface ContractBasedNotification extends ContractBasedNotificationDetail {
+  /**
+   * ID of a subscription.
+   */
+  id: string
 }
 
 export interface AddressBasedNotification extends AddressBasedNotificationDetail {
@@ -78,6 +100,7 @@ export enum NotificationType {
   OUTGOING_NFT_TX = 'OUTGOING_NFT_TX',
   INCOMING_MULTITOKEN_TX = 'INCOMING_MULTITOKEN_TX',
   OUTGOING_MULTITOKEN_TX = 'OUTGOING_MULTITOKEN_TX',
+  CONTRACT_ADDRESS_LOG_EVENT = 'CONTRACT_ADDRESS_LOG_EVENT',
 
   FAILED_TXS_PER_BLOCK = 'FAILED_TXS_PER_BLOCK',
 }
