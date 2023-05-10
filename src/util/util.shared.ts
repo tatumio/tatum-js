@@ -104,4 +104,5 @@ export const Utils = {
     return { responseTime, response }
   },
   padWithZero: (data: string, length = 64) => data.replace('0x', '').padStart(length, '0'),
+  camelToSnakeCase: (str: string) => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),
 }
