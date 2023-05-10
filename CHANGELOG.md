@@ -1,3 +1,8 @@
+## [1.4.6] - 2023.06.10
+
+### Added
+- Added support for native public RPC calls to XRP blockchain
+
 ## [1.4.5] - 2023.05.10
 
 ### Added
