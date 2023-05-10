@@ -28,12 +28,10 @@ describe('RPCs', () => {
     describe('mainnet', () => {
       it('accountChannels', async () => {
         const tatum = await getRippleRpc()
-        const res = await tatum.rpc.accountChannels(
-          'rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn',
-          'ra5nK24KXen9AHvsdFTKHSANinZseWnPcX',
-          undefined,
-          'validated',
-        )
+        const res = await tatum.rpc.accountChannels('rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn', {
+          destinationAccount: 'ra5nK24KXen9AHvsdFTKHSANinZseWnPcX',
+          ledgerIndex: 'validated',
+        })
         expect(res.channels).toContainEqual({
           account: 'rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn',
           amount: '1000',
@@ -52,14 +50,11 @@ describe('RPCs', () => {
       })
       it('norippleCheck', async () => {
         const tatum = await getRippleRpc()
-        const res = await tatum.rpc.norippleCheck(
-          'r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59',
-          'gateway',
-          true,
-          2,
-          undefined,
-          'current',
-        )
+        const res = await tatum.rpc.norippleCheck('r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59', 'gateway', {
+          transactions: true,
+          limit: 2,
+          ledgerIndex: 'current',
+        })
         expect(res.problems.length).toBeGreaterThan(0)
       })
       it('ledgerClosed', async () => {
