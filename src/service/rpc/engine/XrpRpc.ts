@@ -1,15 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
-import {
-  Book,
-  Currency,
-  CurrencyAmount,
-  JsonRpcResponse,
-  LedgerIndex,
-  OrderBook,
-  XrpResult,
-  XrpRpcSuite,
-} from '../../../dto'
+import { Currency, CurrencyAmount, JsonRpcResponse, LedgerIndex, XrpResult, XrpRpcSuite } from '../../../dto'
 import { CONFIG, Utils } from '../../../util'
 import { AbstractJsonRpc } from './AbstractJsonRpc'
 
@@ -290,7 +281,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     binary?: boolean
     ledgerHash?: string
     ledgerIndex?: LedgerIndex
-    index?: number
+    index?: string
     accountRoot?: string
     directory?: string | Record<string, unknown>
     offer?: string | Record<string, unknown>
@@ -571,49 +562,15 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
       .then((r) => r.result)
   }
 
-  subscribe(options?: {
-    streams?: string[]
-    accounts?: string[]
-    accountsProposed?: string[]
-    books?: OrderBook[]
-    url?: string
-    urlUsername?: string
-    urlPassword?: string
-  }): Promise<XrpResult> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall('subscribe', generateXrpParams({}, options)),
-      )
-      .then((r) => r.result)
-  }
-
-  unsubscribe(options?: {
-    streams?: string[]
-    accounts?: string[]
-    accountsProposed?: string[]
-    books?: Book[]
-  }): Promise<XrpResult> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall('unsubscribe', generateXrpParams({}, options)),
-      )
-      .then((r) => r.result)
-  }
-
   fee(): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('fee'))
       .then((r) => r.result)
   }
 
-  serverInfo(publicKey: string): Promise<XrpResult> {
+  serverInfo(): Promise<XrpResult> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall('server_info', generateXrpParams({ publicKey })),
-      )
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('server_info', generateXrpParams()))
       .then((r) => r.result)
   }
 
@@ -628,44 +585,6 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         this.prepareRpcCall('manifest', generateXrpParams({ publicKey })),
-      )
-      .then((r) => r.result)
-  }
-
-  nftHistory(
-    nftId: string,
-    options?: {
-      ledgerIndexMin?: number
-      ledgerIndexMax?: number
-      ledgerHash?: string
-      ledgerIndex?: LedgerIndex
-      binary?: boolean
-      forward?: boolean
-      limit?: number
-      marker?: unknown
-    },
-  ): Promise<XrpResult> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall(
-          'nft_history',
-          generateXrpParams(
-            {
-              nftId,
-            },
-            options,
-          ),
-        ),
-      )
-      .then((r) => r.result)
-  }
-
-  nftInfo(nftId: string, options?: { ledgerHash?: string; ledgerIndex?: LedgerIndex }): Promise<XrpResult> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall('nft_info', generateXrpParams({ nftId }, options)),
       )
       .then((r) => r.result)
   }

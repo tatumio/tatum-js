@@ -18,17 +18,6 @@ export interface CurrencyWithValue extends Currency {
 
 export type CurrencyAmount = string | CurrencyWithValue
 
-export interface Book {
-  taker_gets?: Record<string, unknown>
-  taker_pays?: Record<string, unknown>
-  both?: boolean
-}
-
-export interface OrderBook extends Book {
-  taker: string
-  snapshot?: boolean
-}
-
 export interface XrpResult {
   status: string
   [key: string]: any
@@ -178,7 +167,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     binary?: boolean
     ledgerHash?: string
     ledgerIndex?: LedgerIndex
-    index?: number
+    index?: string
     accountRoot?: string
     directory?: string | Record<string, unknown>
     offer?: string | Record<string, unknown>
@@ -330,55 +319,14 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
 
   channelVerify(amount: string, channelId: string, publicKey: string, signature: string): Promise<XrpResult>
 
-  // subscription methods
-  subscribe(options?: {
-    streams?: string[]
-    accounts?: string[]
-    accountsProposed?: string[]
-    books?: OrderBook[]
-    url?: string
-    urlUsername?: string
-    urlPassword?: string
-  }): Promise<XrpResult>
-
-  unsubscribe(options?: {
-    streams?: string[]
-    accounts?: string[]
-    accountsProposed?: string[]
-    books?: Book[]
-  }): Promise<XrpResult>
-
   // server info methods
   fee(): Promise<XrpResult>
 
-  serverInfo(publicKey: string): Promise<XrpResult>
+  serverInfo(): Promise<XrpResult>
 
   serverState(): Promise<XrpResult>
 
   manifest(publicKey: string): Promise<XrpResult>
-
-  // clio specific methods
-  nftHistory(
-    nftId: string,
-    options?: {
-      ledgerIndexMin?: number
-      ledgerIndexMax?: number
-      ledgerHash?: string
-      ledgerIndex?: LedgerIndex
-      binary?: boolean
-      forward?: boolean
-      limit?: number
-      marker?: unknown
-    },
-  ): Promise<XrpResult>
-
-  nftInfo(
-    nftId: string,
-    options?: {
-      ledgerHash?: string
-      ledgerIndex?: LedgerIndex
-    },
-  ): Promise<XrpResult>
 
   // utility methods
   ping(): Promise<XrpResult>
