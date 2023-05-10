@@ -15,12 +15,12 @@ describe('RPCs', () => {
       it('ping', async () => {
         const tatum = await getRippleRpc(true)
         const res = await tatum.rpc.ping()
-        expect(res).toBe('success')
+        expect(res.status).toBe('success')
       })
       it('ledgerCurrent', async () => {
         const tatum = await getRippleRpc()
         const res = await tatum.rpc.ledgerCurrent()
-        expect(res).toBeGreaterThan(0)
+        expect(res.ledger_current_index).toBeGreaterThan(0)
       })
     })
   })

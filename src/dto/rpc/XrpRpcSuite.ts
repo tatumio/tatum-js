@@ -29,6 +29,11 @@ export interface OrderBook extends Book {
   snapshot?: boolean
 }
 
+export interface XrpResult {
+  status: string
+  [key: string]: any
+}
+
 export interface XrpRpcSuite extends AbstractJsonRpcSuite {
   // account methods
   accountChannels(
@@ -37,15 +42,15 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
-  ): Promise<any>
+    marker?: unknown,
+  ): Promise<XrpResult>
 
   accountCurrencies(
     account: string,
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     strict?: boolean,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   accountInfo(
     account: string,
@@ -54,7 +59,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     queue?: boolean,
     signerLists?: boolean,
     strict?: boolean,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   accountLines(
     account: string,
@@ -62,16 +67,16 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     ledgerIndex?: LedgerIndex,
     peer?: string,
     limit?: number,
-    marker?: any,
-  ): Promise<any>
+    marker?: unknown,
+  ): Promise<XrpResult>
 
   accountNfts(
     account: string,
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
-  ): Promise<any>
+    marker?: unknown,
+  ): Promise<XrpResult>
 
   accountObjects(
     account: string,
@@ -79,18 +84,18 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
+    marker?: unknown,
     type?: string,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   accountOffers(
     account: string,
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
+    marker?: unknown,
     strict?: boolean,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   accountTx(
     account: string,
@@ -101,8 +106,8 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     binary?: boolean,
     forward?: boolean,
     limit?: number,
-    marker?: any,
-  ): Promise<any>
+    marker?: unknown,
+  ): Promise<XrpResult>
 
   gatewayBalances(
     account: string,
@@ -110,7 +115,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     hotwallet?: string | string[],
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   norippleCheck(
     account: string,
@@ -119,7 +124,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     limit?: number,
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   // ledger methods
   ledger(
@@ -134,20 +139,20 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     queue?: boolean,
     type?: string,
     diff?: boolean,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
-  ledgerClosed(): Promise<{ ledger_hash: string; ledger_index: number }>
+  ledgerClosed(): Promise<XrpResult>
 
-  ledgerCurrent(): Promise<number>
+  ledgerCurrent(): Promise<XrpResult>
 
   ledgerData(
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     binary?: boolean,
     limit?: number,
-    marker?: any,
+    marker?: unknown,
     type?: string,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   ledgerEntry(
     binary?: boolean,
@@ -164,7 +169,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     depositPreauth?: string | Record<string, unknown>,
     ticket?: string | Record<string, unknown>,
     nftPage?: string,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   // transaction methods
   submit(
@@ -180,15 +185,15 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     buildPath?: boolean,
     feeMultMax?: number,
     feeDivMax?: number,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
-  submitMultisigned(txJson: Record<string, unknown>, failHard?: boolean): Promise<any>
+  submitMultisigned(txJson: Record<string, unknown>, failHard?: boolean): Promise<XrpResult>
 
-  transactionEntry(txHash: string, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<any>
+  transactionEntry(txHash: string, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<XrpResult>
 
-  tx(transaction: string, binary?: boolean, minLedger?: number, maxLedger?: number): Promise<any>
+  tx(transaction: string, binary?: boolean, minLedger?: number, maxLedger?: number): Promise<XrpResult>
 
-  txHistory(start: number): Promise<any>
+  txHistory(start: number): Promise<XrpResult>
 
   sign(
     txJson: Record<string, unknown>,
@@ -201,7 +206,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     buildPath?: boolean,
     feeMultMax?: number,
     feeDivMax?: number,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   signFor(
     account: string,
@@ -211,7 +216,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     seedHex?: string,
     passphrase?: string,
     keyType?: string,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   // path and order book methods
   bookOffers(
@@ -221,30 +226,30 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     ledgerIndex?: LedgerIndex,
     limit?: number,
     taker?: string,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   depositAuthorized(
     sourceAccount: string,
     destinationAccount: string,
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   nftBuyOffers(
     nftId: string,
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
-  ): Promise<any>
+    marker?: unknown,
+  ): Promise<XrpResult>
 
   nftSellOffers(
     nftId: string,
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
-  ): Promise<any>
+    marker?: unknown,
+  ): Promise<XrpResult>
 
   pathFind(
     subcommand: string,
@@ -253,7 +258,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     destinationAmount: CurrencyAmount,
     sendMax?: CurrencyAmount,
     paths?: Record<string, unknown>[],
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   ripplePathFind(
     sourceAccount: string,
@@ -264,7 +269,7 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     sourceCurrencies?: Currency[],
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   // payment channel methods
   channelAuthorize(
@@ -275,9 +280,9 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     seedHex?: string,
     passphrase?: string,
     keyType?: string,
-  ): Promise<string>
+  ): Promise<XrpResult>
 
-  channelVerify(amount: string, channelId: string, publicKey: string, signature: string): Promise<boolean>
+  channelVerify(amount: string, channelId: string, publicKey: string, signature: string): Promise<XrpResult>
 
   // subscription methods
   subscribe(
@@ -288,23 +293,23 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     url?: string,
     urlUsername?: string,
     urlPassword?: string,
-  ): Promise<any>
+  ): Promise<XrpResult>
 
   unsubscribe(
     streams?: string[],
     accounts?: string[],
     accountsProposed?: string[],
     books?: Book[],
-  ): Promise<string>
+  ): Promise<XrpResult>
 
   // server info methods
-  fee(): Promise<any>
+  fee(): Promise<XrpResult>
 
-  serverInfo(publicKey: string): Promise<any>
+  serverInfo(publicKey: string): Promise<XrpResult>
 
-  serverState(): Promise<any>
+  serverState(): Promise<XrpResult>
 
-  manifest(publicKey: string): Promise<any>
+  manifest(publicKey: string): Promise<XrpResult>
 
   // clio specific methods
   nftHistory(
@@ -316,13 +321,13 @@ export interface XrpRpcSuite extends AbstractJsonRpcSuite {
     binary?: boolean,
     forward?: boolean,
     limit?: number,
-    marker?: any,
-  ): Promise<any>
+    marker?: unknown,
+  ): Promise<XrpResult>
 
-  nftInfo(nftId: string, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<any>
+  nftInfo(nftId: string, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<XrpResult>
 
   // utility methods
-  ping(): Promise<string>
+  ping(): Promise<XrpResult>
 
-  random(): Promise<string>
+  random(): Promise<XrpResult>
 }

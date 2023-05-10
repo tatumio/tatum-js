@@ -7,6 +7,7 @@ import {
   JsonRpcResponse,
   LedgerIndex,
   OrderBook,
+  XrpResult,
   XrpRpcSuite,
 } from '../../../dto'
 import { CONFIG, Utils } from '../../../util'
@@ -37,8 +38,8 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
-  ): Promise<any> {
+    marker?: unknown,
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -62,7 +63,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     strict?: boolean,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -81,7 +82,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     queue?: boolean,
     signerLists?: boolean,
     strict?: boolean,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -99,8 +100,8 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     ledgerIndex?: LedgerIndex,
     peer?: string,
     limit?: number,
-    marker?: any,
-  ): Promise<any> {
+    marker?: unknown,
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -117,8 +118,8 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
-  ): Promise<any> {
+    marker?: unknown,
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -136,9 +137,9 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
+    marker?: unknown,
     type?: string,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -163,9 +164,9 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
+    marker?: unknown,
     strict?: boolean,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -186,8 +187,8 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     binary?: boolean,
     forward?: boolean,
     limit?: number,
-    marker?: any,
-  ): Promise<any> {
+    marker?: unknown,
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -215,7 +216,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     hotwallet?: string | string[],
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -234,7 +235,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     limit?: number,
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -258,7 +259,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     queue?: boolean,
     type?: string,
     diff?: boolean,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -282,16 +283,16 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
       .then((r) => r.result)
   }
 
-  ledgerClosed(): Promise<{ ledger_hash: string; ledger_index: number }> {
+  ledgerClosed(): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('ledger_closed'))
-      .then((r) => ({ ledger_hash: r.result.ledger_hash, ledger_index: r.result.ledger_index }))
+      .then((r) => r.result)
   }
 
-  ledgerCurrent(): Promise<number> {
+  ledgerCurrent(): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('ledger_current'))
-      .then((r) => r.result.ledger_current_index)
+      .then((r) => r.result)
   }
 
   ledgerData(
@@ -299,9 +300,9 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     ledgerIndex?: LedgerIndex,
     binary?: boolean,
     limit?: number,
-    marker?: any,
+    marker?: unknown,
     type?: string,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -328,7 +329,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     depositPreauth?: string | Record<string, unknown>,
     ticket?: string | Record<string, unknown>,
     nftPage?: string,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -368,7 +369,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     buildPath?: boolean,
     feeMultMax?: number,
     feeDivMax?: number,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -393,7 +394,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
       .then((r) => r.result)
   }
 
-  submitMultisigned(txJson: Record<string, unknown>, failHard?: boolean): Promise<any> {
+  submitMultisigned(txJson: Record<string, unknown>, failHard?: boolean): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -402,7 +403,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
       .then((r) => r.result)
   }
 
-  transactionEntry(txHash: string, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<any> {
+  transactionEntry(txHash: string, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -411,7 +412,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
       .then((r) => r.result)
   }
 
-  tx(transaction: string, binary?: boolean, minLedger?: number, maxLedger?: number): Promise<any> {
+  tx(transaction: string, binary?: boolean, minLedger?: number, maxLedger?: number): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -420,7 +421,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
       .then((r) => r.result)
   }
 
-  txHistory(start: number): Promise<any> {
+  txHistory(start: number): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -440,7 +441,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     buildPath?: boolean,
     feeMultMax?: number,
     feeDivMax?: number,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -471,7 +472,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     seedHex?: string,
     passphrase?: string,
     keyType?: string,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -490,7 +491,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     ledgerIndex?: LedgerIndex,
     limit?: number,
     taker?: string,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -507,7 +508,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     destinationAccount: string,
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -529,8 +530,8 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
-  ): Promise<any> {
+    marker?: unknown,
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -547,8 +548,8 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
     limit?: number,
-    marker?: any,
-  ): Promise<any> {
+    marker?: unknown,
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -567,7 +568,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     destinationAmount: CurrencyAmount,
     sendMax?: CurrencyAmount,
     paths?: Record<string, unknown>[],
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -595,7 +596,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     sourceCurrencies?: Currency[],
     ledgerHash?: string,
     ledgerIndex?: LedgerIndex,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -624,7 +625,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     seedHex?: string,
     passphrase?: string,
     keyType?: string,
-  ): Promise<string> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -641,16 +642,16 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
           }),
         ),
       )
-      .then((r) => r.result.signature)
+      .then((r) => r.result)
   }
 
-  channelVerify(amount: string, channelId: string, publicKey: string, signature: string): Promise<boolean> {
+  channelVerify(amount: string, channelId: string, publicKey: string, signature: string): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         this.prepareRpcCall('channel_verify', generateXrpParams({ amount, channelId, publicKey, signature })),
       )
-      .then((r) => r.result.signature_verified)
+      .then((r) => r.result)
   }
 
   subscribe(
@@ -661,7 +662,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     url?: string,
     urlUsername?: string,
     urlPassword?: string,
-  ): Promise<any> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -686,22 +687,22 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     accounts?: string[],
     accountsProposed?: string[],
     books?: Book[],
-  ): Promise<string> {
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         this.prepareRpcCall('unsubscribe', generateXrpParams({ streams, accounts, accountsProposed, books })),
       )
-      .then((r) => r.result.status)
+      .then((r) => r.result)
   }
 
-  fee(): Promise<any> {
+  fee(): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('fee'))
       .then((r) => r.result)
   }
 
-  serverInfo(publicKey: string): Promise<any> {
+  serverInfo(publicKey: string): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -710,13 +711,13 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
       .then((r) => r.result)
   }
 
-  serverState(): Promise<any> {
+  serverState(): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('server_state'))
       .then((r) => r.result)
   }
 
-  manifest(publicKey: string): Promise<any> {
+  manifest(publicKey: string): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -734,8 +735,8 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     binary?: boolean,
     forward?: boolean,
     limit?: number,
-    marker?: any,
-  ): Promise<any> {
+    marker?: unknown,
+  ): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -757,7 +758,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
       .then((r) => r.result)
   }
 
-  nftInfo(nftId: string, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<any> {
+  nftInfo(nftId: string, ledgerHash?: string, ledgerIndex?: LedgerIndex): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -766,15 +767,15 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
       .then((r) => r.result)
   }
 
-  ping(): Promise<string> {
+  ping(): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('ping'))
-      .then((r) => r.result.status)
+      .then((r) => r.result)
   }
 
-  random(): Promise<string> {
+  random(): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('random'))
-      .then((r) => r.result.random)
+      .then((r) => r.result)
   }
 }
