@@ -2,11 +2,12 @@ import { Container } from 'typedi'
 import {
   AddressEventNotificationChain,
   isEvmBasedNetwork,
+  isSolanaEnabledNetwork,
   isUtxoBasedNetwork,
   isXrpNetwork,
   Network,
 } from '../dto'
-import { EvmBasedRpc, GenericRpc, UtxoBasedRpc, XrpRpc } from '../service'
+import { EvmBasedRpc, GenericRpc, SolanaRpc, UtxoBasedRpc, XrpRpc } from '../service'
 
 export const Utils = {
   getRpc: <T>(id: string, network: Network): T => {
@@ -18,6 +19,9 @@ export const Utils = {
     }
     if (isXrpNetwork(network)) {
       return Container.of(id).get(XrpRpc) as T
+    }
+    if (isSolanaEnabledNetwork(network)) {
+      return Container.of(id).get(SolanaRpc) as T
     }
     console.warn(`RPC Network ${network} is not supported.`)
     return Container.of(id).get(GenericRpc) as T

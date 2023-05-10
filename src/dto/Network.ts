@@ -160,6 +160,8 @@ export const DATA_API_EVM_NETWORKS = [
   Network.CELO_ALFAJORES,
 ]
 
+export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
+
 export const isEvmBasedNetwork = (network: Network) => {
   return EVM_BASED_NETWORKS.includes(network)
 }
@@ -178,4 +180,8 @@ export const isDataApiEvmEnabledNetwork = (network: Network) => {
 
 export const isDataApiUtxoEnabledNetwork = (network: Network) => {
   return DATA_API_UTXO_NETWORKS.includes(network)
+}
+
+export const isSolanaEnabledNetwork = (network: Network) => {
+  return SOLANA_NETWORKS.includes(network)
 }
