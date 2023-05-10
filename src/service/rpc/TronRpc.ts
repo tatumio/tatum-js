@@ -1,8 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-
-import {AbstractJsonRpc} from "./AbstractJsonRpc";
 import {Container, Service} from "typedi";
-import {CONFIG, Utils} from "../../../util";
 import {
   AccountIdentifier,
   AccountPermissionUpdateOptions,
@@ -26,28 +23,30 @@ import {
   UpdateAssetOptions,
   VisibleAndPermissionIdOptions,
   VisibleOption
-} from "../../../dto";
+} from "../../dto";
 import {BigNumber} from "bignumber.js";
+import { AbstractBatchRpc } from './generic'
+import { CONFIG, Utils } from '../../util'
 @Service({
   factory: (data: { id: string }) => {
     return new TronRpc(data.id)
   },
   transient: true,
 })
-export class TronRpc extends AbstractJsonRpc implements TronRpcSuite {
+export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   _id: string
   constructor(id: string) {
-    super(id, Container.of(id).get(CONFIG).network)
+    super(id)
     this._id = id
   }
 
   getRpcNodeUrl(subPath?: string): string {
-    const { apiKey, rpcUrl, network } = Container.of(this._id).get(CONFIG)
+    const { apiKey, rpc, network } = Container.of(this._id).get(CONFIG)
     if (apiKey) {
-      const url =  rpcUrl || `https://api.tatum.io/v3/blockchain/node/${network}/${apiKey.v1 ? apiKey.v1 : apiKey.v2}`
+      const url =  rpc?.nodes?.[0].url || `https://api.tatum.io/v3/blockchain/node/${network}/${apiKey.v1 ? apiKey.v1 : apiKey.v2}`
       return url.concat(subPath || "")
     }
-    return rpcUrl || `https://api.tatum.io/v3/blockchain/node/${network}/`.concat(subPath || "")
+    return rpc?.nodes?.[0].url  || `https://api.tatum.io/v3/blockchain/node/${network}/`.concat(subPath || "")
   }
 
   accountPermissionUpdate(ownerAddress: string, actives: TronPermission[], owner: TronPermission, options?: AccountPermissionUpdateOptions): Promise<any> {

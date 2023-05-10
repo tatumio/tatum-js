@@ -18,8 +18,10 @@ export enum Network {
   ETHEREUM = 'ethereum-mainnet',
   ETHEREUM_CLASSIC = 'ethereum-classic-mainnet',
   FANTOM = 'fantom-mainnet',
+  FLARE = 'flare-mainnet',
   FLOW = 'flow-mainnet',
   GNOSIS = 'gno-mainnet',
+  HAQQ = 'haqq-mainnet',
   HARMONY_ONE_SHARD_0 = 'one-mainnet-s0',
   KLAYTN = 'klaytn-cypress',
   KUCOIN = 'kcs-mainnet',
@@ -60,8 +62,12 @@ export enum Network {
   ETHEREUM_SEPOLIA = 'ethereum-sepolia',
   EOS_TESTNET = 'eos-testnet',
   FANTOM_TESTNET = 'fantom-testnet',
+  FLARE_COSTON = 'flare-coston',
+  FLARE_COSTON_2 = 'flare-coston2',
+  FLARE_SONGBIRD = 'flare-songbird',
   FLOW_TESTNET = 'flow-testnet',
   GNOSIS_TESTNET = 'gno-testnet',
+  HAQQ_TESTNET = 'haqq-testnet',
   HARMONY_ONE_TESTNET_SHARD_0 = 'one-testnet-s0',
   KLAYTN_BAOBAB = 'klaytn-baobab',
   KUCOIN_TESTNET = 'kcs-testnet',
@@ -122,6 +128,12 @@ export const EVM_BASED_NETWORKS = [
   Network.HARMONY_ONE_TESTNET_SHARD_0,
   Network.KLAYTN,
   Network.KLAYTN_BAOBAB,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE,
+  Network.FLARE_SONGBIRD,
+  Network.HAQQ,
+  Network.HAQQ_TESTNET,
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -160,6 +172,32 @@ export const DATA_API_EVM_NETWORKS = [
   Network.CELO_ALFAJORES,
 ]
 
+export const UTXO_LOAD_BALANCER_NETWORKS = [
+  Network.BITCOIN,
+  Network.BITCOIN_TESTNET,
+  Network.LITECOIN,
+  Network.LITECOIN_TESTNET,
+  Network.DOGECOIN,
+  Network.DOGECOIN_TESTNET
+]
+
+export const EVM_LOAD_BALANCER_NETWORKS = [
+  Network.FLARE,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE_SONGBIRD,
+  Network.HAQQ,
+  Network.HAQQ_TESTNET,
+  // TODO: uncomment once it will work
+  // Network.ETHEREUM,
+  // Network.ETHEREUM_SEPOLIA,
+]
+
+export const LOAD_BALANCER_NETWORKS = [
+  ...UTXO_LOAD_BALANCER_NETWORKS,
+  ...EVM_LOAD_BALANCER_NETWORKS,
+]
+
 export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
 export const TRON_NETWORKS = [Network.TRON, Network.TRON_SHASTA]
 
@@ -189,4 +227,16 @@ export const isSolanaEnabledNetwork = (network: Network) => {
 
 export const isTronNetwork = (network: Network) => {
   return TRON_NETWORKS.includes(network)
+}
+
+export const isLoadBalancerNetwork = (network: Network) => {
+  return LOAD_BALANCER_NETWORKS.includes(network)
+}
+
+export const isUtxoLoadBalancerNetwork = (network: Network) => {
+  return UTXO_LOAD_BALANCER_NETWORKS.includes(network)
+}
+
+export const isEvmLoadBalancerNetwork = (network: Network) => {
+  return EVM_LOAD_BALANCER_NETWORKS.includes(network)
 }

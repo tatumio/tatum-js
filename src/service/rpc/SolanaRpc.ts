@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { Container, Service } from 'typedi'
+import { Service } from 'typedi'
 import {
   GetAccountInfoOptions,
   GetBlockOptions,
@@ -43,9 +43,9 @@ import {
   SolanaTypeWithContext,
   SolanaVersion,
   SolanaVoteAccount,
-} from '../../../dto'
-import { CONFIG } from '../../../util'
-import { AbstractJsonRpc } from './AbstractJsonRpc'
+} from '../../dto'
+import { AbstractBatchRpc } from './generic'
+import { Utils } from '../../util'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -53,9 +53,9 @@ import { AbstractJsonRpc } from './AbstractJsonRpc'
   },
   transient: true,
 })
-export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
+export class SolanaRpc extends AbstractBatchRpc implements SolanaRpcSuite {
   constructor(id: string) {
-    super(id, Container.of(id).get(CONFIG).network)
+    super(id)
   }
 
   getAccountInfo(
@@ -65,20 +65,20 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getAccountInfo', [pubkey, options]),
+        Utils.prepareRpcCall('getAccountInfo', [pubkey, options]),
       )
       .then((r) => r.result)
   }
 
   getBalance(address: string): Promise<SolanaTypeWithContext<number>> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBalance', [address]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBalance', [address]))
       .then((r) => r.result)
   }
 
   getBlockHeight(options?: GetCommitmentMinContextSlotOptions): Promise<number> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlockHeight', [options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlockHeight', [options]))
       .then((r) => r.result)
   }
 
@@ -96,7 +96,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     blockHeight: number | null
   } | null> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlock', [block, options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlock', [block, options]))
       .then((r) => r.result)
   }
 
@@ -104,13 +104,13 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     options?: GetBlockProductionOptions,
   ): Promise<SolanaTypeWithContext<SolanaBlockProduction>> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlockProduction', [options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlockProduction', [options]))
       .then((r) => r.result)
   }
 
   getBlockCommitment(block: number): Promise<{ commitment: Array<number>; totalStake: number }> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlockCommitment', [block]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlockCommitment', [block]))
       .then((r) => r.result)
   }
   getBlocks(endSlot: number, startSlot?: number, options?: GetCommitmentOptions): Promise<Array<number>> {
@@ -120,12 +120,12 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     if (options && options.commitment) params.push(options)
 
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlocks', params))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlocks', params))
       .then((r) => r.result)
   }
   getBlockTime(block: number): Promise<number | null> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlockTime', [block]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlockTime', [block]))
       .then((r) => r.result)
   }
 
@@ -141,19 +141,19 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     }>
   > {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getClusterNodes'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getClusterNodes'))
       .then((r) => r.result)
   }
 
   getEpochInfo(options?: GetCommitmentMinContextSlotOptions): Promise<SolanaEpochInfo> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getEpochInfo', [options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getEpochInfo', [options]))
       .then((r) => r.result)
   }
 
   getEpochSchedule(): Promise<SolanaEpochSchedule> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getEpochSchedule'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getEpochSchedule'))
       .then((r) => r.result)
   }
 
@@ -161,34 +161,34 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getFeeForMessage', [message, options]),
+        Utils.prepareRpcCall('getFeeForMessage', [message, options]),
       )
       .then((r) => r.result)
   }
 
   getFirstAvailableBlock(): Promise<number> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getFirstAvailableBlock'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getFirstAvailableBlock'))
       .then((r) => r.result)
   }
   getGenesisHash(): Promise<string> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getGenesisHash'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getGenesisHash'))
       .then((r) => r.result)
   }
   getHealth(): Promise<string> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getHealth'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getHealth'))
       .then((r) => r.result)
   }
   getHighestSnapshotSlot(): Promise<{ full: number; incremental: number }> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getHighestSnapshotSlot'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getHighestSnapshotSlot'))
       .then((r) => r.result)
   }
   getIdentity(): Promise<{ identity: string }> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getIdentity'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getIdentity'))
       .then((r) => r.result)
   }
   getInflationGovernor(options?: GetCommitmentOptions): Promise<{
@@ -199,12 +199,12 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     foundationTerm: number
   }> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getInflationGovernor', [options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getInflationGovernor', [options]))
       .then((r) => r.result)
   }
   getInflationRate(): Promise<{ total: number; validator: number; foundation: number; epoch: number }> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getInflationRate'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getInflationRate'))
       .then((r) => r.result)
   }
   getInflationReward(
@@ -224,46 +224,46 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     if (options) params.push(options)
 
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getInflationReward', params))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getInflationReward', params))
       .then((r) => r.result)
   }
   getLargestAccounts(
     options?: GetLargestAccountsOptions,
   ): Promise<SolanaTypeWithContext<SolanaLargestAccount[]>> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getLargestAccounts', [options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getLargestAccounts', [options]))
       .then((r) => r.result)
   }
   getLatestBlockhash(
     options?: GetCommitmentMinContextSlotOptions,
   ): Promise<SolanaTypeWithContext<SolanaLatestBlockhash>> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getLatestBlockhash', [options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getLatestBlockhash', [options]))
       .then((r) => r.result)
   }
   getLeaderSchedule(slot?: number, options?: GetLeaderScheduleOptions): Promise<SolanaLeaderSchedule | null> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getLeaderSchedule', [slot, options]),
+        Utils.prepareRpcCall('getLeaderSchedule', [slot, options]),
       )
       .then((r) => r.result)
   }
   getMaxRetransmitSlot(): Promise<number> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getMaxRetransmitSlot'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getMaxRetransmitSlot'))
       .then((r) => r.result)
   }
   getMaxShredInsertSlot(): Promise<number> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getMaxShredInsertSlot'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getMaxShredInsertSlot'))
       .then((r) => r.result)
   }
   getMinimumBalanceForRentExemption(dataSize?: number, options?: GetCommitmentOptions): Promise<number> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getMinimumBalanceForRentExemption', [dataSize, options]),
+        Utils.prepareRpcCall('getMinimumBalanceForRentExemption', [dataSize, options]),
       )
       .then((r) => r.result)
   }
@@ -274,7 +274,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getMultipleAccounts', [pubKeys, options]),
+        Utils.prepareRpcCall('getMultipleAccounts', [pubKeys, options]),
       )
       .then((r) => r.result)
   }
@@ -285,7 +285,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getProgramAccounts', [programId, options]),
+        Utils.prepareRpcCall('getProgramAccounts', [programId, options]),
       )
       .then((r) => r.result)
   }
@@ -301,7 +301,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getRecentPerformanceSamples', [limit]),
+        Utils.prepareRpcCall('getRecentPerformanceSamples', [limit]),
       )
       .then((r) => r.result)
   }
@@ -311,7 +311,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getRecentPrioritizationFees', [addresses]),
+        Utils.prepareRpcCall('getRecentPrioritizationFees', [addresses]),
       )
       .then((r) => r.result)
   }
@@ -331,7 +331,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getSignaturesForAddress', [address, options]),
+        Utils.prepareRpcCall('getSignaturesForAddress', [address, options]),
       )
       .then((r) => r.result)
   }
@@ -342,25 +342,25 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getSignatureStatuses', [signatures, options]),
+        Utils.prepareRpcCall('getSignatureStatuses', [signatures, options]),
       )
       .then((r) => r.result)
   }
   getSlot(options?: GetCommitmentMinContextSlotOptions): Promise<number> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getSlot', [options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getSlot', [options]))
       .then((r) => r.result)
   }
   getSlotLeader(options?: GetCommitmentMinContextSlotOptions): Promise<string> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getSlotLeader', [options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getSlotLeader', [options]))
       .then((r) => r.result)
   }
   getSlotLeaders(startSlot?: number, limit?: number): Promise<Array<string>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getSlotLeaders', [startSlot, limit]),
+        Utils.prepareRpcCall('getSlotLeaders', [startSlot, limit]),
       )
       .then((r) => r.result)
   }
@@ -371,7 +371,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getStakeActivation', [pubkey, options]),
+        Utils.prepareRpcCall('getStakeActivation', [pubkey, options]),
       )
       .then((r) => r.result)
   }
@@ -379,13 +379,13 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getStakeMinimumDelegation', [options]),
+        Utils.prepareRpcCall('getStakeMinimumDelegation', [options]),
       )
       .then((r) => r.result)
   }
   getSupply(options?: GetSupplyOptions): Promise<SolanaTypeWithContext<SolanaSupply>> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getSupply', [options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getSupply', [options]))
       .then((r) => r.result)
   }
   getTokenAccountBalance(
@@ -395,7 +395,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getTokenAccountBalance', [pubkey, options]),
+        Utils.prepareRpcCall('getTokenAccountBalance', [pubkey, options]),
       )
       .then((r) => r.result)
   }
@@ -410,7 +410,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getTokenAccountsByDelegate', params),
+        Utils.prepareRpcCall('getTokenAccountsByDelegate', params),
       )
       .then((r) => r.result)
   }
@@ -423,7 +423,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     if (config) params.push(config)
     if (options) params.push(options)
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getTokenAccountsByOwner', params))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getTokenAccountsByOwner', params))
       .then((r) => r.result)
   }
   getTokenLargestAccounts(
@@ -433,7 +433,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getTokenLargestAccounts', [pubkey, options]),
+        Utils.prepareRpcCall('getTokenLargestAccounts', [pubkey, options]),
       )
       .then((r) => r.result)
   }
@@ -444,7 +444,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getTokenSupply', [pubkey, options]),
+        Utils.prepareRpcCall('getTokenSupply', [pubkey, options]),
       )
       .then((r) => r.result)
   }
@@ -452,25 +452,25 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getTransaction', [signature, options]),
+        Utils.prepareRpcCall('getTransaction', [signature, options]),
       )
       .then((r) => r.result)
   }
   getTransactionCount(options?: GetCommitmentMinContextSlotOptions): Promise<number> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getTransactionCount', [options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getTransactionCount', [options]))
       .then((r) => r.result)
   }
   getVersion(): Promise<SolanaVersion> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getVersion'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getVersion'))
       .then((r) => r.result)
   }
   getVoteAccounts(
     options?: GetVoteAccountOptions,
   ): Promise<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getVoteAccounts', [options]))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getVoteAccounts', [options]))
       .then((r) => r.result)
   }
   isBlockhashValid(
@@ -480,20 +480,20 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('isBlockhashValid', [blockhash, options]),
+        Utils.prepareRpcCall('isBlockhashValid', [blockhash, options]),
       )
       .then((r) => r.result)
   }
   minimumLedgerSlot(): Promise<number> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('minimumLedgerSlot'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('minimumLedgerSlot'))
       .then((r) => r.result)
   }
   requestAirdrop(pubkey: string, amount: number, options?: GetCommitmentOptions): Promise<string> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('requestAirdrop', [pubkey, amount, options]),
+        Utils.prepareRpcCall('requestAirdrop', [pubkey, amount, options]),
       )
       .then((r) => r.result)
   }
@@ -501,7 +501,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('sendTransaction', [transaction, options]),
+        Utils.prepareRpcCall('sendTransaction', [transaction, options]),
       )
       .then((r) => r.result)
   }
@@ -512,7 +512,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('simulateTransaction', [transaction, options]),
+        Utils.prepareRpcCall('simulateTransaction', [transaction, options]),
       )
       .then((r) => r.result)
   }

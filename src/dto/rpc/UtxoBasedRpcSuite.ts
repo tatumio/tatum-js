@@ -1,7 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AbstractJsonRpcSuite } from './AbstractJsonRpcSuite'
+import { AbstractRpcInterface } from './AbstractJsonRpcInterface'
 
-export interface UtxoBasedRpcSuite extends AbstractJsonRpcSuite {
+export interface UtxoBasedRpcSuite extends UtxoBasedRpcInterface, AbstractRpcInterface {}
+
+export interface UtxoBasedRpcInterface {
   // blockchain methods
   getBestBlockHash(): Promise<string>
   getBlock(hashOrHeight: string, verbose?: 0 | 1 | 2): Promise<any>

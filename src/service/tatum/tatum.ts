@@ -1,6 +1,12 @@
 import { Container, Service } from 'typedi'
-import { EvmBasedRpcSuite, SolanaRpcSuite, TronRpcSuite, UtxoBasedRpcSuite, XrpRpcSuite } from '../../dto/rpc'
-import { CONFIG, Utils } from '../../util'
+import {
+  SolanaRpcSuite,
+  TronRpcSuite,
+  UtxoBasedRpcSuite,
+  XrpRpcSuite,
+  EvmBasedRpcSuite,
+} from '../../dto/rpc'
+import { CONFIG, Constant, Utils } from '../../util'
 import { Address } from '../address'
 import { FeeEvm, FeeUtxo } from '../fee'
 import { Nft } from '../nft'
@@ -8,6 +14,8 @@ import { Notification } from '../notification'
 import { Rates } from '../rate'
 import { Token } from '../token'
 import { WalletProvider } from '../walletProvider'
+import { LoadBalancerRpc } from '../rpc/generic/LoadBalancerRpc'
+import { LOAD_BALANCER_NETWORKS } from '../../dto'
 import { ApiVersion, TatumConfig } from './tatum.dto'
 
 export class BaseTatumSdk {
@@ -66,6 +74,8 @@ export class Cronos extends BaseEvmClass {}
 export class EthereumClassic extends BaseEvmClass {}
 export class Fantom extends BaseEvmClass {}
 export class Gnosis extends BaseEvmClass {}
+export class Haqq extends BaseEvmClass {}
+export class Flare extends BaseEvmClass {}
 export class HarmonyOne extends BaseEvmClass {}
 export class Klaytn extends BaseEvmClass {}
 export class Kucoin extends BaseEvmClass {}
@@ -113,18 +123,30 @@ export class TatumSDK {
    * @param config
    */
   public static async init<T>(config: TatumConfig): Promise<T> {
-    const defaultConfig: TatumConfig = {
-      verbose: false,
+    const defaultConfig: Partial<TatumConfig> = {
       version: ApiVersion.V2,
       retryCount: 1,
       retryDelay: 1000,
-      ...config,
+      rpc: {
+        oneTimeLoadBalancing: false,
+        allowedBlocksBehind: Constant.OPEN_RPC.ALLOWED_BLOCKS_BEHIND,
+      },
     }
 
-    const id = TatumSDK.generateRandomString()
-    Container.of(id).set(CONFIG, defaultConfig)
+    const mergedConfig = Utils.deepMerge(defaultConfig, config) as TatumConfig
 
-    return Utils.getClient<T>(id, defaultConfig.network)
+    // TODO: check when rpc is customized if there is allowedBlocksBehind if not throw error or set default
+    // TODO: Check if rpc works for other chains and all configurations are set correctly
+
+    const id = TatumSDK.generateRandomString()
+    Container.of(id).set(CONFIG, mergedConfig)
+    if (LOAD_BALANCER_NETWORKS.includes(mergedConfig.network)) {
+      const loadBalancer = Container.of(id).get(LoadBalancerRpc)
+      await loadBalancer.init()
+    }
+
+
+    return Utils.getClient<T>(id, mergedConfig.network)
   }
 
   private static generateRandomString() {

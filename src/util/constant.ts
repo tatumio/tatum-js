@@ -102,6 +102,12 @@ export const Constant = {
     [Network.XDC_TESTNET]: 18,
     [Network.ZILLIQA]: 12,
     [Network.ZILLIQA_TESTNET]: 12,
+    [Network.FLARE]: 18,
+    [Network.FLARE_COSTON]: 18,
+    [Network.FLARE_COSTON_2]: 18,
+    [Network.FLARE_SONGBIRD]: 18,
+    [Network.HAQQ]: 18,
+    [Network.HAQQ_TESTNET]: 18,
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -157,6 +163,10 @@ export const Constant = {
     [Network.GNOSIS]: 'GNO',
     [Network.GNOSIS_TESTNET]: 'GNO',
     [Network.FLOW]: 'FLOW',
+    [Network.FLARE]: 'FLARE',
+    [Network.FLARE_COSTON]: 'FLARE',
+    [Network.FLARE_COSTON_2]: 'FLARE',
+    [Network.FLARE_SONGBIRD]: 'FLARE',
     [Network.FLOW_TESTNET]: 'FLOW',
     [Network.CRONOS]: 'CRO',
     [Network.CRONOS_TESTNET]: 'CRO',
@@ -185,6 +195,9 @@ export const Constant = {
     [Network.XDC_TESTNET]: 'XDC',
     [Network.ZILLIQA]: 'ZIL',
     [Network.ZILLIQA_TESTNET]: 'ZIL',
+    [Network.HAQQ]: 'HAQQ',
+    [Network.HAQQ_TESTNET]: 'HAQQ',
+
   },
   RPC: {
     MAINNETS: [
@@ -273,4 +286,8 @@ export const Constant = {
       Network.ZILLIQA_TESTNET,
     ],
   },
+  OPEN_RPC: {
+    LB_INTERVAL: 60_000,
+    ALLOWED_BLOCKS_BEHIND: 10,
+  }
 }

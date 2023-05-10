@@ -1,7 +1,13 @@
+## [1.5.0] - 2023.06.19
+
+### Added
+- Load balancer feature for Btc, Ltc, Doge, Eth, Flare, Haqq.
+- Load balancer is used managing RPC calls to nodes in a blockchain network. It maintains a list of available nodes and their status, and it automatically selects the most responsive node for subsequent RPC calls.
+
 ## [1.4.25] - 2023.06.19
 
 ### Added
-- Added new module for getting current fee for Evm and Utxo chains. 
+- Added new module for getting current fee for Evm and Utxo chains.
 ### Changed
 - Refactoring TatumSdk class to return specific blockchain class on `init` instead of one generic class.
 

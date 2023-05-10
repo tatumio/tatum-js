@@ -21,7 +21,6 @@ describe('notification', () => {
   beforeAll(async () => {
     const tatum = await TatumSDK.init<Ethereum>({
       network: Network.ETHEREUM,
-      verbose: true,
       retryCount: 10,
       retryDelay: 5000,
     })
@@ -37,7 +36,6 @@ describe('notification', () => {
         it.each(Object.values(AddressEventNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -53,7 +51,6 @@ describe('notification', () => {
         it.each(Object.values(IncomingNativeTxNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -69,7 +66,6 @@ describe('notification', () => {
         it.each(Object.values(OutgoingNativeTxNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -85,7 +81,6 @@ describe('notification', () => {
         it.each(Object.values(OutgoingFailedNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -101,7 +96,6 @@ describe('notification', () => {
         it.each(Object.values(PaidFeeNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -117,7 +111,6 @@ describe('notification', () => {
         it.each(Object.values(InternalTxNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -133,7 +126,6 @@ describe('notification', () => {
         it.each(Object.values(InternalTxNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -149,7 +141,6 @@ describe('notification', () => {
         it.each(Object.values(FungibleTxNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -165,7 +156,6 @@ describe('notification', () => {
         it.each(Object.values(FungibleTxNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -181,7 +171,6 @@ describe('notification', () => {
         it.each(Object.values(NftNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -197,7 +186,6 @@ describe('notification', () => {
         it.each(Object.values(NftNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -213,7 +201,6 @@ describe('notification', () => {
         it.each(Object.values(MultitokenNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -229,7 +216,6 @@ describe('notification', () => {
         it.each(Object.values(MultitokenNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -245,7 +231,6 @@ describe('notification', () => {
         it.each(Object.values(FailedTxPerBlockNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -260,7 +245,6 @@ describe('notification', () => {
         it.each(Object.values(ContractAddressLogEventNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
-            verbose: true,
             retryCount: 10,
             retryDelay: 5000,
           })
@@ -276,7 +260,6 @@ describe('notification', () => {
     it('NOK - existing subscription ', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM,
-        verbose: true,
         retryCount: 10,
         retryDelay: 5000,
       })
@@ -300,7 +283,6 @@ describe('notification', () => {
     it('NOK - invalid address', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM,
-        verbose: true,
         retryCount: 10,
         retryDelay: 5000,
       })
@@ -321,7 +303,6 @@ describe('notification', () => {
     it('OK', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM_SEPOLIA,
-        verbose: true,
         retryCount: 10,
         retryDelay: 5000,
       })
@@ -342,7 +323,6 @@ describe('notification', () => {
     it('NOK - invalid subscription', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM_SEPOLIA,
-        verbose: true,
         retryCount: 10,
         retryDelay: 5000,
       })
@@ -358,7 +338,6 @@ describe('notification', () => {
   it('getAll', async () => {
     const tatum = await TatumSDK.init<Ethereum>({
       network: Network.ETHEREUM,
-      verbose: true,
       retryCount: 10,
       retryDelay: 5000,
     })
@@ -377,7 +356,6 @@ describe('notification', () => {
   it.skip('getAllExecutedWebhooks', async () => {
     const tatum = await TatumSDK.init<Ethereum>({
       network: Network.ETHEREUM_SEPOLIA,
-      verbose: true,
       retryCount: 10,
       retryDelay: 5000,
     })

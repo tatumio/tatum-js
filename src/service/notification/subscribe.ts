@@ -32,6 +32,14 @@ export class Subscribe {
   ): Promise<ResponseDto<AddressBasedNotification>> {
     return ErrorUtils.tryFail(async () => {
       const chain = Utils.mapNetworkToNotificationChain(this.config.network)
+      console.log({
+        type: type,
+        attr: {
+          chain,
+          address,
+          url,
+        },
+      })
       const { id } = await this.connector.post<IdDto>({
         path: 'subscription',
         body: {

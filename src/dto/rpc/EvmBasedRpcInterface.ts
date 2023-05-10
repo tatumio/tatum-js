@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BigNumber } from 'bignumber.js'
-import { AbstractJsonRpcSuite } from './AbstractJsonRpcSuite'
+import { AbstractRpcInterface } from './AbstractJsonRpcInterface'
 
 /**
  * EVM based RPC calls.
@@ -66,7 +66,9 @@ export interface LogFilter {
   blockHash?: string
 }
 
-export interface EvmBasedRpcSuite extends AbstractJsonRpcSuite {
+export interface EvmBasedRpcSuite extends EvmBasedRpcInterface, AbstractRpcInterface {}
+
+export interface EvmBasedRpcInterface {
   // eth_ methods
   blockNumber(): Promise<BigNumber>
 

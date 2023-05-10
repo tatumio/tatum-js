@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Container, Service } from 'typedi'
+import { Service } from 'typedi'
 import {
   AccountChannelsOptions,
   AccountInfoOptions,
@@ -28,9 +28,9 @@ import {
   TypeOption,
   XrpResult,
   XrpRpcSuite,
-} from '../../../dto'
-import { CONFIG, Utils } from '../../../util'
-import { AbstractJsonRpc } from './AbstractJsonRpc'
+} from '../../dto'
+import { AbstractBatchRpc } from './generic'
+import { Utils } from '../../util'
 
 const generateXrpParams = (required?: { [key: string]: any }, optional?: { [key: string]: any }) => {
   const xrpParams: { [name: string]: unknown } = {}
@@ -47,16 +47,16 @@ const generateXrpParams = (required?: { [key: string]: any }, optional?: { [key:
   },
   transient: true,
 })
-export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
+export class XrpRpc extends AbstractBatchRpc implements XrpRpcSuite {
   constructor(id: string) {
-    super(id, Container.of(id).get(CONFIG).network)
+    super(id)
   }
 
   accountChannels(account: string, options?: AccountChannelsOptions): Promise<XrpResult> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall(
+        Utils.prepareRpcCall(
           'account_channels',
           generateXrpParams(
             {
@@ -73,7 +73,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('account_currencies', generateXrpParams({ account }, options)),
+        Utils.prepareRpcCall('account_currencies', generateXrpParams({ account }, options)),
       )
       .then((r) => r.result)
   }
@@ -82,7 +82,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('account_info', generateXrpParams({ account }, options)),
+        Utils.prepareRpcCall('account_info', generateXrpParams({ account }, options)),
       )
       .then((r) => r.result)
   }
@@ -91,7 +91,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('account_lines', generateXrpParams({ account }, options)),
+        Utils.prepareRpcCall('account_lines', generateXrpParams({ account }, options)),
       )
       .then((r) => r.result)
   }
@@ -100,7 +100,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('account_nfts', generateXrpParams({ account }, options)),
+        Utils.prepareRpcCall('account_nfts', generateXrpParams({ account }, options)),
       )
       .then((r) => r.result)
   }
@@ -109,7 +109,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall(
+        Utils.prepareRpcCall(
           'account_objects',
           generateXrpParams(
             {
@@ -126,7 +126,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('account_offers', generateXrpParams({ account }, options)),
+        Utils.prepareRpcCall('account_offers', generateXrpParams({ account }, options)),
       )
       .then((r) => r.result)
   }
@@ -135,7 +135,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall(
+        Utils.prepareRpcCall(
           'account_tx',
           generateXrpParams(
             {
@@ -152,7 +152,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('gateway_balances', generateXrpParams({ account }, options)),
+        Utils.prepareRpcCall('gateway_balances', generateXrpParams({ account }, options)),
       )
       .then((r) => r.result)
   }
@@ -161,7 +161,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('noripple_check', generateXrpParams({ account, role }, options)),
+        Utils.prepareRpcCall('noripple_check', generateXrpParams({ account, role }, options)),
       )
       .then((r) => r.result)
   }
@@ -170,20 +170,20 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('ledger', generateXrpParams({}, options)),
+        Utils.prepareRpcCall('ledger', generateXrpParams({}, options)),
       )
       .then((r) => r.result)
   }
 
   ledgerClosed(): Promise<XrpResult> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('ledger_closed'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('ledger_closed'))
       .then((r) => r.result)
   }
 
   ledgerCurrent(): Promise<XrpResult> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('ledger_current'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('ledger_current'))
       .then((r) => r.result)
   }
 
@@ -191,7 +191,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('ledger_data', generateXrpParams({}, options)),
+        Utils.prepareRpcCall('ledger_data', generateXrpParams({}, options)),
       )
       .then((r) => r.result)
   }
@@ -200,7 +200,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('ledger_entry', generateXrpParams({}, options)),
+        Utils.prepareRpcCall('ledger_entry', generateXrpParams({}, options)),
       )
       .then((r) => r.result)
   }
@@ -209,7 +209,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall(
+        Utils.prepareRpcCall(
           'submit',
           generateXrpParams(typeof tx === 'string' ? { txBlob: tx } : { txJson: tx }, options),
         ),
@@ -221,7 +221,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('submit_multisigned', generateXrpParams({ txJson }, options)),
+        Utils.prepareRpcCall('submit_multisigned', generateXrpParams({ txJson }, options)),
       )
       .then((r) => r.result)
   }
@@ -230,7 +230,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('transaction_entry', generateXrpParams({ txHash }, options)),
+        Utils.prepareRpcCall('transaction_entry', generateXrpParams({ txHash }, options)),
       )
       .then((r) => r.result)
   }
@@ -239,7 +239,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('tx', generateXrpParams({ transaction }, options)),
+        Utils.prepareRpcCall('tx', generateXrpParams({ transaction }, options)),
       )
       .then((r) => r.result)
   }
@@ -248,7 +248,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('txHistory', generateXrpParams({ start })),
+        Utils.prepareRpcCall('txHistory', generateXrpParams({ start })),
       )
       .then((r) => r.result)
   }
@@ -257,7 +257,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall(
+        Utils.prepareRpcCall(
           'sign',
           generateXrpParams(
             {
@@ -274,7 +274,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('sign_for', generateXrpParams({ account, txJson }, options)),
+        Utils.prepareRpcCall('sign_for', generateXrpParams({ account, txJson }, options)),
       )
       .then((r) => r.result)
   }
@@ -283,7 +283,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('book_offers', generateXrpParams({ takerGets, takerPays }, options)),
+        Utils.prepareRpcCall('book_offers', generateXrpParams({ takerGets, takerPays }, options)),
       )
       .then((r) => r.result)
   }
@@ -292,7 +292,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall(
+        Utils.prepareRpcCall(
           'deposit_authorized',
           generateXrpParams(
             {
@@ -310,7 +310,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('nft_buy_offers', generateXrpParams({ nftId }, options)),
+        Utils.prepareRpcCall('nft_buy_offers', generateXrpParams({ nftId }, options)),
       )
       .then((r) => r.result)
   }
@@ -319,7 +319,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('nft_sell_offers', generateXrpParams({ nftId }, options)),
+        Utils.prepareRpcCall('nft_sell_offers', generateXrpParams({ nftId }, options)),
       )
       .then((r) => r.result)
   }
@@ -333,7 +333,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall(
+        Utils.prepareRpcCall(
           'ripple_path_find',
           generateXrpParams(
             {
@@ -352,7 +352,7 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall(
+        Utils.prepareRpcCall(
           'channel_authorize',
           generateXrpParams(
             {
@@ -370,26 +370,26 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('channel_verify', generateXrpParams({ amount, channelId, publicKey, signature })),
+        Utils.prepareRpcCall('channel_verify', generateXrpParams({ amount, channelId, publicKey, signature })),
       )
       .then((r) => r.result)
   }
 
   fee(): Promise<XrpResult> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('fee'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('fee'))
       .then((r) => r.result)
   }
 
   serverInfo(): Promise<XrpResult> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('server_info', generateXrpParams()))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('server_info', generateXrpParams()))
       .then((r) => r.result)
   }
 
   serverState(): Promise<XrpResult> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('server_state'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('server_state'))
       .then((r) => r.result)
   }
 
@@ -397,20 +397,20 @@ export class XrpRpc extends AbstractJsonRpc implements XrpRpcSuite {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('manifest', generateXrpParams({ publicKey })),
+        Utils.prepareRpcCall('manifest', generateXrpParams({ publicKey })),
       )
       .then((r) => r.result)
   }
 
   ping(): Promise<XrpResult> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('ping'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('ping'))
       .then((r) => r.result)
   }
 
   random(): Promise<XrpResult> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('random'))
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('random'))
       .then((r) => r.result)
   }
 }

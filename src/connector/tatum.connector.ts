@@ -66,6 +66,10 @@ export class TatumConnector {
             await res.clone().text(),
           )
         }
+        if ([204, 304, 101, 100].includes(res.status)) {
+          return
+        }
+
         if (res.ok) {
           return res.json()
         }

@@ -1,9 +1,10 @@
-import { Network, TatumSDK, Tron } from '../service'
+import { Network, TatumSDK, Tron } from '../../service'
+
 
 const getTronRpc = async (testnet?: boolean) =>
   await TatumSDK.init<Tron>({
     network: testnet ? Network.TRON_SHASTA : Network.TRON,
-    verbose: true,
+
     retryCount: 1,
     retryDelay: 2000,
   })
