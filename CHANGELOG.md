@@ -1,3 +1,10 @@
+## [1.4.5] - 2023.05.10
+
+### Added
+- Support for `Contract Address Log Event` notification type
+- TRON chain notifications
+- SOLANA chain notifications
+
 ## [1.4.4] - 2023.04.28
 
 ### Fixed
