@@ -2,7 +2,7 @@ import {
   AddressBasedNotification,
   AddressBasedNotificationDetail,
   BlockBasedNotification,
-  BlockBasedNotificationDetail,
+  BlockBasedNotificationDetail, ContractBasedNotification, ContractBasedNotificationDetail,
   Network,
   TatumSDK,
 } from '../service'
@@ -76,10 +76,44 @@ export const e2eUtil = {
         address,
       })
       console.log(data)
+      console.log(error)
+
+      if(error){
+        throw new Error(error.message.join(','))
+      }
+
+      expect(data.id).toBeDefined()
       await tatum.notification.unsubscribe(data.id)
       expect(error).toBeUndefined()
-      expect(data.id).toBeDefined()
       expect(data.address.toLowerCase()).toEqual(address.toLowerCase())
+      expect(url).toBeDefined()
+    },
+    testContractBasedSubscription: async (
+      tatum: TatumSDK<unknown>,
+      contractAddress: string,
+      func: (
+        contractBasedNotificationDetail: ContractBasedNotificationDetail,
+      ) => Promise<ResponseDto<ContractBasedNotification>>,
+    ) => {
+      const url = 'https://webhook.site/'
+      const event = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
+      const { data, error } = await func({
+        url,
+        contractAddress,
+        event,
+      })
+
+      console.log(data)
+      console.log(error)
+
+      if(error){
+        throw new Error(error.message.join(','))
+      }
+
+      expect(data.id).toBeDefined()
+      await tatum.notification.unsubscribe(data.id)
+      expect(error).toBeUndefined()
+      expect(data.contractAddress.toLowerCase()).toEqual(contractAddress.toLowerCase())
       expect(url).toBeDefined()
     },
     testBlockBasedSubscription: async (

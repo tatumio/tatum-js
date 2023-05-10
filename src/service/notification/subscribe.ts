@@ -7,7 +7,7 @@ import {
   AddressBasedNotification,
   AddressBasedNotificationDetail,
   BlockBasedNotification,
-  BlockBasedNotificationDetail,
+  BlockBasedNotificationDetail, ContractBasedNotification, ContractBasedNotificationDetail,
   NotificationType,
 } from './notification.dto'
 
@@ -48,6 +48,34 @@ export class Subscribe {
         address,
         chain,
         url,
+      }
+    })
+  }
+
+  private async contractBasedNotification(
+    { contractAddress, url, event }: ContractBasedNotificationDetail,
+    type: NotificationType,
+  ): Promise<ResponseDto<ContractBasedNotification>> {
+    return ErrorUtils.tryFail(async () => {
+      const chain = Utils.mapNetworkToNotificationChain(this.config.network)
+      const { id } = await this.connector.post<IdDto>({
+        path: 'subscription',
+        body: {
+          type: type,
+          attr: {
+            chain,
+            contractAddress,
+            url,
+            event,
+          },
+        },
+      })
+      return {
+        id,
+        contractAddress,
+        chain,
+        url,
+        event,
       }
     })
   }
@@ -179,6 +207,14 @@ export class Subscribe {
     addressBasedNotificationDetail: AddressBasedNotificationDetail,
   ): Promise<ResponseDto<AddressBasedNotification>> =>
     this.addressBasedNotification(addressBasedNotificationDetail, NotificationType.OUTGOING_MULTITOKEN_TX)
+
+  /**
+   * Subscribe to outgoing multitoken tx.
+   */
+  contractAddressLogEvent = async (
+    contractBasedNotificationDetail: ContractBasedNotificationDetail,
+  ): Promise<ResponseDto<ContractBasedNotification>> =>
+    this.contractBasedNotification(contractBasedNotificationDetail, NotificationType.CONTRACT_ADDRESS_LOG_EVENT)
 
   /**
    * Subscribe to failed txs per block.

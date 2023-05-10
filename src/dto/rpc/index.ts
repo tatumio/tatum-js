@@ -25,6 +25,9 @@ export type Palm = EvmBasedRpcSuite
 export type Polygon = EvmBasedRpcSuite
 export type Vechain = EvmBasedRpcSuite
 export type Xdc = EvmBasedRpcSuite
+export type Tron = EvmBasedRpcSuite
+export type Solana = EvmBasedRpcSuite
+export type Xrp = EvmBasedRpcSuite
 
 // UTXO chains
 export type Bitcoin = UtxoBasedRpcSuite
