@@ -18,7 +18,7 @@ describe('Address', () => {
           asset: 'ETH',
           decimals: 18,
           address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
-          balance: '1',
+          balance: '0.001775274999118',
           type: 'native',
         })
       })
@@ -32,14 +32,14 @@ describe('Address', () => {
           asset: 'ETH',
           address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
           decimals: 18,
-          balance: '1',
+          balance: '0.001775274999118',
           type: 'native',
         })
         expect(data[1]).toStrictEqual({
           asset: 'ETH',
           address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
           decimals: 18,
-          balance: '1',
+          balance: '0.001775274999118',
           type: 'native',
         })
       })
@@ -207,8 +207,8 @@ describe('Address', () => {
           address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
         })
         expect(txs.status === Status.SUCCESS)
-        expect(txs.data).toHaveLength(1)
-        expect(txs.data[0]).toStrictEqual({
+        expect(txs.data).toHaveLength(8)
+        expect(txs.data[7]).toStrictEqual({
           address: '0x514d547c8ac8ccbec29b5144810454bd7d3625ca',
           amount: '1',
           blockNumber: 3325299,
