@@ -47,7 +47,7 @@
     "ts-jest": "^27.1.4",
     "ts-node": "^10.7.0",
     "tslib": "^2.5.0",
-    "typescript": "^4.9.5",
+    "typescript": "^5.0.4",
     "undici": "^5.21.0"
   }
 }
