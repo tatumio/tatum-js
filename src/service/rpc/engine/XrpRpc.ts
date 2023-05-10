@@ -9,15 +9,13 @@ import {
   OrderBook,
   XrpRpcSuite,
 } from '../../../dto'
-import { CONFIG } from '../../../util'
+import { CONFIG, Utils } from '../../../util'
 import { AbstractJsonRpc } from './AbstractJsonRpc'
-
-const camelToSnakeCase = (str: string) => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`)
 
 const generateXrpParams = (params: Record<string, unknown>) => {
   const xrpParams: { [name: string]: unknown } = {}
   for (const [name, value] of Object.entries(params)) {
-    xrpParams[camelToSnakeCase(name)] = value
+    xrpParams[Utils.camelToSnakeCase(name)] = value
   }
   return [xrpParams]
 }
