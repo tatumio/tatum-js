@@ -10,6 +10,16 @@ export interface SolanaAccountInfo {
   size: number
 }
 
+export interface SolanaMint {
+  mint: string
+}
+export interface SolanaProgramId {
+  programId: string
+}
+export interface SolanaVersion {
+  'solana-core': string
+  'feature-set': string
+}
 export interface SolanaEpochInfo {
   absoluteSlot: number
   blockHeight: number
@@ -32,29 +42,22 @@ export interface SolanaLeaderSchedule {
 }
 
 export interface SolanaTransaction {
-  signatures: Array<string>
-  message: {
-    accountKeys: Array<string>
-    header: {
-      numReadonlySignedAccounts: number
-      numReadonlyUnsignedAccounts: number
-      numRequiredSignatures: number
-    }
-    instructions: Array<{
-      accounts: Array<number>
-      data: string
-      programIdIndex: number
-    }>
-  }
+  slot: number
+  transaction: any
+  meta: any
+  blockTime: number | null
+  version: number | string | null
 }
 
 export interface SolanaVoteAccount {
-  commission: number
-  epochCredits: Array<[number, number, number]>
-  nodePubkey: string
-  lastVote: number
-  rootSlot: number
   votePubkey: string
+  nodePubkey: string
+  activatedStake: number
+  epochVoteAccount: boolean
+  commission: number
+  lastVote: number
+  epochCredits: Array<[number, number, number]>
+  rootSlot: number
 }
 
 export enum Commitment {
@@ -264,62 +267,132 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
   getSlotLeader: (options?: { commitment?: Commitment; minContextSlot?: number }) => Promise<string>
   getSlotLeaders: (startSlot?: number, limit?: number) => Promise<Array<string>>
   getStakeActivation: (
-    publicKey: string,
+    pubkey: string,
     options?: { commitment?: Commitment; minContextSlot?: number; epoch?: number },
   ) => Promise<{ state: string; active: number; inactive: number }>
-  getStakeMinimumDelegation: (commitment?: Commitment) => Promise<number>
-  getSupply: (
-    commitment?: Commitment,
-  ) => Promise<{ circulating: number; nonCirculating: number; total: number }>
+  getStakeMinimumDelegation: (options?: {
+    commitment?: Commitment
+  }) => Promise<{ context: { slot: number }; value: number }>
+  getSupply: (options?: { commitment?: Commitment; excludeNonCirculatingAccountsList?: boolean }) => Promise<{
+    context: { slot: number }
+    value: {
+      circulating: number
+      nonCirculating: number
+      nonCirculatingAccounts: Array<string>
+      total: number
+    }
+  }>
   getTokenAccountBalance: (
-    publicKey: string,
-    commitment?: Commitment,
-  ) => Promise<{ value: number; decimals: number }>
+    pubkey: string,
+    options?: { commitment?: Commitment },
+  ) => Promise<{
+    context: { slot: number }
+    value: { amount: number; decimals: number; uiAmount: number | null; uiAmountString: string }
+  }>
   getTokenAccountsByDelegate: (
-    delegate: string,
+    pubkey: string,
+    config?: SolanaMint | SolanaProgramId,
     options?: {
-      mint?: string
-      programId?: string
-      encoding?: Encoding
+      commitment?: Commitment
+      minContextSlot?: number
       dataSlice?: { offset: number; length: number }
+      encoding?: Encoding
     },
-    commitment?: Commitment,
-  ) => Promise<Array<{ account: SolanaAccountInfo; pubkey: string; data: any }>>
+  ) => Promise<{
+    context: { slot: number }
+    value: Array<{ account: SolanaAccountInfo; pubkey: string }>
+  }>
   getTokenAccountsByOwner: (
-    owner: string,
+    pubkey: string,
+    config?: SolanaMint | SolanaProgramId,
     options?: {
-      mint?: string
-      programId?: string
-      encoding?: Encoding
+      commitment?: Commitment
+      minContextSlot?: number
       dataSlice?: { offset: number; length: number }
+      encoding?: Encoding
     },
-    commitment?: Commitment,
-  ) => Promise<Array<{ account: SolanaAccountInfo; pubkey: string; data: any }>>
+  ) => Promise<{
+    context: { slot: number }
+    value: Array<{ account: SolanaAccountInfo; pubkey: string }>
+  }>
   getTokenLargestAccounts: (
-    mintAddress: string,
-    commitment?: Commitment,
-  ) => Promise<Array<{ address: string; amount: number }>>
-  getTokenSupply: (mintAddress: string, commitment?: Commitment) => Promise<number>
-  getTransaction: (signature: string, commitment?: Commitment) => Promise<SolanaTransaction>
-  getTransactionCount: (commitment?: Commitment) => Promise<number>
-  getVersion: () => Promise<number>
-  getVoteAccounts: (
-    commitment?: Commitment,
-  ) => Promise<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }>
-  isBlockhashValid: (blockhash: string, commitment?: Commitment) => Promise<boolean>
+    pubkey: string,
+    options?: {
+      commitment?: Commitment
+    },
+  ) => Promise<{
+    context: { slot: number }
+    value: Array<{
+      address: string
+      amount: number
+      decimals: number
+      uiAmount: number | null
+      uiAmountString: string
+    }>
+  }>
+  getTokenSupply: (
+    pubkey: string,
+    options?: { commitment?: Commitment },
+  ) => Promise<{
+    context: { slot: number }
+    value: { amount: string; decimals: number; uiAmount: number | null; uiAmountString: string }
+  }>
+  getTransaction: (
+    signature: string,
+    options?: { commitment?: Commitment; maxSupportedTransactionVersion?: number; encoding: Encoding },
+  ) => Promise<SolanaTransaction | null>
+  getTransactionCount: (options?: { commitment?: Commitment; minContextSlot?: number }) => Promise<number>
+  getVersion: () => Promise<SolanaVersion>
+  getVoteAccounts: (options?: {
+    commitment?: Commitment
+    votePubkey?: string
+    keepUnstakedDelinquents?: boolean
+    delinquentSlotDistance?: number
+  }) => Promise<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }>
+  isBlockhashValid: (
+    blockhash: string,
+    options?: { commitment?: Commitment; minContextSlot?: number },
+  ) => Promise<{
+    context: {
+      slot: number
+    }
+    value: boolean
+  }>
   minimumLedgerSlot: () => Promise<number>
-  requestAirdrop: (publicKey: string, amount: number, commitment?: Commitment) => Promise<string>
+  requestAirdrop: (pubkey: string, amount: number, options?: { commitment?: Commitment }) => Promise<string>
   sendTransaction: (
-    transaction: SolanaTransaction,
-    config?: {
+    transaction: string,
+    options?: {
+      encoding?: Encoding
       skipPreflight?: boolean
       preflightCommitment?: Commitment
-      commitment?: Commitment
+      maxRetries?: number
+      minContextSlot?: number
     },
   ) => Promise<string>
   simulateTransaction: (
-    transaction: SolanaTransaction,
-    signers?: Array<string>,
-    commitment?: Commitment,
-  ) => Promise<{ err: any }>
+    transaction: string,
+    options?: {
+      commitment?: Commitment
+      sigVerify?: boolean
+      replaceRecentBlockhash?: boolean
+      minContextSlot?: number
+      encoding?: Encoding
+      accounts: {
+        addresses: Array<string>
+        encoding?: Encoding
+      }
+    },
+  ) => Promise<{
+    context: { slot: number }
+    value: {
+      err: any
+      accounts: Array<any> | null
+      unitsConsumed: number | null
+      returnData: {
+        programId: string
+        data: Array<string>
+      }
+    }
+  }>
 }

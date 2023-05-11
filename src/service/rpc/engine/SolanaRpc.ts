@@ -9,8 +9,11 @@ import {
   SolanaEpochInfo,
   SolanaEpochSchedule,
   SolanaLeaderSchedule,
+  SolanaMint,
+  SolanaProgramId,
   SolanaRpcSuite,
   SolanaTransaction,
+  SolanaVersion,
   SolanaVoteAccount,
   TransactionDetails,
 } from '../../../dto'
@@ -417,63 +420,237 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       )
       .then((r) => r.result)
   }
-  getStakeActivation: (
-    publicKey: string,
+  getStakeActivation(
+    pubkey: string,
     options?: { commitment?: Commitment; minContextSlot?: number; epoch?: number },
-  ) => Promise<{ state: string; active: number; inactive: number }>
-  getStakeMinimumDelegation: (commitment?: Commitment) => Promise<number>
-  getSupply: (
-    commitment?: Commitment,
-  ) => Promise<{ circulating: number; nonCirculating: number; total: number }>
-  getTokenAccountBalance: (
-    publicKey: string,
-    commitment?: Commitment,
-  ) => Promise<{ value: number; decimals: number }>
-  getTokenAccountsByDelegate: (
-    delegate: string,
+  ): Promise<{ state: string; active: number; inactive: number }> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('getStakeActivation', [pubkey, options]),
+      )
+      .then((r) => r.result)
+  }
+  getStakeMinimumDelegation(options?: {
+    commitment?: Commitment
+  }): Promise<{ context: { slot: number }; value: number }> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('getStakeMinimumDelegation', [options]),
+      )
+      .then((r) => r.result)
+  }
+  getSupply(options?: { commitment?: Commitment; excludeNonCirculatingAccountsList?: boolean }): Promise<{
+    context: { slot: number }
+    value: {
+      circulating: number
+      nonCirculating: number
+      nonCirculatingAccounts: Array<string>
+      total: number
+    }
+  }> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getSupply', [options]))
+      .then((r) => r.result)
+  }
+  getTokenAccountBalance(
+    pubkey: string,
+    options?: { commitment?: Commitment },
+  ): Promise<{
+    context: { slot: number }
+    value: { amount: number; decimals: number; uiAmount: number | null; uiAmountString: string }
+  }> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('getTokenAccountBalance', [pubkey, options]),
+      )
+      .then((r) => r.result)
+  }
+  getTokenAccountsByDelegate(
+    pubkey: string,
+    config?: SolanaMint | SolanaProgramId,
     options?: {
-      mint?: string
-      programId?: string
-      encoding?: Encoding
+      commitment?: Commitment
+      minContextSlot?: number
       dataSlice?: { offset: number; length: number }
+      encoding?: Encoding
     },
-    commitment?: Commitment,
-  ) => Promise<Array<{ account: SolanaAccountInfo; pubkey: string; data: any }>>
-  getTokenAccountsByOwner: (
-    owner: string,
+  ): Promise<{
+    context: { slot: number }
+    value: Array<{ account: SolanaAccountInfo; pubkey: string }>
+  }> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('getTokenAccountsByDelegate', [pubkey, config, options]),
+      )
+      .then((r) => r.result)
+  }
+  getTokenAccountsByOwner(
+    pubkey: string,
+    config?: SolanaMint | SolanaProgramId,
     options?: {
-      mint?: string
-      programId?: string
-      encoding?: Encoding
+      commitment?: Commitment
+      minContextSlot?: number
       dataSlice?: { offset: number; length: number }
+      encoding?: Encoding
     },
-    commitment?: Commitment,
-  ) => Promise<Array<{ account: SolanaAccountInfo; pubkey: string; data: any }>>
-  getTokenLargestAccounts: (
-    mintAddress: string,
-    commitment?: Commitment,
-  ) => Promise<Array<{ address: string; amount: number }>>
-  getTokenSupply: (mintAddress: string, commitment?: Commitment) => Promise<number>
-  getTransaction: (signature: string, commitment?: Commitment) => Promise<SolanaTransaction>
-  getTransactionCount: (commitment?: Commitment) => Promise<number>
-  getVersion: () => Promise<number>
-  getVoteAccounts: (
-    commitment?: Commitment,
-  ) => Promise<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }>
-  isBlockhashValid: (blockhash: string, commitment?: Commitment) => Promise<boolean>
-  minimumLedgerSlot: () => Promise<number>
-  requestAirdrop: (publicKey: string, amount: number, commitment?: Commitment) => Promise<string>
-  sendTransaction: (
-    transaction: SolanaTransaction,
-    config?: {
-      skipPreflight?: boolean
-      preflightCommitment?: Commitment
+  ): Promise<{
+    context: { slot: number }
+    value: Array<{ account: SolanaAccountInfo; pubkey: string }>
+  }> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('getTokenAccountsByOwner', [pubkey, config, options]),
+      )
+      .then((r) => r.result)
+  }
+  getTokenLargestAccounts(
+    pubkey: string,
+    options?: {
       commitment?: Commitment
     },
-  ) => Promise<string>
-  simulateTransaction: (
-    transaction: SolanaTransaction,
-    signers?: Array<string>,
-    commitment?: Commitment,
-  ) => Promise<{ err: any }>
+  ): Promise<{
+    context: { slot: number }
+    value: Array<{
+      address: string
+      amount: number
+      decimals: number
+      uiAmount: number | null
+      uiAmountString: string
+    }>
+  }> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('getTokenLargestAccounts', [pubkey, options]),
+      )
+      .then((r) => r.result)
+  }
+  getTokenSupply(
+    pubkey: string,
+    options?: { commitment?: Commitment },
+  ): Promise<{
+    context: { slot: number }
+    value: { amount: string; decimals: number; uiAmount: number | null; uiAmountString: string }
+  }> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('getTokenSupply', [pubkey, options]),
+      )
+      .then((r) => r.result)
+  }
+  getTransaction(
+    signature: string,
+    options?: { commitment?: Commitment; maxSupportedTransactionVersion?: number; encoding: Encoding },
+  ): Promise<SolanaTransaction | null> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('getTransaction', [signature, options]),
+      )
+      .then((r) => r.result)
+  }
+  getTransactionCount(options?: { commitment?: Commitment; minContextSlot?: number }): Promise<number> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getTransactionCount', [options]))
+      .then((r) => r.result)
+  }
+  getVersion(): Promise<SolanaVersion> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getVersion'))
+      .then((r) => r.result)
+  }
+  getVoteAccounts(options?: {
+    commitment?: Commitment
+    votePubkey?: string
+    keepUnstakedDelinquents?: boolean
+    delinquentSlotDistance?: number
+  }): Promise<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getVoteAccounts', [options]))
+      .then((r) => r.result)
+  }
+  isBlockhashValid(
+    blockhash: string,
+    options?: { commitment?: Commitment; minContextSlot?: number },
+  ): Promise<{
+    context: {
+      slot: number
+    }
+    value: boolean
+  }> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('isBlockhashValid', [blockhash, options]),
+      )
+      .then((r) => r.result)
+  }
+  minimumLedgerSlot(): Promise<number> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('minimumLedgerSlot'))
+      .then((r) => r.result)
+  }
+  requestAirdrop(pubkey: string, amount: number, options?: { commitment?: Commitment }): Promise<string> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('requestAirdrop', [pubkey, amount, options]),
+      )
+      .then((r) => r.result)
+  }
+  sendTransaction(
+    transaction: string,
+    options?: {
+      encoding?: Encoding
+      skipPreflight?: boolean
+      preflightCommitment?: Commitment
+      maxRetries?: number
+      minContextSlot?: number
+    },
+  ): Promise<string> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('sendTransaction', [transaction, options]),
+      )
+      .then((r) => r.result)
+  }
+  simulateTransaction(
+    transaction: string,
+    options?: {
+      commitment?: Commitment
+      sigVerify?: boolean
+      replaceRecentBlockhash?: boolean
+      minContextSlot?: number
+      encoding?: Encoding
+      accounts: {
+        addresses: Array<string>
+        encoding?: Encoding
+      }
+    },
+  ): Promise<{
+    context: { slot: number }
+    value: {
+      err: any
+      accounts: Array<any> | null
+      unitsConsumed: number | null
+      returnData: {
+        programId: string
+        data: Array<string>
+      }
+    }
+  }> {
+    return this.connector
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        this.prepareRpcCall('simulateTransaction', [transaction, options]),
+      )
+      .then((r) => r.result)
+  }
 }
