@@ -2,20 +2,47 @@
 
 import { Container, Service } from 'typedi'
 import {
-  Commitment,
-  Encoding,
+  GetAccountInfoOptions,
+  GetBlockOptions,
+  GetBlockProductionOptions,
+  GetCommitmentMinContextSlotOptions,
+  GetCommitmentOptions,
+  GetInflationRewardOptions,
+  GetLargestAccountsOptions,
+  GetLeaderScheduleOptions,
+  GetMultipleAccountsOptions,
+  GetProgramAccountsOptions,
+  GetSignaturesForAddressOptions,
+  GetSignatureStatusesOptions,
+  GetStakeActivationOptions,
+  GetSupplyOptions,
+  GetTokenAccountsOptions,
+  GetTransactionOptions,
+  GetVoteAccountOptions,
   JsonRpcResponse,
+  SendTransactionOptions,
+  SimulateTransactionOptions,
+  SolanaAccount,
   SolanaAccountInfo,
+  SolanaBlockProduction,
   SolanaEpochInfo,
   SolanaEpochSchedule,
+  SolanaLargestAccount,
+  SolanaLatestBlockhash,
   SolanaLeaderSchedule,
   SolanaMint,
   SolanaProgramId,
   SolanaRpcSuite,
+  SolanaSignatureStatus,
+  SolanaSupply,
+  SolanaTokenAccount,
+  SolanaTokenAccountBalance,
+  SolanaTokenSupply,
   SolanaTransaction,
+  SolanaTransactionSimulation,
+  SolanaTypeWithContext,
   SolanaVersion,
   SolanaVoteAccount,
-  TransactionDetails,
 } from '../../../dto'
 import { CONFIG } from '../../../util'
 import { AbstractJsonRpc } from './AbstractJsonRpc'
@@ -32,42 +59,32 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
   }
 
   getAccountInfo(
-    publicKey: string,
-    commitment?: Commitment,
-    encoding?: Encoding,
-  ): Promise<SolanaAccountInfo | null> {
+    pubkey: string,
+    options?: GetAccountInfoOptions,
+  ): Promise<SolanaTypeWithContext<SolanaAccountInfo | null>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getAccountInfo', [publicKey, { commitment, encoding }]),
+        this.prepareRpcCall('getAccountInfo', [pubkey, options]),
       )
       .then((r) => r.result)
   }
 
-  getBalance(address: string): Promise<{ context: { slot: number }; value: number }> {
+  getBalance(address: string): Promise<SolanaTypeWithContext<number>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBalance', [address]))
       .then((r) => r.result)
   }
 
-  getBlockHeight(commitment?: string, minContextSlot?: string): Promise<number> {
+  getBlockHeight(options?: GetCommitmentMinContextSlotOptions): Promise<number> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall('getBlockHeight', [{ commitment, minContextSlot }]),
-      )
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlockHeight', [options]))
       .then((r) => r.result)
   }
 
   getBlock(
     block: number,
-    options?: {
-      commitment?: Commitment
-      encoding?: Encoding
-      transactionDetails?: TransactionDetails
-      maxSupportedTransactionVersion?: number
-      rewards?: boolean
-    },
+    options?: GetBlockOptions,
   ): Promise<{
     blockhash: string
     previousBlockhash: string
@@ -79,34 +96,15 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
     blockHeight: number | null
   } | null> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall('getBlock', [block, { ...options }]),
-      )
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlock', [block, options]))
       .then((r) => r.result)
   }
 
-  getBlockProduction(options?: {
-    commitment?: Commitment
-    identity?: string
-    range?: {
-      firstSlot: number
-      lastSlot: number
-    }
-  }): Promise<{
-    context: { slot: number }
-    value: {
-      byIdentity: {
-        [key: string]: Array<number>
-      }
-      range: { firstSlot: number; lastSlot: number }
-    }
-  }> {
+  getBlockProduction(
+    options?: GetBlockProductionOptions,
+  ): Promise<SolanaTypeWithContext<SolanaBlockProduction>> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall('getBlockProduction', [{ ...options }]),
-      )
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlockProduction', [options]))
       .then((r) => r.result)
   }
 
@@ -115,11 +113,11 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlockCommitment', [block]))
       .then((r) => r.result)
   }
-  getBlocks(endSlot: number, startSlot?: number, commitment?: Commitment): Promise<Array<number>> {
+  getBlocks(endSlot: number, startSlot?: number, options?: GetCommitmentOptions): Promise<Array<number>> {
     let params: any = [endSlot]
     if (startSlot) params = [startSlot, endSlot]
 
-    if (commitment) params.push({ commitment })
+    if (options && options.commitment) params.push(options)
 
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getBlocks', params))
@@ -146,16 +144,10 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getClusterNodes'))
       .then((r) => r.result)
   }
-  //todo test
-  getEpochInfo(
-    pubkey: string,
-    options?: { commitment?: Commitment; minContextSlot?: number },
-  ): Promise<SolanaEpochInfo> {
+
+  getEpochInfo(options?: GetCommitmentMinContextSlotOptions): Promise<SolanaEpochInfo> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall('getEpochInfo', [pubkey, { ...options }]),
-      )
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getEpochInfo', [options]))
       .then((r) => r.result)
   }
 
@@ -165,14 +157,11 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       .then((r) => r.result)
   }
 
-  getFeeForMessage(
-    message: any,
-    options?: { commitment?: Commitment; minContextSlot?: number },
-  ): Promise<number | null> {
+  getFeeForMessage(message: any, options?: GetCommitmentMinContextSlotOptions): Promise<number | null> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getFeeForMessage', [message, { ...options }]),
+        this.prepareRpcCall('getFeeForMessage', [message, options]),
       )
       .then((r) => r.result)
   }
@@ -202,7 +191,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getIdentity'))
       .then((r) => r.result)
   }
-  getInflationGovernor(options?: { commitment?: Commitment }): Promise<{
+  getInflationGovernor(options?: GetCommitmentOptions): Promise<{
     initial: number
     terminal: number
     taper: number
@@ -220,11 +209,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
   }
   getInflationReward(
     addresses?: string[],
-    options?: {
-      commitment?: Commitment
-      epoch?: number
-      minContextSlot?: number
-    },
+    options?: GetInflationRewardOptions,
   ): Promise<
     Array<{
       epoch: number
@@ -234,39 +219,29 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       commission: number
     }>
   > {
+    let params: any = []
+    if (addresses) params = [addresses]
+    if (options) params.push(options)
+
     return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall('getInflationReward', [addresses, options]),
-      )
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getInflationReward', params))
       .then((r) => r.result)
   }
-  getLargestAccounts(options?: {
-    commitment?: Commitment
-    filter?: 'circulating' | 'nonCirculating'
-  }): Promise<{ context: { slot: number }; value: Array<{ address: string; lamports: number }> }> {
+  getLargestAccounts(
+    options?: GetLargestAccountsOptions,
+  ): Promise<SolanaTypeWithContext<SolanaLargestAccount[]>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getLargestAccounts', [options]))
       .then((r) => r.result)
   }
-  getLatestBlockhash(options?: { commitment?: Commitment; minContextSlot?: number }): Promise<{
-    context: { slot: number }
-    value: {
-      blockhash: string
-      lastValidBlockHeight: number
-    }
-  }> {
+  getLatestBlockhash(
+    options?: GetCommitmentMinContextSlotOptions,
+  ): Promise<SolanaTypeWithContext<SolanaLatestBlockhash>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getLatestBlockhash', [options]))
       .then((r) => r.result)
   }
-  getLeaderSchedule(
-    slot?: number,
-    options?: {
-      commitment?: Commitment
-      identity?: string
-    },
-  ): Promise<SolanaLeaderSchedule | null> {
+  getLeaderSchedule(slot?: number, options?: GetLeaderScheduleOptions): Promise<SolanaLeaderSchedule | null> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -284,10 +259,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getMaxShredInsertSlot'))
       .then((r) => r.result)
   }
-  getMinimumBalanceForRentExemption(
-    dataSize?: number,
-    options?: { commitment?: Commitment },
-  ): Promise<number> {
+  getMinimumBalanceForRentExemption(dataSize?: number, options?: GetCommitmentOptions): Promise<number> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -297,13 +269,8 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
   }
   getMultipleAccounts(
     pubKeys?: string[],
-    options?: {
-      commitment?: Commitment
-      minContextSlot?: number
-      dataSlice?: { offset: number; length: number }
-      encoding?: Encoding
-    },
-  ): Promise<{ context: { slot: number }; value: Array<SolanaAccountInfo | null> }> {
+    options?: GetMultipleAccountsOptions,
+  ): Promise<SolanaTypeWithContext<Array<SolanaAccountInfo | null>>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -313,14 +280,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
   }
   getProgramAccounts(
     programId: string,
-    options?: {
-      commitment?: Commitment
-      minContextSlot?: number
-      withContext?: boolean
-      encoding?: Encoding
-      dataSlice?: { offset: number; length: number }
-      filters?: Array<{ memcmp: { offset: number; bytes: string } | { dataSize: number } }>
-    },
+    options?: GetProgramAccountsOptions,
   ): Promise<Array<{ account: SolanaAccountInfo; pubkey: string }>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
@@ -357,13 +317,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
   }
   getSignaturesForAddress(
     address: string,
-    options?: {
-      commitment?: Commitment
-      minContextSlot?: number
-      limit?: number
-      before?: string
-      until?: string
-    },
+    options?: GetSignaturesForAddressOptions,
   ): Promise<
     Array<{
       signature: string
@@ -383,18 +337,8 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
   }
   getSignatureStatuses(
     signatures?: string[],
-    options?: {
-      searchTransactionHistory?: boolean
-    },
-  ): Promise<{
-    context: { slot: number }
-    value: {
-      slot: number
-      confirmations: number | null
-      err: any | null
-      confirmationStatus: string | null
-    }
-  }> {
+    options?: GetSignatureStatusesOptions,
+  ): Promise<SolanaTypeWithContext<SolanaSignatureStatus>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -402,12 +346,12 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       )
       .then((r) => r.result)
   }
-  getSlot(options?: { commitment?: Commitment; minContextSlot?: number }): Promise<number> {
+  getSlot(options?: GetCommitmentMinContextSlotOptions): Promise<number> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getSlot', [options]))
       .then((r) => r.result)
   }
-  getSlotLeader(options?: { commitment?: Commitment; minContextSlot?: number }): Promise<string> {
+  getSlotLeader(options?: GetCommitmentMinContextSlotOptions): Promise<string> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getSlotLeader', [options]))
       .then((r) => r.result)
@@ -422,7 +366,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
   }
   getStakeActivation(
     pubkey: string,
-    options?: { commitment?: Commitment; minContextSlot?: number; epoch?: number },
+    options?: GetStakeActivationOptions,
   ): Promise<{ state: string; active: number; inactive: number }> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
@@ -431,9 +375,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       )
       .then((r) => r.result)
   }
-  getStakeMinimumDelegation(options?: {
-    commitment?: Commitment
-  }): Promise<{ context: { slot: number }; value: number }> {
+  getStakeMinimumDelegation(options?: GetCommitmentOptions): Promise<SolanaTypeWithContext<number>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -441,26 +383,15 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       )
       .then((r) => r.result)
   }
-  getSupply(options?: { commitment?: Commitment; excludeNonCirculatingAccountsList?: boolean }): Promise<{
-    context: { slot: number }
-    value: {
-      circulating: number
-      nonCirculating: number
-      nonCirculatingAccounts: Array<string>
-      total: number
-    }
-  }> {
+  getSupply(options?: GetSupplyOptions): Promise<SolanaTypeWithContext<SolanaSupply>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getSupply', [options]))
       .then((r) => r.result)
   }
   getTokenAccountBalance(
     pubkey: string,
-    options?: { commitment?: Commitment },
-  ): Promise<{
-    context: { slot: number }
-    value: { amount: number; decimals: number; uiAmount: number | null; uiAmountString: string }
-  }> {
+    options?: GetCommitmentOptions,
+  ): Promise<SolanaTypeWithContext<SolanaTokenAccountBalance>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -471,58 +402,34 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
   getTokenAccountsByDelegate(
     pubkey: string,
     config?: SolanaMint | SolanaProgramId,
-    options?: {
-      commitment?: Commitment
-      minContextSlot?: number
-      dataSlice?: { offset: number; length: number }
-      encoding?: Encoding
-    },
-  ): Promise<{
-    context: { slot: number }
-    value: Array<{ account: SolanaAccountInfo; pubkey: string }>
-  }> {
+    options?: GetTokenAccountsOptions,
+  ): Promise<SolanaTypeWithContext<SolanaTokenAccount[]>> {
+    const params: any[] = [pubkey]
+    if (config) params.push(config)
+    if (options) params.push(options)
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        this.prepareRpcCall('getTokenAccountsByDelegate', [pubkey, config, options]),
+        this.prepareRpcCall('getTokenAccountsByDelegate', params),
       )
       .then((r) => r.result)
   }
   getTokenAccountsByOwner(
     pubkey: string,
     config?: SolanaMint | SolanaProgramId,
-    options?: {
-      commitment?: Commitment
-      minContextSlot?: number
-      dataSlice?: { offset: number; length: number }
-      encoding?: Encoding
-    },
-  ): Promise<{
-    context: { slot: number }
-    value: Array<{ account: SolanaAccountInfo; pubkey: string }>
-  }> {
+    options?: GetTokenAccountsOptions,
+  ): Promise<SolanaTypeWithContext<SolanaTokenAccount[]>> {
+    const params: any[] = [pubkey]
+    if (config) params.push(config)
+    if (options) params.push(options)
     return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        this.prepareRpcCall('getTokenAccountsByOwner', [pubkey, config, options]),
-      )
+      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getTokenAccountsByOwner', params))
       .then((r) => r.result)
   }
   getTokenLargestAccounts(
     pubkey: string,
-    options?: {
-      commitment?: Commitment
-    },
-  ): Promise<{
-    context: { slot: number }
-    value: Array<{
-      address: string
-      amount: number
-      decimals: number
-      uiAmount: number | null
-      uiAmountString: string
-    }>
-  }> {
+    options?: GetCommitmentOptions,
+  ): Promise<SolanaTypeWithContext<SolanaAccount[]>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -532,11 +439,8 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
   }
   getTokenSupply(
     pubkey: string,
-    options?: { commitment?: Commitment },
-  ): Promise<{
-    context: { slot: number }
-    value: { amount: string; decimals: number; uiAmount: number | null; uiAmountString: string }
-  }> {
+    options?: GetCommitmentOptions,
+  ): Promise<SolanaTypeWithContext<SolanaTokenSupply>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -544,10 +448,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       )
       .then((r) => r.result)
   }
-  getTransaction(
-    signature: string,
-    options?: { commitment?: Commitment; maxSupportedTransactionVersion?: number; encoding: Encoding },
-  ): Promise<SolanaTransaction | null> {
+  getTransaction(signature: string, options?: GetTransactionOptions): Promise<SolanaTransaction | null> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -555,7 +456,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       )
       .then((r) => r.result)
   }
-  getTransactionCount(options?: { commitment?: Commitment; minContextSlot?: number }): Promise<number> {
+  getTransactionCount(options?: GetCommitmentMinContextSlotOptions): Promise<number> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getTransactionCount', [options]))
       .then((r) => r.result)
@@ -565,25 +466,17 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getVersion'))
       .then((r) => r.result)
   }
-  getVoteAccounts(options?: {
-    commitment?: Commitment
-    votePubkey?: string
-    keepUnstakedDelinquents?: boolean
-    delinquentSlotDistance?: number
-  }): Promise<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }> {
+  getVoteAccounts(
+    options?: GetVoteAccountOptions,
+  ): Promise<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('getVoteAccounts', [options]))
       .then((r) => r.result)
   }
   isBlockhashValid(
     blockhash: string,
-    options?: { commitment?: Commitment; minContextSlot?: number },
-  ): Promise<{
-    context: {
-      slot: number
-    }
-    value: boolean
-  }> {
+    options?: GetCommitmentMinContextSlotOptions,
+  ): Promise<SolanaTypeWithContext<boolean>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -596,7 +489,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), this.prepareRpcCall('minimumLedgerSlot'))
       .then((r) => r.result)
   }
-  requestAirdrop(pubkey: string, amount: number, options?: { commitment?: Commitment }): Promise<string> {
+  requestAirdrop(pubkey: string, amount: number, options?: GetCommitmentOptions): Promise<string> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -604,16 +497,7 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
       )
       .then((r) => r.result)
   }
-  sendTransaction(
-    transaction: string,
-    options?: {
-      encoding?: Encoding
-      skipPreflight?: boolean
-      preflightCommitment?: Commitment
-      maxRetries?: number
-      minContextSlot?: number
-    },
-  ): Promise<string> {
+  sendTransaction(transaction: string, options?: SendTransactionOptions): Promise<string> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -623,29 +507,8 @@ export class SolanaRpc extends AbstractJsonRpc implements SolanaRpcSuite {
   }
   simulateTransaction(
     transaction: string,
-    options?: {
-      commitment?: Commitment
-      sigVerify?: boolean
-      replaceRecentBlockhash?: boolean
-      minContextSlot?: number
-      encoding?: Encoding
-      accounts: {
-        addresses: Array<string>
-        encoding?: Encoding
-      }
-    },
-  ): Promise<{
-    context: { slot: number }
-    value: {
-      err: any
-      accounts: Array<any> | null
-      unitsConsumed: number | null
-      returnData: {
-        programId: string
-        data: Array<string>
-      }
-    }
-  }> {
+    options?: SimulateTransactionOptions,
+  ): Promise<SolanaTypeWithContext<SolanaTransactionSimulation>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
