@@ -111,4 +111,23 @@ describe('Solana mainnet RPC', () => {
       expect(Array.isArray(blocksResponse)).toBe(true)
     })
   })
+
+  describe('getBlockTime', () => {
+    test('should return block time ', async () => {
+      const tatum = await getClient()
+      const result = await tatum.rpc.getBlockTime(193167072)
+
+      expect(typeof result).toBe('number')
+      expect(result).toBeGreaterThan(0)
+    })
+  })
+
+  describe('getClusterNodes', () => {
+    test('should return cluster nodes info ', async () => {
+      const tatum = await getClient()
+      const result = await tatum.rpc.getClusterNodes()
+
+      expect(Array.isArray(result)).toBe(true)
+    })
+  })
 })

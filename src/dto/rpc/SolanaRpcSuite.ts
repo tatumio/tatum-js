@@ -2,32 +2,33 @@
 import { AbstractJsonRpcSuite } from './AbstractJsonRpcSuite'
 
 export interface SolanaAccountInfo {
-  executable: boolean
   lamports: number
   owner: string
-  rentEpoch: number
   data: string
+  executable: boolean
+  rentEpoch: number
+  size: number
 }
 
 export interface SolanaEpochInfo {
+  absoluteSlot: number
+  blockHeight: number
   epoch: number
   slotIndex: number
   slotsInEpoch: number
-  absoluteSlot: number
+  transactionCount: number
+}
+
+export interface SolanaEpochSchedule {
+  slotsPerEpoch: number
+  leaderScheduleSlotOffset: number
+  warmup: boolean
+  firstNormalEpoch: number
+  firstNormalSlot: number
 }
 
 export interface SolanaLeaderSchedule {
   [pubkey: string]: number[]
-}
-
-export interface SolanaPublicKey {
-  _bn: string
-  toString(): string
-}
-
-export interface SolanaTransactionSignature {
-  _bn: string
-  toString(): string
 }
 
 export interface SolanaTransaction {
@@ -119,81 +120,153 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
   }>
 
   getBlockCommitment: (block: number) => Promise<{ commitment: Array<number>; totalStake: number }>
-  getBlocks: (endSlot: number, startSlot?: number, commitment?: Commitment) => Promise<Array<number>> /*
-  getBlockTime: (block: number | 'recent', commitment?: Commitment) => Promise<number | null>
-  // Cluster-related methods
-  getClusterNodes: () => Promise<Array<{ pubkey: SolanaPublicKey; gossip: string; tpu?: string }>>
-  getEpochInfo: (commitment?: Commitment) => Promise<SolanaEpochInfo>
-  getEpochSchedule: (
-    commitment?: Commitment,
-  ) => Promise<Array<{ firstSlot: number; leader: SolanaPublicKey }>>
-  getFeeForMessage: (message: any, commitment?: Commitment) => Promise<number>
+  getBlocks: (endSlot: number, startSlot?: number, commitment?: Commitment) => Promise<Array<number>>
+  getBlockTime: (block: number) => Promise<number | null>
+  getClusterNodes: () => Promise<
+    Array<{
+      pubkey: string
+      gossip?: string
+      tpu?: string
+      rpc?: string
+      version?: string
+      featureSet?: number
+      shredVersion?: number
+    }>
+  >
+  getEpochInfo: (
+    pubkey: string,
+    options?: { commitment?: Commitment; minContextSlot?: number },
+  ) => Promise<SolanaEpochInfo>
+  getEpochSchedule: () => Promise<SolanaEpochSchedule>
+  getFeeForMessage: (
+    message: any,
+    options?: { commitment?: Commitment; minContextSlot?: number },
+  ) => Promise<number | null>
   getFirstAvailableBlock: () => Promise<number>
   getGenesisHash: () => Promise<string>
-  getHealth: () => Promise<boolean>
-  getHighestSnapshotSlot: () => Promise<number>
-  getIdentity: () => Promise<SolanaPublicKey>
-  getInflationGovernor: (commitment?: Commitment) => Promise<{
+  getHealth: () => Promise<string>
+  getHighestSnapshotSlot: () => Promise<{ full: number; incremental: number }>
+  getIdentity: () => Promise<{ identity: string }>
+  getInflationGovernor: (options?: { commitment?: Commitment }) => Promise<{
+    initial: number
+    terminal: number
+    taper: number
     foundation: number
     foundationTerm: number
-    initial: number
-    taper: number
-    terminal: number
   }>
-  getInflationRate: (commitment?: Commitment) => Promise<number>
-  getInflationReward: (epoch: number, commitment?: Commitment) => Promise<number>
-  getLargestAccounts: (
-    filter?: 'circulating' | 'nonCirculating',
-    commitment?: Commitment,
-  ) => Promise<Array<{ address: string; lamports: number }>>
-  getLatestBlockhash: (commitment?: Commitment) => Promise<[string, string]>
-  getLeaderSchedule: (epoch?: number, commitment?: Commitment) => Promise<SolanaLeaderSchedule>
+  getInflationRate: () => Promise<{ total: number; validator: number; foundation: number; epoch: number }>
+  getInflationReward: (
+    addresses?: string[],
+    options?: {
+      commitment?: Commitment
+      epoch?: number
+      minContextSlot?: number
+    },
+  ) => Promise<
+    Array<{
+      epoch: number
+      effectiveSlot: number
+      amount: number
+      postBalance: number
+      commission: number
+    }>
+  >
+  getLargestAccounts: (options?: {
+    commitment?: Commitment
+    filter?: 'circulating' | 'nonCirculating'
+  }) => Promise<{ context: { slot: number }; value: Array<{ address: string; lamports: number }> }>
+  getLatestBlockhash: (options?: { commitment?: Commitment; minContextSlot?: number }) => Promise<{
+    context: { slot: number }
+    value: {
+      blockhash: string
+      lastValidBlockHeight: number
+    }
+  }>
+  getLeaderSchedule: (
+    slot?: number,
+    options?: {
+      commitment?: Commitment
+      identity?: string
+    },
+  ) => Promise<SolanaLeaderSchedule | null>
   getMaxRetransmitSlot: () => Promise<number>
   getMaxShredInsertSlot: () => Promise<number>
-  getMinimumBalanceForRentExemption: (dataSize: number, commitment?: Commitment) => Promise<number>
+  getMinimumBalanceForRentExemption: (
+    dataSize?: number,
+    options?: { commitment?: Commitment },
+  ) => Promise<number>
   getMultipleAccounts: (
-    publicKeys: string[],
-    commitment?: Commitment,
-  ) => Promise<Array<{ account: SolanaAccountInfo | null; pubkey: SolanaPublicKey }>>
+    pubKeys: string[],
+    options?: {
+      commitment?: Commitment
+      minContextSlot?: number
+      dataSlice?: { offset: number; length: number }
+      encoding?: Encoding
+    },
+  ) => Promise<{ context: { slot: number }; value: Array<SolanaAccountInfo | null> }>
   getProgramAccounts: (
     programId: string,
-    config: {
+    options?: {
       commitment?: Commitment
+      minContextSlot?: number
+      withContext?: boolean
       encoding?: Encoding
       dataSlice?: { offset: number; length: number }
+      filters?: Array<{ memcmp: { offset: number; bytes: string } | { dataSize: number } }>
     },
-  ) => Promise<Array<{ account: SolanaAccountInfo; pubkey: SolanaPublicKey; data: any }>>
-  getRecentPerformanceSamples: (
-    limit?: number,
-    commitment?: Commitment,
-  ) => Promise<Array<{ numSlots: number; numTransactions: number; samplePeriodSecs: number }>>
+  ) => Promise<Array<{ account: SolanaAccountInfo; pubkey: string }>>
+  getRecentPerformanceSamples: (limit?: number) => Promise<
+    Array<{
+      slot: number
+      numTransactions: number
+      numSlots: number
+      samplePeriodSecs: number
+      numNonVoteTransaction: number
+    }>
+  >
   getRecentPrioritizationFees: (
-    commitment?: Commitment,
-  ) => Promise<Array<{ fee: number; lastValidSlot: number; targetSlot: number }>>
+    addresses?: string[],
+  ) => Promise<Array<{ slot: number; prioritizationFee: number }>>
   getSignaturesForAddress: (
     address: string,
     options?: {
-      before?: SolanaTransactionSignature
-      until?: SolanaTransactionSignature
+      commitment?: Commitment
+      minContextSlot?: number
       limit?: number
+      before?: string
+      until?: string
     },
-    commitment?: Commitment,
-  ) => Promise<Array<SolanaTransactionSignature>>
+  ) => Promise<
+    Array<{
+      signature: string
+      slot: number
+      err: any | null
+      memo: string | null
+      blockTime: number | null
+      confirmationStatus: string | null
+    }>
+  >
   getSignatureStatuses: (
-    signatures: SolanaTransactionSignature[],
-    commitment?: Commitment,
-  ) => Promise<{ [signature: string]: { slot: number; err: any } | null }>
-  getSlot: (commitment?: Commitment) => Promise<number>
-  getSlotLeader: (commitment?: Commitment) => Promise<SolanaPublicKey>
-  getSlotLeaders: (
-    startSlot: number,
-    limit?: number,
-    commitment?: Commitment,
-  ) => Promise<Array<{ pubkey: SolanaPublicKey; slot: number }>>
+    signatures?: string[],
+    options?: {
+      searchTransactionHistory?: boolean
+    },
+  ) => Promise<{
+    context: { slot: number }
+    value: {
+      slot: number
+      confirmations: number | null
+      err: any | null
+      confirmationStatus: string | null
+    }
+  }>
+  getSlot: (options?: { commitment?: Commitment; minContextSlot?: number }) => Promise<number>
+  getSlotLeader: (options?: { commitment?: Commitment; minContextSlot?: number }) => Promise<string>
+  getSlotLeaders: (startSlot?: number, limit?: number) => Promise<Array<string>>
   getStakeActivation: (
     publicKey: string,
-    commitment?: Commitment,
-  ) => Promise<{ active: number; inactive: number }>
+    options?: { commitment?: Commitment; minContextSlot?: number; epoch?: number },
+  ) => Promise<{ state: string; active: number; inactive: number }>
   getStakeMinimumDelegation: (commitment?: Commitment) => Promise<number>
   getSupply: (
     commitment?: Commitment,
@@ -211,7 +284,7 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
       dataSlice?: { offset: number; length: number }
     },
     commitment?: Commitment,
-  ) => Promise<Array<{ account: SolanaAccountInfo; pubkey: SolanaPublicKey; data: any }>>
+  ) => Promise<Array<{ account: SolanaAccountInfo; pubkey: string; data: any }>>
   getTokenAccountsByOwner: (
     owner: string,
     options?: {
@@ -221,16 +294,13 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
       dataSlice?: { offset: number; length: number }
     },
     commitment?: Commitment,
-  ) => Promise<Array<{ account: SolanaAccountInfo; pubkey: SolanaPublicKey; data: any }>>
+  ) => Promise<Array<{ account: SolanaAccountInfo; pubkey: string; data: any }>>
   getTokenLargestAccounts: (
     mintAddress: string,
     commitment?: Commitment,
   ) => Promise<Array<{ address: string; amount: number }>>
   getTokenSupply: (mintAddress: string, commitment?: Commitment) => Promise<number>
-  getTransaction: (
-    signature: SolanaTransactionSignature,
-    commitment?: Commitment,
-  ) => Promise<SolanaTransaction>
+  getTransaction: (signature: string, commitment?: Commitment) => Promise<SolanaTransaction>
   getTransactionCount: (commitment?: Commitment) => Promise<number>
   getVersion: () => Promise<number>
   getVoteAccounts: (
@@ -238,11 +308,7 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
   ) => Promise<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }>
   isBlockhashValid: (blockhash: string, commitment?: Commitment) => Promise<boolean>
   minimumLedgerSlot: () => Promise<number>
-  requestAirdrop: (
-    publicKey: string,
-    amount: number,
-    commitment?: Commitment,
-  ) => Promise<SolanaTransactionSignature>
+  requestAirdrop: (publicKey: string, amount: number, commitment?: Commitment) => Promise<string>
   sendTransaction: (
     transaction: SolanaTransaction,
     config?: {
@@ -250,10 +316,10 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
       preflightCommitment?: Commitment
       commitment?: Commitment
     },
-  ) => Promise<SolanaTransactionSignature>
+  ) => Promise<string>
   simulateTransaction: (
     transaction: SolanaTransaction,
     signers?: Array<string>,
     commitment?: Commitment,
-  ) => Promise<{ err: any }>*/
+  ) => Promise<{ err: any }>
 }
