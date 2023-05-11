@@ -161,6 +161,22 @@ export interface Webhook {
     chain: string
     // Type of the subscription
     subscriptionType: NotificationType
+    // Counter address involved in the transaction (optional)
+    counterAddress?: string
+    // Whether the transaction is in the mempool (optional)
+    mempool?: boolean
+    // Source tag of the transaction (optional)
+    sourceTag?: number
+    // Destination tag of the transaction (optional)
+    destinationTag?: number
+    // Contract address for fungible and non-fungible token transactions (optional)
+    contractAddress?: string
+    // Token ID for non-fungible token transactions (optional)
+    tokenId?: string
+    // Metadata URI for non-fungible token transactions (optional)
+    metadataURI?: unknown
+    // Array of contract event logs for contract address log event notifications (optional)
+    events?: []
   }
   // Next notification execution try time	- Unix timestamp
   nextTime: number
