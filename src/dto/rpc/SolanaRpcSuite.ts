@@ -84,7 +84,6 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
   //Account-related methods
   getAccountInfo: (publicKey: string, commitment?: Commitment) => Promise<SolanaAccountInfo | null>
   getBalance: (publicKey: string) => Promise<{ context: { slot: number }; value: number }>
-
   getBlockHeight: (commitment?: string, minContextSlot?: string) => Promise<number>
   getBlock: (
     block: number,

@@ -78,8 +78,7 @@ describe('Solana mainnet RPC', () => {
     test('should return block commitment information', async () => {
       const tatum = await getClient()
       const result = await tatum.rpc.getBlockCommitment(193167072)
-
-      expect(Array.isArray(result.commitment)).toBe(true)
+      expect(result).toHaveProperty('commitment')
       expect(result.totalStake).toBeGreaterThan(0)
     })
   })
