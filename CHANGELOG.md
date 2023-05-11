@@ -1,4 +1,9 @@
-## [1.4.6] - 2023.06.10
+## [1.4.7] - 2023.05.11
+
+### Added
+- Added support for native public RPC calls to Solana blockchain
+
+## [1.4.6] - 2023.05.10
 
 ### Added
 - Added support for native public RPC calls to XRP blockchain
