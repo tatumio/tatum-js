@@ -5,8 +5,8 @@ const getRippleRpc = async (testnet?: boolean) =>
   await TatumSDK.init<Ripple>({
     network: testnet ? Network.XRP_TESTNET : Network.XRP,
     verbose: true,
-    retryCount: 3,
-    retryDelay: 100000,
+    retryCount: 1,
+    retryDelay: 2000,
   })
 
 describe('RPCs', () => {
