@@ -1,3 +1,7 @@
+## [1.4.8] - 2023.05.11
+
+### Added
+- Add comments to input parameters for Solana RPC
 ## [1.4.7] - 2023.05.11
 
 ### Added
