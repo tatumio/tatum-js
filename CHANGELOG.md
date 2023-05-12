@@ -1,3 +1,8 @@
+## [1.4.9] - 2023.05.12
+
+### Added
+- Added support for Deploying contracts using MetaMask. It's possible to deploy NFT Collections (ERC-721/1155) or Fungible Tokens (ERC-20) directly from the browser.
+
 ## [1.4.8] - 2023.05.11
 
 ### Added

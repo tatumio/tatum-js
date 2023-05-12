@@ -4,6 +4,9 @@ import { TxPayload } from '../../dto'
 import { BigNumber } from 'bignumber.js'
 import { TatumConfig } from '../tatum'
 import { EvmBasedRpc } from '../rpc'
+import { TatumConnector } from '../../connector/tatum.connector'
+import { CreateFungibleToken } from '../../dto/walletProvider'
+
 
 @Service({
   factory: (data: { id: string }) => {
@@ -14,9 +17,12 @@ import { EvmBasedRpc } from '../rpc'
 export class MetaMask<T extends EvmBasedRpc> {
   private readonly config: TatumConfig
   private readonly rpc: T
+  private readonly connector: TatumConnector
+
   constructor(private readonly id: string) {
     this.config = Container.of(this.id).get(CONFIG)
     this.rpc = Utils.getRpc<T>(this.id, this.config.network)
+    this.connector = Container.of(this.id).get(TatumConnector)
   }
 
   /**
@@ -80,6 +86,107 @@ export class MetaMask<T extends EvmBasedRpc> {
       to: tokenAddress,
       from: await this.connect(),
       data: `0xa9059cbb${Utils.padWithZero(recipient)}${new BigNumber(amount).multipliedBy(10 ** decimals.toNumber()).toString(16).padStart(64, '0')}`,
+    }
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/return-await
+      return await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [payload],
+      })
+    } catch (e) {
+      console.error('User denied transaction signature:', e);
+      throw new Error(`User denied transaction signature. Error is ${e}`)
+    }
+  }
+
+  /**
+   * Deploy new ERC-721 NFT Collection contract with MetaMask wallet. This method checks if MetaMask is installed and if it is connected to the browser.
+   * If so, it returns the signed transaction hash. If not, it throws an error.
+   * @param name name of the collection
+   * @param symbol symbol of the collection
+   * @param baseUri (optional) base URI of the collection, defaults to empty string. Base URI is prepended to the token ID in the token URI.
+   * @param author (optional) author of the collection, defaults to the connected MetaMask account
+   * @param minter (optional) minter of the collection, defaults to the connected MetaMask account
+   */
+  async createNftCollection(name: string, symbol: string, baseUri?: string, author?: string, minter?: string): Promise<string> {
+    const from = await this.connect()
+    const { data } = await this.connector.post<{ data: string }>({
+      path: `/v3/contract/deploy/prepare`,
+      body: {
+        contractType: 1,
+        params: [name, symbol, baseUri || '', author || from, minter || from],
+      },
+    })
+    const payload: TxPayload = {
+      from: from,
+      data,
+    }
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/return-await
+      return await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [payload],
+      })
+    } catch (e) {
+      console.error('User denied transaction signature:', e);
+      throw new Error(`User denied transaction signature. Error is ${e}`)
+    }
+  }
+
+  /**
+   * Deploy new ERC-20 Token (USDT or USDC like) contract with MetaMask wallet. This method checks if MetaMask is installed and if it is connected to the browser.
+   * If so, it returns the signed transaction hash. If not, it throws an error.
+   */
+  async createFungibleToken(body: CreateFungibleToken): Promise<string> {
+    const from = await this.connect()
+    const { data } = await this.connector.post<{ data: string }>({
+      path: `/v3/contract/deploy/prepare`,
+      body: {
+        contractType: 0,
+        params: [body.name, body.symbol, body.decimals || 18, body.initialSupply, body.initialHolder || from, body.admin || from, body.minter || from, body.pauser || from],
+      },
+    })
+    const payload: TxPayload = {
+      from: from,
+      data,
+    }
+    try {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      // eslint-disable-next-line @typescript-eslint/return-await
+      return await window.ethereum.request({
+        method: 'eth_sendTransaction',
+        params: [payload],
+      })
+    } catch (e) {
+      console.error('User denied transaction signature:', e);
+      throw new Error(`User denied transaction signature. Error is ${e}`)
+    }
+  }
+
+  /**
+   * Deploy new ERC-1155 NFT Collection contract with MetaMask wallet. This method checks if MetaMask is installed and if it is connected to the browser.
+   * If so, it returns the signed transaction hash. If not, it throws an error.
+   * @param admin (optional) admin of the collection, defaults to the connected MetaMask account
+   * @param minter (optional) minter of the collection, defaults to the connected MetaMask account
+   * @param baseURI (optional) base URI of the collection, defaults to empty string. Base URI is prepended to the token ID in the token URI.
+   */
+  async createErc1155NftCollection(admin?: string, minter?: string, baseURI?: string): Promise<string> {
+    const from = await this.connect()
+    const { data } = await this.connector.post<{ data: string }>({
+      path: `/v3/contract/deploy/prepare`,
+      body: {
+        contractType: 2,
+        params: [admin || from, minter || from, baseURI || ''],
+      },
+    })
+    const payload: TxPayload = {
+      from: from,
+      data,
     }
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
