@@ -113,7 +113,8 @@ export class MetaMask<T extends EvmBasedRpc> {
   async createNftCollection(name: string, symbol: string, baseUri?: string, author?: string, minter?: string): Promise<string> {
     const from = await this.connect()
     const { data } = await this.connector.post<{ data: string }>({
-      path: `/v3/contract/deploy/prepare`,
+      path: `contract/deploy/prepare`,
+      basePath: Constant.TATUM_API_URL.V1,
       body: {
         contractType: 1,
         params: [name, symbol, baseUri || '', author || from, minter || from],

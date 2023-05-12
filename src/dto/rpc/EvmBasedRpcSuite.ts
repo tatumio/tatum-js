@@ -82,8 +82,6 @@ export interface EvmBasedRpcSuite extends AbstractJsonRpcSuite {
 
   getBalance(address: string, blockNumber?: BlockNumber): Promise<BigNumber>
 
-  getTokenDecimals(tokenAddress: string): Promise<BigNumber>
-
   getBlockByHash(blockHash: string, includeTransactions?: boolean): Promise<any>
 
   getBlockByNumber(blockNumber: string | number, includeTransactions?: boolean): Promise<any>
@@ -119,6 +117,12 @@ export interface EvmBasedRpcSuite extends AbstractJsonRpcSuite {
   sendRawTransaction(signedTransactionData: string): Promise<string>
 
   syncing(): Promise<any>
+
+  // Custom helper functions, not part of the RPC node
+
+  getTokenDecimals(tokenAddress: string): Promise<BigNumber>
+
+  getContractAddress(txHash: string): Promise<string | null>
 
   // web3_ methods
   clientVersion(): Promise<string>

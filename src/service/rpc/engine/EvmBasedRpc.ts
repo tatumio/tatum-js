@@ -157,6 +157,16 @@ export class EvmBasedRpc extends AbstractJsonRpc implements EvmBasedRpcSuite {
       .then((r) => new BigNumber(r.result))
   }
 
+  async getContractAddress(txHash: string): Promise<string | null> {
+    try {
+      const txReceipt = await this.getTransactionReceipt(txHash)
+      return txReceipt.contractAddress
+    } catch (e) {
+      console.error('Failed to get contract address, transaction does not exist, or is not a contract creation tx or is not mined yet.')
+      return null
+    }
+  }
+
   getBlockByHash(blockHash: string, includeTransactions = false): Promise<any> {
     return this.connector
       .rpcCall<JsonRpcResponse>(

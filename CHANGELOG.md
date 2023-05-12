@@ -1,4 +1,7 @@
-## [1.4.9] - 2023.05.12
+## [1.4.10] - 2023.05.12
+
+### Added
+- Added support for reading deployed smart contract address via EVM-based helper function `getContractAddress(txHash: string): Promise<string | null>`
 
 ### Added
 - Added support for Deploying contracts using MetaMask. It's possible to deploy NFT Collections (ERC-721/1155) or Fungible Tokens (ERC-20) directly from the browser.
