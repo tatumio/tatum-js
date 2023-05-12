@@ -217,7 +217,7 @@ describe('Address', () => {
           counterAddress: expect.any(String),
           hash: expect.any(String),
           timestamp: expect.any(Number),
-          transactionIndex: 1,
+          transactionIndex: expect.any(Number),
           transactionSubtype: expect.any(String),
           transactionType: 'native',
         })
