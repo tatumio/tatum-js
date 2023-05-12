@@ -1,3 +1,7 @@
+## [1.4.11] - 2023.05.12
+
+### Fixed
+- Fixed `createErc1155NftCollection` and `createFungibleToken` methods - wrong API endpoint was used
 ## [1.4.10] - 2023.05.12
 
 ### Added
