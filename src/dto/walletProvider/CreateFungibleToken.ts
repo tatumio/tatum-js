@@ -14,7 +14,7 @@ export interface CreateFungibleToken {
   /**
    * Total supply of the token.
    */
-  initialSupply: number
+  initialSupply: string
   /**
    * (Optional) Address of the initial holder of the token. Defaults to the connected MetaMask account.
    */
