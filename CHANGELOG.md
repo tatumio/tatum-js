@@ -1,3 +1,8 @@
+## [1.4.12] - 2023.05.13
+
+### Fixed
+- Fixed `createFungibleToken` method - wrong initial supply calculation
+
 ## [1.4.11] - 2023.05.12
 
 ### Fixed

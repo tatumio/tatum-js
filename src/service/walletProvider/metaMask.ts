@@ -144,12 +144,20 @@ export class MetaMask<T extends EvmBasedRpc> {
    */
   async createFungibleToken(body: CreateFungibleToken): Promise<string> {
     const from = await this.connect()
+    const decimals = body.decimals || 18
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
       basePath: Constant.TATUM_API_URL.V1,
       body: {
         contractType: 0,
-        params: [body.name, body.symbol, body.decimals || 18, body.initialSupply, body.initialHolder || from, body.admin || from, body.minter || from, body.pauser || from],
+        params: [body.name,
+          body.symbol,
+          decimals,
+          `0x${new BigNumber(body.initialSupply).multipliedBy(10 ** decimals).toString(16)}`,
+          body.initialHolder || from,
+          body.admin || from,
+          body.minter || from,
+          body.pauser || from],
       },
     })
     const payload: TxPayload = {
