@@ -1,4 +1,4 @@
-## [1.4.12] - 2023.05.15
+## [1.4.13] - 2023.05.15
 
 ### Changed
 - Change params of `createFungibleToken`, `createErc1155NftCollection` and `createNftCollection` methods
