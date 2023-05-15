@@ -5,7 +5,7 @@ import { BigNumber } from 'bignumber.js'
 import { TatumConfig } from '../tatum'
 import { EvmBasedRpc } from '../rpc'
 import { TatumConnector } from '../../connector/tatum.connector'
-import { CreateFungibleToken } from '../../dto/walletProvider'
+import { CreateErc1155NftCollection, CreateFungibleToken, CreateNftCollection } from '../../dto/walletProvider'
 
 
 @Service({
@@ -104,13 +104,9 @@ export class MetaMask<T extends EvmBasedRpc> {
   /**
    * Deploy new ERC-721 NFT Collection contract with MetaMask wallet. This method checks if MetaMask is installed and if it is connected to the browser.
    * If so, it returns the signed transaction hash. If not, it throws an error.
-   * @param name name of the collection
-   * @param symbol symbol of the collection
-   * @param baseURI (optional) base URI of the collection, defaults to empty string. Base URI is prepended to the token ID in the token URI.
-   * @param author (optional) author of the collection, defaults to the connected MetaMask account
-   * @param minter (optional) minter of the collection, defaults to the connected MetaMask account
    */
-  async createNftCollection(name: string, symbol: string, baseURI?: string, author?: string, minter?: string): Promise<string> {
+  async createNftCollection(body: CreateNftCollection): Promise<string> {
+    const { name, symbol, baseURI, author, minter } = body
     const from = await this.connect()
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
@@ -181,18 +177,16 @@ export class MetaMask<T extends EvmBasedRpc> {
   /**
    * Deploy new ERC-1155 NFT Collection contract with MetaMask wallet. This method checks if MetaMask is installed and if it is connected to the browser.
    * If so, it returns the signed transaction hash. If not, it throws an error.
-   * @param admin (optional) admin of the collection, defaults to the connected MetaMask account
-   * @param minter (optional) minter of the collection, defaults to the connected MetaMask account
-   * @param baseURI (optional) base URI of the collection, defaults to empty string. Base URI is prepended to the token ID in the token URI.
    */
-  async createErc1155NftCollection(admin?: string, minter?: string, baseURI?: string): Promise<string> {
+  async createErc1155NftCollection(body?: CreateErc1155NftCollection): Promise<string> {
+    const { author, minter, baseURI } = body || {}
     const from = await this.connect()
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
       basePath: Constant.TATUM_API_URL.V1,
       body: {
         contractType: 2,
-        params: [admin || from, minter || from, baseURI || ''],
+        params: [author || from, minter || from, baseURI || ''],
       },
     })
     const payload: TxPayload = {
