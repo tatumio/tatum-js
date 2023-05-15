@@ -1,3 +1,7 @@
+## [1.4.14] - 2023.05.15
+
+### Changed
+- Added support for native public RPC calls to TRON blockchain
 ## [1.4.13] - 2023.05.15
 
 ### Changed

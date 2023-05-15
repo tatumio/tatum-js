@@ -2,12 +2,12 @@ import { Container } from 'typedi'
 import {
   AddressEventNotificationChain,
   isEvmBasedNetwork,
-  isSolanaEnabledNetwork,
+  isSolanaEnabledNetwork, isTronNetwork,
   isUtxoBasedNetwork,
   isXrpNetwork,
   Network,
 } from '../dto'
-import { EvmBasedRpc, GenericRpc, SolanaRpc, UtxoBasedRpc, XrpRpc } from '../service'
+import {EvmBasedRpc, GenericRpc, SolanaRpc, TronRpc, UtxoBasedRpc, XrpRpc} from '../service'
 
 export const Utils = {
   getRpc: <T>(id: string, network: Network): T => {
@@ -22,6 +22,9 @@ export const Utils = {
     }
     if (isSolanaEnabledNetwork(network)) {
       return Container.of(id).get(SolanaRpc) as T
+    }
+    if (isTronNetwork(network)) {
+      return Container.of(id).get(TronRpc) as T
     }
     console.warn(`RPC Network ${network} is not supported.`)
     return Container.of(id).get(GenericRpc) as T
@@ -118,4 +121,20 @@ export const Utils = {
   },
   padWithZero: (data: string, length = 64) => data.replace('0x', '').padStart(length, '0'),
   camelToSnakeCase: (str: string) => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),
+  convertObjCamelToSnake: (obj: object)=> {
+    const snakeObj = {};
+    for (const [key, value] of Object.entries(obj)) {
+      const snakeKey = Utils.camelToSnakeCase(key)
+      if (typeof value === 'object' && value !== null) {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        snakeObj[snakeKey] = convertObjCamelToSnake(value);
+      } else {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        snakeObj[snakeKey] = value;
+      }
+    }
+    return snakeObj;
+  }
 }

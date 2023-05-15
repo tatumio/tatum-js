@@ -161,6 +161,7 @@ export const DATA_API_EVM_NETWORKS = [
 ]
 
 export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
+export const TRON_NETWORKS = [Network.TRON, Network.TRON_SHASTA]
 
 export const isEvmBasedNetwork = (network: Network) => {
   return EVM_BASED_NETWORKS.includes(network)
@@ -184,4 +185,8 @@ export const isDataApiUtxoEnabledNetwork = (network: Network) => {
 
 export const isSolanaEnabledNetwork = (network: Network) => {
   return SOLANA_NETWORKS.includes(network)
+}
+
+export const isTronNetwork = (network: Network) => {
+  return TRON_NETWORKS.includes(network)
 }
