@@ -200,7 +200,7 @@ describe('RPCs', () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM,
         verbose: true,
-        rpcUrl: 'https://api.tatum.io/v3/blockchain/node/ethereum-mainnet',
+        rpcUrl: 'https://api.tatum.io/v3/blockchain/node/ethereum-mainnet/',
       })
       const info = await tatum.rpc.chainId()
       expect(info.toNumber()).toBe(1)

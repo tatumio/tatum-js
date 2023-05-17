@@ -57,7 +57,8 @@ describe('Solana mainnet RPC', () => {
   describe('getBlock', () => {
     it('should return a recent block', async () => {
       const tatum = await getClient()
-      const blockResponse = await tatum.rpc.getBlock(193167072, {
+      const blockHeightResponse = await tatum.rpc.getSlot()
+      const blockResponse = await tatum.rpc.getBlock(blockHeightResponse, {
         encoding: Encoding.JsonParsed,
         maxSupportedTransactionVersion: 0,
       })
@@ -125,7 +126,8 @@ describe('Solana mainnet RPC', () => {
   describe('getBlockTime', () => {
     it('should return block time ', async () => {
       const tatum = await getClient()
-      const result = await tatum.rpc.getBlockTime(193167072)
+      const blockHeightResponse = await tatum.rpc.getSlot()
+      const result = await tatum.rpc.getBlockTime(blockHeightResponse)
 
       expect(typeof result).toBe('number')
       expect(result).toBeGreaterThan(0)
@@ -321,8 +323,14 @@ describe('Solana mainnet RPC', () => {
     it('should return transaction data', async () => {
       const tatum = await getClient()
 
+      const blockHeightResponse = await tatum.rpc.getSlot()
+      const blockResponse = await tatum.rpc.getBlock(blockHeightResponse, {
+        encoding: Encoding.JsonParsed,
+        maxSupportedTransactionVersion: 0,
+      })
+
       const result = await tatum.rpc.getTransaction(
-        'UaNFYfCxzuYQV1GZyBYai6d3ozYDfS5rEkSqqmhGXCdScyLZXJ4NzmwG5r9Qk2hV6Na352c2rrkcbyWAVbrteTo',
+        blockResponse?.transactions[0].transaction.signatures[0],
       )
 
       expect(result?.slot).toBeGreaterThan(0)
