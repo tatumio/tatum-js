@@ -1,3 +1,8 @@
+## [1.4.15] - 2023.05.17
+
+### Changed
+- Expanded type exports
+
 ## [1.4.14] - 2023.05.15
 
 ### Changed
