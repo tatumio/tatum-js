@@ -1,3 +1,8 @@
+## [1.4.16] - 2023.05.18
+
+### Changed
+- XRP naming convention on the SDK side
+
 ## [1.4.15] - 2023.05.17
 
 ### Changed

@@ -32,7 +32,6 @@ export type Polygon = EvmBasedRpcSuite
 export type Vechain = EvmBasedRpcSuite
 export type Xdc = EvmBasedRpcSuite
 export type Tron = TronRpcSuite
-export type Xrp = EvmBasedRpcSuite
 
 // UTXO chains
 export type Bitcoin = UtxoBasedRpcSuite
@@ -41,5 +40,5 @@ export type Dogecoin = UtxoBasedRpcSuite
 export type BitcoinCash = UtxoBasedRpcSuite
 
 // other chains
-export type Ripple = XrpRpcSuite
+export type Xrp = XrpRpcSuite
 export type Solana = SolanaRpcSuite
