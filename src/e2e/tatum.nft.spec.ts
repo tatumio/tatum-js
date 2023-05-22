@@ -4,7 +4,7 @@ import { Network, TatumSDK } from '../service'
 describe('Tatum NFT', () => {
   let tatum: TatumSDK<Ethereum>
   beforeAll(async () => {
-    tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA, verbose: true, retryDelay: 1000 })
+    tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA, verbose: true, retryDelay: 1000, retryCount: 2 })
   })
   describe('NFT balances', () => {
     it('should get NFT balances', async () => {
