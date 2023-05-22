@@ -329,12 +329,26 @@ describe('Solana mainnet RPC', () => {
         maxSupportedTransactionVersion: 0,
       })
 
-      const result = await tatum.rpc.getTransaction(
-        blockResponse?.transactions[0].transaction.signatures[0],
-      )
+      const result = await tatum.rpc.getTransaction(blockResponse?.transactions[0].transaction.signatures[0])
 
       expect(result?.slot).toBeGreaterThan(0)
       expect(result?.transaction).toBeTruthy()
+    })
+  })
+
+  //takes too long to finish
+  describe('getProgramAccount', () => {
+    it.skip('should return account data', async () => {
+      const tatum = await getClient(true)
+
+      const result = await tatum.rpc.getProgramAccounts('FriELggez2Dy3phZeHHAdpcoEXkKQVkv6tx3zDtCVP8T', {
+        filters: [
+          {
+            dataSize: 165, // number of bytes
+          },
+        ],
+      })
+      expect(result).toBeTruthy()
     })
   })
 })

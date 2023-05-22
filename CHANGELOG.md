@@ -1,3 +1,8 @@
+## [1.4.18] - 2023.05.22
+
+### Added
+- Added docs for Solana and XRP RPC
+
 ## [1.4.17] - 2023.05.22
 
 ### Changed

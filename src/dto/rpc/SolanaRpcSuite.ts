@@ -185,7 +185,15 @@ export type GetProgramAccountsOptions = {
   withContext?: boolean // Whether to include context in the response.
   encoding?: Encoding // The encoding for the account data.
   dataSlice?: { offset: number; length: number } // The range of data to include in the response.
-  filters?: Array<{ memcmp: { offset: number; bytes: string } | { dataSize: number } }> // Filters to apply to the accounts data.
+  filters?: Array<
+    | {
+        memcmp: {
+          offset: number
+          bytes: string
+        }
+      }
+    | { dataSize: number }
+  > // Filters to apply to the accounts data.
 }
 
 export type GetSignaturesForAddressOptions = {
@@ -277,14 +285,39 @@ export type SendTransactionOptions = {
 }
 
 export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
+  /**
+   * Get info about the account on the Solana blockchain.
+   * @param pubkey - Pubkey of account to query, as base-58 encoded string
+   * @param options - Options for the query
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-account-information/getaccountinfo
+   */
   getAccountInfo: (
-    pubkey: string, // Pubkey of account to query, as base-58 encoded string
+    pubkey: string,
     options?: GetAccountInfoOptions,
   ) => Promise<SolanaTypeWithContext<SolanaAccountInfo | null>>
+
+  /**
+   * Get balance of the account on the Solana blockchain.
+   * @param publicKey - Pubkey of account to query, as base-58 encoded string
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-account-information/getbalance
+   */
   getBalance: (publicKey: string) => Promise<SolanaTypeWithContext<number>>
+
+  /**
+   * Get the latest block height.
+   * @param options - Options for the query
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getblockheight
+   */
   getBlockHeight: (options?: GetCommitmentMinContextSlotOptions) => Promise<number>
+
+  /**
+   * Get information about a specific block.
+   * @param block - Block number, identified by Slot
+   * @param options - Options for the query
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getblock
+   */
   getBlock: (
-    block: number, // Slot number
+    block: number,
     options?: GetBlockOptions,
   ) => Promise<{
     blockhash: string
@@ -296,20 +329,43 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
     blockTime: number | null
     blockHeight: number | null
   } | null>
+
+  /**
+   * Get block production information.
+   * @param options - Options for the query
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getblockproduction
+   */
   getBlockProduction: (
     options?: GetBlockProductionOptions,
   ) => Promise<SolanaTypeWithContext<SolanaBlockProduction>>
-  getBlockCommitment: (
-    block: number, // Block number, identified by Slot
-  ) => Promise<{ commitment: Array<number>; totalStake: number }>
-  getBlocks: (
-    endSlot: number, // Block number, identified by Slot
-    startSlot?: number, // Block number, identified by Slot
-    options?: GetCommitmentOptions,
-  ) => Promise<Array<number>>
-  getBlockTime: (
-    block: number, // Block number, identified by Slot
-  ) => Promise<number | null>
+
+  /**
+   * Get block commitment information.
+   * @param block - Block number, identified by Slot
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getblockcommitment
+   */
+  getBlockCommitment: (block: number) => Promise<{ commitment: Array<number>; totalStake: number }>
+
+  /**
+   * Get blocks information.
+   * @param endSlot - Block number, identified by Slot
+   * @param startSlot - Block number, identified by Slot
+   * @param options - Options for the query
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getblocks
+   */
+  getBlocks: (endSlot: number, startSlot?: number, options?: GetCommitmentOptions) => Promise<Array<number>>
+
+  /**
+   * Get block time information.
+   * @param block - Block number, identified by Slot
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getblocktime
+   */
+  getBlockTime: (block: number) => Promise<number | null>
+
+  /**
+   * Get cluster nodes information.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getclusternodes
+   */
   getClusterNodes: () => Promise<
     Array<{
       pubkey: string
@@ -321,17 +377,63 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
       shredVersion?: number
     }>
   >
+
+  /**
+   * Get information about epoch.
+   * @param options - Options for the query
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getepochinfo
+   */
   getEpochInfo: (options?: GetCommitmentMinContextSlotOptions) => Promise<SolanaEpochInfo>
+
+  /**
+   * Get epoch schedule.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getepochschedule
+   */
   getEpochSchedule: () => Promise<SolanaEpochSchedule>
-  getFeeForMessage: (
-    message: any, // Base-64 encoded Message
-    options?: GetCommitmentMinContextSlotOptions,
-  ) => Promise<number | null>
+
+  /**
+   * Retrieve the minimum fee required to include a message in a block.
+   * @param message - The base-64 encoded message to query.
+   * @param options - Options for the query.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-transaction-management/getfeeformessage
+   */
+  getFeeForMessage: (message: any, options?: GetCommitmentMinContextSlotOptions) => Promise<number | null>
+
+  /**
+   * Get the first available block on the Solana blockchain.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getfirstavailableblock
+   */
   getFirstAvailableBlock: () => Promise<number>
+
+  /**
+   * Get the Genesis Hash of the Solana blockchain.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getgenesishash
+   */
   getGenesisHash: () => Promise<string>
+
+  /**
+   * Get the health status of the Solana cluster.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/gethealth
+   */
   getHealth: () => Promise<string>
+
+  /**
+   * Get the highest available snapshot slot on the Solana cluster.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/gethighestsnapshotslot
+   */
   getHighestSnapshotSlot: () => Promise<{ full: number; incremental: number }>
+
+  /**
+   * Get the identity pubkey of the node.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getidentity
+   */
   getIdentity: () => Promise<{ identity: string }>
+
+  /**
+   * Get the current inflation governor's rates.
+   * @param options - Options for the query.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-token-and-stake-information/getinflationgovernor
+   */
   getInflationGovernor: (options?: GetCommitmentOptions) => Promise<{
     initial: number
     terminal: number
@@ -339,9 +441,21 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
     foundation: number
     foundationTerm: number
   }>
+
+  /**
+   * Get the current inflation rate on the Solana blockchain.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-token-and-stake-information/getinflationrate
+   */
   getInflationRate: () => Promise<{ total: number; validator: number; foundation: number; epoch: number }>
+
+  /**
+   * Get the inflation reward for specified addresses.
+   * @param addresses - An array of addresses to query, as base-58 encoded strings.
+   * @param options - Options for the query.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-token-and-stake-information/getinflationreward
+   */
   getInflationReward: (
-    addresses?: string[], // An array of addresses to query, as base-58 encoded strings
+    addresses?: string[],
     options?: GetInflationRewardOptions,
   ) => Promise<
     Array<{
@@ -352,33 +466,84 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
       commission: number
     }>
   >
+
+  /**
+   * Get the largest accounts on the Solana blockchain.
+   * @param options Options for the query.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-account-information/getlargestaccounts
+   */
   getLargestAccounts: (
     options?: GetLargestAccountsOptions,
   ) => Promise<SolanaTypeWithContext<SolanaLargestAccount[]>>
+
+  /**
+   * Fetches the latest block hash from the Solana blockchain.
+   * @param options - Options for the query.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getlatestblockhash
+   */
   getLatestBlockhash: (
     options?: GetCommitmentMinContextSlotOptions,
   ) => Promise<SolanaTypeWithContext<SolanaLatestBlockhash>>
+
+  /**
+   * Fetches the leader schedule for the Solana blockchain.
+   * @param slot - The slot number corresponding to the epoch for which to fetch the leader schedule. If unspecified, the schedule for the current epoch is fetched.
+   * @param options - The options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getleaderschedule
+   */
   getLeaderSchedule: (
-    slot?: number, // Fetch the leader schedule for the epoch that corresponds to the provided slot. If unspecified, the leader schedule for the current epoch is fetched
+    slot?: number,
     options?: GetLeaderScheduleOptions,
   ) => Promise<SolanaLeaderSchedule | null>
+
+  /**
+   * Retrieves the max slot number seen from retransmit stage.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getmaxretransmitslot
+   */
   getMaxRetransmitSlot: () => Promise<number>
+
+  /**
+   * Retrieves the max slot number seen from after shred insert.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getmaxshredinsertslot
+   */
   getMaxShredInsertSlot: () => Promise<number>
-  getMinimumBalanceForRentExemption: (
-    dataSize?: number, // The Account's data length
-    options?: GetCommitmentOptions,
-  ) => Promise<number>
+
+  /**
+   * Gets the minimum balance required for rent exemption for an account.
+   * @param dataSize - The account's data length.
+   * @param options - The options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getminimumbalanceforrentexemption
+   */
+  getMinimumBalanceForRentExemption: (dataSize?: number, options?: GetCommitmentOptions) => Promise<number>
+
+  /**
+   * Fetches multiple accounts on the Solana blockchain.
+   * @param pubKeys - An array of pubkeys to query, as base-58 encoded strings. (up to a maximum of 100)
+   * @param options - The options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-account-information/getmultipleaccounts
+   */
   getMultipleAccounts: (
-    pubKeys: string[], // An array of Pubkeys to query, as base-58 encoded strings (up to a maximum of 100)
+    pubKeys: string[],
     options?: GetMultipleAccountsOptions,
   ) => Promise<SolanaTypeWithContext<Array<SolanaAccountInfo | null>>>
+
+  /**
+   * Fetches program accounts from the Solana blockchain.
+   * @param programId - The Pubkey of the program, as a base-58 encoded string.
+   * @param options - The options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-account-information/getprogramaccounts
+   */
   getProgramAccounts: (
-    programId: string, // Pubkey of program, as base-58 encoded string
+    programId: string,
     options?: GetProgramAccountsOptions,
   ) => Promise<Array<{ account: SolanaAccountInfo; pubkey: string }>>
-  getRecentPerformanceSamples: (
-    limit?: number, // number of samples to return (maximum 720)
-  ) => Promise<
+
+  /**
+   * Gets recent performance samples.
+   * @param limit - Number of samples to return (maximum 720).
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getrecentperformancesamples
+   */
+  getRecentPerformanceSamples: (limit?: number) => Promise<
     Array<{
       slot: number
       numTransactions: number
@@ -387,11 +552,24 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
       numNonVoteTransaction: number
     }>
   >
+
+  /**
+   * Gets recent prioritization fees.
+   * @param addresses - An array of account addresses (up to a maximum of 128 addresses), as base-58 encoded strings.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getrecentprioritizationfees
+   */
   getRecentPrioritizationFees: (
-    addresses?: string[], // An array of Account addresses (up to a maximum of 128 addresses), as base-58 encoded strings
+    addresses?: string[],
   ) => Promise<Array<{ slot: number; prioritizationFee: number }>>
+
+  /**
+   * Fetches the transaction signatures for a specific account address.
+   * @param address - Account address as a base-58 encoded string.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-transaction-management/getsignaturesforaddress
+   */
   getSignaturesForAddress: (
-    address: string, // Account address as base-58 encoded string
+    address: string,
     options?: GetSignaturesForAddressOptions,
   ) => Promise<
     Array<{
@@ -403,69 +581,196 @@ export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
       confirmationStatus: string | null
     }>
   >
+
+  /**
+   * Fetches the status of a list of transaction signatures.
+   * @param signatures - An array of transaction signatures to confirm, as base-58 encoded strings (up to a maximum of 256).
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-transaction-management/getsignaturestatuses
+   */
   getSignatureStatuses: (
-    signatures?: string[], // An array of transaction signatures to confirm, as base-58 encoded strings (up to a maximum of 256)
+    signatures?: string[],
     options?: GetSignatureStatusesOptions,
   ) => Promise<SolanaTypeWithContext<SolanaSignatureStatus>>
+
+  /**
+   * Fetches the current slot number of the cluster.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getslot
+   */
   getSlot: (options?: GetCommitmentMinContextSlotOptions) => Promise<number>
+
+  /**
+   * Fetches the current leader of the slot.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getslotleader
+   */
   getSlotLeader: (options?: GetCommitmentMinContextSlotOptions) => Promise<string>
-  getSlotLeaders: (
-    startSlot?: number,
-    limit?: number, // Limit (between 1 and 5,000)
-  ) => Promise<Array<string>>
+
+  /**
+   * Fetches the current leaders of the slot within a certain limit.
+   * @param startSlot - Optional parameter for starting slot.
+   * @param limit - Limit (between 1 and 5,000)
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getslotleaders
+   */
+  getSlotLeaders: (startSlot?: number, limit?: number) => Promise<Array<string>>
+
+  /**
+   * Fetches the stake activation details for the specified account.
+   * @param pubkey - Pubkey of stake Account to query, as base-58 encoded string.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-token-and-stake-information/getstakeactivation
+   */
   getStakeActivation: (
-    pubkey: string, // Pubkey of stake Account to query, as base-58 encoded string
+    pubkey: string,
     options?: GetStakeActivationOptions,
   ) => Promise<{ state: string; active: number; inactive: number }>
+
+  /**
+   * Fetches the minimum stake delegation.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-token-and-stake-information/getstakeminimumdelegation
+   */
   getStakeMinimumDelegation: (options?: GetCommitmentOptions) => Promise<SolanaTypeWithContext<number>>
+
+  /**
+   * Fetches the current supply of the Solana network.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getsupply
+   */
   getSupply: (options?: GetSupplyOptions) => Promise<SolanaTypeWithContext<SolanaSupply>>
+
+  /**
+   * Fetches the balance of the specified token account.
+   * @param pubkey - Pubkey of Token account to query, as base-58 encoded string.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-account-information/gettokenaccountbalance
+   */
   getTokenAccountBalance: (
-    pubkey: string, // Pubkey of Token account to query, as base-58 encoded string
+    pubkey: string,
     options?: GetCommitmentOptions,
   ) => Promise<SolanaTypeWithContext<SolanaTokenAccountBalance>>
+
+  /**
+   * Fetches token accounts by delegate.
+   * @param pubkey - Pubkey of account delegate to query, as base-58 encoded string.
+   * @param config - Configuration options for this request.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-account-information/gettokenaccountsbydelegate
+   */
   getTokenAccountsByDelegate: (
-    pubkey: string, // Pubkey of account delegate to query, as base-58 encoded string
+    pubkey: string,
     config?: SolanaMint | SolanaProgramId,
     options?: GetTokenAccountsOptions,
   ) => Promise<SolanaTypeWithContext<SolanaTokenAccount[]>>
+
+  /**
+   * Fetches token accounts by owner.
+   * @param pubkey - Pubkey of account owner to query, as base-58 encoded string.
+   * @param config - Configuration options for this request.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-account-information/gettokenaccountsbyowner
+   */
   getTokenAccountsByOwner: (
-    pubkey: string, // Pubkey of account delegate to query, as base-58 encoded string
+    pubkey: string,
     config?: SolanaMint | SolanaProgramId,
     options?: GetTokenAccountsOptions,
   ) => Promise<SolanaTypeWithContext<SolanaTokenAccount[]>>
+
+  /**
+   * Fetches largest token accounts for a mint.
+   * @param pubkey - Pubkey of the token Mint to query, as base-58 encoded string.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-token-and-stake-information/gettokenlargestaccounts
+   */
   getTokenLargestAccounts: (
-    pubkey: string, // Pubkey of the token Mint to query, as base-58 encoded string
+    pubkey: string,
     options?: GetCommitmentOptions,
   ) => Promise<SolanaTypeWithContext<SolanaAccount[]>>
+
+  /**
+   * Fetches token supply details for a mint.
+   * @param pubkey - Pubkey of the token Mint to query, as base-58 encoded string.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-token-and-stake-information/gettokensupply
+   */
   getTokenSupply: (
-    pubkey: string, // Pubkey of the token Mint to query, as base-58 encoded string
+    pubkey: string,
     options?: GetCommitmentOptions,
   ) => Promise<SolanaTypeWithContext<SolanaTokenSupply>>
-  getTransaction: (
-    signature: string, // Transaction signature, as base-58 encoded string
-    options?: GetTransactionOptions,
-  ) => Promise<SolanaTransaction | null>
+
+  /**
+   * Fetches a specific transaction by signature.
+   * @param signature - Transaction signature, as base-58 encoded string.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-transaction-management/gettransaction
+   */
+  getTransaction: (signature: string, options?: GetTransactionOptions) => Promise<SolanaTransaction | null>
+
+  /**
+   * Fetches the current transaction count.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-transaction-management/gettransactioncount
+   */
   getTransactionCount: (options?: GetCommitmentMinContextSlotOptions) => Promise<number>
+
+  /**
+   * Fetches the current version of the Solana core software.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getversion
+   */
   getVersion: () => Promise<SolanaVersion>
+
+  /**
+   * Fetches vote accounts information.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-account-information/getvoteaccounts
+   */
   getVoteAccounts: (
     options?: GetVoteAccountOptions,
   ) => Promise<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }>
+
+  /**
+   * Checks if a blockhash is valid.
+   * @param blockhash - The blockhash of the block to evaluate, as base-58 encoded string.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-transaction-management/isblockhashvalid
+   */
   isBlockhashValid: (
-    blockhash: string, // The blockhash of the block to evauluate, as base-58 encoded string
+    blockhash: string,
     options?: GetCommitmentMinContextSlotOptions,
   ) => Promise<SolanaTypeWithContext<boolean>>
+
+  /**
+   * Fetches the lowest slot that the node has information about in its ledger.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/minimumledgerslot
+   */
   minimumLedgerSlot: () => Promise<number>
-  requestAirdrop: (
-    pubkey: string, // Pubkey of account to receive lamports, as a base-58 encoded string
-    amount: number, // Lamports to airdrop
-    options?: GetCommitmentOptions,
-  ) => Promise<string>
-  sendTransaction: (
-    transaction: string, // Fully-signed Transaction, as encoded string.
-    options?: SendTransactionOptions,
-  ) => Promise<string>
+
+  /**
+   * Requests an airdrop of lamports to a given pubkey.
+   * @param pubkey - Pubkey of account to receive lamports, as a base-58 encoded string.
+   * @param amount - Lamports to airdrop.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/requestairdrop
+   */
+  requestAirdrop: (pubkey: string, amount: number, options?: GetCommitmentOptions) => Promise<string>
+
+  /**
+   * Sends a transaction to the Solana blockchain.
+   * @param transaction - Fully-signed Transaction, as encoded string.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-transaction-management/sendtransaction
+   */
+  sendTransaction: (transaction: string, options?: SendTransactionOptions) => Promise<string>
+
+  /**
+   * Simulates a transaction on the Solana blockchain.
+   * @param transaction - Transaction, as an encoded string.
+   * @param options - Options for this request.
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-transaction-management/simulatetransaction
+   */
   simulateTransaction: (
-    transaction: string, // Transaction, as an encoded string.
+    transaction: string,
     options?: SimulateTransactionOptions,
   ) => Promise<SolanaTypeWithContext<SolanaTransactionSimulation>>
 }
