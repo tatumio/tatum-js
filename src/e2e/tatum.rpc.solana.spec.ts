@@ -4,7 +4,7 @@ import { Network, TatumSDK } from '../service'
 const getClient = async (testnet?: boolean) =>
   await TatumSDK.init<Solana>({
     network: testnet ? Network.SOLANA_DEVNET : Network.SOLANA,
-    verbose: true,
+    verbose: false,
     retryCount: 1,
     retryDelay: 2000,
   })
