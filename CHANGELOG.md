@@ -1,3 +1,8 @@
+## [1.4.19] - 2023.05.22
+
+### Added
+- Added support for creation of NFT (`nft.createNftCollection`) / MultiToken (`nft.createMultiTokenNftCollection`) collections on EVM chains like Ethereum, Polygon, Celo and Binance Smart Chain inside `nft` submodule.
+
 ## [1.4.18] - 2023.05.22
 
 ### Added

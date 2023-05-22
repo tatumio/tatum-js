@@ -4,7 +4,7 @@ import { AddressBalanceDetails } from '../../dto'
 import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
 import { TatumConfig } from '../tatum'
 import {
-  CheckTokenOwner,
+  CheckTokenOwner, CreateMultiTokenNftCollection, CreateNftCollection,
   GetAllNftTransactionsByAddress,
   GetAllNftTransactionsQuery,
   GetCollection,
@@ -30,6 +30,45 @@ export class Nft {
     this.connector = Container.of(this.id).get(TatumConnector)
   }
 
+  /**
+   * Create new NFT collection (ERC-721 compatible smart contract). This operation deploys new smart contract to the blockchain and sets the owner of the collection.
+   * You don't need to specify the default minter of the collection, as the owner of the collection is the default minter.
+   * You don't have to have any funds on the address, as the smart contract is deployed by Tatum.
+   * @param body Body of the request.
+   * @returns ResponseDto<{txId: string}> Transaction ID of the deployment transaction. You can get the contract address from the transaction details using rpc.getContractAddress(transactionId) function, once transaction is included in the block.
+   */
+  async createNftCollection(body: CreateNftCollection): Promise<ResponseDto<{txId: string}>> {
+    return ErrorUtils.tryFail(() =>
+      this.connector.post<{ txId: string }>({
+        path: `contract/deploy`,
+        body: {
+          ...body,
+          chain: this.config.network,
+          contractType: 1,
+        },
+      }),
+    )
+  }
+
+  /**
+   * Create new MultiToken NFT collection (ERC-1155 compatible smart contract). This operation deploys new smart contract to the blockchain and sets the owner of the collection.
+   * You don't need to specify the default minter of the collection, as the owner of the collection is the default minter.
+   * You don't have to have any funds on the address, as the smart contract is deployed by Tatum.
+   * @param body Body of the request.
+   * @returns ResponseDto<{txId: string}> Transaction ID of the deployment transaction. You can get the contract address from the transaction details using rpc.getContractAddress(transactionId) function, once transaction is included in the block.
+   */
+  async createMultiTokenNftCollection(body: CreateMultiTokenNftCollection): Promise<ResponseDto<{txId: string}>> {
+    return ErrorUtils.tryFail(() =>
+      this.connector.post<{ txId: string }>({
+        path: `contract/deploy`,
+        body: {
+          ...body,
+          chain: this.config.network,
+          contractType: 2,
+        },
+      })
+    )
+  }
   /**
    * Get balance of NFT for given address.
    * You can get balance of multiple addresses in one call.

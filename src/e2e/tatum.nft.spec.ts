@@ -4,7 +4,12 @@ import { Network, TatumSDK } from '../service'
 describe('Tatum NFT', () => {
   let tatum: TatumSDK<Ethereum>
   beforeAll(async () => {
-    tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA, verbose: true, retryDelay: 1000, retryCount: 2 })
+    tatum = await TatumSDK.init<Ethereum>({
+      network: Network.ETHEREUM_SEPOLIA,
+      verbose: true,
+      retryDelay: 1000,
+      retryCount: 2,
+    })
   })
   describe('NFT balances', () => {
     it('should get NFT balances', async () => {
@@ -204,6 +209,24 @@ describe('Tatum NFT', () => {
         tokenId: '1',
         tokenType: 'nft',
       })
+    })
+  })
+
+  describe.skip('Create collections', () => {
+    it('should create NFT ERC721 collection', async () => {
+      const result = await tatum.nft.createNftCollection({
+        name: 'Test Collection',
+        symbol: 'TST',
+        owner: '0x53e8577c4347c365e4e0da5b57a589cb6f2ab849',
+      })
+      expect(result.data).toStrictEqual({txId: expect.any(String)})
+    })
+
+    it('should create NFT ERC1155 collection', async () => {
+      const result = await tatum.nft.createMultiTokenNftCollection({
+        owner: '0x53e8577c4347c365e4e0da5b57a589cb6f2ab849',
+      })
+      expect(result.data).toStrictEqual({txId: expect.any(String)})
     })
   })
 })
