@@ -110,7 +110,6 @@ export class MetaMask<T extends EvmBasedRpc> {
     const from = await this.connect()
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
-      basePath: Constant.TATUM_API_URL.V1,
       body: {
         contractType: 1,
         params: [name, symbol, baseURI || '', author || from, minter || from],
@@ -143,7 +142,6 @@ export class MetaMask<T extends EvmBasedRpc> {
     const decimals = body.decimals || 18
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
-      basePath: Constant.TATUM_API_URL.V1,
       body: {
         contractType: 0,
         params: [body.name,
@@ -183,7 +181,6 @@ export class MetaMask<T extends EvmBasedRpc> {
     const from = await this.connect()
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
-      basePath: Constant.TATUM_API_URL.V1,
       body: {
         contractType: 2,
         params: [author || from, minter || from, baseURI || ''],

@@ -1,3 +1,8 @@
+## [1.4.17] - 2023.05.22
+
+### Changed
+- Changed the underlying REST API call for metaMask deploy* contracts function
+
 ## [1.4.16] - 2023.05.18
 
 ### Changed
