@@ -120,7 +120,7 @@ export interface NftAddressBalance extends NftTokenDetail {
   lastUpdatedBlock: number
 }
 
-export interface GetAllNftTransactionsQuery {
+export interface GetAllNftTransactionsQuery extends GetAllNftTransactionsQueryDetails{
   /**
    * Token ID
    */
@@ -129,6 +129,9 @@ export interface GetAllNftTransactionsQuery {
    * Token contract address
    */
   tokenAddress: string
+}
+
+export interface GetAllNftTransactionsQueryDetails {
   /**
    * Optional transaction type. If not specified, both incoming and outgoing transactions are returned.
    */
@@ -151,11 +154,19 @@ export interface GetAllNftTransactionsQuery {
   page?: number
 }
 
-export interface GetAllNftTransactionsByAddress extends GetAllNftTransactionsQuery {
+export interface GetAllNftTransactionsByAddress extends GetAllNftTransactionsQueryDetails {
   /**
    * Addresses to get NFT transactions from.
    */
   addresses: string[]
+  /**
+   * Token ID
+   */
+  tokenId?: string
+  /**
+   * Token contract address
+   */
+  tokenAddress?: string
 }
 
 export type NftTransaction = {

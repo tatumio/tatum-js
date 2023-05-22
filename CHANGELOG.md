@@ -1,3 +1,8 @@
+## [1.4.2-] - 2023.05.22
+
+### Changed
+- getAllNftTransactionsByAddress required params reduced
+
 ## [1.4.19] - 2023.05.22
 
 ### Added

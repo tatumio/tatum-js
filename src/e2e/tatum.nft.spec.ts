@@ -85,12 +85,10 @@ describe('Tatum NFT', () => {
     })
     it('should get NFT transactions for a specific NFT token on the address', async () => {
       const { data: txs } = await tatum.nft.getAllNftTransactionsByAddress({
-        tokenId: '1395688000000000',
         addresses: ['0x53e8577c4347c365e4e0da5b57a589cb6f2ab849'],
-        tokenAddress: '0x211500d1960bdb7ba3390347ffd8ad486b897a18',
       })
-      expect(txs).toHaveLength(1)
-      expect(txs[0]).toStrictEqual({
+      expect(txs).toHaveLength(3)
+      expect(txs[1]).toStrictEqual({
         address: '0x53e8577c4347c365e4e0da5b57a589cb6f2ab849',
         amount: '1',
         blockNumber: 3306734,
