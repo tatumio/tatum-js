@@ -1,3 +1,9 @@
+## [1.4.21] - 2023.05.23
+
+### Changed
+- Fixed TRON RPC params
+- Added docs to TRON RPC
+
 ## [1.4.20] - 2023.05.22
 
 ### Changed
