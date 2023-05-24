@@ -9,6 +9,7 @@ import {
   BlockIdentifier,
   CreateAssetIssueOptions,
   CreateTransactionOptions,
+  DeployContractOptions,
   DetailOption,
   FreezeAccountOptions,
   GetCanWithdrawUnfreezeAmountOptions,
@@ -105,19 +106,20 @@ export class TronRpc extends AbstractJsonRpc implements TronRpcSuite {
     });
   }
 
-  deployContract(abi: string, bytecode: string, feeLimit: BigNumber, parameter: string, originEnergyLimit: BigNumber, ownerAddress: string, name: string, callValue: BigNumber, consumeUserResourcePercent: number, options?: VisibleAndPermissionIdOptions): Promise<any> {
+  deployContract(
+    abi: string,
+    bytecode: string,
+    ownerAddress: string,
+    name: string,
+    options?: DeployContractOptions
+  ): Promise<any> {
     return this.connector.post({
       path: this.getRpcNodeUrl("/wallet/deploycontract"),
       body: Utils.convertObjCamelToSnake({
         abi,
         bytecode,
-        feeLimit,
-        parameter,
-        originEnergyLimit,
         ownerAddress,
-        name,
-        callValue,
-        consumeUserResourcePercent, ...options
+        name, ...options
       })
     });
   }
@@ -185,10 +187,10 @@ export class TronRpc extends AbstractJsonRpc implements TronRpcSuite {
     });
   }
 
-  getAssetIssueByName(name: string): Promise<any> {
+  getAssetIssueByName(value: string): Promise<any> {
     return this.connector.post({
       path: this.getRpcNodeUrl("/wallet/getassetissuebyname"),
-      body: Utils.convertObjCamelToSnake({name})
+      body: Utils.convertObjCamelToSnake({value})
     });
   }
 
