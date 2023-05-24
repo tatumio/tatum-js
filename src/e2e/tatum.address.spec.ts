@@ -168,7 +168,7 @@ describe('Address', () => {
           asset: 'ADA',
           address: 'addr_test1vzs4u97282u69c89p740fxnmkz6kyngxhspekkrlnun9udssd5p9l',
           decimals: 6,
-          balance: '1053',
+          balance: '44',
           type: 'native',
         })
       })
