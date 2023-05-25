@@ -111,7 +111,7 @@ export class MetaMask<T extends EvmBasedRpc> {
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
       body: {
-        contractType: 1,
+        contractType: 'nft',
         params: [name, symbol, baseURI || '', author || from, minter || from],
       },
     })
@@ -143,7 +143,7 @@ export class MetaMask<T extends EvmBasedRpc> {
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
       body: {
-        contractType: 0,
+        contractType: 'fungible',
         params: [body.name,
           body.symbol,
           decimals,
@@ -182,7 +182,7 @@ export class MetaMask<T extends EvmBasedRpc> {
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
       body: {
-        contractType: 2,
+        contractType: 'multitoken',
         params: [author || from, minter || from, baseURI || ''],
       },
     })

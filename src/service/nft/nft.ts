@@ -44,7 +44,7 @@ export class Nft {
         body: {
           ...body,
           chain: this.config.network,
-          contractType: 1,
+          contractType: 'nft',
         },
       }),
     )
@@ -64,7 +64,7 @@ export class Nft {
         body: {
           ...body,
           chain: this.config.network,
-          contractType: 2,
+          contractType: 'multitoken',
         },
       })
     )

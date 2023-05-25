@@ -1,3 +1,8 @@
+## [1.4.22] - 2023.05.25
+
+### Added
+- Changed internal api calls for creation of NFT (`nft.createNftCollection`) / MultiToken (`nft.createMultiTokenNftCollection`) collections inside `nft` submodule and MetaMask integration in `walletProvider` submodule.
+
 ## [1.4.21] - 2023.05.23
 
 ### Changed
