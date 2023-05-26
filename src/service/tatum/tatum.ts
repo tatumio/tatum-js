@@ -3,14 +3,16 @@ import { CONFIG, Utils } from '../../util'
 import { Address } from '../address'
 import { Nft } from '../nft'
 import { Notification } from '../notification'
-import { ApiVersion, TatumConfig } from './tatum.dto'
+import { Rates } from '../rate'
+import { Token } from '../token'
 import { WalletProvider } from '../walletProvider'
-import { Rates } from "../rate";
+import { ApiVersion, TatumConfig } from './tatum.dto'
 
 @Service({ transient: true })
 export class TatumSDK<T> {
   notification: Notification
   nft: Nft
+  token: Token
   address: Address
   rpc: T
   walletProvider: WalletProvider
