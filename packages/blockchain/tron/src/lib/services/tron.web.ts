@@ -3,7 +3,7 @@ import { OpenAPI, TATUM_API_CONSTANTS } from '@tatumio/api-client'
 // @ts-ignore
 import TronWeb from 'tronweb'
 
-export type TronWebClient = any
+export type TronWebClient = TronWeb
 
 // TODO: name conflict with lib export TronWeb
 export interface ITronWeb {

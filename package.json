@@ -1,6 +1,6 @@
 {
   "name": "tatumio",
-  "version": "2.2.13",
+  "version": "2.2.14",
   "license": "MIT",
   "repository": "https://github.com/tatumio/tatum-js",
   "scripts": {
@@ -74,7 +74,7 @@
     "ripple-lib": "^1.7.1",
     "sha3": "^2.1.4",
     "stellar-sdk": "^9.1.0",
-    "tronweb": "^4.1.0",
+    "tronweb": "^5.2.0",
     "tslib": "^2.0.0",
     "url-parse": "^1.5.10",
     "web3": "^1.7.4",

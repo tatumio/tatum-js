@@ -39,8 +39,6 @@ export async function tronTxExample(): Promise<void> {
   // https://apidoc.tatum.io/tag/Tron#operation/TronFreeze
   const { txId: freezeTransactionId } = (await tronSdk.transaction.send.freezeTransaction({
     fromPrivateKey,
-    receiver: address,
-    duration: 3,
     resource: 'ENERGY',
     amount: '5',
   })) as TransactionHash

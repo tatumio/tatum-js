@@ -15,7 +15,7 @@ import { evmBasedGasPump, indexesFromRange } from '@tatumio/shared-blockchain-ev
 import { tronTrc10 } from './tron.trc10'
 import { tronTrc20 } from './tron.trc20'
 import { tronTrc721 } from './tron.trc721'
-import { ITronWeb } from './tron.web'
+import { ITronWeb, TronWebClient } from './tron.web'
 import { Blockchain } from '@tatumio/shared-core'
 
 export type CallSmartContract = FromPrivateKeyOrSignatureIdTron<CallSmartContractMethod>
@@ -46,26 +46,45 @@ const prepareSignedTransaction = async (body: TronTransfer, tronWeb: ITronWeb, p
 }
 
 const prepareFreezeTransaction = async (body: TronFreeze, tronWeb: ITronWeb, provider?: string) => {
-  const { receiver, amount, resource, duration } = body
-  const client = tronWeb.getClient(provider)
+  const { amount, resource } = body
+  const client: TronWebClient = tronWeb.getClient(provider)
 
   if (body.signatureId) {
-    const tx = await client.transactionBuilder.freezeBalance(
+    const tx = await client.transactionBuilder.freezeBalanceV2(
       client.toSun(parseFloat(amount)),
-      duration,
       resource,
       body.from,
-      receiver,
     )
 
     return JSON.stringify(tx)
   } else {
-    const tx = await client.transactionBuilder.freezeBalance(
+    const tx = await client.transactionBuilder.freezeBalanceV2(
       client.toSun(parseFloat(amount)),
-      duration,
       resource,
       client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey)),
-      receiver,
+    )
+
+    return JSON.stringify(await client.trx.sign(tx, body.fromPrivateKey))
+  }
+}
+
+const prepareUnfreezeTransaction = async (body: TronFreeze, tronWeb: ITronWeb, provider?: string) => {
+  const { amount, resource } = body
+  const client: TronWebClient = tronWeb.getClient(provider)
+
+  if (body.signatureId) {
+    const tx = await client.transactionBuilder.unfreezeBalanceV2(
+      client.toSun(parseFloat(amount)),
+      resource,
+      body.from,
+    )
+
+    return JSON.stringify(tx)
+  } else {
+    const tx = await client.transactionBuilder.unfreezeBalanceV2(
+      client.toSun(parseFloat(amount)),
+      resource,
+      client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey)),
     )
 
     return JSON.stringify(await client.trx.sign(tx, body.fromPrivateKey))
@@ -232,19 +251,27 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
         signedTransaction: async (body: TronTransfer, provider?: string) =>
           prepareSignedTransaction(body, args.tronWeb, provider),
         /**
-         * Sign Tron Freeze balance transaction with private keys locally. Nothing is broadcast to the blockchain.
+         * Sign Tron Freeze balance V2 transaction with private keys locally. Nothing is broadcast to the blockchain.
          * @param body content of the transaction to broadcast
          * @param provider optional provider to enter. if not present, Tatum provider will be used.
          * @returns transaction data to be broadcast to blockchain.
          */
         freezeTransaction: async (body: TronFreeze, provider?: string) =>
-          prepareFreezeTransaction(body, args.tronWeb, provider),
+          prepareFreezeTransaction(body, args.tronWeb, provider), /**
+         * Sign Tron Unfreeze balance V2 transaction with private keys locally. Nothing is broadcast to the blockchain.
+         * @param body content of the transaction to broadcast
+         * @param provider optional provider to enter. if not present, Tatum provider will be used.
+         * @returns transaction data to be broadcast to blockchain.
+         */
+        unfreezeTransaction: async (body: TronFreeze, provider?: string) =>
+          prepareUnfreezeTransaction(body, args.tronWeb, provider),
       },
       send: {
         /**
          * Send Tron transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
          * This operation is irreversible.
          * @param body content of the transaction to broadcast
+         * @param provider optional provider to enter. if not present, Tatum provider will be used.
          * @returns transaction id of the transaction in the blockchain
          */
         signedTransaction: async (body: TronTransfer, provider?: string) => {
@@ -257,14 +284,30 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
           }
         },
         /**
-         * Send Tron Freeze balance transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * Send Tron Unfreeze balance V2 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
          * This operation is irreversible.
          * @param body content of the transaction to broadcast
+         * @param provider
          * @returns transaction id of the transaction in the blockchain
          */
         freezeTransaction: async (body: TronFreeze, provider?: string) => {
           if (body.signatureId) {
-            return ApiServices.blockchain.tron.tronFreeze(body as FreezeTronKMS)
+            return ApiServices.blockchain.tron.tronUnfreeze(body as FreezeTronKMS)
+          } else {
+            return TronService.tronBroadcast({
+              txData: await prepareUnfreezeTransaction(body, args.tronWeb, provider),
+            })
+          }
+        },/**
+         * Send Tron Unfreeze balance V2 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
+         * This operation is irreversible.
+         * @param body content of the transaction to broadcast
+         * @param provider
+         * @returns transaction id of the transaction in the blockchain
+         */
+        unfreezeTransaction: async (body: TronFreeze, provider?: string) => {
+          if (body.signatureId) {
+            return ApiServices.blockchain.tron.tronUnfreeze(body as FreezeTronKMS)
           } else {
             return TronService.tronBroadcast({
               txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
