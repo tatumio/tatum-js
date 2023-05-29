@@ -1,4 +1,4 @@
-import { TokenIdContractAddress } from '../../dto'
+import { TokenAddress } from '../../dto'
 
 export interface CreateFungibleToken {
   /**
@@ -26,7 +26,7 @@ export interface CreateFungibleToken {
    */
   initialSupply: string
   /**
-   * Initial supply of fungible token
+   * Initial holder of fungible token
    */
   initialHolder: string
   /**
@@ -47,7 +47,7 @@ export interface FungibleTokenBalance {
   /**
    * Token type, default 'fungible' (ERC-20).
    */
-  tokenType: 'fungible' //TODO Probably misprint, correct is 'type'
+  type: 'fungible' //TODO should be tokenType as in other places
 
   /**
    * Block number of the last balance update.
@@ -65,9 +65,13 @@ export interface FungibleTokenBalance {
   balance: string
 }
 
-export type GetTokenMetadata = TokenIdContractAddress
+export type GetTokenMetadata = TokenAddress
 
 export interface TokenMetadata {
+  /**
+   * Blockchain network
+   */
+  chain: string
   /**
    * Symbol of the fungible token.
    */
@@ -85,7 +89,7 @@ export interface TokenMetadata {
    */
   decimals: number
   /**
-   * Type of the token (e.g., ERC20, BEP20).
+   * Type of the token - fungible
    */
   tokenType: string
   /**
@@ -98,7 +102,7 @@ export interface GetAllFungibleTransactionsQuery {
   /**
    * Token contract address
    */
-  tokenAddress: string
+  tokenAddress?: string
   /**
    * Addresses to fetch. Up to 10 addresses as a comma separated string.
    */
@@ -110,11 +114,11 @@ export interface GetAllFungibleTransactionsQuery {
   /**
    * Optional from block. If not specified, all transactions are returned from the beginning of the blockchain.
    */
-  fromBlock?: number
+  blockFrom?: number
   /**
    * Optional to block. If not specified, all transactions are returned up till now.
    */
-  toBlock?: number
+  blockTo?: number
   /**
    * Optional page size. If not specified, the default page size is used, which is 10.
    */

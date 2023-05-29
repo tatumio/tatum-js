@@ -14,7 +14,7 @@ export interface CreateMultiTokenNftCollection {
   baseURI?: string
 }
 
-export interface CreateNftCollection extends CreateMultiTokenNftCollection{
+export interface CreateNftCollection extends CreateMultiTokenNftCollection {
   /**
    * Name of the NFT collection, e.g. Bored Ape Yacht Club
    */
@@ -74,7 +74,7 @@ export interface NftTokenDetail {
   /**
    * Token type. Either 'nft' (ERC-721) or 'multitoken' (ERC-1155)
    */
-  tokenType: 'nft' | 'multitoken'
+  type: 'nft' | 'multitoken'
   /**
    * Token URI
    */
@@ -120,7 +120,7 @@ export interface NftAddressBalance extends NftTokenDetail {
   lastUpdatedBlock: number
 }
 
-export interface GetAllNftTransactionsQuery extends GetAllNftTransactionsQueryDetails{
+export interface GetAllNftTransactionsQuery extends GetAllNftTransactionsQueryDetails {
   /**
    * Token ID
    */
@@ -139,11 +139,11 @@ export interface GetAllNftTransactionsQueryDetails {
   /**
    * Optional from block. If not specified, all transactions are returned from the beginning of the blockchain.
    */
-  fromBlock?: number
+  blockFrom?: number
   /**
    * Optional to block. If not specified, all transactions are returned up till now.
    */
-  toBlock?: number
+  blockTo?: number
   /**
    * Optional page size. If not specified, the default page size is used, which is 10.
    */

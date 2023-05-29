@@ -4,7 +4,9 @@ import { AddressBalanceDetails } from '../../dto'
 import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
 import { TatumConfig } from '../tatum'
 import {
-  CheckTokenOwner, CreateMultiTokenNftCollection, CreateNftCollection,
+  CheckTokenOwner,
+  CreateMultiTokenNftCollection,
+  CreateNftCollection,
   GetAllNftTransactionsByAddress,
   GetAllNftTransactionsQuery,
   GetCollection,
@@ -37,7 +39,7 @@ export class Nft {
    * @param body Body of the request.
    * @returns ResponseDto<{txId: string}> Transaction ID of the deployment transaction. You can get the contract address from the transaction details using rpc.getContractAddress(transactionId) function, once transaction is included in the block.
    */
-  async createNftCollection(body: CreateNftCollection): Promise<ResponseDto<{txId: string}>> {
+  async createNftCollection(body: CreateNftCollection): Promise<ResponseDto<{ txId: string }>> {
     return ErrorUtils.tryFail(() =>
       this.connector.post<{ txId: string }>({
         path: `contract/deploy`,
@@ -57,7 +59,9 @@ export class Nft {
    * @param body Body of the request.
    * @returns ResponseDto<{txId: string}> Transaction ID of the deployment transaction. You can get the contract address from the transaction details using rpc.getContractAddress(transactionId) function, once transaction is included in the block.
    */
-  async createMultiTokenNftCollection(body: CreateMultiTokenNftCollection): Promise<ResponseDto<{txId: string}>> {
+  async createMultiTokenNftCollection(
+    body: CreateMultiTokenNftCollection,
+  ): Promise<ResponseDto<{ txId: string }>> {
     return ErrorUtils.tryFail(() =>
       this.connector.post<{ txId: string }>({
         path: `contract/deploy`,
@@ -66,7 +70,7 @@ export class Nft {
           chain: this.config.network,
           contractType: 'multitoken',
         },
-      })
+      }),
     )
   }
   /**
@@ -107,8 +111,8 @@ export class Nft {
     tokenId,
     tokenAddress,
     transactionType,
-    fromBlock,
-    toBlock,
+    blockFrom,
+    blockTo,
   }: GetAllNftTransactionsQuery): Promise<ResponseDto<NftTransaction[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(() =>
@@ -123,8 +127,8 @@ export class Nft {
             transactionSubtype: transactionType,
             tokenAddress,
             tokenId,
-            fromBlock,
-            toBlock,
+            blockFrom,
+            blockTo,
           },
         })
         .then((r) => r.result),
@@ -144,8 +148,8 @@ export class Nft {
     tokenId,
     tokenAddress,
     transactionType,
-    fromBlock,
-    toBlock,
+    blockFrom,
+    blockTo,
   }: GetAllNftTransactionsByAddress): Promise<ResponseDto<NftTransaction[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(() =>
@@ -161,8 +165,8 @@ export class Nft {
             transactionSubtype: transactionType,
             tokenAddress,
             tokenId,
-            fromBlock,
-            toBlock,
+            blockFrom,
+            blockTo,
           },
         })
         .then((r) => r.result),

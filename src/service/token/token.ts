@@ -53,6 +53,13 @@ export class Token {
     )
   }
 
+  /**
+   * Create new fungible collection (ERC-20 compatible smart contract). This operation deploys new smart contract to the blockchain and sets the owner of the token.
+   * You don't need to specify the default minter of the collection, as the owner of the collection is the default minter.
+   * You don't have to have any funds on the address, as the smart contract is deployed by Tatum.
+   * @param body Body of the request.
+   * @returns ResponseDto<{txId: string}> Transaction ID of the deployment transaction. You can get the contract address from the transaction details using rpc.getContractAddress(transactionId) function, once transaction is included in the block.
+   */
   async createNewFungibleToken(body: CreateFungibleToken): Promise<ResponseDto<{ txId: string }>> {
     return ErrorUtils.tryFail(() =>
       this.connector.post<{ txId: string }>({
@@ -69,10 +76,7 @@ export class Token {
   /**
    * Get metadata of fungible token.
    */
-  async getTokenMetadata({
-    tokenAddress,
-    tokenId,
-  }: GetTokenMetadata): Promise<ResponseDto<TokenMetadata | null>> {
+  async getTokenMetadata({ tokenAddress }: GetTokenMetadata): Promise<ResponseDto<TokenMetadata | null>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(async () => {
       return this.connector.get<TokenMetadata>({
@@ -80,15 +84,14 @@ export class Token {
         params: {
           chain,
           tokenAddress,
-          tokenIds: tokenId,
         },
       })
     })
   }
 
   /**
-   * Get all transactions for given NFT.
-   * @param nftTransactionsDetails  You can get multiple NFT transactions in one call.
+   * Get all token transactions for given address.
+   * @param details  You can get multiple token transactions in one call.
    * @param page
    * @param pageSize
    */
@@ -96,9 +99,10 @@ export class Token {
     page = 0,
     pageSize = 50,
     tokenAddress,
+    addresses,
     transactionType,
-    fromBlock,
-    toBlock,
+    blockFrom,
+    blockTo,
   }: GetAllFungibleTransactionsQuery): Promise<ResponseDto<FungibleTransaction[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(() =>
@@ -112,8 +116,9 @@ export class Token {
             tokenTypes: 'fungible',
             transactionSubtype: transactionType,
             tokenAddress,
-            fromBlock,
-            toBlock,
+            addresses,
+            blockFrom,
+            blockTo,
           },
         })
         .then((r) => r.result),
