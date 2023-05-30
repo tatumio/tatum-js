@@ -1,3 +1,8 @@
+## [1.4.23] - 2023.05.30
+
+### Fixed
+- Fixed LTC node URL path in the configuration
+
 ## [1.4.22] - 2023.05.25
 
 ### Added

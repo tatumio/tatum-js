@@ -1,4 +1,4 @@
-import { Bitcoin, Ethereum, Polygon } from '../dto'
+import { Bitcoin, Ethereum, Litecoin, Polygon } from '../dto'
 import { Network, TatumSDK } from '../service'
 
 describe('RPCs', () => {
@@ -206,6 +206,22 @@ describe('RPCs', () => {
       })
       const info = await tatum.rpc.chainId()
       expect(info.toNumber()).toBe(1)
+    })
+  })
+  describe('Litecoin', () => {
+    it('Testnet', async () => {
+      const ltc = await TatumSDK.init<Litecoin>({
+        network: Network.LITECOIN_TESTNET,
+      })
+      const block = await ltc.rpc.getBestBlockHash()
+      expect(block).toBeDefined()
+    })
+    it('Mainnet', async () => {
+      const ltc = await TatumSDK.init<Litecoin>({
+        network: Network.LITECOIN,
+      })
+      const block = await ltc.rpc.getBestBlockHash()
+      expect(block).toBeDefined()
     })
   })
 })
