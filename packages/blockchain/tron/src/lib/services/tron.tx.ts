@@ -292,10 +292,10 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
          */
         freezeTransaction: async (body: TronFreeze, provider?: string) => {
           if (body.signatureId) {
-            return ApiServices.blockchain.tron.tronUnfreeze(body as FreezeTronKMS)
+            return ApiServices.blockchain.tron.tronFreeze(body as FreezeTronKMS)
           } else {
             return TronService.tronBroadcast({
-              txData: await prepareUnfreezeTransaction(body, args.tronWeb, provider),
+              txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
             })
           }
         },/**
@@ -310,7 +310,7 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
             return ApiServices.blockchain.tron.tronUnfreeze(body as FreezeTronKMS)
           } else {
             return TronService.tronBroadcast({
-              txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
+              txData: await prepareUnfreezeTransaction(body, args.tronWeb, provider),
             })
           }
         },
