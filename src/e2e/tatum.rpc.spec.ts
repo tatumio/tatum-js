@@ -60,6 +60,7 @@ describe('RPCs', () => {
           verbose: true,
           retryCount: 1,
           retryDelay: 2000,
+          rpcUrl: 'https://blablabla:65465465456465465465@bitcoin-mainnet-01.rpc.tatum.com:443',
         })
         const info = await tatum.rpc.getBlockChainInfo()
         expect(info.chain).toBe('main')

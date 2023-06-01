@@ -38,7 +38,18 @@ export class TatumConnector {
     const { verbose } = Container.of(this.id).get(CONFIG)
 
     const url = externalUrl || this.getUrl({ path, params, basePath })
-    const headers = await this.headers(retry)
+    const urlObj = new URL(url)
+    let urlStr = url
+    let auth = ''
+
+    if (urlObj.username && urlObj.password) {
+      auth = `Basic ${Buffer.from(urlObj.username + ':' + urlObj.password, 'binary').toString('base64')}`
+      urlObj.username = 'user'
+      urlObj.password = 'pass'
+      urlStr = urlObj.toString().replace('user:pass@', '')
+    }
+
+    const headers = await this.headers(retry, auth)
     const request: RequestInit = {
       headers,
       method,
@@ -50,7 +61,7 @@ export class TatumConnector {
       console.debug(new Date().toISOString(), 'Request: ', request.method, url, request.body)
     }
     try {
-      return await fetch(url, request).then(async (res) => {
+      return await fetch(urlStr, request).then(async (res) => {
         const end = Date.now() - start
         if (verbose) {
           console.log(
@@ -94,7 +105,7 @@ export class TatumConnector {
     return url.toString()
   }
 
-  private async headers(retry: number) {
+  private async headers(retry: number, auth: string) {
     const config = Container.of(this.id).get(CONFIG)
     const headers = new Headers({
       'Content-Type': 'application/json',
@@ -109,6 +120,9 @@ export class TatumConnector {
       } else if (config.version === ApiVersion.V2 && config.apiKey.v2) {
         headers.append('x-api-key', config.apiKey.v2)
       }
+    }
+    if (auth) {
+      headers.append('Authorization', auth)
     }
     return headers
   }
