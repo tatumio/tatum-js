@@ -1,3 +1,8 @@
+## [1.4.23] - 2023.06.01
+
+### Added
+- Added `rates` submodule including `getCurrentRate` and `getCurrentRateBatch` methods for obtaining current fiat/crypto exchange rates.
+
 ## [1.4.22] - 2023.05.25
 
 ### Added

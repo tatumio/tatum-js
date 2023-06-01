@@ -160,6 +160,23 @@ const txId: string = await tatum.walletProvider.metaMask.transferNative('0x53e85
 console.log(txId)
 ```
 
+### Get exchange rates
+Using TatumSDK, obtain current fiat/crypto exchange rates To achieve this, use the following code:
+
+```ts
+import {
+  TatumSDK,
+  Network,
+  Ethereum,
+} from '@tatumcom/js'
+
+const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
+
+const res = await tatum.rates.getCurrentRate("BTC","EUR");
+
+console.log(res.data)
+```
+
 ## Structure of the SDK
 TatumSDK is thoughtfully designed and organized into these submodules to provide a clean and efficient way of interacting with blockchains:
 
@@ -172,6 +189,8 @@ TatumSDK is thoughtfully designed and organized into these submodules to provide
 * **Address submodule - `tatum.address.*`**: This submodule simplifies wallet management across multiple blockchains by allowing you to fetch wallet balances and retrieve transactions for a given address. With the Address submodule, you can easily manage your wallets and monitor transactions, making your blockchain application development more efficient and user-friendly.
 
 * **Wallet Provider submodule - `tatum.walletProvider.*`**: This submodule enables seamless interaction with external wallets like Metamask or Phantom within the browser. The Wallet Provider submodule allows the SDK to communicate with various wallet providers, streamlining the process of signing transactions, querying account balances, and interacting with smart contracts directly through popular browser wallets.
+
+* **Rate Exchange submodule - `tatum.rates.*`**: This submodule enables allows you to easily obtain exchange rates for fiat/crypto.
 
 By dividing the library into these submodules, TatumSDK offers an organized, easy-to-use interface that makes interacting with Ethereum and other blockchains a breeze. Both beginners and advanced developers can benefit from the streamlined architecture, enabling them to focus on building powerful blockchain applications.
 
