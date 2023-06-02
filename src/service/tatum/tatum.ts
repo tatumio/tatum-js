@@ -5,6 +5,7 @@ import { Nft } from '../nft'
 import { Notification } from '../notification'
 import { ApiVersion, TatumConfig } from './tatum.dto'
 import { WalletProvider } from '../walletProvider'
+import { Rates } from "../rate";
 
 @Service({ transient: true })
 export class TatumSDK<T> {
@@ -13,6 +14,7 @@ export class TatumSDK<T> {
   address: Address
   rpc: T
   walletProvider: WalletProvider
+  rates: Rates
 
   private constructor(private readonly id: string) {
     this.notification = Container.of(id).get(Notification)
@@ -20,6 +22,7 @@ export class TatumSDK<T> {
     this.walletProvider = Container.of(id).get(WalletProvider)
     this.address = Container.of(id).get(Address)
     this.rpc = Utils.getRpc<T>(this.id, Container.of(id).get(CONFIG).network)
+    this.rates = Container.of(id).get(Rates)
   }
 
   /**
