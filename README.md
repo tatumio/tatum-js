@@ -17,7 +17,7 @@
 
 <div align="center">
 
-<a href="">[![Build all packages](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml/badge.svg?branch=master)](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml)</a>
+<a href="">[![Build all packages](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml/badge.svg?branch=v2)](https://github.com/tatumio/tatum-js/actions/workflows/build.yaml)</a>
 <a href="">[![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum)</a>
 <a href="">[![npm version](https://img.shields.io/npm/v/@tatumio/sdk.svg?style=flat-square)](https://www.npmjs.com/package/@tatumio/sdk)</a>
 <a href="">[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg)](https://github.com/prettier/prettier)</a>
@@ -76,82 +76,82 @@ Currently supported blockchain sdks
   <tr>
     <td align="center">Algo</td>
     <td align="center">@tatumio/algo</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/algo-example'>algo examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/algo-example'>algo examples</a></td>
   </tr>
   <tr>
     <td align="center">Bitcoin cash</td>
     <td align="center">@tatumio/bch</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/bch-example'>bcash examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/bch-example'>bcash examples</a></td>
   </tr>
   <tr>
     <td align="center">Bitcoin</td>
     <td align="center">@tatumio/btc</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/btc-example'>btc examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/btc-example'>btc examples</a></td>
   </tr>
   <tr>
     <td align="center">Binance smart chain</td>
     <td align="center">@tatumio/bsc</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/bsc-example'>bsc examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/bsc-example'>bsc examples</a></td>
   </tr>
   <tr>
     <td align="center">Celo</td>
     <td align="center">@tatumio/celo</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/celo-example'>celo examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/celo-example'>celo examples</a></td>
   </tr>
   <tr>
     <td align="center">Dogecoin</td>
     <td align="center">@tatumio/dog</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/doge-example'>doge examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/doge-example'>doge examples</a></td>
   </tr>
   <tr>
     <td align="center">Ethereum</td>
     <td align="center">@tatumio/eth</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/eth-example'>eth examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/eth-example'>eth examples</a></td>
   </tr>
   <tr>
     <td align="center">Flow</td>
     <td align="center">@tatumio/flow</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/flow-example'>flow examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/flow-example'>flow examples</a></td>
   </tr>
   <tr>
     <td align="center">KuCoin</td>
     <td align="center">@tatumio/kcs</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/kcs-example'>kcs examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/kcs-example'>kcs examples</a></td>
   </tr>
   <tr>
     <td align="center">Klaytn</td>
     <td align="center">@tatumio/klaytn</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/klaytn-example'>klaytn examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/klaytn-example'>klaytn examples</a></td>
   </tr>
   <tr>
     <td align="center">Litecoin</td>
     <td align="center">@tatumio/ltc</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/ltc-example'>ltc examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/ltc-example'>ltc examples</a></td>
   </tr>
   <tr>
     <td align="center">Polygon</td>
     <td align="center">@tatumio/polygon</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/polygon-example'>polygon examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/polygon-example'>polygon examples</a></td>
   </tr>
   <tr>
     <td align="center">Solana</td>
     <td align="center">@tatumio/solana</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/solana-example'>solana examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/solana-example'>solana examples</a></td>
   </tr>
   <tr>
     <td align="center">Tron</td>
     <td align="center">@tatumio/tron</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/tron-example'>tron examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/tron-example'>tron examples</a></td>
   </tr>
   <tr>
     <td align="center">Stellar</td>
     <td align="center">@tatumio/xlm</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/xlm-example'>xlm examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/xlm-example'>xlm examples</a></td>
   </tr>
   <tr>
     <td align="center">XRP</td>
     <td align="center">@tatumio/xrp</td>
-    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/master/examples/xrp-example'>xrp examples</a></td>
+    <td align="center"><a href='https://github.com/tatumio/tatum-js/tree/v2/examples/xrp-example'>xrp examples</a></td>
   </tr>
 </table>
 
@@ -212,7 +212,7 @@ Examples
 | Transaction | ethSDK.transaction.prepare.transferSignedTransaction | Blockchain native transfer
 | Wallet | ethSDK.wallet.generateWallet | Create blockchain wallet and address
 
-All examples of SDK usage will be found after completion at https://github.com/tatumio/tatum-js/tree/master/examples
+All examples of SDK usage will be found after completion at https://github.com/tatumio/tatum-js/tree/v2/examples
 
 <details>
   <summary style='font-size: 16px; font-weight: bold'>Usage with create-react-app (which uses Webpack 5)</summary>
