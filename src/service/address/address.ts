@@ -8,6 +8,7 @@ import {
   isEvmBasedNetwork,
   TokenDetails,
 } from '../../dto'
+import { ApiBalanceRequest } from '../../dto/api/api.dto'
 import { CONFIG, Constant, ErrorUtils, ResponseDto, Utils } from '../../util'
 import { EvmBasedRpc, GenericRpc } from '../rpc'
 import { Network, TatumConfig } from '../tatum'
@@ -43,7 +44,7 @@ export class Address {
         this.getNativeBalance(addresses),
         isDataApiEvmEnabledNetwork(chain) &&
           this.connector
-            .get<{ result: AddressBalance[] }>({
+            .get<{ result: AddressBalance[] }, ApiBalanceRequest>({
               path: `data/balances`,
               params: {
                 pageSize,

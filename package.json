@@ -25,7 +25,8 @@
     "clean": "rm -rf dist build package",
     "ts-node": "ts-node",
     "build": "tsc -p tsconfig.json",
-    "build-all": "yarn clean && yarn build"
+    "build-all": "yarn clean && yarn build",
+    "generate-api": "openapi --exportCore true --exportServices true --exportModels true --useOptions true --useUnionTypes true --client fetch --input ./openapi.json --output ./src/api/generated"
   },
   "dependencies": {
     "bignumber.js": "^9.1.1",
@@ -48,6 +49,7 @@
     "ts-node": "^10.7.0",
     "tslib": "^2.5.0",
     "typescript": "^5.0.4",
-    "undici": "^5.21.0"
+    "undici": "^5.21.0",
+    "openapi-typescript-codegen": "^0.24.0"
   }
 }

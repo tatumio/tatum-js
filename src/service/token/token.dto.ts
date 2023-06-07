@@ -1,3 +1,4 @@
+import { ApiBalanceResponse } from '../../api/api.dto'
 import { TokenAddress } from '../../dto'
 
 export interface CreateFungibleToken {
@@ -47,7 +48,7 @@ export interface FungibleTokenBalance {
   /**
    * Token type, default 'fungible' (ERC-20).
    */
-  type: 'fungible' //TODO should be tokenType as in other places
+  tokenType: 'fungible'
 
   /**
    * Block number of the last balance update.
@@ -170,4 +171,15 @@ export type FungibleTransaction = {
    * Counter address of the transaction. This is sender address for incoming transactions on `address` and receiver address for outgoing transactions on `address`.
    */
   counterAddress: string
+}
+
+export const mapper = {
+  toFungibleTokenBalance: (apiResponse: ApiBalanceResponse): FungibleTokenBalance => ({
+    chain: apiResponse.chain,
+    tokenAddress: apiResponse.tokenAddress,
+    tokenType: apiResponse.type as 'fungible',
+    lastUpdatedBlock: apiResponse.lastUpdatedBlockNumber,
+    address: apiResponse.address,
+    balance: apiResponse.balance,
+  }),
 }

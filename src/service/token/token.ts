@@ -1,4 +1,5 @@
 import { Container, Service } from 'typedi'
+import { TatumApi } from '../../api/tatum.api'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { AddressBalanceDetails } from '../../dto'
 import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
@@ -9,6 +10,7 @@ import {
   FungibleTransaction,
   GetAllFungibleTransactionsQuery,
   GetTokenMetadata,
+  mapper,
   TokenMetadata,
 } from './token.dto'
 
@@ -20,11 +22,13 @@ import {
 })
 export class Token {
   private readonly connector: TatumConnector
+  private readonly api: TatumApi
   private readonly config: TatumConfig
 
   constructor(private readonly id: string) {
     this.config = Container.of(this.id).get(CONFIG)
     this.connector = Container.of(this.id).get(TatumConnector)
+    this.api = Container.of(this.id).get(TatumApi)
   }
 
   /**
@@ -38,18 +42,19 @@ export class Token {
   }: AddressBalanceDetails): Promise<ResponseDto<FungibleTokenBalance[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(() =>
-      this.connector
-        .get<{ result: FungibleTokenBalance[] }>({
-          path: `data/balances`,
-          params: {
-            pageSize,
-            offset: page,
-            chain,
-            tokenTypes: 'fungible',
-            addresses: addresses.join(','),
-          },
+      this.api
+        .getBalancesOfAddresses({
+          chain,
+          addresses: addresses.join(','),
+          pageSize,
+          offset: page,
+          tokenTypes: 'fungible',
         })
-        .then((r) => r.result),
+        .then((r) =>
+          r.map((value) => {
+            return mapper.toFungibleTokenBalance(value)
+          }),
+        ),
     )
   }
 
