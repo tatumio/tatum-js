@@ -76,7 +76,7 @@ describe('Tatum token', () => {
   describe('token transactions', () => {
     it('should get ERC20 transactions for address for all tokens', async () => {
       const { data: txs } = await tatum.token.getAllFungibleTransactions({
-        addresses: '0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab',
+        addresses: ['0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab'],
       })
       expect(txs).toHaveLength(2)
       expect(txs[0]).toStrictEqual({
@@ -109,7 +109,7 @@ describe('Tatum token', () => {
 
     it('should get ERC20 transactions for address for specific token', async () => {
       const { data: txs } = await tatum.token.getAllFungibleTransactions({
-        addresses: '0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab',
+        addresses: ['0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab'],
         tokenAddress: '0x9b7d44c8d1f1f1bf42f596600c28431b567fcd40',
       })
       expect(txs).toHaveLength(1)
@@ -128,7 +128,7 @@ describe('Tatum token', () => {
       })
 
       const { data: txs2 } = await tatum.token.getAllFungibleTransactions({
-        addresses: '0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab',
+        addresses: ['0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab'],
         tokenAddress: '0x5169fe503d6dacb7ac0495faa342ee9731892490',
       })
       expect(txs).toHaveLength(1)
@@ -147,7 +147,7 @@ describe('Tatum token', () => {
       })
 
       const { data: wrongSC } = await tatum.token.getAllFungibleTransactions({
-        addresses: '0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab',
+        addresses: ['0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab'],
         tokenAddress: '0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab',
       })
       expect(wrongSC).toHaveLength(0)
@@ -156,7 +156,7 @@ describe('Tatum token', () => {
     describe('should filter ERC20 transactions for address for all tokens', () => {
       it('blockFrom', async () => {
         const { data: txs } = await tatum.token.getAllFungibleTransactions({
-          addresses: '0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab',
+          addresses: ['0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab'],
           blockFrom: 3582256,
         })
         expect(txs).toHaveLength(1)
@@ -177,7 +177,7 @@ describe('Tatum token', () => {
 
       it('blockTo', async () => {
         const { data: txs } = await tatum.token.getAllFungibleTransactions({
-          addresses: '0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab',
+          addresses: ['0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab'],
           blockTo: 3582261,
         })
         expect(txs).toHaveLength(1)
@@ -198,7 +198,7 @@ describe('Tatum token', () => {
 
       it('no txs by filter', async () => {
         const { data: txs } = await tatum.token.getAllFungibleTransactions({
-          addresses: '0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab',
+          addresses: ['0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab'],
           blockFrom: 3582256,
           blockTo: 3582261,
         })
@@ -207,7 +207,7 @@ describe('Tatum token', () => {
 
       it('both txs by filter', async () => {
         const { data: txs } = await tatum.token.getAllFungibleTransactions({
-          addresses: '0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab',
+          addresses: ['0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab'],
           blockFrom: 3582250,
           blockTo: 3582269,
         })
@@ -248,7 +248,6 @@ describe('Tatum token', () => {
         tokenAddress: '0x5169fe503d6dacb7ac0495faa342ee9731892490',
       })
       expect(metadata).toStrictEqual({
-        // chain: 'ethereum-sepolia', //TODO bug?
         cap: '10000000000000',
         decimals: 6,
         name: 'ERC_TEST_TEST_2',

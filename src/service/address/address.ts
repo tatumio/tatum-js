@@ -1,14 +1,14 @@
 import { BigNumber } from 'bignumber.js'
 import { Container, Service } from 'typedi'
+import { ApiBalanceRequest } from '../../api/api.dto'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
   AddressBalanceDetails,
+  TokenDetails,
   isDataApiEvmEnabledNetwork,
   isDataApiUtxoEnabledNetwork,
   isEvmBasedNetwork,
-  TokenDetails,
 } from '../../dto'
-import { ApiBalanceRequest } from '../../dto/api/api.dto'
 import { CONFIG, Constant, ErrorUtils, ResponseDto, Utils } from '../../util'
 import { EvmBasedRpc, GenericRpc } from '../rpc'
 import { Network, TatumConfig } from '../tatum'

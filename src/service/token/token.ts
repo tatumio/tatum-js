@@ -1,19 +1,20 @@
 import { Container, Service } from 'typedi'
 import { TatumApi } from '../../api/tatum.api'
-import { TatumConnector } from '../../connector/tatum.connector'
-import { AddressBalanceDetails } from '../../dto'
+import { AddressBalanceDetails, isDataApiEvmEnabledNetwork } from '../../dto'
 import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
 import { TatumConfig } from '../tatum'
 import {
   CreateFungibleToken,
   FungibleTokenBalance,
-  FungibleTransaction,
   GetAllFungibleTransactionsQuery,
   GetTokenMetadata,
-  mapper,
   TokenMetadata,
+  Transaction,
+  TxIdResponse,
+  mapper,
 } from './token.dto'
 
+import { FungibleInfo, networkToChain } from '../../api/api.dto'
 @Service({
   factory: (data: { id: string }) => {
     return new Token(data.id)
@@ -21,13 +22,11 @@ import {
   transient: true,
 })
 export class Token {
-  private readonly connector: TatumConnector
   private readonly api: TatumApi
   private readonly config: TatumConfig
 
   constructor(private readonly id: string) {
     this.config = Container.of(this.id).get(CONFIG)
-    this.connector = Container.of(this.id).get(TatumConnector)
     this.api = Container.of(this.id).get(TatumApi)
   }
 
@@ -41,21 +40,25 @@ export class Token {
     addresses,
   }: AddressBalanceDetails): Promise<ResponseDto<FungibleTokenBalance[]>> {
     const chain = this.config.network
-    return ErrorUtils.tryFail(() =>
-      this.api
-        .getBalancesOfAddresses({
-          chain,
-          addresses: addresses.join(','),
-          pageSize,
-          offset: page,
-          tokenTypes: 'fungible',
-        })
-        .then((r) =>
-          r.map((value) => {
-            return mapper.toFungibleTokenBalance(value)
-          }),
-        ),
-    )
+    if (isDataApiEvmEnabledNetwork(chain)) {
+      return ErrorUtils.tryFail(() =>
+        this.api
+          .getBalancesOfAddresses({
+            chain,
+            addresses: addresses.join(','),
+            pageSize,
+            offset: page,
+            tokenTypes: 'fungible',
+          })
+          .then((r) =>
+            r.map((value) => {
+              return mapper.toFungibleTokenBalance(value)
+            }),
+          ),
+      )
+    } else {
+      throw new Error(`Not supported for ${chain} network.`)
+    }
   }
 
   /**
@@ -65,33 +68,32 @@ export class Token {
    * @param body Body of the request.
    * @returns ResponseDto<{txId: string}> Transaction ID of the deployment transaction. You can get the contract address from the transaction details using rpc.getContractAddress(transactionId) function, once transaction is included in the block.
    */
-  async createNewFungibleToken(body: CreateFungibleToken): Promise<ResponseDto<{ txId: string }>> {
+  async createNewFungibleToken(body: CreateFungibleToken): Promise<ResponseDto<TxIdResponse>> {
+    const chain = networkToChain(this.config.network)
     return ErrorUtils.tryFail(() =>
-      this.connector.post<{ txId: string }>({
-        path: `contract/deploy`,
-        body: {
+      this.api
+        .createFungibleToken({
           ...body,
-          chain: this.config.network,
+          chain,
           contractType: 'fungible',
-        },
-      }),
+        })
+        .then((r) => mapper.toCreateTokenResponse(r)),
     )
   }
 
   /**
    * Get metadata of fungible token.
    */
-  async getTokenMetadata({ tokenAddress }: GetTokenMetadata): Promise<ResponseDto<TokenMetadata | null>> {
-    const chain = this.config.network
-    return ErrorUtils.tryFail(async () => {
-      return this.connector.get<TokenMetadata>({
-        path: `data/tokens`,
-        params: {
+  async getTokenMetadata({ tokenAddress }: GetTokenMetadata): Promise<ResponseDto<TokenMetadata>> {
+    const chain = networkToChain(this.config.network)
+    return ErrorUtils.tryFail(() =>
+      this.api
+        .getTokenInfo({
           chain,
           tokenAddress,
-        },
-      })
-    })
+        })
+        .then((r) => mapper.toTokenMetadata(r as FungibleInfo)),
+    )
   }
 
   /**
@@ -105,28 +107,28 @@ export class Token {
     pageSize = 50,
     tokenAddress,
     addresses,
-    transactionType,
+    transactionTypes,
     blockFrom,
     blockTo,
-  }: GetAllFungibleTransactionsQuery): Promise<ResponseDto<FungibleTransaction[]>> {
-    const chain = this.config.network
+  }: GetAllFungibleTransactionsQuery): Promise<ResponseDto<Transaction[]>> {
+    const chain = networkToChain(this.config.network)
     return ErrorUtils.tryFail(() =>
-      this.connector
-        .get<{ result: FungibleTransaction[] }>({
-          path: `data/transactions`,
-          params: {
-            pageSize,
-            offset: page,
-            chain,
-            tokenTypes: 'fungible',
-            transactionSubtype: transactionType,
-            tokenAddress,
-            addresses,
-            blockFrom,
-            blockTo,
-          },
+      this.api
+        .getTransactions({
+          chain,
+          tokenAddress,
+          pageSize,
+          offset: page,
+          blockFrom,
+          blockTo,
+          transactionSubTypes: transactionTypes?.join(','),
+          addresses: addresses.join(','),
         })
-        .then((r) => r.result),
+        .then((r) =>
+          r.map((value) => {
+            return mapper.toTransaction(value)
+          }),
+        ),
     )
   }
 }

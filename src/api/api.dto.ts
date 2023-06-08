@@ -1,15 +1,5 @@
 import { DefaultParamsType } from '../connector/connector.dto'
-import {
-  FungibleTransfer,
-  MultitokenTransferBatch,
-  MultitokenTransferSingle,
-  NftMetadata,
-  NftTransfer,
-  RawData,
-  StablecoinTransfer,
-  UniswapTradeV2,
-  UniswapTradeV3,
-} from './generated'
+import { Network } from '../dto'
 
 export type TokenType = 'native' | 'fungible' | 'nft' | 'multitoken'
 export type TxSubtype = 'incoming' | 'outgoing' | 'zero-transfer'
@@ -34,21 +24,48 @@ export type ChainUtxoEnum =
   | 'doge-testnet'
   | 'cardano'
   | 'cardano-preprod'
-export type ChainEnum =
-  | 'ethereum'
-  | 'ethereum-sepolia'
-  | 'celo'
-  | 'celo-testnet'
-  | 'bsc'
-  | 'bsc-testnet'
-  | 'polygon'
-  | 'polygon-mumbai'
+
+export enum ChainEnum {
+  ETHEREUM = 'ethereum',
+  ETHEREUM_SEPOLIA = 'ethereum-sepolia',
+  CELO = 'celo',
+  CELO_TESTNET = 'celo-testnet',
+  BSC = 'bsc',
+  BSC_TESTNET = 'bsc-testnet',
+  POLYGON = 'polygon',
+  POLYGON_MUMBAI = 'polygon-mumbai',
+}
+
+export function networkToChain(network: Network): Chain {
+  switch (network) {
+    case Network.ETHEREUM:
+      return ChainEnum.ETHEREUM
+    case Network.ETHEREUM_SEPOLIA:
+      return ChainEnum.ETHEREUM_SEPOLIA
+    case Network.CELO:
+      return ChainEnum.CELO
+    case Network.CELO_ALFAJORES:
+      return ChainEnum.CELO_TESTNET
+    case Network.BINANCE_SMART_CHAIN:
+      return ChainEnum.BSC
+    case Network.BINANCE_SMART_CHAIN_TESTNET:
+      return ChainEnum.BSC_TESTNET
+    case Network.POLYGON:
+      return ChainEnum.POLYGON
+    case Network.POLYGON_MUMBAI:
+      return ChainEnum.POLYGON_MUMBAI
+    case Network.CARDANO:
+      return ChainEnum.POLYGON_MUMBAI
+    default:
+      throw new Error(`Unsupported network ${network}`)
+  }
+}
 
 export interface ApiBalanceRequest extends DefaultParamsType {
   /**
    * Blockchain network
    */
-  chain: Chain
+  chain: Network
 
   /**
    * Addresses
@@ -189,13 +206,109 @@ export interface ApiCollectionsRequest extends DefaultParamsType {
   offset?: number
 }
 
+export interface FungibleInfo {
+  /**
+   * Symbol of the fungible token.
+   */
+  symbol: string
+  /**
+   * Full name of the fungible token
+   */
+  name: string
+  /**
+   * Total supply of the fungible token.
+   */
+  supply: string
+  /**
+   * Number of decimal places for the fungible token.
+   */
+  decimals: number
+  /**
+   * Type of the token - fungible
+   */
+  tokenType: 'fungible'
+  /**
+   * Maximum supply cap of the fungible token.
+   */
+  cap: string
+}
+
+export interface MultitokenInfo {
+  /**
+   * Blockchain network
+   */
+  chain: Chain
+  /**
+   * Symbol of the fungible token.
+   */
+  symbol: string
+  /**
+   * Full name of the fungible token
+   */
+  name: string
+  /**
+   * Type of the token - fungible
+   */
+  tokenType: 'multitoken'
+}
+
+export interface NftInfo {
+  /**
+   * Blockchain network
+   */
+  chain: Chain
+  /**
+   * Symbol of the fungible token.
+   */
+  symbol: string
+  /**
+   * Full name of the fungible token
+   */
+  name: string
+  /**
+   * Total supply of the fungible token.
+   */
+  supply: string
+  /**
+   * Type of the token - fungible
+   */
+  tokenType: 'nft'
+}
+
+export interface NftTokenInfo {
+  /**
+   * Blockchain network
+   */
+  chain: Chain
+  /**
+   * Symbol of the fungible token.
+   */
+  symbol: string
+  /**
+   * Full name of the fungible token
+   */
+  name: string
+  /**
+   * Metadata of the token
+   */
+  metadata: any
+  /**
+   * Metadata URI to obtain metadata of the token
+   */
+  metadataURI: string
+  /**
+   * Type of the token - fungible
+   */
+  tokenType: 'nft'
+}
+
 export interface ApiCollectionsResponse {
   chain?: Chain
   tokenId?: string
   tokenAddress?: string
   tokenType?: TokenType
   metadataURI?: string
-  metadata?: NftMetadata
+  metadata?: any
 }
 
 export interface ApiOwnersRequest extends DefaultParamsType {
@@ -240,16 +353,16 @@ export interface ApiCheckOwnersRequest extends DefaultParamsType {
   tokenId?: string
 }
 
-export type ApiTxData = {
-  chain?: ChainEnum
+export interface ApiTxData {
+  chain: Chain
   /**
    * The transaction hash.
    */
-  hash?: string
+  hash: string
   /**
    * The address involved in the transaction.
    */
-  address?: string
+  address: string
   /**
    * The counter address involved in the transaction (optional).
    */
@@ -265,21 +378,25 @@ export type ApiTxData = {
   /**
    * The block number in which the transaction occurred.
    */
-  blockNumber?: number
+  blockNumber: number
   /**
    * The transaction index within the block.
    */
-  transactionIndex?: number
-  transactionType?: TxType
-  transactionSubtype?: TxSubtype
+  transactionIndex: number
+  transactionType: TxType
+  transactionSubtype: TxSubtype
   /**
    * The amount transferred in the transaction.
    */
-  amount?: string
+  amount: string
   /**
    * The timestamp when the transaction occurred.
    */
-  timestamp?: number
+  timestamp: number
+}
+
+export interface TxIdResponse {
+  txId: string
 }
 
 export interface ApiGetTxByHashRequest extends DefaultParamsType {
@@ -297,7 +414,7 @@ export interface ApiTransactionsRequest extends DefaultParamsType {
   /**
    * The blockchain to work with.
    */
-  chain: ChainEnum
+  chain: Chain
   /**
    * The blockchain public wallet addresses.
    * It is possible to enter list of up to 10 addresses as a comma separated string.
@@ -392,6 +509,79 @@ export interface ApiEventsRequest extends DefaultParamsType {
    * The offset to obtain next page of the data.
    */
   offset?: number
+}
+
+interface DecodedDataCommon {
+  label: string
+  type: string
+  subtype: string
+  from: string
+  to: string
+}
+
+interface FungibleTransfer extends DecodedDataCommon {
+  decimals?: number
+  value: string
+}
+
+interface StablecoinTransfer extends FungibleTransfer {
+  stablecoin: string
+}
+
+interface NftTransfer extends DecodedDataCommon {
+  tokenId: string
+}
+
+interface MultitokenTransfer extends DecodedDataCommon {
+  operator: string
+}
+
+interface MultitokenTransferSingle extends MultitokenTransfer {
+  multitokenId: string
+  multitokenValue: string
+}
+
+interface MultitokenTransferBatch extends MultitokenTransfer {
+  multitokenIds: string[]
+  multitokenValues: string[]
+}
+
+interface UniswapTrade extends DecodedDataCommon {
+  token0?: string
+  token1?: string
+  partiallyRaw?: boolean
+}
+
+interface UniswapTradeV2 extends UniswapTrade {
+  amount0In: string
+  amount1In: string
+  amount0Out: string
+  amount1Out: string
+}
+
+interface UniswapTradeV3 extends UniswapTrade {
+  amount0: string
+  amount1: string
+  sqrtPriceX96: string
+  liquidity: string
+  tick: number
+}
+
+export type DecodedData =
+  | FungibleTransfer
+  | StablecoinTransfer
+  | NftTransfer
+  | MultitokenTransferSingle
+  | MultitokenTransferBatch
+  | UniswapTradeV2
+  | UniswapTradeV3
+
+export type RawData = {
+  topic_0?: string
+  topic_1?: string
+  topic_2?: string
+  topic_3?: string
+  data?: string
 }
 
 export interface Event {
@@ -507,7 +697,7 @@ export interface ApiTokensRequest extends DefaultParamsType {
   /**
    * The blockchain to work with.
    */
-  chain: ChainEnum
+  chain: Chain
   /**
    * The blockchain address of the token (NFT collection or any fungible token).
    */
@@ -551,4 +741,47 @@ export interface ApiUtxoResponse {
    * Value of the UTXO, in BTC, LTC or DOGE.
    */
   value: number
+}
+
+export interface ApiCreateTokenRequest extends DefaultParamsType {
+  /**
+   * The blockchain to work with.
+   */
+  chain: Chain
+  /**
+   * Type of the contract
+   */
+  contractType: 'fungible' | 'nft' | 'multitoken'
+  /**
+   * Address of the fungible token owner
+   */
+  owner: string
+  /**
+   * Optional. Address of the fungible token minter, it defaults to the owner address
+   */
+  minter?: string
+  /**
+   * Optional. Address of the fungible token pauser, it defaults to the owner address
+   */
+  pauser?: string
+  /**
+   * Name of fungible token
+   */
+  name: string
+  /**
+   * Symbol of fungible token
+   */
+  symbol: string
+  /**
+   * Initial supply of fungible token
+   */
+  initialSupply: string
+  /**
+   * Initial holder of fungible token
+   */
+  initialHolder: string
+  /**
+   * Optional. Number of decimal places for the fungible token, it defaults to 18
+   */
+  decimals?: string
 }

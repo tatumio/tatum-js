@@ -5,6 +5,7 @@ import {
   ApiBalanceResponse,
   ApiCheckOwnersRequest,
   ApiCollectionsResponse,
+  ApiCreateTokenRequest,
   ApiEventsRequest,
   ApiGetBlockRequest,
   ApiLatestBlockRequest,
@@ -19,8 +20,12 @@ import {
   ApiUtxoResponse,
   Block,
   Event,
+  FungibleInfo,
+  MultitokenInfo,
+  NftInfo,
+  NftTokenInfo,
+  TxIdResponse,
 } from './api.dto'
-import { FungibleInfo, MultitokenInfo, NftInfo, NftTokenInfo } from './generated'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -119,7 +124,7 @@ export class TatumApi {
     })
   }
 
-  public async getTokenCollectionInfo(
+  public async getTokenInfo(
     params: ApiTokensRequest,
   ): Promise<FungibleInfo | NftInfo | MultitokenInfo | NftTokenInfo> {
     return this.connector.get<FungibleInfo | NftInfo | MultitokenInfo | NftTokenInfo, ApiTokensRequest>({
@@ -132,6 +137,13 @@ export class TatumApi {
     return this.connector.get<ApiUtxoResponse[], ApiUtxoByAddress>({
       path: `data/utxos`,
       params,
+    })
+  }
+
+  public async createFungibleToken(body: ApiCreateTokenRequest): Promise<TxIdResponse> {
+    return this.connector.post<TxIdResponse, ApiCreateTokenRequest>({
+      path: `contract/deploy`,
+      body,
     })
   }
 }

@@ -1,4 +1,4 @@
-import { ApiBalanceResponse } from '../../api/api.dto'
+import { ApiBalanceResponse, ApiTxData, FungibleInfo } from '../../api/api.dto'
 import { TokenAddress } from '../../dto'
 
 export interface CreateFungibleToken {
@@ -48,12 +48,12 @@ export interface FungibleTokenBalance {
   /**
    * Token type, default 'fungible' (ERC-20).
    */
-  tokenType: 'fungible'
+  type: 'fungible'
 
   /**
    * Block number of the last balance update.
    */
-  lastUpdatedBlock: number
+  lastUpdatedBlockNumber: number
 
   /**
    * Address
@@ -69,10 +69,6 @@ export interface FungibleTokenBalance {
 export type GetTokenMetadata = TokenAddress
 
 export interface TokenMetadata {
-  /**
-   * Blockchain network
-   */
-  chain: string
   /**
    * Symbol of the fungible token.
    */
@@ -107,11 +103,11 @@ export interface GetAllFungibleTransactionsQuery {
   /**
    * Addresses to fetch. Up to 10 addresses as a comma separated string.
    */
-  addresses: string
+  addresses: string[]
   /**
    * Optional transaction type. If not specified, both incoming and outgoing transactions are returned.
    */
-  transactionType?: 'incoming' | 'outgoing' | 'zero-transfer'
+  transactionTypes?: TransactionType[]
   /**
    * Optional from block. If not specified, all transactions are returned from the beginning of the blockchain.
    */
@@ -130,7 +126,9 @@ export interface GetAllFungibleTransactionsQuery {
   page?: number
 }
 
-export type FungibleTransaction = {
+export type TransactionType = 'incoming' | 'outgoing' | 'zero-transfer'
+
+export interface Transaction {
   /**
    * Blockchain network
    */
@@ -146,7 +144,11 @@ export type FungibleTransaction = {
   /**
    * Transaction type
    */
-  transactionType: 'incoming' | 'outgoing' | 'zero-transfer'
+  transactionType: 'fungible' | 'nft' | 'multitoken' | 'native' | 'internal'
+  /**
+   * Transaction sub type
+   */
+  transactionSubtype: 'incoming' | 'outgoing' | 'zero-transfer'
   /**
    * Index of the transaction in the block
    */
@@ -154,7 +156,11 @@ export type FungibleTransaction = {
   /**
    * Address of the token collection
    */
-  tokenAddress: string
+  tokenAddress?: string
+  /**
+   * The ID of the token involved in the transaction (optional).
+   */
+  tokenId?: string
   /**
    * Amount transferred. For outgoing transactions, it's a negative number. For zero-transfer transactions, it's always 0. For incoming transactions, it's a positive number.
    */
@@ -170,16 +176,47 @@ export type FungibleTransaction = {
   /**
    * Counter address of the transaction. This is sender address for incoming transactions on `address` and receiver address for outgoing transactions on `address`.
    */
-  counterAddress: string
+  counterAddress?: string
+}
+
+export interface TxIdResponse {
+  /**
+   * Id of the transaction
+   */
+  txId: string
 }
 
 export const mapper = {
   toFungibleTokenBalance: (apiResponse: ApiBalanceResponse): FungibleTokenBalance => ({
     chain: apiResponse.chain,
     tokenAddress: apiResponse.tokenAddress,
-    tokenType: apiResponse.type as 'fungible',
-    lastUpdatedBlock: apiResponse.lastUpdatedBlockNumber,
+    type: apiResponse.type as 'fungible',
+    lastUpdatedBlockNumber: apiResponse.lastUpdatedBlockNumber,
     address: apiResponse.address,
     balance: apiResponse.balance,
+  }),
+  toTokenMetadata: (apiResponse: FungibleInfo): TokenMetadata => ({
+    symbol: apiResponse.symbol,
+    name: apiResponse.name,
+    supply: apiResponse.supply,
+    decimals: apiResponse.decimals,
+    tokenType: apiResponse.tokenType,
+    cap: apiResponse.cap,
+  }),
+  toTransaction: (apiResponse: ApiTxData): Transaction => ({
+    chain: apiResponse.chain,
+    blockNumber: apiResponse.blockNumber,
+    hash: apiResponse.hash,
+    transactionType: apiResponse.transactionType,
+    transactionIndex: apiResponse.transactionIndex,
+    tokenAddress: apiResponse.tokenAddress,
+    amount: apiResponse.amount,
+    timestamp: apiResponse.timestamp,
+    address: apiResponse.address,
+    counterAddress: apiResponse.counterAddress,
+    transactionSubtype: apiResponse.transactionSubtype,
+  }),
+  toCreateTokenResponse: (apiResponse: TxIdResponse): TxIdResponse => ({
+    txId: apiResponse.txId,
   }),
 }
