@@ -291,7 +291,7 @@ export interface NftTokenInfo {
   /**
    * Metadata of the token
    */
-  metadata: any
+  metadata: object
   /**
    * Metadata URI to obtain metadata of the token
    */
@@ -308,7 +308,7 @@ export interface ApiCollectionsResponse {
   tokenAddress?: string
   tokenType?: TokenType
   metadataURI?: string
-  metadata?: any
+  metadata?: object
 }
 
 export interface ApiOwnersRequest extends DefaultParamsType {
