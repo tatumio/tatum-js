@@ -74,7 +74,7 @@ export interface NftTokenDetail {
   /**
    * Token type. Either 'nft' (ERC-721) or 'multitoken' (ERC-1155)
    */
-  type: 'nft' | 'multitoken'
+  tokenType: 'nft' | 'multitoken'
   /**
    * Token URI
    */
@@ -139,11 +139,11 @@ export interface GetAllNftTransactionsQueryDetails {
   /**
    * Optional from block. If not specified, all transactions are returned from the beginning of the blockchain.
    */
-  blockFrom?: number
+  fromBlock?: number
   /**
    * Optional to block. If not specified, all transactions are returned up till now.
    */
-  blockTo?: number
+  toBlock?: number
   /**
    * Optional page size. If not specified, the default page size is used, which is 10.
    */

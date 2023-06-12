@@ -112,8 +112,8 @@ export class Nft {
     tokenId,
     tokenAddress,
     transactionType,
-    blockFrom,
-    blockTo,
+    fromBlock,
+    toBlock,
   }: GetAllNftTransactionsQuery): Promise<ResponseDto<NftTransaction[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(() =>
@@ -128,8 +128,8 @@ export class Nft {
             transactionSubtype: transactionType,
             tokenAddress,
             tokenId,
-            blockFrom,
-            blockTo,
+            blockFrom: fromBlock,
+            blockTo: toBlock,
           },
         })
         .then((r) => r.result),
@@ -149,8 +149,8 @@ export class Nft {
     tokenId,
     tokenAddress,
     transactionType,
-    blockFrom,
-    blockTo,
+    fromBlock,
+    toBlock,
   }: GetAllNftTransactionsByAddress): Promise<ResponseDto<NftTransaction[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(() =>
@@ -166,8 +166,8 @@ export class Nft {
             transactionSubtype: transactionType,
             tokenAddress,
             tokenId,
-            blockFrom,
-            blockTo,
+            blockFrom: fromBlock,
+            blockTo: toBlock,
           },
         })
         .then((r) => r.result),
