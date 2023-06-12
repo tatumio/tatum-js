@@ -123,6 +123,7 @@ export class Token {
           blockTo,
           transactionSubTypes: transactionTypes?.join(','),
           addresses: addresses.join(','),
+          transactionTypes: 'fungible',
         })
         .then((r) =>
           r.map((value) => {
