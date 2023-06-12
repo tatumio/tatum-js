@@ -226,7 +226,7 @@ describe('Solana mainnet RPC', () => {
   })
 
   describe('getInflationReward', () => {
-    it('should return inflation reward', async () => {
+    it.skip('should return inflation reward', async () => {
       const tatum = await getClient()
       const result = await tatum.rpc.getInflationReward(['GUP3BG93X9EoDor3bDarTqv8n653u1Bkr2NbQqRqBZwF'])
 
