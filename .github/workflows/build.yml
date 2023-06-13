@@ -51,9 +51,7 @@ jobs:
     - uses: actions/checkout@v3
 
     - name: Download SDK error messages
-      uses: wei/curl@v1.1.1
-      with:
-        args: https://raw.githubusercontent.com/tatumio/tatum-sdk-error-mesages/$SDK_ERROR_MESSAGES_VERSION/error-messages.json --output resources/error-messages.json
+      run: curl --fail --silent https://raw.githubusercontent.com/tatumio/tatum-sdk-error-mesages/$SDK_ERROR_MESSAGES_VERSION/error-messages.json --output resources/error-messages.json
 
     # https://github.com/actions/setup-node
     - uses: actions/setup-node@v3
