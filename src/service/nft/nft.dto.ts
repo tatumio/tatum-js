@@ -14,7 +14,7 @@ export interface CreateMultiTokenNftCollection {
   baseURI?: string
 }
 
-export interface CreateNftCollection extends CreateMultiTokenNftCollection{
+export interface CreateNftCollection extends CreateMultiTokenNftCollection {
   /**
    * Name of the NFT collection, e.g. Bored Ape Yacht Club
    */
@@ -120,7 +120,7 @@ export interface NftAddressBalance extends NftTokenDetail {
   lastUpdatedBlock: number
 }
 
-export interface GetAllNftTransactionsQuery extends GetAllNftTransactionsQueryDetails{
+export interface GetAllNftTransactionsQuery extends GetAllNftTransactionsQueryDetails {
   /**
    * Token ID
    */

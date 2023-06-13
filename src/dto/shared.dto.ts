@@ -2,15 +2,18 @@ export interface IdDto {
   id: string
 }
 
-export interface TokenIdContractAddress {
-  /**
-   * Token ID
-   */
-  tokenId: string
+export interface TokenAddress {
   /**
    * Token contract address
    */
   tokenAddress: string
+}
+
+export interface TokenIdContractAddress extends TokenAddress {
+  /**
+   * Token ID
+   */
+  tokenId: string
 }
 
 export interface AddressBalanceDetails {

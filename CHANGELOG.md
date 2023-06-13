@@ -1,3 +1,8 @@
+## [1.4.24] - 2023.06.12
+
+### Added
+- Added new module for fungible tokens with methods `getBalance`, `createNewFungibleToken`, `getTokenMetadata` and `getAllFungibleTransactions`.
+
 ## [1.4.23] - 2023.06.01
 
 ### Added

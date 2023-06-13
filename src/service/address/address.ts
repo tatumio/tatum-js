@@ -1,12 +1,13 @@
 import { BigNumber } from 'bignumber.js'
 import { Container, Service } from 'typedi'
+import { ApiBalanceRequest } from '../../api/api.dto'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
   AddressBalanceDetails,
+  TokenDetails,
   isDataApiEvmEnabledNetwork,
   isDataApiUtxoEnabledNetwork,
   isEvmBasedNetwork,
-  TokenDetails,
 } from '../../dto'
 import { CONFIG, Constant, ErrorUtils, ResponseDto, Utils } from '../../util'
 import { EvmBasedRpc, GenericRpc } from '../rpc'
@@ -43,7 +44,7 @@ export class Address {
         this.getNativeBalance(addresses),
         isDataApiEvmEnabledNetwork(chain) &&
           this.connector
-            .get<{ result: AddressBalance[] }>({
+            .get<{ result: AddressBalance[] }, ApiBalanceRequest>({
               path: `data/balances`,
               params: {
                 pageSize,
@@ -95,8 +96,8 @@ export class Address {
               addresses: address,
               transactionTypes: transactionTypes?.join(),
               transactionSubtype: transactionDirection,
-              fromBlock,
-              toBlock,
+              blockFrom: fromBlock,
+              blockTo: toBlock,
               pageSize,
               offset: page,
             },

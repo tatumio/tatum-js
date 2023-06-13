@@ -3,7 +3,7 @@ import { version } from '../../package.json'
 import { JsonRpcCall } from '../dto'
 import { ApiVersion } from '../service'
 import { CONFIG, Constant, Utils } from '../util'
-import { GetUrl, SdkRequest } from './connector.dto'
+import { DefaultBodyType, DefaultParamsType, GetUrl, SdkRequest } from './connector.dto'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -14,27 +14,33 @@ import { GetUrl, SdkRequest } from './connector.dto'
 export class TatumConnector {
   constructor(private readonly id: string) {}
 
-  public async get<T>(request: GetUrl) {
-    return this.request<T>({ ...request, method: 'GET' })
+  public async get<RESPONSE, PARAMS extends DefaultParamsType = DefaultParamsType>(request: GetUrl<PARAMS>) {
+    return this.request<RESPONSE, PARAMS>({ ...request, method: 'GET' })
   }
 
-  public async rpcCall<T>(url: string, body: JsonRpcCall | JsonRpcCall[]) {
-    return this.request<T>({ body, method: 'POST' }, 0, url)
+  public async rpcCall<RESPONSE>(url: string, body: JsonRpcCall | JsonRpcCall[]) {
+    return this.request<RESPONSE>({ body, method: 'POST' }, 0, url)
   }
 
-  public async post<T>(request: SdkRequest) {
-    return this.request<T>({ ...request, method: 'POST' })
+  public async post<RESPONSE, BODY extends DefaultBodyType = DefaultBodyType>(
+    request: SdkRequest<DefaultParamsType, BODY>,
+  ) {
+    return this.request<RESPONSE, DefaultParamsType, BODY>({ ...request, method: 'POST' })
   }
 
-  public async delete<T>(request: GetUrl) {
-    return this.request<T>({ ...request, method: 'DELETE' })
+  public async delete<RESPONSE>(request: GetUrl) {
+    return this.request<RESPONSE>({ ...request, method: 'DELETE' })
   }
 
-  private async request<T>(
-    { path, params, body, method, basePath }: SdkRequest,
+  private async request<
+    RESPONSE,
+    PARAMS extends DefaultParamsType = DefaultParamsType,
+    BODY extends DefaultBodyType = DefaultBodyType,
+  >(
+    { path, params, body, method, basePath }: SdkRequest<PARAMS, BODY>,
     retry = 0,
     externalUrl?: string,
-  ): Promise<T> {
+  ): Promise<RESPONSE> {
     const { verbose } = Container.of(this.id).get(CONFIG)
 
     const url = externalUrl || this.getUrl({ path, params, basePath })
@@ -74,7 +80,11 @@ export class TatumConnector {
     }
   }
 
-  private getUrl({ path, params, basePath }: GetUrl) {
+  private getUrl<PARAMS extends DefaultParamsType = DefaultParamsType>({
+    path,
+    params,
+    basePath,
+  }: GetUrl<PARAMS>) {
     const config = Container.of(this.id).get(CONFIG)
     const url = new URL(
       path || '',
