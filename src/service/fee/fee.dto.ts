@@ -1,4 +1,4 @@
-import { Chain } from '../../dto'
+import { Chain, Network } from '../../dto'
 
 export interface NativeTransferFeeEstimationDetails {
   chain: Chain
@@ -23,18 +23,27 @@ export interface EstimationsApi {
   }
 }
 
-export type CurrentFee = {
-  [key in Chain]: {
-    gasPrice: {
-      slow: string
-      medium: string
-      fast: string
-      baseFee: string
-      unit: string
-    }
-    lastRecalculated: string
-    basedOnBlockNumber: string
+export interface CurrentEvmFee {
+  chain: Network
+  gasPrice: {
+    slow: string
+    medium: string
+    fast: string
+    baseFee: string
+    unit: string
   }
+  lastRecalculated: string
+  basedOnBlockNumber: string
+}
+
+export interface CurrentUtxoFee {
+  chain: Network
+  slow: string
+  medium: string
+  fast: string
+  unit: string
+  lastRecalculated: string
+  basedOnBlockNumber: string
 }
 
 export type EmptyObject = Record<string, never>
@@ -50,4 +59,21 @@ export type NativeTransferFeeEstimation = {
     }
     gasLimit: string
   }[]
+}
+
+export interface ApiUtxoFeeResponse {
+  fast: string
+  medium: string
+  slow: string
+  time: string
+  block: string
+}
+
+export interface ApiEvmFeeResponse {
+  slow: string
+  baseFee: string
+  fast: string
+  medium: string
+  time: string
+  block: string
 }

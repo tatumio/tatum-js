@@ -1,6 +1,7 @@
 import { Container, Service } from 'typedi'
 import { CONFIG, Utils } from '../../util'
 import { Address } from '../address'
+import { Fee } from '../fee'
 import { Nft } from '../nft'
 import { Notification } from '../notification'
 import { Rates } from '../rate'
@@ -17,6 +18,7 @@ export class TatumSDK<T> {
   rpc: T
   walletProvider: WalletProvider
   rates: Rates
+  fee: Fee
 
   private constructor(private readonly id: string) {
     this.notification = Container.of(id).get(Notification)
@@ -26,6 +28,7 @@ export class TatumSDK<T> {
     this.address = Container.of(id).get(Address)
     this.rpc = Utils.getRpc<T>(this.id, Container.of(id).get(CONFIG).network)
     this.rates = Container.of(id).get(Rates)
+    this.fee = Container.of(id).get(Fee)
   }
 
   /**

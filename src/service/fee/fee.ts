@@ -1,8 +1,10 @@
 import { BigNumber } from 'bignumber.js'
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
-import { Chain } from '../../dto'
-import { CurrentFee, EmptyObject } from './fee.dto'
+import { Currency, networkToCurrency } from '../../dto/Currency'
+import { CONFIG } from '../../util/'
+import { Network, TatumConfig } from '../tatum'
+import { ApiEvmFeeResponse, ApiUtxoFeeResponse, CurrentEvmFee, CurrentUtxoFee } from './fee.dto'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -12,40 +14,50 @@ import { CurrentFee, EmptyObject } from './fee.dto'
 })
 export class Fee {
   private readonly connector: TatumConnector
+  private readonly config: TatumConfig
 
-  private constructor(private readonly id: string) {
+  constructor(private readonly id: string) {
     this.connector = Container.of(this.id).get(TatumConnector)
+    this.config = Container.of(this.id).get(CONFIG)
   }
-  async getCurrentFee(chains: Chain[]): Promise<CurrentFee | EmptyObject> {
-    if (!chains.length) {
-      return {}
-    }
+  async getCurrentFee(): Promise<CurrentUtxoFee | CurrentEvmFee> {
+    const currency = networkToCurrency(this.config.network)
 
-    const uniqueChains = [...new Set(chains)]
-    const fees = await Promise.all(
-      uniqueChains.map((chain) =>
-        this.connector.get<{
-          slow: string
-          baseFee: string
-          fast: string
-          medium: string
-          time: number
-          block: number
-          // TODO
-        }>({ path: `blockchain/fee/${chain}` }),
-      ),
-    )
-    return chains.reduce((obj, chain) => {
-      const fee = fees[uniqueChains.indexOf(chain)]
-      return {
-        ...obj,
-        [chain]: {
-          gasPrice: Fee.mapGasPrice(fee),
+    const fee = await this.connector.get<ApiEvmFeeResponse | ApiUtxoFeeResponse>({
+      path: `blockchain/fee/${currency}`,
+    })
+
+    return Fee.map(this.config.network, currency, fee)
+  }
+
+  private static map(
+    network: Network,
+    currency: Currency,
+    fee: ApiEvmFeeResponse | ApiUtxoFeeResponse,
+  ): CurrentUtxoFee | CurrentEvmFee {
+    switch (currency) {
+      case Currency.BTC:
+      case Currency.LTC:
+      case Currency.DOGE:
+        return {
+          chain: network,
           lastRecalculated: fee.time,
           basedOnBlockNumber: fee.block,
-        },
-      }
-    }, {} as CurrentFee)
+          slow: fee.slow.toString(),
+          medium: fee.medium.toString(),
+          fast: fee.fast.toString(),
+        } as CurrentUtxoFee
+      case Currency.ETH:
+        return {
+          chain: network,
+          gasPrice: Fee.mapGasPrice(fee as ApiEvmFeeResponse),
+          lastRecalculated: fee.time,
+          basedOnBlockNumber: fee.block,
+        } as CurrentEvmFee
+
+      default:
+        throw new Error('Not supported network')
+    }
   }
 
   private static mapGasPrice({
