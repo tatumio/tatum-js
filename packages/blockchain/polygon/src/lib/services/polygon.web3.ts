@@ -1,6 +1,7 @@
 import { evmBasedWeb3 } from '@tatumio/shared-blockchain-evm-based'
 import Web3 from 'web3'
 import { EvmBasedBlockchain, httpHelper, THIRD_PARTY_API } from '@tatumio/shared-core'
+import BigNumber from 'bignumber.js'
 
 export const polygonWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
@@ -25,10 +26,29 @@ export const polygonWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web
         gasStationUrl = `${gasStationUrl}?apiKey=${possiblyGasStationApiKey}`
       }
 
-      const data = (await httpHelper.get(gasStationUrl)).data
-      const gasPrice = Math.max(30, Math.ceil(data['fast'] ?? 20))
+      const data = (await httpHelper.get(gasStationUrl)).data as GasStationResponse
+      const fee = new BigNumber(data?.fast?.maxFee ?? 20).toNumber()
+      const gasPrice = Math.max(30, Math.ceil(fee))
 
       return Web3.utils.toWei(gasPrice.toString(), 'gwei')
     },
   }
+}
+
+type GasStationResponse = {
+  safeLow: {
+    maxPriorityFee: number
+    maxFee: string
+  }
+  standard: {
+    maxPriorityFee: number
+    maxFee: string
+  }
+  fast: {
+    maxPriorityFee: string
+    maxFee: string
+  }
+  estimatedBaseFee: string
+  blockTime: number
+  blockNumber: number
 }
