@@ -53,8 +53,9 @@ import erc721GeneralTokenBytecode from '../contracts/erc721General/erc721_byteco
  * Estimate Gas price for the transaction.
  */
 export const polygonGetGasPriceInWei = async () => {
-  const { data } = await axios.get('https://gasstation-mainnet.matic.network');
-  return Web3.utils.toWei(`${Math.max(30, Math.ceil(data.fast))}`, 'gwei');
+  const { data } = await axios.get('https://gasstation.polygon.technology/v2');
+  const gasPrice = new BigNumber(data?.fast?.maxFee ?? 30).toNumber();
+  return Web3.utils.toWei(`${Math.max(30, Math.ceil(gasPrice))}`, 'gwei');
 };
 
 const prepareGeneralTx = async (client: Web3, testnet: boolean, fromPrivateKey?: string, signatureId?: string, to?: string, amount?: string, nonce?: number,
