@@ -1,7 +1,7 @@
-import { Commitment, Encoding, Solana } from '../dto'
-import { Network, TatumSDK } from '../service'
+import { Commitment, Encoding } from '../dto'
+import { Network, Solana, TatumSDK } from '../service'
 
-const getClient = async (testnet?: boolean) =>
+const getClient = async (testnet?: boolean): Promise<Solana> =>
   await TatumSDK.init<Solana>({
     network: testnet ? Network.SOLANA_DEVNET : Network.SOLANA,
     verbose: false,

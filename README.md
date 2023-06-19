@@ -32,21 +32,23 @@ Tatum SDK is a powerful, feature-rich TypeScript/JavaScript library that streaml
 
 With Tatum SDK, you can:
 
-* Perform native RPC calls: Easily interact with different blockchains through native RPC calls, abstracting away the complexities of managing separate RPC clients for each blockchain.
-* Create notifications: Monitor wallet activity with ease by setting up real-time notifications for events such as incoming and outgoing transactions, balance updates, and contract interactions.
-* Access wallet information: Retrieve vital wallet details, including balances, transaction history, and other relevant information, all through a single interface.
-And much more: Tatum SDK is constantly evolving, with new features and support for additional blockchains being added regularly.
-This comprehensive library is the ideal choice for developers who are keen on building robust, scalable, and efficient blockchain applications without getting bogged down by the intricacies of working with multiple blockchain protocols.
+- Perform native RPC calls: Easily interact with different blockchains through native RPC calls, abstracting away the complexities of managing separate RPC clients for each blockchain.
+- Create notifications: Monitor wallet activity with ease by setting up real-time notifications for events such as incoming and outgoing transactions, balance updates, and contract interactions.
+- Access wallet information: Retrieve vital wallet details, including balances, transaction history, and other relevant information, all through a single interface.
+  And much more: Tatum SDK is constantly evolving, with new features and support for additional blockchains being added regularly.
+  This comprehensive library is the ideal choice for developers who are keen on building robust, scalable, and efficient blockchain applications without getting bogged down by the intricacies of working with multiple blockchain protocols.
 
 This guide will walk you through the basic setup, installation, and usage of TatumSDK to help you harness the full potential of this library.
 
 ## Prerequisites
+
 Before diving into TatumSDK, ensure that you have the following prerequisites installed:
 
-* **Node.js**: Ensure you have the latest LTS version installed.
-* **npm**: npm is bundled with Node.js, so installing Node.js should automatically install npm.
+- **Node.js**: Ensure you have the latest LTS version installed.
+- **npm**: npm is bundled with Node.js, so installing Node.js should automatically install npm.
 
 ## Installation
+
 To install TatumSDK, simply run the following command in your terminal or command prompt:
 
 ### Install using [npm](https://www.npmjs.com/)
@@ -70,46 +72,39 @@ pnpm install @tatumcom/js
 ## Getting started
 
 ### Basic Usage
+
 Here's a brief overview of how to utilize TatumSDK for RPC calls and subscribing to notifications.
 
 ### Initialization
+
 Start by importing the TatumSDK library and initializing Ethereum client as follows:
 
 ```ts
-import {
-  TatumSDK,
-  Network,
-  Ethereum,
-} from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 ```
 
 ### RPC Calls
+
 To make RPC calls, use the available methods to interact with Ethereum blockchain. For example, to fetch the balance of a specific Ethereum address:
 
 ```ts
-import {
-  TatumSDK,
-  Network,
-  Ethereum,
-} from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
-const balance = await tatum.rpc.getBalance('0x742d35Cc6634C0532925a3b844Bc454e4438f44e');
-console.log(`Balance: ${balance}`);
+const balance = await tatum.rpc.getBalance('0x742d35Cc6634C0532925a3b844Bc454e4438f44e')
+console.log(`Balance: ${balance}`)
 ```
+
 ### Subscribing to Notifications
+
 To subscribe to notifications for events related to a specified Ethereum address, choose a type of event you want to be notified about.
 We are going to use `addressEvent` as an example, which sends you notification about any transfer on the address - native ones, ERC20 tokens or NFTs. To subscribe to this event, use the following code:
 
 ```ts
-import {
-  TatumSDK,
-  Network,
-  Ethereum,
-} from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
@@ -123,15 +118,11 @@ console.log(response)
 ```
 
 ### Get NFT balance of a wallet
+
 Using TatumSDK, obtain the NFT balance of an address by calling the getNFTBalance method within the NFT submodule and passing the target address as an argument. This streamlined process efficiently retrieves the total number of NFTs owned by the specified address. To achieve this, use the following code:
 
 ```ts
-import {
-  TatumSDK,
-  Network,
-  Ethereum,
-  NftAddressBalance
-} from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum, NftAddressBalance } from '@tatumcom/js'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
@@ -143,54 +134,97 @@ console.log(balances)
 ```
 
 ### Connect to MetaMask and send transaction
+
 Using TatumSDK, it's possible to connect your browser application to MetaMask and perform transactions using it. To achieve this, use the following code:
 
 ```ts
-import {
-  TatumSDK,
-  Network,
-  Ethereum,
-} from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
 const account: string = await tatum.walletProvider.metaMask.connect()
-const txId: string = await tatum.walletProvider.metaMask.transferNative('0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848', '1')
+const txId: string = await tatum.walletProvider.metaMask.transferNative(
+  '0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848',
+  '1',
+)
 
 console.log(txId)
 ```
 
 ### Get exchange rates
+
 Using TatumSDK, obtain current fiat/crypto exchange rates To achieve this, use the following code:
 
 ```ts
-import {
-  TatumSDK,
-  Network,
-  Ethereum,
-} from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
-const res = await tatum.rates.getCurrentRate("BTC","EUR");
+const res = await tatum.rates.getCurrentRate('BTC', 'EUR')
 
 console.log(res.data)
 ```
 
+### Get current fees
+
+Using TatumSDK, you can obtain recommended fee/gas price for a blockchain. Supported blockchains are:
+
+- `Bitcoin`
+- `Litecoin`
+- `Dogecoin`
+- `Ethereum`
+
+```ts
+import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
+
+const tatum = await TatumSDK.init<Ethereum>({
+  network: Network.ETHEREUM_SEPOLIA,
+  verbose: true,
+  retryDelay: 1000,
+  retryCount: 2,
+  version: ApiVersion.V1,
+})
+
+const result = await tatum.fee.getCurrentFee()
+
+console.log(result.data)
+```
+
+### Get token balance
+
+Using TatumSDK, obtain all fungible token balances of an address by calling the getBalance method within the `token` submodule and passing the target address as an argument. This streamlined process efficiently retrieves all balances for fungible tokens that specified address holds. To achieve this, use the following code:
+
+```ts
+import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
+
+const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA })
+
+const { data: balances } = await tatum.token.getBalance({
+  addresses: ['0x2cbaf358c0af93096bd820ce57c26f0b7c6ec7ab'],
+})
+
+console.log(balances)
+```
+
 ## Structure of the SDK
+
 TatumSDK is thoughtfully designed and organized into these submodules to provide a clean and efficient way of interacting with blockchains:
 
-* **RPC submodule - `tatum.rpc.*`**: This submodule enables you to make direct Remote Procedure Call (RPC) calls to multiple blockchains, providing seamless access to various on-chain data and functionalities. With the RPC submodule, you can fetch account balances, send transactions, interact with smart contracts, and more.
+- **RPC submodule - `tatum.rpc.*`**: This submodule enables you to make direct Remote Procedure Call (RPC) calls to multiple blockchains, providing seamless access to various on-chain data and functionalities. With the RPC submodule, you can fetch account balances, send transactions, interact with smart contracts, and more.
 
-* **Notification submodule - `tatum.notification.*`**: This submodule allows you to subscribe to real-time notifications for a wide range of events related to specified blockchain addresses. By leveraging the notification submodule, you can effortlessly track incoming and outgoing transactions, NFT transfers, and other events without constantly polling the blockchain.
+- **Notification submodule - `tatum.notification.*`**: This submodule allows you to subscribe to real-time notifications for a wide range of events related to specified blockchain addresses. By leveraging the notification submodule, you can effortlessly track incoming and outgoing transactions, NFT transfers, and other events without constantly polling the blockchain.
 
-* **NFT submodule - `tatum.nft.*`**: This submodule offers a comprehensive suite of tools for working with Non-Fungible Tokens (NFTs). With the NFT submodule, you can query the balance of NFTs on an address, retrieve NFT transactions associated with a specific address, explore NFTs within a collection or identify the owners of a particular NFT.
+- **NFT submodule - `tatum.nft.*`**: This submodule offers a comprehensive suite of tools for working with Non-Fungible Tokens (NFTs). With the NFT submodule, you can query the balance of NFTs on an address, retrieve NFT transactions associated with a specific address, explore NFTs within a collection or identify the owners of a particular NFT.
 
-* **Address submodule - `tatum.address.*`**: This submodule simplifies wallet management across multiple blockchains by allowing you to fetch wallet balances and retrieve transactions for a given address. With the Address submodule, you can easily manage your wallets and monitor transactions, making your blockchain application development more efficient and user-friendly.
+- **Address submodule - `tatum.address.*`**: This submodule simplifies wallet management across multiple blockchains by allowing you to fetch wallet balances and retrieve transactions for a given address. With the Address submodule, you can easily manage your wallets and monitor transactions, making your blockchain application development more efficient and user-friendly.
 
-* **Wallet Provider submodule - `tatum.walletProvider.*`**: This submodule enables seamless interaction with external wallets like Metamask or Phantom within the browser. The Wallet Provider submodule allows the SDK to communicate with various wallet providers, streamlining the process of signing transactions, querying account balances, and interacting with smart contracts directly through popular browser wallets.
+- **Wallet Provider submodule - `tatum.walletProvider.*`**: This submodule enables seamless interaction with external wallets like Metamask or Phantom within the browser. The Wallet Provider submodule allows the SDK to communicate with various wallet providers, streamlining the process of signing transactions, querying account balances, and interacting with smart contracts directly through popular browser wallets.
 
-* **Rate Exchange submodule - `tatum.rates.*`**: This submodule enables allows you to easily obtain exchange rates for fiat/crypto.
+- **Rate Exchange submodule - `tatum.rates.*`**: This submodule enables allows you to easily obtain exchange rates for fiat/crypto.
+
+- **Fee submodule - `tatum.fee.*`**: This submodule allows you to easily obtain recommended fee/gas for a blockchain
+
+- **Token submodule - `tatum.token.*`**: This submodule enables you to interact with fungible tokens on a specified blockchain. It facilitates the tracking of fungible token balances for a wallet address and allows the retrieval of details or transactions for a specific token. Additionally, this submodule can be used to create a new fungible token.
 
 By dividing the library into these submodules, TatumSDK offers an organized, easy-to-use interface that makes interacting with Ethereum and other blockchains a breeze. Both beginners and advanced developers can benefit from the streamlined architecture, enabling them to focus on building powerful blockchain applications.
 
@@ -209,6 +243,7 @@ Older versions of the Tatum SDK has been moved to long living branches [`Tatum S
 ## Contributing
 
 Contributions to the Tatum SDK are welcome. Please ensure that you have tested your changes with a local client and have added unit test coverage for your code.
+
 ### Bugs and feature requests
 
 Have a bug or a feature request? Please first read the issue guidelines and search for existing and closed issues. If your problem or idea is not addressed yet, please open a [new issue](https://github.com/tatumio/tatum-js/issues/new/choose).

@@ -1,8 +1,7 @@
-import { ApiVersion, Network, TatumSDK } from "../service";
-import { Ethereum } from "../dto";
+import { ApiVersion, Ethereum, Network, TatumSDK } from '../service'
 
-describe("Rates", () => {
-  let tatum: TatumSDK<Ethereum>
+describe('Rates', () => {
+  let tatum: Ethereum
   beforeAll(async () => {
     tatum = await TatumSDK.init<Ethereum>({
       network: Network.ETHEREUM_SEPOLIA,
@@ -12,12 +11,15 @@ describe("Rates", () => {
       version: ApiVersion.V2,
     })
   })
-  it("get ETH/EUR", async () => {
-    const res = await tatum.rates.getCurrentRate("BTC","EUR");
-    expect(res.data.value).toBeDefined();
-  });
-  it("get batch", async () => {
-    const res = await tatum.rates.getCurrentRateBatch([{currency: "BTC", basePair: "EUR"}, {currency: "ETH", basePair: "EUR"}]);
-    expect(res.data[1].value).toBeDefined();
-  });
-});
+  it('get ETH/EUR', async () => {
+    const res = await tatum.rates.getCurrentRate('BTC', 'EUR')
+    expect(res.data.value).toBeDefined()
+  })
+  it('get batch', async () => {
+    const res = await tatum.rates.getCurrentRateBatch([
+      { currency: 'BTC', basePair: 'EUR' },
+      { currency: 'ETH', basePair: 'EUR' },
+    ])
+    expect(res.data[1].value).toBeDefined()
+  })
+})

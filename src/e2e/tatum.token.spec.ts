@@ -1,8 +1,7 @@
-import { Ethereum } from '../dto'
-import { Network, TatumSDK } from '../service'
+import { Ethereum, Network, TatumSDK } from '../service'
 
 describe('Tatum token', () => {
-  let tatum: TatumSDK<Ethereum>
+  let tatum: Ethereum
   beforeAll(async () => {
     tatum = await TatumSDK.init<Ethereum>({
       network: Network.ETHEREUM_SEPOLIA,

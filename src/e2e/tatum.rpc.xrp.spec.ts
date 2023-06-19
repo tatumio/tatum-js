@@ -1,5 +1,4 @@
-import { Xrp } from '../dto'
-import { Network, TatumSDK } from '../service'
+import { Network, TatumSDK, Xrp } from '../service'
 
 const getXrpRpc = async (testnet?: boolean) =>
   await TatumSDK.init<Xrp>({
