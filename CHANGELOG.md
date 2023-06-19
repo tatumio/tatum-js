@@ -1,3 +1,10 @@
+## [1.4.25] - 2023.06.19
+
+### Added
+- Added new module for getting current fee for Evm and Utxo chains. 
+### Changed
+- Refactoring TatumSdk class to return specific blockchain class on `init` instead of one generic class.
+
 ## [1.4.24] - 2023.06.12
 
 ### Added

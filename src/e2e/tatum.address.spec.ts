@@ -13,7 +13,7 @@ describe('Address', () => {
         const { data } = await client.address.getBalance({
           addresses: ['0x514D547c8aC8ccBEc29b5144810454BD7d3625CA'],
         })
-        expect(data).toHaveLength(1)
+        expect(data).toHaveLength(2)
         expect(data[0]).toStrictEqual({
           asset: 'ETH',
           decimals: 18,
@@ -30,7 +30,7 @@ describe('Address', () => {
             '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
           ],
         })
-        expect(data).toHaveLength(2)
+        expect(data).toHaveLength(3)
         expect(data[0]).toStrictEqual({
           asset: 'ETH',
           address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
@@ -208,6 +208,7 @@ describe('Address', () => {
       it('should get transactions - native only', async () => {
         const txs = await client.address.getTransactions({
           address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
+          transactionTypes: ['native'],
         })
         expect(txs.status === Status.SUCCESS)
         // at least one transaction
