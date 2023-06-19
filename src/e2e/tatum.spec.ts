@@ -1,5 +1,5 @@
-import { Bitcoin, Network } from '../dto'
-import { TatumSDK } from '../service'
+import { Network } from '../dto'
+import { Bitcoin, TatumSDK } from '../service'
 import { e2eUtil } from './e2e.util'
 
 describe('Tatum Init', () => {

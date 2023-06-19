@@ -1,14 +1,14 @@
 import { EvmBasedRpcSuite } from './EvmBasedRpcSuite'
 import { SolanaRpcSuite } from './SolanaRpcSuite'
+import { TronRpcSuite } from './TronRpcSuite'
 import { UtxoBasedRpcSuite } from './UtxoBasedRpcSuite'
 import { XrpRpcSuite } from './XrpRpcSuite'
-import {TronRpcSuite} from "./TronRpcSuite";
 
 export * from './EvmBasedRpcSuite'
 export * from './SolanaRpcSuite'
+export * from './TronRpcSuite'
 export * from './UtxoBasedRpcSuite'
 export * from './XrpRpcSuite'
-export * from './TronRpcSuite'
 
 // EVM chains
 export type Ethereum = EvmBasedRpcSuite
@@ -31,7 +31,6 @@ export type Palm = EvmBasedRpcSuite
 export type Polygon = EvmBasedRpcSuite
 export type Vechain = EvmBasedRpcSuite
 export type Xdc = EvmBasedRpcSuite
-export type Tron = TronRpcSuite
 
 // UTXO chains
 export type Bitcoin = UtxoBasedRpcSuite
@@ -42,3 +41,4 @@ export type BitcoinCash = UtxoBasedRpcSuite
 // other chains
 export type Xrp = XrpRpcSuite
 export type Solana = SolanaRpcSuite
+export type Tron = TronRpcSuite

@@ -1,5 +1,4 @@
-import { Bitcoin, Ethereum, Polygon } from '../dto'
-import { Network, TatumSDK } from '../service'
+import { Bitcoin, Ethereum, Network, Polygon, TatumSDK } from '../service'
 
 describe('RPCs', () => {
   describe('Bitcoin', () => {

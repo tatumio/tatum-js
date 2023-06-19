@@ -1,10 +1,13 @@
 import {
   AddressBasedNotification,
   AddressBasedNotificationDetail,
+  BaseTatumSdk,
   BlockBasedNotification,
-  BlockBasedNotificationDetail, ContractBasedNotification, ContractBasedNotificationDetail,
+  BlockBasedNotificationDetail,
+  ContractBasedNotification,
+  ContractBasedNotificationDetail,
+  Ethereum,
   Network,
-  TatumSDK,
 } from '../service'
 import { ResponseDto } from '../util'
 
@@ -64,7 +67,7 @@ export const e2eUtil = {
       }
     },
     testAddressBasedSubscription: async (
-      tatum: TatumSDK<unknown>,
+      tatum: BaseTatumSdk,
       address: string,
       func: (
         addressBasedNotificationDetail: AddressBasedNotificationDetail,
@@ -78,7 +81,7 @@ export const e2eUtil = {
       console.log(data)
       console.log(error)
 
-      if(error){
+      if (error) {
         throw new Error(error.message.join(','))
       }
 
@@ -89,7 +92,7 @@ export const e2eUtil = {
       expect(url).toBeDefined()
     },
     testContractBasedSubscription: async (
-      tatum: TatumSDK<unknown>,
+      tatum: Ethereum,
       contractAddress: string,
       func: (
         contractBasedNotificationDetail: ContractBasedNotificationDetail,
@@ -106,7 +109,7 @@ export const e2eUtil = {
       console.log(data)
       console.log(error)
 
-      if(error){
+      if (error) {
         throw new Error(error.message.join(','))
       }
 
@@ -117,7 +120,7 @@ export const e2eUtil = {
       expect(url).toBeDefined()
     },
     testBlockBasedSubscription: async (
-      tatum: TatumSDK<unknown>,
+      tatum: Ethereum,
       func: (
         blockBasedNotificationDetail: BlockBasedNotificationDetail,
       ) => Promise<ResponseDto<BlockBasedNotification>>,

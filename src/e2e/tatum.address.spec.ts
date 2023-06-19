@@ -1,16 +1,16 @@
-import { Bitcoin, Dogecoin, Ethereum, Litecoin, Network } from '../dto'
-import { TatumSDK } from '../service'
+import { Network } from '../dto'
+import { BaseTatumSdk, Bitcoin, Dogecoin, Ethereum, Litecoin, Solana, TatumSDK, Xrp } from '../service'
 import { Status } from '../util'
 
 describe('Address', () => {
   describe('Address Balance', () => {
     describe('getBalance EVM', () => {
-      let tatumSDK: TatumSDK<Ethereum>
+      let client: Ethereum
       beforeAll(async () => {
-        tatumSDK = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA, verbose: true })
+        client = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA, verbose: true })
       })
       it('should get balance with native assets only', async () => {
-        const { data } = await tatumSDK.address.getBalance({
+        const { data } = await client.address.getBalance({
           addresses: ['0x514D547c8aC8ccBEc29b5144810454BD7d3625CA'],
         })
         expect(data).toHaveLength(1)
@@ -24,8 +24,11 @@ describe('Address', () => {
       })
 
       it('should get balance with native assets only for 2 addresses', async () => {
-        const { data } = await tatumSDK.address.getBalance({
-          addresses: ['0x514D547c8aC8ccBEc29b5144810454BD7d3625CA', '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA'],
+        const { data } = await client.address.getBalance({
+          addresses: [
+            '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
+            '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
+          ],
         })
         expect(data).toHaveLength(2)
         expect(data[0]).toStrictEqual({
@@ -45,7 +48,7 @@ describe('Address', () => {
       })
 
       it('should get balance with native, erc20 and erc721 assets', async () => {
-        const { data } = await tatumSDK.address.getBalance({
+        const { data } = await client.address.getBalance({
           addresses: ['0x514D547c8aC8CCBEc29B5144810454BD7D3625cB'],
         })
         expect(data).toHaveLength(3)
@@ -75,12 +78,12 @@ describe('Address', () => {
     })
 
     describe('getBalance SOL', () => {
-      let tatumSDK: TatumSDK<unknown>
+      let client: Solana
       beforeAll(async () => {
-        tatumSDK = await TatumSDK.init({ network: Network.SOLANA_DEVNET, verbose: true })
+        client = await TatumSDK.init<Solana>({ network: Network.SOLANA_DEVNET, verbose: true })
       })
       it('should get balance with native assets only', async () => {
-        const { data } = await tatumSDK.address.getBalance({
+        const { data } = await client.address.getBalance({
           addresses: ['5RMd4Uy6LVyJqMqNPYmerZdzBPCtyq964WBfhPdT2SWi'],
         })
         expect(data).toHaveLength(1)
@@ -95,12 +98,12 @@ describe('Address', () => {
     })
 
     describe('getBalance BTC', () => {
-      let tatumSDK: TatumSDK<Bitcoin>
+      let client: Bitcoin
       beforeAll(async () => {
-        tatumSDK = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN_TESTNET, verbose: true })
+        client = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN_TESTNET, verbose: true })
       })
       it('should get balance with native assets only', async () => {
-        const { data } = await tatumSDK.address.getBalance({
+        const { data } = await client.address.getBalance({
           addresses: ['tb1qrd9jz8ksy3qqm400vt296udlvk89z96p443mv0'],
         })
         expect(data).toHaveLength(1)
@@ -115,12 +118,12 @@ describe('Address', () => {
     })
 
     describe('getBalance DOGE', () => {
-      let tatumSDK: TatumSDK<Dogecoin>
+      let client: Dogecoin
       beforeAll(async () => {
-        tatumSDK = await TatumSDK.init<Dogecoin>({ network: Network.DOGECOIN_TESTNET, verbose: true })
+        client = await TatumSDK.init<Dogecoin>({ network: Network.DOGECOIN_TESTNET, verbose: true })
       })
       it('should get balance with native assets only', async () => {
-        const { data } = await tatumSDK.address.getBalance({
+        const { data } = await client.address.getBalance({
           addresses: ['nqNmVv1PCPFbNQLBMbeKhW4YrswqEgpVsr'],
         })
         expect(data).toHaveLength(1)
@@ -135,12 +138,12 @@ describe('Address', () => {
     })
 
     describe('getBalance LTC', () => {
-      let tatumSDK: TatumSDK<Litecoin>
+      let client: Litecoin
       beforeAll(async () => {
-        tatumSDK = await TatumSDK.init<Litecoin>({ network: Network.LITECOIN_TESTNET, verbose: true })
+        client = await TatumSDK.init<Litecoin>({ network: Network.LITECOIN_TESTNET, verbose: true })
       })
       it('should get balance with native assets only', async () => {
-        const { data } = await tatumSDK.address.getBalance({
+        const { data } = await client.address.getBalance({
           addresses: ['n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3'],
         })
         expect(data).toHaveLength(1)
@@ -155,7 +158,7 @@ describe('Address', () => {
     })
 
     describe('getBalance CARDANO', () => {
-      let tatumSDK: TatumSDK<unknown>
+      let tatumSDK: BaseTatumSdk
       beforeAll(async () => {
         tatumSDK = await TatumSDK.init({ network: Network.CARDANO_PREPROD, verbose: true })
       })
@@ -175,12 +178,12 @@ describe('Address', () => {
     })
 
     describe('getBalance XRP', () => {
-      let tatumSDK: TatumSDK<unknown>
+      let client: Xrp
       beforeAll(async () => {
-        tatumSDK = await TatumSDK.init({ network: Network.XRP_TESTNET, verbose: true })
+        client = await TatumSDK.init({ network: Network.XRP_TESTNET, verbose: true })
       })
       it('should get balance with native assets only', async () => {
-        const response = await tatumSDK.address.getBalance({
+        const response = await client.address.getBalance({
           addresses: ['rK2MUqCRuodSxyYjfregVuJyMgbVXgeyAG'],
         })
         expect(response.data).toHaveLength(1)
@@ -197,13 +200,13 @@ describe('Address', () => {
 
   describe('getTransactions', () => {
     describe('getTransactions EVM', () => {
-      let tatum: TatumSDK<Ethereum>
+      let client: Ethereum
       beforeAll(async () => {
-        tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA, verbose: true })
+        client = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA, verbose: true })
       })
 
       it('should get transactions - native only', async () => {
-        const txs = await tatum.address.getTransactions({
+        const txs = await client.address.getTransactions({
           address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
         })
         expect(txs.status === Status.SUCCESS)
@@ -224,7 +227,7 @@ describe('Address', () => {
       })
 
       it('should get transactions - tokens only', async () => {
-        const txs = await tatum.address.getTransactions({
+        const txs = await client.address.getTransactions({
           address: '0x514D547c8aC8CCBEc29B5144810454BD7D3625cB',
         })
         expect(txs.status === Status.SUCCESS)
@@ -258,7 +261,7 @@ describe('Address', () => {
         })
       })
       it('should get transactions - NFT tokens only', async () => {
-        const txs = await tatum.address.getTransactions({
+        const txs = await client.address.getTransactions({
           address: '0x514D547c8aC8CCBEc29B5144810454BD7D3625cB',
           transactionTypes: ['nft'],
         })
@@ -280,11 +283,11 @@ describe('Address', () => {
         })
       })
       it('should get transactions - pagination', async () => {
-        const page1 = await tatum.address.getTransactions({
+        const page1 = await client.address.getTransactions({
           address: '0x514D547c8aC8CCBEc29B5144810454BD7D3625cB',
           pageSize: 1,
         })
-        const page2 = await tatum.address.getTransactions({
+        const page2 = await client.address.getTransactions({
           address: '0x514D547c8aC8CCBEc29B5144810454BD7D3625cB',
           pageSize: 1,
           page: 1,
@@ -297,13 +300,13 @@ describe('Address', () => {
       })
     })
     describe('getTransactions BITCOIN', () => {
-      let tatum: TatumSDK<Bitcoin>
+      let client: Bitcoin
       beforeAll(async () => {
-        tatum = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN_TESTNET, verbose: true })
+        client = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN_TESTNET, verbose: true })
       })
 
       it('should get transactions', async () => {
-        const txs = await tatum.address.getTransactions({
+        const txs = await client.address.getTransactions({
           address: 'tb1qrd9jz8ksy3qqm400vt296udlvk89z96p443mv0',
         })
         expect(txs.status === Status.SUCCESS)
@@ -338,13 +341,13 @@ describe('Address', () => {
       })
     })
     describe('getTransactions DOGECOIN', () => {
-      let tatum: TatumSDK<Dogecoin>
+      let client: Dogecoin
       beforeAll(async () => {
-        tatum = await TatumSDK.init<Dogecoin>({ network: Network.DOGECOIN_TESTNET, verbose: true })
+        client = await TatumSDK.init<Dogecoin>({ network: Network.DOGECOIN_TESTNET, verbose: true })
       })
 
       it('should get transactions', async () => {
-        const txs = await tatum.address.getTransactions({
+        const txs = await client.address.getTransactions({
           address: 'nqNmVv1PCPFbNQLBMbeKhW4YrswqEgpVsr',
           pageSize: 3,
         })
@@ -380,13 +383,13 @@ describe('Address', () => {
       })
     })
     describe('getTransactions LITECOIN', () => {
-      let tatum: TatumSDK<Litecoin>
+      let client: Litecoin
       beforeAll(async () => {
-        tatum = await TatumSDK.init<Litecoin>({ network: Network.LITECOIN_TESTNET, verbose: true })
+        client = await TatumSDK.init<Litecoin>({ network: Network.LITECOIN_TESTNET, verbose: true })
       })
 
       it('should get transactions', async () => {
-        const txs = await tatum.address.getTransactions({
+        const txs = await client.address.getTransactions({
           address: 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
         })
         expect(txs.status === Status.SUCCESS)

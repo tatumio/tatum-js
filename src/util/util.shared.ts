@@ -2,12 +2,48 @@ import { Container } from 'typedi'
 import {
   AddressEventNotificationChain,
   isEvmBasedNetwork,
-  isSolanaEnabledNetwork, isTronNetwork,
+  isSolanaEnabledNetwork,
+  isTronNetwork,
   isUtxoBasedNetwork,
   isXrpNetwork,
   Network,
 } from '../dto'
-import {EvmBasedRpc, GenericRpc, SolanaRpc, TronRpc, UtxoBasedRpc, XrpRpc} from '../service'
+import {
+  ArbitrumNova,
+  ArbitrumOne,
+  Aurora,
+  AvalancheC,
+  BaseTatumSdk,
+  BinanceSmartChain,
+  Bitcoin,
+  BitcoinCash,
+  Celo,
+  Cronos,
+  Dogecoin,
+  Ethereum,
+  EthereumClassic,
+  EvmBasedRpc,
+  Fantom,
+  GenericRpc,
+  Gnosis,
+  HarmonyOne,
+  Klaytn,
+  Kucoin,
+  Litecoin,
+  Oasis,
+  Optimism,
+  Palm,
+  Polygon,
+  Solana,
+  SolanaRpc,
+  Tron,
+  TronRpc,
+  UtxoBasedRpc,
+  Vechain,
+  Xdc,
+  Xrp,
+  XrpRpc,
+} from '../service'
 
 export const Utils = {
   getRpc: <T>(id: string, network: Network): T => {
@@ -121,20 +157,110 @@ export const Utils = {
   },
   padWithZero: (data: string, length = 64) => data.replace('0x', '').padStart(length, '0'),
   camelToSnakeCase: (str: string) => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),
-  convertObjCamelToSnake: (obj: object)=> {
-    const snakeObj = {};
+  convertObjCamelToSnake: (obj: object) => {
+    const snakeObj = {}
     for (const [key, value] of Object.entries(obj)) {
       const snakeKey = Utils.camelToSnakeCase(key)
       if (typeof value === 'object' && value !== null) {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        snakeObj[snakeKey] = convertObjCamelToSnake(value);
+        snakeObj[snakeKey] = convertObjCamelToSnake(value)
       } else {
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        snakeObj[snakeKey] = value;
+        snakeObj[snakeKey] = value
       }
     }
-    return snakeObj;
-  }
+    return snakeObj
+  },
+  getClient: <T>(id: string, network: Network): T => {
+    switch (network) {
+      case Network.BITCOIN:
+      case Network.BITCOIN_TESTNET:
+        return new Bitcoin(id) as T
+      case Network.LITECOIN:
+      case Network.LITECOIN_TESTNET:
+        return new Litecoin(id) as T
+      case Network.DOGECOIN:
+      case Network.DOGECOIN_TESTNET:
+        return new Dogecoin(id) as T
+      case Network.BITCOIN_CASH:
+      case Network.BITCOIN_CASH_TESTNET:
+        return new BitcoinCash(id) as T
+      case Network.ETHEREUM:
+      case Network.ETHEREUM_SEPOLIA:
+      case Network.ETHEREUM_GOERLI:
+        return new Ethereum(id) as T
+      case Network.ETHEREUM_CLASSIC:
+        return new EthereumClassic(id) as T
+      case Network.ARBITRUM_NOVA:
+      case Network.ARBITRUM_NOVA_TESTNET:
+        return new ArbitrumNova(id) as T
+      case Network.ARBITRUM_ONE:
+        return new ArbitrumOne(id) as T
+      case Network.AURORA:
+      case Network.AURORA_TESTNET:
+        return new Aurora(id) as T
+      case Network.AVALANCHE_C:
+      case Network.AVALANCHE_C_TESTNET:
+      case Network.AVALANCHE_P:
+      case Network.AVALANCHE_P_TESTNET:
+      case Network.AVALANCHE_X:
+      case Network.AVALANCHE_X_TESTNET:
+        return new AvalancheC(id) as T
+      case Network.BINANCE_SMART_CHAIN:
+      case Network.BINANCE_SMART_CHAIN_TESTNET:
+        return new BinanceSmartChain(id) as T
+      case Network.CELO:
+      case Network.CELO_ALFAJORES:
+        return new Celo(id) as T
+      case Network.CRONOS:
+      case Network.CRONOS_TESTNET:
+        return new Cronos(id) as T
+      case Network.FANTOM:
+      case Network.FANTOM_TESTNET:
+        return new Fantom(id) as T
+      case Network.GNOSIS:
+      case Network.GNOSIS_TESTNET:
+        return new Gnosis(id) as T
+      case Network.HARMONY_ONE_SHARD_0:
+      case Network.HARMONY_ONE_TESTNET_SHARD_0:
+        return new HarmonyOne(id) as T
+      case Network.KLAYTN:
+      case Network.KLAYTN_BAOBAB:
+        return new Klaytn(id) as T
+      case Network.KUCOIN:
+      case Network.KUCOIN_TESTNET:
+        return new Kucoin(id) as T
+      case Network.OASIS:
+      case Network.OASIS_TESTNET:
+        return new Oasis(id) as T
+      case Network.OPTIMISM:
+      case Network.OPTIMISM_TESTNET:
+        return new Optimism(id) as T
+      case Network.PALM:
+      case Network.PALM_TESTNET:
+        return new Palm(id) as T
+      case Network.POLYGON:
+      case Network.POLYGON_MUMBAI:
+        return new Polygon(id) as T
+      case Network.VECHAIN:
+      case Network.VECHAIN_TESTNET:
+        return new Vechain(id) as T
+      case Network.XDC:
+      case Network.XDC_TESTNET:
+        return new Xdc(id) as T
+      case Network.XRP:
+      case Network.XRP_TESTNET:
+        return new Xrp(id) as T
+      case Network.SOLANA:
+      case Network.SOLANA_DEVNET:
+        return new Solana(id) as T
+      case Network.TRON:
+      case Network.TRON_SHASTA:
+        return new Tron(id) as T
+      default:
+        return new BaseTatumSdk(id) as T
+    }
+  },
 }

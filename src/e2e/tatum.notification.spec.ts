@@ -1,23 +1,30 @@
 import { Network } from '../dto'
-import { NotificationSubscription, TatumSDK } from '../service'
+import { Ethereum, NotificationSubscription, TatumSDK } from '../service'
 import { Status } from '../util'
 import {
   AddressEventNetworks,
   ContractAddressLogEventNetworks,
   FailedTxPerBlockNetworks,
-  FungibleTxNetworks, IncomingNativeTxNetworks,
+  FungibleTxNetworks,
+  IncomingNativeTxNetworks,
   InternalTxNetworks,
   MultitokenNetworks,
   NftNetworks,
-  OutgoingFailedNetworks, OutgoingNativeTxNetworks,
+  OutgoingFailedNetworks,
+  OutgoingNativeTxNetworks,
   PaidFeeNetworks,
-  TestConst
+  TestConst,
 } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 
 describe('notification', () => {
   beforeAll(async () => {
-    const tatum = await TatumSDK.init({network: Network.ETHEREUM, verbose: true, retryCount: 10, retryDelay: 5000})
+    const tatum = await TatumSDK.init<Ethereum>({
+      network: Network.ETHEREUM,
+      verbose: true,
+      retryCount: 10,
+      retryDelay: 5000,
+    })
     const notifications = await tatum.notification.getAll()
 
     for (const notification of notifications.data as NotificationSubscription[]) {
@@ -28,7 +35,12 @@ describe('notification', () => {
     describe('IP auth', () => {
       describe('Address Event', () => {
         it.each(Object.values(AddressEventNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -39,7 +51,12 @@ describe('notification', () => {
 
       describe('Incoming Native Tx', () => {
         it.each(Object.values(IncomingNativeTxNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -50,7 +67,12 @@ describe('notification', () => {
 
       describe('Outgoing Native Tx', () => {
         it.each(Object.values(OutgoingNativeTxNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -61,7 +83,12 @@ describe('notification', () => {
 
       describe('Outgoing Failed Tx', () => {
         it.each(Object.values(OutgoingFailedNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -72,7 +99,12 @@ describe('notification', () => {
 
       describe('Paid Fee', () => {
         it.each(Object.values(PaidFeeNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -83,7 +115,12 @@ describe('notification', () => {
 
       describe('Incoming Internal Tx', () => {
         it.each(Object.values(InternalTxNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -94,7 +131,12 @@ describe('notification', () => {
 
       describe('Outgoing Internal Tx', () => {
         it.each(Object.values(InternalTxNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -105,7 +147,12 @@ describe('notification', () => {
 
       describe('Incoming Fungible Tx', () => {
         it.each(Object.values(FungibleTxNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -116,7 +163,12 @@ describe('notification', () => {
 
       describe('Outgoing Fungible Tx', () => {
         it.each(Object.values(FungibleTxNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -127,7 +179,12 @@ describe('notification', () => {
 
       describe('Incoming Nft Tx', () => {
         it.each(Object.values(NftNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -136,10 +193,14 @@ describe('notification', () => {
         })
       })
 
-
       describe('Outgoing Nft Tx', () => {
         it.each(Object.values(NftNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -150,7 +211,12 @@ describe('notification', () => {
 
       describe('Incoming Multitoken Tx', () => {
         it.each(Object.values(MultitokenNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -161,7 +227,12 @@ describe('notification', () => {
 
       describe('Outgoing Multitoken Tx', () => {
         it.each(Object.values(MultitokenNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -172,7 +243,12 @@ describe('notification', () => {
 
       describe('Failed Txs Per Block', () => {
         it.each(Object.values(FailedTxPerBlockNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testBlockBasedSubscription(
             tatum,
             tatum.notification.subscribe.failedTxsPerBlock,
@@ -182,7 +258,12 @@ describe('notification', () => {
 
       describe('Contract Address Log Event', () => {
         it.each(Object.values(ContractAddressLogEventNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init({ network, verbose: true, retryCount: 10, retryDelay: 5000 })
+          const tatum = await TatumSDK.init<Ethereum>({
+            network,
+            verbose: true,
+            retryCount: 10,
+            retryDelay: 5000,
+          })
           await e2eUtil.subscriptions.testContractBasedSubscription(
             tatum,
             e2eUtil.subscriptions.getAddress(network),
@@ -193,7 +274,12 @@ describe('notification', () => {
     })
 
     it('NOK - existing subscription ', async () => {
-      const tatum = await TatumSDK.init({ network: Network.ETHEREUM, verbose: true, retryCount: 10, retryDelay: 5000 })
+      const tatum = await TatumSDK.init<Ethereum>({
+        network: Network.ETHEREUM,
+        verbose: true,
+        retryCount: 10,
+        retryDelay: 5000,
+      })
       await tatum.notification.subscribe.addressEvent({
         url: 'https://tatum.com',
         address: TestConst.EXISTING_SUBSCRIPTION_ETH_ADDRESS,
@@ -212,7 +298,12 @@ describe('notification', () => {
     })
 
     it('NOK - invalid address', async () => {
-      const tatum = await TatumSDK.init({ network: Network.ETHEREUM, verbose: true, retryCount: 10, retryDelay: 5000 })
+      const tatum = await TatumSDK.init<Ethereum>({
+        network: Network.ETHEREUM,
+        verbose: true,
+        retryCount: 10,
+        retryDelay: 5000,
+      })
 
       const { status, error } = await tatum.notification.subscribe.addressEvent({
         url: 'https://tatum.io',
@@ -228,7 +319,12 @@ describe('notification', () => {
 
   describe('deleteSubscription', () => {
     it('OK', async () => {
-      const tatum = await TatumSDK.init({ network: Network.ETHEREUM_SEPOLIA, verbose: true, retryCount: 10, retryDelay: 5000 })
+      const tatum = await TatumSDK.init<Ethereum>({
+        network: Network.ETHEREUM_SEPOLIA,
+        verbose: true,
+        retryCount: 10,
+        retryDelay: 5000,
+      })
       const address = e2eUtil.subscriptions.getAddress(Network.ETHEREUM_SEPOLIA)
       const { data: subscribeData } = await tatum.notification.subscribe.addressEvent({
         url: 'https://tatum.io',
@@ -244,7 +340,12 @@ describe('notification', () => {
     })
 
     it('NOK - invalid subscription', async () => {
-      const tatum = await TatumSDK.init({ network: Network.ETHEREUM_SEPOLIA, verbose: true, retryCount: 10, retryDelay: 5000 })
+      const tatum = await TatumSDK.init<Ethereum>({
+        network: Network.ETHEREUM_SEPOLIA,
+        verbose: true,
+        retryCount: 10,
+        retryDelay: 5000,
+      })
       const { data, status, error } = await tatum.notification.unsubscribe('invalid-subscription-id')
       expect(data).toEqual(null)
       expect(status).toEqual(Status.ERROR)
@@ -255,7 +356,12 @@ describe('notification', () => {
   })
 
   it('getAll', async () => {
-    const tatum = await TatumSDK.init({ network: Network.ETHEREUM, verbose: true, retryCount: 10, retryDelay: 5000 })
+    const tatum = await TatumSDK.init<Ethereum>({
+      network: Network.ETHEREUM,
+      verbose: true,
+      retryCount: 10,
+      retryDelay: 5000,
+    })
     const { data, error } = await tatum.notification.getAll()
     console.log(new Date().toISOString(), error)
     expect(data).not.toHaveLength(0)
@@ -269,7 +375,12 @@ describe('notification', () => {
 
   // TODO pipeline dont work with this test - IP auth
   it.skip('getAllExecutedWebhooks', async () => {
-    const tatum = await TatumSDK.init({ network: Network.ETHEREUM_SEPOLIA, verbose: true, retryCount: 10, retryDelay: 5000 })
+    const tatum = await TatumSDK.init<Ethereum>({
+      network: Network.ETHEREUM_SEPOLIA,
+      verbose: true,
+      retryCount: 10,
+      retryDelay: 5000,
+    })
     const { data } = await tatum.notification.getAllExecutedWebhooks()
     expect(data[0].type).toBeDefined()
     expect(data[0].id).toBeDefined()
