@@ -8,7 +8,7 @@ See the [RPC API Reference](https://docs.tatum.com/docs/rpc-api-reference) for m
 Load balancer is used managing RPC calls to nodes in a blockchain network.
 It maintains a list of available nodes and their status, and it automatically selects the most responsive node for subsequent RPC calls.
 
-> **_For use of the Load Balancer, you need to know how it is working!._**  Load Balancer works automatically in the background and selects the most responsive node for subsequent RPC calls. You can use the SDK without any knowledge of the Load Balancer.
+> **_For use of the Load Balancer, you don't need to know how it is working!._**  Load Balancer works automatically in the background and selects the most responsive node for subsequent RPC calls. You can use the SDK without any knowledge of the Load Balancer.
 
 Load Balancer implementation is available in [LoadBalancerRpc.ts](https://github.com/tatumio/tatum-js/blob/master/src/service/rpc/generic/LoadBalancerRpc.ts)
 
