@@ -129,7 +129,6 @@ export const e2eUtil = {
       const { data, error } = await func({
         url,
       })
-      console.log(data)
       await tatum.notification.unsubscribe(data.id)
       expect(error).toBeUndefined()
       expect(data.id).toBeDefined()

@@ -39,8 +39,6 @@ export class Address {
     addresses,
   }: AddressBalanceDetails): Promise<ResponseDto<AddressBalance[]>> {
     const chain = this.config.network
-    const address = await this.getNativeBalance(addresses)
-    console.log(address)
     return ErrorUtils.tryFail(async () => {
       const [nativeBalances, tokenBalances] = await Promise.all([
         this.getNativeBalance(addresses),

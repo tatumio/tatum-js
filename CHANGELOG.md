@@ -1,11 +1,3 @@
-## [1.5.2] - 2023.06.20
-### Changed
-- Fixed EVM tatum.address.spec.ts tests
-
-## [1.5.1] - 2023.06.20
-### Changed
- - Fixed docs links to make it working in the /docs folder
-
 ## [1.5.0] - 2023.06.19
 
 ### Added

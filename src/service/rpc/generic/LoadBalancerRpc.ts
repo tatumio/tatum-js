@@ -286,7 +286,10 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
       console.error(`All servers are unavailable.`)
       throw e
     }
-    console.log(new Date().toISOString(), `Server ${fastestServer.node.url} is selected as active server, because ${url} failed.`)
+    Utils.log({
+      id: this.id,
+      message: `Server ${fastestServer.node.url} is selected as active server, because ${url} failed.`,
+    })
     this.activeUrl[nodeType] = { url: fastestServer.node.url, index }
   }
 
