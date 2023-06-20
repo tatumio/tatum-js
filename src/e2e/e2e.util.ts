@@ -78,10 +78,8 @@ export const e2eUtil = {
         url,
         address,
       })
-      console.log(data)
-      console.log(error)
-
       if (error) {
+        console.log(error)
         throw new Error(error.message.join(','))
       }
 

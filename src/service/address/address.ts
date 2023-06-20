@@ -39,6 +39,8 @@ export class Address {
     addresses,
   }: AddressBalanceDetails): Promise<ResponseDto<AddressBalance[]>> {
     const chain = this.config.network
+    const address = await this.getNativeBalance(addresses)
+    console.log(address)
     return ErrorUtils.tryFail(async () => {
       const [nativeBalances, tokenBalances] = await Promise.all([
         this.getNativeBalance(addresses),
@@ -232,15 +234,14 @@ export class Address {
       })
   }
 
-  private getNativeBalance(addresses: string[]): Promise<string[]> {
+  private async getNativeBalance(addresses: string[]): Promise<string[]> {
     const network = this.config.network
     if (isEvmBasedNetwork(network)) {
       const rpc = Utils.getRpc<EvmBasedRpc>(this.id, network)
-      return rpc
-        .rawBatchRpcCall(addresses.map((a, i) => Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i)))
-        .then((r) =>
-          r.map((e) => new BigNumber(e.result).dividedBy(10 ** Constant.DECIMALS[network]).toString()),
-        )
+      const result = await Promise.all(addresses.map((a, i) => rpc.rawRpcCall(Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i))))
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      return result.map((e) => new BigNumber(e.result).dividedBy(10 ** Constant.DECIMALS[network]).toString())
     }
     if ([Network.SOLANA, Network.SOLANA_DEVNET].includes(network)) {
       const rpc = Utils.getRpc<GenericRpc>(this.id, network)

@@ -188,7 +188,6 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.FLARE_SONGBIRD,
   Network.HAQQ,
   Network.HAQQ_TESTNET,
-  // TODO: uncomment once it will work
   // Network.ETHEREUM,
   // Network.ETHEREUM_SEPOLIA,
 ]
