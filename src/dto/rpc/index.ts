@@ -1,4 +1,4 @@
-export * from './EvmBasedRpcSuite'
+export * from './EvmBasedRpcInterface'
 export * from './SolanaRpcSuite'
 export * from './TronRpcSuite'
 export * from './UtxoBasedRpcSuite'

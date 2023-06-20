@@ -26,13 +26,13 @@ export const e2eUtil = {
         case Network.BINANCE_SMART_CHAIN_TESTNET:
           return '0xddde2061b144Be4b5921eE1F1Cd2Db4eDC9AE6aA'
         case Network.SOLANA_DEVNET:
-          return '53U8WBbpjfwMprZ9YQr5frU5DtY1gNRBwzxkcPHtxQP8'
+          return 'GwzBgrXb4PG59zjce24SF2b9JXbLEjJJTBkmytuEZj1b'
         case Network.TRON_SHASTA:
           return 'TLduuX5NWFucPPafLbj9eab6Znwrdm72Qv'
         case Network.BITCOIN_TESTNET:
           return 'tb1q0w3g78u9uwwpf94m3jtqen3neyge5g7y20w8mt'
         case Network.BITCOIN_CASH_TESTNET:
-          return 'qz3yu2m8dzwrw5uc85a5pz78dyxnrvdhf5v8tlf8jd'
+          return 'bchtest:qp495cqlv22676su9hllwy58unawwsmnfvztn0p0t6'
         case Network.XRP:
         case Network.XRP_TESTNET:
           return 'rpnU81snz763qoXiHwnonsuTpDNwemL6yu'
@@ -51,7 +51,7 @@ export const e2eUtil = {
         case Network.BINANCE_SMART_CHAIN:
           return '0x9b38ffbac4acb7a9fd15a7b3bbab5796724166ef'
         case Network.SOLANA:
-          return '53U8WBbpjfwMprZ9YQr5frU5DtY1gNRBwzxkcPHtxQP8'
+          return '5U3bH5b6XtG99aVWLqwVzYPVpQiFHytBD68Rz2eFPZd7'
         case Network.TRON:
           return 'TLduuX5NWFucPPafLbj9eab6Znwrdm72Qv'
         case Network.BITCOIN:
@@ -90,6 +90,7 @@ export const e2eUtil = {
       expect(error).toBeUndefined()
       expect(data.address.toLowerCase()).toEqual(address.toLowerCase())
       expect(url).toBeDefined()
+      return data.id
     },
     testContractBasedSubscription: async (
       tatum: Ethereum,

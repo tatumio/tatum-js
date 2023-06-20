@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AbstractJsonRpcSuite } from './AbstractJsonRpcSuite'
+import { AbstractRpcInterface } from './AbstractJsonRpcInterface'
 
 export interface SolanaAccountInfo {
   lamports: number
@@ -284,7 +284,7 @@ export type SendTransactionOptions = {
   minContextSlot?: number // Specifies the minimum slot to include in the response.
 }
 
-export interface SolanaRpcSuite extends AbstractJsonRpcSuite {
+export interface SolanaRpcSuite extends AbstractRpcInterface {
   /**
    * Get info about the account on the Solana blockchain.
    * @param pubkey - Pubkey of account to query, as base-58 encoded string

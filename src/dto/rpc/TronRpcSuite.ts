@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import {AbstractJsonRpcSuite} from "./AbstractJsonRpcSuite"
 import {BigNumber} from "bignumber.js";
+import { AbstractRpcInterface } from './AbstractJsonRpcInterface'
 
 export interface TronTxRawBody {
   visible?: boolean
@@ -131,7 +131,7 @@ export interface BlockIdentifier {
   number: BigNumber
 }
 
-export interface TronRpcSuite extends AbstractJsonRpcSuite {
+export interface TronRpcSuite extends AbstractRpcInterface {
   /**
    * Validates a Tron address.
    *

@@ -1,6 +1,6 @@
 {
   "name": "@tatumcom/js",
-  "version": "1.4.25",
+  "version": "1.5.0",
   "description": "Tatum JS SDK",
   "author": "Tatum",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -21,7 +21,7 @@
   "scripts": {
     "cli": "ts-node src/cli.ts",
     "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx && prettier --write src/",
-    "test": "jest --forceExit --detectOpenHandles",
+    "test": "jest --forceExit",
     "clean": "rm -rf dist build package",
     "ts-node": "ts-node",
     "build": "tsc -p tsconfig.json",

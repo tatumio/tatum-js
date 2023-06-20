@@ -237,7 +237,7 @@ export class Address {
     if (isEvmBasedNetwork(network)) {
       const rpc = Utils.getRpc<EvmBasedRpc>(this.id, network)
       return rpc
-        .rawBatchRpcCall(addresses.map((a, i) => rpc.prepareRpcCall('eth_getBalance', [a, 'pending'], i)))
+        .rawBatchRpcCall(addresses.map((a, i) => Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i)))
         .then((r) =>
           r.map((e) => new BigNumber(e.result).dividedBy(10 ** Constant.DECIMALS[network]).toString()),
         )
@@ -246,7 +246,7 @@ export class Address {
       const rpc = Utils.getRpc<GenericRpc>(this.id, network)
       return rpc
         .rawBatchRpcCall(
-          addresses.map((a, i) => rpc.prepareRpcCall('getBalance', [a, { commitment: 'processed' }], i)),
+          addresses.map((a, i) => Utils.prepareRpcCall('getBalance', [a, { commitment: 'processed' }], i)),
         )
         .then((r) =>
           r.map((e) => new BigNumber(e.result.value).dividedBy(10 ** Constant.DECIMALS[network]).toString()),
@@ -258,7 +258,7 @@ export class Address {
       const rpc = Utils.getRpc<GenericRpc>(this.id, network)
       return rpc
         .rawRpcCall(
-          rpc.prepareRpcCall('account_info', [
+          Utils.prepareRpcCall('account_info', [
             {
               account: addresses[0],
               ledger_index: 'current',

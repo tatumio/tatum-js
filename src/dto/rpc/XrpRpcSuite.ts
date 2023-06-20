@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AbstractJsonRpcSuite } from './AbstractJsonRpcSuite'
+
+import { AbstractRpcInterface } from './AbstractJsonRpcInterface'
 
 /**
  * XRP RPC calls.
@@ -244,7 +245,7 @@ export interface XrpResult {
   [key: string]: any
 }
 
-export interface XrpRpcSuite extends AbstractJsonRpcSuite {
+export interface XrpRpcSuite extends AbstractRpcInterface {
   // account methods
 
   /**

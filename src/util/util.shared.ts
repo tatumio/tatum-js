@@ -1,11 +1,17 @@
 import { Container } from 'typedi'
+
+import { CONFIG } from './di.tokens'
 import {
   AddressEventNotificationChain,
   isEvmBasedNetwork,
+  isEvmLoadBalancerNetwork,
   isSolanaEnabledNetwork,
   isTronNetwork,
   isUtxoBasedNetwork,
+  isUtxoLoadBalancerNetwork,
   isXrpNetwork,
+  JsonRpcCall,
+  JsonRpcResponse,
   Network,
 } from '../dto'
 import {
@@ -22,10 +28,12 @@ import {
   Dogecoin,
   Ethereum,
   EthereumClassic,
+  EvmBasedLoadBalancerRpc,
   EvmBasedRpc,
-  Fantom,
+  Fantom, Flare,
   GenericRpc,
   Gnosis,
+  Haqq,
   HarmonyOne,
   Klaytn,
   Kucoin,
@@ -38,18 +46,29 @@ import {
   SolanaRpc,
   Tron,
   TronRpc,
+  UtxoBasedLoadBalancerRpc,
   UtxoBasedRpc,
   Vechain,
   Xdc,
   Xrp,
   XrpRpc,
 } from '../service'
+import { BigNumber } from 'bignumber.js'
 
 export const Utils = {
   getRpc: <T>(id: string, network: Network): T => {
+    if (isUtxoLoadBalancerNetwork(network)) {
+      return Container.of(id).get(UtxoBasedLoadBalancerRpc) as T
+    }
+
+    if (isEvmLoadBalancerNetwork(network)) {
+      return Container.of(id).get(EvmBasedLoadBalancerRpc) as T
+    }
+
     if (isEvmBasedNetwork(network)) {
       return Container.of(id).get(EvmBasedRpc) as T
     }
+
     if (isUtxoBasedNetwork(network)) {
       return Container.of(id).get(UtxoBasedRpc) as T
     }
@@ -64,6 +83,34 @@ export const Utils = {
     }
     console.warn(`RPC Network ${network} is not supported.`)
     return Container.of(id).get(GenericRpc) as T
+  },
+  getRpcListUrl: (network: Network): string => {
+    return `https://rpc.tatum.com/${network}/list.json`
+  },
+  getStatusPayload: (network: Network) => {
+    if (isUtxoBasedNetwork(network)) {
+      return {
+        jsonrpc: '2.0',
+        method: 'getblockcount',
+        params: [],
+        id: 1,
+      }
+    }
+    if (isEvmBasedNetwork(network)) {
+      return {
+        jsonrpc: '2.0',
+        method: 'eth_blockNumber',
+        params: [],
+        id: 1,
+      }
+    }
+    throw new Error(`Network ${network} is not supported.`)
+  },
+  parseStatusPayload: (network: Network, response: JsonRpcResponse) => {
+    if (isUtxoBasedNetwork(network) || isEvmBasedNetwork(network)) {
+      return new BigNumber(response.result as number || -1).toNumber()
+    }
+    throw new Error(`Network ${network} is not supported.`)
   },
   mapNotificationChainToNetwork: (chain: AddressEventNotificationChain): Network => {
     switch (chain) {
@@ -147,9 +194,13 @@ export const Utils = {
     const controller = new AbortController()
     const id = setTimeout(() => controller.abort(), timeout)
     const start = Date.now()
+
     const response = await fetch(url, {
       ...config,
       signal: controller.signal,
+      headers: {
+        'Content-Type': 'application/json',
+      }
     })
     const responseTime = Date.now() - start
     clearTimeout(id)
@@ -226,6 +277,14 @@ export const Utils = {
       case Network.HARMONY_ONE_SHARD_0:
       case Network.HARMONY_ONE_TESTNET_SHARD_0:
         return new HarmonyOne(id) as T
+      case Network.HAQQ:
+      case Network.HAQQ_TESTNET:
+        return new Haqq(id) as T
+      case Network.FLARE:
+      case Network.FLARE_COSTON:
+      case Network.FLARE_COSTON_2:
+      case Network.FLARE_SONGBIRD:
+        return new Flare(id) as T
       case Network.KLAYTN:
       case Network.KLAYTN_BAOBAB:
         return new Klaytn(id) as T
@@ -263,4 +322,52 @@ export const Utils = {
         return new BaseTatumSdk(id) as T
     }
   },
+
+  log: ({ id, message, data, mode }: { id: string, message?: string, data?: object, mode?: 'table' }) => {
+    const config = Container.of(id).get(CONFIG)
+    if (config.verbose) {
+      if (data) {
+        if (mode === 'table') {
+          console.table(data)
+        } else {
+          console.debug(new Date().toISOString(), message, data)
+        }
+      } else {
+        console.debug(new Date().toISOString(), message)
+      }
+    }
+  },
+  prepareRpcCall: (method: string, params?: unknown[], id = 1): JsonRpcCall => {
+    return {
+      jsonrpc: '2.0',
+      id,
+      method,
+      params,
+    }
+  },
+  deepMerge(target: unknown, source: unknown): unknown {
+    const isObject = (obj: unknown): obj is Record<string, unknown> =>
+      typeof obj === 'object' && obj !== null;
+
+    if (!isObject(target) || !isObject(source)) {
+      return source;
+    }
+
+    const output: Record<string, unknown> = { ...target };
+
+    Object.keys(source).forEach((key) => {
+      const targetValue = output[key];
+      const sourceValue = source[key];
+
+      if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
+        output[key] = [...targetValue, ...sourceValue];
+      } else if (isObject(targetValue) && isObject(sourceValue)) {
+        output[key] = Utils.deepMerge(targetValue, sourceValue);
+      } else {
+        output[key] = sourceValue;
+      }
+    });
+
+    return output;
+  }
 }

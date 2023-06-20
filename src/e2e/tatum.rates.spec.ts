@@ -5,7 +5,6 @@ describe('Rates', () => {
   beforeAll(async () => {
     tatum = await TatumSDK.init<Ethereum>({
       network: Network.ETHEREUM_SEPOLIA,
-      verbose: true,
       retryDelay: 1000,
       retryCount: 2,
       version: ApiVersion.V2,

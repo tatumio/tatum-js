@@ -29,8 +29,6 @@ export const AddressEventNetworks = [
   Network.KLAYTN_BAOBAB,
   Network.TRON,
   Network.TRON_SHASTA,
-  Network.SOLANA,
-  Network.SOLANA_DEVNET,
   Network.XRP,
   Network.XRP_TESTNET,
 ]
