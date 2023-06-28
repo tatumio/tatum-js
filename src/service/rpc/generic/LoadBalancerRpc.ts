@@ -59,28 +59,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     const nodes = config.rpc?.nodes
     if (nodes) {
       Utils.log({ id: this.id, message: 'Initializing RPC module from static URLs' })
-      if (nodes?.length) {
-        for (const node of nodes) {
-          if (node.type === RpcNodeType.NORMAL) {
-            this.rpcUrls[RpcNodeType.NORMAL].push({
-              node: { url: node.url },
-              lastBlock: 0,
-              lastResponseTime: 0,
-              failed: false,
-            })
-          }
-          if (node.type === RpcNodeType.ARCHIVE) {
-            this.rpcUrls[RpcNodeType.ARCHIVE].push({
-              node: { url: node.url },
-              lastBlock: 0,
-              lastResponseTime: 0,
-              failed: false,
-            })
-          }
-        }
-      } else {
-        Utils.log({ id: this.id, message: 'No RPC URLs provided' })
-      }
+      this.initCustomNodes(nodes)
     } else {
       Utils.log({ id: this.id, message: 'Initializing RPC module from remote hosts' })
       await this.initRemoteHostsUrls()
@@ -97,6 +76,33 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
 
   destroy() {
     clearTimeout(this.timeout as number)
+  }
+
+  private initCustomNodes(nodes: RpcNode[]) {
+    this.initRemoteHosts(RpcNodeType.NORMAL, nodes)
+    this.initRemoteHosts(RpcNodeType.ARCHIVE, nodes)
+    if (nodes?.length) {
+      for (const node of nodes) {
+        if (node.type === RpcNodeType.NORMAL) {
+          this.rpcUrls[RpcNodeType.NORMAL].push({
+            node: { url: node.url },
+            lastBlock: 0,
+            lastResponseTime: 0,
+            failed: false,
+          })
+        }
+        if (node.type === RpcNodeType.ARCHIVE) {
+          this.rpcUrls[RpcNodeType.ARCHIVE].push({
+            node: { url: node.url },
+            lastBlock: 0,
+            lastResponseTime: 0,
+            failed: false,
+          })
+        }
+      }
+    } else {
+      Utils.log({ id: this.id, message: 'No RPC URLs provided' })
+    }
   }
 
   private async checkStatuses() {

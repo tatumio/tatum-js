@@ -1,3 +1,9 @@
+## [1.5.1] - 2023.06.28
+
+### Updated
+- Fixed custom nodes configuration
+- renamed index.md to readme.md
+
 ## [1.5.0] - 2023.06.19
 
 ### Added
