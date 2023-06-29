@@ -86,7 +86,11 @@ export interface EvmBasedRpcInterface {
 
   getBlockByHash(blockHash: string, includeTransactions?: boolean): Promise<any>
 
+  getBlockTransactionCountByHash(blockHash: string): Promise<number>
+
   getBlockByNumber(blockNumber: string | number, includeTransactions?: boolean): Promise<any>
+
+  getBlockTransactionCountByNumber(blockNumber: string | number): Promise<number>
 
   getCode(address: string, blockNumber?: BlockNumber): Promise<string>
 
@@ -168,7 +172,7 @@ export interface EvmBasedRpcInterface {
   // txpool_ methods
   txPoolContent(): Promise<any>
 
-  txPoolStatus(include: 'pending' | 'queued'): Promise<any>
+  txPoolStatus(): Promise<any>
 
   txPoolInspect(): Promise<any>
 }

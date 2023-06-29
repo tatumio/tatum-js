@@ -136,7 +136,12 @@ export abstract class AbstractEvmBasedRpc implements EvmBasedRpcInterface {
   }
 
   async getBlockByHash(blockHash: string, includeTransactions = false): Promise<any> {
-    const r = await this.rpcCall <JsonRpcResponse>('eth_getTransactionByBlockNumberAndIndex', [blockHash, includeTransactions])
+    const r = await this.rpcCall <JsonRpcResponse>('eth_getBlockByHash', [blockHash, includeTransactions])
+    return r.result;
+  }
+
+  async getBlockTransactionCountByHash(blockHash: string): Promise<number> {
+    const r = await this.rpcCall <JsonRpcResponse>('eth_getBlockTransactionCountByHash', [blockHash])
     return r.result;
   }
 
@@ -148,7 +153,19 @@ export abstract class AbstractEvmBasedRpc implements EvmBasedRpcInterface {
     return r.result
   }
 
+  async getBlockTransactionCountByNumber(blockNumber: BlockNumber): Promise<number> {
+    const r = await this.rpcCall<JsonRpcResponse>(
+      'eth_getBlockTransactionCountByNumber',
+      [typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber],
+    )
+    return r.result
+  }
+
   async getCode(address: string, blockNumber?: BlockNumber): Promise<string> {
+    if(!blockNumber){
+      blockNumber = 'latest'
+    }
+
     const r = await this.rpcCall<JsonRpcResponse>(
       'eth_getCode',
       [address, typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber],
@@ -171,6 +188,10 @@ export abstract class AbstractEvmBasedRpc implements EvmBasedRpcInterface {
   }
 
   async getStorageAt(address: string, position: string, blockNumber?: BlockNumber): Promise<string> {
+    if(!blockNumber){
+      blockNumber = 'latest'
+    }
+
     const r = await this.rpcCall<JsonRpcResponse>(
       'eth_getStorageAt', [address,
         position,
@@ -181,7 +202,7 @@ export abstract class AbstractEvmBasedRpc implements EvmBasedRpcInterface {
 
   async getTransactionByBlockHashAndIndex(blockHash: string, index: number): Promise<any> {
     const r = await this.rpcCall<JsonRpcResponse>(
-      'eth_getTransactionByBlockNumberAndIndex', [blockHash,
+      'eth_getTransactionByBlockHashAndIndex', [blockHash,
         `0x${new BigNumber(index).toString(16)}`,
       ])
     return r.result;
@@ -338,9 +359,9 @@ export abstract class AbstractEvmBasedRpc implements EvmBasedRpcInterface {
     return r.result;
   }
 
-  async txPoolStatus(include = 'pending'): Promise<any> {
+  async txPoolStatus(): Promise<any> {
     const r = await this.rpcCall<JsonRpcResponse>(
-      'txpool_status', [include])
+      'txpool_status')
     return r.result;
   }
 }
