@@ -33,10 +33,15 @@ Tatum SDK is a powerful, feature-rich TypeScript/JavaScript library that streaml
 With Tatum SDK, you can:
 
 ### Perform native RPC calls
+
 Easily interact with different blockchains through native RPC calls, abstracting away the complexities of managing separate RPC clients for each blockchain.
+
 ### Create notifications
+
 Monitor wallet activity with ease by setting up real-time notifications for events such as incoming and outgoing transactions, balance updates, and contract interactions.
+
 ### Access wallet information
+
 Retrieve vital wallet details, including balances, transaction history, and other relevant information, all through a single interface.
 
 Tatum SDK is constantly evolving, with new features and support for additional blockchains being added regularly.
@@ -98,8 +103,8 @@ import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
-const balance = await tatum.rpc.getBalance('0x742d35Cc6634C0532925a3b844Bc454e4438f44e')
-console.log(`Balance: ${balance}`)
+const { data } = await tatum.rpc.getBalance('0x742d35Cc6634C0532925a3b844Bc454e4438f44e')
+console.log(`Balance: ${data}`)
 ```
 
 ### Subscribing to Notifications
@@ -212,14 +217,15 @@ console.log(balances)
 
 ## Documentation
 
- - [Documentation and Guides](https://docs.tatum.com) to get started with Tatum SDK
- - [Documentation section](https://github.com/tatumio/tatum-js/tree/master/docs) for more details.
+- [Documentation and Guides](https://docs.tatum.com) to get started with Tatum SDK
+- [Documentation section](https://github.com/tatumio/tatum-js/tree/master/docs) for more details.
 
 ## Examples
-  - [Browser Example](https://github.com/tatumio/tatum-js/tree/master/examples/browser)
-  - [Get Balance ETH Example](https://github.com/tatumio/tatum-js/tree/master/examples/docs/get-balance-eth)
-  - [NextJS Example](https://github.com/tatumio/tatum-js/tree/master/examples/nextjs)
-  - [TypeScript Example](https://github.com/tatumio/tatum-js/tree/master/examples/typescript)
+
+- [Browser Example](https://github.com/tatumio/tatum-js/tree/master/examples/browser)
+- [Get Balance ETH Example](https://github.com/tatumio/tatum-js/tree/master/examples/docs/get-balance-eth)
+- [NextJS Example](https://github.com/tatumio/tatum-js/tree/master/examples/nextjs)
+- [TypeScript Example](https://github.com/tatumio/tatum-js/tree/master/examples/typescript)
 
 ## Legacy versions
 

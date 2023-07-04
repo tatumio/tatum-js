@@ -1,136 +1,146 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JsonRpcResponse, UtxoBasedRpcInterface } from '../../../dto'
+import { ResponseDto, ResponseUtils } from '../../../util'
 
 export abstract class AbstractUtxoBasedRpc implements UtxoBasedRpcInterface {
   protected abstract rpcCall<T>(method: string, params?: unknown[]): Promise<T>
 
-  async createRawTransaction(inputs: any[], outputs: any, locktime = 0, replaceable = false): Promise<string> {
-    const res = await this.rpcCall<JsonRpcResponse>('createrawtransaction', [inputs, outputs, locktime, replaceable]);
-    return res.result;
+  async createRawTransaction(
+    inputs: any[],
+    outputs: any,
+    locktime = 0,
+    replaceable = false,
+  ): Promise<ResponseDto<string>> {
+    const res = await this.rpcCall<JsonRpcResponse>('createrawtransaction', [
+      inputs,
+      outputs,
+      locktime,
+      replaceable,
+    ])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async decodeRawTransaction(hexstring: string): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('decoderawtransaction', [hexstring]);
-    return res.result;
+  async decodeRawTransaction(hexstring: string): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('decoderawtransaction', [hexstring])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async decodeScript(hexstring: string): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('decodescript', [hexstring]);
-    return res.result;
+  async decodeScript(hexstring: string): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('decodescript', [hexstring])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async estimateSmartFee(blocks: number, estimateMode = 'CONSERVATIVE'): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('estimatesmartfee', [blocks, estimateMode]);
-    return res.result;
+  async estimateSmartFee(blocks: number, estimateMode = 'CONSERVATIVE'): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('estimatesmartfee', [blocks, estimateMode])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getBestBlockHash(): Promise<string> {
-    const res = await this.rpcCall<JsonRpcResponse>('getbestblockhash');
-    return res.result;
+  async getBestBlockHash(): Promise<ResponseDto<string>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getbestblockhash')
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getBlock(hashOrHeight: string, verbose: 0 | 1 | 2 = 1): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('getblock', [hashOrHeight, verbose]);
-    return res.result;
+  async getBlock(hashOrHeight: string, verbose: 0 | 1 | 2 = 1): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getblock', [hashOrHeight, verbose])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getBlockChainInfo(): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('getblockchaininfo');
-    return res.result;
+  async getBlockChainInfo(): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getblockchaininfo')
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getBlockCount(): Promise<number> {
-    const res = await this.rpcCall<JsonRpcResponse>('getblockcount');
-    return res.result;
+  async getBlockCount(): Promise<ResponseDto<number>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getblockcount')
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getBlockHash(height: number): Promise<string> {
-    const res = await this.rpcCall<JsonRpcResponse>('getblockhash', [height]);
-    return res.result;
+  async getBlockHash(height: number): Promise<ResponseDto<string>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getblockhash', [height])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getBlockHeader(hash: string, verbose = true): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('getblockheader', [hash, verbose]);
-    return res.result;
+  async getBlockHeader(hash: string, verbose = true): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getblockheader', [hash, verbose])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getBlockStats(hash: string): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('getblockstats', [hash]);
-    return res.result;
+  async getBlockStats(hash: string): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getblockstats', [hash])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getChainTips(): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('getchaintips');
-    return res
+  async getChainTips(): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getchaintips')
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getDifficulty(): Promise<number> {
-    const res = await this.rpcCall<JsonRpcResponse>('getdifficulty');
-    return res.result;
+  async getDifficulty(): Promise<ResponseDto<number>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getdifficulty')
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getMempoolAncestors(txId: string, verbose = false): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('getmempoolancestors', [txId, verbose]);
-    return res.result;
+  async getMempoolAncestors(txId: string, verbose = false): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getmempoolancestors', [txId, verbose])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getMempoolDescendants(txId: string, verbose = false): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('getmempooldescendants', [txId, verbose]);
-    return res.result;
+  async getMempoolDescendants(txId: string, verbose = false): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getmempooldescendants', [txId, verbose])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getMempoolEntry(txId: string): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('getmempoolentry', [txId]);
-    return res.result;
+  async getMempoolEntry(txId: string): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getmempoolentry', [txId])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getMempoolInfo(): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('getmempoolinfo');
-    return res.result;
+  async getMempoolInfo(): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getmempoolinfo')
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getRawMemPool(verbose = false): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('getrawmempool', [verbose]);
-    return res.result;
+  async getRawMemPool(verbose = false): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getrawmempool', [verbose])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getRawTransaction(txId: string, verbose = false): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('getrawtransaction', [txId, verbose]);
-    return res.result;
+  async getRawTransaction(txId: string, verbose = false): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('getrawtransaction', [txId, verbose])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getTxOut(txId: string, index: number, includeMempool = true): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('gettxout', [txId, index, includeMempool]);
-    return res.result;
+  async getTxOut(txId: string, index: number, includeMempool = true): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('gettxout', [txId, index, includeMempool])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async getTxOutProof(txIds: string[], blockhash?: string): Promise<any> {
-    const params: unknown[] = [txIds];
+  async getTxOutProof(txIds: string[], blockhash?: string): Promise<ResponseDto<any>> {
+    const params: unknown[] = [txIds]
     if (blockhash) {
-      params.push(blockhash);
+      params.push(blockhash)
     }
-    const res = await this.rpcCall<JsonRpcResponse>('gettxoutproof', params);
-    return res.result;
+    const res = await this.rpcCall<JsonRpcResponse>('gettxoutproof', params)
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async sendRawTransaction(hexstring: string): Promise<string> {
-    const res = await this.rpcCall<JsonRpcResponse>('sendrawtransaction', [hexstring]);
-    return res.result;
+  async sendRawTransaction(hexstring: string): Promise<ResponseDto<string>> {
+    const res = await this.rpcCall<JsonRpcResponse>('sendrawtransaction', [hexstring])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async validateAddress(address: string): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('validateaddress', [address]);
-    return res.result;
+  async validateAddress(address: string): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('validateaddress', [address])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async verifyMessage(address: string, signature: string, message: string): Promise<boolean> {
-    const res = await this.rpcCall<JsonRpcResponse>('verifymessage', [address, signature, message]);
-    return res.result;
+  async verifyMessage(address: string, signature: string, message: string): Promise<ResponseDto<boolean>> {
+    const res = await this.rpcCall<JsonRpcResponse>('verifymessage', [address, signature, message])
+    return ResponseUtils.fromRpcResult(res)
   }
 
-  async verifyTxOutProof(proof: string): Promise<any> {
-    const res = await this.rpcCall<JsonRpcResponse>('verifytxoutproof', [proof]);
-    return res.result;
+  async verifyTxOutProof(proof: string): Promise<ResponseDto<any>> {
+    const res = await this.rpcCall<JsonRpcResponse>('verifytxoutproof', [proof])
+    return ResponseUtils.fromRpcResult(res)
   }
 }
-

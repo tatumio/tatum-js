@@ -26,11 +26,10 @@ import {
   TxJson,
   TxOptions,
   TypeOption,
-  XrpResult,
   XrpRpcSuite,
 } from '../../dto'
+import { ResponseDto, ResponseUtils, Utils } from '../../util'
 import { AbstractBatchRpc } from './generic'
-import { Utils } from '../../util'
 
 const generateXrpParams = (required?: { [key: string]: any }, optional?: { [key: string]: any }) => {
   const xrpParams: { [name: string]: unknown } = {}
@@ -52,7 +51,7 @@ export class XrpRpc extends AbstractBatchRpc implements XrpRpcSuite {
     super(id)
   }
 
-  accountChannels(account: string, options?: AccountChannelsOptions): Promise<XrpResult> {
+  accountChannels(account: string, options?: AccountChannelsOptions): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -66,46 +65,46 @@ export class XrpRpc extends AbstractBatchRpc implements XrpRpcSuite {
           ),
         ),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  accountCurrencies(account: string, options?: Ledger & StrictOption): Promise<XrpResult> {
+  accountCurrencies(account: string, options?: Ledger & StrictOption): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('account_currencies', generateXrpParams({ account }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  accountInfo(account: string, options?: AccountInfoOptions): Promise<XrpResult> {
+  accountInfo(account: string, options?: AccountInfoOptions): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('account_info', generateXrpParams({ account }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  accountLines(account: string, options?: AccountLinesOptions): Promise<XrpResult> {
+  accountLines(account: string, options?: AccountLinesOptions): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('account_lines', generateXrpParams({ account }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  accountNfts(account: string, options?: Ledger & Pagination): Promise<XrpResult> {
+  accountNfts(account: string, options?: Ledger & Pagination): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('account_nfts', generateXrpParams({ account }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  accountObjects(account: string, options?: AccountObjectsOptions): Promise<XrpResult> {
+  accountObjects(account: string, options?: AccountObjectsOptions): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -119,19 +118,19 @@ export class XrpRpc extends AbstractBatchRpc implements XrpRpcSuite {
           ),
         ),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  accountOffers(account: string, options?: Ledger & Pagination & StrictOption): Promise<XrpResult> {
+  accountOffers(account: string, options?: Ledger & Pagination & StrictOption): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('account_offers', generateXrpParams({ account }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  accountTx(account: string, options?: AccountTxOptions): Promise<XrpResult> {
+  accountTx(account: string, options?: AccountTxOptions): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -145,67 +144,67 @@ export class XrpRpc extends AbstractBatchRpc implements XrpRpcSuite {
           ),
         ),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  gatewayBalances(account: string, options?: GatewayBalancesOptions): Promise<XrpResult> {
+  gatewayBalances(account: string, options?: GatewayBalancesOptions): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('gateway_balances', generateXrpParams({ account }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  norippleCheck(account: string, role: string, options?: NorippleCheckOptions): Promise<XrpResult> {
+  norippleCheck(account: string, role: string, options?: NorippleCheckOptions): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('noripple_check', generateXrpParams({ account, role }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  ledger(options?: LedgerOptions): Promise<XrpResult> {
+  ledger(options?: LedgerOptions): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('ledger', generateXrpParams({}, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  ledgerClosed(): Promise<XrpResult> {
+  ledgerClosed(): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('ledger_closed'))
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  ledgerCurrent(): Promise<XrpResult> {
+  ledgerCurrent(): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('ledger_current'))
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  ledgerData(options?: Ledger & LedgerBinaryOption & Pagination & TypeOption): Promise<XrpResult> {
+  ledgerData(options?: Ledger & LedgerBinaryOption & Pagination & TypeOption): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('ledger_data', generateXrpParams({}, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  ledgerEntry(options?: LedgerEntryOptions): Promise<XrpResult> {
+  ledgerEntry(options?: LedgerEntryOptions): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('ledger_entry', generateXrpParams({}, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  submit(tx: Transaction, options?: Secrets & FailOption & AutoFilling): Promise<XrpResult> {
+  submit(tx: Transaction, options?: Secrets & FailOption & AutoFilling): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -214,46 +213,46 @@ export class XrpRpc extends AbstractBatchRpc implements XrpRpcSuite {
           generateXrpParams(typeof tx === 'string' ? { txBlob: tx } : { txJson: tx }, options),
         ),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  submitMultisigned(txJson: TxJson, options?: FailOption): Promise<XrpResult> {
+  submitMultisigned(txJson: TxJson, options?: FailOption): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('submit_multisigned', generateXrpParams({ txJson }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  transactionEntry(txHash: string, options?: Ledger): Promise<XrpResult> {
+  transactionEntry(txHash: string, options?: Ledger): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('transaction_entry', generateXrpParams({ txHash }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  tx(transaction: string, options?: TxOptions): Promise<XrpResult> {
+  tx(transaction: string, options?: TxOptions): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('tx', generateXrpParams({ transaction }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  txHistory(start: number): Promise<XrpResult> {
+  txHistory(start: number): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('txHistory', generateXrpParams({ start })),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  sign(txJson: TxJson, options?: Secrets & AutoFilling): Promise<XrpResult> {
+  sign(txJson: TxJson, options?: Secrets & AutoFilling): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -267,28 +266,36 @@ export class XrpRpc extends AbstractBatchRpc implements XrpRpcSuite {
           ),
         ),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  signFor(account: string, txJson: TxJson, options?: Secrets): Promise<XrpResult> {
+  signFor(account: string, txJson: TxJson, options?: Secrets): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('sign_for', generateXrpParams({ account, txJson }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  bookOffers(takerGets: Currency, takerPays: Currency, options?: BookOffersOptions): Promise<XrpResult> {
+  bookOffers(
+    takerGets: Currency,
+    takerPays: Currency,
+    options?: BookOffersOptions,
+  ): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('book_offers', generateXrpParams({ takerGets, takerPays }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  depositAuthorized(sourceAccount: string, destinationAccount: string, options?: Ledger): Promise<XrpResult> {
+  depositAuthorized(
+    sourceAccount: string,
+    destinationAccount: string,
+    options?: Ledger,
+  ): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -303,25 +310,25 @@ export class XrpRpc extends AbstractBatchRpc implements XrpRpcSuite {
           ),
         ),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  nftBuyOffers(nftId: string, options?: Ledger & Pagination): Promise<XrpResult> {
+  nftBuyOffers(nftId: string, options?: Ledger & Pagination): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('nft_buy_offers', generateXrpParams({ nftId }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  nftSellOffers(nftId: string, options?: Ledger & Pagination): Promise<XrpResult> {
+  nftSellOffers(nftId: string, options?: Ledger & Pagination): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('nft_sell_offers', generateXrpParams({ nftId }, options)),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
   ripplePathFind(
@@ -329,7 +336,7 @@ export class XrpRpc extends AbstractBatchRpc implements XrpRpcSuite {
     destinationAccount: string,
     destinationAmount: CurrencyAmount,
     options?: RipplePathFindOptions,
-  ): Promise<XrpResult> {
+  ): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -345,10 +352,10 @@ export class XrpRpc extends AbstractBatchRpc implements XrpRpcSuite {
           ),
         ),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  channelAuthorize(amount: string, channelId: string, options?: Secrets): Promise<XrpResult> {
+  channelAuthorize(amount: string, channelId: string, options?: Secrets): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
@@ -363,54 +370,65 @@ export class XrpRpc extends AbstractBatchRpc implements XrpRpcSuite {
           ),
         ),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  channelVerify(amount: string, channelId: string, publicKey: string, signature: string): Promise<XrpResult> {
+  channelVerify(
+    amount: string,
+    channelId: string,
+    publicKey: string,
+    signature: string,
+  ): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('channel_verify', generateXrpParams({ amount, channelId, publicKey, signature })),
+        Utils.prepareRpcCall(
+          'channel_verify',
+          generateXrpParams({ amount, channelId, publicKey, signature }),
+        ),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  fee(): Promise<XrpResult> {
+  fee(): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('fee'))
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  serverInfo(): Promise<XrpResult> {
+  serverInfo(): Promise<ResponseDto<any>> {
     return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('server_info', generateXrpParams()))
-      .then((r) => r.result)
+      .rpcCall<JsonRpcResponse>(
+        this.getRpcNodeUrl(),
+        Utils.prepareRpcCall('server_info', generateXrpParams()),
+      )
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  serverState(): Promise<XrpResult> {
+  serverState(): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('server_state'))
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  manifest(publicKey: string): Promise<XrpResult> {
+  manifest(publicKey: string): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(
         this.getRpcNodeUrl(),
         Utils.prepareRpcCall('manifest', generateXrpParams({ publicKey })),
       )
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  ping(): Promise<XrpResult> {
+  ping(): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('ping'))
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 
-  random(): Promise<XrpResult> {
+  random(): Promise<ResponseDto<any>> {
     return this.connector
       .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('random'))
-      .then((r) => r.result)
+      .then((r) => ResponseUtils.fromRpcResult(r))
   }
 }
