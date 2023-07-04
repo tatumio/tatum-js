@@ -12,15 +12,13 @@ import { abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abs
 import { Blockchain } from '@tatumio/shared-core'
 import BigNumber from 'bignumber.js'
 import { BchSdkError } from '../bch.sdk.errors'
-import stringify from 'fast-safe-stringify'
 import { btcBasedWalletUtils } from '@tatumio/shared-blockchain-btc-based'
 // @ts-ignore
 import * as BitcoinCashJS from '@tatumio/bitcoincashjs2-lib'
-import { networks, TransactionBuilder } from 'bitcoinjs-lib'
-// @ts-ignore
-import * as bitcoreLibCash from 'bitcore-lib-cash'
+import { TransactionBuilder } from 'bitcoinjs-lib'
 // @ts-ignore
 import * as coininfo from 'coininfo'
+import bchaddr from 'bchaddrjs'
 
 interface KeyPair {
   address: string
@@ -28,12 +26,7 @@ interface KeyPair {
 }
 
 const addOutputAddressValue = (transactionBuilder: TransactionBuilder, address: string, value: number) => {
-  try {
-    transactionBuilder.addOutput(address, value)
-  } catch (_) {
-    const addressFromString = new bitcoreLibCash.Address.fromString(address)
-    transactionBuilder.addOutput(addressFromString.toLegacyAddress(), value)
-  }
+  transactionBuilder.addOutput(bchaddr.toLegacyAddress(address), value)
 }
 
 const prepareTransaction = async (

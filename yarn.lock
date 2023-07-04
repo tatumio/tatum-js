@@ -2799,6 +2799,11 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/bchaddrjs@^0.4.0":
+  version "0.4.0"
+  resolved "https://registry.yarnpkg.com/@types/bchaddrjs/-/bchaddrjs-0.4.0.tgz#f3d29ab56096c9d7105b5ccbc69969d11426e087"
+  integrity sha512-Nvv3haWpXNWYfKasVoEp3VBgVsBTLTh45anhHUN8xVUPhn4ErU3FPS5AEcZtACWc5ICGUxbaiLTWOnwDkwYF1Q==
+
 "@types/bech32@^1.1.2":
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@types/bech32/-/bech32-1.1.4.tgz#501590d41c81a5f1802e39d6be450e89ec6d75d6"
@@ -4265,6 +4270,16 @@ batch@0.6.1:
   resolved "https://registry.yarnpkg.com/batch/-/batch-0.6.1.tgz#dc34314f4e679318093fc760272525f94bf25c16"
   integrity sha512-x+VAiMRL6UPkx+kudNvxTl6hB2XNNCG2r+7wixVfIYwu/2HKRXimwQyaumLjMveWvT2Hkd/cAJw+QBMfJ/EKVw==
 
+bchaddrjs@^0.5.2:
+  version "0.5.2"
+  resolved "https://registry.yarnpkg.com/bchaddrjs/-/bchaddrjs-0.5.2.tgz#1f52b5077329774e7c82d4882964628106bb11a0"
+  integrity sha512-OO7gIn3m7ea4FVx4cT8gdlWQR2+++EquhdpWQJH9BQjK63tJJ6ngB3QMZDO6DiBoXiIGUsTPHjlrHVxPGcGxLQ==
+  dependencies:
+    bs58check "2.1.2"
+    buffer "^6.0.3"
+    cashaddrjs "0.4.4"
+    stream-browserify "^3.0.0"
+
 bcrypt-pbkdf@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/bcrypt-pbkdf/-/bcrypt-pbkdf-1.0.2.tgz#a4301d389b6a43f9b67ff3ca11a3f6637e360e9e"
@@ -4466,19 +4481,6 @@ bitcoinjs-lib@^5.2.0:
     varuint-bitcoin "^1.0.4"
     wif "^2.0.1"
 
-bitcore-lib-cash@10.0.2:
-  version "10.0.2"
-  resolved "https://registry.yarnpkg.com/bitcore-lib-cash/-/bitcore-lib-cash-10.0.2.tgz#9fc823de3c177c520a95c87454c138769b276df0"
-  integrity sha512-k4WkisK/OBD4CKl5r+GvOf3Hdw9W6UGviYUj6zNQujuyT/3eAgCs3QdhjLLVkauszg5pLXHezMV6C/UVLjBctQ==
-  dependencies:
-    bitcore-lib "^10.0.2"
-    bn.js "=4.11.8"
-    bs58 "^4.0.1"
-    buffer-compare "=1.1.1"
-    elliptic "^6.5.3"
-    inherits "=2.0.1"
-    lodash "^4.17.20"
-
 bitcore-lib-doge@10.0.0:
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/bitcore-lib-doge/-/bitcore-lib-doge-10.0.0.tgz#78adce96e75968640bd0fcad178cdea715c6b59f"
@@ -4506,7 +4508,7 @@ bitcore-lib-ltc@10.0.0:
     lodash "^4.17.20"
     scryptsy "2.1.0"
 
-bitcore-lib@10.0.2, bitcore-lib@^10.0.2:
+bitcore-lib@10.0.2:
   version "10.0.2"
   resolved "https://registry.yarnpkg.com/bitcore-lib/-/bitcore-lib-10.0.2.tgz#7ba3a90e014584933893a7f8facebf9b9ce5e953"
   integrity sha512-x7bWAqZdk5B/aVM8ppcenErhjQ2Q8q+SIwqNkB+iKPDsYUCgx7Yvl2SCyQriU23HEJlfqkzBdsFm6tO0DbCikw==
@@ -4792,7 +4794,7 @@ bs58@^5.0.0:
   dependencies:
     base-x "^4.0.0"
 
-bs58check@<3.0.0, bs58check@^2.0.0, bs58check@^2.1.1, bs58check@^2.1.2:
+bs58check@2.1.2, bs58check@<3.0.0, bs58check@^2.0.0, bs58check@^2.1.1, bs58check@^2.1.2:
   version "2.1.2"
   resolved "https://registry.yarnpkg.com/bs58check/-/bs58check-2.1.2.tgz#53b018291228d82a5aa08e7d796fdafda54aebfc"
   integrity sha512-0TS1jicxdU09dwJMNZtVAfzPi6Q6QeN0pM1Fkzrjn+XYHvzMKPU3pHVpva+769iNVSfIYWf7LJ6WR+BuuMf8cA==
@@ -5010,7 +5012,7 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==
 
-cashaddrjs@^0.4.4:
+cashaddrjs@0.4.4, cashaddrjs@^0.4.4:
   version "0.4.4"
   resolved "https://registry.yarnpkg.com/cashaddrjs/-/cashaddrjs-0.4.4.tgz#169f1ae620d325db77700273d972282adeeee331"
   integrity sha512-xZkuWdNOh0uq/mxJIng6vYWfTowZLd9F4GMAlp2DwFHlcCqCm91NtuAc47RuV4L7r4PYcY5p6Cr2OKNb4hnkWA==
