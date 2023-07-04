@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BigNumber } from 'bignumber.js'
+import { ResponseDto } from '../../util'
 import { AbstractRpcInterface } from './AbstractJsonRpcInterface'
 
 /**
@@ -70,73 +71,72 @@ export interface EvmBasedRpcSuite extends EvmBasedRpcInterface, AbstractRpcInter
 
 export interface EvmBasedRpcInterface {
   // eth_ methods
-  blockNumber(): Promise<BigNumber>
+  blockNumber(): Promise<ResponseDto<BigNumber>>
 
-  call(callObject: TxPayload, blockNumber?: BlockNumber): Promise<string>
+  call(callObject: TxPayload, blockNumber?: BlockNumber): Promise<ResponseDto<string>>
 
-  chainId(): Promise<BigNumber>
+  chainId(): Promise<ResponseDto<BigNumber>>
 
-  estimateGas(callObject: TxPayload): Promise<BigNumber>
+  estimateGas(callObject: TxPayload): Promise<ResponseDto<BigNumber>>
 
-  gasPrice(): Promise<BigNumber>
+  gasPrice(): Promise<ResponseDto<BigNumber>>
 
-  maxPriorityFeePerGas(): Promise<BigNumber>
+  maxPriorityFeePerGas(): Promise<ResponseDto<BigNumber>>
 
-  getBalance(address: string, blockNumber?: BlockNumber): Promise<BigNumber>
+  getBalance(address: string, blockNumber?: BlockNumber): Promise<ResponseDto<BigNumber>>
 
-  getBlockByHash(blockHash: string, includeTransactions?: boolean): Promise<any>
+  getBlockByHash(blockHash: string, includeTransactions?: boolean): Promise<ResponseDto<any>>
+  getBlockTransactionCountByHash(blockHash: string): Promise<ResponseDto<number>>
 
-  getBlockTransactionCountByHash(blockHash: string): Promise<number>
+  getBlockByNumber(blockNumber: string | number, includeTransactions?: boolean): Promise<ResponseDto<any>>
 
-  getBlockByNumber(blockNumber: string | number, includeTransactions?: boolean): Promise<any>
+  getBlockTransactionCountByNumber(blockNumber: string | number): Promise<ResponseDto<number>>
 
-  getBlockTransactionCountByNumber(blockNumber: string | number): Promise<number>
+  getCode(address: string, blockNumber?: BlockNumber): Promise<ResponseDto<string>>
 
-  getCode(address: string, blockNumber?: BlockNumber): Promise<string>
+  getLogs(filterObject: LogFilter): Promise<ResponseDto<any>>
 
-  getLogs(filterObject: LogFilter): Promise<any>
+  getProof(address: string, storageKeys: string[], blockNumber?: BlockNumber): Promise<ResponseDto<any>>
 
-  getProof(address: string, storageKeys: string[], blockNumber?: BlockNumber): Promise<any>
+  getStorageAt(address: string, position: string, blockNumber?: BlockNumber): Promise<ResponseDto<string>>
 
-  getStorageAt(address: string, position: string, blockNumber?: BlockNumber): Promise<string>
+  getTransactionByBlockHashAndIndex(blockHash: string, index: number): Promise<ResponseDto<any>>
 
-  getTransactionByBlockHashAndIndex(blockHash: string, index: number): Promise<any>
+  getTransactionByBlockNumberAndIndex(blockNumber: string | number, index: number): Promise<ResponseDto<any>>
 
-  getTransactionByBlockNumberAndIndex(blockNumber: string | number, index: number): Promise<any>
+  getTransactionByHash(txHash: string): Promise<ResponseDto<any>>
 
-  getTransactionByHash(txHash: string): Promise<any>
+  getTransactionCount(address: string, blockNumber?: BlockNumber): Promise<ResponseDto<BigNumber>>
 
-  getTransactionCount(address: string, blockNumber?: BlockNumber): Promise<BigNumber>
+  getTransactionReceipt(txHash: string): Promise<ResponseDto<any>>
 
-  getTransactionReceipt(txHash: string): Promise<any>
+  getUncleByBlockHashAndIndex(blockHash: string, index: number): Promise<ResponseDto<any>>
 
-  getUncleByBlockHashAndIndex(blockHash: string, index: number): Promise<any>
+  getUncleByBlockNumberAndIndex(blockNumber: string | number, index: number): Promise<ResponseDto<any>>
 
-  getUncleByBlockNumberAndIndex(blockNumber: string | number, index: number): Promise<any>
+  getUncleCountByBlockHash(blockHash: string): Promise<ResponseDto<string>>
 
-  getUncleCountByBlockHash(blockHash: string): Promise<string>
+  getUncleCountByBlockNumber(blockNumber: string | number): Promise<ResponseDto<string>>
 
-  getUncleCountByBlockNumber(blockNumber: string | number): Promise<string>
+  protocolVersion(): Promise<ResponseDto<string>>
 
-  protocolVersion(): Promise<string>
+  sendRawTransaction(signedTransactionData: string): Promise<ResponseDto<string>>
 
-  sendRawTransaction(signedTransactionData: string): Promise<string>
-
-  syncing(): Promise<any>
+  syncing(): Promise<ResponseDto<any>>
 
   // Custom helper functions, not part of the RPC node
 
-  getTokenDecimals(tokenAddress: string): Promise<BigNumber>
+  getTokenDecimals(tokenAddress: string): Promise<ResponseDto<BigNumber>>
 
-  getContractAddress(txHash: string): Promise<string | null>
+  getContractAddress(txHash: string): Promise<ResponseDto<string | null>>
 
   // web3_ methods
-  clientVersion(): Promise<string>
+  clientVersion(): Promise<ResponseDto<string>>
 
-  sha3(data: string): Promise<string>
+  sha3(data: string): Promise<ResponseDto<string>>
 
   // debug_ methods
-  debugGetBadBlocks(): Promise<any>
+  debugGetBadBlocks(): Promise<ResponseDto<any>>
 
   debugStorageRangeAt(
     blockHash: string,
@@ -144,35 +144,47 @@ export interface EvmBasedRpcInterface {
     contractAddress: string,
     startKey: string,
     maxResult: string,
-  ): Promise<any>
+  ): Promise<ResponseDto<any>>
 
-  debugTraceCall(callObject: TxPayload, blockNumber: BlockNumber, traceOptions?: TraceOptions): Promise<any>
+  debugTraceCall(
+    callObject: TxPayload,
+    blockNumber: BlockNumber,
+    traceOptions?: TraceOptions,
+  ): Promise<ResponseDto<any>>
 
-  debugTraceTransaction(txHash: string, traceOptions?: TraceOptions): Promise<any>
+  debugTraceTransaction(txHash: string, traceOptions?: TraceOptions): Promise<ResponseDto<any>>
 
-  debugTraceBlockByHash(blockHash: string, traceOptions?: TraceOptions): Promise<any>
+  debugTraceBlockByHash(blockHash: string, traceOptions?: TraceOptions): Promise<ResponseDto<any>>
 
-  debugTraceBlockByNumber(blockHash: string | number, traceOptions?: TraceOptions): Promise<any>
+  debugTraceBlockByNumber(blockHash: string | number, traceOptions?: TraceOptions): Promise<ResponseDto<any>>
 
   // trace_ methods
-  traceBlock(blockNumber: BlockNumber): Promise<any>
+  traceBlock(blockNumber: BlockNumber): Promise<ResponseDto<any>>
 
-  traceCall(callObject: TxPayload, traceType: TraceType[], blockNumber: BlockNumber): Promise<any>
+  traceCall(
+    callObject: TxPayload,
+    traceType: TraceType[],
+    blockNumber: BlockNumber,
+  ): Promise<ResponseDto<any>>
 
-  traceCallMany(callObject: TxPayload[], traceType: TraceType[][], blockNumber: BlockNumber): Promise<any>
+  traceCallMany(
+    callObject: TxPayload[],
+    traceType: TraceType[][],
+    blockNumber: BlockNumber,
+  ): Promise<ResponseDto<any>>
 
-  traceRawTransaction(signedTransactionData: string, traceOptions: TraceType[]): Promise<any>
+  traceRawTransaction(signedTransactionData: string, traceOptions: TraceType[]): Promise<ResponseDto<any>>
 
-  traceReplayBlockTransactions(blockNumber: BlockNumber, traceOptions: TraceType[]): Promise<any>
+  traceReplayBlockTransactions(blockNumber: BlockNumber, traceOptions: TraceType[]): Promise<ResponseDto<any>>
 
-  traceReplayTransaction(txHash: string, traceOptions: TraceType[]): Promise<any>
+  traceReplayTransaction(txHash: string, traceOptions: TraceType[]): Promise<ResponseDto<any>>
 
-  traceTransaction(txHash: string): Promise<any>
+  traceTransaction(txHash: string): Promise<ResponseDto<any>>
 
   // txpool_ methods
-  txPoolContent(): Promise<any>
+  txPoolContent(): Promise<ResponseDto<any>>
 
-  txPoolStatus(): Promise<any>
+  txPoolStatus(): Promise<ResponseDto<any>>
 
-  txPoolInspect(): Promise<any>
+  txPoolInspect(): Promise<ResponseDto<any>>
 }

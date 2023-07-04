@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
+import { ResponseDto } from '../../util'
 import { AbstractRpcInterface } from './AbstractJsonRpcInterface'
 
 /**
@@ -237,14 +238,6 @@ export type RipplePathFindOptions = Ledger & {
   sourceCurrencies?: Currency[]
 }
 
-export interface XrpResult {
-  // success indicates the request was successfully received and understood by the server
-  status: string
-
-  // response data received by the server
-  [key: string]: any
-}
-
 export interface XrpRpcSuite extends AbstractRpcInterface {
   // account methods
 
@@ -254,7 +247,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-account-methods/account_channels
    */
-  accountChannels(account: string, options?: AccountChannelsOptions): Promise<XrpResult>
+  accountChannels(account: string, options?: AccountChannelsOptions): Promise<ResponseDto<any>>
 
   /**
    * Retrieves currencies of a given account.
@@ -262,7 +255,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-account-methods/account_currencies
    */
-  accountCurrencies(account: string, options?: Ledger & StrictOption): Promise<XrpResult>
+  accountCurrencies(account: string, options?: Ledger & StrictOption): Promise<ResponseDto<any>>
 
   /**
    * Retrieves information about a given account.
@@ -270,7 +263,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-account-methods/account_info
    */
-  accountInfo(account: string, options?: AccountInfoOptions): Promise<XrpResult>
+  accountInfo(account: string, options?: AccountInfoOptions): Promise<ResponseDto<any>>
 
   /**
    * Retrieves trust lines connected to an account.
@@ -278,7 +271,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-account-methods/account_lines
    */
-  accountLines(account: string, options?: AccountLinesOptions): Promise<XrpResult>
+  accountLines(account: string, options?: AccountLinesOptions): Promise<ResponseDto<any>>
 
   /**
    * Retrieves non-fungible tokens (NFTs) owned by an account.
@@ -286,7 +279,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-account-methods/account_nfts
    */
-  accountNfts(account: string, options?: Ledger & Pagination): Promise<XrpResult>
+  accountNfts(account: string, options?: Ledger & Pagination): Promise<ResponseDto<any>>
 
   /**
    * Retrieves the objects owned by an account on the ledger.
@@ -294,7 +287,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-account-methods/account_objects
    */
-  accountObjects(account: string, options?: AccountObjectsOptions): Promise<XrpResult>
+  accountObjects(account: string, options?: AccountObjectsOptions): Promise<ResponseDto<any>>
 
   /**
    * Retrieves outstanding offers by a given account.
@@ -302,7 +295,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-account-methods/account_offers
    */
-  accountOffers(account: string, options?: Ledger & Pagination & StrictOption): Promise<XrpResult>
+  accountOffers(account: string, options?: Ledger & Pagination & StrictOption): Promise<ResponseDto<any>>
 
   /**
    * Retrieves a list of transactions affecting an account.
@@ -310,7 +303,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-account-methods/account_tx
    */
-  accountTx(account: string, options?: AccountTxOptions): Promise<XrpResult>
+  accountTx(account: string, options?: AccountTxOptions): Promise<ResponseDto<any>>
 
   /**
    * Calculates the total balances issued by an account.
@@ -318,7 +311,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-account-methods/gateway_balances
    */
-  gatewayBalances(account: string, options?: GatewayBalancesOptions): Promise<XrpResult>
+  gatewayBalances(account: string, options?: GatewayBalancesOptions): Promise<ResponseDto<any>>
 
   /**
    * Checks potential issues with an account's NoRipple settings.
@@ -327,7 +320,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-account-methods/noripple_check
    */
-  norippleCheck(account: string, role: Role, options?: NorippleCheckOptions): Promise<XrpResult>
+  norippleCheck(account: string, role: Role, options?: NorippleCheckOptions): Promise<ResponseDto<any>>
 
   // ledger methods
 
@@ -336,33 +329,33 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-ledger-methods/ledger
    */
-  ledger(options?: LedgerOptions): Promise<XrpResult>
+  ledger(options?: LedgerOptions): Promise<ResponseDto<any>>
 
   /**
    * Retrieves information about the most recently closed ledger.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-ledger-methods/ledger_closed
    */
-  ledgerClosed(): Promise<XrpResult>
+  ledgerClosed(): Promise<ResponseDto<any>>
 
   /**
    * Retrieves information about the current in-progress ledger.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-ledger-methods/ledger_current
    */
-  ledgerCurrent(): Promise<XrpResult>
+  ledgerCurrent(): Promise<ResponseDto<any>>
 
   /**
    * Retrieves information about the contents of a ledger.
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-ledger-methods/ledger_data
    */
-  ledgerData(options?: Ledger & LedgerBinaryOption & Pagination & TypeOption): Promise<XrpResult>
+  ledgerData(options?: Ledger & LedgerBinaryOption & Pagination & TypeOption): Promise<ResponseDto<any>>
 
   /**
    * Retrieves a specific object from a ledger.
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-ledger-methods/ledger_entry
    */
-  ledgerEntry(options?: LedgerEntryOptions): Promise<XrpResult>
+  ledgerEntry(options?: LedgerEntryOptions): Promise<ResponseDto<any>>
 
   // transaction methods
 
@@ -372,7 +365,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-transaction-methods/submit
    */
-  submit(tx: Transaction, options?: Secrets & FailOption & AutoFilling): Promise<XrpResult>
+  submit(tx: Transaction, options?: Secrets & FailOption & AutoFilling): Promise<ResponseDto<any>>
 
   /**
    * Submits a multi-signed transaction to the XRP Ledger.
@@ -380,7 +373,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-transaction-methods/submit_multisigned
    */
-  submitMultisigned(txJson: TxJson, options?: FailOption): Promise<XrpResult>
+  submitMultisigned(txJson: TxJson, options?: FailOption): Promise<ResponseDto<any>>
 
   /**
    * Retrieves information about a particular transaction by its hash.
@@ -388,7 +381,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-transaction-methods/transaction_entry
    */
-  transactionEntry(txHash: string, options?: Ledger): Promise<XrpResult>
+  transactionEntry(txHash: string, options?: Ledger): Promise<ResponseDto<any>>
 
   /**
    * Retrieves information about a particular transaction by its ID.
@@ -396,14 +389,14 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-transaction-methods/tx
    */
-  tx(transaction: string, options?: TxOptions): Promise<XrpResult>
+  tx(transaction: string, options?: TxOptions): Promise<ResponseDto<any>>
 
   /**
    * Retrieves historical transactions.
    * @param start - The starting point for history retrieval.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-transaction-methods/tx_history
    */
-  txHistory(start: number): Promise<XrpResult>
+  txHistory(start: number): Promise<ResponseDto<any>>
 
   /**
    * Signs a transaction in preparation for submission to the XRP Ledger.
@@ -411,7 +404,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-transaction-methods/sign
    */
-  sign(txJson: TxJson, options?: Secrets & AutoFilling): Promise<XrpResult>
+  sign(txJson: TxJson, options?: Secrets & AutoFilling): Promise<ResponseDto<any>>
 
   /**
    * Signs a transaction for a specific account.
@@ -420,7 +413,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Secrets for signing the transaction.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-transaction-methods/sign_for
    */
-  signFor(account: string, txJson: TxJson, options?: Secrets): Promise<XrpResult>
+  signFor(account: string, txJson: TxJson, options?: Secrets): Promise<ResponseDto<any>>
 
   // path and order book methods
 
@@ -431,7 +424,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-path-and-order-book-methods/book_offers
    */
-  bookOffers(takerGets: Currency, takerPays: Currency, options?: BookOffersOptions): Promise<XrpResult>
+  bookOffers(takerGets: Currency, takerPays: Currency, options?: BookOffersOptions): Promise<ResponseDto<any>>
 
   /**
    * Checks if a deposit is authorized between two accounts.
@@ -440,7 +433,11 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-path-and-order-book-methods/deposit_authorized
    */
-  depositAuthorized(sourceAccount: string, destinationAccount: string, options?: Ledger): Promise<XrpResult>
+  depositAuthorized(
+    sourceAccount: string,
+    destinationAccount: string,
+    options?: Ledger,
+  ): Promise<ResponseDto<any>>
 
   /**
    * Retrieves buy offers for a specific NFT.
@@ -448,7 +445,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-path-and-order-book-methods/nft_buy_offers
    */
-  nftBuyOffers(nftId: string, options?: Ledger & Pagination): Promise<XrpResult>
+  nftBuyOffers(nftId: string, options?: Ledger & Pagination): Promise<ResponseDto<any>>
 
   /**
    * Retrieves sell offers for a specific NFT.
@@ -456,7 +453,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-path-and-order-book-methods/nft_sell_offers
    */
-  nftSellOffers(nftId: string, options?: Ledger & Pagination): Promise<XrpResult>
+  nftSellOffers(nftId: string, options?: Ledger & Pagination): Promise<ResponseDto<any>>
 
   /**
    * Finds the best path for a payment from the source account to the destination account for a specific amount.
@@ -471,7 +468,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
     destinationAccount: string,
     destinationAmount: CurrencyAmount,
     options?: RipplePathFindOptions,
-  ): Promise<XrpResult>
+  ): Promise<ResponseDto<any>>
 
   // payment channel methods
 
@@ -482,7 +479,7 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-payment-channel-methods/channel_authorize
    */
-  channelAuthorize(amount: string, channelId: string, options?: Secrets): Promise<XrpResult>
+  channelAuthorize(amount: string, channelId: string, options?: Secrets): Promise<ResponseDto<any>>
 
   /**
    * Verifies a signature against a specific amount and channel.
@@ -492,7 +489,12 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * @param signature - The signature to verify.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-payment-channel-methods/channel_verify
    */
-  channelVerify(amount: string, channelId: string, publicKey: string, signature: string): Promise<XrpResult>
+  channelVerify(
+    amount: string,
+    channelId: string,
+    publicKey: string,
+    signature: string,
+  ): Promise<ResponseDto<any>>
 
   // server info methods
 
@@ -500,26 +502,26 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * Retrieves information about current fee rates.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-server-info-methods/fee
    */
-  fee(): Promise<XrpResult>
+  fee(): Promise<ResponseDto<any>>
 
   /**
    * Retrieves information about the server.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-server-info-methods/server_info
    */
-  serverInfo(): Promise<XrpResult>
+  serverInfo(): Promise<ResponseDto<any>>
 
   /**
    * Retrieves the current state of the server.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-server-info-methods/server_state
    */
-  serverState(): Promise<XrpResult>
+  serverState(): Promise<ResponseDto<any>>
 
   /**
    * Retrieves the manifest of a specific public key.
    * @param publicKey - The public key for which the manifest is requested.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-server-info-methods/manifest
    */
-  manifest(publicKey: string): Promise<XrpResult>
+  manifest(publicKey: string): Promise<ResponseDto<any>>
 
   // utility methods
 
@@ -527,11 +529,11 @@ export interface XrpRpcSuite extends AbstractRpcInterface {
    * Sends a ping to the server.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-utility-methods/ping
    */
-  ping(): Promise<XrpResult>
+  ping(): Promise<ResponseDto<any>>
 
   /**
    * Generates a random number using server's random number generator.
    * https://docs.tatum.com/docs/rpc-api-reference/xrp-rpc-documentation/api-calls-for-utility-methods/random
    */
-  random(): Promise<XrpResult>
+  random(): Promise<ResponseDto<any>>
 }

@@ -2,12 +2,12 @@ import { BigNumber } from 'bignumber.js'
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { networkToCurrency } from '../../dto/Currency'
-import { CONFIG } from '../../util/'
+import { CONFIG, ErrorUtils, ResponseDto, Status } from '../../util/'
 import { TatumConfig } from '../tatum'
 import { ApiEvmFeeResponse, ApiUtxoFeeResponse, CurrentEvmFee, CurrentUtxoFee } from './fee.dto'
 
 export interface FeeService<T> {
-  getCurrentFee(): Promise<T>
+  getCurrentFee(): Promise<ResponseDto<T>>
 }
 
 @Service({
@@ -24,21 +24,34 @@ export class FeeUtxo implements FeeService<CurrentUtxoFee> {
     this.connector = Container.of(this.id).get(TatumConnector)
     this.config = Container.of(this.id).get(CONFIG)
   }
-  async getCurrentFee(): Promise<CurrentUtxoFee> {
+  async getCurrentFee(): Promise<ResponseDto<CurrentUtxoFee>> {
     const currency = networkToCurrency(this.config.network)
 
-    const fee = await this.connector.get<ApiUtxoFeeResponse>({
-      path: `blockchain/fee/${currency}`,
-    })
+    const response = await ErrorUtils.tryFail(() =>
+      this.connector.get<ApiUtxoFeeResponse>({
+        path: `blockchain/fee/${currency}`,
+      }),
+    )
 
-    return {
-      chain: this.config.network,
-      lastRecalculated: fee.time,
-      basedOnBlockNumber: fee.block,
-      slow: fee.slow.toString(),
-      medium: fee.medium.toString(),
-      fast: fee.fast.toString(),
-    } as CurrentUtxoFee
+    const result: ResponseDto<CurrentUtxoFee> = {
+      data: null as unknown as CurrentUtxoFee,
+      status: Status.ERROR,
+      error: response.error,
+    }
+
+    if (response.data) {
+      result.data = {
+        chain: this.config.network,
+        lastRecalculated: response.data.time,
+        basedOnBlockNumber: response.data.block,
+        slow: response.data.slow.toString(),
+        medium: response.data.medium.toString(),
+        fast: response.data.fast.toString(),
+      } as CurrentUtxoFee
+      result.status = Status.SUCCESS
+    }
+
+    return result
   }
 }
 
@@ -56,19 +69,33 @@ export class FeeEvm implements FeeService<CurrentEvmFee> {
     this.connector = Container.of(this.id).get(TatumConnector)
     this.config = Container.of(this.id).get(CONFIG)
   }
-  async getCurrentFee(): Promise<CurrentEvmFee> {
+  async getCurrentFee(): Promise<ResponseDto<CurrentEvmFee>> {
     const currency = networkToCurrency(this.config.network)
 
-    const fee = await this.connector.get<ApiEvmFeeResponse>({
-      path: `blockchain/fee/${currency}`,
-    })
+    const response = await ErrorUtils.tryFail(() =>
+      this.connector.get<ApiEvmFeeResponse>({
+        path: `blockchain/fee/${currency}`,
+      }),
+    )
 
-    return {
-      chain: this.config.network,
-      gasPrice: FeeEvm.mapGasPrice(fee as ApiEvmFeeResponse),
-      lastRecalculated: fee.time,
-      basedOnBlockNumber: fee.block,
-    } as CurrentEvmFee
+    const result: ResponseDto<CurrentEvmFee> = {
+      data: null as unknown as CurrentEvmFee,
+      status: Status.ERROR,
+      error: response.error,
+    }
+
+    if (response.data) {
+      result.data = {
+        chain: this.config.network,
+        gasPrice: FeeEvm.mapGasPrice(response.data as ApiEvmFeeResponse),
+        lastRecalculated: response.data.time,
+        basedOnBlockNumber: response.data.block,
+      } as CurrentEvmFee
+
+      result.status = Status.SUCCESS
+    }
+
+    return result
   }
 
   private static mapGasPrice({

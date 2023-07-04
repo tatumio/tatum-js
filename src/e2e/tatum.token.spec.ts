@@ -1,4 +1,5 @@
 import { Ethereum, Network, TatumSDK } from '../service'
+import { Status } from '../util'
 
 describe('Tatum token', () => {
   let tatum: Ethereum
@@ -269,10 +270,12 @@ describe('Tatum token', () => {
     })
 
     it('should get deployed sc address', async function () {
-      const address = await tatum.rpc.getContractAddress(
+      const { data, status } = await tatum.rpc.getContractAddress(
         '0x2b04f0d7ffbd3380c4deb4cb428f8562ebbc38ae4a377ad420ce9bf1508ea47d',
       )
-      expect(address).toStrictEqual('0x9b7d44c8d1f1f1bf42f596600c28431b567fcd40')
+
+      expect(status).toBe(Status.SUCCESS)
+      expect(data).toStrictEqual('0x9b7d44c8d1f1f1bf42f596600c28431b567fcd40')
     })
   })
 })

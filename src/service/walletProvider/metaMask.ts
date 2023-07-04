@@ -1,12 +1,15 @@
-import { Container, Service } from 'typedi'
-import { CONFIG, Constant, Utils } from '../../util'
-import { TxPayload } from '../../dto'
 import { BigNumber } from 'bignumber.js'
-import { TatumConfig } from '../tatum'
-import { EvmBasedRpc } from '../rpc'
+import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
-import { CreateErc1155NftCollection, CreateFungibleToken, CreateNftCollection } from '../../dto/walletProvider'
-
+import { TxPayload } from '../../dto'
+import {
+  CreateErc1155NftCollection,
+  CreateFungibleToken,
+  CreateNftCollection,
+} from '../../dto/walletProvider'
+import { CONFIG, Constant, Utils } from '../../util'
+import { EvmBasedRpc } from '../rpc'
+import { TatumConfig } from '../tatum'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -42,7 +45,7 @@ export class MetaMask<T extends EvmBasedRpc> {
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
       return accounts[0] as string
     } catch (error) {
-      console.error('User denied account access:', error);
+      console.error('User denied account access:', error)
       throw new Error(`User denied account access. Error is ${error}`)
     }
   }
@@ -57,7 +60,9 @@ export class MetaMask<T extends EvmBasedRpc> {
     const payload: TxPayload = {
       to: recipient,
       from: await this.connect(),
-      value: `0x${new BigNumber(amount).multipliedBy(10 ** Constant.DECIMALS[this.config.network]).toString(16)}`,
+      value: `0x${new BigNumber(amount)
+        .multipliedBy(10 ** Constant.DECIMALS[this.config.network])
+        .toString(16)}`,
     }
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -68,7 +73,7 @@ export class MetaMask<T extends EvmBasedRpc> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e);
+      console.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -81,11 +86,14 @@ export class MetaMask<T extends EvmBasedRpc> {
    * @param tokenAddress address of the token contract
    */
   async transferErc20(recipient: string, amount: string, tokenAddress: string): Promise<string> {
-    const decimals = await this.rpc.getTokenDecimals(tokenAddress)
+    const { data: decimals } = await this.rpc.getTokenDecimals(tokenAddress)
     const payload: TxPayload = {
       to: tokenAddress,
       from: await this.connect(),
-      data: `0xa9059cbb${Utils.padWithZero(recipient)}${new BigNumber(amount).multipliedBy(10 ** decimals.toNumber()).toString(16).padStart(64, '0')}`,
+      data: `0xa9059cbb${Utils.padWithZero(recipient)}${new BigNumber(amount)
+        .multipliedBy(10 ** decimals.toNumber())
+        .toString(16)
+        .padStart(64, '0')}`,
     }
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -96,7 +104,7 @@ export class MetaMask<T extends EvmBasedRpc> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e);
+      console.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -128,7 +136,7 @@ export class MetaMask<T extends EvmBasedRpc> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e);
+      console.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -144,14 +152,16 @@ export class MetaMask<T extends EvmBasedRpc> {
       path: `contract/deploy/prepare`,
       body: {
         contractType: 'fungible',
-        params: [body.name,
+        params: [
+          body.name,
           body.symbol,
           decimals,
           `0x${new BigNumber(body.initialSupply).multipliedBy(10 ** decimals).toString(16)}`,
           body.initialHolder || from,
           body.admin || from,
           body.minter || from,
-          body.pauser || from],
+          body.pauser || from,
+        ],
       },
     })
     const payload: TxPayload = {
@@ -167,7 +177,7 @@ export class MetaMask<T extends EvmBasedRpc> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e);
+      console.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -199,7 +209,7 @@ export class MetaMask<T extends EvmBasedRpc> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e);
+      console.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -216,7 +226,9 @@ export class MetaMask<T extends EvmBasedRpc> {
     const payload: TxPayload = {
       to: tokenAddress,
       from: from,
-      data: `0x42842e0e${Utils.padWithZero(from)}${Utils.padWithZero(recipient)}${new BigNumber(tokenId).toString(16).padStart(64, '0')}`,
+      data: `0x42842e0e${Utils.padWithZero(from)}${Utils.padWithZero(recipient)}${new BigNumber(tokenId)
+        .toString(16)
+        .padStart(64, '0')}`,
     }
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -227,7 +239,7 @@ export class MetaMask<T extends EvmBasedRpc> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e);
+      console.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -240,11 +252,14 @@ export class MetaMask<T extends EvmBasedRpc> {
    * @param tokenAddress address of the token contract
    */
   async approveErc20(spender: string, amount: string, tokenAddress: string): Promise<string> {
-    const decimals = await this.rpc.getTokenDecimals(tokenAddress)
+    const { data: decimals } = await this.rpc.getTokenDecimals(tokenAddress)
     const payload: TxPayload = {
       to: tokenAddress,
       from: await this.connect(),
-      data: `0x095ea7b3${Utils.padWithZero(spender)}${new BigNumber(amount).multipliedBy(10 ** decimals.toNumber()).toString(16).padStart(64, '0')}`,
+      data: `0x095ea7b3${Utils.padWithZero(spender)}${new BigNumber(amount)
+        .multipliedBy(10 ** decimals.toNumber())
+        .toString(16)
+        .padStart(64, '0')}`,
     }
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -255,7 +270,7 @@ export class MetaMask<T extends EvmBasedRpc> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e);
+      console.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -276,7 +291,7 @@ export class MetaMask<T extends EvmBasedRpc> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e);
+      console.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }

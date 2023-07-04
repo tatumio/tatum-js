@@ -1,3 +1,5 @@
+import { JsonRpcResponse } from '../dto'
+
 export enum Status {
   SUCCESS = 'SUCCESS',
   ERROR = 'ERROR',
@@ -82,5 +84,27 @@ export const ErrorUtils = {
       'message' in e &&
       typeof (e as Record<string, unknown>).message === 'string'
     )
+  },
+}
+
+export const ResponseUtils = {
+  fromRpcResult: <T>(response: JsonRpcResponse): ResponseDto<T> => {
+    if (response && response.result) {
+      return {
+        data: response.result,
+        status: Status.SUCCESS,
+      }
+    } else if (response && response.error) {
+      return {
+        data: null as unknown as T,
+        status: Status.ERROR,
+        error: ErrorUtils.toErrorWithMessage(response.error),
+      }
+    }
+    return {
+      data: null as unknown as T,
+      status: Status.ERROR,
+      error: ErrorUtils.toErrorWithMessage('Internal error'),
+    }
   },
 }

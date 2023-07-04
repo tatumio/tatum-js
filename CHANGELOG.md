@@ -1,3 +1,7 @@
+## [1.5.2] - 2023.07.04
+### Changed
+- All RPC methods are returning `ResponseDto` object with fields: `data`, `error`, `status`.
+
 ## [1.5.1] - 2023.06.28
 
 ### Updated
