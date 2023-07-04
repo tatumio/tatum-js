@@ -53,7 +53,7 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
           const addressFromUtxo = txs[i]?.vout?.[item.index]?.scriptPubKey?.addresses?.[0]
           if (addressFromUtxo) {
             const addressFromPk = utils.generateAddressFromPrivateKey(item.privateKey, {
-              testnet: args.testnet,
+              testnet: args.testnet ?? false,
             })
             const legacyFromPk = bchaddr.toLegacyAddress(addressFromPk)
             const legacyFromUtxo = bchaddr.toLegacyAddress(addressFromUtxo)
