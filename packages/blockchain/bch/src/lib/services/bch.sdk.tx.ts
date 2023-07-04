@@ -1,5 +1,4 @@
 import { ApiServices, BchTx, TransactionHash } from '@tatumio/api-client'
-import { bcashAddressHelper } from '../utils/bch.address'
 import { BchSdkError } from '../bch.sdk.errors'
 import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 // @ts-ignore
@@ -9,9 +8,8 @@ import * as BitcoinCashJS from '@tatumio/bitcoincashjs2-lib'
 import BigNumber from 'bignumber.js'
 import _ from 'lodash'
 import { BchApiCallsType } from '../..'
-// @ts-ignore
-import * as bitcoreLibCash from 'bitcore-lib-cash'
 import { BchTransactionTypes, Signature } from '../bch.sdk.types'
+import bchaddr from 'bchaddrjs'
 
 export const bchTransactions = (apiCalls: BchApiCallsType) => {
   const sendTransaction = async (
@@ -48,7 +46,9 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
         if ('signatureId' in item) {
           privateKeysToSign.push(item.signatureId)
           signaturesToSign.push({ id: item.signatureId, index: item.signatureIdIndex })
-        } else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
+        } else if ('privateKey' in item) {
+          privateKeysToSign.push(item.privateKey)
+        }
 
         const vout = txs?.[i]?.vout?.[item.index]
         if (!vout || !vout.value) throw new BchSdkError(SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND)
@@ -58,30 +58,19 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
 
       for (const item of body.to) {
         const value = amountUtils.toSatoshis(item.value)
-        try {
-          const address = bcashAddressHelper.getAddress(item.address)
-          transactionBuilder.addOutput(address, value)
-          outputs.push(value)
-        } catch (e: any) {
-          const address = new bitcoreLibCash.Address.fromString(item.address)
-          transactionBuilder.addOutput(address.toLegacyAddress(), value)
-          outputs.push(value)
-        }
+        transactionBuilder.addOutput(bchaddr.toLegacyAddress(item.address), value)
+        outputs.push(value)
       }
 
       // send the change to change address
-      if (body.changeAddress) {
+      const changeAddress = body.changeAddress
+      if (changeAddress) {
         const sumOfInputs = _.sum(amountToSign)
         const sumOfOutputs = _.sum(outputs)
         const defaultFee = 0.00001
         const txFee = amountUtils.toSatoshis(body.fee ?? defaultFee)
         const change = Number(new BigNumber(sumOfInputs).minus(sumOfOutputs).minus(txFee))
-        try {
-          transactionBuilder.addOutput(bcashAddressHelper.getAddress(body.changeAddress), change)
-        } catch (e: any) {
-          const address = new bitcoreLibCash.Address.fromString(body.changeAddress)
-          transactionBuilder.addOutput(address.toLegacyAddress(), change)
-        }
+        transactionBuilder.addOutput(bchaddr.toLegacyAddress(changeAddress), change)
       }
 
       verifyAmounts(amountToSign, body)
