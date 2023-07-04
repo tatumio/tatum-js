@@ -67,8 +67,8 @@ export class SdkError extends Error {
         if (args.errorSubstringMapping) {
           const errorCodeFromMapping = args.errorSubstringMapping
             ? Object.keys(args.errorSubstringMapping).find(
-              (k) => errorMessageAsString && errorMessageAsString.indexOf(k) !== -1,
-            )
+                (k) => errorMessageAsString && errorMessageAsString.indexOf(k) !== -1,
+              )
             : undefined
           errorCode = errorCodeFromMapping
             ? args.errorSubstringMapping[errorCodeFromMapping]
@@ -105,6 +105,7 @@ export enum SdkErrorCode {
   ADA_BASED_AMOUNT = 'ada.validation.amount',
   BTC_BASED_AMOUNT = 'btc-based.validation.amount',
   BTC_BASED_MISSING_PRIVATE_KEY = 'btc-based.validation.private-key.missing',
+  BTC_BASED_WRONG_PRIVATE_KEY = 'btc-based.validation.private-key.wrong',
   BTC_BASED_WRONG_BODY = 'btc-based.validation.body.wrong-body',
   BTC_BASED_TX_PREPARATION_UTXO = 'transaction.preparation.failed.utxo',
   BTC_BASED_DESTINATION_LESS_THAN_ZERO = 'transaction.preparation.destination.less.than.zero',
