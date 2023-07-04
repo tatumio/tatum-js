@@ -15,6 +15,7 @@ export type BchSdkErrorCode =
   | SdkErrorCode.BTC_BASED_MNEMONIC_OR_KEYPAIR_EXPECTED
   | SdkErrorCode.BTC_BASED_TX_FAILED
   | SdkErrorCode.BTC_BASED_BLOCKCHAIN_ERROR
+  | SdkErrorCode.BTC_BASED_WRONG_PRIVATE_KEY
 
 export class BchSdkError extends SdkError {
   constructor(error: Error | BchSdkErrorCode) {

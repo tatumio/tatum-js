@@ -7,11 +7,13 @@ import * as coininfo from 'coininfo'
 import * as BitcoinCashJS from '@tatumio/bitcoincashjs2-lib'
 import BigNumber from 'bignumber.js'
 import _ from 'lodash'
-import { BchApiCallsType } from '../..'
+import { BchApiCallsType, bchWalletUtils } from '../..'
 import { BchTransactionTypes, Signature } from '../bch.sdk.types'
 import bchaddr from 'bchaddrjs'
 
 export const bchTransactions = (apiCalls: BchApiCallsType) => {
+  const utils = bchWalletUtils()
+
   const sendTransaction = async (
     body: BchTransactionTypes,
     args: { testnet?: boolean },
@@ -48,6 +50,17 @@ export const bchTransactions = (apiCalls: BchApiCallsType) => {
           signaturesToSign.push({ id: item.signatureId, index: item.signatureIdIndex })
         } else if ('privateKey' in item) {
           privateKeysToSign.push(item.privateKey)
+          const addressFromUtxo = txs[i]?.vout?.[item.index]?.scriptPubKey?.addresses?.[0]
+          if (addressFromUtxo) {
+            const addressFromPk = utils.generateAddressFromPrivateKey(item.privateKey, {
+              testnet: args.testnet ?? false,
+            })
+            const legacyFromPk = bchaddr.toLegacyAddress(addressFromPk)
+            const legacyFromUtxo = bchaddr.toLegacyAddress(addressFromUtxo)
+            if (legacyFromUtxo !== legacyFromPk) {
+              throw new BchSdkError(SdkErrorCode.BTC_BASED_WRONG_PRIVATE_KEY)
+            }
+          }
         }
 
         const vout = txs?.[i]?.vout?.[item.index]
