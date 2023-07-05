@@ -213,12 +213,8 @@ export const Utils = {
     for (const [key, value] of Object.entries(obj)) {
       const snakeKey = Utils.camelToSnakeCase(key)
       if (typeof value === 'object' && value !== null) {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        snakeObj[snakeKey] = convertObjCamelToSnake(value)
+        snakeObj[snakeKey] = Utils.convertObjCamelToSnake(value)
       } else {
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         snakeObj[snakeKey] = value
       }
     }

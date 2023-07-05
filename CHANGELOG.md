@@ -1,3 +1,7 @@
+## [1.5.3] - 2023.07.05
+### Changed
+- Fixed not working Tron RPC calls
+
 ## [1.5.2] - 2023.07.04
 ### Changed
 - All RPC methods are returning `ResponseDto` object with fields: `data`, `error`, `status`.
