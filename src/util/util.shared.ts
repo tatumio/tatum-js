@@ -209,7 +209,7 @@ export const Utils = {
   padWithZero: (data: string, length = 64) => data.replace('0x', '').padStart(length, '0'),
   camelToSnakeCase: (str: string) => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),
   convertObjCamelToSnake: (obj: object) => {
-    const snakeObj = {}
+    const snakeObj: Record<string, unknown> = {}
     for (const [key, value] of Object.entries(obj)) {
       const snakeKey = Utils.camelToSnakeCase(key)
       if (typeof value === 'object' && value !== null) {
