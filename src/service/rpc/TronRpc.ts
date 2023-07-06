@@ -46,7 +46,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     owner: TronPermission,
     options?: AccountPermissionUpdateOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/accountpermissionupdate'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, actives, owner, ...options }),
@@ -55,7 +55,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   broadcastHex(transaction: string): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/broadcasthex'),
         body: Utils.convertObjCamelToSnake({ transaction }),
@@ -64,7 +64,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   broadcastTransaction(rawBody: TronTxRawBody): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/broadcasttransaction'),
         body: Utils.convertObjCamelToSnake(rawBody),
@@ -77,7 +77,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     contractAddress: string,
     options?: VisibleOption,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/clearabi'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, contractAddress, ...options }),
@@ -90,7 +90,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     accountAddress: string,
     options?: VisibleAndPermissionIdOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/createaccount'),
         body: { ownerAddress, accountAddress, ...options },
@@ -110,7 +110,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     url: string,
     options?: CreateAssetIssueOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/createassetissue'),
         body: { ownerAddress, name, abbr, totalSupply, trxNum, num, startTime, endTime, url, ...options },
@@ -124,7 +124,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     amount: BigNumber,
     options?: CreateTransactionOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/createtransaction'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, toAddress, amount, ...options }),
@@ -140,7 +140,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     lock: boolean,
     options?: VisibleAndPermissionIdOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/delegateresource'),
         body: Utils.convertObjCamelToSnake({
@@ -162,7 +162,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     name: string,
     options?: DeployContractOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/deploycontract'),
         body: Utils.convertObjCamelToSnake({
@@ -183,7 +183,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     parameter: string,
     options?: VisibleOption,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/estimateenergy'),
         body: Utils.convertObjCamelToSnake({
@@ -204,7 +204,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     resource: TronStakeType,
     options?: FreezeAccountOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/freezebalance'),
         body: Utils.convertObjCamelToSnake({
@@ -224,7 +224,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     resource: TronStakeType,
     options?: VisibleAndPermissionIdOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/freezebalancev2'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, frozenBalance, resource, ...options }),
@@ -233,7 +233,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getAccount(address: string, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getaccount'),
         body: Utils.convertObjCamelToSnake({ address, ...options }),
@@ -246,7 +246,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     blockIdentifier: BlockIdentifier,
     options?: VisibleOption,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getaccountbalance'),
         body: Utils.convertObjCamelToSnake({ accountIdentifier, blockIdentifier, ...options }),
@@ -255,7 +255,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getAccountNet(address: string, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getaccountnet'),
         body: Utils.convertObjCamelToSnake({ address, ...options }),
@@ -264,7 +264,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getAccountResources(address: string, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getaccountresource'),
         body: Utils.convertObjCamelToSnake({ address, ...options }),
@@ -273,7 +273,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getAssetIssueByAccount(address: string, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getassetissuebyaccount'),
         body: Utils.convertObjCamelToSnake({ address, ...options }),
@@ -282,7 +282,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getAssetIssueById(value: number): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getassetissuebyid'),
         body: Utils.convertObjCamelToSnake({ value }),
@@ -291,7 +291,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getAssetIssueByName(value: string): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getassetissuebyname'),
         body: Utils.convertObjCamelToSnake({ value }),
@@ -300,7 +300,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getAssetIssueList(): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getassetissuelist'),
       }),
@@ -308,7 +308,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getAssetIssueListByName(value: string): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getassetissuelistbyname'),
         body: Utils.convertObjCamelToSnake({ value }),
@@ -317,7 +317,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getAvailableUnfreezeCount(ownerAddress: string, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getavailableunfreezecount'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, ...options }),
@@ -326,7 +326,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getBandwidthPrices(): Promise<ResponseDto<TronPrices>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getbandwidthprices'),
       }),
@@ -334,7 +334,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getBlock(idOrNum: string, options?: DetailOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getblock'),
         body: Utils.convertObjCamelToSnake({ idOrNum, ...options }),
@@ -343,7 +343,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getBlockBalance(hash: string, number: BigNumber, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getblockbalance'),
         body: Utils.convertObjCamelToSnake({ hash, number, ...options }),
@@ -352,7 +352,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getBlockById(id: string): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getblockbyid'),
         body: Utils.convertObjCamelToSnake({ id }),
@@ -361,7 +361,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getBlockByLatestNum(num: number): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getblockbylatestnum'),
         body: Utils.convertObjCamelToSnake({ num }),
@@ -370,7 +370,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getBlockByLimitNext(startNum: number, endNum: number): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getblockbylimitnext'),
         body: Utils.convertObjCamelToSnake({ startNum, endNum }),
@@ -379,7 +379,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getBlockByNum(num: number): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getblockbynum'),
         body: Utils.convertObjCamelToSnake({ num }),
@@ -388,7 +388,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getBurnTRX(): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getburntrx'),
       }),
@@ -400,7 +400,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     type: TronStakeTypeNumeric,
     options?: VisibleOption,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getcandelegatedmaxsize'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, type, ...options }),
@@ -412,7 +412,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     ownerAddress: string,
     options?: GetCanWithdrawUnfreezeAmountOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getcanwithdrawunfreezeamount'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, ...options }),
@@ -421,7 +421,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getChainParameters(): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getchainparameters'),
       }),
@@ -429,7 +429,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getContract(value: string, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getcontract'),
         body: Utils.convertObjCamelToSnake({ value, ...options }),
@@ -438,7 +438,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getContractInfo(value: string, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getcontractinfo'),
         body: Utils.convertObjCamelToSnake({ value, ...options }),
@@ -451,7 +451,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     toAddress: string,
     options?: VisibleOption,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getdelegatedresource'),
         body: Utils.convertObjCamelToSnake({ fromAddress, toAddress, ...options }),
@@ -460,7 +460,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getDelegatedResourceAccountIndex(value: string, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getdelegatedresourceaccountindex'),
         body: Utils.convertObjCamelToSnake({ value, ...options }),
@@ -469,7 +469,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getDelegatedResourceAccountIndexV2(value: string, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getdelegatedresourceaccountindexv2'),
         body: Utils.convertObjCamelToSnake({ value, ...options }),
@@ -482,7 +482,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     toAddress: string,
     options?: VisibleOption,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getdelegatedresourcev2'),
         body: Utils.convertObjCamelToSnake({ fromAddress, toAddress, ...options }),
@@ -491,7 +491,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getEnergyPrices(): Promise<ResponseDto<TronPrices>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getenergyprices'),
       }),
@@ -499,7 +499,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getNodeInfo(): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getnodeinfo'),
       }),
@@ -507,7 +507,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getNowBlock(): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getnowblock'),
       }),
@@ -515,7 +515,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getPaginatedAssetIssueList(offset: number, limit: number): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/getpaginatedassetissuelist'),
         body: Utils.convertObjCamelToSnake({ offset, limit }),
@@ -524,7 +524,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getTransactionById(value: string, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/gettransactionbyid'),
         body: Utils.convertObjCamelToSnake({ value, ...options }),
@@ -533,7 +533,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getTransactionInfoByBlockNum(num: number): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/gettransactioninfobyblocknum'),
         body: Utils.convertObjCamelToSnake({ num }),
@@ -542,7 +542,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   getTransactionInfoById(value: string): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/gettransactioninfobyid'),
         body: Utils.convertObjCamelToSnake({ value }),
@@ -551,7 +551,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   listNodes(): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/listnodes'),
       }),
@@ -565,7 +565,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     amount: BigNumber,
     options?: VisibleOption,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/participateassetissue'),
         body: Utils.convertObjCamelToSnake({ toAddress, ownerAddress, assetName, amount, ...options }),
@@ -580,7 +580,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     amount: BigNumber,
     options?: TransferAssetIssueByAccountOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/transferasset'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, toAddress, assetName, amount, ...options }),
@@ -595,7 +595,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     parameter: string,
     options?: TriggerConstantContractOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/triggerconstantcontract'),
         body: Utils.convertObjCamelToSnake({
@@ -616,7 +616,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     parameter: string,
     options?: TriggerSmartContractOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/triggersmartcontract'),
         body: Utils.convertObjCamelToSnake({
@@ -638,7 +638,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     lock: boolean,
     options?: VisibleAndPermissionIdOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/undelegateresource'),
         body: Utils.convertObjCamelToSnake({
@@ -654,7 +654,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   unfreezeAsset(ownerAddress: string, options?: VisibleAndPermissionIdOptions): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/unfreezeasset'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, ...options }),
@@ -667,7 +667,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     resource: TronStakeType,
     options?: UnFreezeAccountOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/unfreezebalance'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, resource, ...options }),
@@ -681,7 +681,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     resource: TronStakeType,
     options?: VisibleAndPermissionIdOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/unfreezebalancev2'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, unfreezeBalance, resource, ...options }),
@@ -694,7 +694,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     accountName: string,
     options?: VisibleAndPermissionIdOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/updateaccount'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, accountName, ...options }),
@@ -703,7 +703,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   updateAsset(ownerAddress: string, url: string, options?: UpdateAssetOptions): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/updateasset'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, url, ...options }),
@@ -717,7 +717,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     originEnergyLimit: number,
     options?: VisibleAndPermissionIdOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/updateenergylimit'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, contractAddress, originEnergyLimit, ...options }),
@@ -731,7 +731,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     consumeUserResourcePercent: number,
     options?: VisibleAndPermissionIdOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/updatesetting'),
         body: Utils.convertObjCamelToSnake({
@@ -745,7 +745,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   }
 
   validateAddress(address: string, options?: VisibleOption): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/validateaddress'),
         body: Utils.convertObjCamelToSnake({ address, ...options }),
@@ -757,7 +757,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
     ownerAddress: string,
     options?: VisibleAndPermissionIdOptions,
   ): Promise<ResponseDto<any>> {
-    return ErrorUtils.tryFail(() =>
+    return ErrorUtils.tryFailTron(() =>
       this.connector.post({
         path: this.getRpcNodeUrl('/wallet/withdrawexpireunfreeze'),
         body: Utils.convertObjCamelToSnake({ ownerAddress, ...options }),
