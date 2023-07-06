@@ -1,3 +1,7 @@
+## [1.5.4] - 2023.07.05
+### Changed
+- Change Tron RPC calls error handling (to accommodate Tron RPC returning 200 status code even on error)
+
 ## [1.5.3] - 2023.07.05
 ### Changed
 - Fixed not working Tron RPC calls
