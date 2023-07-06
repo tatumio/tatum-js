@@ -212,7 +212,9 @@ export const Utils = {
     const snakeObj: Record<string, unknown> = {}
     for (const [key, value] of Object.entries(obj)) {
       const snakeKey = Utils.camelToSnakeCase(key)
-      if (typeof value === 'object' && value !== null) {
+      if (value instanceof BigNumber) {
+        snakeObj[snakeKey] = value.toNumber();
+      } else if  (typeof value === 'object' && value !== null) {
         snakeObj[snakeKey] = Utils.convertObjCamelToSnake(value)
       } else {
         snakeObj[snakeKey] = value

@@ -26,6 +26,22 @@ type ErrorWithMessage = {
 }
 
 export const ErrorUtils = {
+  tryFailTron: async <T>(f: (() => Promise<T>) | (() => T)): Promise<ResponseDto<T>> => {
+    const response = await ErrorUtils.tryFail(f)
+
+    type errorKey = keyof typeof response.data
+    const error: errorKey = "Error" as errorKey;
+
+    if(response.data[error]) {
+      return {
+        data: null as unknown as T,
+        status: Status.ERROR,
+        error: ErrorUtils.toErrorWithMessage(response.data[error]),
+      }
+    }
+
+    return response
+  },
   tryFail: async <T>(f: (() => Promise<T>) | (() => T)): Promise<ResponseDto<T>> => {
     try {
       const data = await f()
