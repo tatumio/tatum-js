@@ -353,14 +353,27 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
 
   /**
    * Get blocks information.
-   * @param endSlot - Block number, identified by Slot
    * @param startSlot - Block number, identified by Slot
+   * @param endSlot - Block number, identified by Slot
    * @param options - Options for the query
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getblocks
    */
   getBlocks: (
-    endSlot: number,
-    startSlot?: number,
+    startSlot: number,
+    endSlot?: number,
+    options?: GetCommitmentOptions,
+  ) => Promise<ResponseDto<Array<number>>>
+
+  /**
+   * Get blocks information.
+   * @param startSlot - Block number, identified by Slot
+   * @param limit - Number of blocks to return
+   * @param options - Options for the query
+   * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getBlocksWithLimit
+   */
+  getBlocksWithLimit: (
+    startSlot: number,
+    limit?: number,
     options?: GetCommitmentOptions,
   ) => Promise<ResponseDto<Array<number>>>
 
