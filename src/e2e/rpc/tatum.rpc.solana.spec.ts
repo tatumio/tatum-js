@@ -7,6 +7,7 @@ const getClient = async (testnet?: boolean): Promise<Solana> =>
     network: testnet ? Network.SOLANA_DEVNET : Network.SOLANA,
     retryCount: 1,
     retryDelay: 2000,
+    verbose: true,
   })
 
 const blockNumber = 203046000
@@ -395,6 +396,18 @@ describe('Solana mainnet RPC', () => {
           ],
         },
       )
+      expect(status).toBe(Status.SUCCESS)
+      expect(data).toBeTruthy()
+    })
+  })
+  describe('getTokenAccountsByDelegate', () => {
+    it('should return account data', async () => {
+      const tatum = await getClient(true)
+
+      const { data, status, error } = await tatum.rpc.getTokenAccountsByDelegate(
+        'QDXXCvhbMRdp9KomWLUtz2ihpvupMRzX1uwftjP7iHgbpdrQVRHQ5WkLCnJk'
+      )
+      expect(error).toBeUndefined()
       expect(status).toBe(Status.SUCCESS)
       expect(data).toBeTruthy()
     })
