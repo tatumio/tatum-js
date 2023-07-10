@@ -149,11 +149,11 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
           server.failed = false
           server.lastBlock = Utils.parseStatusPayload(network, response)
         } else {
-          Utils.log({ id: this.id, message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(response)}`})
+          Utils.log({ id: this.id, message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(response, Object.getOwnPropertyNames(response))}`})
           server.failed = true
         }
       }).catch((e) => {
-        Utils.log({ id: this.id, message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(e)}` })
+        Utils.log({ id: this.id, message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}` })
         Utils.log({
           id: this.id,
           message: `Server ${server.node.url} will be marked as failed and will be removed from the pool.`,
@@ -266,7 +266,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
         console.error(new Date().toISOString(), `Failed to fetch RPC configuration for ${network} blockchain`)
       }
     } catch (e) {
-      console.error(new Date().toISOString(), 'Failed to initialize RPC module', e)
+      console.error(new Date().toISOString(), `Failed to initialize RPC module. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`)
     }
   }
 
@@ -275,7 +275,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     const url = this.getActiveUrl(nodeType)
     const activeIndex = this.getActiveIndex(nodeType)
     if (verbose) {
-      console.warn(new Date().toISOString(), `Failed to call RPC ${Array.isArray(rpcCall) ? 'methods' : rpcCall.method} on ${url}.`, e)
+      console.warn(new Date().toISOString(), `Failed to call RPC ${Array.isArray(rpcCall) ? 'methods' : rpcCall.method} on ${url}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`)
       console.log(new Date().toISOString(), `Switching to another server, marking this as unstable.`)
     }
     /**
