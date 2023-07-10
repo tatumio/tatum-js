@@ -3,7 +3,7 @@ import { Container } from 'typedi'
 
 import { BigNumber } from 'bignumber.js'
 import {
-  AddressEventNotificationChain,
+  AddressEventNotificationChain, isEvmArchiveNonArchiveLoadBalancerNetwork,
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
   isSolanaEnabledNetwork,
@@ -29,8 +29,8 @@ import {
   Dogecoin,
   Ethereum,
   EthereumClassic,
-  EvmBasedLoadBalancerRpc,
-  EvmBasedRpc,
+  EvmLoadBalancerRpc,
+  EvmRpc,
   Fantom,
   Flare,
   GenericRpc,
@@ -48,32 +48,38 @@ import {
   SolanaRpc,
   Tron,
   TronRpc,
-  UtxoBasedLoadBalancerRpc,
-  UtxoBasedRpc,
+  UtxoLoadBalancerRpc,
+  UtxoRpc,
   Vechain,
   Xdc,
   Xrp,
   XrpRpc,
 } from '../service'
 import { CONFIG } from './di.tokens'
+import { EvmArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmArchiveLoadBalancerRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, network: Network): T => {
     if (isUtxoLoadBalancerNetwork(network)) {
-      return Container.of(id).get(UtxoBasedLoadBalancerRpc) as T
+      return Container.of(id).get(UtxoLoadBalancerRpc) as T
+    }
+
+    if (isEvmArchiveNonArchiveLoadBalancerNetwork(network)) {
+      return Container.of(id).get(EvmArchiveLoadBalancerRpc) as T
     }
 
     if (isEvmLoadBalancerNetwork(network)) {
-      return Container.of(id).get(EvmBasedLoadBalancerRpc) as T
+      return Container.of(id).get(EvmLoadBalancerRpc) as T
     }
 
     if (isEvmBasedNetwork(network)) {
-      return Container.of(id).get(EvmBasedRpc) as T
+      return Container.of(id).get(EvmRpc) as T
     }
 
     if (isUtxoBasedNetwork(network)) {
-      return Container.of(id).get(UtxoBasedRpc) as T
+      return Container.of(id).get(UtxoRpc) as T
     }
+
     if (isXrpNetwork(network)) {
       return Container.of(id).get(XrpRpc) as T
     }
@@ -86,8 +92,8 @@ export const Utils = {
     console.warn(`RPC Network ${network} is not supported.`)
     return Container.of(id).get(GenericRpc) as T
   },
-  getRpcListUrl: (network: Network): string => {
-    return `https://rpc.tatum.com/${network}/list.json`
+  getRpcListUrl: (network: Network): string[] => {
+    return [`https://rpc.tatum.com/${network}/list.json`, `https://rpc.tatum.com/${network}-archive/list.json`]
   },
   getStatusPayload: (network: Network) => {
     if (isUtxoBasedNetwork(network)) {

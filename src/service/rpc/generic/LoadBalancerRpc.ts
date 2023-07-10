@@ -225,19 +225,33 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
 
   public getActiveArchiveUrlWithFallback() {
     const activeArchiveUrl = this.getActiveUrl(RpcNodeType.ARCHIVE)
-    if (activeArchiveUrl) {
-      return { url: activeArchiveUrl, type: RpcNodeType.ARCHIVE }
+    if (activeArchiveUrl?.url) {
+      return { url: activeArchiveUrl.url, type: RpcNodeType.ARCHIVE }
     }
 
-    if (this.getActiveUrl(RpcNodeType.NORMAL)) {
-      return { url: this.getActiveUrl(RpcNodeType.NORMAL), type: RpcNodeType.NORMAL }
+    if (this.getActiveUrl(RpcNodeType.NORMAL)?.url) {
+      return { url: this.getActiveUrl(RpcNodeType.NORMAL).url, type: RpcNodeType.NORMAL }
     }
 
     throw new Error('No active node found.')
   }
 
-  public getActiveUrl(nodeType: RpcNodeType): string {
-    return this.activeUrl[nodeType]?.url as string
+
+  public getActiveNormalUrlWithFallback() {
+    const activeNormalUrl = this.getActiveUrl(RpcNodeType.NORMAL)
+    if (activeNormalUrl?.url) {
+      return { url: activeNormalUrl.url, type: RpcNodeType.NORMAL }
+    }
+
+    if (this.getActiveUrl(RpcNodeType.ARCHIVE)?.url) {
+      return { url: this.getActiveUrl(RpcNodeType.ARCHIVE).url, type: RpcNodeType.ARCHIVE }
+    }
+
+    throw new Error('No active node found.')
+  }
+
+  public getActiveUrl(nodeType: RpcNodeType) {
+    return { url: this.activeUrl[nodeType]?.url as string, type: nodeType }
   }
 
   private getActiveIndex(nodeType: RpcNodeType): number {
@@ -247,29 +261,31 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
   private initRemoteHosts(nodeType: RpcNodeType, nodes: RpcNode[]) {
     const filteredNodes = nodes.filter((node) => node.type === nodeType)
 
-    const randomIndex = Math.floor(Math.random() * filteredNodes.length)
-
     if (filteredNodes.length === 0) {
-      Utils.log({
-        id: this.id,
-        message: `No ${nodeType} nodes found for ${this.network} blockchain.`,
-      })
       return
     }
 
-    Utils.log({
-      id: this.id,
-      message: `Using random URL ${filteredNodes[randomIndex].url} for ${this.network} blockchain during the initialization for node`,
-    })
+    if (!this.rpcUrls[nodeType]) {
+      this.rpcUrls[nodeType] = [];
+    }
 
-    this.activeUrl[nodeType] = { url: filteredNodes[randomIndex].url, index: randomIndex }
-
-    this.rpcUrls[nodeType] = filteredNodes.map((s) => ({
+    this.rpcUrls[nodeType] = [...this.rpcUrls[nodeType], ...filteredNodes.map((s) => ({
       node: { url: s.url },
       lastBlock: 0,
       lastResponseTime: 0,
       failed: false,
-    }))
+    }))]
+
+    const randomIndex = Math.floor(Math.random() * this.rpcUrls[nodeType].length)
+
+    Utils.log({
+      id: this.id,
+      message: `Using random URL ${this.rpcUrls[nodeType][randomIndex].node.url} for ${this.network} blockchain during the initialization for node ${nodeType}.`,
+    })
+
+    this.activeUrl[nodeType] = { url: this.rpcUrls[nodeType][randomIndex].node.url, index: randomIndex }
+
+
   }
 
   private async initRemoteHostsUrls() {
@@ -279,13 +295,21 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const res = await fetch(rpcList)
-      if (res.ok) {
-        const nodes: RpcNode[] = await res.json()
+      const [normal, archive] = await Promise.all(rpcList.map((url) => fetch(url)))
+      if (normal.ok) {
+        const nodes: RpcNode[] = await normal.json()
         this.initRemoteHosts(RpcNodeType.NORMAL, nodes)
         this.initRemoteHosts(RpcNodeType.ARCHIVE, nodes)
       } else {
-        console.error(new Date().toISOString(), `Failed to fetch RPC configuration for ${network} blockchain`)
+        console.error(new Date().toISOString(), `Failed to fetch RPC configuration for ${network} blockchain for normal nodes`)
+      }
+
+      if (archive.ok) {
+        const nodes: RpcNode[] = await archive.json()
+        this.initRemoteHosts(RpcNodeType.NORMAL, nodes)
+        this.initRemoteHosts(RpcNodeType.ARCHIVE, nodes)
+      } else {
+        console.error(new Date().toISOString(), `Failed to fetch RPC configuration for ${network} blockchain for archive nodes`)
       }
     } catch (e) {
       console.error(
@@ -297,7 +321,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
 
   async handleFailedRpcCall(rpcCall: JsonRpcCall | JsonRpcCall[], e: unknown, nodeType: RpcNodeType) {
     const { verbose, rpc: rpcConfig } = Container.of(this.id).get(CONFIG)
-    const url = this.getActiveUrl(nodeType)
+    const { url } = this.getActiveUrl(nodeType)
     const activeIndex = this.getActiveIndex(nodeType)
     if (verbose) {
       console.warn(
@@ -308,6 +332,12 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
       )
       console.log(new Date().toISOString(), `Switching to another server, marking this as unstable.`)
     }
+
+    if (!activeIndex) {
+      console.error(`No active server found for ${nodeType} node.`)
+      throw e
+    }
+
     /**
      * If the node is not responding, it will be marked as failed.
      * New node will be selected and will be used for the given blockchain.
@@ -329,9 +359,13 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     this.activeUrl[nodeType] = { url: fastestServer.node.url, index }
   }
 
-  async rawRpcCall(rpcCall: JsonRpcCall): Promise<JsonRpcResponse<any>> {
-    const { url, type } = this.getActiveArchiveUrlWithFallback()
+  async rawRpcCall(rpcCall: JsonRpcCall, archive?: boolean): Promise<JsonRpcResponse<any>> {
+    const { url, type } = archive ? this.getActiveArchiveUrlWithFallback() : this.getActiveNormalUrlWithFallback()
     try {
+      Utils.log({
+        id: this.id,
+        message: `Sending RPC ${rpcCall.method} to ${url} for ${this.network} blockchain node type ${type}.`,
+      })
       return await this.connector.rpcCall(url, rpcCall)
     } catch (e) {
       await this.handleFailedRpcCall(rpcCall, e, type)

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JsonRpcResponse, UtxoBasedRpcInterface } from '../../../dto'
 
-export abstract class AbstractUtxoBasedRpc implements UtxoBasedRpcInterface {
+export abstract class AbstractUtxoRpc implements UtxoBasedRpcInterface {
   protected abstract rpcCall<T>(method: string, params?: unknown[]): Promise<T>
 
   async createRawTransaction(

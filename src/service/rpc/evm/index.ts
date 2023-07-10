@@ -1,2 +1,2 @@
-export * from './EvmBasedLoadBalancerRpc'
-export * from './EvmBasedRpc'
+export * from './EvmRpc'
+export * from './EvmLoadBalancerRpc'

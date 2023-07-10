@@ -5,6 +5,7 @@ on:
 
 env:
   SDK_ERROR_MESSAGES_VERSION: "master"
+  V2_API_KEY: ${{ secrets.V2_API_KEY }}
 
 jobs:
   metadata:

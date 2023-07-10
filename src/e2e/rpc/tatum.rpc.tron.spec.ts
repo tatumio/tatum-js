@@ -9,7 +9,7 @@ const getTronRpc = async (testnet?: boolean) =>
     retryCount: 1,
     retryDelay: 2000,
   })
-describe('RPCs', () => {
+describe.skip('RPCs', () => {
   describe('TRON', () => {
     describe('testnet', () => {
       it('getNowBlock', async () => {

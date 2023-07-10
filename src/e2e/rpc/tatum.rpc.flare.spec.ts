@@ -2,12 +2,12 @@ import { Network } from '../../service'
 import { EvmE2eUtils } from './evm.e2e.utils'
 
 //temporarily skipping Flare as RPC's are not available
-describe.skip('Flare', () => {
+describe('Flare', () => {
   describe('mainnet', () => {
     EvmE2eUtils.e2e({ network: Network.FLARE, chainId: 14 })
   })
 
-  describe('songbird', () => {
+  describe.skip('songbird', () => {
     EvmE2eUtils.e2e({ network: Network.FLARE_SONGBIRD, chainId: 19 })
   })
 

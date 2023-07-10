@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
-import { JsonRpcCall, JsonRpcResponse, UtxoBasedRpcSuite } from '../../../dto'
+import { JsonRpcCall, JsonRpcResponse } from '../../../dto'
 import { Utils } from '../../../util'
-import { GenericRpc } from '../generic'
-import { AbstractUtxoBasedRpc } from './AbstractUtxoBasedRpc'
+import { GenericRpc } from '../generic/GenericRpc'
+import { AbstractEvmRpc } from './AbstractEvmRpc'
 
 @Service({
   factory: (data: { id: string }) => {
-    return new UtxoBasedRpc(data.id)
+    return new EvmRpc(data.id)
   },
   transient: true,
 })
-export class UtxoBasedRpc extends AbstractUtxoBasedRpc implements UtxoBasedRpcSuite {
+export class EvmRpc extends AbstractEvmRpc {
   public readonly genericRpc: GenericRpc
 
   constructor(id: string) {
@@ -24,12 +24,12 @@ export class UtxoBasedRpc extends AbstractUtxoBasedRpc implements UtxoBasedRpcSu
     return (await this.genericRpc.rawRpcCall(preparedCall)) as T
   }
 
-  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
-    return this.genericRpc.rawBatchRpcCall(body)
-  }
-
   async rawRpcCall<T>(body: JsonRpcCall): Promise<T> {
     return (await this.genericRpc.rawRpcCall(body)) as T
+  }
+
+  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
+    return this.genericRpc.rawBatchRpcCall(body)
   }
 
   destroy(): void {

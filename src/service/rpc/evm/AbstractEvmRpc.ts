@@ -12,7 +12,7 @@ import {
 } from '../../../dto'
 
 @Service()
-export abstract class AbstractEvmBasedRpc implements EvmBasedRpcInterface {
+export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
   protected abstract rpcCall<T>(method: string, params?: unknown[]): Promise<T>
 
   async blockNumber(): Promise<JsonRpcResponse<any>> {
