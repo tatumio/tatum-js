@@ -277,7 +277,7 @@ export abstract class AbstractEvmBasedRpc implements EvmBasedRpcInterface {
     return ResponseUtils.fromRpcResult(r)
   }
 
-  async getTransactionCount(address: string, blockNumber?: BlockNumber): Promise<ResponseDto<BigNumber>> {
+  async getTransactionCount(address: string, blockNumber: BlockNumber = 'latest'): Promise<ResponseDto<BigNumber>> {
     const r = await this.rpcCall<JsonRpcResponse>('eth_getTransactionCount', [
       address,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
