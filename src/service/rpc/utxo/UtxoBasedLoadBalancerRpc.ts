@@ -1,8 +1,8 @@
 import { Container, Service } from 'typedi'
 import { JsonRpcCall, JsonRpcResponse, UtxoBasedRpcSuite } from '../../../dto'
-import { AbstractUtxoBasedRpc } from './AbstractUtxoBasedRpc'
-import { LoadBalancerRpc } from '../generic/LoadBalancerRpc'
 import { Utils } from '../../../util'
+import { LoadBalancerRpc } from '../generic/LoadBalancerRpc'
+import { AbstractUtxoBasedRpc } from './AbstractUtxoBasedRpc'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -23,11 +23,11 @@ export class UtxoBasedLoadBalancerRpc extends AbstractUtxoBasedRpc implements Ut
     return (await this.loadBalancerRpc.rawRpcCall(preparedCall)) as T
   }
 
-  async rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse> {
+  async rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<any>> {
     return this.loadBalancerRpc.rawRpcCall(body)
   }
 
-  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse[]> {
+  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
     return this.loadBalancerRpc.rawBatchRpcCall(body)
   }
 

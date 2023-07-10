@@ -1,6 +1,6 @@
 import { Container } from 'typedi'
 
-import { CONFIG } from './di.tokens'
+import { BigNumber } from 'bignumber.js'
 import {
   AddressEventNotificationChain,
   isEvmBasedNetwork,
@@ -30,7 +30,8 @@ import {
   EthereumClassic,
   EvmBasedLoadBalancerRpc,
   EvmBasedRpc,
-  Fantom, Flare,
+  Fantom,
+  Flare,
   GenericRpc,
   Gnosis,
   Haqq,
@@ -53,7 +54,7 @@ import {
   Xrp,
   XrpRpc,
 } from '../service'
-import { BigNumber } from 'bignumber.js'
+import { CONFIG } from './di.tokens'
 
 export const Utils = {
   getRpc: <T>(id: string, network: Network): T => {
@@ -106,9 +107,9 @@ export const Utils = {
     }
     throw new Error(`Network ${network} is not supported.`)
   },
-  parseStatusPayload: (network: Network, response: JsonRpcResponse) => {
+  parseStatusPayload: (network: Network, response: JsonRpcResponse<any>) => {
     if (isUtxoBasedNetwork(network) || isEvmBasedNetwork(network)) {
-      return new BigNumber(response.result as number || -1).toNumber()
+      return new BigNumber((response.result as number) || -1).toNumber()
     }
     throw new Error(`Network ${network} is not supported.`)
   },
@@ -200,7 +201,7 @@ export const Utils = {
       signal: controller.signal,
       headers: {
         'Content-Type': 'application/json',
-      }
+      },
     })
     const responseTime = Date.now() - start
     clearTimeout(id)
@@ -213,8 +214,8 @@ export const Utils = {
     for (const [key, value] of Object.entries(obj)) {
       const snakeKey = Utils.camelToSnakeCase(key)
       if (value instanceof BigNumber) {
-        snakeObj[snakeKey] = value.toNumber();
-      } else if  (typeof value === 'object' && value !== null) {
+        snakeObj[snakeKey] = value.toNumber()
+      } else if (typeof value === 'object' && value !== null) {
         snakeObj[snakeKey] = Utils.convertObjCamelToSnake(value)
       } else {
         snakeObj[snakeKey] = value
@@ -321,7 +322,7 @@ export const Utils = {
     }
   },
 
-  log: ({ id, message, data, mode }: { id: string, message?: string, data?: object, mode?: 'table' }) => {
+  log: ({ id, message, data, mode }: { id: string; message?: string; data?: object; mode?: 'table' }) => {
     const config = Container.of(id).get(CONFIG)
     if (config.verbose) {
       if (data) {
@@ -344,28 +345,27 @@ export const Utils = {
     }
   },
   deepMerge(target: unknown, source: unknown): unknown {
-    const isObject = (obj: unknown): obj is Record<string, unknown> =>
-      typeof obj === 'object' && obj !== null;
+    const isObject = (obj: unknown): obj is Record<string, unknown> => typeof obj === 'object' && obj !== null
 
     if (!isObject(target) || !isObject(source)) {
-      return source;
+      return source
     }
 
-    const output: Record<string, unknown> = { ...target };
+    const output: Record<string, unknown> = { ...target }
 
     Object.keys(source).forEach((key) => {
-      const targetValue = output[key];
-      const sourceValue = source[key];
+      const targetValue = output[key]
+      const sourceValue = source[key]
 
       if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
-        output[key] = [...targetValue, ...sourceValue];
+        output[key] = [...targetValue, ...sourceValue]
       } else if (isObject(targetValue) && isObject(sourceValue)) {
-        output[key] = Utils.deepMerge(targetValue, sourceValue);
+        output[key] = Utils.deepMerge(targetValue, sourceValue)
       } else {
-        output[key] = sourceValue;
+        output[key] = sourceValue
       }
-    });
+    })
 
-    return output;
-  }
+    return output
+  },
 }

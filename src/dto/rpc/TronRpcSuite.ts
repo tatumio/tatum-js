@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BigNumber } from 'bignumber.js'
-import { ResponseDto } from '../../util'
 import { AbstractRpcInterface } from './AbstractJsonRpcInterface'
 
 export interface TronTxRawBody {
@@ -138,7 +137,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with validation result.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-address-utility-methods/validateaddress
    */
-  validateAddress(address: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  validateAddress(address: string, options?: VisibleOption): Promise<any>
 
   /**
    * Broadcasts a raw Tron transaction.
@@ -147,7 +146,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the broadcast result.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-transaction-methods/broadcasttransaction
    */
-  broadcastTransaction(rawBody: TronTxRawBody): Promise<ResponseDto<any>>
+  broadcastTransaction(rawBody: TronTxRawBody): Promise<any>
 
   /**
    * Broadcasts a transaction in hexadecimal format.
@@ -156,7 +155,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the broadcast result.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-transaction-methods/broadcasthex
    */
-  broadcastHex(transaction: string): Promise<ResponseDto<any>>
+  broadcastHex(transaction: string): Promise<any>
 
   /**
    * Creates a Tron transaction.
@@ -173,7 +172,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     toAddress: string,
     amount: BigNumber,
     options?: CreateTransactionOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Creates a Tron account.
@@ -188,7 +187,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     ownerAddress: string,
     accountAddress: string,
     options?: VisibleAndPermissionIdOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Gets the details of a specific account.
@@ -198,7 +197,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the account details.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-account-methods/getaccount
    */
-  getAccount(address: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  getAccount(address: string, options?: VisibleOption): Promise<any>
 
   /**
    * Updates an existing Tron account.
@@ -213,7 +212,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     ownerAddress: string,
     accountName: string,
     options?: VisibleAndPermissionIdOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Updates the permissions of an account.
@@ -230,7 +229,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     actives: TronPermission[],
     owner: TronPermission,
     options?: AccountPermissionUpdateOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Gets the balance of a specific account.
@@ -245,7 +244,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     accountIdentifier: AccountIdentifier,
     blockIdentifier: BlockIdentifier,
     options?: VisibleOption,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Fetches the resources of a given account.
@@ -255,7 +254,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the account resources.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-account-resource-methods/getaccountresource
    */
-  getAccountResources(address: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  getAccountResources(address: string, options?: VisibleOption): Promise<any>
 
   /**
    * Fetches the net resources of a given account.
@@ -265,7 +264,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the account net resources.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-account-resource-methods/getaccountnet
    */
-  getAccountNet(address: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  getAccountNet(address: string, options?: VisibleOption): Promise<any>
 
   /**
    * Freezes balance of a given account.
@@ -284,7 +283,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     frozenDuration: number,
     resource: TronStakeType,
     options?: FreezeAccountOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Unfreezes the balance of a given account.
@@ -299,7 +298,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     ownerAddress: string,
     resource: TronStakeType,
     options?: UnFreezeAccountOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Fetches the delegated resource from a specified address to another.
@@ -310,11 +309,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the delegated resources.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-account-resource-methods/getdelegatedresource
    */
-  getDelegatedResource(
-    fromAddress: string,
-    toAddress: string,
-    options?: VisibleOption,
-  ): Promise<ResponseDto<any>>
+  getDelegatedResource(fromAddress: string, toAddress: string, options?: VisibleOption): Promise<any>
 
   /**
    * Fetches the account index of the delegated resource.
@@ -324,7 +319,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the account index of the delegated resource.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-account-resource-methods/getdelegatedresourceaccountindex
    */
-  getDelegatedResourceAccountIndex(value: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  getDelegatedResourceAccountIndex(value: string, options?: VisibleOption): Promise<any>
 
   /**
    * Freezes the balance of a given account, version 2.
@@ -341,7 +336,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     frozenBalance: BigNumber,
     resource: TronStakeType,
     options?: VisibleAndPermissionIdOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Unfreezes the balance of a given account, version 2.
@@ -358,7 +353,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     unfreezeBalance: BigNumber,
     resource: TronStakeType,
     options?: VisibleAndPermissionIdOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Delegates a resource from one account to another.
@@ -379,7 +374,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     resource: TronStakeType,
     lock: boolean,
     options?: VisibleAndPermissionIdOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Undoes a previous resource delegation from one account to another.
@@ -400,7 +395,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     resource: TronStakeType,
     lock: boolean,
     options?: VisibleAndPermissionIdOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Withdraws the expired unfrozen balance for an account.
@@ -410,10 +405,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves when the withdrawal is complete.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-account-resource-methods/withdrawexpireunfreeze
    */
-  withdrawExpireUnfreeze(
-    ownerAddress: string,
-    options?: VisibleAndPermissionIdOptions,
-  ): Promise<ResponseDto<any>>
+  withdrawExpireUnfreeze(ownerAddress: string, options?: VisibleAndPermissionIdOptions): Promise<any>
 
   /**
    * Fetches the available unfreeze count for a given account.
@@ -423,7 +415,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the available unfreeze count.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-account-resource-methods/getavailableunfreezecount
    */
-  getAvailableUnfreezeCount(ownerAddress: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  getAvailableUnfreezeCount(ownerAddress: string, options?: VisibleOption): Promise<any>
 
   /**
    * Fetches the maximum withdrawable unfreeze amount for a given account.
@@ -436,7 +428,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
   getCanWithdrawUnfreezeAmount(
     ownerAddress: string,
     options?: GetCanWithdrawUnfreezeAmountOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Fetches the maximum size of delegatable resource for a given account.
@@ -451,7 +443,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     ownerAddress: string,
     type: TronStakeTypeNumeric,
     options?: VisibleOption,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Fetches the delegated resource from a specified address to another, version 2.
@@ -462,11 +454,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the delegated resources.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-account-resource-methods/getdelegatedresourcev2
    */
-  getDelegatedResourceV2(
-    fromAddress: string,
-    toAddress: string,
-    options?: VisibleOption,
-  ): Promise<ResponseDto<any>>
+  getDelegatedResourceV2(fromAddress: string, toAddress: string, options?: VisibleOption): Promise<any>
 
   /**
    * Fetches the account index of the delegated resource, version 2.
@@ -476,7 +464,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the account index of the delegated resource.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-account-resource-methods/getdelegatedresourceaccountindexv2
    */
-  getDelegatedResourceAccountIndexV2(value: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  getDelegatedResourceAccountIndexV2(value: string, options?: VisibleOption): Promise<any>
 
   /**
    * Fetches a block from the blockchain using either its ID or number.
@@ -486,7 +474,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the requested block.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getblock
    */
-  getBlock(idOrNum: string, options?: DetailOption): Promise<ResponseDto<any>>
+  getBlock(idOrNum: string, options?: DetailOption): Promise<any>
 
   /**
    * Fetches a block from the blockchain using its number.
@@ -495,7 +483,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the requested block.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getblockbynum
    */
-  getBlockByNum(num: number): Promise<ResponseDto<any>>
+  getBlockByNum(num: number): Promise<any>
 
   /**
    * Fetches a block from the blockchain using its ID.
@@ -504,7 +492,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the requested block.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getblockbyid
    */
-  getBlockById(id: string): Promise<ResponseDto<any>>
+  getBlockById(id: string): Promise<any>
 
   /**
    * Fetches the latest block from the blockchain based on the number.
@@ -513,7 +501,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the requested block.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getblockbylatestnum
    */
-  getBlockByLatestNum(num: number): Promise<ResponseDto<any>>
+  getBlockByLatestNum(num: number): Promise<any>
 
   /**
    * Fetches a series of blocks from the blockchain using start and end numbers.
@@ -523,7 +511,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the requested series of blocks.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getblockbylimitnext
    */
-  getBlockByLimitNext(startNum: number, endNum: number): Promise<ResponseDto<any>>
+  getBlockByLimitNext(startNum: number, endNum: number): Promise<any>
 
   /**
    * Fetches the current block from the blockchain.
@@ -531,7 +519,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the current block.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getnowblock
    */
-  getNowBlock(): Promise<ResponseDto<any>>
+  getNowBlock(): Promise<any>
 
   /**
    * Fetches a transaction from the blockchain using its ID.
@@ -541,7 +529,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the requested transaction.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/gettransactionbyid
    */
-  getTransactionById(value: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  getTransactionById(value: string, options?: VisibleOption): Promise<any>
 
   /**
    * Fetches transaction info from the blockchain using the transaction ID.
@@ -550,7 +538,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the transaction info.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/gettransactioninfobyid
    */
-  getTransactionInfoById(value: string): Promise<ResponseDto<any>>
+  getTransactionInfoById(value: string): Promise<any>
 
   /**
    * Fetches transaction info from the blockchain by the block number.
@@ -559,7 +547,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the transaction info.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/gettransactioninfobyblocknum
    */
-  getTransactionInfoByBlockNum(num: number): Promise<ResponseDto<any>>
+  getTransactionInfoByBlockNum(num: number): Promise<any>
 
   /**
    * Lists all nodes of the network.
@@ -567,7 +555,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the list of nodes.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/listnodes
    */
-  listNodes(): Promise<ResponseDto<any>>
+  listNodes(): Promise<any>
 
   /**
    * Fetches information about the current node.
@@ -575,7 +563,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the node information.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getnodeinfo
    */
-  getNodeInfo(): Promise<ResponseDto<any>>
+  getNodeInfo(): Promise<any>
 
   /**
    * Fetches the chain parameters.
@@ -583,7 +571,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the chain parameters.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getchainparameters
    */
-  getChainParameters(): Promise<ResponseDto<any>>
+  getChainParameters(): Promise<any>
 
   /**
    * Fetches the balance of a block.
@@ -594,7 +582,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the block balance.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getblockbalance
    */
-  getBlockBalance(hash: string, number: BigNumber, options?: VisibleOption): Promise<ResponseDto<any>>
+  getBlockBalance(hash: string, number: BigNumber, options?: VisibleOption): Promise<any>
 
   /**
    * Fetches the energy prices.
@@ -602,7 +590,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<TronPrices>} - Returns a Promise that resolves with the energy prices.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getenergyprices
    */
-  getEnergyPrices(): Promise<ResponseDto<TronPrices>>
+  getEnergyPrices(): Promise<TronPrices>
 
   /**
    * Fetches the bandwidth prices.
@@ -610,7 +598,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<TronPrices>} - Returns a Promise that resolves with the bandwidth prices.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getbandwidthprices
    */
-  getBandwidthPrices(): Promise<ResponseDto<TronPrices>>
+  getBandwidthPrices(): Promise<TronPrices>
 
   /**
    * Fetches the amount of TRX burned.
@@ -618,7 +606,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the amount of TRX burned.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-query-the-network-methods/getburntrx
    */
-  getBurnTRX(): Promise<ResponseDto<any>>
+  getBurnTRX(): Promise<any>
 
   /**
    * Fetches the asset issue by an account.
@@ -628,7 +616,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the asset issue.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-trc10-token-methods/getassetissuebyaccount
    */
-  getAssetIssueByAccount(address: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  getAssetIssueByAccount(address: string, options?: VisibleOption): Promise<any>
 
   /**
    * Fetches the asset issue by its ID.
@@ -637,7 +625,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the asset issue.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-trc10-token-methods/getassetissuebyid
    */
-  getAssetIssueById(value: number): Promise<ResponseDto<any>>
+  getAssetIssueById(value: number): Promise<any>
 
   /**
    * Fetches the asset issue by its name.
@@ -646,7 +634,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the asset issue.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-trc10-token-methods/getassetissuebyname
    */
-  getAssetIssueByName(name: string): Promise<ResponseDto<any>>
+  getAssetIssueByName(name: string): Promise<any>
 
   /**
    * Fetches a list of all asset issues.
@@ -654,7 +642,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with a list of all asset issues.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-trc10-token-methods/getassetissuelist
    */
-  getAssetIssueList(): Promise<ResponseDto<any>>
+  getAssetIssueList(): Promise<any>
 
   /**
    * Fetches a list of all asset issues by name.
@@ -663,7 +651,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with a list of all asset issues by name.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-trc10-token-methods/getassetissuelistbyname
    */
-  getAssetIssueListByName(value: string): Promise<ResponseDto<any>>
+  getAssetIssueListByName(value: string): Promise<any>
 
   /**
    * Fetches a paginated list of all asset issues.
@@ -673,7 +661,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with a paginated list of all asset issues.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-trc10-token-methods/getpaginatedassetissuelist
    */
-  getPaginatedAssetIssueList(offset: number, limit: number): Promise<ResponseDto<any>>
+  getPaginatedAssetIssueList(offset: number, limit: number): Promise<any>
 
   /**
    * Transfer an asset.
@@ -692,7 +680,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     assetName: string,
     amount: BigNumber,
     options?: TransferAssetIssueByAccountOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Creates an asset issue.
@@ -721,7 +709,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     endTime: number,
     url: string,
     options?: CreateAssetIssueOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Participate in an asset issue.
@@ -740,7 +728,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     assetName: string,
     amount: BigNumber,
     options?: VisibleOption,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Unfreezes an asset.
@@ -750,7 +738,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the result of the unfreeze operation.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-trc10-token-methods/unfreezeasset
    */
-  unfreezeAsset(ownerAddress: string, options?: VisibleAndPermissionIdOptions): Promise<ResponseDto<any>>
+  unfreezeAsset(ownerAddress: string, options?: VisibleAndPermissionIdOptions): Promise<any>
 
   /**
    * Updates an asset.
@@ -761,7 +749,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the result of the update operation.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-trc10-token-methods/updateasset
    */
-  updateAsset(ownerAddress: string, url: string, options?: UpdateAssetOptions): Promise<ResponseDto<any>>
+  updateAsset(ownerAddress: string, url: string, options?: UpdateAssetOptions): Promise<any>
 
   /**
    * Fetches contract information.
@@ -771,7 +759,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the contract information.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-smart-contract-methods/getcontract
    */
-  getContract(value: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  getContract(value: string, options?: VisibleOption): Promise<any>
 
   /**
    * Fetches contract information.
@@ -781,7 +769,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the contract information.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-smart-contract-methods/getcontractinfo
    */
-  getContractInfo(value: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  getContractInfo(value: string, options?: VisibleOption): Promise<any>
 
   /**
    * Triggers a smart contract.
@@ -800,7 +788,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     functionSelector: string,
     parameter: string,
     options?: TriggerSmartContractOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Triggers a constant contract.
@@ -819,7 +807,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     functionSelector: string,
     parameter: string,
     options?: TriggerConstantContractOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Deploys a contract.
@@ -838,7 +826,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     ownerAddress: string,
     name: string,
     options?: DeployContractOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Updates the setting of a contract.
@@ -855,7 +843,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     contractAddress: string,
     consumeUserResourcePercent: number,
     options?: VisibleAndPermissionIdOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Updates the energy limit of a contract.
@@ -872,7 +860,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     contractAddress: string,
     originEnergyLimit: number,
     options?: VisibleAndPermissionIdOptions,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 
   /**
    * Clears the ABI of a contract.
@@ -883,7 +871,7 @@ export interface TronRpcSuite extends AbstractRpcInterface {
    * @returns {Promise<any>} - Returns a Promise that resolves with the result of the ABI clear operation.
    * https://docs.tatum.com/docs/rpc-api-reference/tron-rpc-documentation/api-calls-for-smart-contract-methods/clearabi
    */
-  clearAbi(ownerAddress: string, contractAddress: string, options?: VisibleOption): Promise<ResponseDto<any>>
+  clearAbi(ownerAddress: string, contractAddress: string, options?: VisibleOption): Promise<any>
 
   /**
    * Estimates the energy consumption of a contract call.
@@ -902,5 +890,5 @@ export interface TronRpcSuite extends AbstractRpcInterface {
     functionSelector: string,
     parameter: string,
     options?: VisibleOption,
-  ): Promise<ResponseDto<any>>
+  ): Promise<any>
 }

@@ -1,11 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
-import {
-  JsonRpcCall,
-  JsonRpcResponse,
-} from '../../../dto'
-import { GenericRpc } from '../generic/GenericRpc'
+import { JsonRpcCall, JsonRpcResponse } from '../../../dto'
 import { Utils } from '../../../util'
+import { GenericRpc } from '../generic/GenericRpc'
 import { AbstractEvmBasedRpc } from './AbstractEvmBasedRpc'
 
 @Service({
@@ -31,7 +28,7 @@ export class EvmBasedRpc extends AbstractEvmBasedRpc {
     return (await this.genericRpc.rawRpcCall(body)) as T
   }
 
-  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse[]> {
+  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
     return this.genericRpc.rawBatchRpcCall(body)
   }
 

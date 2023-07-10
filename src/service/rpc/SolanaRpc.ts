@@ -24,13 +24,20 @@ import {
   SimulateTransactionOptions,
   SolanaAccount,
   SolanaAccountInfo,
+  SolanaAddressSignature,
+  SolanaBlock,
   SolanaBlockProduction,
+  SolanaClusterNode,
   SolanaEpochInfo,
   SolanaEpochSchedule,
+  SolanaInflationGovernor,
+  SolanaInflationRate,
+  SolanaInflationReward,
   SolanaLargestAccount,
   SolanaLatestBlockhash,
   SolanaLeaderSchedule,
   SolanaMint,
+  SolanaPerformanceSample,
   SolanaProgramId,
   SolanaRpcSuite,
   SolanaSignatureStatus,
@@ -44,7 +51,7 @@ import {
   SolanaVersion,
   SolanaVoteAccount,
 } from '../../dto'
-import { ResponseDto, ResponseUtils, Utils } from '../../util'
+import { Utils } from '../../util'
 import { AbstractBatchRpc } from './generic'
 
 @Service({
@@ -61,563 +68,436 @@ export class SolanaRpc extends AbstractBatchRpc implements SolanaRpcSuite {
   getAccountInfo(
     pubkey: string,
     options?: GetAccountInfoOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<SolanaAccountInfo | null>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getAccountInfo', [pubkey, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaAccountInfo | null>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaAccountInfo | null>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaAccountInfo | null>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getAccountInfo', [pubkey, options]),
+    )
   }
 
-  getBalance(address: string): Promise<ResponseDto<SolanaTypeWithContext<number>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBalance', [address]))
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<number>>(r))
+  getBalance(address: string): Promise<JsonRpcResponse<SolanaTypeWithContext<number>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<number>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getBalance', [address]),
+    )
   }
 
-  getBlockHeight(options?: GetCommitmentMinContextSlotOptions): Promise<ResponseDto<number>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlockHeight', [options]))
-      .then((r) => ResponseUtils.fromRpcResult<number>(r))
+  getBlockHeight(options?: GetCommitmentMinContextSlotOptions): Promise<JsonRpcResponse<number>> {
+    return this.connector.rpcCall<JsonRpcResponse<number>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getBlockHeight', [options]),
+    )
   }
 
-  getBlock(
-    block: number,
-    options?: GetBlockOptions,
-  ): Promise<
-    ResponseDto<{
-      blockhash: string
-      previousBlockhash: string
-      parentSlot: number
-      transactions: Array<any>
-      signatures: Array<any>
-      rewards: Array<any> | undefined
-      blockTime: number | null
-      blockHeight: number | null
-    } | null>
-  > {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlock', [block, options]))
-      .then((r) => ResponseUtils.fromRpcResult<{
-        blockhash: string
-        previousBlockhash: string
-        parentSlot: number
-        transactions: Array<any>
-        signatures: Array<any>
-        rewards: Array<any> | undefined
-        blockTime: number | null
-        blockHeight: number | null
-      } | null>(r))
+  getBlock(block: number, options?: GetBlockOptions): Promise<JsonRpcResponse<SolanaBlock>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaBlock>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getBlock', [block, options]),
+    )
   }
 
   getBlockProduction(
     options?: GetBlockProductionOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<SolanaBlockProduction>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlockProduction', [options]))
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaBlockProduction>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaBlockProduction>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaBlockProduction>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getBlockProduction', [options]),
+    )
   }
 
-  getBlockCommitment(block: number): Promise<ResponseDto<{ commitment: Array<number>; totalStake: number }>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlockCommitment', [block]))
-      .then((r) => ResponseUtils.fromRpcResult<{ commitment: Array<number>; totalStake: number }>(r))
+  getBlockCommitment(
+    block: number,
+  ): Promise<JsonRpcResponse<{ commitment: Array<number>; totalStake: number }>> {
+    return this.connector.rpcCall<JsonRpcResponse<{ commitment: Array<number>; totalStake: number }>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getBlockCommitment', [block]),
+    )
   }
   getBlocks(
     startSlot: number,
     endSlot?: number,
     options?: GetCommitmentOptions,
-  ): Promise<ResponseDto<Array<number>>> {
+  ): Promise<JsonRpcResponse<Array<number>>> {
     let params: any = [startSlot]
     if (endSlot) params = [startSlot, endSlot]
 
     if (options && options.commitment) params.push(options)
 
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlocks', params))
-      .then((r) => ResponseUtils.fromRpcResult<Array<number>>(r))
+    return this.connector.rpcCall<JsonRpcResponse<Array<number>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getBlocks', params),
+    )
   }
   getBlocksWithLimit(
     startSlot: number,
     limit?: number,
     options?: GetCommitmentOptions,
-  ): Promise<ResponseDto<Array<number>>> {
+  ): Promise<JsonRpcResponse<Array<number>>> {
     let params: any = [startSlot]
     if (limit) params = [startSlot, limit]
 
     if (options && options.commitment) params.push(options)
 
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlocksWithLimit', params))
-      .then((r) => ResponseUtils.fromRpcResult<Array<number>>(r))
+    return this.connector.rpcCall<JsonRpcResponse<Array<number>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getBlocksWithLimit', params),
+    )
   }
 
-  getBlockTime(block: number): Promise<ResponseDto<number | null>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getBlockTime', [block]))
-      .then((r) => ResponseUtils.fromRpcResult<number | null>(r))
+  getBlockTime(block: number): Promise<JsonRpcResponse<number | null>> {
+    return this.connector.rpcCall<JsonRpcResponse<number | null>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getBlockTime', [block]),
+    )
   }
 
-  getClusterNodes(): Promise<
-    ResponseDto<
-      Array<{
-        pubkey: string
-        gossip?: string
-        tpu?: string
-        rpc?: string
-        version?: string
-        featureSet?: number
-        shredVersion?: number
-      }>
-    >
-  > {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getClusterNodes'))
-      .then((r) => ResponseUtils.fromRpcResult<
-        Array<{
-          pubkey: string
-          gossip?: string
-          tpu?: string
-          rpc?: string
-          version?: string
-          featureSet?: number
-          shredVersion?: number
-        }>
-        >(r))
+  getClusterNodes(): Promise<JsonRpcResponse<Array<SolanaClusterNode>>> {
+    return this.connector.rpcCall<JsonRpcResponse<Array<SolanaClusterNode>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getClusterNodes'),
+    )
   }
 
-  getEpochInfo(options?: GetCommitmentMinContextSlotOptions): Promise<ResponseDto<SolanaEpochInfo>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getEpochInfo', [options]))
-      .then((r) => ResponseUtils.fromRpcResult<SolanaEpochInfo>(r))
+  getEpochInfo(options?: GetCommitmentMinContextSlotOptions): Promise<JsonRpcResponse<SolanaEpochInfo>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaEpochInfo>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getEpochInfo', [options]),
+    )
   }
 
-  getEpochSchedule(): Promise<ResponseDto<SolanaEpochSchedule>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getEpochSchedule'))
-      .then((r) => ResponseUtils.fromRpcResult<SolanaEpochSchedule>(r))
+  getEpochSchedule(): Promise<JsonRpcResponse<SolanaEpochSchedule>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaEpochSchedule>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getEpochSchedule'),
+    )
   }
 
   getFeeForMessage(
     message: any,
     options?: GetCommitmentMinContextSlotOptions,
-  ): Promise<ResponseDto<number | null>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getFeeForMessage', [message, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<number | null>(r))
+  ): Promise<JsonRpcResponse<number | null>> {
+    return this.connector.rpcCall<JsonRpcResponse<number | null>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getFeeForMessage', [message, options]),
+    )
   }
 
-  getFirstAvailableBlock(): Promise<ResponseDto<number>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getFirstAvailableBlock'))
-      .then((r) => ResponseUtils.fromRpcResult<number>(r))
+  getFirstAvailableBlock(): Promise<JsonRpcResponse<number>> {
+    return this.connector.rpcCall<JsonRpcResponse<number>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getFirstAvailableBlock'),
+    )
   }
-  getGenesisHash(): Promise<ResponseDto<string>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getGenesisHash'))
-      .then((r) => ResponseUtils.fromRpcResult<string>(r))
+  getGenesisHash(): Promise<JsonRpcResponse<string>> {
+    return this.connector.rpcCall<JsonRpcResponse<string>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getGenesisHash'),
+    )
   }
-  getHealth(): Promise<ResponseDto<string>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getHealth'))
-      .then((r) => ResponseUtils.fromRpcResult<string>(r))
+  getHealth(): Promise<JsonRpcResponse<string>> {
+    return this.connector.rpcCall<JsonRpcResponse<string>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getHealth'),
+    )
   }
-  getHighestSnapshotSlot(): Promise<ResponseDto<{ full: number; incremental: number }>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getHighestSnapshotSlot'))
-      .then((r) => ResponseUtils.fromRpcResult<{ full: number; incremental: number }>(r))
+  getHighestSnapshotSlot(): Promise<JsonRpcResponse<{ full: number; incremental: number }>> {
+    return this.connector.rpcCall<JsonRpcResponse<{ full: number; incremental: number }>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getHighestSnapshotSlot'),
+    )
   }
-  getIdentity(): Promise<ResponseDto<{ identity: string }>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getIdentity'))
-      .then((r) => ResponseUtils.fromRpcResult<{ identity: string }>(r))
+
+  getIdentity(): Promise<JsonRpcResponse<{ identity: string }>> {
+    return this.connector.rpcCall<JsonRpcResponse<{ identity: string }>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getIdentity'),
+    )
   }
-  getInflationGovernor(options?: GetCommitmentOptions): Promise<
-    ResponseDto<{
-      initial: number
-      terminal: number
-      taper: number
-      foundation: number
-      foundationTerm: number
-    }>
-  > {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getInflationGovernor', [options]))
-      .then((r) => ResponseUtils.fromRpcResult<{
-        initial: number
-        terminal: number
-        taper: number
-        foundation: number
-        foundationTerm: number
-      }>(r))
+  getInflationGovernor(options?: GetCommitmentOptions): Promise<JsonRpcResponse<SolanaInflationGovernor>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaInflationGovernor>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getInflationGovernor', [options]),
+    )
   }
-  getInflationRate(): Promise<
-    ResponseDto<{ total: number; validator: number; foundation: number; epoch: number }>
-  > {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getInflationRate'))
-      .then((r) => ResponseUtils.fromRpcResult<{ total: number; validator: number; foundation: number; epoch: number }>(r))
+  getInflationRate(): Promise<JsonRpcResponse<SolanaInflationRate>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaInflationRate>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getInflationRate'),
+    )
   }
   getInflationReward(
     addresses?: string[],
     options?: GetInflationRewardOptions,
-  ): Promise<
-    ResponseDto<
-      Array<{
-        epoch: number
-        effectiveSlot: number
-        amount: number
-        postBalance: number
-        commission: number
-      }>
-    >
-  > {
+  ): Promise<JsonRpcResponse<Array<SolanaInflationReward>>> {
     let params: any = []
     if (addresses) params = [addresses]
     if (options) params = [addresses, options]
 
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getInflationReward', params))
-      .then((r) => ResponseUtils.fromRpcResult<
-        Array<{
-          epoch: number
-          effectiveSlot: number
-          amount: number
-          postBalance: number
-          commission: number
-        }>
-        >(r))
+    return this.connector.rpcCall<JsonRpcResponse<Array<SolanaInflationReward>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getInflationReward', params),
+    )
   }
   getLargestAccounts(
     options?: GetLargestAccountsOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<SolanaLargestAccount[]>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getLargestAccounts', [options]))
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaLargestAccount[]>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaLargestAccount[]>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaLargestAccount[]>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getLargestAccounts', [options]),
+    )
   }
   getLatestBlockhash(
     options?: GetCommitmentMinContextSlotOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<SolanaLatestBlockhash>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getLatestBlockhash', [options]))
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaLatestBlockhash>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaLatestBlockhash>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaLatestBlockhash>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getLatestBlockhash', [options]),
+    )
   }
   getLeaderSchedule(
     slot?: number,
     options?: GetLeaderScheduleOptions,
-  ): Promise<ResponseDto<SolanaLeaderSchedule | null>> {
+  ): Promise<JsonRpcResponse<SolanaLeaderSchedule | null>> {
     let params: any = []
     if (slot) params = [slot]
     if (options) params = [slot, options]
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getLeaderSchedule', params),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaLeaderSchedule | null>(r))
+    return this.connector.rpcCall<JsonRpcResponse<SolanaLeaderSchedule | null>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getLeaderSchedule', params),
+    )
   }
-  getMaxRetransmitSlot(): Promise<ResponseDto<number>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getMaxRetransmitSlot'))
-      .then((r) => ResponseUtils.fromRpcResult<number>(r))
+  getMaxRetransmitSlot(): Promise<JsonRpcResponse<number>> {
+    return this.connector.rpcCall<JsonRpcResponse<number>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getMaxRetransmitSlot'),
+    )
   }
-  getMaxShredInsertSlot(): Promise<ResponseDto<number>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getMaxShredInsertSlot'))
-      .then((r) => ResponseUtils.fromRpcResult<number>(r))
+  getMaxShredInsertSlot(): Promise<JsonRpcResponse<number>> {
+    return this.connector.rpcCall<JsonRpcResponse<number>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getMaxShredInsertSlot'),
+    )
   }
   getMinimumBalanceForRentExemption(
     dataSize?: number,
     options?: GetCommitmentOptions,
-  ): Promise<ResponseDto<number>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getMinimumBalanceForRentExemption', [dataSize, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<number>(r))
+  ): Promise<JsonRpcResponse<number>> {
+    return this.connector.rpcCall<JsonRpcResponse<number>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getMinimumBalanceForRentExemption', [dataSize, options]),
+    )
   }
   getMultipleAccounts(
     pubKeys?: string[],
     options?: GetMultipleAccountsOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<Array<SolanaAccountInfo | null>>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getMultipleAccounts', [pubKeys, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<Array<SolanaAccountInfo | null>>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<Array<SolanaAccountInfo | null>>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<Array<SolanaAccountInfo | null>>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getMultipleAccounts', [pubKeys, options]),
+    )
   }
   getProgramAccounts(
     programId: string,
     options?: GetProgramAccountsOptions,
-  ): Promise<ResponseDto<Array<{ account: SolanaAccountInfo; pubkey: string }>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getProgramAccounts', [programId, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<Array<{ account: SolanaAccountInfo; pubkey: string }>>(r))
+  ): Promise<JsonRpcResponse<Array<{ account: SolanaAccountInfo; pubkey: string }>>> {
+    return this.connector.rpcCall<JsonRpcResponse<Array<{ account: SolanaAccountInfo; pubkey: string }>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getProgramAccounts', [programId, options]),
+    )
   }
-  getRecentPerformanceSamples(limit?: number): Promise<
-    ResponseDto<
-      Array<{
-        slot: number
-        numTransactions: number
-        numSlots: number
-        samplePeriodSecs: number
-        numNonVoteTransaction: number
-      }>
-    >
-  > {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getRecentPerformanceSamples', [limit]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<
-        Array<{
-          slot: number
-          numTransactions: number
-          numSlots: number
-          samplePeriodSecs: number
-          numNonVoteTransaction: number
-        }>
-        >(r))
+  getRecentPerformanceSamples(limit?: number): Promise<JsonRpcResponse<Array<SolanaPerformanceSample>>> {
+    return this.connector.rpcCall<JsonRpcResponse<Array<SolanaPerformanceSample>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getRecentPerformanceSamples', [limit]),
+    )
   }
   getRecentPrioritizationFees(
     addresses?: string[],
-  ): Promise<ResponseDto<Array<{ slot: number; prioritizationFee: number }>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getRecentPrioritizationFees', [addresses]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<Array<{ slot: number; prioritizationFee: number }>>(r))
+  ): Promise<JsonRpcResponse<Array<{ slot: number; prioritizationFee: number }>>> {
+    return this.connector.rpcCall<JsonRpcResponse<Array<{ slot: number; prioritizationFee: number }>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getRecentPrioritizationFees', [addresses]),
+    )
   }
+
   getSignaturesForAddress(
     address: string,
     options?: GetSignaturesForAddressOptions,
-  ): Promise<
-    ResponseDto<
-      Array<{
-        signature: string
-        slot: number
-        err: any | null
-        memo: string | null
-        blockTime: number | null
-        confirmationStatus: string | null
-      }>
-    >
-  > {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getSignaturesForAddress', [address, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<
-        Array<{
-          signature: string
-          slot: number
-          err: any | null
-          memo: string | null
-          blockTime: number | null
-          confirmationStatus: string | null
-        }>
-        >(r))
+  ): Promise<JsonRpcResponse<Array<SolanaAddressSignature>>> {
+    return this.connector.rpcCall<JsonRpcResponse<Array<SolanaAddressSignature>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getSignaturesForAddress', [address, options]),
+    )
   }
   getSignatureStatuses(
     signatures?: string[],
     options?: GetSignatureStatusesOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<SolanaSignatureStatus>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getSignatureStatuses', [signatures, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaSignatureStatus>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaSignatureStatus>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaSignatureStatus>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getSignatureStatuses', [signatures, options]),
+    )
   }
-  getSlot(options?: GetCommitmentMinContextSlotOptions): Promise<ResponseDto<number>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getSlot', [options]))
-      .then((r) => ResponseUtils.fromRpcResult<number>(r))
+  getSlot(options?: GetCommitmentMinContextSlotOptions): Promise<JsonRpcResponse<number>> {
+    return this.connector.rpcCall<JsonRpcResponse<number>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getSlot', [options]),
+    )
   }
-  getSlotLeader(options?: GetCommitmentMinContextSlotOptions): Promise<ResponseDto<string>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getSlotLeader', [options]))
-      .then((r) => ResponseUtils.fromRpcResult<string>(r))
+  getSlotLeader(options?: GetCommitmentMinContextSlotOptions): Promise<JsonRpcResponse<string>> {
+    return this.connector.rpcCall<JsonRpcResponse<string>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getSlotLeader', [options]),
+    )
   }
-  getSlotLeaders(startSlot?: number, limit?: number): Promise<ResponseDto<Array<string>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getSlotLeaders', [startSlot, limit]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<Array<string>>(r))
+  getSlotLeaders(startSlot?: number, limit?: number): Promise<JsonRpcResponse<Array<string>>> {
+    return this.connector.rpcCall<JsonRpcResponse<Array<string>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getSlotLeaders', [startSlot, limit]),
+    )
   }
   getStakeActivation(
     pubkey: string,
     options?: GetStakeActivationOptions,
-  ): Promise<ResponseDto<{ state: string; active: number; inactive: number }>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getStakeActivation', [pubkey, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<{ state: string; active: number; inactive: number }>(r))
+  ): Promise<JsonRpcResponse<{ state: string; active: number; inactive: number }>> {
+    return this.connector.rpcCall<JsonRpcResponse<{ state: string; active: number; inactive: number }>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getStakeActivation', [pubkey, options]),
+    )
   }
   getStakeMinimumDelegation(
     options?: GetCommitmentOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<number>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getStakeMinimumDelegation', [options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<number>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<number>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<number>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getStakeMinimumDelegation', [options]),
+    )
   }
-  getSupply(options?: GetSupplyOptions): Promise<ResponseDto<SolanaTypeWithContext<SolanaSupply>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getSupply', [options]))
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaSupply>>(r))
+  getSupply(options?: GetSupplyOptions): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaSupply>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaSupply>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getSupply', [options]),
+    )
   }
   getTokenAccountBalance(
     pubkey: string,
     options?: GetCommitmentOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<SolanaTokenAccountBalance>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getTokenAccountBalance', [pubkey, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaTokenAccountBalance>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenAccountBalance>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenAccountBalance>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getTokenAccountBalance', [pubkey, options]),
+    )
   }
   getTokenAccountsByDelegate(
     pubkey: string,
     config?: SolanaMint | SolanaProgramId,
     options?: GetTokenAccountsOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<SolanaTokenAccount[]>>> {
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenAccount[]>>> {
     const params: any[] = [pubkey]
     if (config) params.push(config)
     if (options) params.push(options)
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getTokenAccountsByDelegate', params),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaTokenAccount[]>>(r))
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenAccount[]>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getTokenAccountsByDelegate', params),
+    )
   }
   getTokenAccountsByOwner(
     pubkey: string,
     config?: SolanaMint | SolanaProgramId,
     options?: GetTokenAccountsOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<SolanaTokenAccount[]>>> {
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenAccount[]>>> {
     const params: any[] = [pubkey]
     if (config) params.push(config)
     if (options) params.push(options)
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getTokenAccountsByOwner', params))
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaTokenAccount[]>>(r))
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenAccount[]>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getTokenAccountsByOwner', params),
+    )
   }
   getTokenLargestAccounts(
     pubkey: string,
     options?: GetCommitmentOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<SolanaAccount[]>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getTokenLargestAccounts', [pubkey, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaAccount[]>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaAccount[]>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaAccount[]>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getTokenLargestAccounts', [pubkey, options]),
+    )
   }
   getTokenSupply(
     pubkey: string,
     options?: GetCommitmentOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<SolanaTokenSupply>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getTokenSupply', [pubkey, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaTokenSupply>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenSupply>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenSupply>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getTokenSupply', [pubkey, options]),
+    )
   }
   getTransaction(
     signature: string,
     options?: GetTransactionOptions,
-  ): Promise<ResponseDto<SolanaTransaction | null>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('getTransaction', [signature, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTransaction | null>(r))
+  ): Promise<JsonRpcResponse<SolanaTransaction | null>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTransaction | null>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getTransaction', [signature, options]),
+    )
   }
-  getTransactionCount(options?: GetCommitmentMinContextSlotOptions): Promise<ResponseDto<number>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getTransactionCount', [options]))
-      .then((r) => ResponseUtils.fromRpcResult<number>(r))
+  getTransactionCount(options?: GetCommitmentMinContextSlotOptions): Promise<JsonRpcResponse<number>> {
+    return this.connector.rpcCall<JsonRpcResponse<number>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getTransactionCount', [options]),
+    )
   }
-  getVersion(): Promise<ResponseDto<SolanaVersion>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getVersion'))
-      .then((r) => ResponseUtils.fromRpcResult<SolanaVersion>(r))
+  getVersion(): Promise<JsonRpcResponse<SolanaVersion>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaVersion>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('getVersion'),
+    )
   }
   getVoteAccounts(
     options?: GetVoteAccountOptions,
-  ): Promise<ResponseDto<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('getVoteAccounts', [options]))
-      .then((r) => ResponseUtils.fromRpcResult<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }>(r))
+  ): Promise<JsonRpcResponse<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }>> {
+    return this.connector.rpcCall<
+      JsonRpcResponse<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }>
+    >(this.getRpcNodeUrl(), Utils.prepareRpcCall('getVoteAccounts', [options]))
   }
   isBlockhashValid(
     blockhash: string,
     options?: GetCommitmentMinContextSlotOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<boolean>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('isBlockhashValid', [blockhash, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<boolean>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<boolean>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<boolean>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('isBlockhashValid', [blockhash, options]),
+    )
   }
-  minimumLedgerSlot(): Promise<ResponseDto<number>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(this.getRpcNodeUrl(), Utils.prepareRpcCall('minimumLedgerSlot'))
-      .then((r) => ResponseUtils.fromRpcResult<number>(r))
+  minimumLedgerSlot(): Promise<JsonRpcResponse<number>> {
+    return this.connector.rpcCall<JsonRpcResponse<number>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('minimumLedgerSlot'),
+    )
   }
   requestAirdrop(
     pubkey: string,
     amount: number,
     options?: GetCommitmentOptions,
-  ): Promise<ResponseDto<string>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('requestAirdrop', [pubkey, amount, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<string>(r))
+  ): Promise<JsonRpcResponse<string>> {
+    return this.connector.rpcCall<JsonRpcResponse<string>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('requestAirdrop', [pubkey, amount, options]),
+    )
   }
-  sendTransaction(transaction: string, options?: SendTransactionOptions): Promise<ResponseDto<string>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('sendTransaction', [transaction, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<string>(r))
+  sendTransaction(transaction: string, options?: SendTransactionOptions): Promise<JsonRpcResponse<string>> {
+    return this.connector.rpcCall<JsonRpcResponse<string>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('sendTransaction', [transaction, options]),
+    )
   }
   simulateTransaction(
     transaction: string,
     options?: SimulateTransactionOptions,
-  ): Promise<ResponseDto<SolanaTypeWithContext<SolanaTransactionSimulation>>> {
-    return this.connector
-      .rpcCall<JsonRpcResponse>(
-        this.getRpcNodeUrl(),
-        Utils.prepareRpcCall('simulateTransaction', [transaction, options]),
-      )
-      .then((r) => ResponseUtils.fromRpcResult<SolanaTypeWithContext<SolanaTransactionSimulation>>(r))
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaTransactionSimulation>>> {
+    return this.connector.rpcCall<JsonRpcResponse<SolanaTypeWithContext<SolanaTransactionSimulation>>>(
+      this.getRpcNodeUrl(),
+      Utils.prepareRpcCall('simulateTransaction', [transaction, options]),
+    )
   }
 }

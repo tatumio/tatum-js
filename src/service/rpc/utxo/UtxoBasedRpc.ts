@@ -1,9 +1,8 @@
 import { Container, Service } from 'typedi'
 import { JsonRpcCall, JsonRpcResponse, UtxoBasedRpcSuite } from '../../../dto'
 import { Utils } from '../../../util'
-import { AbstractUtxoBasedRpc } from './AbstractUtxoBasedRpc'
 import { GenericRpc } from '../generic'
-
+import { AbstractUtxoBasedRpc } from './AbstractUtxoBasedRpc'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -24,7 +23,7 @@ export class UtxoBasedRpc extends AbstractUtxoBasedRpc implements UtxoBasedRpcSu
     return (await this.genericRpc.rawRpcCall(preparedCall)) as T
   }
 
-  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse[]> {
+  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
     return this.genericRpc.rawBatchRpcCall(body)
   }
 

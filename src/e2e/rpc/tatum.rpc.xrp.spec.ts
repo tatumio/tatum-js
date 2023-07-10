@@ -1,5 +1,4 @@
 import { Network, TatumSDK, Xrp } from '../../service'
-import { Status } from '../../util'
 
 const getXrpRpc = async (testnet?: boolean) =>
   await TatumSDK.init<Xrp>({
@@ -19,17 +18,15 @@ describe('RPCs', () => {
     describe('testnet', () => {
       it('ledger_current', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.ledgerCurrent()
+        const { result } = await tatum.rpc.ledgerCurrent()
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.ledger_current_index).toBeGreaterThan(0)
+        expect(result.ledger_current_index).toBeGreaterThan(0)
       })
       it('ping', async () => {
         const tatum = await getXrpRpc(true)
-        const { data, status } = await tatum.rpc.ping()
+        const { result } = await tatum.rpc.ping()
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.status).toBe('success')
+        expect(result.status).toBe('success')
       })
     })
   })
@@ -37,13 +34,12 @@ describe('RPCs', () => {
     describe('mainnet', () => {
       it('account_channels', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.accountChannels('rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn', {
+        const result = await tatum.rpc.accountChannels('rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn', {
           destinationAccount: 'ra5nK24KXen9AHvsdFTKHSANinZseWnPcX',
           ledgerIndex: 'validated',
         })
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.channels).toContainEqual({
+        expect(result.result.channels).toContainEqual({
           account: 'rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn',
           amount: '1000',
           balance: '0',
@@ -56,36 +52,33 @@ describe('RPCs', () => {
       })
       it('account_currencies', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.accountCurrencies('r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59', {
+        const { result } = await tatum.rpc.accountCurrencies('r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59', {
           ledgerIndex: 'validated',
           strict: true,
         })
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.receive_currencies.length).toBeGreaterThan(0)
+        expect(result.receive_currencies.length).toBeGreaterThan(0)
       })
       it('account_lines', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.accountLines('r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59')
+        const { result } = await tatum.rpc.accountLines('r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59')
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.lines.length).toBeGreaterThan(0)
+        expect(result.lines.length).toBeGreaterThan(0)
       })
       it('account_info', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.accountInfo('rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn', {
+        const { result } = await tatum.rpc.accountInfo('rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn', {
           strict: true,
           ledgerIndex: 'current',
           queue: true,
         })
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.account_data.Account).toBe('rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn')
+        expect(result.account_data.Account).toBe('rf1BiGeXwwQoi8Z2ueFYTEXSwuJYfV2Jpn')
       })
       // TODO: not working in pipeline
       it.skip('account_tx', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.accountTx('rLNaPoKeeBjZe2qs6x52yVPZpZ8td4dc6w', {
+        const { result } = await tatum.rpc.accountTx('rLNaPoKeeBjZe2qs6x52yVPZpZ8td4dc6w', {
           binary: false,
           forward: false,
           ledgerIndexMax: -1,
@@ -93,27 +86,21 @@ describe('RPCs', () => {
           limit: 2,
         })
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.transactions.length).toBeGreaterThan(0)
+        expect(result.transactions.length).toBeGreaterThan(0)
       })
       it('noripple_check', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.norippleCheck(
-          'r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59',
-          'gateway',
-          {
-            transactions: true,
-            limit: 2,
-            ledgerIndex: 'current',
-          },
-        )
+        const { result } = await tatum.rpc.norippleCheck('r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59', 'gateway', {
+          transactions: true,
+          limit: 2,
+          ledgerIndex: 'current',
+        })
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.problems.length).toBeGreaterThan(0)
+        expect(result.problems.length).toBeGreaterThan(0)
       })
       it('ledger', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.ledger({
+        const { result } = await tatum.rpc.ledger({
           ledgerIndex: 'validated',
           accounts: false,
           full: false,
@@ -122,60 +109,54 @@ describe('RPCs', () => {
           ownerFunds: false,
         })
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.ledger.accepted).toBe(true)
+        expect(result.ledger.accepted).toBe(true)
       })
       it('ledger_closed', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.ledgerClosed()
+        const { result } = await tatum.rpc.ledgerClosed()
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.ledger_index).toBeGreaterThan(0)
+        expect(result.ledger_index).toBeGreaterThan(0)
       })
       it('ledger_entry', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.ledgerEntry({
+        const { result } = await tatum.rpc.ledgerEntry({
           index: '7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4',
           ledgerIndex: 'validated',
         })
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.index).toBe('7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4')
+        expect(result.index).toBe('7DB0788C020F02780A673DC74757F23823FA3014C1866E72CC4CD8B226CD6EF4')
       })
       it('submit', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.submit(
+        const { result } = await tatum.rpc.submit(
           '1200002280000000240000001E61D4838D7EA4C6800000000000000000000000000055534400000000004B4E9C06F24296074F7BC48F92A97916C6DC5EA968400000000000000B732103AB40A0490F9B7ED8DF29D246BF2D6269820A0EE7742ACDD457BEA7C7D0931EDB7447304502210095D23D8AF107DF50651F266259CC7139D0CD0C64ABBA3A958156352A0D95A21E02207FCF9B77D7510380E49FF250C21B57169E14E9B4ACFD314CEDC79DDD0A38B8A681144B4E9C06F24296074F7BC48F92A97916C6DC5EA983143E9D4A2B8AA0780F682D136F7A56D6724EF53754',
         )
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.tx_json.Destination).toBe('ra5nK24KXen9AHvsdFTKHSANinZseWnPcX')
+        expect(result.tx_json.Destination).toBe('ra5nK24KXen9AHvsdFTKHSANinZseWnPcX')
       })
       it('transaction_entry', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.transactionEntry(
+        const { result } = await tatum.rpc.transactionEntry(
           'C53ECF838647FA5A4C780377025FEC7999AB4182590510CA461444B207AB74A9',
           { ledgerIndex: 56865245 },
         )
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.tx_json.TransactionType).toBe('OfferCreate')
+        expect(result.tx_json.TransactionType).toBe('OfferCreate')
       })
       it('tx', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.tx(
+        const { result } = await tatum.rpc.tx(
           'C53ECF838647FA5A4C780377025FEC7999AB4182590510CA461444B207AB74A9',
           {
             binary: false,
           },
         )
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.TransactionType).toBe('OfferCreate')
+        expect(result.TransactionType).toBe('OfferCreate')
       })
       it('book_offers', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.bookOffers(
+        const { result } = await tatum.rpc.bookOffers(
           {
             currency: 'XRP',
           },
@@ -186,15 +167,13 @@ describe('RPCs', () => {
           { taker: 'r9cZA1mLK5R5Am25ArfXFmqgNwjZgnfk59', limit: 10 },
         )
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.offers.length).toBeGreaterThan(0)
+        expect(result.offers.length).toBeGreaterThan(0)
       })
       it('fee', async () => {
         const tatum = await getXrpRpc()
-        const { data, status } = await tatum.rpc.fee()
+        const { result } = await tatum.rpc.fee()
 
-        expect(status).toBe(Status.SUCCESS)
-        expect(data.ledger_current_index).toBeGreaterThan(0)
+        expect(result.ledger_current_index).toBeGreaterThan(0)
       })
     })
   })
