@@ -78,7 +78,7 @@ export class TatumConnector {
       })
     } catch (error) {
       if (verbose) {
-        console.warn(new Date().toISOString(), 'Error: ', JSON.stringify(error))
+        console.warn(new Date().toISOString(), `Error: ${JSON.stringify(error, Object.getOwnPropertyNames(error))}`)
       }
       return Promise.reject(error)
     }
