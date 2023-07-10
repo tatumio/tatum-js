@@ -267,7 +267,7 @@ export class Address {
           ]),
         )
         .then((r) => [
-          new BigNumber(r.result?.account_data?.Balance || 0)
+          new BigNumber(r.result.account_data?.Balance || 0)
             .dividedBy(10 ** Constant.DECIMALS[network])
             .toString(),
         ])

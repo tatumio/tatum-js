@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container } from 'typedi'
 
 import { BigNumber } from 'bignumber.js'
@@ -107,7 +108,7 @@ export const Utils = {
     }
     throw new Error(`Network ${network} is not supported.`)
   },
-  parseStatusPayload: (network: Network, response: JsonRpcResponse<unknown>) => {
+  parseStatusPayload: (network: Network, response: JsonRpcResponse<any>) => {
     if (isUtxoBasedNetwork(network) || isEvmBasedNetwork(network)) {
       return new BigNumber((response.result as number) || -1).toNumber()
     }

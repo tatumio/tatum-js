@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
 import { Utils } from '../../../util'
@@ -23,11 +24,11 @@ export class EvmBasedLoadBalancerRpc extends AbstractEvmBasedRpc implements EvmB
     return (await this.loadBalancerRpc.rawRpcCall(preparedCall)) as T
   }
 
-  async rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<unknown>> {
+  async rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<any>> {
     return this.loadBalancerRpc.rawRpcCall(body)
   }
 
-  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<unknown>[]> {
+  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
     return this.loadBalancerRpc.rawBatchRpcCall(body)
   }
 

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container } from 'typedi'
 import { TatumConnector } from '../../../connector/tatum.connector'
 import { JsonRpcCall, JsonRpcResponse } from '../../../dto'
@@ -25,11 +26,11 @@ export abstract class AbstractBatchRpc implements AbstractRpcInterface {
     return rpc?.nodes?.[0].url || `https://api.tatum.io/v3/blockchain/node/${network}/`.concat(subPath || '')
   }
 
-  rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<unknown>> {
+  rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<any>> {
     return this.connector.rpcCall(this.getRpcNodeUrl(), body)
   }
 
-  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<unknown>[]> {
+  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
     return this.connector.rpcCall(this.getRpcNodeUrl(), body)
   }
 

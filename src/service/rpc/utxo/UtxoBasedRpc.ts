@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { JsonRpcCall, JsonRpcResponse, UtxoBasedRpcSuite } from '../../../dto'
 import { Utils } from '../../../util'
@@ -23,7 +24,7 @@ export class UtxoBasedRpc extends AbstractUtxoBasedRpc implements UtxoBasedRpcSu
     return (await this.genericRpc.rawRpcCall(preparedCall)) as T
   }
 
-  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<unknown>[]> {
+  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
     return this.genericRpc.rawBatchRpcCall(body)
   }
 
