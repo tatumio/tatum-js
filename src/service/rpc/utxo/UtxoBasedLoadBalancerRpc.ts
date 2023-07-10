@@ -23,11 +23,11 @@ export class UtxoBasedLoadBalancerRpc extends AbstractUtxoBasedRpc implements Ut
     return (await this.loadBalancerRpc.rawRpcCall(preparedCall)) as T
   }
 
-  async rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<any>> {
+  async rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<unknown>> {
     return this.loadBalancerRpc.rawRpcCall(body)
   }
 
-  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
+  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<unknown>[]> {
     return this.loadBalancerRpc.rawBatchRpcCall(body)
   }
 

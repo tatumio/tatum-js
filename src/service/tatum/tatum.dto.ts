@@ -94,5 +94,5 @@ export enum RpcNodeType {
   NORMAL,
 
   // Node with access to archive data, will be used for historical data
-  ARCHIVE
+  ARCHIVE,
 }

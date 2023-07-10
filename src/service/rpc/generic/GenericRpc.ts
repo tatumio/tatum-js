@@ -1,7 +1,7 @@
 import { Container, Service } from 'typedi'
-import { AbstractBatchRpc } from './AbstractBatchRpc'
 import { CONFIG } from '../../../util'
 import { TatumConfig } from '../../tatum'
+import { AbstractBatchRpc } from './AbstractBatchRpc'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -19,6 +19,9 @@ export class GenericRpc extends AbstractBatchRpc {
 
   protected getRpcNodeUrl() {
     const { apiKey, rpc, network } = this.config
-    return rpc?.nodes?.[0].url || `https://api.tatum.io/v3/blockchain/node/${network}${apiKey?.v1 ? `/${apiKey.v1}` : '/'}`
+    return (
+      rpc?.nodes?.[0].url ||
+      `https://api.tatum.io/v3/blockchain/node/${network}${apiKey?.v1 ? `/${apiKey.v1}` : '/'}`
+    )
   }
 }

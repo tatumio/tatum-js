@@ -329,7 +329,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     this.activeUrl[nodeType] = { url: fastestServer.node.url, index }
   }
 
-  async rawRpcCall(rpcCall: JsonRpcCall): Promise<JsonRpcResponse<any>> {
+  async rawRpcCall(rpcCall: JsonRpcCall): Promise<JsonRpcResponse<unknown>> {
     const { url, type } = this.getActiveArchiveUrlWithFallback()
     try {
       return await this.connector.rpcCall(url, rpcCall)
@@ -339,7 +339,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     }
   }
 
-  async rawBatchRpcCall(rpcCall: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
+  async rawBatchRpcCall(rpcCall: JsonRpcCall[]): Promise<JsonRpcResponse<unknown>[]> {
     const { url, type } = this.getActiveArchiveUrlWithFallback()
     try {
       return await this.connector.rpcCall(url, rpcCall)

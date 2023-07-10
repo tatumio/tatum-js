@@ -236,7 +236,9 @@ export class Address {
     const network = this.config.network
     if (isEvmBasedNetwork(network)) {
       const rpc = Utils.getRpc<EvmBasedRpc>(this.id, network)
-      const result = await Promise.all(addresses.map((a, i) => rpc.rawRpcCall(Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i))))
+      const result = await Promise.all(
+        addresses.map((a, i) => rpc.rawRpcCall(Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i))),
+      )
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       return result.map((e) => new BigNumber(e.result).dividedBy(10 ** Constant.DECIMALS[network]).toString())

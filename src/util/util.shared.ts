@@ -107,7 +107,7 @@ export const Utils = {
     }
     throw new Error(`Network ${network} is not supported.`)
   },
-  parseStatusPayload: (network: Network, response: JsonRpcResponse<any>) => {
+  parseStatusPayload: (network: Network, response: JsonRpcResponse<unknown>) => {
     if (isUtxoBasedNetwork(network) || isEvmBasedNetwork(network)) {
       return new BigNumber((response.result as number) || -1).toNumber()
     }

@@ -1,5 +1,5 @@
-import { EvmE2eUtils } from './evm.e2e.utils'
 import { Network } from '../../dto'
+import { EvmE2eUtils } from './evm.e2e.utils'
 
 describe('Polygon', () => {
   describe('mainnet', () => {

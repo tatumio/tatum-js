@@ -1,6 +1,6 @@
 import { Container, Service } from 'typedi'
-import { MetaMask } from './metaMask'
 import { EvmBasedRpc } from '../rpc'
+import { MetaMask } from './metaMask'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -14,5 +14,4 @@ export class WalletProvider {
   constructor(private readonly id: string) {
     this.metaMask = Container.of(this.id).get(MetaMask)
   }
-
 }
