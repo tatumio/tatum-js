@@ -1,3 +1,7 @@
+## [1.5.6] - 2023.07.10
+### Changed
+- Added JSON stringify to see error message in case of error to Loadbalancer
+
 ## [1.5.5] - 2023.07.05
 ### Changed
 - Fixed not working Solana RPC calls

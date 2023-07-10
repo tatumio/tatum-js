@@ -149,11 +149,11 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
           server.failed = false
           server.lastBlock = Utils.parseStatusPayload(network, response)
         } else {
-          Utils.log({ id: this.id, message: `Failed to check status of ${server.node.url}.`, data: response })
+          Utils.log({ id: this.id, message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(response)}`})
           server.failed = true
         }
       }).catch((e) => {
-        Utils.log({ id: this.id, message: `Failed to check status of ${server.node.url}.`, data: e })
+        Utils.log({ id: this.id, message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(e)}` })
         Utils.log({
           id: this.id,
           message: `Server ${server.node.url} will be marked as failed and will be removed from the pool.`,
