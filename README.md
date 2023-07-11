@@ -235,6 +235,8 @@ Older versions of the Tatum SDK has been moved to long living branches [`Tatum S
 
 Contributions to the Tatum SDK are welcome. Please ensure that you have tested your changes with a local client and have added unit test coverage for your code.
 
+Changes will be included with the nearest release (but please point out if you deem changes worthy dedicated release).
+
 ### Bugs and feature requests
 
 Have a bug or a feature request? Please first read the issue guidelines and search for existing and closed issues. If your problem or idea is not addressed yet, please open a [new issue](https://github.com/tatumio/tatum-js/issues/new/choose).
