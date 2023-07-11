@@ -1,3 +1,7 @@
+## [1.5.8] - 2023.07.10
+### Changed
+- Update all RPC calls to return unmodified data
+
 ## [1.5.7] - 2023.07.10
 ### Changed
 - Extended JSON stringify to see error message in case of error to Loadbalancer

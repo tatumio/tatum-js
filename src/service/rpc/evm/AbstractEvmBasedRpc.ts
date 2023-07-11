@@ -10,46 +10,42 @@ import {
   TraceType,
   TxPayload,
 } from '../../../dto'
-import { ErrorUtils, ResponseDto, ResponseUtils, Status } from '../../../util'
 
 @Service()
 export abstract class AbstractEvmBasedRpc implements EvmBasedRpcInterface {
   protected abstract rpcCall<T>(method: string, params?: unknown[]): Promise<T>
 
-  async blockNumber(): Promise<ResponseDto<BigNumber>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_blockNumber')
-    const response = ResponseUtils.fromRpcResult<BigNumber>(r)
-    if (response.data) {
-      response.data = new BigNumber(r.result)
+  async blockNumber(): Promise<JsonRpcResponse<any>> {
+    const response = await this.rpcCall<JsonRpcResponse<any>>('eth_blockNumber')
+
+    if (response.result) {
+      response.result = new BigNumber(response.result)
     }
     return response
   }
 
-  async call(callObject: TxPayload, blockNumber?: BlockNumber): Promise<ResponseDto<string>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_call', [
+  async call(callObject: TxPayload, blockNumber?: BlockNumber): Promise<JsonRpcResponse<string>> {
+    return this.rpcCall<JsonRpcResponse<string>>('eth_call', [
       callObject,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
-  async chainId(): Promise<ResponseDto<BigNumber>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_chainId')
-    const response = ResponseUtils.fromRpcResult<BigNumber>(r)
-    if (response.data) {
-      response.data = new BigNumber(r.result)
+  async chainId(): Promise<JsonRpcResponse<BigNumber>> {
+    const response = await this.rpcCall<JsonRpcResponse<any>>('eth_chainId')
+
+    if (response.result) {
+      response.result = new BigNumber(response.result)
     }
     return response
   }
 
-  async clientVersion(): Promise<ResponseDto<string>> {
-    const r = await this.rpcCall<JsonRpcResponse>('web3_clientVersion')
-    return ResponseUtils.fromRpcResult(r)
+  async clientVersion(): Promise<JsonRpcResponse<string>> {
+    return this.rpcCall<JsonRpcResponse<string>>('web3_clientVersion')
   }
 
-  async debugGetBadBlocks(): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('debug_getBadBlocks')
-    return ResponseUtils.fromRpcResult(r)
+  async debugGetBadBlocks(): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('debug_getBadBlocks')
   }
 
   async debugStorageRangeAt(
@@ -58,307 +54,273 @@ export abstract class AbstractEvmBasedRpc implements EvmBasedRpcInterface {
     contractAddress: string,
     startKey: string,
     maxResult: string,
-  ): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('debug_storageRangeAt', [
+  ): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('debug_storageRangeAt', [
       blockHash,
       txIndex,
       contractAddress,
       startKey,
       maxResult,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
-  async debugTraceBlockByHash(blockHash: string, traceOptions?: TraceOptions): Promise<ResponseDto<any>> {
+  async debugTraceBlockByHash(blockHash: string, traceOptions?: TraceOptions): Promise<JsonRpcResponse<any>> {
     const params: unknown[] = [blockHash]
     if (traceOptions) {
       params.push(traceOptions)
     }
-    const r = await this.rpcCall<JsonRpcResponse>('debug_traceBlockByHash', params)
-    return ResponseUtils.fromRpcResult(r)
+    return this.rpcCall<JsonRpcResponse<any>>('debug_traceBlockByHash', params)
   }
 
   async debugTraceBlockByNumber(
     blockHash: string | number,
     traceOptions?: TraceOptions,
-  ): Promise<ResponseDto<any>> {
+  ): Promise<JsonRpcResponse<any>> {
     const params: unknown[] = [`0x${new BigNumber(blockHash).toString(16)}`]
     if (traceOptions) {
       params.push(traceOptions)
     }
-    const r = await this.rpcCall<JsonRpcResponse>('debug_traceBlockByNumber', params)
-    return ResponseUtils.fromRpcResult(r)
+    return this.rpcCall<JsonRpcResponse<any>>('debug_traceBlockByNumber', params)
   }
 
   async debugTraceCall(
     callObject: TxPayload,
     blockNumber: BlockNumber,
     traceOptions?: TraceOptions,
-  ): Promise<ResponseDto<any>> {
+  ): Promise<JsonRpcResponse<any>> {
     const params: unknown[] = [callObject, blockNumber]
     if (traceOptions) {
       params.push(traceOptions)
     }
-    const r = await this.rpcCall<JsonRpcResponse>('debug_traceCall', params)
-    return ResponseUtils.fromRpcResult(r)
+    return this.rpcCall<JsonRpcResponse<any>>('debug_traceCall', params)
   }
 
-  async debugTraceTransaction(txHash: string, traceOptions?: TraceOptions): Promise<ResponseDto<any>> {
+  async debugTraceTransaction(txHash: string, traceOptions?: TraceOptions): Promise<JsonRpcResponse<any>> {
     const params: unknown[] = [txHash]
     if (traceOptions) {
       params.push(traceOptions)
     }
-    const r = await this.rpcCall<JsonRpcResponse>('debug_traceTransaction', params)
-    return ResponseUtils.fromRpcResult(r)
+    return this.rpcCall<JsonRpcResponse<any>>('debug_traceTransaction', params)
   }
 
-  async estimateGas(callObject: TxPayload): Promise<ResponseDto<BigNumber>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_estimateGas', [callObject])
+  async estimateGas(callObject: TxPayload): Promise<JsonRpcResponse<BigNumber>> {
+    const response = await this.rpcCall<JsonRpcResponse<any>>('eth_estimateGas', [callObject])
 
-    const response = ResponseUtils.fromRpcResult<BigNumber>(r)
-    if (response.data) {
-      response.data = new BigNumber(r.result)
+    if (response.result) {
+      response.result = new BigNumber(response.result)
     }
     return response
   }
 
-  async gasPrice(): Promise<ResponseDto<BigNumber>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_gasPrice')
-    const response = ResponseUtils.fromRpcResult<BigNumber>(r)
-    if (response.data) {
-      response.data = new BigNumber(r.result)
+  async gasPrice(): Promise<JsonRpcResponse<BigNumber>> {
+    const response = await this.rpcCall<JsonRpcResponse<any>>('eth_gasPrice')
+    if (response.result) {
+      response.result = new BigNumber(response.result)
     }
     return response
   }
 
-  async maxPriorityFeePerGas(): Promise<ResponseDto<BigNumber>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_maxPriorityFeePerGas')
-    const response = ResponseUtils.fromRpcResult<BigNumber>(r)
-    if (response.data) {
-      response.data = new BigNumber(r.result)
+  async maxPriorityFeePerGas(): Promise<JsonRpcResponse<BigNumber>> {
+    const response = await this.rpcCall<JsonRpcResponse<any>>('eth_maxPriorityFeePerGas')
+    if (response.result) {
+      response.result = new BigNumber(response.result)
     }
     return response
   }
 
-  async getBalance(address: string, blockNumber?: BlockNumber): Promise<ResponseDto<BigNumber>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getBalance', [
+  async getBalance(address: string, blockNumber?: BlockNumber): Promise<JsonRpcResponse<BigNumber>> {
+    const response = await this.rpcCall<JsonRpcResponse<any>>('eth_getBalance', [
       address,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
     ])
-    const response = ResponseUtils.fromRpcResult<BigNumber>(r)
-    if (response.data) {
-      response.data = new BigNumber(r.result)
+    if (response.result) {
+      response.result = new BigNumber(response.result)
     }
     return response
   }
 
-  async getTokenDecimals(tokenAddress: string): Promise<ResponseDto<BigNumber>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_call', [
+  async getTokenDecimals(tokenAddress: string): Promise<JsonRpcResponse<BigNumber>> {
+    const response = await this.rpcCall<JsonRpcResponse<any>>('eth_call', [
       { to: tokenAddress, data: '0x313ce567' },
       'latest',
     ])
-    const response = ResponseUtils.fromRpcResult<BigNumber>(r)
-    if (response.data) {
-      response.data = new BigNumber(r.result)
+    if (response.result) {
+      response.result = new BigNumber(response.result)
     }
     return response
   }
 
-  async getContractAddress(txHash: string): Promise<ResponseDto<string | null>> {
-    const txReceipt = await this.getTransactionReceipt(txHash)
-    if (txReceipt.data?.contractAddress) {
-      return {
-        data: txReceipt.data.contractAddress,
-        status: Status.SUCCESS,
-      } as ResponseDto<string>
-    }
-
-    return {
-      status: Status.ERROR,
-      error: ErrorUtils.toErrorWithMessage(
+  async getContractAddress(txHash: string): Promise<string | null> {
+    try {
+      const txReceipt = await this.getTransactionReceipt(txHash)
+      return txReceipt.result.contractAddress
+    } catch (e) {
+      console.error(
         'Failed to get contract address, transaction does not exist, or is not a contract creation tx or is not mined yet.',
-      ),
-    } as ResponseDto<string>
+      )
+      return null
+    }
+  }
+  async getBlockByHash(blockHash: string, includeTransactions = false): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_getBlockByHash', [blockHash, includeTransactions])
   }
 
-  async getBlockByHash(blockHash: string, includeTransactions = false): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getBlockByHash', [blockHash, includeTransactions])
-    return ResponseUtils.fromRpcResult(r)
+  async getBlockTransactionCountByHash(blockHash: string): Promise<JsonRpcResponse<number>> {
+    return this.rpcCall<JsonRpcResponse<number>>('eth_getBlockTransactionCountByHash', [blockHash])
   }
 
-  async getBlockTransactionCountByHash(blockHash: string): Promise<ResponseDto<number>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getBlockTransactionCountByHash', [blockHash])
-    return ResponseUtils.fromRpcResult(r)
-  }
-
-  async getBlockByNumber(blockNumber: BlockNumber, full?: boolean): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getBlockByNumber', [
+  async getBlockByNumber(blockNumber: BlockNumber, full?: boolean): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_getBlockByNumber', [
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
       full,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
-  async getBlockTransactionCountByNumber(blockNumber: BlockNumber): Promise<ResponseDto<number>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getBlockTransactionCountByNumber', [
+  async getBlockTransactionCountByNumber(blockNumber: BlockNumber): Promise<JsonRpcResponse<number>> {
+    return this.rpcCall<JsonRpcResponse<number>>('eth_getBlockTransactionCountByNumber', [
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
-  async getCode(address: string, blockNumber?: BlockNumber): Promise<ResponseDto<string>> {
+  async getCode(address: string, blockNumber?: BlockNumber): Promise<JsonRpcResponse<string>> {
     if (!blockNumber) {
       blockNumber = 'latest'
     }
 
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getCode', [
+    return this.rpcCall<JsonRpcResponse<string>>('eth_getCode', [
       address,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
-  async getLogs(filter: LogFilter): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getLogs', [filter])
-    return ResponseUtils.fromRpcResult(r)
+  async getLogs(filter: LogFilter): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_getLogs', [filter])
   }
 
   async getProof(
     address: string,
     storageKeys: string[],
     blockNumber?: BlockNumber,
-  ): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getProof', [
+  ): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_getProof', [
       address,
       storageKeys,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
   async getStorageAt(
     address: string,
     position: string,
     blockNumber?: BlockNumber,
-  ): Promise<ResponseDto<string>> {
+  ): Promise<JsonRpcResponse<string>> {
     if (!blockNumber) {
       blockNumber = 'latest'
     }
 
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getStorageAt', [
+    return this.rpcCall<JsonRpcResponse<string>>('eth_getStorageAt', [
       address,
       position,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
-  async getTransactionByBlockHashAndIndex(blockHash: string, index: number): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getTransactionByBlockHashAndIndex', [
+  async getTransactionByBlockHashAndIndex(blockHash: string, index: number): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_getTransactionByBlockHashAndIndex', [
       blockHash,
       `0x${new BigNumber(index).toString(16)}`,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
   async getTransactionByBlockNumberAndIndex(
     blockNumber: string | number,
     index: number,
-  ): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getTransactionByBlockNumberAndIndex', [
+  ): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_getTransactionByBlockNumberAndIndex', [
       `0x${new BigNumber(blockNumber).toString(16)}`,
       `0x${new BigNumber(index).toString(16)}`,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
-  async getTransactionByHash(txHash: string): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getTransactionByHash', [txHash])
-    return ResponseUtils.fromRpcResult(r)
+  async getTransactionByHash(txHash: string): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_getTransactionByHash', [txHash])
   }
 
-  async getTransactionCount(address: string, blockNumber: BlockNumber = 'latest'): Promise<ResponseDto<BigNumber>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getTransactionCount', [
+  async getTransactionCount(
+    address: string,
+    blockNumber: BlockNumber = 'latest',
+  ): Promise<JsonRpcResponse<BigNumber>> {
+    const response = await this.rpcCall<JsonRpcResponse<any>>('eth_getTransactionCount', [
       address,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
     ])
-    const response = ResponseUtils.fromRpcResult<BigNumber>(r)
-    if (response.data) {
-      response.data = new BigNumber(r.result)
+
+    if (response.result) {
+      response.result = new BigNumber(response.result)
     }
     return response
   }
 
-  async getTransactionReceipt(transactionHash: string): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getTransactionReceipt', [transactionHash])
-    return ResponseUtils.fromRpcResult(r)
+  async getTransactionReceipt(transactionHash: string): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_getTransactionReceipt', [transactionHash])
   }
 
-  async getUncleByBlockHashAndIndex(blockHash: string, index: number): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getUncleByBlockHashAndIndex', [
+  async getUncleByBlockHashAndIndex(blockHash: string, index: number): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_getUncleByBlockHashAndIndex', [
       blockHash,
       `0x${new BigNumber(index).toString(16)}`,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
   async getUncleByBlockNumberAndIndex(
     blockNumber: string | number,
     index: number,
-  ): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getUncleByBlockNumberAndIndex', [
+  ): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_getUncleByBlockNumberAndIndex', [
       `0x${new BigNumber(blockNumber).toString(16)}`,
       `0x${new BigNumber(index).toString(16)}`,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
-  async getUncleCountByBlockHash(blockHash: string): Promise<ResponseDto<string>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getUncleCountByBlockHash', [blockHash])
-    return ResponseUtils.fromRpcResult(r)
+  async getUncleCountByBlockHash(blockHash: string): Promise<JsonRpcResponse<string>> {
+    return this.rpcCall<JsonRpcResponse<string>>('eth_getUncleCountByBlockHash', [blockHash])
   }
 
-  async getUncleCountByBlockNumber(blockNumber: string | number): Promise<ResponseDto<string>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_getUncleCountByBlockNumber', [
+  async getUncleCountByBlockNumber(blockNumber: string | number): Promise<JsonRpcResponse<string>> {
+    return this.rpcCall<JsonRpcResponse<string>>('eth_getUncleCountByBlockNumber', [
       `0x${new BigNumber(blockNumber).toString(16)}`,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
-  async protocolVersion(): Promise<ResponseDto<string>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_protocolVersion')
-    return ResponseUtils.fromRpcResult(r)
+  async protocolVersion(): Promise<JsonRpcResponse<string>> {
+    return this.rpcCall<JsonRpcResponse<string>>('eth_protocolVersion')
   }
 
-  async sendRawTransaction(signedTransactionData: string): Promise<ResponseDto<string>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_sendRawTransaction', [signedTransactionData])
-    return ResponseUtils.fromRpcResult(r)
+  async sendRawTransaction(signedTransactionData: string): Promise<JsonRpcResponse<string>> {
+    return this.rpcCall<JsonRpcResponse<string>>('eth_sendRawTransaction', [signedTransactionData])
   }
 
-  async sha3(data: string): Promise<ResponseDto<string>> {
-    const r = await this.rpcCall<JsonRpcResponse>('web3_sha', [data])
-    return ResponseUtils.fromRpcResult(r)
+  async sha3(data: string): Promise<JsonRpcResponse<string>> {
+    return this.rpcCall<JsonRpcResponse<string>>('web3_sha', [data])
   }
 
-  async syncing(): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('eth_syncing')
-    return ResponseUtils.fromRpcResult(r)
+  async syncing(): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_syncing')
   }
 
-  async traceBlock(blockNumber: BlockNumber, traceOptions?: TraceOptions): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('trace_block', [
+  async traceBlock(blockNumber: BlockNumber, traceOptions?: TraceOptions): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('trace_block', [
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
       traceOptions,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
   async traceCall(
     callObject: TxPayload,
     traceTypes: TraceType[],
     blockNumber?: BlockNumber,
-  ): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('trace_call', [
+  ): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('trace_call', [
       callObject,
       traceTypes,
       {
@@ -366,68 +328,53 @@ export abstract class AbstractEvmBasedRpc implements EvmBasedRpcInterface {
           typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
       },
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
   async traceCallMany(
     callObject: TxPayload[],
     traceType: TraceType[][],
     blockNumber: BlockNumber,
-  ): Promise<ResponseDto<any>> {
+  ): Promise<JsonRpcResponse<any>> {
     const params = callObject.map((call, index) => {
       return [call, traceType[index]]
     })
-    const r = await this.rpcCall<JsonRpcResponse>('trace_callMany', [
+    return this.rpcCall<JsonRpcResponse<any>>('trace_callMany', [
       params,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
     ])
-    return ResponseUtils.fromRpcResult(r)
   }
 
   async traceRawTransaction(
     signedTransactionData: string,
     traceOptions: TraceType[],
-  ): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('trace_rawTransaction', [
-      signedTransactionData,
-      traceOptions,
-    ])
-    return ResponseUtils.fromRpcResult(r)
+  ): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('trace_rawTransaction', [signedTransactionData, traceOptions])
   }
 
   async traceReplayBlockTransactions(
     blockNumber: BlockNumber,
     traceOptions: TraceType[],
-  ): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('trace_replayBlockTransactions', [
-      blockNumber,
-      traceOptions,
-    ])
-    return ResponseUtils.fromRpcResult(r)
+  ): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('trace_replayBlockTransactions', [blockNumber, traceOptions])
   }
 
-  async traceReplayTransaction(txHash: string, traceOptions: TraceType[]): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('trace_replayTransaction', [txHash, traceOptions])
-    return ResponseUtils.fromRpcResult(r)
+  async traceReplayTransaction(txHash: string, traceOptions: TraceType[]): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('trace_replayTransaction', [txHash, traceOptions])
   }
 
-  async traceTransaction(txHash: string): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('trace_transaction', [txHash])
-    return ResponseUtils.fromRpcResult(r)
+  async traceTransaction(txHash: string): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('trace_transaction', [txHash])
   }
 
-  async txPoolContent(): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('txpool_content')
-    return ResponseUtils.fromRpcResult(r)
+  async txPoolContent(): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('txpool_content')
   }
 
-  async txPoolInspect(): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('txpool_inspect')
-    return ResponseUtils.fromRpcResult(r)
+  async txPoolInspect(): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('txpool_inspect')
   }
 
-  async txPoolStatus(): Promise<ResponseDto<any>> {
-    const r = await this.rpcCall<JsonRpcResponse>('txpool_status')
-    return ResponseUtils.fromRpcResult(r)
+  async txPoolStatus(): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('txpool_status')
   }
 }

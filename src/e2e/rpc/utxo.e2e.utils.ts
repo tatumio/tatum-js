@@ -1,6 +1,5 @@
 import { Network } from '../../dto'
 import { BaseUtxoClass, TatumSDK } from '../../service'
-import { Status } from '../../util'
 import { RpcE2eUtils } from './rpc.e2e.utils'
 
 interface TatumBtcUtils {
@@ -13,10 +12,9 @@ export const UtxoE2eUtils = {
   e2e: ({ type, network }: TatumBtcUtils) => {
     it('chain info', async () => {
       const tatum = await UtxoE2eUtils.initTatum(network)
-      const { data, status } = await tatum.rpc.getBlockChainInfo()
+      const { result } = await tatum.rpc.getBlockChainInfo()
 
-      expect(status).toBe(Status.SUCCESS)
-      expect(data.chain).toBe(type)
+      expect(result.chain).toBe(type)
       tatum.rpc.destroy()
     })
 
@@ -32,37 +30,33 @@ export const UtxoE2eUtils = {
 
     it('best block hash', async () => {
       const tatum = await UtxoE2eUtils.initTatum(network)
-      const { data, status } = await tatum.rpc.getBestBlockHash()
+      const { result } = await tatum.rpc.getBestBlockHash()
 
-      expect(status).toBe(Status.SUCCESS)
-      expect(data).toBeTruthy()
+      expect(result).toBeTruthy()
       tatum.rpc.destroy()
     })
 
     it('block count', async () => {
       const tatum = await UtxoE2eUtils.initTatum(network)
-      const { data, status } = await tatum.rpc.getBlockCount()
+      const { result } = await tatum.rpc.getBlockCount()
 
-      expect(status).toBe(Status.SUCCESS)
-      expect(data).toBeGreaterThan(0)
+      expect(result).toBeGreaterThan(0)
       tatum.rpc.destroy()
     })
 
     it('difficulty', async () => {
       const tatum = await UtxoE2eUtils.initTatum(network)
-      const { data, status } = await tatum.rpc.getDifficulty()
+      const { result } = await tatum.rpc.getDifficulty()
 
-      expect(status).toBe(Status.SUCCESS)
-      expect(data).toBeGreaterThan(0)
+      expect(result).toBeGreaterThan(0)
       tatum.rpc.destroy()
     })
 
     it('mempool info', async () => {
       const tatum = await UtxoE2eUtils.initTatum(network)
-      const { data, status } = await tatum.rpc.getMempoolInfo()
+      const { result } = await tatum.rpc.getMempoolInfo()
 
-      expect(status).toBe(Status.SUCCESS)
-      expect(data).toBeDefined()
+      expect(result).toBeDefined()
       tatum.rpc.destroy()
     })
   },

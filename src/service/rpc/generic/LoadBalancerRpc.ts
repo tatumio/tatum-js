@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../../connector/tatum.connector'
 import { JsonRpcCall, JsonRpcResponse, Network } from '../../../dto'
@@ -116,7 +117,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     const { rpc } = Container.of(this.id).get(CONFIG)
     if (!rpc?.oneTimeLoadBalancing) {
       if (this.timeout) {
-       this.destroy()
+        this.destroy()
       }
       this.timeout = setTimeout(() => this.checkStatuses(), Constant.OPEN_RPC.LB_INTERVAL)
     }
@@ -132,43 +133,59 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
      */
     for (const server of this.rpcUrls[nodeType]) {
       Utils.log({ id: this.id, message: `Checking status of ${server.node.url}` })
-      all.push(Utils.fetchWithTimeout(server.node.url, {
-        method: 'POST',
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        body: JSON.stringify(Utils.getStatusPayload(network)),
-      }).then(async ({ response: res, responseTime }) => {
-        server.lastResponseTime = responseTime
-        const response = await res.json()
-        Utils.log({
-          id: this.id,
-          message: `Response time of ${server.node.url} is ${server.lastResponseTime}ms with response: `,
-          data: response,
+      all.push(
+        Utils.fetchWithTimeout(server.node.url, {
+          method: 'POST',
+          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+          // @ts-ignore
+          body: JSON.stringify(Utils.getStatusPayload(network)),
         })
-        if (res.ok && response.result) {
-          server.failed = false
-          server.lastBlock = Utils.parseStatusPayload(network, response)
-        } else {
-          Utils.log({ id: this.id, message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(response, Object.getOwnPropertyNames(response))}`})
-          server.failed = true
-        }
-      }).catch((e) => {
-        Utils.log({ id: this.id, message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}` })
-        Utils.log({
-          id: this.id,
-          message: `Server ${server.node.url} will be marked as failed and will be removed from the pool.`,
-        })
-        server.failed = true
-      }))
+          .then(async ({ response: res, responseTime }) => {
+            server.lastResponseTime = responseTime
+            const response = await res.json()
+            Utils.log({
+              id: this.id,
+              message: `Response time of ${server.node.url} is ${server.lastResponseTime}ms with response: `,
+              data: response,
+            })
+            if (res.ok && response.result) {
+              server.failed = false
+              server.lastBlock = Utils.parseStatusPayload(network, response)
+            } else {
+              Utils.log({
+                id: this.id,
+                message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(
+                  response,
+                  Object.getOwnPropertyNames(response),
+                )}`,
+              })
+              server.failed = true
+            }
+          })
+          .catch((e) => {
+            Utils.log({
+              id: this.id,
+              message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(
+                e,
+                Object.getOwnPropertyNames(e),
+              )}`,
+            })
+            Utils.log({
+              id: this.id,
+              message: `Server ${server.node.url} will be marked as failed and will be removed from the pool.`,
+            })
+            server.failed = true
+          }),
+      )
     }
     /**
      * The fastest node will be selected and will be used.
      */
     await Promise.allSettled(all).then(() => {
-      const {
-        fastestServer,
-        index,
-      } = LoadBalancerRpc.getFastestServer(this.rpcUrls[nodeType], rpc?.allowedBlocksBehind as number)
+      const { fastestServer, index } = LoadBalancerRpc.getFastestServer(
+        this.rpcUrls[nodeType],
+        rpc?.allowedBlocksBehind as number,
+      )
       Utils.log({
         id: this.id,
         data: this.rpcUrls[nodeType],
@@ -186,19 +203,24 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
   }
 
   private static getFastestServer(servers: RpcStatus[], allowedBlocksBehind: number) {
-    const { fastestServer, index } = servers.reduce((result, item, index) => {
-      const isNotFailed = !item.failed;
-      const isFasterBlock = (item.lastBlock - allowedBlocksBehind) > result.fastestServer.lastBlock;
-      const isSameBlockFasterResponse = item.lastBlock === result.fastestServer.lastBlock && item.lastResponseTime < result.fastestServer.lastResponseTime;
+    const { fastestServer, index } = servers.reduce(
+      (result, item, index) => {
+        const isNotFailed = !item.failed
+        const isFasterBlock = item.lastBlock - allowedBlocksBehind > result.fastestServer.lastBlock
+        const isSameBlockFasterResponse =
+          item.lastBlock === result.fastestServer.lastBlock &&
+          item.lastResponseTime < result.fastestServer.lastResponseTime
 
-      if (isNotFailed && (isFasterBlock || isSameBlockFasterResponse)) {
-        return { fastestServer: item, index: index };
-      } else {
-        return result;
-      }
-    }, { fastestServer: { lastBlock: -Infinity, lastResponseTime: Infinity, node: { url: '' } }, index: -1 });
+        if (isNotFailed && (isFasterBlock || isSameBlockFasterResponse)) {
+          return { fastestServer: item, index: index }
+        } else {
+          return result
+        }
+      },
+      { fastestServer: { lastBlock: -Infinity, lastResponseTime: Infinity, node: { url: '' } }, index: -1 },
+    )
 
-    return { fastestServer, index };
+    return { fastestServer, index }
   }
 
   public getActiveArchiveUrlWithFallback() {
@@ -266,7 +288,10 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
         console.error(new Date().toISOString(), `Failed to fetch RPC configuration for ${network} blockchain`)
       }
     } catch (e) {
-      console.error(new Date().toISOString(), `Failed to initialize RPC module. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`)
+      console.error(
+        new Date().toISOString(),
+        `Failed to initialize RPC module. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
+      )
     }
   }
 
@@ -275,7 +300,12 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     const url = this.getActiveUrl(nodeType)
     const activeIndex = this.getActiveIndex(nodeType)
     if (verbose) {
-      console.warn(new Date().toISOString(), `Failed to call RPC ${Array.isArray(rpcCall) ? 'methods' : rpcCall.method} on ${url}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`)
+      console.warn(
+        new Date().toISOString(),
+        `Failed to call RPC ${
+          Array.isArray(rpcCall) ? 'methods' : rpcCall.method
+        } on ${url}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
+      )
       console.log(new Date().toISOString(), `Switching to another server, marking this as unstable.`)
     }
     /**
@@ -284,10 +314,10 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
      */
     const servers = this.rpcUrls[nodeType] as RpcStatus[]
     servers[activeIndex].failed = true
-    const {
-      index,
-      fastestServer,
-    } = LoadBalancerRpc.getFastestServer(servers, rpcConfig?.allowedBlocksBehind as number)
+    const { index, fastestServer } = LoadBalancerRpc.getFastestServer(
+      servers,
+      rpcConfig?.allowedBlocksBehind as number,
+    )
     if (index === -1) {
       console.error(`All servers are unavailable.`)
       throw e
@@ -299,7 +329,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     this.activeUrl[nodeType] = { url: fastestServer.node.url, index }
   }
 
-  async rawRpcCall(rpcCall: JsonRpcCall): Promise<JsonRpcResponse> {
+  async rawRpcCall(rpcCall: JsonRpcCall): Promise<JsonRpcResponse<any>> {
     const { url, type } = this.getActiveArchiveUrlWithFallback()
     try {
       return await this.connector.rpcCall(url, rpcCall)
@@ -309,7 +339,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     }
   }
 
-  async rawBatchRpcCall(rpcCall: JsonRpcCall[]): Promise<JsonRpcResponse[]> {
+  async rawBatchRpcCall(rpcCall: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
     const { url, type } = this.getActiveArchiveUrlWithFallback()
     try {
       return await this.connector.rpcCall(url, rpcCall)

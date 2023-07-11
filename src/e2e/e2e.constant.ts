@@ -1,10 +1,9 @@
-import { Network } from "../dto";
+import { Network } from '../dto'
 
 export const TestConst = {
   EXISTING_SUBSCRIPTION_ETH_ADDRESS: '0xbaf6dc2e647aeb6f510f9e318856a1bcd66c5e19',
   INVALID_ETH_ADDRESS: 'TLduuX5NWFucPPafLbj9eab6Znwrdm72Qv',
 }
-
 
 export const AddressEventNetworks = [
   Network.BITCOIN,
@@ -192,4 +191,9 @@ export const ContractAddressLogEventNetworks = [
   Network.KLAYTN_BAOBAB,
 ]
 
-export const InternalTxNetworks = [Network.ETHEREUM, Network.ETHEREUM_SEPOLIA, Network.CELO, Network.CELO_ALFAJORES]
+export const InternalTxNetworks = [
+  Network.ETHEREUM,
+  Network.ETHEREUM_SEPOLIA,
+  Network.CELO,
+  Network.CELO_ALFAJORES,
+]

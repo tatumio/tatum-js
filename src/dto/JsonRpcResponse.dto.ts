@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-export interface JsonRpcResponse {
+export interface JsonRpcResponse<T> {
   id: number | string
   jsonrpc: string
-  result?: any
+  result?: T
   error?: any
 }

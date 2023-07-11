@@ -197,7 +197,6 @@ export const Constant = {
     [Network.ZILLIQA_TESTNET]: 'ZIL',
     [Network.HAQQ]: 'HAQQ',
     [Network.HAQQ_TESTNET]: 'HAQQ',
-
   },
   RPC: {
     MAINNETS: [
@@ -289,5 +288,5 @@ export const Constant = {
   OPEN_RPC: {
     LB_INTERVAL: 60_000,
     ALLOWED_BLOCKS_BEHIND: 10,
-  }
+  },
 }
