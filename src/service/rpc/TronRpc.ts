@@ -300,7 +300,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   getBlockById(id: string): Promise<any> {
     return this.connector.post({
       path: this.getRpcNodeUrl('/wallet/getblockbyid'),
-      body: Utils.convertObjCamelToSnake({ id }),
+      body: Utils.convertObjCamelToSnake({ value: id }),
     })
   }
 
@@ -314,7 +314,7 @@ export class TronRpc extends AbstractBatchRpc implements TronRpcSuite {
   getBlockByLimitNext(startNum: number, endNum: number): Promise<any> {
     return this.connector.post({
       path: this.getRpcNodeUrl('/wallet/getblockbylimitnext'),
-      body: Utils.convertObjCamelToSnake({ startNum, endNum }),
+      body: { startNum, endNum },
     })
   }
 
