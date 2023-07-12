@@ -82,6 +82,12 @@ describe('RPCs', () => {
 
         expect(result.txID).toBe('eb49c1c052fb23a9b909a0f487602459112d1fb41276361752e9bc491e649598')
       })
+      it('getBlockByLimitNext', async () => {
+        const tatum = await getTronRpc(false)
+        const result = await tatum.rpc.getBlockByLimitNext(1, 5)
+        expect(result.block).toHaveLength(4)
+        expect(result.block[0].block_header.raw_data.number).toBeGreaterThan(0)
+      })
       it('getAccountBalance', async () => {
         const address = 'TQuDQGdYmzuicmjkWrdpFWXKxpb9P17777'
         const blockHash = '0000000003153ce39bcd0a9832ab6783b629b43d656107bb26f18697095ec073'

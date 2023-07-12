@@ -23,7 +23,7 @@ export abstract class AbstractBatchRpc implements AbstractRpcInterface {
         `https://api.tatum.io/v3/blockchain/node/${network}/${apiKey.v1 ? apiKey.v1 : apiKey.v2}`
       return url.concat(subPath || '')
     }
-    return rpc?.nodes?.[0].url || `https://api.tatum.io/v3/blockchain/node/${network}/`.concat(subPath || '')
+    return rpc?.nodes?.[0].url || `https://api.tatum.io/v3/blockchain/node/${network}`.concat(subPath || '')
   }
 
   rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<any>> {
