@@ -1,3 +1,7 @@
+## [1.5.9] - 2023.07.12
+### Changed
+- Several Tron RPC calls fixed
+
 ## [1.5.8] - 2023.07.10
 ### Changed
 - Update all RPC calls to return unmodified data
