@@ -45,7 +45,7 @@ import {
   Palm,
   Polygon,
   Solana,
-  SolanaRpc,
+  SolanaRpc, TatumConfig,
   Tron,
   TronRpc,
   UtxoLoadBalancerRpc,
@@ -59,12 +59,13 @@ import { CONFIG } from './di.tokens'
 import { EvmArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmArchiveLoadBalancerRpc'
 
 export const Utils = {
-  getRpc: <T>(id: string, network: Network): T => {
+  getRpc: <T>(id: string, config: TatumConfig): T => {
+    const { network, apiKey } = config
     if (isUtxoLoadBalancerNetwork(network)) {
       return Container.of(id).get(UtxoLoadBalancerRpc) as T
     }
 
-    if (isEvmArchiveNonArchiveLoadBalancerNetwork(network)) {
+    if (isEvmArchiveNonArchiveLoadBalancerNetwork(network) && apiKey?.v2) {
       return Container.of(id).get(EvmArchiveLoadBalancerRpc) as T
     }
 

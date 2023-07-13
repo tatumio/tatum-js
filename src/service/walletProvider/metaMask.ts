@@ -24,7 +24,7 @@ export class MetaMask<T extends EvmRpc> {
 
   constructor(private readonly id: string) {
     this.config = Container.of(this.id).get(CONFIG)
-    this.rpc = Utils.getRpc<T>(this.id, this.config.network)
+    this.rpc = Utils.getRpc<T>(this.id, this.config)
     this.connector = Container.of(this.id).get(TatumConnector)
   }
 

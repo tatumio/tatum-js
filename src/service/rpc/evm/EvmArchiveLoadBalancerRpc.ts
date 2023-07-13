@@ -60,6 +60,8 @@ export class EvmArchiveLoadBalancerRpc extends AbstractEvmRpc implements EvmBase
   }
 
   private isArchiveMethod(rpc: JsonRpcCall): boolean {
+
+
     const isArchiveMethod = ARCHIVE_METHODS.includes(rpc.method)
     if (isArchiveMethod) {
       return true
