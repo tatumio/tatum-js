@@ -1,3 +1,7 @@
+## [1.5.10] - 2023.07.10
+### Changed
+- Selected Archive/Non-Archive node for Ethereum RPC calls based on method
+
 ## [1.5.9] - 2023.07.12
 ### Changed
 - Several Tron RPC calls fixed

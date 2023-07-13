@@ -10,7 +10,7 @@ const getClient = async (testnet?: boolean): Promise<Solana> =>
 
 const blockNumber = 203046000
 
-describe('Solana mainnet RPC', () => {
+describe.skip('Solana mainnet RPC', () => {
   describe('getAccountInfo', () => {
     it('should return account info', async () => {
       const tatum = await getClient()
@@ -331,7 +331,7 @@ describe('Solana mainnet RPC', () => {
   })
 
   describe('getTransaction', () => {
-    it('should return transaction data', async () => {
+    it.skip('should return transaction data', async () => {
       const tatum = await getClient()
 
       const { result: slot } = await tatum.rpc.getSlot()

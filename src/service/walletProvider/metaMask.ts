@@ -8,7 +8,7 @@ import {
   CreateNftCollection,
 } from '../../dto/walletProvider'
 import { CONFIG, Constant, Utils } from '../../util'
-import { EvmBasedRpc } from '../rpc'
+import { EvmRpc } from '../rpc'
 import { TatumConfig } from '../tatum'
 
 @Service({
@@ -17,7 +17,7 @@ import { TatumConfig } from '../tatum'
   },
   transient: true,
 })
-export class MetaMask<T extends EvmBasedRpc> {
+export class MetaMask<T extends EvmRpc> {
   private readonly config: TatumConfig
   private readonly rpc: T
   private readonly connector: TatumConnector

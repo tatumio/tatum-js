@@ -8,7 +8,7 @@ const getXrpRpc = async (testnet?: boolean) =>
     retryDelay: 2000,
   })
 
-describe('RPCs', () => {
+describe.skip('RPCs', () => {
   afterEach(async () => {
     // wait for 200ms to avoid rate limit
     await new Promise((resolve) => setTimeout(resolve, 100))

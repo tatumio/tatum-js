@@ -1,5 +1,6 @@
-import { ApiVersion, Bitcoin, Network, TatumSDK } from '../../service'
+import { ApiVersion, Ethereum, Network, TatumSDK } from '../../service'
 import { UtxoE2eUtils } from './utxo.e2e.utils'
+import { BigNumber } from 'bignumber.js'
 
 describe('Bitcoin', () => {
   describe('testnet', () => {
@@ -12,17 +13,18 @@ describe('Bitcoin', () => {
 
   // Used for testing New Relic usage
   it.skip('static rpc 1000000 requests', async () => {
-    const tatum = await TatumSDK.init<Bitcoin>({
-      network: Network.BITCOIN,
+    const tatum = await TatumSDK.init<Ethereum>({
+      network: Network.ETHEREUM,
       version: ApiVersion.V2,
       verbose: true,
       apiKey: {
-        v2: 't-646b50dc56974f10418581e1-646b50dc56974f10418581e7',
+        v2: 't-647835e1930be3001cb53f81-647835e2930be3001cb53f87',
       },
     })
 
     for (let i = 0; i < 1000000; i++) {
-      await tatum.rpc.getBlockChainInfo()
+      const { result: blockNum } = await tatum.rpc.blockNumber()
+      await tatum.rpc.getBlockByNumber((blockNum as BigNumber).toNumber())
       // Wait for 1 second before starting the next iteration
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }

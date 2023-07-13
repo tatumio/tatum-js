@@ -10,7 +10,7 @@ import {
   isEvmBasedNetwork,
 } from '../../dto'
 import { CONFIG, Constant, ErrorUtils, ResponseDto, Utils } from '../../util'
-import { EvmBasedRpc, GenericRpc } from '../rpc'
+import { EvmRpc, GenericRpc } from '../rpc'
 import { Network, TatumConfig } from '../tatum'
 import { AddressBalance, AddressTransaction, GetAddressTransactionsQuery } from './address.dto'
 
@@ -235,7 +235,7 @@ export class Address {
   private async getNativeBalance(addresses: string[]): Promise<string[]> {
     const network = this.config.network
     if (isEvmBasedNetwork(network)) {
-      const rpc = Utils.getRpc<EvmBasedRpc>(this.id, network)
+      const rpc = Utils.getRpc<EvmRpc>(this.id, network)
       const result = await Promise.all(
         addresses.map((a, i) => rpc.rawRpcCall(Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i))),
       )

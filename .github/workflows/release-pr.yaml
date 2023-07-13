@@ -5,6 +5,9 @@ on:
     branches:
       - master
 
+env:
+  V2_API_KEY: ${{ secrets.V2_API_KEY }}
+
 jobs:
   checks:
     runs-on: ubuntu-latest
@@ -15,7 +18,7 @@ jobs:
         run: |
           hash=$(sha1sum CHANGELOG.md | cut -f1 -d' ')
           version=$(jq -r '.version' package.json)
-          echo "pr_pkg_version=$version" >> $GITHUB_ENV 
+          echo "pr_pkg_version=$version" >> $GITHUB_ENV
           echo "pr_changelog_hash=$hash" >> $GITHUB_ENV
       - name: Check if release exists
         run: |
@@ -32,4 +35,4 @@ jobs:
           echo "master_changelog_hash=$hash" >> $GITHUB_ENV
       - name: Ensure changelog updated if version changed
         run: |
-          [ "${{ env.release_exists }}" == "false" ] && [ "${{ env.pr_changelog_hash }}" = "${{ env.master_changelog_hash }}" ] && echo "Error: no changes in changelog detected for the release" && exit 1 || exit 0            
+          [ "${{ env.release_exists }}" == "false" ] && [ "${{ env.pr_changelog_hash }}" = "${{ env.master_changelog_hash }}" ] && echo "Error: no changes in changelog detected for the release" && exit 1 || exit 0

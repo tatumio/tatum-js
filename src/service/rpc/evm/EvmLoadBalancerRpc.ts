@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
-import { JsonRpcCall, JsonRpcResponse, UtxoBasedRpcSuite } from '../../../dto'
+import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
 import { Utils } from '../../../util'
 import { LoadBalancerRpc } from '../generic/LoadBalancerRpc'
-import { AbstractUtxoBasedRpc } from './AbstractUtxoBasedRpc'
+import { AbstractEvmRpc } from './AbstractEvmRpc'
 
 @Service({
   factory: (data: { id: string }) => {
-    return new UtxoBasedLoadBalancerRpc(data.id)
+    return new EvmLoadBalancerRpc(data.id)
   },
   transient: true,
 })
-export class UtxoBasedLoadBalancerRpc extends AbstractUtxoBasedRpc implements UtxoBasedRpcSuite {
+export class EvmLoadBalancerRpc extends AbstractEvmRpc implements EvmBasedRpcSuite {
   protected readonly loadBalancerRpc: LoadBalancerRpc
 
   constructor(id: string) {
