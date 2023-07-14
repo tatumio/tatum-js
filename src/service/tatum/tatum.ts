@@ -1,21 +1,15 @@
 import { Container, Service } from 'typedi'
-import {
-  SolanaRpcSuite,
-  TronRpcSuite,
-  UtxoBasedRpcSuite,
-  XrpRpcSuite,
-  EvmBasedRpcSuite,
-} from '../../dto/rpc'
+import { LOAD_BALANCER_NETWORKS } from '../../dto'
+import { EvmBasedRpcSuite, SolanaRpcSuite, TronRpcSuite, UtxoBasedRpcSuite, XrpRpcSuite } from '../../dto/rpc'
 import { CONFIG, Constant, Utils } from '../../util'
 import { Address } from '../address'
 import { FeeEvm, FeeUtxo } from '../fee'
 import { Nft } from '../nft'
 import { Notification } from '../notification'
 import { Rates } from '../rate'
+import { LoadBalancerRpc } from '../rpc/generic/LoadBalancerRpc'
 import { Token } from '../token'
 import { WalletProvider } from '../walletProvider'
-import { LoadBalancerRpc } from '../rpc/generic/LoadBalancerRpc'
-import { LOAD_BALANCER_NETWORKS } from '../../dto'
 import { ApiVersion, TatumConfig } from './tatum.dto'
 
 export class BaseTatumSdk {
@@ -42,7 +36,7 @@ export abstract class BaseUtxoClass extends BaseTatumSdk {
 
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<UtxoBasedRpcSuite>(id, Container.of(id).get(CONFIG).network)
+    this.rpc = Utils.getRpc<UtxoBasedRpcSuite>(id, Container.of(id).get(CONFIG))
     this.fee = Container.of(id).get(FeeUtxo)
   }
 }
@@ -52,7 +46,7 @@ export abstract class BaseEvmClass extends BaseTatumSdk {
 
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<EvmBasedRpcSuite>(id, Container.of(id).get(CONFIG).network)
+    this.rpc = Utils.getRpc<EvmBasedRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 
@@ -97,21 +91,21 @@ export class Xrp extends BaseTatumSdk {
   rpc: XrpRpcSuite
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<XrpRpcSuite>(id, Container.of(id).get(CONFIG).network)
+    this.rpc = Utils.getRpc<XrpRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 export class Solana extends BaseTatumSdk {
   rpc: SolanaRpcSuite
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<SolanaRpcSuite>(id, Container.of(id).get(CONFIG).network)
+    this.rpc = Utils.getRpc<SolanaRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 export class Tron extends BaseTatumSdk {
   rpc: TronRpcSuite
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<TronRpcSuite>(id, Container.of(id).get(CONFIG).network)
+    this.rpc = Utils.getRpc<TronRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 
@@ -144,7 +138,6 @@ export class TatumSDK {
       const loadBalancer = Container.of(id).get(LoadBalancerRpc)
       await loadBalancer.init()
     }
-
 
     return Utils.getClient<T>(id, mergedConfig.network)
   }

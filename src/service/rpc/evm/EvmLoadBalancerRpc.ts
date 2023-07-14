@@ -1,16 +1,17 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
-import { LoadBalancerRpc } from '../generic/LoadBalancerRpc'
 import { Utils } from '../../../util'
-import { AbstractEvmBasedRpc } from './AbstractEvmBasedRpc'
+import { LoadBalancerRpc } from '../generic/LoadBalancerRpc'
+import { AbstractEvmRpc } from './AbstractEvmRpc'
 
 @Service({
   factory: (data: { id: string }) => {
-    return new EvmBasedLoadBalancerRpc(data.id)
+    return new EvmLoadBalancerRpc(data.id)
   },
   transient: true,
 })
-export class EvmBasedLoadBalancerRpc extends AbstractEvmBasedRpc implements EvmBasedRpcSuite {
+export class EvmLoadBalancerRpc extends AbstractEvmRpc implements EvmBasedRpcSuite {
   protected readonly loadBalancerRpc: LoadBalancerRpc
 
   constructor(id: string) {
@@ -23,11 +24,11 @@ export class EvmBasedLoadBalancerRpc extends AbstractEvmBasedRpc implements EvmB
     return (await this.loadBalancerRpc.rawRpcCall(preparedCall)) as T
   }
 
-  async rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse> {
+  async rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<any>> {
     return this.loadBalancerRpc.rawRpcCall(body)
   }
 
-  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse[]> {
+  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
     return this.loadBalancerRpc.rawBatchRpcCall(body)
   }
 

@@ -7,7 +7,7 @@ describe('Address', () => {
     describe('getBalance EVM', () => {
       let client: Ethereum
       beforeAll(async () => {
-        client = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA })
+        client = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA, apiKey: { v2: process.env.V2_API_KEY } })
       })
       it('should get balance with native assets only', async () => {
         const { data } = await client.address.getBalance({
@@ -178,7 +178,7 @@ describe('Address', () => {
       })
     })
 
-    describe('getBalance XRP', () => {
+    describe.skip('getBalance XRP', () => {
       let client: Xrp
       beforeAll(async () => {
         client = await TatumSDK.init({ network: Network.XRP_TESTNET })

@@ -10,7 +10,7 @@ import {
   isEvmBasedNetwork,
 } from '../../dto'
 import { CONFIG, Constant, ErrorUtils, ResponseDto, Utils } from '../../util'
-import { EvmBasedRpc, GenericRpc } from '../rpc'
+import { EvmRpc, GenericRpc } from '../rpc'
 import { Network, TatumConfig } from '../tatum'
 import { AddressBalance, AddressTransaction, GetAddressTransactionsQuery } from './address.dto'
 
@@ -235,14 +235,16 @@ export class Address {
   private async getNativeBalance(addresses: string[]): Promise<string[]> {
     const network = this.config.network
     if (isEvmBasedNetwork(network)) {
-      const rpc = Utils.getRpc<EvmBasedRpc>(this.id, network)
-      const result = await Promise.all(addresses.map((a, i) => rpc.rawRpcCall(Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i))))
+      const rpc = Utils.getRpc<EvmRpc>(this.id, this.config)
+      const result = await Promise.all(
+        addresses.map((a, i) => rpc.rawRpcCall(Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i))),
+      )
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       return result.map((e) => new BigNumber(e.result).dividedBy(10 ** Constant.DECIMALS[network]).toString())
     }
     if ([Network.SOLANA, Network.SOLANA_DEVNET].includes(network)) {
-      const rpc = Utils.getRpc<GenericRpc>(this.id, network)
+      const rpc = Utils.getRpc<GenericRpc>(this.id, this.config)
       return rpc
         .rawBatchRpcCall(
           addresses.map((a, i) => Utils.prepareRpcCall('getBalance', [a, { commitment: 'processed' }], i)),
@@ -254,7 +256,7 @@ export class Address {
       if (addresses.length !== 1) {
         throw new Error(`UTXO based networks like ${network} support only one address per call.`)
       }
-      const rpc = Utils.getRpc<GenericRpc>(this.id, network)
+      const rpc = Utils.getRpc<GenericRpc>(this.id, this.config)
       return rpc
         .rawRpcCall(
           Utils.prepareRpcCall('account_info', [
@@ -265,7 +267,7 @@ export class Address {
           ]),
         )
         .then((r) => [
-          new BigNumber(r.result?.account_data?.Balance || 0)
+          new BigNumber(r.result.account_data?.Balance || 0)
             .dividedBy(10 ** Constant.DECIMALS[network])
             .toString(),
         ])

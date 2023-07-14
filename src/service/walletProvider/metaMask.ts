@@ -8,7 +8,7 @@ import {
   CreateNftCollection,
 } from '../../dto/walletProvider'
 import { CONFIG, Constant, Utils } from '../../util'
-import { EvmBasedRpc } from '../rpc'
+import { EvmRpc } from '../rpc'
 import { TatumConfig } from '../tatum'
 
 @Service({
@@ -17,14 +17,14 @@ import { TatumConfig } from '../tatum'
   },
   transient: true,
 })
-export class MetaMask<T extends EvmBasedRpc> {
+export class MetaMask<T extends EvmRpc> {
   private readonly config: TatumConfig
   private readonly rpc: T
   private readonly connector: TatumConnector
 
   constructor(private readonly id: string) {
     this.config = Container.of(this.id).get(CONFIG)
-    this.rpc = Utils.getRpc<T>(this.id, this.config.network)
+    this.rpc = Utils.getRpc<T>(this.id, this.config)
     this.connector = Container.of(this.id).get(TatumConnector)
   }
 
@@ -86,12 +86,12 @@ export class MetaMask<T extends EvmBasedRpc> {
    * @param tokenAddress address of the token contract
    */
   async transferErc20(recipient: string, amount: string, tokenAddress: string): Promise<string> {
-    const { data: decimals } = await this.rpc.getTokenDecimals(tokenAddress)
+    const { result: decimals } = await this.rpc.getTokenDecimals(tokenAddress)
     const payload: TxPayload = {
       to: tokenAddress,
       from: await this.connect(),
       data: `0xa9059cbb${Utils.padWithZero(recipient)}${new BigNumber(amount)
-        .multipliedBy(10 ** decimals.toNumber())
+        .multipliedBy(10 ** decimals!.toNumber())
         .toString(16)
         .padStart(64, '0')}`,
     }
@@ -252,12 +252,12 @@ export class MetaMask<T extends EvmBasedRpc> {
    * @param tokenAddress address of the token contract
    */
   async approveErc20(spender: string, amount: string, tokenAddress: string): Promise<string> {
-    const { data: decimals } = await this.rpc.getTokenDecimals(tokenAddress)
+    const { result: decimals } = await this.rpc.getTokenDecimals(tokenAddress)
     const payload: TxPayload = {
       to: tokenAddress,
       from: await this.connect(),
       data: `0x095ea7b3${Utils.padWithZero(spender)}${new BigNumber(amount)
-        .multipliedBy(10 ** decimals.toNumber())
+        .multipliedBy(10 ** decimals!.toNumber())
         .toString(16)
         .padStart(64, '0')}`,
     }

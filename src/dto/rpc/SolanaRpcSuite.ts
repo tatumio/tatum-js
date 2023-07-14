@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ResponseDto } from '../../util'
+import { JsonRpcResponse } from '../JsonRpcResponse.dto'
 import { AbstractRpcInterface } from './AbstractJsonRpcInterface'
 
 export interface SolanaAccountInfo {
@@ -100,6 +100,14 @@ export type SolanaSignatureStatus = {
   confirmationStatus: string | null
 }
 
+export type SolanaInflationReward = {
+  epoch: number
+  effectiveSlot: number
+  amount: number
+  postBalance: number
+  commission: number
+}
+
 export type SolanaLargestAccount = {
   address: string
   lamports: number
@@ -149,6 +157,17 @@ export type SolanaTransactionSimulation = {
     programId: string
     data: Array<string>
   }
+}
+
+export type SolanaBlock = {
+  blockhash: string
+  previousBlockhash: string
+  parentSlot: number
+  transactions: Array<any>
+  signatures: Array<any>
+  rewards: Array<any> | undefined
+  blockTime: number | null
+  blockHeight: number | null
 }
 
 export type GetAccountInfoOptions = {
@@ -285,6 +304,43 @@ export type SendTransactionOptions = {
   minContextSlot?: number // Specifies the minimum slot to include in the response.
 }
 
+export type SolanaClusterNode = {
+  pubkey: string
+  gossip?: string
+  tpu?: string
+  rpc?: string
+  version?: string
+  featureSet?: number
+  shredVersion?: number
+}
+
+export type SolanaInflationGovernor = {
+  initial: number
+  terminal: number
+  taper: number
+  foundation: number
+  foundationTerm: number
+}
+
+export type SolanaPerformanceSample = {
+  slot: number
+  numTransactions: number
+  numSlots: number
+  samplePeriodSecs: number
+  numNonVoteTransaction: number
+}
+
+export type SolanaAddressSignature = {
+  signature: string
+  slot: number
+  err: any | null
+  memo: string | null
+  blockTime: number | null
+  confirmationStatus: string | null
+}
+
+export type SolanaInflationRate = { total: number; validator: number; foundation: number; epoch: number }
+
 export interface SolanaRpcSuite extends AbstractRpcInterface {
   /**
    * Get info about the account on the Solana blockchain.
@@ -295,21 +351,21 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getAccountInfo: (
     pubkey: string,
     options?: GetAccountInfoOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<SolanaAccountInfo | null>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaAccountInfo | null>>>
 
   /**
    * Get balance of the account on the Solana blockchain.
    * @param publicKey - Pubkey of account to query, as base-58 encoded string
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-account-information/getbalance
    */
-  getBalance: (publicKey: string) => Promise<ResponseDto<SolanaTypeWithContext<number>>>
+  getBalance: (publicKey: string) => Promise<JsonRpcResponse<SolanaTypeWithContext<number>>>
 
   /**
    * Get the latest block height.
    * @param options - Options for the query
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getblockheight
    */
-  getBlockHeight: (options?: GetCommitmentMinContextSlotOptions) => Promise<ResponseDto<number>>
+  getBlockHeight: (options?: GetCommitmentMinContextSlotOptions) => Promise<JsonRpcResponse<number>>
 
   /**
    * Get information about a specific block.
@@ -317,21 +373,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
    * @param options - Options for the query
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getblock
    */
-  getBlock: (
-    block: number,
-    options?: GetBlockOptions,
-  ) => Promise<
-    ResponseDto<{
-      blockhash: string
-      previousBlockhash: string
-      parentSlot: number
-      transactions: Array<any>
-      signatures: Array<any>
-      rewards: Array<any> | undefined
-      blockTime: number | null
-      blockHeight: number | null
-    } | null>
-  >
+  getBlock: (block: number, options?: GetBlockOptions) => Promise<JsonRpcResponse<SolanaBlock | null>>
 
   /**
    * Get block production information.
@@ -340,7 +382,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
    */
   getBlockProduction: (
     options?: GetBlockProductionOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<SolanaBlockProduction>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaBlockProduction>>>
 
   /**
    * Get block commitment information.
@@ -349,7 +391,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
    */
   getBlockCommitment: (
     block: number,
-  ) => Promise<ResponseDto<{ commitment: Array<number>; totalStake: number }>>
+  ) => Promise<JsonRpcResponse<{ commitment: Array<number>; totalStake: number }>>
 
   /**
    * Get blocks information.
@@ -362,7 +404,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
     startSlot: number,
     endSlot?: number,
     options?: GetCommitmentOptions,
-  ) => Promise<ResponseDto<Array<number>>>
+  ) => Promise<JsonRpcResponse<Array<number>>>
 
   /**
    * Get blocks information.
@@ -375,45 +417,33 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
     startSlot: number,
     limit?: number,
     options?: GetCommitmentOptions,
-  ) => Promise<ResponseDto<Array<number>>>
+  ) => Promise<JsonRpcResponse<Array<number>>>
 
   /**
    * Get block time information.
    * @param block - Block number, identified by Slot
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getblocktime
    */
-  getBlockTime: (block: number) => Promise<ResponseDto<number | null>>
+  getBlockTime: (block: number) => Promise<JsonRpcResponse<number | null>>
 
   /**
    * Get cluster nodes information.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getclusternodes
    */
-  getClusterNodes: () => Promise<
-    ResponseDto<
-      Array<{
-        pubkey: string
-        gossip?: string
-        tpu?: string
-        rpc?: string
-        version?: string
-        featureSet?: number
-        shredVersion?: number
-      }>
-    >
-  >
+  getClusterNodes: () => Promise<JsonRpcResponse<Array<SolanaClusterNode>>>
 
   /**
    * Get information about epoch.
    * @param options - Options for the query
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getepochinfo
    */
-  getEpochInfo: (options?: GetCommitmentMinContextSlotOptions) => Promise<ResponseDto<SolanaEpochInfo>>
+  getEpochInfo: (options?: GetCommitmentMinContextSlotOptions) => Promise<JsonRpcResponse<SolanaEpochInfo>>
 
   /**
    * Get epoch schedule.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getepochschedule
    */
-  getEpochSchedule: () => Promise<ResponseDto<SolanaEpochSchedule>>
+  getEpochSchedule: () => Promise<JsonRpcResponse<SolanaEpochSchedule>>
 
   /**
    * Retrieve the minimum fee required to include a message in a block.
@@ -424,60 +454,50 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getFeeForMessage: (
     message: any,
     options?: GetCommitmentMinContextSlotOptions,
-  ) => Promise<ResponseDto<number | null>>
+  ) => Promise<JsonRpcResponse<number | null>>
 
   /**
    * Get the first available block on the Solana blockchain.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getfirstavailableblock
    */
-  getFirstAvailableBlock: () => Promise<ResponseDto<number>>
+  getFirstAvailableBlock: () => Promise<JsonRpcResponse<number>>
 
   /**
    * Get the Genesis Hash of the Solana blockchain.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getgenesishash
    */
-  getGenesisHash: () => Promise<ResponseDto<string>>
+  getGenesisHash: () => Promise<JsonRpcResponse<string>>
 
   /**
    * Get the health status of the Solana cluster.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/gethealth
    */
-  getHealth: () => Promise<ResponseDto<string>>
+  getHealth: () => Promise<JsonRpcResponse<string>>
 
   /**
    * Get the highest available snapshot slot on the Solana cluster.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/gethighestsnapshotslot
    */
-  getHighestSnapshotSlot: () => Promise<ResponseDto<{ full: number; incremental: number }>>
+  getHighestSnapshotSlot: () => Promise<JsonRpcResponse<{ full: number; incremental: number }>>
 
   /**
    * Get the identity pubkey of the node.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getidentity
    */
-  getIdentity: () => Promise<ResponseDto<{ identity: string }>>
+  getIdentity: () => Promise<JsonRpcResponse<{ identity: string }>>
 
   /**
    * Get the current inflation governor's rates.
    * @param options - Options for the query.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-token-and-stake-information/getinflationgovernor
    */
-  getInflationGovernor: (options?: GetCommitmentOptions) => Promise<
-    ResponseDto<{
-      initial: number
-      terminal: number
-      taper: number
-      foundation: number
-      foundationTerm: number
-    }>
-  >
+  getInflationGovernor: (options?: GetCommitmentOptions) => Promise<JsonRpcResponse<SolanaInflationGovernor>>
 
   /**
    * Get the current inflation rate on the Solana blockchain.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-querying-token-and-stake-information/getinflationrate
    */
-  getInflationRate: () => Promise<
-    ResponseDto<{ total: number; validator: number; foundation: number; epoch: number }>
-  >
+  getInflationRate: () => Promise<JsonRpcResponse<SolanaInflationRate>>
 
   /**
    * Get the inflation reward for specified addresses.
@@ -488,17 +508,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getInflationReward: (
     addresses?: string[],
     options?: GetInflationRewardOptions,
-  ) => Promise<
-    ResponseDto<
-      Array<{
-        epoch: number
-        effectiveSlot: number
-        amount: number
-        postBalance: number
-        commission: number
-      }>
-    >
-  >
+  ) => Promise<JsonRpcResponse<SolanaInflationReward[]>>
 
   /**
    * Get the largest accounts on the Solana blockchain.
@@ -507,7 +517,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
    */
   getLargestAccounts: (
     options?: GetLargestAccountsOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<SolanaLargestAccount[]>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaLargestAccount[]>>>
 
   /**
    * Fetches the latest block hash from the Solana blockchain.
@@ -516,7 +526,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
    */
   getLatestBlockhash: (
     options?: GetCommitmentMinContextSlotOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<SolanaLatestBlockhash>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaLatestBlockhash>>>
 
   /**
    * Fetches the leader schedule for the Solana blockchain.
@@ -527,19 +537,19 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getLeaderSchedule: (
     slot?: number,
     options?: GetLeaderScheduleOptions,
-  ) => Promise<ResponseDto<SolanaLeaderSchedule | null>>
+  ) => Promise<JsonRpcResponse<SolanaLeaderSchedule | null>>
 
   /**
    * Retrieves the max slot number seen from retransmit stage.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getmaxretransmitslot
    */
-  getMaxRetransmitSlot: () => Promise<ResponseDto<number>>
+  getMaxRetransmitSlot: () => Promise<JsonRpcResponse<number>>
 
   /**
    * Retrieves the max slot number seen from after shred insert.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getmaxshredinsertslot
    */
-  getMaxShredInsertSlot: () => Promise<ResponseDto<number>>
+  getMaxShredInsertSlot: () => Promise<JsonRpcResponse<number>>
 
   /**
    * Gets the minimum balance required for rent exemption for an account.
@@ -550,7 +560,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getMinimumBalanceForRentExemption: (
     dataSize?: number,
     options?: GetCommitmentOptions,
-  ) => Promise<ResponseDto<number>>
+  ) => Promise<JsonRpcResponse<number>>
 
   /**
    * Fetches multiple accounts on the Solana blockchain.
@@ -561,7 +571,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getMultipleAccounts: (
     pubKeys: string[],
     options?: GetMultipleAccountsOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<Array<SolanaAccountInfo | null>>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<Array<SolanaAccountInfo | null>>>>
 
   /**
    * Fetches program accounts from the Solana blockchain.
@@ -572,24 +582,14 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getProgramAccounts: (
     programId: string,
     options?: GetProgramAccountsOptions,
-  ) => Promise<ResponseDto<Array<{ account: SolanaAccountInfo; pubkey: string }>>>
+  ) => Promise<JsonRpcResponse<Array<{ account: SolanaAccountInfo; pubkey: string }>>>
 
   /**
    * Gets recent performance samples.
    * @param limit - Number of samples to return (maximum 720).
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getrecentperformancesamples
    */
-  getRecentPerformanceSamples: (limit?: number) => Promise<
-    ResponseDto<
-      Array<{
-        slot: number
-        numTransactions: number
-        numSlots: number
-        samplePeriodSecs: number
-        numNonVoteTransaction: number
-      }>
-    >
-  >
+  getRecentPerformanceSamples: (limit?: number) => Promise<JsonRpcResponse<Array<SolanaPerformanceSample>>>
 
   /**
    * Gets recent prioritization fees.
@@ -598,7 +598,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
    */
   getRecentPrioritizationFees: (
     addresses?: string[],
-  ) => Promise<ResponseDto<Array<{ slot: number; prioritizationFee: number }>>>
+  ) => Promise<JsonRpcResponse<Array<{ slot: number; prioritizationFee: number }>>>
 
   /**
    * Fetches the transaction signatures for a specific account address.
@@ -609,18 +609,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getSignaturesForAddress: (
     address: string,
     options?: GetSignaturesForAddressOptions,
-  ) => Promise<
-    ResponseDto<
-      Array<{
-        signature: string
-        slot: number
-        err: any | null
-        memo: string | null
-        blockTime: number | null
-        confirmationStatus: string | null
-      }>
-    >
-  >
+  ) => Promise<JsonRpcResponse<Array<SolanaAddressSignature>>>
 
   /**
    * Fetches the status of a list of transaction signatures.
@@ -631,21 +620,21 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getSignatureStatuses: (
     signatures?: string[],
     options?: GetSignatureStatusesOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<SolanaSignatureStatus>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaSignatureStatus>>>
 
   /**
    * Fetches the current slot number of the cluster.
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getslot
    */
-  getSlot: (options?: GetCommitmentMinContextSlotOptions) => Promise<ResponseDto<number>>
+  getSlot: (options?: GetCommitmentMinContextSlotOptions) => Promise<JsonRpcResponse<number>>
 
   /**
    * Fetches the current leader of the slot.
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getslotleader
    */
-  getSlotLeader: (options?: GetCommitmentMinContextSlotOptions) => Promise<ResponseDto<string>>
+  getSlotLeader: (options?: GetCommitmentMinContextSlotOptions) => Promise<JsonRpcResponse<string>>
 
   /**
    * Fetches the current leaders of the slot within a certain limit.
@@ -653,7 +642,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
    * @param limit - Limit (between 1 and 5,000)
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/getslotleaders
    */
-  getSlotLeaders: (startSlot?: number, limit?: number) => Promise<ResponseDto<Array<string>>>
+  getSlotLeaders: (startSlot?: number, limit?: number) => Promise<JsonRpcResponse<Array<string>>>
 
   /**
    * Fetches the stake activation details for the specified account.
@@ -664,7 +653,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getStakeActivation: (
     pubkey: string,
     options?: GetStakeActivationOptions,
-  ) => Promise<ResponseDto<{ state: string; active: number; inactive: number }>>
+  ) => Promise<JsonRpcResponse<{ state: string; active: number; inactive: number }>>
 
   /**
    * Fetches the minimum stake delegation.
@@ -673,14 +662,14 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
    */
   getStakeMinimumDelegation: (
     options?: GetCommitmentOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<number>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<number>>>
 
   /**
    * Fetches the current supply of the Solana network.
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getsupply
    */
-  getSupply: (options?: GetSupplyOptions) => Promise<ResponseDto<SolanaTypeWithContext<SolanaSupply>>>
+  getSupply: (options?: GetSupplyOptions) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaSupply>>>
 
   /**
    * Fetches the balance of the specified token account.
@@ -691,7 +680,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getTokenAccountBalance: (
     pubkey: string,
     options?: GetCommitmentOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<SolanaTokenAccountBalance>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenAccountBalance>>>
 
   /**
    * Fetches token accounts by delegate.
@@ -704,7 +693,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
     pubkey: string,
     config?: SolanaMint | SolanaProgramId,
     options?: GetTokenAccountsOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<SolanaTokenAccount[]>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenAccount[]>>>
 
   /**
    * Fetches token accounts by owner.
@@ -717,7 +706,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
     pubkey: string,
     config?: SolanaMint | SolanaProgramId,
     options?: GetTokenAccountsOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<SolanaTokenAccount[]>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenAccount[]>>>
 
   /**
    * Fetches largest token accounts for a mint.
@@ -728,7 +717,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getTokenLargestAccounts: (
     pubkey: string,
     options?: GetCommitmentOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<SolanaAccount[]>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaAccount[]>>>
 
   /**
    * Fetches token supply details for a mint.
@@ -739,7 +728,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getTokenSupply: (
     pubkey: string,
     options?: GetCommitmentOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<SolanaTokenSupply>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaTokenSupply>>>
 
   /**
    * Fetches a specific transaction by signature.
@@ -750,20 +739,20 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   getTransaction: (
     signature: string,
     options?: GetTransactionOptions,
-  ) => Promise<ResponseDto<SolanaTransaction | null>>
+  ) => Promise<JsonRpcResponse<SolanaTransaction | null>>
 
   /**
    * Fetches the current transaction count.
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-transaction-management/gettransactioncount
    */
-  getTransactionCount: (options?: GetCommitmentMinContextSlotOptions) => Promise<ResponseDto<number>>
+  getTransactionCount: (options?: GetCommitmentMinContextSlotOptions) => Promise<JsonRpcResponse<number>>
 
   /**
    * Fetches the current version of the Solana core software.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/miscellaneous-api-calls/getversion
    */
-  getVersion: () => Promise<ResponseDto<SolanaVersion>>
+  getVersion: () => Promise<JsonRpcResponse<SolanaVersion>>
 
   /**
    * Fetches vote accounts information.
@@ -772,7 +761,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
    */
   getVoteAccounts: (
     options?: GetVoteAccountOptions,
-  ) => Promise<ResponseDto<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }>>
+  ) => Promise<JsonRpcResponse<{ current: Array<SolanaVoteAccount>; delinquent: Array<SolanaVoteAccount> }>>
 
   /**
    * Checks if a blockhash is valid.
@@ -783,13 +772,13 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   isBlockhashValid: (
     blockhash: string,
     options?: GetCommitmentMinContextSlotOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<boolean>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<boolean>>>
 
   /**
    * Fetches the lowest slot that the node has information about in its ledger.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-ledger-and-block-information/minimumledgerslot
    */
-  minimumLedgerSlot: () => Promise<ResponseDto<number>>
+  minimumLedgerSlot: () => Promise<JsonRpcResponse<number>>
 
   /**
    * Requests an airdrop of lamports to a given pubkey.
@@ -802,7 +791,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
     pubkey: string,
     amount: number,
     options?: GetCommitmentOptions,
-  ) => Promise<ResponseDto<string>>
+  ) => Promise<JsonRpcResponse<string>>
 
   /**
    * Sends a transaction to the Solana blockchain.
@@ -810,7 +799,7 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
    * @param options - Options for this request.
    * https://docs.tatum.com/docs/rpc-api-reference/solana-rpc-documentation/api-calls-for-transaction-management/sendtransaction
    */
-  sendTransaction: (transaction: string, options?: SendTransactionOptions) => Promise<ResponseDto<string>>
+  sendTransaction: (transaction: string, options?: SendTransactionOptions) => Promise<JsonRpcResponse<string>>
 
   /**
    * Simulates a transaction on the Solana blockchain.
@@ -821,5 +810,5 @@ export interface SolanaRpcSuite extends AbstractRpcInterface {
   simulateTransaction: (
     transaction: string,
     options?: SimulateTransactionOptions,
-  ) => Promise<ResponseDto<SolanaTypeWithContext<SolanaTransactionSimulation>>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<SolanaTransactionSimulation>>>
 }

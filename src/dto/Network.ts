@@ -178,7 +178,7 @@ export const UTXO_LOAD_BALANCER_NETWORKS = [
   Network.LITECOIN,
   Network.LITECOIN_TESTNET,
   Network.DOGECOIN,
-  Network.DOGECOIN_TESTNET
+  Network.DOGECOIN_TESTNET,
 ]
 
 export const EVM_LOAD_BALANCER_NETWORKS = [
@@ -190,52 +190,40 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.HAQQ_TESTNET,
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.POLYGON,
+  Network.POLYGON_MUMBAI,
 ]
 
-export const LOAD_BALANCER_NETWORKS = [
-  ...UTXO_LOAD_BALANCER_NETWORKS,
-  ...EVM_LOAD_BALANCER_NETWORKS,
+export const LOAD_BALANCER_NETWORKS = [...UTXO_LOAD_BALANCER_NETWORKS, ...EVM_LOAD_BALANCER_NETWORKS]
+
+export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
+  Network.ETHEREUM,
+  Network.ETHEREUM_SEPOLIA,
+  Network.HAQQ,
+  Network.HAQQ_TESTNET,
 ]
 
 export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
 export const TRON_NETWORKS = [Network.TRON, Network.TRON_SHASTA]
 
-export const isEvmBasedNetwork = (network: Network) => {
-  return EVM_BASED_NETWORKS.includes(network)
-}
+export const isEvmBasedNetwork = (network: Network) => EVM_BASED_NETWORKS.includes(network)
 
-export const isUtxoBasedNetwork = (network: Network) => {
-  return UTXO_BASED_NETWORKS.includes(network)
-}
+export const isUtxoBasedNetwork = (network: Network) => UTXO_BASED_NETWORKS.includes(network)
 
-export const isXrpNetwork = (network: Network) => {
-  return [Network.XRP, Network.XRP_TESTNET].includes(network)
-}
+export const isXrpNetwork = (network: Network) => [Network.XRP, Network.XRP_TESTNET].includes(network)
 
-export const isDataApiEvmEnabledNetwork = (network: Network) => {
-  return DATA_API_EVM_NETWORKS.includes(network)
-}
+export const isDataApiEvmEnabledNetwork = (network: Network) => DATA_API_EVM_NETWORKS.includes(network)
 
-export const isDataApiUtxoEnabledNetwork = (network: Network) => {
-  return DATA_API_UTXO_NETWORKS.includes(network)
-}
+export const isDataApiUtxoEnabledNetwork = (network: Network) => DATA_API_UTXO_NETWORKS.includes(network)
 
-export const isSolanaEnabledNetwork = (network: Network) => {
-  return SOLANA_NETWORKS.includes(network)
-}
+export const isSolanaEnabledNetwork = (network: Network) => SOLANA_NETWORKS.includes(network)
 
-export const isTronNetwork = (network: Network) => {
-  return TRON_NETWORKS.includes(network)
-}
+export const isTronNetwork = (network: Network) => TRON_NETWORKS.includes(network)
 
-export const isLoadBalancerNetwork = (network: Network) => {
-  return LOAD_BALANCER_NETWORKS.includes(network)
-}
+export const isLoadBalancerNetwork = (network: Network) => LOAD_BALANCER_NETWORKS.includes(network)
 
-export const isUtxoLoadBalancerNetwork = (network: Network) => {
-  return UTXO_LOAD_BALANCER_NETWORKS.includes(network)
-}
+export const isUtxoLoadBalancerNetwork = (network: Network) => UTXO_LOAD_BALANCER_NETWORKS.includes(network)
 
-export const isEvmLoadBalancerNetwork = (network: Network) => {
-  return EVM_LOAD_BALANCER_NETWORKS.includes(network)
-}
+export const isEvmLoadBalancerNetwork = (network: Network) => EVM_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isEvmArchiveNonArchiveLoadBalancerNetwork = (network: Network) => EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS.includes(network)

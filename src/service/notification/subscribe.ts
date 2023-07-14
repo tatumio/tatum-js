@@ -7,7 +7,9 @@ import {
   AddressBasedNotification,
   AddressBasedNotificationDetail,
   BlockBasedNotification,
-  BlockBasedNotificationDetail, ContractBasedNotification, ContractBasedNotificationDetail,
+  BlockBasedNotificationDetail,
+  ContractBasedNotification,
+  ContractBasedNotificationDetail,
   NotificationType,
 } from './notification.dto'
 
@@ -214,7 +216,10 @@ export class Subscribe {
   contractAddressLogEvent = async (
     contractBasedNotificationDetail: ContractBasedNotificationDetail,
   ): Promise<ResponseDto<ContractBasedNotification>> =>
-    this.contractBasedNotification(contractBasedNotificationDetail, NotificationType.CONTRACT_ADDRESS_LOG_EVENT)
+    this.contractBasedNotification(
+      contractBasedNotificationDetail,
+      NotificationType.CONTRACT_ADDRESS_LOG_EVENT,
+    )
 
   /**
    * Subscribe to failed txs per block.

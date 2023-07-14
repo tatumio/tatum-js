@@ -1,3 +1,19 @@
+## [1.5.11] - 2023.07.13
+### Changed
+- Fix rpc calls without api key & Added haqq archive/non-archive calls
+
+## [1.5.10] - 2023.07.10
+### Changed
+- Selected Archive/Non-Archive node for Ethereum RPC calls based on method
+
+## [1.5.9] - 2023.07.12
+### Changed
+- Several Tron RPC calls fixed
+
+## [1.5.8] - 2023.07.10
+### Changed
+- Update all RPC calls to return unmodified data
+
 ## [1.5.7] - 2023.07.10
 ### Changed
 - Extended JSON stringify to see error message in case of error to Loadbalancer
