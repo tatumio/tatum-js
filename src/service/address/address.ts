@@ -8,14 +8,14 @@ import {
   isDataApiEvmEnabledNetwork,
   isDataApiUtxoEnabledNetwork,
   isEvmBasedNetwork, isTronNetwork
-} from '../../dto';
+} from '../../dto'
 import { CONFIG, Constant, ErrorUtils, ResponseDto, Utils } from '../../util'
-import { EvmRpc, GenericRpc } from '../rpc';
+import { EvmRpc, GenericRpc } from '../rpc'
 import { Network, TatumConfig } from '../tatum'
 import { AddressBalance, AddressTransaction, GetAddressTransactionsQuery } from './address.dto'
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
-import TronWeb from 'tronweb';
+import TronWeb from 'tronweb'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -31,7 +31,7 @@ export class Address {
   constructor(private readonly id: string) {
     this.config = Container.of(this.id).get(CONFIG)
     this.connector = Container.of(this.id).get(TatumConnector)
-    const tronNode = `https://api.tatum.io/v3/blockchain/node/${this.config.network}/${this.config.apiKey?.v1 ? this.config.apiKey?.v1 : this.config.apiKey?.v2}`;
+    const tronNode = `https://api.tatum.io/v3/blockchain/node/${this.config.network}/${this.config.apiKey?.v1 ? this.config.apiKey?.v1 : this.config.apiKey?.v2}`
     this.tronWeb = new TronWeb(tronNode, tronNode, tronNode);
   }
 
@@ -47,8 +47,8 @@ export class Address {
     const chain = this.config.network
     return ErrorUtils.tryFail(async () => {
 
-      const fullBalances = isTronNetwork(chain) ? await this.getFullBalance(addresses) : { nativeBalance: '0', tokenBalances: [] };
-      const nativeBalances = isTronNetwork(chain) ? [fullBalances.nativeBalance] : await this.getNativeBalance(addresses);
+      const fullBalances = isTronNetwork(chain) ? await this.getFullBalance(addresses) : { nativeBalance: '0', tokenBalances: [] }
+      const nativeBalances = isTronNetwork(chain) ? [fullBalances.nativeBalance] : await this.getNativeBalance(addresses)
       const tokenBalances =  isTronNetwork(chain) ? fullBalances.tokenBalances : isDataApiEvmEnabledNetwork(chain) &&
         await this.connector
           .get<{ result: AddressBalance[] }, ApiBalanceRequest>({
@@ -76,7 +76,7 @@ export class Address {
       if (!tokenBalances) {
         return result
       }
-      const serializedTokenBalances = isTronNetwork(chain) ? tokenBalances : await this.processTokenBalanceDetails(tokenBalances, chain);
+      const serializedTokenBalances = isTronNetwork(chain) ? tokenBalances : await this.processTokenBalanceDetails(tokenBalances, chain)
       return [...result, ...serializedTokenBalances]
     })
   }
@@ -129,19 +129,19 @@ export class Address {
   }
 
   private async processTRC20TokenBalanceDetails(tokenBalances: {[key: string]: string}) {
-    const balances = Object.entries(tokenBalances[0]);
-    const serializedTokenBalance: Array<unknown> = [];
+    const balances = Object.entries(tokenBalances[0])
+    const serializedTokenBalance: Array<unknown> = []
     for (let i = 0; i < balances.length; i++) {
-      this.tronWeb.setAddress(balances[i][0]);
-      const contract = await this.tronWeb.contract().at(balances[i][0]);
-      const asset = await contract.symbol().call();
-      const decimals = await contract.decimals().call();
-      const balance = balances[i][1];
+      this.tronWeb.setAddress(balances[i][0])
+      const contract = await this.tronWeb.contract().at(balances[i][0])
+      const asset = await contract.symbol().call()
+      const decimals = await contract.decimals().call()
+      const balance = balances[i][1]
       serializedTokenBalance.push({
         asset,
         decimals,
         balance
-      });
+      })
     }
     return serializedTokenBalance
   }
@@ -199,8 +199,8 @@ export class Address {
           blockNumber: number
           time: number
           hash: string
-          inputs: Array<{ coin: { address: string; value: number | string } }>
-          outputs: Array<{ address: string; value: string | number }>
+          inputs: Array<{ coin: { address: string, value: number | string } }>
+          outputs: Array<{ address: string, value: string | number }>
         }>
       >({
         path,
@@ -267,13 +267,13 @@ export class Address {
         }
         return this.connector
           .get<{
-            balance: number;
-            createTime: number;
+            balance: number,
+            createTime: number
             trc10: [{
-              key: string;
-              value: number;
-            }];
-            trc20: {[key: string]: string};
+              key: string,
+              value: number,
+            }]
+            trc20: {[key: string]: string}
             freeNetLimit: number,
             bandwidth: number,
           }>({
