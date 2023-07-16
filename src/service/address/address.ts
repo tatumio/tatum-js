@@ -13,6 +13,9 @@ import { CONFIG, Constant, ErrorUtils, ResponseDto, Utils } from '../../util'
 import { EvmRpc, GenericRpc } from '../rpc';
 import { Network, TatumConfig } from '../tatum'
 import { AddressBalance, AddressTransaction, GetAddressTransactionsQuery } from './address.dto'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import TronWeb from 'tronweb';
 
 @Service({
   factory: (data: { id: string }) => {
@@ -23,10 +26,13 @@ import { AddressBalance, AddressTransaction, GetAddressTransactionsQuery } from 
 export class Address {
   private readonly connector: TatumConnector
   private readonly config: TatumConfig
+  private readonly tronWeb: TronWeb
 
   constructor(private readonly id: string) {
     this.config = Container.of(this.id).get(CONFIG)
     this.connector = Container.of(this.id).get(TatumConnector)
+    const tronNode = `https://api.tatum.io/v3/blockchain/node/${this.config.network}/${this.config.apiKey?.v1 ? this.config.apiKey?.v1 : this.config.apiKey?.v2}`;
+    this.tronWeb = new TronWeb(tronNode, tronNode, tronNode);
   }
 
   /**
@@ -70,7 +76,8 @@ export class Address {
       if (!tokenBalances) {
         return result
       }
-      return [...result, ...(await this.processTokenBalanceDetails(tokenBalances, chain))]
+      const serializedTokenBalances = isTronNetwork(chain) ? tokenBalances : await this.processTokenBalanceDetails(tokenBalances, chain);
+      return [...result, ...serializedTokenBalances]
     })
   }
 
@@ -122,42 +129,21 @@ export class Address {
   }
 
   private async processTRC20TokenBalanceDetails(tokenBalances: {[key: string]: string}) {
-    const result: AddressBalance[] = []
-    // Processing token details
-    const details = await Promise.all(
-      tokenBalances.map((details) =>
-        this.connector.get<TokenDetails>({
-          path: 'data/tokens',
-          params: {
-            chain,
-            tokenAddress: details.tokenAddress,
-          },
-        }),
-      ),
-    )
-    for (let i = 0; i < tokenBalances.length; i++) {
-      const tokenBalance = tokenBalances[i]
-      const item: AddressBalance = {
-        address: tokenBalance.address,
-        tokenAddress: tokenBalance.tokenAddress,
-        balance: tokenBalance.balance,
-        type: tokenBalance.type,
-      }
-      if (tokenBalance.lastUpdatedBlock) {
-        item.lastUpdatedBlock = tokenBalance.lastUpdatedBlock
-      }
-      if (details[i].symbol) {
-        item.asset = details[i].symbol
-      }
-      if (details[i].decimals) {
-        item.decimals = details[i].decimals
-      }
-      if (tokenBalance.tokenId) {
-        item.tokenId = tokenBalance.tokenId
-      }
-      result.push(item)
+    const balances = Object.entries(tokenBalances[0]);
+    const serializedTokenBalance: Array<unknown> = [];
+    for (let i = 0; i < balances.length; i++) {
+      this.tronWeb.setAddress(balances[i][0]);
+      const contract = await this.tronWeb.contract().at(balances[i][0]);
+      const asset = await contract.symbol().call();
+      const decimals = await contract.decimals().call();
+      const balance = balances[i][1];
+      serializedTokenBalance.push({
+        asset,
+        decimals,
+        balance
+      });
     }
-    return result
+    return serializedTokenBalance
   }
 
   private async processTokenBalanceDetails(tokenBalances: AddressBalance[], chain: Network) {
@@ -287,16 +273,19 @@ export class Address {
               key: string;
               value: number;
             }];
-            trc20: [];
+            trc20: {[key: string]: string};
             freeNetLimit: number,
             bandwidth: number,
           }>({
             path: `tron/account/${addresses[0]}`,
           })
-          .then((r) => Object.create({
-            nativeBalance: r.balance.toString(),
-            tokenBalances: r.trc20
-          }))
+          .then(async (r) =>
+          {
+            return Object.create({
+              nativeBalance: r.balance.toString(),
+              tokenBalances: await this.processTRC20TokenBalanceDetails(r.trc20),
+            })
+          })
     }
     throw new Error(`Unsupported network ${network} for now.`)
   }
