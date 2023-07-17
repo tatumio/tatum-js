@@ -10,12 +10,10 @@ import {
   isEvmBasedNetwork, isTronNetwork
 } from '../../dto'
 import { CONFIG, Constant, ErrorUtils, ResponseDto, Utils } from '../../util'
-import { EvmRpc, GenericRpc } from '../rpc'
+import { EvmRpc, GenericRpc, TronRpc } from '../rpc';
 import { Network, TatumConfig } from '../tatum'
 import { AddressBalance, AddressTransaction, GetAddressTransactionsQuery } from './address.dto'
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import TronWeb from 'tronweb'
+import { decodeUInt256 } from '../../util/decode';
 
 @Service({
   factory: (data: { id: string }) => {
@@ -26,13 +24,10 @@ import TronWeb from 'tronweb'
 export class Address {
   private readonly connector: TatumConnector
   private readonly config: TatumConfig
-  private readonly tronWeb: TronWeb
 
   constructor(private readonly id: string) {
     this.config = Container.of(this.id).get(CONFIG)
     this.connector = Container.of(this.id).get(TatumConnector)
-    const tronNode = `https://api.tatum.io/v3/blockchain/node/${this.config.network}/${this.config.apiKey?.v1 ? this.config.apiKey?.v1 : this.config.apiKey?.v2}`
-    this.tronWeb = new TronWeb(tronNode, tronNode, tronNode);
   }
 
   /**
@@ -94,35 +89,36 @@ export class Address {
     page = 0,
   }: GetAddressTransactionsQuery): Promise<ResponseDto<AddressTransaction[]>> {
     const chain = this.config.network
+    let path;
     return ErrorUtils.tryFail(async () => {
-      if (isDataApiEvmEnabledNetwork(chain)) {
-        return this.connector
-          .get<{ result: AddressTransaction[] }>({
-            path: `data/transactions`,
-            params: {
-              chain,
-              addresses: address,
-              transactionTypes: transactionTypes?.join(),
-              transactionSubtype: transactionDirection,
-              blockFrom: fromBlock,
-              blockTo: toBlock,
-              pageSize,
-              offset: page,
-            },
-          })
-          .then((r) => r.result)
-      }
-      let path
-      if ([Network.BITCOIN, Network.BITCOIN_TESTNET].includes(chain)) {
-        path = `bitcoin/transaction/address/${address}`
-      } else if ([Network.LITECOIN, Network.LITECOIN_TESTNET].includes(chain)) {
-        path = `litecoin/transaction/address/${address}`
-      } else if ([Network.DOGECOIN, Network.DOGECOIN_TESTNET].includes(chain)) {
-        path = `dogecoin/transaction/address/${address}`
-      }
-      if (!path) {
-        // TODO: implement for other networks - TRON, XRP, CARDANO, SOL, XLM etc etc
-        throw new Error(`Not supported for ${chain} network.`)
+      switch (true) {
+        case isDataApiEvmEnabledNetwork(chain):
+          return this.connector
+            .get<{ result: AddressTransaction[] }>({
+              path: `data/transactions`,
+              params: {
+                chain,
+                addresses: address,
+                transactionTypes: transactionTypes?.join(),
+                transactionSubtype: transactionDirection,
+                blockFrom: fromBlock,
+                blockTo: toBlock,
+                pageSize,
+                offset: page,
+              },
+            })
+            .then((r) => r.result)
+        case [Network.BITCOIN, Network.BITCOIN_TESTNET].includes(chain):
+          path = `bitcoin/transaction/address/${address}`
+          break;
+        case [Network.LITECOIN, Network.LITECOIN_TESTNET].includes(chain):
+          path = `litecoin/transaction/address/${address}`
+          break;
+        case [Network.DOGECOIN, Network.DOGECOIN_TESTNET].includes(chain):
+          path = `dogecoin/transaction/address/${address}`
+          break;
+        default:
+          throw new Error(`Not supported for ${chain} network.`)
       }
       return this.processUtxoBasedTxs(path, pageSize, page, transactionDirection, chain, address)
     })
@@ -132,10 +128,12 @@ export class Address {
     const balances = Object.entries(tokenBalances[0])
     const serializedTokenBalance: Array<unknown> = []
     for (let i = 0; i < balances.length; i++) {
-      this.tronWeb.setAddress(balances[i][0])
-      const contract = await this.tronWeb.contract().at(balances[i][0])
-      const asset = await contract.symbol().call()
-      const decimals = await contract.decimals().call()
+      const asset = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(
+        balances[i][0], balances[i][0], 'symbol()', '', { visible: true }
+      ).then(r => decodeUInt256(r.constant_result[0]));
+      const decimals = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(
+        balances[i][0], balances[i][0], 'decimals()', '', { visible: true }
+      ).then(r => decodeUInt256(r.constant_result[0]));
       const balance = balances[i][1]
       serializedTokenBalance.push({
         asset,
