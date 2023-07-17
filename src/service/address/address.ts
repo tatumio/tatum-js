@@ -10,10 +10,10 @@ import {
   isEvmBasedNetwork, isTronNetwork
 } from '../../dto'
 import { CONFIG, Constant, ErrorUtils, ResponseDto, Utils } from '../../util'
-import { EvmRpc, GenericRpc, TronRpc } from '../rpc';
+import { EvmRpc, GenericRpc, TronRpc } from '../rpc'
 import { Network, TatumConfig } from '../tatum'
 import { AddressBalance, AddressTransaction, GetAddressTransactionsQuery } from './address.dto'
-import { decodeUInt256 } from '../../util/decode';
+import { decodeUInt256 } from '../../util/decode'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -89,7 +89,7 @@ export class Address {
     page = 0,
   }: GetAddressTransactionsQuery): Promise<ResponseDto<AddressTransaction[]>> {
     const chain = this.config.network
-    let path;
+    let path
     return ErrorUtils.tryFail(async () => {
       switch (true) {
         case isDataApiEvmEnabledNetwork(chain):
@@ -110,13 +110,13 @@ export class Address {
             .then((r) => r.result)
         case [Network.BITCOIN, Network.BITCOIN_TESTNET].includes(chain):
           path = `bitcoin/transaction/address/${address}`
-          break;
+          break
         case [Network.LITECOIN, Network.LITECOIN_TESTNET].includes(chain):
           path = `litecoin/transaction/address/${address}`
-          break;
+          break
         case [Network.DOGECOIN, Network.DOGECOIN_TESTNET].includes(chain):
           path = `dogecoin/transaction/address/${address}`
-          break;
+          break
         default:
           throw new Error(`Not supported for ${chain} network.`)
       }
@@ -130,10 +130,10 @@ export class Address {
     for (let i = 0; i < balances.length; i++) {
       const asset = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(
         balances[i][0], balances[i][0], 'symbol()', '', { visible: true }
-      ).then(r => decodeUInt256(r.constant_result[0]));
+      ).then(r => decodeUInt256(r.constant_result[0]))
       const decimals = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(
         balances[i][0], balances[i][0], 'decimals()', '', { visible: true }
-      ).then(r => decodeUInt256(r.constant_result[0]));
+      ).then(r => decodeUInt256(r.constant_result[0]))
       const balance = balances[i][1]
       serializedTokenBalance.push({
         asset,
