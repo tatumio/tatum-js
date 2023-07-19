@@ -1,7 +1,7 @@
 # RPC
 All RPC calls are implemented in the `tatum.rpc.*` submodule.
 
-See the [RPC API Reference](https://docs.tatum.com/docs/rpc-api-reference) for more about supported chains and methods.
+See the [RPC API Reference](https://docs.tatum.io/docs/rpc-api-reference) for more about supported chains and methods.
 
 ## Load Balancer
 
@@ -51,14 +51,14 @@ When you need to stop load balancer, you should can call `destroy` method. This 
 The list of nodes is dynamically fetched from the remote server and it is defined for every blockchain.
 
 ```
-https://rpc.tatum.com/${network}/list.json
+https://rpc.tatum.io/${network}/list.json
 ```
 Networks enum is available in the [Network.ts](https://github.com/tatumio/tatum-js/blob/master/src/dto/Network.ts)
 
 For instance if we will need Bitcoin mainnet nodes, we will use this URL:
 
 ```
-curl https://rpc.tatum.com/bitcoin-mainnet/list.json
+curl https://rpc.tatum.io/bitcoin-mainnet/list.json
 ```
 
 The response is a list of nodes with their url, type (0 - normal, 1 - archive) and location.
@@ -68,27 +68,27 @@ The response is a list of nodes with their url, type (0 - normal, 1 - archive) a
   {
     "location": "Sydney",
     "type": 0,
-    "url": "https://02-sydney-007-01.rpc.tatum.com./"
+    "url": "https://02-sydney-007-01.rpc.tatum.io/"
   },
   {
     "location": "Tokyo",
     "type": 0,
-    "url": "https://02-tokyo-007-02.rpc.tatum.com./"
+    "url": "https://02-tokyo-007-02.rpc.tatum.io/"
   },
   {
     "location": "Dallas",
     "type": 0,
-    "url": "https://02-dallas-007-03.rpc.tatum.com./"
+    "url": "https://02-dallas-007-03.rpc.tatum.io/"
   },
   {
     "location": "Sao Paulo",
     "type": 0,
-    "url": "https://02-saopaulo-007-04.rpc.tatum.com./"
+    "url": "https://02-saopaulo-007-04.rpc.tatum.io/"
   },
   {
     "location": "Warsaw",
     "type": 0,
-    "url": "https://01-warsaw-007-05.rpc.tatum.com./"
+    "url": "https://01-warsaw-007-05.rpc.tatum.io/"
   }
 ]
 ```

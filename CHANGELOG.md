@@ -1,3 +1,13 @@
+## [3.0.0] - 2023.07.19
+### Changed
+- Updated npm package name from @tatumcom/js to @tatumio/tatum.
+- Updated npm token to ensure correct package retrieval.
+- Made changes to the readme page for improved documentation.
+
+## [1.5.11] - 2023.07.13
+### Changed
+- Fix rpc calls without api key & Added haqq archive/non-archive calls
+
 ## [1.5.10] - 2023.07.10
 ### Changed
 - Selected Archive/Non-Archive node for Ethereum RPC calls based on method

@@ -36,7 +36,7 @@ export abstract class BaseUtxoClass extends BaseTatumSdk {
 
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<UtxoBasedRpcSuite>(id, Container.of(id).get(CONFIG).network)
+    this.rpc = Utils.getRpc<UtxoBasedRpcSuite>(id, Container.of(id).get(CONFIG))
     this.fee = Container.of(id).get(FeeUtxo)
   }
 }
@@ -46,7 +46,7 @@ export abstract class BaseEvmClass extends BaseTatumSdk {
 
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<EvmBasedRpcSuite>(id, Container.of(id).get(CONFIG).network)
+    this.rpc = Utils.getRpc<EvmBasedRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 
@@ -91,21 +91,21 @@ export class Xrp extends BaseTatumSdk {
   rpc: XrpRpcSuite
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<XrpRpcSuite>(id, Container.of(id).get(CONFIG).network)
+    this.rpc = Utils.getRpc<XrpRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 export class Solana extends BaseTatumSdk {
   rpc: SolanaRpcSuite
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<SolanaRpcSuite>(id, Container.of(id).get(CONFIG).network)
+    this.rpc = Utils.getRpc<SolanaRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 export class Tron extends BaseTatumSdk {
   rpc: TronRpcSuite
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<TronRpcSuite>(id, Container.of(id).get(CONFIG).network)
+    this.rpc = Utils.getRpc<TronRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 
