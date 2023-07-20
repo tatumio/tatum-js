@@ -51,7 +51,7 @@ const sendTronVirtualAccountTransaction = async (
 
   const account = await AccountService.getAccountByAccountId(senderAccountId)
   if (account.currency === Currency.TRON) {
-    txData = await txService.native.send.signedTransaction({
+    txData = await txService.native.prepare.signedTransaction({
       amount,
       fromPrivateKey: fromPrivKey,
       to: address,
