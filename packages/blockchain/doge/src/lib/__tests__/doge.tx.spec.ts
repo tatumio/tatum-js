@@ -3,6 +3,8 @@ import { mockHelper } from '@tatumio/shared-testing-common'
 import * as apiClient from '@tatumio/api-client'
 import { ChainEnum, DogeTransactionAddress, DogeTransactionUTXO } from '@tatumio/api-client'
 import { oldBtcBasedTxTestFactory } from '@tatumio/shared-testing-btc-based'
+import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import BigNumber from 'bignumber.js'
 
 jest.mock('@tatumio/api-client')
 const mockedApi = mockHelper.mockApi(apiClient)
@@ -15,7 +17,8 @@ describe('DOGE transactions', () => {
   const UTXO_AMOUNT = 60.0819
   const VALID_ADDRESS_AMOUNT = 100
   const VALID_AMOUNT = 58
-  const VALID_TX_ADDRESS_DATA = '0100000001765b4f02260b37447d795f342c1e7023ff27b53413aa352678c0c1b8a78bc294010000006a473044022021628a76ddfd8a211b45101a59bd317be6c08a3a11a045b0da34c36ccfa5c7e202204a2ecfd90ba00f8d12a7407b1c180bb182ab72f5fc5fa345adfda4aedbfbab20012102473ddfe2afe40c68b68ecb81036003df920503668188b744b7c72046a97000bbffffffff010003164e020000001976a914299480256432f2372df6d66e21ed48b097797c9a88ac00000000'
+  const VALID_TX_ADDRESS_DATA =
+    '0100000001765b4f02260b37447d795f342c1e7023ff27b53413aa352678c0c1b8a78bc294010000006a473044022021628a76ddfd8a211b45101a59bd317be6c08a3a11a045b0da34c36ccfa5c7e202204a2ecfd90ba00f8d12a7407b1c180bb182ab72f5fc5fa345adfda4aedbfbab20012102473ddfe2afe40c68b68ecb81036003df920503668188b744b7c72046a97000bbffffffff010003164e020000001976a914299480256432f2372df6d66e21ed48b097797c9a88ac00000000'
   const VALID_TX_DATA =
     '0100000001e579889f4d028fbe6cf9000273ba8c6dbd0c93248fc574377b4058bfbbdfb7ab010000006a473044022042162432ec6f09dc0e259dde1a7643b0b2502aa77b92d9fad867801fee987223022010911ffa756f4da3bc52ef454fd9476453ed91e8cca8706dcce4fdc3ef79b0eb012102473ddfe2afe40c68b68ecb81036003df920503668188b744b7c72046a97000bbffffffff0200fab459010000001976a914299480256432f2372df6d66e21ed48b097797c9a88ac30d97206000000001976a914299480256432f2372df6d66e21ed48b097797c9a88ac00000000'
 
@@ -32,12 +35,9 @@ describe('DOGE transactions', () => {
         validTxData: VALID_TX_DATA,
       },
       mock: {
-        requestGetRawTx: () => {
-        },
-        requestGetUtxo: () => {
-        },
-        requestGetUtxoNotFound: () => {
-        },
+        requestGetRawTx: () => {},
+        requestGetUtxo: () => {},
+        requestGetUtxoNotFound: () => {},
         broadcast: mockedApi.blockchain.doge.dogeBroadcast,
       },
       getRequestBodyFromUTXO,
@@ -49,15 +49,15 @@ describe('DOGE transactions', () => {
   })
 
   describe('From Address', () => {
-    const requestGetUTXOsByAddress = (chain: ChainEnum, address: string, amount: number) => ([
+    const requestGetUTXOsByAddress = (chain: ChainEnum, address: string, amount: number) => [
       {
-        'txHash': '94c28ba7b8c1c0782635aa1334b527ff23701e2c345f797d44370b26024f5b76',
-        'index': 1,
-        'value': 100,
-        'address': 'nXz1s8tMQbqjARaSMNCPkgdwJQ2JDW2M7W',
-        'chain': 'doge-testnet',
+        txHash: '94c28ba7b8c1c0782635aa1334b527ff23701e2c345f797d44370b26024f5b76',
+        index: 1,
+        value: 100,
+        address: 'nXz1s8tMQbqjARaSMNCPkgdwJQ2JDW2M7W',
+        chain: 'doge-testnet',
       },
-    ])
+    ]
 
     oldBtcBasedTxTestFactory.fromAddress({
       transactions: dogeTransactions({
@@ -70,13 +70,58 @@ describe('DOGE transactions', () => {
         validTxData: VALID_TX_ADDRESS_DATA,
       },
       mock: {
-        requestGetUtxo: () => {
-        },
-        requestGetUtxoNotFound: () => {
-        },
+        requestGetUtxo: () => {},
+        requestGetUtxoNotFound: () => {},
         broadcast: mockedApi.blockchain.doge.dogeBroadcast,
       },
       getRequestBodyFromAddress,
+    })
+  })
+
+  describe('From Address - dust amount ', () => {
+    it('dust change', async () => {
+      const transactions = dogeTransactions({
+        getUTXOsByAddress: (chain: ChainEnum, address: string, amount: number) => [
+          {
+            txHash: '94c28ba7b8c1c0782635aa1334b527ff23701e2c345f797d44370b26024f5b76',
+            index: 1,
+            value: 100.1,
+            address: 'nXz1s8tMQbqjARaSMNCPkgdwJQ2JDW2M7W',
+            chain: 'doge-testnet',
+          },
+        ],
+        getUtxo: mockedApi.blockchain.doge.dogeGetUtxo,
+        dogeBroadcast: mockedApi.blockchain.doge.dogeBroadcast,
+      } as any)
+
+      const options = { testnet: true }
+
+      await expect(
+        transactions.prepareSignedTransaction(getRequestBodyFromAddress(VALID_ADDRESS_AMOUNT), options),
+      ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_DUST_AMOUNT)
+    })
+
+    it('dust output', async () => {
+      const transactions = dogeTransactions({
+        getUTXOsByAddress: (chain: ChainEnum, address: string, amount: number) => [
+          {
+            txHash: '94c28ba7b8c1c0782635aa1334b527ff23701e2c345f797d44370b26024f5b76',
+            index: 1,
+            value: 100.1,
+            address: 'nXz1s8tMQbqjARaSMNCPkgdwJQ2JDW2M7W',
+            chain: 'doge-testnet',
+          },
+        ],
+        getUtxo: mockedApi.blockchain.doge.dogeGetUtxo,
+        dogeBroadcast: mockedApi.blockchain.doge.dogeBroadcast,
+      } as any)
+
+      const options = { testnet: true }
+
+      const requestBodyFromAddress = getRequestBodyFromAddress(1.2)
+      await expect(
+        transactions.prepareSignedTransaction(requestBodyFromAddress, options),
+      ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_DUST_AMOUNT)
     })
   })
 
@@ -102,7 +147,8 @@ describe('DOGE transactions', () => {
     }
   }
 
-  function getRequestBodyFromAddress(amount: number): DogeTransactionAddress {
+  function getRequestBodyFromAddress(amount: number | string): DogeTransactionAddress {
+    const value = new BigNumber(amount)
     return {
       fromAddress: [
         {
@@ -113,7 +159,7 @@ describe('DOGE transactions', () => {
       to: [
         {
           address: TO_ADDRESS,
-          value: amount - 1,
+          value: value.minus(1).toNumber(),
         },
       ],
       changeAddress: ADDRESS,

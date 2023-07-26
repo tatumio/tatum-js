@@ -129,7 +129,6 @@ export const oldBtcBasedTxTestFactory = {
       })
 
       it('not enough money on balance', async () => {
-
         await expect(
           args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(100500), {
             testnet: true,
@@ -138,11 +137,13 @@ export const oldBtcBasedTxTestFactory = {
       })
 
       it('fee = 0', async () => {
-
         await expect(
-          args.transactions.prepareSignedTransaction(args.getRequestBodyFromAddress(args.data.validAmount + 1), {
-            testnet: true,
-          }),
+          args.transactions.prepareSignedTransaction(
+            args.getRequestBodyFromAddress(args.data.validAmount + 1),
+            {
+              testnet: true,
+            },
+          ),
         ).rejects.toThrowSdkErrorWithCode(SdkErrorCode.BTC_BASED_FEE_TOO_SMALL)
       })
     })
