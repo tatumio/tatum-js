@@ -112,6 +112,7 @@ export enum SdkErrorCode {
   BTC_BASED_MNEMONIC_OR_KEYPAIR_EXPECTED = 'transaction.preparation.mnemonic.or.keypair.not.present',
   BTC_BASED_TX_FAILED = 'transaction.preparation.failed',
   BTC_BASED_BLOCKCHAIN_ERROR = 'transaction.preparation.blockchain.error',
+  BTC_BASED_DUST_AMOUNT = 'transaction.output.dust.amount',
 
   VALIDATION_AMOUNT = 'validation.amount',
   SECRET_CHECKSUM = 'validation.secret.checksum',
@@ -214,6 +215,7 @@ export const SdkErrorMessage: Map<SdkErrorCode, string> = new Map([
 
   // BTC
   [SdkErrorCode.BTC_BASED_FEE_TOO_SMALL, `Fee is too small. Please make sure that amount to send < balance`],
+  [SdkErrorCode.BTC_BASED_DUST_AMOUNT, `Dust amount in one of the outputs`],
   [
     SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND,
     `UTXO with hash {0} and index {1} not found. Please check that outputs are valid`,
