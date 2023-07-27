@@ -5,10 +5,13 @@ export const DOGE_ERRORS_MAPPING = {
   'dogecore.ErrorTransactionInvalidOutputAmountSum': SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE,
   'dogecore.ErrorTransactionFeeErrorDifferent': SdkErrorCode.BTC_BASED_FEE_TOO_SMALL,
   'dogecore.ErrorTransactionDustOutputs': SdkErrorCode.BTC_BASED_DUST_AMOUNT,
+  'dogecore.ErrorTransactionChangeAddressMissing': SdkErrorCode.BTC_FEE_IS_TOO_LARGE,
+  'dogecore.ErrorTransactionFeeErrorTooLarge': SdkErrorCode.BTC_FEE_IS_TOO_LARGE,
 }
 
 export type DogeSdkErrorCode =
   | SdkErrorCode.BTC_BASED_FEE_TOO_SMALL
+  | SdkErrorCode.BTC_FEE_IS_TOO_LARGE
   | SdkErrorCode.BTC_BASED_UTXO_NOT_FOUND
   | SdkErrorCode.BTC_BASED_NOT_ENOUGH_BALANCE
   | SdkErrorCode.BTC_BASED_DUST_AMOUNT
