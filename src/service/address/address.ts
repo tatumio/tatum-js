@@ -134,9 +134,9 @@ export class Address {
         asset,
         decimals,
         balance
-      })
+      });
     }
-    return serializedTokenBalance
+    return serializedTokenBalance;
   }
 
   private async processTokenBalanceDetails(tokenBalances: AddressBalance[], chain: Network) {
