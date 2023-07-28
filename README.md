@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://tatum.com/">
+  <a href="https://tatum.io/">
     <img src="https://assets-global.website-files.com/62624e283b503f3e68275638/62624e283b503fde012757c1_Light.svg" alt="Logo" width="200" height="100">
   </a>
 </p>
@@ -10,7 +10,7 @@ SDK</h3>
 
 <p align="center">
   Welcome to Tatum SDK - TypeScript/JavaScript Library for Simplifying Blockchain Development.<br>
-  <a href="https://docs.tatum.com/"><strong>Documentation</strong></a>
+  <a href="https://docs.tatum.io/"><strong>Documentation</strong></a>
   <br>
   <br>
   <a href="https://github.com/tatumio/tatum-js/issues/new?assignees=-&labels=bug&template=bug_report.yml">Report bug</a>
@@ -18,8 +18,8 @@ SDK</h3>
 
 <div align="center">
 
-<a href="">[![GitHub license](https://img.shields.io/npm/dm/@tatumcom/js)](https://img.shields.io/npm/dm/@tatumcom/js)</a>
-<a href="">[![npm version](https://img.shields.io/npm/v/@tatumcom/js.svg?style=flat-square)](https://www.npmjs.com/package/@tatumcom/js)</a>
+<a href="">[![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum)</a>
+<a href="">[![npm version](https://img.shields.io/npm/v/@tatumio/tatum.svg?style=flat-square)](https://www.npmjs.com/package/@tatumio/tatum)</a>
 <a href="">[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tatumio/tatum-js/blob/master/LICENSE.txt)</a>
 <a href="">[![Build](https://img.shields.io/github/actions/workflow/status/tatumio/tatum-js/build.yml?branch=master)](https://img.shields.io/github/actions/workflow/status/tatumio/tatum-js/build.yml?branch=master)</a>
 
@@ -63,19 +63,19 @@ To install TatumSDK, simply run the following command in your terminal or comman
 ### Install using [npm](https://www.npmjs.com/)
 
 ```console
-npm install @tatumcom/js
+npm install @tatumio/tatum
 ```
 
 ### Install using [yarn](https://yarnpkg.com/)
 
 ```console
-yarn add @tatumcom/js
+yarn add @tatumio/tatum
 ```
 
 ### Install using [pnpm](https://pnpm.io/)
 
 ```console
-pnpm install @tatumcom/js
+pnpm install @tatumio/tatum
 ```
 
 ## Getting started
@@ -89,7 +89,7 @@ Here's a brief overview of how to utilize TatumSDK for RPC calls and subscribing
 Start by importing the TatumSDK library and initializing Ethereum client as follows:
 
 ```ts
-import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 ```
@@ -99,7 +99,7 @@ const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 To make RPC calls, use the available methods to interact with Ethereum blockchain. For example, to fetch the balance of a specific Ethereum address:
 
 ```ts
-import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
@@ -113,7 +113,7 @@ To subscribe to notifications for events related to a specified Ethereum address
 We are going to use `addressEvent` as an example, which sends you notification about any transfer on the address - native ones, ERC20 tokens or NFTs. To subscribe to this event, use the following code:
 
 ```ts
-import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
@@ -131,7 +131,7 @@ console.log(response)
 Using TatumSDK, obtain the NFT balance of an address by calling the getNFTBalance method within the NFT submodule and passing the target address as an argument. This streamlined process efficiently retrieves the total number of NFTs owned by the specified address. To achieve this, use the following code:
 
 ```ts
-import { TatumSDK, Network, Ethereum, NftAddressBalance } from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum, NftAddressBalance } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
@@ -147,7 +147,7 @@ console.log(balances)
 Using TatumSDK, it's possible to connect your browser application to MetaMask and perform transactions using it. To achieve this, use the following code:
 
 ```ts
-import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
@@ -165,7 +165,7 @@ console.log(txId)
 Using TatumSDK, obtain current fiat/crypto exchange rates To achieve this, use the following code:
 
 ```ts
-import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
@@ -184,7 +184,7 @@ Using TatumSDK, you can obtain recommended fee/gas price for a blockchain. Suppo
 - `Ethereum`
 
 ```ts
-import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({
   network: Network.ETHEREUM_SEPOLIA,
@@ -204,7 +204,7 @@ console.log(result.data)
 Using TatumSDK, obtain all fungible token balances of an address by calling the getBalance method within the `token` submodule and passing the target address as an argument. This streamlined process efficiently retrieves all balances for fungible tokens that specified address holds. To achieve this, use the following code:
 
 ```ts
-import { TatumSDK, Network, Ethereum } from '@tatumcom/js'
+import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA })
 
@@ -217,7 +217,7 @@ console.log(balances)
 
 ## Documentation
 
-- [Documentation and Guides](https://docs.tatum.com) to get started with Tatum SDK
+- [Documentation and Guides](https://docs.tatum.io) to get started with Tatum SDK
 - [Documentation section](https://github.com/tatumio/tatum-js/tree/master/docs) for more details.
 
 ## Examples
