@@ -124,24 +124,19 @@ export class Address {
     })
   }
 
-  private async processTRC20TokenBalanceDetails(tokenBalances: {[key: string]: string}) {
-    const balances = Object.entries(tokenBalances[0])
-    const serializedTokenBalance: Array<unknown> = []
-    for (let i = 0; i < balances.length; i++) {
-      const asset = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(
-        balances[i][0], balances[i][0], 'symbol()', '', { visible: true }
-      ).then(r => decodeUInt256(r.constant_result[0]))
-      const decimals = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(
-        balances[i][0], balances[i][0], 'decimals()', '', { visible: true }
-      ).then(r => decodeUInt256(r.constant_result[0]))
-      const balance = balances[i][1]
+  private async processTRC20TokenBalanceDetails(tokenBalances: [{[key: string]: string}]) {
+    const serializedTokenBalance = [];
+    for (let i = 0; i < tokenBalances.length; i++) {
+      const asset = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(Object.keys(tokenBalances[i])[0], Object.keys(tokenBalances[i])[0], 'symbol()', '', { visible: true }).then(r => decodeUInt256(r.constant_result[0]));
+      const decimals = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(Object.keys(tokenBalances[i])[0], Object.keys(tokenBalances[i])[0], 'decimals()', '', { visible: true }).then(r => decodeUInt256(r.constant_result[0]));
+      const balance = Object.values(tokenBalances[i])[0];
       serializedTokenBalance.push({
         asset,
         decimals,
         balance
-      })
+      });
     }
-    return serializedTokenBalance
+    return serializedTokenBalance;
   }
 
   private async processTokenBalanceDetails(tokenBalances: AddressBalance[], chain: Network) {
@@ -271,7 +266,7 @@ export class Address {
               key: string,
               value: number,
             }]
-            trc20: {[key: string]: string}
+            trc20: [{[key: string]: string}]
             freeNetLimit: number,
             bandwidth: number,
           }>({
@@ -281,7 +276,7 @@ export class Address {
           {
             return Object.create({
               nativeBalance: r.balance.toString(),
-              tokenBalances: await this.processTRC20TokenBalanceDetails(r.trc20),
+              tokenBalances: r.trc20.length > 0 ? await this.processTRC20TokenBalanceDetails(r.trc20) : [],
             })
           })
     }
