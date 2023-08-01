@@ -127,8 +127,8 @@ export class Address {
   private async processTRC20TokenBalanceDetails(tokenBalances: [{[key: string]: string}]) {
     const serializedTokenBalance = [];
     for (let i = 0; i < tokenBalances.length; i++) {
-      const asset = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(Object.keys(tokenBalances[i])[0], Object.keys(tokenBalances[i])[0], 'symbol()', '', { visible: true }).then(r => decodeHexString(r.constant_result[0]));
-      const decimals = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(Object.keys(tokenBalances[i])[0], Object.keys(tokenBalances[i])[0], 'decimals()', '', { visible: true }).then(r => decodeUInt256(r.constant_result[0]));
+      const asset = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(Object.keys(tokenBalances[i])[0], Object.keys(tokenBalances[i])[0], 'symbol()', '', { visible: true }).then(r => decodeHexString(r.constant_result[0]))
+      const decimals = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(Object.keys(tokenBalances[i])[0], Object.keys(tokenBalances[i])[0], 'decimals()', '', { visible: true }).then(r => decodeUInt256(r.constant_result[0]))
       const balance = Object.values(tokenBalances[i])[0];
       serializedTokenBalance.push({
         asset,
