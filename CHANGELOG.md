@@ -1,7 +1,12 @@
+## [3.0.2] - 2023.08.01
+### Changed
+- Added destroy method to the global Tatum SDK instance
+
 ## [3.0.1] - 2023.08.01
 ### Changed
 - Renamed RPC list domain from com to io
-- Added Optimism and Polygon RPC calls archice
+- Added Optimism and Polygon RPC calls archive
+
 ## [3.0.0] - 2023.07.19
 ### Changed
 - Updated npm package name from @tatumcom/js to @tatumio/tatum.
