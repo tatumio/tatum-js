@@ -53,7 +53,7 @@ export const EvmE2eUtils = {
     it('eth_getBlockByNumber', async () => {
       const tatum = await EvmE2eUtils.initTatum(network)
       const { result } = await tatum.rpc.blockNumber()
-      const { result: block } = await tatum.rpc.getBlockByNumber((result as BigNumber).toNumber())
+      const { result: block } = await tatum.rpc.getBlockByNumber((result as BigNumber).toNumber() - 100)
       expect(block.timestamp).toBeDefined()
       expect(block.size).toBeDefined()
       tatum.rpc.destroy()
