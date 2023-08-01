@@ -6,7 +6,7 @@ describe('Polygon', () => {
     EvmE2eUtils.e2e({ network: Network.POLYGON, chainId: 137 })
   })
 
-  describe.skip('mumbai', () => {
+  describe('mumbai', () => {
     EvmE2eUtils.e2e({ network: Network.POLYGON_MUMBAI, chainId: 80001 })
   })
 })

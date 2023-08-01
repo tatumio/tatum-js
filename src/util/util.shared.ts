@@ -94,7 +94,7 @@ export const Utils = {
     return Container.of(id).get(GenericRpc) as T
   },
   getRpcListUrl: (network: Network): string[] => {
-    return [`https://rpc.tatum.com/${network}/list.json`, `https://rpc.tatum.com/${network}-archive/list.json`]
+    return [`https://rpc.tatum.io/${network}/list.json`, `https://rpc.tatum.io/${network}-archive/list.json`]
   },
   getStatusPayload: (network: Network) => {
     if (isUtxoBasedNetwork(network)) {
