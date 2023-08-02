@@ -1,7 +1,12 @@
+## [3.0.2] - 2023.08.02
+### Changed
+- Changed error message for RPC calls from 'No active server found for ${nodeType} node.' to 'No active server found for node type ${NODE_TYPE_LABEL[nodeType]}.'
+
 ## [3.0.1] - 2023.08.01
 ### Changed
 - Renamed RPC list domain from com to io
 - Added Optimism and Polygon RPC calls archice
+
 ## [3.0.0] - 2023.07.19
 ### Changed
 - Updated npm package name from @tatumcom/js to @tatumio/tatum.
