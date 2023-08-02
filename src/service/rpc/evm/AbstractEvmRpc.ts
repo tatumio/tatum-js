@@ -10,6 +10,7 @@ import {
   TraceType,
   TxPayload,
 } from '../../../dto'
+import { decodeHexString } from '../../../util/decode';
 
 @Service()
 export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
@@ -146,6 +147,17 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     ])
     if (response.result) {
       response.result = new BigNumber(response.result)
+    }
+    return response
+  }
+
+  async getTokenSymbol(tokenAddress: string): Promise<JsonRpcResponse<string>> {
+    const response = await this.rpcCall<JsonRpcResponse<string>>('eth_call', [
+      { to: tokenAddress, data: '0x95d89b41' },
+      'latest',
+    ])
+    if (response.result) {
+      response.result = decodeHexString(response.result)
     }
     return response
   }
