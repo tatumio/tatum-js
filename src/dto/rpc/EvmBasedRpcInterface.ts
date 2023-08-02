@@ -131,6 +131,8 @@ export interface EvmBasedRpcInterface {
 
   getTokenDecimals(tokenAddress: string): Promise<JsonRpcResponse<BigNumber>>
 
+  getTokenSymbol(tokenAddress: string): Promise<JsonRpcResponse<string>>
+
   getContractAddress(txHash: string): Promise<string | null>
 
   // web3_ methods
