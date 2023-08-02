@@ -25,6 +25,11 @@ interface ActiveUrl {
   [RpcNodeType.ARCHIVE]: UrlIndex
 }
 
+const NODE_TYPE_LABEL = {
+  [RpcNodeType.NORMAL]: 'normal',
+  [RpcNodeType.ARCHIVE]: 'archive',
+}
+
 interface UrlIndex {
   url: string
   index: number
@@ -334,7 +339,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     }
 
     if (!activeIndex) {
-      console.error(`No active server found for ${nodeType} node.`)
+      console.error(`No active server found for node type ${NODE_TYPE_LABEL[nodeType]}.`)
       throw e
     }
 
