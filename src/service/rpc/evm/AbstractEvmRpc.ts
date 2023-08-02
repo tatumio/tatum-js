@@ -25,7 +25,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     return response
   }
 
-  async call(callObject: TxPayload, blockNumber?: BlockNumber): Promise<JsonRpcResponse<string>> {
+  async call(callObject: TxPayload, blockNumber: BlockNumber = 'latest'): Promise<JsonRpcResponse<string>> {
     return this.rpcCall<JsonRpcResponse<string>>('eth_call', [
       callObject,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
@@ -129,7 +129,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     return response
   }
 
-  async getBalance(address: string, blockNumber?: BlockNumber): Promise<JsonRpcResponse<BigNumber>> {
+  async getBalance(address: string, blockNumber: BlockNumber = 'latest'): Promise<JsonRpcResponse<BigNumber>> {
     const response = await this.rpcCall<JsonRpcResponse<any>>('eth_getBalance', [
       address,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
@@ -194,7 +194,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     ])
   }
 
-  async getCode(address: string, blockNumber?: BlockNumber): Promise<JsonRpcResponse<string>> {
+  async getCode(address: string, blockNumber: BlockNumber = 'latest'): Promise<JsonRpcResponse<string>> {
     if (!blockNumber) {
       blockNumber = 'latest'
     }
@@ -212,7 +212,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
   async getProof(
     address: string,
     storageKeys: string[],
-    blockNumber?: BlockNumber,
+    blockNumber: BlockNumber = 'latest',
   ): Promise<JsonRpcResponse<any>> {
     return this.rpcCall<JsonRpcResponse<any>>('eth_getProof', [
       address,
@@ -224,7 +224,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
   async getStorageAt(
     address: string,
     position: string,
-    blockNumber?: BlockNumber,
+    blockNumber: BlockNumber = 'latest',
   ): Promise<JsonRpcResponse<string>> {
     if (!blockNumber) {
       blockNumber = 'latest'
@@ -330,7 +330,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
   async traceCall(
     callObject: TxPayload,
     traceTypes: TraceType[],
-    blockNumber?: BlockNumber,
+    blockNumber: BlockNumber = 'latest',
   ): Promise<JsonRpcResponse<any>> {
     return this.rpcCall<JsonRpcResponse<any>>('trace_call', [
       callObject,
