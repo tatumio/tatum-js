@@ -11,7 +11,7 @@ export const EvmE2eUtils = {
       const { result } = await tatum.rpc.blockNumber()
 
       expect(result?.toNumber()).toBeGreaterThan(0)
-      tatum.rpc.destroy()
+      tatum.destroy()
     })
 
     it('eth_chainId', async () => {
@@ -31,7 +31,7 @@ export const EvmE2eUtils = {
       })
 
       expect(result?.toNumber()).toBeGreaterThan(0)
-      tatum.rpc.destroy()
+      tatum.destroy()
     })
 
     it('eth_gasPrice', async () => {
@@ -39,7 +39,7 @@ export const EvmE2eUtils = {
       const { result } = await tatum.rpc.gasPrice()
 
       expect(result?.toNumber()).toBeGreaterThan(0)
-      tatum.rpc.destroy()
+      tatum.destroy()
     })
 
     it('web3_clientVersion', async () => {
@@ -47,7 +47,7 @@ export const EvmE2eUtils = {
       const { result } = await tatum.rpc.clientVersion()
 
       expect(result).toBeTruthy()
-      tatum.rpc.destroy()
+      tatum.destroy()
     })
 
     it('eth_getBlockByNumber', async () => {
@@ -56,7 +56,7 @@ export const EvmE2eUtils = {
       const { result: block } = await tatum.rpc.getBlockByNumber((result as BigNumber).toNumber() - 1000)
       expect(block.timestamp).toBeDefined()
       expect(block.size).toBeDefined()
-      tatum.rpc.destroy()
+      tatum.destroy()
     })
   },
 }

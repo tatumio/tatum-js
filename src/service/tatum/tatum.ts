@@ -39,6 +39,10 @@ export abstract class BaseUtxoClass extends BaseTatumSdk {
     this.rpc = Utils.getRpc<UtxoBasedRpcSuite>(id, Container.of(id).get(CONFIG))
     this.fee = Container.of(id).get(FeeUtxo)
   }
+
+  destroy(): void {
+    this.rpc.destroy()
+  }
 }
 
 export abstract class BaseEvmClass extends BaseTatumSdk {
@@ -47,6 +51,10 @@ export abstract class BaseEvmClass extends BaseTatumSdk {
   constructor(id: string) {
     super(id)
     this.rpc = Utils.getRpc<EvmBasedRpcSuite>(id, Container.of(id).get(CONFIG))
+  }
+
+  destroy(): void {
+    this.rpc.destroy()
   }
 }
 
@@ -93,6 +101,10 @@ export class Xrp extends BaseTatumSdk {
     super(id)
     this.rpc = Utils.getRpc<XrpRpcSuite>(id, Container.of(id).get(CONFIG))
   }
+
+  destroy(): void {
+    this.rpc.destroy()
+  }
 }
 export class Solana extends BaseTatumSdk {
   rpc: SolanaRpcSuite
@@ -100,12 +112,20 @@ export class Solana extends BaseTatumSdk {
     super(id)
     this.rpc = Utils.getRpc<SolanaRpcSuite>(id, Container.of(id).get(CONFIG))
   }
+
+  destroy(): void {
+    this.rpc.destroy()
+  }
 }
 export class Tron extends BaseTatumSdk {
   rpc: TronRpcSuite
   constructor(id: string) {
     super(id)
     this.rpc = Utils.getRpc<TronRpcSuite>(id, Container.of(id).get(CONFIG))
+  }
+
+  destroy(): void {
+    this.rpc.destroy()
   }
 }
 
