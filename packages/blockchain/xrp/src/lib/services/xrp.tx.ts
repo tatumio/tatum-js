@@ -5,8 +5,7 @@ import {
   TrustLineXrpBlockchain,
 } from '@tatumio/api-client'
 import { BigNumber } from 'bignumber.js'
-import { RippleAPI } from 'ripple-lib'
-import { Payment } from 'ripple-lib/dist/npm/transaction/payment'
+import { Client, AccountSet, Payment, TrustSet, Wallet } from 'xrpl'
 import { XrpSdkError } from '../xrp.sdk.errors'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { XrpApiCallsType } from '../../index'
@@ -21,8 +20,8 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
   const prepareFee = async (fee?: string): Promise<number> => {
     if (fee && new BigNumber(fee).lte(0)) throw new XrpSdkError(SdkErrorCode.FEE_TOO_SMALL)
 
-    const manualFee = new BigNumber(fee ?? '0')
-    const estimatedFee = xrpUtils.toAmount((await apiCalls.getFee())?.drops?.base_fee)
+    const manualFee = xrpUtils.toDrops(fee ?? '0')
+    const estimatedFee = new BigNumber((await apiCalls.getFee())?.drops?.base_fee!)
 
     return Math.max(manualFee.toNumber(), estimatedFee.toNumber())
   }
@@ -88,30 +87,11 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
         issuerAccount,
       } = body
 
-      const finalFee = await prepareFee(fee)
+      const finalFeeInDrops = await prepareFee(fee)
+      const xrpFee = xrpUtils.toAmount(finalFeeInDrops.toString())
 
-      const payment: Payment = {
-        source: {
-          address: fromAccount,
-          maxAmount: {
-            currency: token || 'XRP',
-            counterparty: issuerAccount,
-            value: amount,
-          },
-          tag: sourceTag,
-        },
-        destination: {
-          address: to,
-          amount: {
-            currency: token || 'XRP',
-            counterparty: issuerAccount,
-            value: amount,
-          },
-          tag: destinationTag,
-        },
-      }
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
-      const balanceRequired = new BigNumber(amount).plus(finalFee)
+      const balanceRequired = new BigNumber(amount).plus(xrpFee)
       const accountBalance = xrpUtils.toAmount(accountInfo.account_data?.Balance)
       if (accountBalance.isLessThan(balanceRequired)) {
         throw new XrpSdkError(
@@ -119,19 +99,34 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
           `Insufficient funds. Balance: ${accountBalance.toString()} on account ${fromAccount} is less than ${balanceRequired.toString()}`,
         )
       }
-      const sequence = accountInfo.account_data?.Sequence
-      const maxLedgerVersion = accountInfo.ledger_current_index! + 500
-      const rippleAPI = new RippleAPI()
-      const prepared = await rippleAPI.preparePayment(fromAccount, payment, {
-        fee: finalFee.toString(),
-        sequence,
-        maxLedgerVersion,
-      })
-      if (signatureId) {
-        return prepared.txJSON
+
+      const payment: Payment = {
+        Account: fromAccount,
+        Amount: amount,
+        SourceTag: sourceTag,
+        Destination: to,
+        TransactionType: 'Payment',
+        Sequence: accountInfo.account_data?.Sequence,
+        LastLedgerSequence: accountInfo.ledger_current_index! + 500,
+        Fee: finalFeeInDrops.toString(),
+        DestinationTag: destinationTag,
       }
-      const signed = rippleAPI.sign(prepared.txJSON, fromSecret)
-      return signed.signedTransaction
+
+      if (token && issuerAccount) {
+        payment.Amount = { currency: token, value: amount, issuer: issuerAccount }
+      }
+
+      const client = new Client('wss://xrplcluster.com')
+      const prepared = await client.autofill(payment)
+
+      if (signatureId) {
+        return JSON.stringify(prepared)
+      }
+      const wallet = Wallet.fromSeed(fromSecret!)
+
+      const { tx_blob } = await wallet.sign(prepared)
+
+      return tx_blob
     } catch (e: any) {
       throw new XrpSdkError(e)
     }
@@ -152,32 +147,47 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
           'rippling and requireDestinationTag cannot be set at the same time',
         )
       }
-      const finalFee = await prepareFee(fee)
-      const rippleAPI = new RippleAPI()
+      const finalFeeInDrops = await prepareFee(fee)
+      const xrpFee = xrpUtils.toAmount(finalFeeInDrops.toString())
 
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
 
       const accountBalance = xrpUtils.toAmount(accountInfo.account_data?.Balance)
-      if (accountBalance.isLessThan(finalFee)) {
+      if (accountBalance.isLessThan(xrpFee)) {
         throw new XrpSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,
-          `Insufficient funds. Balance: ${accountBalance.toString()} on account ${fromAccount} is less than ${finalFee.toString()}`,
+          `Insufficient funds. Balance: ${accountBalance.toString()} on account ${fromAccount} is less than ${xrpFee.toString()}`,
         )
       }
 
-      const sequence = accountInfo.account_data?.Sequence
-      const maxLedgerVersion = (accountInfo.ledger_current_index as number) + 500
-      const settings = rippling === undefined ? { requireDestinationTag } : { defaultRipple: rippling }
-      const prepared = await rippleAPI.prepareSettings(fromAccount, settings, {
-        fee: finalFee.toString(),
-        sequence,
-        maxLedgerVersion,
-      })
-      if (signatureId) {
-        return prepared.txJSON
+      // https://xrpl.org/accountset.html#accountset-flags
+      const flag = rippling === undefined ? 1 : 8
+
+      const tx: AccountSet = {
+        TransactionType: 'AccountSet',
+        Account: fromAccount,
+        Fee: finalFeeInDrops.toString(),
+        Sequence: accountInfo.account_data?.Sequence,
+        LastLedgerSequence: (accountInfo.ledger_current_index as number) + 500,
       }
-      const signed = rippleAPI.sign(prepared.txJSON, fromSecret)
-      return signed.signedTransaction
+
+      if (rippling === true || requireDestinationTag === true) {
+        tx.SetFlag = flag
+      } else {
+        tx.ClearFlag = flag
+      }
+
+      const client = new Client('wss://xrplcluster.com')
+      const prepared = await client.autofill(tx)
+
+      if (signatureId) {
+        return JSON.stringify(prepared)
+      }
+      const wallet = Wallet.fromSeed(fromSecret!)
+
+      const { tx_blob } = await wallet.sign(prepared)
+
+      return tx_blob
     } catch (e: any) {
       throw new XrpSdkError(e)
     }
@@ -192,39 +202,42 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
     try {
       const { fromAccount, fromSecret, issuerAccount, token, limit, fee, signatureId } = body
 
-      const finalFee = await prepareFee(fee)
+      const finalFeeInDrops = await prepareFee(fee)
+      const xrpFee = xrpUtils.toAmount(finalFeeInDrops.toString())
 
-      const rippleAPI = new RippleAPI()
       const accountInfo = await apiCalls.getAccountDetail(fromAccount)
       const accountBalance = xrpUtils.toAmount(accountInfo.account_data?.Balance)
-      if (accountBalance.isLessThan(finalFee)) {
+      if (accountBalance.isLessThan(xrpFee)) {
         throw new XrpSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,
-          `Insufficient funds. Balance: ${accountBalance.toString()} on account ${fromAccount} is less than ${finalFee.toString()}`,
+          `Insufficient funds. Balance: ${accountBalance.toString()} on account ${fromAccount} is less than ${xrpFee.toString()}`,
         )
       }
 
-      const sequence = accountInfo.account_data?.Sequence
-      const maxLedgerVersion = (accountInfo.ledger_current_index as number) + 500
-
-      const prepared = await rippleAPI.prepareTrustline(
-        fromAccount,
-        {
+      const tx: TrustSet = {
+        TransactionType: 'TrustSet',
+        Account: fromAccount,
+        Fee: finalFeeInDrops.toString(),
+        LastLedgerSequence: (accountInfo.ledger_current_index as number) + 500,
+        LimitAmount: {
           currency: token,
-          counterparty: issuerAccount,
-          limit,
+          issuer: issuerAccount,
+          value: limit,
         },
-        {
-          fee: finalFee.toString(),
-          sequence,
-          maxLedgerVersion,
-        },
-      )
-      if (signatureId) {
-        return prepared.txJSON
+        Sequence: accountInfo.account_data?.Sequence,
       }
-      const signed = rippleAPI.sign(prepared.txJSON, fromSecret)
-      return signed.signedTransaction
+
+      const client = new Client('wss://xrplcluster.com')
+      const prepared = await client.autofill(tx)
+
+      if (signatureId) {
+        return JSON.stringify(prepared)
+      }
+      const wallet = Wallet.fromSeed(fromSecret!)
+
+      const { tx_blob } = await wallet.sign(prepared)
+
+      return tx_blob
     } catch (e: any) {
       throw new XrpSdkError(e)
     }

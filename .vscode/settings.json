@@ -1,5 +1,5 @@
 {
-  "editor.formatOnSave": false,
+  "editor.formatOnSave": true,
   "eslint.enable": true,
   "eslint.packageManager": "yarn",
   "editor.codeActionsOnSave": {
