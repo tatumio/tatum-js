@@ -139,7 +139,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     for (const server of this.rpcUrls[nodeType]) {
       Utils.log({ id: this.id, message: `Checking status of ${server.node.url}` })
       all.push(
-        Utils.fetchWithTimeout(server.node.url, {
+        Utils.fetchWithTimeout(server.node.url, this.id,{
           method: 'POST',
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
@@ -285,7 +285,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
 
     Utils.log({
       id: this.id,
-      message: `Using random URL ${this.rpcUrls[nodeType][randomIndex].node.url} for ${this.network} blockchain during the initialization for node ${nodeType}.`,
+      message: `Using random URL ${this.rpcUrls[nodeType][randomIndex].node.url} for ${this.network} blockchain during the initialization for node ${NODE_TYPE_LABEL[nodeType]}.`,
     })
 
     this.activeUrl[nodeType] = { url: this.rpcUrls[nodeType][randomIndex].node.url, index: randomIndex }

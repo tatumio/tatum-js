@@ -113,6 +113,8 @@ export interface EvmBasedRpcInterface {
 
   getTransactionReceipt(txHash: string): Promise<JsonRpcResponse<any>>
 
+  getBlockReceipts(blockNumber: string | number): Promise<JsonRpcResponse<any>>
+
   getUncleByBlockHashAndIndex(blockHash: string, index: number): Promise<JsonRpcResponse<any>>
 
   getUncleByBlockNumberAndIndex(blockNumber: string | number, index: number): Promise<JsonRpcResponse<any>>
@@ -158,6 +160,13 @@ export interface EvmBasedRpcInterface {
   ): Promise<JsonRpcResponse<any>>
 
   debugTraceTransaction(txHash: string, traceOptions?: TraceOptions): Promise<JsonRpcResponse<any>>
+
+  /**
+   *
+   * @param rplBlock The RLP encoded block
+   * @param traceOptions The tracer object
+   */
+  debugTraceBlock(rplBlock: string, traceOptions?: TraceOptions): Promise<JsonRpcResponse<any>>
 
   debugTraceBlockByHash(blockHash: string, traceOptions?: TraceOptions): Promise<JsonRpcResponse<any>>
 

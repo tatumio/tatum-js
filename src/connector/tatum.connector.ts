@@ -1,5 +1,4 @@
 import { Container, Service } from 'typedi'
-import { version } from '../../package.json'
 import { JsonRpcCall } from '../dto'
 import { ApiVersion } from '../service'
 import { CONFIG, Constant, Utils } from '../util'
@@ -44,7 +43,7 @@ export class TatumConnector {
     const { verbose } = Container.of(this.id).get(CONFIG)
 
     const url = externalUrl || this.getUrl({ path, params, basePath })
-    const headers = await this.headers(retry)
+    const headers = await Utils.getHeaders(this.id, retry)
     const request: RequestInit = {
       headers,
       method,
@@ -106,25 +105,6 @@ export class TatumConnector {
     }
 
     return url.toString()
-  }
-
-  private async headers(retry: number) {
-    const config = Container.of(this.id).get(CONFIG)
-    const headers = new Headers({
-      'Content-Type': 'application/json',
-      'x-ttm-sdk-version': version,
-      'x-ttm-sdk-product': 'JS',
-      'x-ttm-sdk-debug': `${config.verbose}`,
-      'x-ttm-sdk-retry': `${retry}`,
-    })
-    if (config.apiKey) {
-      if (config.version === ApiVersion.V1 && config.apiKey.v1) {
-        headers.append('x-api-key', config.apiKey.v1)
-      } else if (config.version === ApiVersion.V2 && config.apiKey.v2) {
-        headers.append('x-api-key', config.apiKey.v2)
-      }
-    }
-    return headers
   }
 
   private async retry(url: string, request: RequestInit, response: Response) {

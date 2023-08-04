@@ -7,15 +7,17 @@ export abstract class AbstractUtxoRpc implements UtxoBasedRpcInterface {
   async createRawTransaction(
     inputs: any[],
     outputs: any,
-    locktime = 0,
-    replaceable = false,
+    locktime: number,
+    replaceable: boolean,
   ): Promise<JsonRpcResponse<string>> {
-    return this.rpcCall<JsonRpcResponse<string>>('createrawtransaction', [
-      inputs,
-      outputs,
-      locktime,
-      replaceable,
-    ])
+    const params: unknown[] = [inputs, outputs]
+    if (locktime) {
+      params.push(locktime)
+    }
+    if (replaceable) {
+      params.push(replaceable)
+    }
+    return this.rpcCall<JsonRpcResponse<string>>('createrawtransaction', params)
   }
 
   async decodeRawTransaction(hexstring: string): Promise<JsonRpcResponse<any>> {
