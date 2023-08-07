@@ -102,7 +102,7 @@ export const xrpTxService = (apiCalls: XrpApiCallsType) => {
 
       const payment: Payment = {
         Account: fromAccount,
-        Amount: amount,
+        Amount: xrpUtils.toDrops(amount).toString(),
         SourceTag: sourceTag,
         Destination: to,
         TransactionType: 'Payment',
