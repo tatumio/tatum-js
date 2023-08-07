@@ -1,3 +1,9 @@
+## [3.0.4] - 2023.08.07
+### Changed
+- Added EVM debug_traceBlock and eth_getBlockReceipts methods
+- Pass Api key to the archive load balancer liveness check
+- Fix createrawtransaction method
+
 ## [3.0.3] - 2023.08.02
 ### Changed
 - Changed error message for RPC calls from 'No active server found for ${nodeType} node.' to 'No active server found for node type ${NODE_TYPE_LABEL[nodeType]}.'
@@ -10,7 +16,7 @@
 ### Changed
 - Renamed RPC list domain from com to io
 - Added Optimism and Polygon RPC calls archice
-- 
+-
 ## [3.0.0] - 2023.07.19
 ### Changed
 - Updated npm package name from @tatumcom/js to @tatumio/tatum.
