@@ -94,7 +94,7 @@ export const prepareTransactionFromVirtualAccountToBlockchain = async (
 
   const payment: Payment = {
     Account: fromAccount,
-    Amount: amount,
+    Amount: xrpUtils.toDrops(amount).toString(),
     SourceTag: sourceTag,
     Destination: address,
     TransactionType: 'Payment',
