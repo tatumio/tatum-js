@@ -1,6 +1,6 @@
 {
   "name": "tatumio",
-  "version": "2.2.21",
+  "version": "2.2.22",
   "license": "MIT",
   "repository": "https://github.com/tatumio/tatum-js",
   "scripts": {
@@ -71,7 +71,6 @@
     "hdkey": "^2.0.1",
     "lodash": "^4.17.21",
     "reflect-metadata": "^0.1.13",
-    "ripple-lib": "^1.7.1",
     "sha3": "^2.1.4",
     "stellar-sdk": "^9.1.0",
     "tronweb": "^5.2.0",
@@ -80,7 +79,8 @@
     "web3": "^1.7.4",
     "web3-core": "^1.7.4",
     "web3-eth": "^1.7.4",
-    "web3-utils": "^1.7.4"
+    "web3-utils": "^1.7.4",
+    "xrpl": "^2.9.1"
   },
   "devDependencies": {
     "@nrwl/cli": "14.8.4",

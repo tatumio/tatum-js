@@ -1,19 +1,18 @@
 import { XrpWallet } from '@tatumio/api-client'
 import { SdkWithXrpLikeWalletFunction } from '@tatumio/shared-blockchain-abstract'
-import { RippleAPI } from 'ripple-lib'
+import { Wallet, isValidAddress, isValidSecret } from 'xrpl'
 
 export const xrpWallet = (): SdkWithXrpLikeWalletFunction => {
   return {
     wallet: (): XrpWallet => {
-      const api = new RippleAPI()
-      const { address, secret } = api.generateAddress()
-      return { address: address as string, secret }
+      const { classicAddress, seed } = Wallet.generate()
+      return { address: classicAddress, secret: seed! }
     },
     isValidAddress: (address: string): boolean => {
-      return new RippleAPI().isValidAddress(address)
+      return isValidAddress(address)
     },
     isValidSecret: (secret: string): boolean => {
-      return new RippleAPI().isValidSecret(secret)
-    }
+      return isValidSecret(secret)
+    },
   }
 }

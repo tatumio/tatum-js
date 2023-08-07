@@ -4,6 +4,7 @@ export const XRP_ERRORS_MAPPING = {
   'instance.secret does not conform to the "secret" format': SdkErrorCode.XRP_SECRET_DOES_NOT_MATCH,
   'chain type is invalid': SdkErrorCode.KMS_CHAIN_MISMATCH,
   'insufficient funds on the sender account for performing the transaction': SdkErrorCode.INSUFFICIENT_FUNDS,
+  checksum_invalid: SdkErrorCode.XRP_SECRET_DOES_NOT_MATCH,
 }
 
 export type XrpSdkErrorCode =

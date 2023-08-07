@@ -1,10 +1,9 @@
 import { ApiServices, Currency, TransferXrp, Withdrawal } from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
-import { RippleAPI } from 'ripple-lib'
+import { Client, Payment, Wallet } from 'xrpl'
 import { abstractBlockchainVirtualAccount } from '@tatumio/shared-blockchain-abstract'
 import { XrpSdkError } from '../xrp.sdk.errors'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
-import { Payment } from 'ripple-lib/dist/npm/transaction/payment'
 import { xrpUtils } from './xrp.utils'
 
 export const xrpVirtualAccountService = (args: { blockchain: Blockchain }) => {
@@ -91,37 +90,29 @@ export const prepareTransactionFromVirtualAccountToBlockchain = async (
   sourceTag?: number,
   destinationTag?: string,
 ) => {
-  const currency = Currency.XRP
   const accountInfo = await ApiServices.blockchain.xrp.xrpGetAccountInfo(fromAccount)
 
   const payment: Payment = {
-    source: {
-      address: fromAccount,
-      maxAmount: {
-        currency,
-        value: amount,
-      },
-      tag: sourceTag,
-    },
-    destination: {
-      address,
-      amount: {
-        currency,
-        value: amount,
-      },
-    },
+    Account: fromAccount,
+    Amount: amount,
+    SourceTag: sourceTag,
+    Destination: address,
+    TransactionType: 'Payment',
+    Sequence: accountInfo?.account_data ? accountInfo.account_data.Sequence : undefined,
+    LastLedgerSequence: accountInfo?.ledger_current_index ? accountInfo.ledger_current_index + 5 : undefined,
+    Fee: xrpUtils.toDrops(fee).toString(),
   }
 
   if (destinationTag) {
-    payment.destination.tag = parseInt(destinationTag)
+    payment.DestinationTag = parseInt(destinationTag)
   }
 
-  const rippleAPI = new RippleAPI()
-  const prepared = await rippleAPI.preparePayment(fromAccount, payment, {
-    fee: `${fee}`,
-    sequence: accountInfo?.account_data ? accountInfo.account_data.Sequence : undefined,
-    maxLedgerVersion: accountInfo?.ledger_current_index ? accountInfo.ledger_current_index + 5 : undefined,
-  })
+  const client = new Client('wss://xrplcluster.com')
+  const prepared = await client.autofill(payment)
 
-  return (await rippleAPI.sign(prepared.txJSON, secret)).signedTransaction
+  const wallet = Wallet.fromSeed(secret)
+
+  const { tx_blob } = await wallet.sign(prepared)
+
+  return tx_blob
 }
