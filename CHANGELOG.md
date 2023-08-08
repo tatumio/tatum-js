@@ -1,3 +1,7 @@
+## [3.0.5] - 2023.08.07
+### Changed
+- In all error responses expects for RPC, error object returns also `dashboardLog` which points to the dashboard error log
+
 ## [3.0.4] - 2023.08.07
 ### Changed
 - Added EVM debug_traceBlock and eth_getBlockReceipts methods
