@@ -1,3 +1,8 @@
+## [3.0.6] - 2023.08.08
+### Changed
+- Forced EVM debug_traceBlock and eth_getBlockReceipts methods to work with archive nodes
+- Updated readme.md to look better
+
 ## [3.0.5] - 2023.08.07
 ### Changed
 - In all error responses expects for RPC, error object returns also `dashboardLog` which points to the dashboard error log
