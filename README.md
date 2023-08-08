@@ -107,6 +107,9 @@ Start by importing the TatumSDK library and initializing Ethereum client as foll
 import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
+
+// Destroy Tatum SDK - needed for stopping background jobs
+tatum.destroy()
 ```
 
 ### RPC Calls
@@ -120,6 +123,9 @@ const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
 const { result } = await tatum.rpc.getBalance('0x742d35Cc6634C0532925a3b844Bc454e4438f44e')
 console.log(`Balance: ${data}`)
+
+// Destroy Tatum SDK - needed for stopping background jobs
+tatum.destroy()
 ```
 
 ### Subscribing to Notifications
@@ -139,6 +145,9 @@ const response = await tatum.notification.subscribe.addressEvent({
 
 console.log(response)
 // 🎉  Now your address is subscribed for any events!
+
+// Destroy Tatum SDK - needed for stopping background jobs
+tatum.destroy()
 ```
 
 ### Get NFT balance of a wallet
@@ -155,6 +164,9 @@ const balances: NftAddressBalance[] = await tatum.nft.getBalance({
 })
 
 console.log(balances)
+
+// Destroy Tatum SDK - needed for stopping background jobs
+tatum.destroy()
 ```
 
 ### Connect to MetaMask and send transaction
@@ -173,6 +185,9 @@ const txId: string = await tatum.walletProvider.metaMask.transferNative(
 )
 
 console.log(txId)
+
+// Destroy Tatum SDK - needed for stopping background jobs
+tatum.destroy()
 ```
 
 ### Get exchange rates
@@ -187,6 +202,9 @@ const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 const res = await tatum.rates.getCurrentRate('BTC', 'EUR')
 
 console.log(res.data)
+
+// Destroy Tatum SDK - needed for stopping background jobs
+tatum.destroy()
 ```
 
 ### Get current fees
@@ -212,6 +230,9 @@ const tatum = await TatumSDK.init<Ethereum>({
 const result = await tatum.fee.getCurrentFee()
 
 console.log(result.data)
+
+// Destroy Tatum SDK - needed for stopping background jobs
+tatum.destroy()
 ```
 
 ### Get token balance
@@ -228,6 +249,9 @@ const { data: balances } = await tatum.token.getBalance({
 })
 
 console.log(balances)
+
+// Destroy Tatum SDK - needed for stopping background jobs
+tatum.destroy()
 ```
 
 ## Documentation
