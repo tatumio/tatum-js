@@ -36,17 +36,7 @@ We simplify the integration process by offering:
  - A user-friendly interface 🤝
  - Consistent interaction with a broad range of blockchains, including Ethereum 🔷, Polygon 🟣, Bitcoin ₿, and many more.
 
-
-A powerful, feature-rich TypeScript/JavaScript library that streamlines the development of blockchain applications.
-
-🔍 **Designed For Developers**
-If you're looking to integrate blockchain functionalities into your projects, [Tatum SDK](https://docs.tatum.io/sdk/get-started-with-tatum-sdk) is for you.We simplify the integration process by offering:
-
-- A user-friendly interface 🤝
-- Consistent interaction with a broad range of blockchains, including Ethereum 🔷, Polygon 🟣, Bitcoin ₿, and many more.
-
 For more details, visit our [documentation](https://docs.tatum.io) and [examples](https://github.com/tatumio/tatum-js#getting-started).
-
 
 
 With Tatum SDK, you can:
