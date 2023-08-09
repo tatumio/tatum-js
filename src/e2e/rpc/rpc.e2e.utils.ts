@@ -7,7 +7,7 @@ export const RpcE2eUtils = {
     retryDelay: 2000,
     verbose: true,
     apiKey: {
-      v2: 't-647835e1930be3001cb53f81-647835e2930be3001cb53f87'
+      v2: process.env.V2_API_KEY
     }
   }),
 }
