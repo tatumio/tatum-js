@@ -57,11 +57,11 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Litecoin RPC documentation](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation) |
 | [Dogecoin RPC documentation](https://docs.tatum.io/docs/rpc/utxo-blockchains/dogecoin-rpc-documentation) |
 | **Solana Blockchains**                                                                                   |
-| [Solana RPC documentation](https://docs.tatum.io/docs/rpc/solana-blockchains/solana-rpc-documentation)   |
+| [Solana RPC documentation](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                      |
 | **XPR Blockchains**                                                                                      |
-| [XPR RPC documentation](https://docs.tatum.io/docs/rpc/xpr-blockchains/xpr-rpc-documentation)            |
+| [XPR RPC documentation](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                            |
 | **Tron Blockchains**                                                                                     |
-| [Tron RPC documentation](https://docs.tatum.io/docs/rpc/tron-blockchains/tron-rpc-documentation)         |
+| [Tron RPC documentation](https://docs.tatum.io/docs/rpc/tron-rpc-documentation)                          |
 
 ### 🔔 Create Notifications
 
@@ -117,7 +117,7 @@ Stay updated with real-time fee insights and ensure smooth transactions without 
 
 | Documentation |
 | ----- |
-| [Fetch real-time gas fee data](https://docs.tatum.io/docs/getCurrentFee) |
+| [Fetch real-time fee data](https://docs.tatum.io/docs/fee-estimation/getcurrentfee) |
 
 ### 💻 Wallet Provider
 
