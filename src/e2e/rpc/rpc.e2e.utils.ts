@@ -5,9 +5,8 @@ export const RpcE2eUtils = {
     network,
     retryCount: 5,
     retryDelay: 2000,
-    verbose: true,
     apiKey: {
-      v2: process.env.V2_API_KEY
-    }
+      v2: process.env.V2_API_KEY,
+    },
   }),
 }

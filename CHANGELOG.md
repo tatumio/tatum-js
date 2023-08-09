@@ -1,3 +1,8 @@
+## [3.0.7] - 2023.08.10
+### Fixed
+- Fix retry requests
+- Do not pass retry number in header
+
 ## [3.0.6] - 2023.08.08
 ### Changed
 - Forced EVM debug_traceBlock and eth_getBlockReceipts methods to work with archive nodes

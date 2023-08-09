@@ -1,7 +1,7 @@
+import { BigNumber } from 'bignumber.js'
 import { Network } from '../../dto'
 import { BaseEvmClass, TatumSDK } from '../../service'
 import { RpcE2eUtils } from './rpc.e2e.utils'
-import { BigNumber } from 'bignumber.js'
 
 export const EvmE2eUtils = {
   initTatum: async (network: Network) => TatumSDK.init<BaseEvmClass>(RpcE2eUtils.initConfig(network)),

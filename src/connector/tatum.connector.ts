@@ -40,10 +40,8 @@ export class TatumConnector {
     retry = 0,
     externalUrl?: string,
   ): Promise<RESPONSE> {
-    const { verbose } = Container.of(this.id).get(CONFIG)
-
     const url = externalUrl || this.getUrl({ path, params, basePath })
-    const headers = await Utils.getHeaders(this.id, retry)
+    const headers = await Utils.getHeaders(this.id)
     const request: RequestInit = {
       headers,
       method,
@@ -51,34 +49,55 @@ export class TatumConnector {
     }
 
     const start = Date.now()
-    if (verbose) {
-      console.debug(new Date().toISOString(), 'Request: ', request.method, url, request.body)
-    }
+
     try {
-      return await fetch(url, request).then(async (res) => {
-        const end = Date.now() - start
-        if (verbose) {
-          console.log(
-            new Date().toISOString(),
-            `Response received in ${end}ms: `,
-            res.status,
-            await res.clone().text(),
-          )
-        }
-        if ([204, 304, 101, 100].includes(res.status)) {
-          return
-        }
+      const res = await fetch(url, request)
+      const end = Date.now() - start
+      const responseBody = await res.clone().text()
 
-        if (res.ok) {
-          return res.json()
-        }
-
-        return this.retry(url, request, res)
+      // Structure your log entry here
+      Utils.log({
+        id: this.id,
+        message: `Request & Response`,
+        data: {
+          request: {
+            method: request.method,
+            url: url,
+            body: request.body,
+          },
+          response: {
+            status: res.status,
+            time: `${end}ms`,
+            body: responseBody,
+          },
+        },
       })
-    } catch (error) {
-      if (verbose) {
-        console.warn(new Date().toISOString(), `Error: ${JSON.stringify(error, Object.getOwnPropertyNames(error))}`)
+
+      if (res.ok) {
+        return await res.json()
       }
+
+      // Retry only in case of 5xx error
+      if (res.status >= 500 && res.status < 600) {
+        return await this.retry(url, request, res, retry)
+      }
+
+      return await Promise.reject(responseBody)
+    } catch (error) {
+      const end = Date.now() - start
+      Utils.log({
+        id: this.id,
+        message: `Error in Request & Response`,
+        data: {
+          request: {
+            method: request.method,
+            url: url,
+            body: request.body,
+          },
+          error: JSON.stringify(error, Object.getOwnPropertyNames(error)),
+          time: `${end}ms`,
+        },
+      })
       return Promise.reject(error)
     }
   }
@@ -107,40 +126,39 @@ export class TatumConnector {
     return url.toString()
   }
 
-  private async retry(url: string, request: RequestInit, response: Response) {
-    const { retryDelay, retryCount, verbose } = Container.of(this.id).get(CONFIG)
+  private async retry<RESPONSE>(
+    url: string,
+    request: RequestInit,
+    response: Response,
+    retry: number,
+  ): Promise<RESPONSE> {
+    const { retryDelay, retryCount } = Container.of(this.id).get(CONFIG)
     if (!retryCount) {
-      if (verbose) {
-        console.warn(
-          new Date().toISOString(),
-          `Not retrying the request - no max retry count defined: `,
-          url,
-          request.body,
-        )
-      }
+      Utils.log({
+        id: this.id,
+        message: `Not retrying the request - no max retry count defined`,
+        data: { url, requestBody: request.body },
+      })
       return Promise.reject(await response.text())
     }
-    const retry = parseInt(response.headers.get('x-ttm-sdk-retry') || `${retryCount}`) + 1
+
     if (retry >= retryCount) {
-      if (verbose) {
-        console.warn(
-          new Date().toISOString(),
-          `Not retrying the request for the '${retry}' time - exceeded max retry count ${retryCount}: `,
-          url,
-          request.body,
-        )
-      }
+      Utils.log({
+        id: this.id,
+        message: `Not retrying the request for the '${retry}' time - exceeded max retry count ${retryCount}: `,
+        data: { url, requestBody: request.body },
+      })
       return Promise.reject(await response.text())
     }
+
+    retry++
+
     await Utils.delay(retryDelay || 1000)
-    if (verbose) {
-      console.warn(
-        new Date().toISOString(),
-        `Retrying the request for the '${retry}' time: `,
-        url,
-        request.body,
-      )
-    }
+    Utils.log({
+      id: this.id,
+      message: `Retrying the request for the '${retry}' time: `,
+      data: { url, requestBody: request.body },
+    })
     return this.request(
       {
         method: request.method as string,
