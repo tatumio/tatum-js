@@ -56,11 +56,9 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Bitcoin RPC documentation](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)   |
 | [Litecoin RPC documentation](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation) |
 | [Dogecoin RPC documentation](https://docs.tatum.io/docs/rpc/utxo-blockchains/dogecoin-rpc-documentation) |
-| **Solana Blockchains**                                                                                   |
+| **Other Blockchains**                                                                                   |
 | [Solana RPC documentation](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                      |
-| **XPR Blockchains**                                                                                      |
 | [XPR RPC documentation](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                            |
-| **Tron Blockchains**                                                                                     |
 | [Tron RPC documentation](https://docs.tatum.io/docs/rpc/tron-rpc-documentation)                          |
 
 ### 🔔 Create Notifications
