@@ -65,6 +65,15 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     ])
   }
 
+  async debugTraceBlock(rplBlock: string, traceOptions?: TraceOptions): Promise<JsonRpcResponse<any>> {
+    const params: unknown[] = [rplBlock]
+    if (traceOptions) {
+      params.push(traceOptions)
+    }
+    return this.rpcCall<JsonRpcResponse<any>>('debug_traceBlock', params)
+  }
+
+
   async debugTraceBlockByHash(blockHash: string, traceOptions?: TraceOptions): Promise<JsonRpcResponse<any>> {
     const params: unknown[] = [blockHash]
     if (traceOptions) {
@@ -286,6 +295,14 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
 
   async getTransactionReceipt(transactionHash: string): Promise<JsonRpcResponse<any>> {
     return this.rpcCall<JsonRpcResponse<any>>('eth_getTransactionReceipt', [transactionHash])
+  }
+
+  async getBlockReceipts(
+    blockNumber: string | number,
+  ): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('eth_getBlockReceipts', [
+      `0x${new BigNumber(blockNumber).toString(16)}`
+    ])
   }
 
   async getUncleByBlockHashAndIndex(blockHash: string, index: number): Promise<JsonRpcResponse<any>> {

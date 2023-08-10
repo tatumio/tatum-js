@@ -1,3 +1,23 @@
+## [3.0.7] - 2023.08.10
+### Fixed
+- Fix retry requests
+- Do not pass retry number in header
+
+## [3.0.6] - 2023.08.08
+### Changed
+- Forced EVM debug_traceBlock and eth_getBlockReceipts methods to work with archive nodes
+- Updated readme.md to look better
+
+## [3.0.5] - 2023.08.07
+### Changed
+- In all error responses expects for RPC, error object returns also `dashboardLog` which points to the dashboard error log
+
+## [3.0.4] - 2023.08.07
+### Changed
+- Added EVM debug_traceBlock and eth_getBlockReceipts methods
+- Pass Api key to the archive load balancer liveness check
+- Fix createrawtransaction method
+
 ## [3.0.3] - 2023.08.02
 ### Changed
 - Changed error message for RPC calls from 'No active server found for ${nodeType} node.' to 'No active server found for node type ${NODE_TYPE_LABEL[nodeType]}.'
@@ -10,7 +30,7 @@
 ### Changed
 - Renamed RPC list domain from com to io
 - Added Optimism and Polygon RPC calls archice
-- 
+-
 ## [3.0.0] - 2023.07.19
 ### Changed
 - Updated npm package name from @tatumcom/js to @tatumio/tatum.

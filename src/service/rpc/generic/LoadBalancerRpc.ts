@@ -139,7 +139,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     for (const server of this.rpcUrls[nodeType]) {
       Utils.log({ id: this.id, message: `Checking status of ${server.node.url}` })
       all.push(
-        Utils.fetchWithTimeout(server.node.url, {
+        Utils.fetchWithTimeout(server.node.url, this.id, {
           method: 'POST',
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
@@ -241,7 +241,6 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     throw new Error('No active node found.')
   }
 
-
   public getActiveNormalUrlWithFallback() {
     const activeNormalUrl = this.getActiveUrl(RpcNodeType.NORMAL)
     if (activeNormalUrl?.url) {
@@ -271,26 +270,27 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     }
 
     if (!this.rpcUrls[nodeType]) {
-      this.rpcUrls[nodeType] = [];
+      this.rpcUrls[nodeType] = []
     }
 
-    this.rpcUrls[nodeType] = [...this.rpcUrls[nodeType], ...filteredNodes.map((s) => ({
-      node: { url: s.url },
-      lastBlock: 0,
-      lastResponseTime: 0,
-      failed: false,
-    }))]
+    this.rpcUrls[nodeType] = [
+      ...this.rpcUrls[nodeType],
+      ...filteredNodes.map((s) => ({
+        node: { url: s.url },
+        lastBlock: 0,
+        lastResponseTime: 0,
+        failed: false,
+      })),
+    ]
 
     const randomIndex = Math.floor(Math.random() * this.rpcUrls[nodeType].length)
 
     Utils.log({
       id: this.id,
-      message: `Using random URL ${this.rpcUrls[nodeType][randomIndex].node.url} for ${this.network} blockchain during the initialization for node ${nodeType}.`,
+      message: `Using random URL ${this.rpcUrls[nodeType][randomIndex].node.url} for ${this.network} blockchain during the initialization for node ${NODE_TYPE_LABEL[nodeType]}.`,
     })
 
     this.activeUrl[nodeType] = { url: this.rpcUrls[nodeType][randomIndex].node.url, index: randomIndex }
-
-
   }
 
   private async initRemoteHostsUrls() {
@@ -306,7 +306,10 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
         this.initRemoteHosts(RpcNodeType.NORMAL, nodes)
         this.initRemoteHosts(RpcNodeType.ARCHIVE, nodes)
       } else {
-        console.error(new Date().toISOString(), `Failed to fetch RPC configuration for ${network} blockchain for normal nodes`)
+        Utils.log({
+          id: this.id,
+          message: `Failed to fetch RPC configuration for ${network} blockchain for normal nodes`,
+        })
       }
 
       if (archive.ok) {
@@ -314,7 +317,10 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
         this.initRemoteHosts(RpcNodeType.NORMAL, nodes)
         this.initRemoteHosts(RpcNodeType.ARCHIVE, nodes)
       } else {
-        console.error(new Date().toISOString(), `Failed to fetch RPC configuration for ${network} blockchain for archive nodes`)
+        Utils.log({
+          id: this.id,
+          message: `Failed to fetch RPC configuration for ${network} blockchain for archive nodes`,
+        })
       }
     } catch (e) {
       console.error(
@@ -325,20 +331,22 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
   }
 
   async handleFailedRpcCall(rpcCall: JsonRpcCall | JsonRpcCall[], e: unknown, nodeType: RpcNodeType) {
-    const { verbose, rpc: rpcConfig } = Container.of(this.id).get(CONFIG)
+    const { rpc: rpcConfig } = Container.of(this.id).get(CONFIG)
     const { url } = this.getActiveUrl(nodeType)
     const activeIndex = this.getActiveIndex(nodeType)
-    if (verbose) {
-      console.warn(
-        new Date().toISOString(),
-        `Failed to call RPC ${
-          Array.isArray(rpcCall) ? 'methods' : rpcCall.method
-        } on ${url}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
-      )
-      console.log(new Date().toISOString(), `Switching to another server, marking this as unstable.`)
-    }
+    Utils.log({
+      id: this.id,
+      message: `Failed to call RPC ${
+        Array.isArray(rpcCall) ? 'methods' : rpcCall.method
+      } on ${url}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
+    })
 
-    if (!activeIndex) {
+    Utils.log({
+      id: this.id,
+      message: `Switching to another server, marking ${url} as unstable.`,
+    })
+
+    if (activeIndex == null) {
       console.error(`No active server found for node type ${NODE_TYPE_LABEL[nodeType]}.`)
       throw e
     }
@@ -354,7 +362,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
       rpcConfig?.allowedBlocksBehind as number,
     )
     if (index === -1) {
-      console.error(`All servers are unavailable.`)
+      console.error(`All RPC nodes are unavailable.`)
       throw e
     }
     Utils.log({
@@ -365,7 +373,9 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
   }
 
   async rawRpcCall(rpcCall: JsonRpcCall, archive?: boolean): Promise<JsonRpcResponse<any>> {
-    const { url, type } = archive ? this.getActiveArchiveUrlWithFallback() : this.getActiveNormalUrlWithFallback()
+    const { url, type } = archive
+      ? this.getActiveArchiveUrlWithFallback()
+      : this.getActiveNormalUrlWithFallback()
     try {
       Utils.log({
         id: this.id,

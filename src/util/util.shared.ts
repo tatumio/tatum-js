@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Container } from 'typedi'
-
 import { BigNumber } from 'bignumber.js'
+import { Container } from 'typedi'
+import { version } from '../../package.json'
 import {
-  AddressEventNotificationChain, isEvmArchiveNonArchiveLoadBalancerNetwork,
+  AddressEventNotificationChain,
+  isEvmArchiveNonArchiveLoadBalancerNetwork,
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
   isSolanaEnabledNetwork,
@@ -16,6 +17,7 @@ import {
   Network,
 } from '../dto'
 import {
+  ApiVersion,
   ArbitrumNova,
   ArbitrumOne,
   Aurora,
@@ -45,7 +47,8 @@ import {
   Palm,
   Polygon,
   Solana,
-  SolanaRpc, TatumConfig,
+  SolanaRpc,
+  TatumConfig,
   Tron,
   TronRpc,
   UtxoLoadBalancerRpc,
@@ -55,8 +58,8 @@ import {
   Xrp,
   XrpRpc,
 } from '../service'
-import { CONFIG } from './di.tokens'
 import { EvmArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmArchiveLoadBalancerRpc'
+import { CONFIG } from './di.tokens'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
@@ -197,6 +200,7 @@ export const Utils = {
   delay: (t: number) => new Promise((resolve) => setTimeout(resolve, t)),
   fetchWithTimeout: async (
     url: string,
+    containerId: string,
     config: RequestInit,
     timeout = 5000,
   ): Promise<{ response: Response; responseTime: number }> => {
@@ -207,13 +211,30 @@ export const Utils = {
     const response = await fetch(url, {
       ...config,
       signal: controller.signal,
-      headers: {
-        'Content-Type': 'application/json',
-      },
+      headers: Utils.getHeaders(containerId),
     })
     const responseTime = Date.now() - start
     clearTimeout(id)
     return { responseTime, response }
+  },
+
+  getHeaders: (id: string) => {
+    const config = Container.of(id).get(CONFIG)
+    const headers = new Headers({
+      'Content-Type': 'application/json',
+      'x-ttm-sdk-version': version,
+      'x-ttm-sdk-product': 'JS',
+      'x-ttm-sdk-debug': `${config.verbose}`,
+    })
+
+    if (config.apiKey) {
+      if (config.version === ApiVersion.V1 && config.apiKey.v1) {
+        headers.append('x-api-key', config.apiKey.v1)
+      } else if (config.version === ApiVersion.V2 && config.apiKey.v2) {
+        headers.append('x-api-key', config.apiKey.v2)
+      }
+    }
+    return headers
   },
   padWithZero: (data: string, length = 64) => data.replace('0x', '').padStart(length, '0'),
   camelToSnakeCase: (str: string) => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),

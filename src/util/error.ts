@@ -21,6 +21,7 @@ export interface ResponseDto<T> {
 type ErrorWithMessage = {
   message: string[] | object[]
   code?: string
+  dashboardLog?: string
 }
 
 export const ErrorUtils = {
@@ -66,24 +67,29 @@ export const ErrorUtils = {
           return {
             message: (error.data as string[]).map((message) => ErrorUtils.formatErrorMsg(message)),
             code: error.errorCode,
+            dashboardLog: error.dashboardLog,
           }
         }
 
         return {
           message: [error.message ?? maybeError],
           code: error.errorCode,
+          dashboardLog: error.dashboardLog,
         }
         // eslint-disable-next-line no-empty
       } catch (_) {}
     }
 
     if (ErrorUtils.isErrorWithMessage(maybeError)) {
-      return { message: [maybeError.message] }
+      return { message: [maybeError.message], dashboardLog: maybeError.dashboardLog }
     }
 
     try {
       return {
         message: [JSON.stringify(maybeError, null, 2)],
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        dashboardLog: maybeError.dashboardLog,
       }
     } catch {
       // fallback in case there's an error stringifying the maybeError
