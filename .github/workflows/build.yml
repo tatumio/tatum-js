@@ -6,6 +6,7 @@ on:
 env:
   SDK_ERROR_MESSAGES_VERSION: "master"
   V2_API_KEY: ${{ secrets.V2_API_KEY }}
+  NON_TATUM_RPC_ETH_URL: ${{ secrets.NON_TATUM_RPC_ETH_URL }}
 
 jobs:
   metadata:

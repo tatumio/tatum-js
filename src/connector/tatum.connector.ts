@@ -58,7 +58,7 @@ export class TatumConnector {
       // Structure your log entry here
       Utils.log({
         id: this.id,
-        message: `Request & Response`,
+        message: `[${request.method}] ${url} -> ${res.status} (${end}ms)`,
         data: {
           request: {
             method: request.method,
@@ -87,7 +87,7 @@ export class TatumConnector {
       const end = Date.now() - start
       Utils.log({
         id: this.id,
-        message: `Error in Request & Response`,
+        message: `[${request.method}] ${url} -> (${end}ms)`,
         data: {
           request: {
             method: request.method,

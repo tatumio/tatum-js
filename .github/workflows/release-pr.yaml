@@ -7,7 +7,7 @@ on:
 
 env:
   V2_API_KEY: ${{ secrets.V2_API_KEY }}
-
+  NON_TATUM_RPC_ETH_URL: ${{ secrets.NON_TATUM_RPC_ETH_URL }}
 jobs:
   checks:
     runs-on: ubuntu-latest
