@@ -162,6 +162,17 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     return response
   }
 
+  async getTokenName(tokenAddress: string): Promise<JsonRpcResponse<string>> {
+    const response = await this.rpcCall<JsonRpcResponse<string>>('eth_call', [
+      { to: tokenAddress, data: '0x06fdde03' },
+      'latest',
+    ])
+    if (response.result) {
+      response.result = decodeHexString(response.result)
+    }
+    return response
+  }
+
   async getContractAddress(txHash: string): Promise<string | null> {
     try {
       const txReceipt = await this.getTransactionReceipt(txHash)
