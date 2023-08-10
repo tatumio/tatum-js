@@ -398,15 +398,15 @@ Older versions of the Tatum SDK has been moved to long living branches [`Tatum S
 
 We appreciate your interest in contributing to the Tatum SDK. Here's a guide to help you make meaningful contributions:
 
-### 1️⃣ Local Testing
+### Local Testing
 
 Before making a pull request, ensure you've thoroughly tested your changes with a local client.
 
-### 2️⃣ Unit Tests
+### Unit Tests
 
 Include unit test coverage for any new code you're adding. This helps in maintaining the quality and reliability of our SDK.
 
-### 3️⃣ Update the Changelog
+### Update the Changelog
 
 For every contribution, it's essential to document your changes in the changelog. The changelog keeps track of all the changes, updates, and fixes we make to our SDK. Use the provided format:
 
@@ -424,17 +424,16 @@ For instance:
 - New feature XYZ
 ```
 
-### 4️⃣ Update `package.json`
+### Update `package.json`
 
 Before creating a pull request or releasing a new version, ensure the `version` in `package.json` is updated to reflect the new release number.
 
-### 5️⃣ Release Consideration
+### Release Consideration
 Your changes will be released after merging the pull request.
 
 ---
 
 🙌 Thank you for helping make Tatum SDK better! Your contributions play a crucial role in its continuous improvement and growth.
-
 
 ### Bugs and feature requests
 
