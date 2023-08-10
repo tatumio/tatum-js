@@ -36,7 +36,7 @@ We simplify the integration process by offering:
  - A user-friendly interface 🤝
  - Consistent interaction with a broad range of blockchains, including Ethereum 🔷, Polygon 🟣, Bitcoin ₿, and many more.
 
-For more details, visit our [documentation](https://docs.tatum.io) and [examples](https://github.com/tatumio/tatum-js#getting-started).
+For more details, visit our [documentation](https://docs.tatum.io) and [getting started guide](https://github.com/tatumio/tatum-js#getting-started).
 
 
 With Tatum SDK, you can:
@@ -206,6 +206,8 @@ const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 // Destroy Tatum SDK - needed for stopping background jobs
 tatum.destroy()
 ```
+
+For more details, check out the [Get started documentation](https://docs.tatum.io/sdk/javascript-typescript-sdk).
 
 ### RPC Calls
 
@@ -383,21 +385,58 @@ For more details, check out the [Wallet address operations documentation](https:
 - [Documentation section](https://github.com/tatumio/tatum-js/tree/master/docs) for more details.
 
 ## Examples
+Explore various applications that utilize the Tatum SDK. These examples help illustrate the SDK's functionality and offer a starting point for developers looking to integrate similar features into their applications.
 
-- [Browser Example](https://github.com/tatumio/tatum-js/tree/master/examples/browser)
-- [Get Balance ETH Example](https://github.com/tatumio/tatum-js/tree/master/examples/docs/get-balance-eth)
-- [NextJS Example](https://github.com/tatumio/tatum-js/tree/master/examples/nextjs)
-- [TypeScript Example](https://github.com/tatumio/tatum-js/tree/master/examples/typescript)
+![Metamask notifications](https://github.com/tatumio/example-apps/blob/master/Metamask/notifications/public/demo.png)
+- [Metamask notifications](https://github.com/tatumio/example-apps/tree/master/Metamask/notifications)
+- [Metamask portfolio](https://github.com/tatumio/example-apps/tree/master/Metamask/portfolio)
+- [Metamask transfer](https://github.com/tatumio/example-apps/tree/master/Metamask/transfer)
 
 ## Legacy versions
 
 Older versions of the Tatum SDK has been moved to long living branches [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1) and [`Tatum SDK V2`](https://github.com/tatumio/tatum-js/tree/v2).
 
-## Contributing
+## 🤝 Contributing
 
-Contributions to the Tatum SDK are welcome. Please ensure that you have tested your changes with a local client and have added unit test coverage for your code.
+We appreciate your interest in contributing to the Tatum SDK. Here's a guide to help you make meaningful contributions:
 
-Changes will be included with the nearest release (but please point out if you deem changes worthy dedicated release).
+### 1️⃣ Local Testing
+
+Before making a pull request, ensure you've thoroughly tested your changes with a local client.
+
+### 2️⃣ Unit Tests
+
+Include unit test coverage for any new code you're adding. This helps in maintaining the quality and reliability of our SDK.
+
+### 3️⃣ Update the Changelog
+
+For every contribution, it's essential to document your changes in the changelog. The changelog keeps track of all the changes, updates, and fixes we make to our SDK. Use the provided format:
+
+```markdown
+## [Version Number] - YYYY.MM.DD
+### Added/Updated/Fixed/Changed
+- Description of the change
+```
+
+For instance:
+
+```markdown
+## [3.0.10] - 2023.08.11
+### Added
+- New feature XYZ
+```
+
+### 4️⃣ Update `package.json`
+
+Before creating a pull request or releasing a new version, ensure the `version` in `package.json` is updated to reflect the new release number.
+
+### 5️⃣ Release Consideration
+Your changes will be released after merging the pull request.
+
+---
+
+🙌 Thank you for helping make Tatum SDK better! Your contributions play a crucial role in its continuous improvement and growth.
+
 
 ### Bugs and feature requests
 

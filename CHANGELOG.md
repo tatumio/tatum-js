@@ -1,3 +1,9 @@
+## [3.0.9] - 2023.08.10
+### Updated
+- Add better logging message
+- Updated contributing guide
+- Removed old example folder
+
 ## [3.0.7] - 2023.08.10
 ### Fixed
 - Fix retry requests
