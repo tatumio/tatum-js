@@ -13,7 +13,6 @@ describe('Ethereum', () => {
   it('custom rpc provider', async () => {
     const tatum = await TatumSDK.init<BaseEvmClass>({
       network: Network.ETHEREUM,
-      verbose: true,
       rpc: {
         nodes: [
           {
@@ -24,7 +23,7 @@ describe('Ethereum', () => {
       },
     })
     const { result } = await tatum.rpc.chainId()
-    expect(result?.toNumber()).toBe(1)
     tatum.destroy()
+    expect(result?.toNumber()).toBe(1)
   })
 })

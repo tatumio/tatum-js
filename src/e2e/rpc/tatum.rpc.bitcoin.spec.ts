@@ -1,6 +1,6 @@
+import { BigNumber } from 'bignumber.js'
 import { ApiVersion, Ethereum, Network, TatumSDK } from '../../service'
 import { UtxoE2eUtils } from './utxo.e2e.utils'
-import { BigNumber } from 'bignumber.js'
 
 describe('Bitcoin', () => {
   describe('testnet', () => {
