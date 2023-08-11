@@ -377,6 +377,186 @@ tatum.destroy()
 
 For more details, check out the [Wallet address operations documentation](https://docs.tatum.io/docs/wallet-address-operations).
 
+## RPC calls
+All RPC calls are implemented in the `tatum.rpc.*` submodule.
+
+See the [RPC API Reference](https://docs.tatum.io/docs/rpc-api-reference) for more about supported chains and methods.
+
+### Status Pages
+This section provides a list of various blockchain network status pages, powered by Tatum. These links direct you to real-time status updates for each network.
+
+| Link                                                  |
+|-------------------------------------------------------|
+| [haqq-testnet.status.tatum.io](https://haqq-testnet.status.tatum.io)                   |
+| [polygon-mumbai.status.tatum.io](https://polygon-mumbai.status.tatum.io)               |
+| [tron-mainnet.status.tatum.io](https://tron-mainnet.status.tatum.io)                   |
+| [ethereum-mainnet-archive.status.tatum.io](https://ethereum-mainnet-archive.status.tatum.io) |
+| [dogecoin-testnet.status.tatum.io](https://dogecoin-testnet.status.tatum.io)           |
+| [polygon-mainnet-archive.status.tatum.io](https://polygon-mainnet-archive.status.tatum.io) |
+| [haqq-mainnet.status.tatum.io](https://haqq-mainnet.status.tatum.io)                   |
+| [ethereum-sepolia.status.tatum.io](https://ethereum-sepolia.status.tatum.io)           |
+| [flare-songbird.status.tatum.io](https://flare-songbird.status.tatum.io)               |
+| [haqq-mainnet-archive.status.tatum.io](https://haqq-mainnet-archive.status.tatum.io)   |
+| [ethereum-mainnet.status.tatum.io](https://ethereum-mainnet.status.tatum.io)           |
+| [bitcoin-mainnet.status.tatum.io](https://bitcoin-mainnet.status.tatum.io)             |
+| [flare-coston2.status.tatum.io](https://flare-coston2.status.tatum.io)                 |
+| [polygon-mainnet.status.tatum.io](https://polygon-mainnet.status.tatum.io)             |
+| [optimism-mainnet-archive.status.tatum.io](https://optimism-mainnet-archive.status.tatum.io) |
+| [litecoin-mainnet.status.tatum.io](https://litecoin-mainnet.status.tatum.io)           |
+| [ethereum-sepolia-archive.status.tatum.io](https://ethereum-sepolia-archive.status.tatum.io) |
+| [litecoin-testnet.status.tatum.io](https://litecoin-testnet.status.tatum.io)           |
+| [polygon-mumbai-archive.status.tatum.io](https://polygon-mumbai-archive.status.tatum.io) |
+| [bitcoin-testnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)             |
+
+
+### Load Balancer
+
+Load balancer is used managing RPC calls to nodes in a blockchain network.
+It maintains a list of available nodes and their status, and it automatically selects the most responsive node for subsequent RPC calls.
+
+> **_For use of the Load Balancer, you don't need to know how it is working!._**  Load Balancer works automatically in the background and selects the most responsive node for subsequent RPC calls. You can use the SDK without any knowledge of the Load Balancer.
+
+Load Balancer implementation is available in [LoadBalancerRpc.ts](https://github.com/tatumio/tatum-js/blob/master/src/service/rpc/generic/LoadBalancerRpc.ts)
+
+Using a load balancer to distribute traffic across multiple nodes, as opposed to routing all traffic to a single node, has several advantages:
+
+- **Improved Performance and Responsiveness:** Load balancers can distribute network or application traffic across several servers, which can help prevent any single server from becoming a bottleneck. As a result, users often experience faster response times.
+
+- **Scalability:** Load balancers enable you to handle larger amounts of traffic by simply adding more servers to the pool. This makes it easier to scale your infrastructure as your needs grow.
+
+- **Redundancy and High Availability:** If a server goes down, a load balancer can automatically reroute traffic to the remaining online servers. This ensures that your service remains available even in the face of hardware failures or other issues.
+
+- **Prevents Overloading of Nodes:** Load balancers can prevent any single server from being overloaded with too many requests, which can degrade the performance of the server and impact user experience.
+
+- **Efficient Use of Resources:** By distributing the load, you can make sure that all your servers are being used efficiently, rather than having some servers idle while others are overloaded.
+
+- **Flexibility and Maintenance:** With a load balancer, you can take servers offline for maintenance without disrupting service. The load balancer will simply stop sending traffic to the offline server.
+
+- **Better User Experience:** Ultimately, all of these benefits can lead to a better user experience, with faster response times and higher availability of services.
+
+#### Initialization
+At start the Load Balancer is initialized with a list of nodes. List of nodes are dynamically fetched from the remote server.
+There is also option to pass your custom list of nodes instead of the dynamic list.
+From the list of the nodes is randomly selected one node as a primary node, which is kept as a primary node until first load balancing is performed.
+The Load Balancer maintain lists of two types of nodes, normal and archive nodes.
+
+
+#### Load Balancing
+The load balancing process is running in the background and every minute it checks the status of all nodes in the list.
+The status of each node is determined by making a request to the node's URL and checking the response.
+The fastest responding node in each category is then selected as the active node for that normal and archive category.
+The selected nodes are then used for subsequent RPC calls.
+
+#### Error Handling
+If a RPC call fails, failure is logged, and the current active node is marked as failed, and load balancer selects a new active node.
+
+#### Destroy
+When you need to stop load balancer, you should can call `destroy` method. This method stops the load balancing process on the background.
+
+#### List of nodes
+The list of nodes is dynamically fetched from the remote server and it is defined for every blockchain.
+
+Here are the list of nodes for each blockchain:
+
+| Link                                               |
+|----------------------------------------------------|
+| [rpc.tatum.io/bitcoin-mainnet/list.json](https://rpc.tatum.io/bitcoin-mainnet/list.json) |
+| [rpc.tatum.io/bitcoin-testnet/list.json](https://rpc.tatum.io/bitcoin-testnet/list.json) |
+| [rpc.tatum.io/doge-mainnet/list.json](https://rpc.tatum.io/doge-mainnet/list.json) |
+| [rpc.tatum.io/doge-testnet/list.json](https://rpc.tatum.io/doge-testnet/list.json) |
+| [rpc.tatum.io/ethereum-mainnet-archive/list.json](https://rpc.tatum.io/ethereum-mainnet-archive/list.json) |
+| [rpc.tatum.io/ethereum-mainnet/list.json](https://rpc.tatum.io/ethereum-mainnet/list.json) |
+| [rpc.tatum.io/ethereum-sepolia-archive/list.json](https://rpc.tatum.io/ethereum-sepolia-archive/list.json) |
+| [rpc.tatum.io/ethereum-sepolia/list.json](https://rpc.tatum.io/ethereum-sepolia/list.json) |
+| [rpc.tatum.io/flare-coston/list.json](https://rpc.tatum.io/flare-coston/list.json) |
+| [rpc.tatum.io/flare-coston2/list.json](https://rpc.tatum.io/flare-coston2/list.json) |
+| [rpc.tatum.io/flare-mainnet/list.json](https://rpc.tatum.io/flare-mainnet/list.json) |
+| [rpc.tatum.io/flare-songbird/list.json](https://rpc.tatum.io/flare-songbird/list.json) |
+| [rpc.tatum.io/haqq-mainnet-archive/list.json](https://rpc.tatum.io/haqq-mainnet-archive/list.json) |
+| [rpc.tatum.io/haqq-mainnet/list.json](https://rpc.tatum.io/haqq-mainnet/list.json) |
+| [rpc.tatum.io/haqq-testnet/list.json](https://rpc.tatum.io/haqq-testnet/list.json) |
+| [rpc.tatum.io/litecoin-mainnet/list.json](https://rpc.tatum.io/litecoin-mainnet/list.json) |
+| [rpc.tatum.io/litecoin-testnet/list.json](https://rpc.tatum.io/litecoin-testnet/list.json) |
+| [rpc.tatum.io/optimism-mainnet-archive/list.json](https://rpc.tatum.io/optimism-mainnet-archive/list.json) |
+| [rpc.tatum.io/polygon-mainnet-archive/list.json](https://rpc.tatum.io/polygon-mainnet-archive/list.json) |
+| [rpc.tatum.io/polygon-mainnet/list.json](https://rpc.tatum.io/polygon-mainnet/list.json) |
+
+
+Following pattern defines the URL for fetching the list of nodes:
+```
+https://rpc.tatum.io/${network}/list.json
+```
+Networks enum is available in the [Network.ts](https://github.com/tatumio/tatum-js/blob/master/src/dto/Network.ts)
+
+For instance if we will need Bitcoin mainnet nodes, we will use this URL:
+
+```
+curl https://rpc.tatum.io/bitcoin-mainnet/list.json
+```
+
+The response is a list of nodes with their url, type (0 - normal, 1 - archive) and location.
+
+```json
+[
+  {
+    "location": "Sydney",
+    "type": 0,
+    "url": "https://02-sydney-007-01.rpc.tatum.io/"
+  },
+  {
+    "location": "Tokyo",
+    "type": 0,
+    "url": "https://02-tokyo-007-02.rpc.tatum.io/"
+  },
+  {
+    "location": "Dallas",
+    "type": 0,
+    "url": "https://02-dallas-007-03.rpc.tatum.io/"
+  },
+  {
+    "location": "Sao Paulo",
+    "type": 0,
+    "url": "https://02-saopaulo-007-04.rpc.tatum.io/"
+  },
+  {
+    "location": "Warsaw",
+    "type": 0,
+    "url": "https://01-warsaw-007-05.rpc.tatum.io/"
+  }
+]
+```
+Load Balancer selects from this list the most responsive node.
+
+### Usage
+
+#### Default config
+
+```typescript
+const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
+const info = await tatum.rpc.chainId()
+tatum.rpc.destroy()
+```
+
+#### Custom RPC node list
+
+```typescript
+const tatum = await TatumSDK.init<Ethereum>({
+  network: Network.ETHEREUM,
+  rpc: {
+    nodes: [
+      {
+        url: 'https://api.tatum.io/v3/blockchain/node/ethereum-mainnet',
+        type: NodeType.Normal,
+      },
+    ],
+    allowedBlocksBehind: 20,
+    oneTimeLoadBalancing: false
+  }
+})
+const info = await tatum.rpc.chainId()
+tatum.rpc.destroy()
+```
+
 ## Documentation
 
 - [Documentation and Guides](https://docs.tatum.io) to get started with Tatum SDK

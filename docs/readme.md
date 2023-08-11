@@ -4,4 +4,3 @@ Welcome to the Tatum SDK documentation! Use the following links to navigate to t
 
 - [Getting Started with Tatum SDK](https://docs.tatum.io)
 - [Structure](https://github.com/tatumio/tatum-js/blob/master/docs/structure.md)
-- [RPC submodule](https://github.com/tatumio/tatum-js/blob/master/docs/rpc.md)
