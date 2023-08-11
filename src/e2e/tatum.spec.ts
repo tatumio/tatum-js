@@ -13,6 +13,7 @@ describe('Tatum Init', () => {
         e2eUtil.subscriptions.getAddress(Network.BITCOIN_TESTNET),
         tatum.notification.subscribe.addressEvent,
       )
+      tatum.destroy()
     })
 
     it('Mainnet', async () => {
@@ -24,6 +25,7 @@ describe('Tatum Init', () => {
         e2eUtil.subscriptions.getAddress(Network.BITCOIN),
         tatum.notification.subscribe.addressEvent,
       )
+      tatum.destroy()
     })
 
     it('Empty', async () => {
@@ -33,6 +35,7 @@ describe('Tatum Init', () => {
         e2eUtil.subscriptions.getAddress(Network.BITCOIN),
         tatum.notification.subscribe.addressEvent,
       )
+      tatum.destroy()
     })
   })
 
@@ -54,6 +57,8 @@ describe('Tatum Init', () => {
         e2eUtil.subscriptions.getAddress(Network.BITCOIN_TESTNET),
         testnet.notification.subscribe.addressEvent,
       )
+      testnet.destroy()
+      mainnet.destroy()
     })
   })
 })
