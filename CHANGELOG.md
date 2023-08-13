@@ -1,4 +1,8 @@
-## [3.0.9] - 2023.08.10
+## [3.0.9] - 2023.08.13
+### Updated
+- Move node-fetch from devDep to Dep to enable package usage in Node.js apps
+
+## [3.0.8] - 2023.08.10
 ### Updated
 - Add better logging message
 - Updated contributing guide
