@@ -8,6 +8,7 @@ import { btcEstimateExample } from './app/btc.estimate.example'
 import { btcSubscriptionsExample } from './app/btc.subscriptions.example'
 import { btcVirtualAccountExample } from './app/btc.virtualAccount.example'
 import { btcBroadcastTransactionsExample } from './app/btc.tx.broadcast.example'
+import { btcTransactionRBFExample } from './app/btc.tx.rbf.example'
 
 const examples = async () => {
   console.log(`Running btcBalanceExample`)
@@ -36,6 +37,9 @@ const examples = async () => {
 
   console.log(`Running btcFromUtxoTransactionsExample`)
   await btcFromUtxoTransactionsExample()
+
+  console.log(`Running btcTransactionRBFExample`)
+  await btcTransactionRBFExample()
 
   console.log(`Running btcVirtualAccountExample`)
   await btcVirtualAccountExample()

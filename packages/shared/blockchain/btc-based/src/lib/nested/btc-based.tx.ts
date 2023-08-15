@@ -23,6 +23,7 @@ import { amountUtils, SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sd
 import { BtcBasedSdkError } from '../btc-based.sdk.errors'
 import BigNumber from 'bignumber.js'
 import { BtcBasedWalletUtils } from '../btc-based.wallet.utils'
+import { BtcBasedFromUtxoReplaceableTypes } from './btc-based.types'
 
 interface BtcBasedTransaction extends Transaction {
   serialize(unchecked?: boolean): string
@@ -31,6 +32,10 @@ interface BtcBasedTransaction extends Transaction {
 export type BtcBasedTx<T> = {
   sendTransaction: (body: T, options: BtcBasedTxOptions) => Promise<TransactionHash>
   prepareSignedTransaction: (body: T, options: BtcBasedTxOptions) => Promise<string>
+  prepareSignedReplaceableTransaction: (
+    body: BtcBasedFromUtxoReplaceableTypes,
+    options: BtcBasedTxOptions,
+  ) => Promise<string>
 }
 
 export type BtcTransactionTypes =
@@ -246,6 +251,38 @@ export const btcBasedTransactions = (
     }
   }
 
+  const privateKeysFromUTXONoChecks = async (
+    transaction: Transaction,
+    body: BtcBasedFromUtxoReplaceableTypes,
+  ): Promise<Array<string>> => {
+    try {
+      const privateKeysToSign = []
+
+      for (let i = 0; i < body.fromUTXO.length; i++) {
+        const utxo = body.fromUTXO[i]
+
+        transaction.from([
+          prepareUnspentOutput({
+            txId: utxo.txHash,
+            outputIndex: utxo.index,
+            script: scriptFromAddress(utxo.address).toString(),
+            satoshis: amountUtils.toSatoshis(utxo.value),
+          }),
+        ])
+
+        if ('signatureId' in utxo) privateKeysToSign.push(utxo.signatureId)
+        else if ('privateKey' in utxo) privateKeysToSign.push(utxo.privateKey)
+      }
+
+      return privateKeysToSign
+    } catch (e: any) {
+      if (e instanceof SdkError) {
+        throw e
+      }
+      throw new BtcBasedSdkError(e)
+    }
+  }
+
   const validateBalanceFromUTXO = async (
     body: BtcTransactionTypes | LtcTransactionTypes,
     utxos: BtcUTXO[] | LtcUTXO[],
@@ -335,6 +372,43 @@ export const btcBasedTransactions = (
     }
   }
 
+  const prepareSignedReplaceableTransaction = async function (
+    body: BtcBasedFromUtxoReplaceableTypes,
+  ): Promise<string> {
+    try {
+      const tx: BtcBasedTransaction = new createTransaction()
+
+      if (body.changeAddress) {
+        tx.change(body.changeAddress)
+      }
+      if (body.fee) {
+        tx.fee(amountUtils.toSatoshis(body.fee))
+      }
+      body.to.forEach((to) => {
+        tx.to(to.address, amountUtils.toSatoshis(to.value))
+      })
+
+      const privateKeysToSign: string[] = await privateKeysFromUTXONoChecks(tx, body)
+
+      tx.enableRBF()
+      const fromUTXO = body.fromUTXO
+      if (fromUTXO && 'signatureId' in fromUTXO[0] && fromUTXO[0].signatureId) {
+        return JSON.stringify(tx)
+      }
+
+      new Set(privateKeysToSign).forEach((key) => {
+        tx.sign(new createPrivateKey(key))
+      })
+
+      return tx.serialize(true)
+    } catch (e: any) {
+      if (e instanceof SdkError) {
+        throw e
+      }
+      throw new BtcBasedSdkError(e)
+    }
+  }
+
   const verifyAmounts = (tx: Transaction, body: BtcBasedTransactionTypes) => {
     const outputsSum: BigNumber = body.to
       .map((to) => amountUtils.toSatoshis(to.value))
@@ -375,5 +449,11 @@ export const btcBasedTransactions = (
      * @returns raw transaction data in hex, to be broadcasted to blockchain.
      */
     prepareSignedTransaction,
+    /**
+     * Prepare a signed replaceable (RBF) bitcoin based transaction with the private key locally. Nothing is broadcasted to the blockchain.
+     * All validations of tx will be skipped, just preparing tx data
+     * @returns raw transaction data in hex, to be broadcasted to blockchain.
+     */
+    prepareSignedReplaceableTransaction,
   }
 }
