@@ -115,13 +115,13 @@ export const btcBasedTransactions = (
       if (options.testnet) {
         return 'litecoin-testnet'
       } else {
-        return 'litecoin'
+        return 'litecoin-mainnet'
       }
     } else {
       if (options.testnet) {
         return 'bitcoin-testnet'
       } else {
-        return 'bitcoin'
+        return 'bitcoin-mainnet'
       }
     }
   }
