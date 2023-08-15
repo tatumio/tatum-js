@@ -9,7 +9,7 @@ import {
   DogeTransactionUTXOKMS,
   TransactionHash,
 } from '@tatumio/api-client'
-import { BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
+import { BtcBasedFromUtxoReplaceableTypes, BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { DogeSdkError } from './doge.sdk.errors'
 import _ from 'lodash'
@@ -121,6 +121,56 @@ export const dogeTransactions = (
     }
   }
 
+  const prepareSignedReplaceableTransaction = async (
+    body: BtcBasedFromUtxoReplaceableTypes,
+  ): Promise<string> => {
+    try {
+      const { to, fee, changeAddress } = body
+      const transaction = new Transaction()
+
+      const hasFeeAndChange = !_.isNil(changeAddress) && !_.isNil(fee)
+
+      for (const item of to) {
+        const amount = amountUtils.toSatoshis(item.value)
+        transaction.to(item.address, amount)
+      }
+
+      const privateKeysToSign = []
+      for (const item of body.fromUTXO) {
+        const satoshis = amountUtils.toSatoshis(item.value)
+        transaction.from([
+          Transaction.UnspentOutput.fromObject({
+            txId: item.txHash,
+            outputIndex: item.index,
+            script: Script.fromAddress(item.address).toString(),
+            satoshis,
+          }),
+        ])
+        if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
+        else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
+      }
+
+      if (hasFeeAndChange) {
+        transaction.change(changeAddress)
+        transaction.fee(amountUtils.toSatoshis(fee))
+      }
+
+      transaction.enableRBF()
+
+      if ('fromUTXO' in body && 'signatureId' in body.fromUTXO[0] && body.fromUTXO[0].signatureId) {
+        return JSON.stringify(transaction)
+      }
+
+      for (const pk of privateKeysToSign) {
+        transaction.sign(PrivateKey.fromWIF(pk))
+      }
+
+      return transaction.serialize()
+    } catch (e: any) {
+      throw new DogeSdkError(e)
+    }
+  }
+
   const validateBody = (body: DogeTransactionTypes) => {
     if (!('fromUTXO' in body) && !('fromAddress' in body)) {
       throw new DogeSdkError(SdkErrorCode.BTC_BASED_WRONG_BODY)
@@ -166,5 +216,6 @@ export const dogeTransactions = (
   return {
     sendTransaction,
     prepareSignedTransaction,
+    prepareSignedReplaceableTransaction,
   }
 }
