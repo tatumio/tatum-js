@@ -16,11 +16,7 @@ export interface TokenIdContractAddress extends TokenAddress {
   tokenId: string
 }
 
-export interface AddressBalanceDetails {
-  /**
-   * List of addresses to check.
-   */
-  addresses: string[]
+export interface AddressBalanceDetails extends AddressBalanceFilters {
   /**
    * Optional page size. If not specified, the default page size is used, which is 10.
    */
@@ -29,6 +25,20 @@ export interface AddressBalanceDetails {
    * Optional page number. If not specified, the first page is returned.
    */
   page?: number
+}
+
+export interface AddressBalanceFilters {
+  /**
+   * List of addresses to check.
+   */
+  addresses: string[]
+}
+
+export interface AddressBalanceFiltersTron {
+  /**
+   * Address to check.
+   */
+  address: string
 }
 
 export interface TokenDetails {

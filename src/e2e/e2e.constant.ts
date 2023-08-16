@@ -30,6 +30,7 @@ export const AddressEventNetworks = [
   Network.TRON_SHASTA,
   Network.XRP,
   Network.XRP_TESTNET,
+  Network.TEZOS,
 ]
 
 export const IncomingNativeTxNetworks = [
@@ -57,6 +58,7 @@ export const IncomingNativeTxNetworks = [
   Network.SOLANA_DEVNET,
   Network.XRP,
   Network.XRP_TESTNET,
+  Network.TEZOS,
 ]
 
 export const OutgoingNativeTxNetworks = [
@@ -82,6 +84,7 @@ export const OutgoingNativeTxNetworks = [
   Network.SOLANA_DEVNET,
   Network.XRP,
   Network.XRP_TESTNET,
+  Network.TEZOS,
 ]
 
 export const OutgoingFailedNetworks = [
@@ -95,6 +98,7 @@ export const OutgoingFailedNetworks = [
   Network.BINANCE_SMART_CHAIN_TESTNET,
   Network.KLAYTN,
   Network.KLAYTN_BAOBAB,
+  Network.TEZOS,
 ]
 
 export const PaidFeeNetworks = [
@@ -112,6 +116,7 @@ export const PaidFeeNetworks = [
   Network.TRON_SHASTA,
   Network.XRP,
   Network.XRP_TESTNET,
+  Network.TEZOS,
 ]
 
 export const FungibleTxNetworks = [
@@ -129,6 +134,7 @@ export const FungibleTxNetworks = [
   Network.TRON_SHASTA,
   Network.SOLANA,
   Network.SOLANA_DEVNET,
+  Network.TEZOS,
 ]
 
 export const NftNetworks = [
@@ -146,6 +152,7 @@ export const NftNetworks = [
   Network.TRON_SHASTA,
   Network.SOLANA,
   Network.SOLANA_DEVNET,
+  Network.TEZOS,
 ]
 
 export const MultitokenNetworks = [
@@ -176,6 +183,7 @@ export const FailedTxPerBlockNetworks = [
   Network.TRON_SHASTA,
   Network.SOLANA,
   Network.SOLANA_DEVNET,
+  Network.TEZOS,
 ]
 
 export const ContractAddressLogEventNetworks = [
@@ -196,4 +204,5 @@ export const InternalTxNetworks = [
   Network.ETHEREUM_SEPOLIA,
   Network.CELO,
   Network.CELO_ALFAJORES,
+  Network.TEZOS,
 ]

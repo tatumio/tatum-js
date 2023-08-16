@@ -64,6 +64,37 @@ export interface GetAddressTransactionsQuery {
   page?: number
 }
 
+export interface GetAddressTransactionsQueryTezos {
+  /**
+   * Blockchain address to get transactions for.
+   */
+  address?: string
+  /**
+   * Optional transaction type. If not specified, both incoming and outgoing transactions are returned.
+   */
+  transactionDirection?: 'incoming' | 'outgoing'
+  /**
+   * Optional from block. If not specified, all transactions are returned from the beginning of the blockchain.
+   */
+  fromBlock?: number
+  /**
+   * Optional to block. If not specified, all transactions are returned up till now.
+   */
+  toBlock?: number
+  /**
+   * Optional page size. If not specified, the default page size is used, which is 10.
+   */
+  pageSize?: number
+  /**
+   * Optional page number. If not specified, the first page is returned.
+   */
+  page?: number
+  /**
+   * Optional cursor parameter for pagination. The cursor to obtain previous page or next page of the data. Available only for Tezos blockchain.
+   */
+  cursor?: string
+}
+
 export interface AddressTransaction {
   /**
    * Blockchain network

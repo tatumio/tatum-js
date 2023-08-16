@@ -172,6 +172,8 @@ export const DATA_API_EVM_NETWORKS = [
   Network.CELO_ALFAJORES,
 ]
 
+export const DATA_API_NETWORKS = [...DATA_API_EVM_NETWORKS, Network.TEZOS]
+
 export const UTXO_LOAD_BALANCER_NETWORKS = [
   Network.BITCOIN,
   Network.BITCOIN_TESTNET,
@@ -218,6 +220,8 @@ export const isXrpNetwork = (network: Network) => [Network.XRP, Network.XRP_TEST
 
 export const isDataApiEvmEnabledNetwork = (network: Network) => DATA_API_EVM_NETWORKS.includes(network)
 
+export const isDataApiEnabledNetwork = (network: Network) => DATA_API_NETWORKS.includes(network)
+
 export const isDataApiUtxoEnabledNetwork = (network: Network) => DATA_API_UTXO_NETWORKS.includes(network)
 
 export const isSolanaEnabledNetwork = (network: Network) => SOLANA_NETWORKS.includes(network)
@@ -230,4 +234,5 @@ export const isUtxoLoadBalancerNetwork = (network: Network) => UTXO_LOAD_BALANCE
 
 export const isEvmLoadBalancerNetwork = (network: Network) => EVM_LOAD_BALANCER_NETWORKS.includes(network)
 
-export const isEvmArchiveNonArchiveLoadBalancerNetwork = (network: Network) => EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS.includes(network)
+export const isEvmArchiveNonArchiveLoadBalancerNetwork = (network: Network) =>
+  EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS.includes(network)

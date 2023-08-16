@@ -1,5 +1,17 @@
 import { Network } from '../dto'
-import { BaseTatumSdk, Bitcoin, Dogecoin, Ethereum, Litecoin, Solana, TatumSDK, Xrp } from '../service'
+import {
+  ApiVersion,
+  BaseTatumSdk,
+  Bitcoin,
+  Dogecoin,
+  Ethereum,
+  Litecoin,
+  Solana,
+  TatumSDK,
+  Tezos,
+  Tron,
+  Xrp,
+} from '../service'
 import { Status } from '../util'
 
 describe('Address', () => {
@@ -232,6 +244,88 @@ describe('Address', () => {
           decimals: 6,
           balance: '1000',
           type: 'native',
+        })
+      })
+    })
+
+    describe('getBalance Tezos', () => {
+      let tatum: Tezos
+
+      beforeEach(async () => {
+        tatum = await TatumSDK.init<Tezos>({
+          network: Network.TEZOS,
+        })
+      })
+
+      it('should get balance with native assets only', async () => {
+        const { data } = await tatum.address.getBalance({
+          addresses: ['tz1irJKkXS2DBWkU1NnmFQx1c1L7pbGg4yhk'],
+        })
+        expect(data).toHaveLength(1)
+        expect(data[0]).toStrictEqual({
+          asset: 'XTZ',
+          decimals: 6,
+          address: 'tz1irJKkXS2DBWkU1NnmFQx1c1L7pbGg4yhk',
+          balance: expect.any(String),
+          type: 'native',
+        })
+      })
+
+      it('should get balance with native assets only for 2 addresses', async () => {
+        const { data } = await tatum.address.getBalance({
+          addresses: ['tz1irJKkXS2DBWkU1NnmFQx1c1L7pbGg4yhk', 'tz1YkqJKPWXjREzs9L32AZqe3yiEdfhSYx3x'],
+        })
+        expect(data).toHaveLength(2)
+        expect(data[0]).toStrictEqual({
+          asset: 'XTZ',
+          address: 'tz1irJKkXS2DBWkU1NnmFQx1c1L7pbGg4yhk',
+          decimals: 6,
+          balance: expect.any(String),
+          type: 'native',
+        })
+        expect(data[1]).toStrictEqual({
+          asset: 'XTZ',
+          address: 'tz1YkqJKPWXjREzs9L32AZqe3yiEdfhSYx3x',
+          decimals: 6,
+          balance: expect.any(String),
+          type: 'native',
+        })
+      })
+    })
+
+    describe('getBalance Tron', () => {
+      let tatum: Tron
+
+      beforeEach(async () => {
+        tatum = await TatumSDK.init<Tron>({
+          network: Network.TRON_SHASTA,
+          version: ApiVersion.V1,
+        })
+      })
+
+      afterEach(() => {
+        tatum.destroy()
+      })
+
+      it('should get balance with native and erc20 assets', async () => {
+        const { data } = await tatum.address.getBalance({
+          address: 'TBhC4DefkF79z1B8MBbXRjAhMsWk5r3VLf',
+        })
+        expect(data.length).toBeGreaterThan(1)
+        expect(data[0]).toStrictEqual({
+          asset: 'TRX',
+          decimals: 6,
+          address: 'TBhC4DefkF79z1B8MBbXRjAhMsWk5r3VLf',
+          balance: expect.any(String),
+          type: 'native',
+        })
+        expect(data[1]).toStrictEqual({
+          asset: expect.any(String),
+          decimals: 6,
+          address: 'TBhC4DefkF79z1B8MBbXRjAhMsWk5r3VLf',
+          balance: expect.any(String),
+          type: 'fungible',
+          tokenAddress: expect.any(String),
         })
       })
     })
@@ -489,6 +583,58 @@ describe('Address', () => {
           hash: '472329bfef53408df028c3689ed31767d52aa5cf4469762dff0f494b2e5d854d',
           timestamp: 1679137321,
           transactionType: 'incoming',
+        })
+      })
+    })
+
+    describe('getTransactions Tezos', () => {
+      let tatum: Tezos
+
+      beforeEach(async () => {
+        tatum = await TatumSDK.init<Tezos>({ network: Network.TEZOS })
+      })
+
+      it('should get transactions - native only', async () => {
+        const txs = await tatum.address.getTransactions({
+          address: 'tz1irJKkXS2DBWkU1NnmFQx1c1L7pbGg4yhk',
+        })
+        expect(txs.status === Status.SUCCESS)
+        // at least one transaction
+        expect(txs.data.result).not.toHaveLength(0)
+        expect(txs.data.result[0]).toStrictEqual({
+          address: expect.any(String),
+          amount: expect.any(String),
+          blockNumber: expect.any(Number),
+          chain: 'tezos-mainnet',
+          counterAddress: expect.any(String),
+          hash: expect.any(String),
+          timestamp: expect.any(Number),
+          transactionIndex: expect.any(Number),
+          transactionSubtype: expect.any(String),
+          transactionType: 'native',
+        })
+      })
+
+      it('should get transactions by block with cursor pagination', async () => {
+        const txs = await tatum.address.getTransactions({
+          fromBlock: 3615470,
+        })
+        expect(txs.status === Status.SUCCESS)
+        // at least one transaction
+        expect(txs.data.result).not.toHaveLength(0)
+        expect(txs.data.nextPage).not.toBe('')
+        expect(txs.data.prevPage).not.toBe('')
+        expect(txs.data.result[0]).toStrictEqual({
+          address: expect.any(String),
+          amount: expect.any(String),
+          blockNumber: expect.any(Number),
+          chain: 'tezos-mainnet',
+          counterAddress: expect.any(String),
+          hash: expect.any(String),
+          timestamp: expect.any(Number),
+          transactionIndex: expect.any(Number),
+          transactionSubtype: expect.any(String),
+          transactionType: 'native',
         })
       })
     })
