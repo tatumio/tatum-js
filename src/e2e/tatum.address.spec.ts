@@ -1,5 +1,17 @@
 import { Network } from '../dto'
-import { BaseTatumSdk, Bitcoin, Dogecoin, Ethereum, Litecoin, Solana, TatumSDK, Tezos, Xrp } from '../service'
+import {
+  ApiVersion,
+  BaseTatumSdk,
+  Bitcoin,
+  Dogecoin,
+  Ethereum,
+  Litecoin,
+  Solana,
+  TatumSDK,
+  Tezos,
+  Tron,
+  Xrp,
+} from '../service'
 import { Status } from '../util'
 
 describe('Address', () => {
@@ -242,7 +254,6 @@ describe('Address', () => {
       beforeEach(async () => {
         tatum = await TatumSDK.init<Tezos>({
           network: Network.TEZOS,
-          apiKey: { v2: process.env.V2_API_KEY },
         })
       })
 
@@ -278,6 +289,43 @@ describe('Address', () => {
           decimals: 6,
           balance: expect.any(String),
           type: 'native',
+        })
+      })
+    })
+
+    describe('getBalance Tron', () => {
+      let tatum: Tron
+
+      beforeEach(async () => {
+        tatum = await TatumSDK.init<Tron>({
+          network: Network.TRON_SHASTA,
+          version: ApiVersion.V1,
+        })
+      })
+
+      afterEach(() => {
+        tatum.destroy()
+      })
+
+      it('should get balance with native and erc20 assets', async () => {
+        const { data } = await tatum.address.getBalance({
+          address: 'TBhC4DefkF79z1B8MBbXRjAhMsWk5r3VLf',
+        })
+        console.log(data)
+        expect(data.length).toBeGreaterThan(1)
+        expect(data[0]).toStrictEqual({
+          asset: 'TRX',
+          decimals: 6,
+          address: 'TBhC4DefkF79z1B8MBbXRjAhMsWk5r3VLf',
+          balance: expect.any(String),
+          type: 'native',
+        })
+        expect(data[1]).toStrictEqual({
+          asset: 'ANK',
+          decimals: 6,
+          address: 'TBhC4DefkF79z1B8MBbXRjAhMsWk5r3VLf',
+          balance: expect.any(String),
+          type: 'fungible',
         })
       })
     })

@@ -2,7 +2,7 @@ import { Container, Service } from 'typedi'
 import { LOAD_BALANCER_NETWORKS } from '../../dto'
 import { EvmBasedRpcSuite, SolanaRpcSuite, TronRpcSuite, UtxoBasedRpcSuite, XrpRpcSuite } from '../../dto/rpc'
 import { CONFIG, Constant, Utils } from '../../util'
-import { Address, AddressTezos } from '../address'
+import { Address, AddressTezos, AddressTron } from '../address'
 import { FeeEvm, FeeUtxo } from '../fee'
 import { Nft } from '../nft'
 import { Notification } from '../notification'
@@ -117,10 +117,22 @@ export class Solana extends BaseTatumSdk {
     this.rpc.destroy()
   }
 }
-export class Tron extends BaseTatumSdk {
+export class Tron {
+  notification: Notification
+  nft: Nft
+  token: Token
+  address: AddressTron
+  walletProvider: WalletProvider
+  rates: Rates
   rpc: TronRpcSuite
-  constructor(id: string) {
-    super(id)
+
+  constructor(private readonly id: string) {
+    this.notification = Container.of(this.id).get(Notification)
+    this.nft = Container.of(id).get(Nft)
+    this.token = Container.of(id).get(Token)
+    this.walletProvider = Container.of(id).get(WalletProvider)
+    this.address = Container.of(id).get(AddressTron)
+    this.rates = Container.of(id).get(Rates)
     this.rpc = Utils.getRpc<TronRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 
