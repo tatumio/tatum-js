@@ -36,7 +36,7 @@ export interface AddressBalanceFilters {
 
 export interface AddressBalanceFiltersTron {
   /**
-   * Addresses to check.
+   * Address to check.
    */
   address: string
 }

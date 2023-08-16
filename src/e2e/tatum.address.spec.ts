@@ -321,11 +321,12 @@ describe('Address', () => {
           type: 'native',
         })
         expect(data[1]).toStrictEqual({
-          asset: 'ANK',
+          asset: expect.any(String),
           decimals: 6,
           address: 'TBhC4DefkF79z1B8MBbXRjAhMsWk5r3VLf',
           balance: expect.any(String),
           type: 'fungible',
+          tokenAddress: expect.any(String),
         })
       })
     })

@@ -1,3 +1,8 @@
+## [3.0.10] - 2023.08.16
+### Added
+- Add support for Tezos - Address and Notification modules
+### Changed
+- Refactored Tron Address module
 ## [3.0.9] - 2023.08.10
 ### Updated
 - Add better logging message

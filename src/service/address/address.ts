@@ -179,32 +179,26 @@ export class AddressTron {
     tokenBalances: [{ [key: string]: string }],
   ): Promise<AddressBalance[]> {
     const serializedTokenBalance: AddressBalance[] = []
-    for (let i = 0; i < tokenBalances.length; i++) {
+    for (let token of tokenBalances) {
+      const tokenAddress = Object.keys(token)[0]
       const asset = await Utils.getRpc<TronRpc>(this.id, this.config)
-        .triggerConstantContract(
-          Object.keys(tokenBalances[i])[0],
-          Object.keys(tokenBalances[i])[0],
-          'symbol()',
-          '',
-          { visible: true },
-        )
+        .triggerConstantContract(tokenAddress, tokenAddress, 'symbol()', '', {
+          visible: true,
+        })
         .then((r) => decodeHexString(r.constant_result[0]))
       const decimals = await Utils.getRpc<TronRpc>(this.id, this.config)
-        .triggerConstantContract(
-          Object.keys(tokenBalances[i])[0],
-          Object.keys(tokenBalances[i])[0],
-          'decimals()',
-          '',
-          { visible: true },
-        )
+        .triggerConstantContract(tokenAddress, tokenAddress, 'decimals()', '', {
+          visible: true,
+        })
         .then((r) => decodeUInt256(r.constant_result[0]))
-      const balance = Object.values(tokenBalances[i])[0]
+      const balance = Object.values(token)[0]
       serializedTokenBalance.push({
         asset,
         decimals,
         balance,
         type: 'fungible',
         address,
+        tokenAddress,
       })
     }
     return serializedTokenBalance
