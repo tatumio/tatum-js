@@ -31,6 +31,13 @@ export interface AddressBalanceDetails {
   page?: number
 }
 
+export interface AddressBalanceDetailsTezos {
+  /**
+   * List of addresses to check.
+   */
+  addresses: string[]
+}
+
 export interface TokenDetails {
   /**
    * Name of the token

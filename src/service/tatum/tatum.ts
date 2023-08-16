@@ -2,7 +2,7 @@ import { Container, Service } from 'typedi'
 import { LOAD_BALANCER_NETWORKS } from '../../dto'
 import { EvmBasedRpcSuite, SolanaRpcSuite, TronRpcSuite, UtxoBasedRpcSuite, XrpRpcSuite } from '../../dto/rpc'
 import { CONFIG, Constant, Utils } from '../../util'
-import { Address } from '../address'
+import { Address, AddressTezos } from '../address'
 import { FeeEvm, FeeUtxo } from '../fee'
 import { Nft } from '../nft'
 import { Notification } from '../notification'
@@ -126,6 +126,16 @@ export class Tron extends BaseTatumSdk {
 
   destroy(): void {
     this.rpc.destroy()
+  }
+}
+
+export class Tezos {
+  notification: Notification
+  address: AddressTezos
+
+  constructor(private readonly id: string) {
+    this.notification = Container.of(this.id).get(Notification)
+    this.address = Container.of(this.id).get(AddressTezos)
   }
 }
 

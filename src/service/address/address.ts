@@ -4,16 +4,109 @@ import { ApiBalanceRequest } from '../../api/api.dto'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
   AddressBalanceDetails,
+  AddressBalanceDetailsTezos,
   TokenDetails,
+  isDataApiEnabledNetwork,
   isDataApiEvmEnabledNetwork,
   isDataApiUtxoEnabledNetwork,
-  isEvmBasedNetwork, isTronNetwork
+  isEvmBasedNetwork,
+  isTronNetwork,
 } from '../../dto'
 import { CONFIG, Constant, ErrorUtils, ResponseDto, Utils } from '../../util'
+import { decodeHexString, decodeUInt256 } from '../../util/decode'
 import { EvmRpc, GenericRpc, TronRpc } from '../rpc'
 import { Network, TatumConfig } from '../tatum'
-import { AddressBalance, AddressTransaction, GetAddressTransactionsQuery } from './address.dto'
-import { decodeHexString, decodeUInt256 } from '../../util/decode';
+import {
+  AddressBalance,
+  AddressTransaction,
+  GetAddressTransactionsQuery,
+  GetAddressTransactionsQueryTezos,
+} from './address.dto'
+
+@Service({
+  factory: (data: { id: string }) => new AddressTezos(data.id),
+  transient: true,
+})
+export class AddressTezos {
+  private readonly connector: TatumConnector
+  private readonly config: TatumConfig
+
+  constructor(private readonly id: string) {
+    this.config = Container.of(this.id).get(CONFIG)
+    this.connector = Container.of(this.id).get(TatumConnector)
+  }
+
+  /**
+   * Get balance of XTZ for a given Tezos address.
+   * You can get balance of multiple addresses in one call.
+   */
+  async getBalance({ addresses }: AddressBalanceDetailsTezos): Promise<ResponseDto<AddressBalance[]>> {
+    const chain = this.config.network
+
+    return ErrorUtils.tryFail(async () => {
+      const data = await this.connector.get<{ result: AddressBalance[] }, ApiBalanceRequest>({
+        path: `data/balances`,
+        params: {
+          pageSize: 50,
+          offset: 0,
+          chain,
+          addresses: addresses.join(','),
+        },
+      })
+
+      return data.result.map((value) => ({
+        address: value.address,
+        asset: Constant.CURRENCY_NAMES[chain],
+        decimals: Constant.DECIMALS[chain],
+        balance: value.balance,
+        type: 'native',
+      }))
+    })
+  }
+
+  /**
+   * Get all transactions, that are related to the given address. It could be both incoming and outgoing transactions.
+   */
+  async getTransactions({
+    address,
+    transactionDirection,
+    fromBlock,
+    toBlock,
+    pageSize = 10,
+    page = 0,
+    cursor = undefined,
+  }: GetAddressTransactionsQueryTezos): Promise<
+    ResponseDto<{ result: AddressTransaction[]; prevPage: string; nextPage: string }>
+  > {
+    const chain = this.config.network
+
+    return ErrorUtils.tryFail(async () => {
+      const data = await this.connector.get<{
+        result: AddressTransaction[]
+        prevPage: string
+        nextPage: string
+      }>({
+        path: `data/transactions`,
+        params: {
+          chain,
+          addresses: address,
+          transactionSubtype: transactionDirection,
+          blockFrom: fromBlock,
+          blockTo: toBlock,
+          pageSize,
+          offset: page,
+          cursor,
+        },
+      })
+
+      return {
+        result: data.result,
+        prevPage: data.prevPage,
+        nextPage: data.nextPage,
+      }
+    })
+  }
+}
 
 @Service({
   factory: (data: { id: string }) => {
@@ -41,22 +134,27 @@ export class Address {
   }: AddressBalanceDetails): Promise<ResponseDto<AddressBalance[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(async () => {
-
-      const fullBalances = isTronNetwork(chain) ? await this.getFullBalance(addresses) : { nativeBalance: '0', tokenBalances: [] }
-      const nativeBalances = isTronNetwork(chain) ? [fullBalances.nativeBalance] : await this.getNativeBalance(addresses)
-      const tokenBalances =  isTronNetwork(chain) ? fullBalances.tokenBalances : isDataApiEvmEnabledNetwork(chain) &&
-        await this.connector
-          .get<{ result: AddressBalance[] }, ApiBalanceRequest>({
-            path: `data/balances`,
-            params: {
-              pageSize,
-              offset: page,
-              excludeMetadata: true,
-              chain,
-              addresses: addresses.join(','),
-            },
-          })
-          .then((r) => r.result)
+      const fullBalances = isTronNetwork(chain)
+        ? await this.getFullBalance(addresses)
+        : { nativeBalance: '0', tokenBalances: [] }
+      const nativeBalances = isTronNetwork(chain)
+        ? [fullBalances.nativeBalance]
+        : await this.getNativeBalance(addresses)
+      const tokenBalances = isTronNetwork(chain)
+        ? fullBalances.tokenBalances
+        : isDataApiEvmEnabledNetwork(chain) &&
+          (await this.connector
+            .get<{ result: AddressBalance[] }, ApiBalanceRequest>({
+              path: `data/balances`,
+              params: {
+                pageSize,
+                offset: page,
+                excludeMetadata: true,
+                chain,
+                addresses: addresses.join(','),
+              },
+            })
+            .then((r) => r.result))
 
       const result: AddressBalance[] = []
       for (const [i, nativeBalance] of nativeBalances.entries()) {
@@ -71,7 +169,9 @@ export class Address {
       if (!tokenBalances) {
         return result
       }
-      const serializedTokenBalances = isTronNetwork(chain) ? tokenBalances : await this.processTokenBalanceDetails(tokenBalances, chain)
+      const serializedTokenBalances = isTronNetwork(chain)
+        ? tokenBalances
+        : await this.processTokenBalanceDetails(tokenBalances, chain)
       return [...result, ...serializedTokenBalances]
     })
   }
@@ -92,7 +192,7 @@ export class Address {
     let path
     return ErrorUtils.tryFail(async () => {
       switch (true) {
-        case isDataApiEvmEnabledNetwork(chain):
+        case isDataApiEnabledNetwork(chain):
           return this.connector
             .get<{ result: AddressTransaction[] }>({
               path: `data/transactions`,
@@ -124,16 +224,32 @@ export class Address {
     })
   }
 
-  private async processTRC20TokenBalanceDetails(tokenBalances: [{[key: string]: string}]) {
-    const serializedTokenBalance = [];
+  private async processTRC20TokenBalanceDetails(tokenBalances: [{ [key: string]: string }]) {
+    const serializedTokenBalance = []
     for (let i = 0; i < tokenBalances.length; i++) {
-      const asset = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(Object.keys(tokenBalances[i])[0], Object.keys(tokenBalances[i])[0], 'symbol()', '', { visible: true }).then(r => decodeHexString(r.constant_result[0]))
-      const decimals = await Utils.getRpc<TronRpc>(this.id, this.config).triggerConstantContract(Object.keys(tokenBalances[i])[0], Object.keys(tokenBalances[i])[0], 'decimals()', '', { visible: true }).then(r => decodeUInt256(r.constant_result[0]))
-      const balance = Object.values(tokenBalances[i])[0];
+      const asset = await Utils.getRpc<TronRpc>(this.id, this.config)
+        .triggerConstantContract(
+          Object.keys(tokenBalances[i])[0],
+          Object.keys(tokenBalances[i])[0],
+          'symbol()',
+          '',
+          { visible: true },
+        )
+        .then((r) => decodeHexString(r.constant_result[0]))
+      const decimals = await Utils.getRpc<TronRpc>(this.id, this.config)
+        .triggerConstantContract(
+          Object.keys(tokenBalances[i])[0],
+          Object.keys(tokenBalances[i])[0],
+          'decimals()',
+          '',
+          { visible: true },
+        )
+        .then((r) => decodeUInt256(r.constant_result[0]))
+      const balance = Object.values(tokenBalances[i])[0]
       serializedTokenBalance.push({
         asset,
         decimals,
-        balance
+        balance,
       })
     }
     return serializedTokenBalance
@@ -192,8 +308,8 @@ export class Address {
           blockNumber: number
           time: number
           hash: string
-          inputs: Array<{ coin: { address: string, value: number | string } }>
-          outputs: Array<{ address: string, value: string | number }>
+          inputs: Array<{ coin: { address: string; value: number | string } }>
+          outputs: Array<{ address: string; value: string | number }>
         }>
       >({
         path,
@@ -251,7 +367,7 @@ export class Address {
       })
   }
 
-  private async getFullBalance(addresses: string[]): Promise<{nativeBalance: string, tokenBalances: []}> {
+  private async getFullBalance(addresses: string[]): Promise<{ nativeBalance: string; tokenBalances: [] }> {
     const network = this.config.network
     switch (true) {
       case [Network.TRON, Network.TRON_SHASTA].includes(network):
@@ -260,20 +376,21 @@ export class Address {
         }
         return this.connector
           .get<{
-            balance: number,
+            balance: number
             createTime: number
-            trc10: [{
-              key: string,
-              value: number,
-            }]
-            trc20: [{[key: string]: string}]
-            freeNetLimit: number,
-            bandwidth: number,
+            trc10: [
+              {
+                key: string
+                value: number
+              },
+            ]
+            trc20: [{ [key: string]: string }]
+            freeNetLimit: number
+            bandwidth: number
           }>({
             path: `tron/account/${addresses[0]}`,
           })
-          .then(async (r) =>
-          {
+          .then(async (r) => {
             return Object.create({
               nativeBalance: r.balance.toString(),
               tokenBalances: r.trc20.length > 0 ? await this.processTRC20TokenBalanceDetails(r.trc20) : [],
@@ -288,31 +405,41 @@ export class Address {
     switch (true) {
       case isEvmBasedNetwork(network):
         return Promise.all(
-          addresses.map((a, i) => Utils.getRpc<EvmRpc>(this.id, this.config).rawRpcCall(Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i))),
-        ).then(r => r.map((e) =>
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          new BigNumber(e.result).dividedBy(10 ** Constant.DECIMALS[network]).toString()))
+          addresses.map((a, i) =>
+            Utils.getRpc<EvmRpc>(this.id, this.config).rawRpcCall(
+              Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i),
+            ),
+          ),
+        ).then((r) =>
+          r.map((e) =>
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            new BigNumber(e.result).dividedBy(10 ** Constant.DECIMALS[network]).toString(),
+          ),
+        )
       case [Network.SOLANA, Network.SOLANA_DEVNET].includes(network):
         return Utils.getRpc<GenericRpc>(this.id, this.config)
           .rawBatchRpcCall(
             addresses.map((a, i) => Utils.prepareRpcCall('getBalance', [a, { commitment: 'processed' }], i)),
           )
           .then((r) =>
-            r.map((e) => new BigNumber(e.result.value).dividedBy(10 ** Constant.DECIMALS[network]).toString()),
+            r.map((e) =>
+              new BigNumber(e.result.value).dividedBy(10 ** Constant.DECIMALS[network]).toString(),
+            ),
           )
       case [Network.XRP, Network.XRP_TESTNET].includes(network):
         if (addresses.length !== 1) {
           throw new Error(`UTXO based networks like ${network} support only one address per call.`)
         }
-        return Utils.getRpc<GenericRpc>(this.id, this.config).rawRpcCall(
-          Utils.prepareRpcCall('account_info', [
-            {
-              account: addresses[0],
-              ledger_index: 'current',
-            },
-          ]),
-        )
+        return Utils.getRpc<GenericRpc>(this.id, this.config)
+          .rawRpcCall(
+            Utils.prepareRpcCall('account_info', [
+              {
+                account: addresses[0],
+                ledger_index: 'current',
+              },
+            ]),
+          )
           .then((r) => [
             new BigNumber(r.result.account_data?.Balance || 0)
               .dividedBy(10 ** Constant.DECIMALS[network])

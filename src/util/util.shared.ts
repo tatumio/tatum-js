@@ -49,6 +49,7 @@ import {
   Solana,
   SolanaRpc,
   TatumConfig,
+  Tezos,
   Tron,
   TronRpc,
   UtxoLoadBalancerRpc,
@@ -193,6 +194,8 @@ export const Utils = {
       case Network.KLAYTN:
       case Network.KLAYTN_BAOBAB:
         return AddressEventNotificationChain.KLAY
+      case Network.TEZOS:
+        return AddressEventNotificationChain.TEZOS
       default:
         throw new Error(`Network ${network} is not supported.`)
     }
@@ -346,6 +349,8 @@ export const Utils = {
       case Network.TRON:
       case Network.TRON_SHASTA:
         return new Tron(id) as T
+      case Network.TEZOS:
+        return new Tezos(id) as T
       default:
         return new BaseTatumSdk(id) as T
     }

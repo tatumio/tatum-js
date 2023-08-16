@@ -62,6 +62,8 @@ export const e2eUtil = {
           return 'LSNjqFj7ddawFb2tiykRwKUPNDFbPsAVro'
         case Network.DOGECOIN:
           return 'DKckW1iwr2tgCaLXPThMAXnPu7gbMJqBx5'
+        case Network.TEZOS:
+          return 'tz1T8S68igxa6uWZbeoWWwbcuRHEDQSzknEX'
         default:
           throw new Error(`Network ${network} not supported`)
       }
