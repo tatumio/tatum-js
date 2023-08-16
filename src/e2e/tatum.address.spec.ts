@@ -311,7 +311,6 @@ describe('Address', () => {
         const { data } = await tatum.address.getBalance({
           address: 'TBhC4DefkF79z1B8MBbXRjAhMsWk5r3VLf',
         })
-        console.log(data)
         expect(data.length).toBeGreaterThan(1)
         expect(data[0]).toStrictEqual({
           asset: 'TRX',

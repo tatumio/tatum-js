@@ -179,7 +179,7 @@ export class AddressTron {
     tokenBalances: [{ [key: string]: string }],
   ): Promise<AddressBalance[]> {
     const serializedTokenBalance: AddressBalance[] = []
-    for (let token of tokenBalances) {
+    for (const token of tokenBalances) {
       const tokenAddress = Object.keys(token)[0]
       const asset = await Utils.getRpc<TronRpc>(this.id, this.config)
         .triggerConstantContract(tokenAddress, tokenAddress, 'symbol()', '', {
@@ -270,36 +270,35 @@ export class Address {
     page = 0,
   }: GetAddressTransactionsQuery): Promise<ResponseDto<AddressTransaction[]>> {
     const chain = this.config.network
-    let path
     return ErrorUtils.tryFail(async () => {
-      switch (true) {
-        case isDataApiEnabledNetwork(chain):
-          return this.connector
-            .get<{ result: AddressTransaction[] }>({
-              path: `data/transactions`,
-              params: {
-                chain,
-                addresses: address,
-                transactionTypes: transactionTypes?.join(),
-                transactionSubtype: transactionDirection,
-                blockFrom: fromBlock,
-                blockTo: toBlock,
-                pageSize,
-                offset: page,
-              },
-            })
-            .then((r) => r.result)
-        case [Network.BITCOIN, Network.BITCOIN_TESTNET].includes(chain):
-          path = `bitcoin/transaction/address/${address}`
-          break
-        case [Network.LITECOIN, Network.LITECOIN_TESTNET].includes(chain):
-          path = `litecoin/transaction/address/${address}`
-          break
-        case [Network.DOGECOIN, Network.DOGECOIN_TESTNET].includes(chain):
-          path = `dogecoin/transaction/address/${address}`
-          break
-        default:
-          throw new Error(`Not supported for ${chain} network.`)
+      if (isDataApiEnabledNetwork(chain)) {
+        return this.connector
+          .get<{ result: AddressTransaction[] }>({
+            path: `data/transactions`,
+            params: {
+              chain,
+              addresses: address,
+              transactionTypes: transactionTypes?.join(),
+              transactionSubtype: transactionDirection,
+              blockFrom: fromBlock,
+              blockTo: toBlock,
+              pageSize,
+              offset: page,
+            },
+          })
+          .then((r) => r.result)
+      }
+      let path
+      if ([Network.BITCOIN, Network.BITCOIN_TESTNET].includes(chain)) {
+        path = `bitcoin/transaction/address/${address}`
+      } else if ([Network.LITECOIN, Network.LITECOIN_TESTNET].includes(chain)) {
+        path = `litecoin/transaction/address/${address}`
+      } else if ([Network.DOGECOIN, Network.DOGECOIN_TESTNET].includes(chain)) {
+        path = `dogecoin/transaction/address/${address}`
+      }
+      if (!path) {
+        // TODO: implement for other networks - TRON, XRP, CARDANO, SOL, XLM etc etc
+        throw new Error(`Not supported for ${chain} network.`)
       }
       return this.processUtxoBasedTxs(path, pageSize, page, transactionDirection, chain, address)
     })
@@ -419,67 +418,59 @@ export class Address {
 
   private async getNativeBalance(addresses: string[]): Promise<string[]> {
     const network = this.config.network
-    switch (true) {
-      case isEvmBasedNetwork(network):
-        return Promise.all(
-          addresses.map((a, i) =>
-            Utils.getRpc<EvmRpc>(this.id, this.config).rawRpcCall(
-              Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i),
-            ),
-          ),
-        ).then((r) =>
-          r.map((e) =>
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
-            new BigNumber(e.result).dividedBy(10 ** Constant.DECIMALS[network]).toString(),
-          ),
-        )
-      case [Network.SOLANA, Network.SOLANA_DEVNET].includes(network):
-        return Utils.getRpc<GenericRpc>(this.id, this.config)
-          .rawBatchRpcCall(
-            addresses.map((a, i) => Utils.prepareRpcCall('getBalance', [a, { commitment: 'processed' }], i)),
-          )
-          .then((r) =>
-            r.map((e) =>
-              new BigNumber(e.result.value).dividedBy(10 ** Constant.DECIMALS[network]).toString(),
-            ),
-          )
-      case [Network.XRP, Network.XRP_TESTNET].includes(network):
-        if (addresses.length !== 1) {
-          throw new Error(`UTXO based networks like ${network} support only one address per call.`)
-        }
-        return Utils.getRpc<GenericRpc>(this.id, this.config)
-          .rawRpcCall(
-            Utils.prepareRpcCall('account_info', [
-              {
-                account: addresses[0],
-                ledger_index: 'current',
-              },
-            ]),
-          )
-          .then((r) => [
-            new BigNumber(r.result.account_data?.Balance || 0)
-              .dividedBy(10 ** Constant.DECIMALS[network])
-              .toString(),
-          ])
-      case isDataApiUtxoEnabledNetwork(network):
-        if (addresses.length !== 1) {
-          throw new Error(`UTXO based networks like ${network} support only one address per call.`)
-        }
-        return this.connector
-          .get<Array<{ value: number }>>({
-            path: 'data/utxos',
-            params: {
-              chain: network,
-              address: addresses[0],
-              totalValue: 200000000000,
-            },
-          })
-          .then((r) => [r.reduce((acc, val) => acc + val.value, 0).toString()])
-      case [Network.TRON, Network.TRON_SHASTA].includes(network):
-        throw new Error(`Use 'getFullBalance' method for network ${network}.`)
+    if (isEvmBasedNetwork(network)) {
+      const rpc = Utils.getRpc<EvmRpc>(this.id, this.config)
+      const result = await Promise.all(
+        addresses.map((a, i) => rpc.rawRpcCall(Utils.prepareRpcCall('eth_getBalance', [a, 'pending'], i))),
+      )
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      return result.map((e) => new BigNumber(e.result).dividedBy(10 ** Constant.DECIMALS[network]).toString())
     }
-    // TODO: implement for other networks - XLM etc etc
+    if ([Network.SOLANA, Network.SOLANA_DEVNET].includes(network)) {
+      const rpc = Utils.getRpc<GenericRpc>(this.id, this.config)
+      return rpc
+        .rawBatchRpcCall(
+          addresses.map((a, i) => Utils.prepareRpcCall('getBalance', [a, { commitment: 'processed' }], i)),
+        )
+        .then((r) =>
+          r.map((e) => new BigNumber(e.result.value).dividedBy(10 ** Constant.DECIMALS[network]).toString()),
+        )
+    } else if ([Network.XRP, Network.XRP_TESTNET].includes(network)) {
+      if (addresses.length !== 1) {
+        throw new Error(`UTXO based networks like ${network} support only one address per call.`)
+      }
+      const rpc = Utils.getRpc<GenericRpc>(this.id, this.config)
+      return rpc
+        .rawRpcCall(
+          Utils.prepareRpcCall('account_info', [
+            {
+              account: addresses[0],
+              ledger_index: 'current',
+            },
+          ]),
+        )
+        .then((r) => [
+          new BigNumber(r.result.account_data?.Balance || 0)
+            .dividedBy(10 ** Constant.DECIMALS[network])
+            .toString(),
+        ])
+    } else if (isDataApiUtxoEnabledNetwork(network)) {
+      if (addresses.length !== 1) {
+        throw new Error(`UTXO based networks like ${network} support only one address per call.`)
+      }
+      return this.connector
+        .get<Array<{ value: number }>>({
+          path: 'data/utxos',
+          params: {
+            chain: network,
+            address: addresses[0],
+            totalValue: 200000000000,
+          },
+        })
+        .then((r) => [r.reduce((acc, val) => acc + val.value, 0).toString()])
+    }
+    // TODO: implement for other networks - TRON, XLM etc etc
     throw new Error(`Unsupported network ${network} for now.`)
   }
 }

@@ -2,7 +2,7 @@
 ### Added
 - Add support for Tezos - Address and Notification modules
 ### Changed
-- Refactored Tron Address module
+- Refactored Tron Address module. getBalance now accepts only one string parameter `address` as it wasn't working with multiple addresses
 ## [3.0.9] - 2023.08.10
 ### Updated
 - Add better logging message
