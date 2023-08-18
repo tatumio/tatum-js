@@ -1,3 +1,7 @@
+## [3.0.11] - 2023.08.18
+### Added
+- Added support for Eon - RPC calls
+
 ## [3.0.10] - 2023.08.16
 ### Added
 - Add support for Tezos - Address and Notification modules

@@ -56,7 +56,7 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Bitcoin RPC documentation](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)   |
 | [Litecoin RPC documentation](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation) |
 | [Dogecoin RPC documentation](https://docs.tatum.io/docs/rpc/utxo-blockchains/dogecoin-rpc-documentation) |
-| **Other Blockchains**                                                                                   |
+| **Other Blockchains**                                                                                    |
 | [Solana RPC documentation](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                      |
 | [XPR RPC documentation](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                            |
 | [Tron RPC documentation](https://docs.tatum.io/docs/rpc/tron-rpc-documentation)                          |
@@ -385,28 +385,29 @@ See the [RPC API Reference](https://docs.tatum.io/docs/rpc-api-reference) for mo
 ### Status Pages
 This section provides a list of various blockchain network status pages, powered by Tatum. These links direct you to real-time status updates for each network.
 
-| Link                                                  |
-|-------------------------------------------------------|
-| [haqq-testnet.status.tatum.io](https://haqq-testnet.status.tatum.io)                   |
-| [polygon-mumbai.status.tatum.io](https://polygon-mumbai.status.tatum.io)               |
-| [tron-mainnet.status.tatum.io](https://tron-mainnet.status.tatum.io)                   |
+| Status Pages                                                                                 |
+|----------------------------------------------------------------------------------------------|
+| [haqq-testnet.status.tatum.io](https://haqq-testnet.status.tatum.io)                         |
+| [polygon-mumbai.status.tatum.io](https://polygon-mumbai.status.tatum.io)                     |
+| [tron-mainnet.status.tatum.io](https://tron-mainnet.status.tatum.io)                         |
 | [ethereum-mainnet-archive.status.tatum.io](https://ethereum-mainnet-archive.status.tatum.io) |
-| [dogecoin-testnet.status.tatum.io](https://dogecoin-testnet.status.tatum.io)           |
-| [polygon-mainnet-archive.status.tatum.io](https://polygon-mainnet-archive.status.tatum.io) |
-| [haqq-mainnet.status.tatum.io](https://haqq-mainnet.status.tatum.io)                   |
-| [ethereum-sepolia.status.tatum.io](https://ethereum-sepolia.status.tatum.io)           |
-| [flare-songbird.status.tatum.io](https://flare-songbird.status.tatum.io)               |
-| [haqq-mainnet-archive.status.tatum.io](https://haqq-mainnet-archive.status.tatum.io)   |
-| [ethereum-mainnet.status.tatum.io](https://ethereum-mainnet.status.tatum.io)           |
-| [bitcoin-mainnet.status.tatum.io](https://bitcoin-mainnet.status.tatum.io)             |
-| [flare-coston2.status.tatum.io](https://flare-coston2.status.tatum.io)                 |
-| [polygon-mainnet.status.tatum.io](https://polygon-mainnet.status.tatum.io)             |
+| [dogecoin-testnet.status.tatum.io](https://dogecoin-testnet.status.tatum.io)                 |
+| [polygon-mainnet-archive.status.tatum.io](https://polygon-mainnet-archive.status.tatum.io)   |
+| [haqq-mainnet.status.tatum.io](https://haqq-mainnet.status.tatum.io)                         |
+| [ethereum-sepolia.status.tatum.io](https://ethereum-sepolia.status.tatum.io)                 |
+| [flare-songbird.status.tatum.io](https://flare-songbird.status.tatum.io)                     |
+| [haqq-mainnet-archive.status.tatum.io](https://haqq-mainnet-archive.status.tatum.io)         |
+| [ethereum-mainnet.status.tatum.io](https://ethereum-mainnet.status.tatum.io)                 |
+| [bitcoin-mainnet.status.tatum.io](https://bitcoin-mainnet.status.tatum.io)                   |
+| [flare-coston2.status.tatum.io](https://flare-coston2.status.tatum.io)                       |
+| [polygon-mainnet.status.tatum.io](https://polygon-mainnet.status.tatum.io)                   |
 | [optimism-mainnet-archive.status.tatum.io](https://optimism-mainnet-archive.status.tatum.io) |
-| [litecoin-mainnet.status.tatum.io](https://litecoin-mainnet.status.tatum.io)           |
+| [litecoin-mainnet.status.tatum.io](https://litecoin-mainnet.status.tatum.io)                 |
 | [ethereum-sepolia-archive.status.tatum.io](https://ethereum-sepolia-archive.status.tatum.io) |
-| [litecoin-testnet.status.tatum.io](https://litecoin-testnet.status.tatum.io)           |
-| [polygon-mumbai-archive.status.tatum.io](https://polygon-mumbai-archive.status.tatum.io) |
-| [bitcoin-testnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)             |
+| [litecoin-testnet.status.tatum.io](https://litecoin-testnet.status.tatum.io)                 |
+| [polygon-mumbai-archive.status.tatum.io](https://polygon-mumbai-archive.status.tatum.io)     |
+| [bitcoin-testnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)                   |
+| [eon-mainnet.status.tatum.io](https://eon-mainnet.status.tatum.io)                           |
 
 
 ### Load Balancer
@@ -458,28 +459,29 @@ The list of nodes is dynamically fetched from the remote server and it is define
 
 Here are the list of nodes for each blockchain:
 
-| Link                                               |
-|----------------------------------------------------|
-| [rpc.tatum.io/bitcoin-mainnet/list.json](https://rpc.tatum.io/bitcoin-mainnet/list.json) |
-| [rpc.tatum.io/bitcoin-testnet/list.json](https://rpc.tatum.io/bitcoin-testnet/list.json) |
-| [rpc.tatum.io/doge-mainnet/list.json](https://rpc.tatum.io/doge-mainnet/list.json) |
-| [rpc.tatum.io/doge-testnet/list.json](https://rpc.tatum.io/doge-testnet/list.json) |
+| Nodes List                                                                                                 |
+|------------------------------------------------------------------------------------------------------------|
+| [rpc.tatum.io/bitcoin-mainnet/list.json](https://rpc.tatum.io/bitcoin-mainnet/list.json)                   |
+| [rpc.tatum.io/bitcoin-testnet/list.json](https://rpc.tatum.io/bitcoin-testnet/list.json)                   |
+| [rpc.tatum.io/doge-mainnet/list.json](https://rpc.tatum.io/doge-mainnet/list.json)                         |
+| [rpc.tatum.io/doge-testnet/list.json](https://rpc.tatum.io/doge-testnet/list.json)                         |
 | [rpc.tatum.io/ethereum-mainnet-archive/list.json](https://rpc.tatum.io/ethereum-mainnet-archive/list.json) |
-| [rpc.tatum.io/ethereum-mainnet/list.json](https://rpc.tatum.io/ethereum-mainnet/list.json) |
+| [rpc.tatum.io/ethereum-mainnet/list.json](https://rpc.tatum.io/ethereum-mainnet/list.json)                 |
 | [rpc.tatum.io/ethereum-sepolia-archive/list.json](https://rpc.tatum.io/ethereum-sepolia-archive/list.json) |
-| [rpc.tatum.io/ethereum-sepolia/list.json](https://rpc.tatum.io/ethereum-sepolia/list.json) |
-| [rpc.tatum.io/flare-coston/list.json](https://rpc.tatum.io/flare-coston/list.json) |
-| [rpc.tatum.io/flare-coston2/list.json](https://rpc.tatum.io/flare-coston2/list.json) |
-| [rpc.tatum.io/flare-mainnet/list.json](https://rpc.tatum.io/flare-mainnet/list.json) |
-| [rpc.tatum.io/flare-songbird/list.json](https://rpc.tatum.io/flare-songbird/list.json) |
-| [rpc.tatum.io/haqq-mainnet-archive/list.json](https://rpc.tatum.io/haqq-mainnet-archive/list.json) |
-| [rpc.tatum.io/haqq-mainnet/list.json](https://rpc.tatum.io/haqq-mainnet/list.json) |
-| [rpc.tatum.io/haqq-testnet/list.json](https://rpc.tatum.io/haqq-testnet/list.json) |
-| [rpc.tatum.io/litecoin-mainnet/list.json](https://rpc.tatum.io/litecoin-mainnet/list.json) |
-| [rpc.tatum.io/litecoin-testnet/list.json](https://rpc.tatum.io/litecoin-testnet/list.json) |
+| [rpc.tatum.io/ethereum-sepolia/list.json](https://rpc.tatum.io/ethereum-sepolia/list.json)                 |
+| [rpc.tatum.io/flare-coston/list.json](https://rpc.tatum.io/flare-coston/list.json)                         |
+| [rpc.tatum.io/flare-coston2/list.json](https://rpc.tatum.io/flare-coston2/list.json)                       |
+| [rpc.tatum.io/flare-mainnet/list.json](https://rpc.tatum.io/flare-mainnet/list.json)                       |
+| [rpc.tatum.io/flare-songbird/list.json](https://rpc.tatum.io/flare-songbird/list.json)                     |
+| [rpc.tatum.io/haqq-mainnet-archive/list.json](https://rpc.tatum.io/haqq-mainnet-archive/list.json)         |
+| [rpc.tatum.io/haqq-mainnet/list.json](https://rpc.tatum.io/haqq-mainnet/list.json)                         |
+| [rpc.tatum.io/haqq-testnet/list.json](https://rpc.tatum.io/haqq-testnet/list.json)                         |
+| [rpc.tatum.io/litecoin-mainnet/list.json](https://rpc.tatum.io/litecoin-mainnet/list.json)                 |
+| [rpc.tatum.io/litecoin-testnet/list.json](https://rpc.tatum.io/litecoin-testnet/list.json)                 |
 | [rpc.tatum.io/optimism-mainnet-archive/list.json](https://rpc.tatum.io/optimism-mainnet-archive/list.json) |
-| [rpc.tatum.io/polygon-mainnet-archive/list.json](https://rpc.tatum.io/polygon-mainnet-archive/list.json) |
-| [rpc.tatum.io/polygon-mainnet/list.json](https://rpc.tatum.io/polygon-mainnet/list.json) |
+| [rpc.tatum.io/polygon-mainnet-archive/list.json](https://rpc.tatum.io/polygon-mainnet-archive/list.json)   |
+| [rpc.tatum.io/polygon-mainnet/list.json](https://rpc.tatum.io/polygon-mainnet/list.json)                   |
+| [rpc.tatum.io/eon-mainnet/list.json](https://rpc.tatum.io/eon-mainnet/list.json)                           |
 
 
 Following pattern defines the URL for fetching the list of nodes:
@@ -611,6 +613,13 @@ Before creating a pull request or releasing a new version, ensure the `version` 
 ### Release Consideration
 Your changes will be released after merging the pull request.
 
+### How to add support for new RPC chain
+- Add new chain to the [Network.ts](./src/dto/Network.ts) enum (Check also LOAD_BALANCER_NETWORKS constants)
+- Add new class to the [tatum.ts](./src/service/tatum/tatum.ts) file
+- Add new chain getClient method in the [Utils.ts](./src/util/util.shared.ts) file
+- Add new chain CURRENCY_NAMES and DECIMALS constants in the [constants.ts](./src/util/constant.ts) file
+- Update README.md with new chain for status page and list.json
+- Add E2E test
 ---
 
 🙌 Thank you for helping make Tatum SDK better! Your contributions play a crucial role in its continuous improvement and growth.

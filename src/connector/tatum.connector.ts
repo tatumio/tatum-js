@@ -70,6 +70,7 @@ export class TatumConnector {
             time: `${end}ms`,
             body: responseBody,
           },
+          headers: Utils.headersToJson(headers),
         },
       })
 
@@ -96,6 +97,7 @@ export class TatumConnector {
           },
           error: JSON.stringify(error, Object.getOwnPropertyNames(error)),
           time: `${end}ms`,
+          headers: Utils.headersToJson(headers),
         },
       })
       return Promise.reject(error)
