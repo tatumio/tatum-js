@@ -15,6 +15,7 @@ export enum Network {
   CRONOS = 'cro-mainnet',
   DOGECOIN = 'doge-mainnet',
   EOS = 'eos-mainnet',
+  EON = 'eon-mainnet',
   ETHEREUM = 'ethereum-mainnet',
   ETHEREUM_CLASSIC = 'ethereum-classic-mainnet',
   FANTOM = 'fantom-mainnet',
@@ -196,6 +197,7 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.POLYGON_MUMBAI,
   Network.OPTIMISM,
   Network.OPTIMISM_TESTNET,
+  Network.EON,
 ]
 
 export const LOAD_BALANCER_NETWORKS = [...UTXO_LOAD_BALANCER_NETWORKS, ...EVM_LOAD_BALANCER_NETWORKS]

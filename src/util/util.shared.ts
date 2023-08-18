@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BigNumber } from 'bignumber.js'
 import { Container } from 'typedi'
+import { Headers } from 'undici'
 import { version } from '../../package.json'
 import {
   AddressEventNotificationChain,
@@ -29,6 +30,7 @@ import {
   Celo,
   Cronos,
   Dogecoin,
+  Eon,
   Ethereum,
   EthereumClassic,
   EvmLoadBalancerRpc,
@@ -220,7 +222,15 @@ export const Utils = {
     clearTimeout(id)
     return { responseTime, response }
   },
-
+  headersToJson(headers: Headers) {
+    const headersObj = {}
+    for (const [key, value] of headers.entries()) {
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      headersObj[key] = value
+    }
+    return JSON.stringify(headersObj, null, 2) // the last two arguments prettify the output
+  },
   getHeaders: (id: string) => {
     const config = Container.of(id).get(CONFIG)
     const headers = new Headers({
@@ -351,6 +361,8 @@ export const Utils = {
         return new Tron(id) as T
       case Network.TEZOS:
         return new Tezos(id) as T
+      case Network.EON:
+        return new Eon(id) as T
       default:
         return new BaseTatumSdk(id) as T
     }
