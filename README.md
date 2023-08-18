@@ -407,7 +407,7 @@ This section provides a list of various blockchain network status pages, powered
 | [litecoin-testnet.status.tatum.io](https://litecoin-testnet.status.tatum.io)                 |
 | [polygon-mumbai-archive.status.tatum.io](https://polygon-mumbai-archive.status.tatum.io)     |
 | [bitcoin-testnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)                   |
-| [eon-mainnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)                       |
+| [eon-mainnet.status.tatum.io](https://eon-mainnet.status.tatum.io)                           |
 
 
 ### Load Balancer
