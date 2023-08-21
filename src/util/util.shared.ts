@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { BigNumber } from 'bignumber.js'
 import { Container } from 'typedi'
-import { Headers } from 'undici'
 import { version } from '../../package.json'
 import {
   AddressEventNotificationChain,
@@ -222,7 +221,7 @@ export const Utils = {
     clearTimeout(id)
     return { responseTime, response }
   },
-  headersToJson(headers: Headers) {
+  headersToJson(headers: any) {
     const headersObj = {}
     for (const [key, value] of headers.entries()) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
