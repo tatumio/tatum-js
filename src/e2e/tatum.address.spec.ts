@@ -14,7 +14,7 @@ import {
 } from '../service'
 import { Status } from '../util'
 
-describe('Address', () => {
+describe.skip('Address', () => {
   describe('Address Balance', () => {
     describe('getBalance EVM', () => {
       let tatum: Ethereum

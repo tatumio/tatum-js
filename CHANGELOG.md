@@ -1,3 +1,7 @@
+## [3.0.12] - 2023.08.21
+### Fixed
+- Removed undici dependency as it was causing issues
+
 ## [3.0.11] - 2023.08.18
 ### Added
 - Added support for Eon - RPC calls
