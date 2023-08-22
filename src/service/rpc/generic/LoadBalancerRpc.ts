@@ -74,7 +74,10 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     // TODO: consider removing this because we already have a timeout in checkStatuses()
     if (!config.rpc?.oneTimeLoadBalancing) {
       this.timeout = setTimeout(() => this.checkStatuses(), Constant.OPEN_RPC.LB_INTERVAL)
-      process.on('exit', () => this.destroy())
+      // Check if we are running in Node.js environment
+      if (typeof process !== 'undefined' && process.release && process.release.name === 'node') {
+        process.on('exit', () => this.destroy())
+      }
     } else {
       await this.checkStatuses()
     }
