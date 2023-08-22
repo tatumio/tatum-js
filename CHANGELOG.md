@@ -1,3 +1,7 @@
+## [3.0.12] - 2023.08.22
+### Fixed
+- Fixed Load Balancer issue with process is undefined on the pure browser
+
 ## [3.0.12] - 2023.08.21
 ### Fixed
 - Removed undici dependency as it was causing issues
