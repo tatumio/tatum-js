@@ -27,6 +27,7 @@ const EndpointsMapping: Record<Blockchain, string> = {
   KCS: 'kcs',
   KLAY: 'klaytn',
   BNB: 'bnb',
+  TEZOS: 'tezos',
 }
 
 const isWebWorker =
@@ -43,7 +44,6 @@ export const httpCommon = {
     return `${url}/${TATUM_API_CONSTANTS.API_VERSION}/blockchain/node/${chain}/${apiKey}`
   },
 }
-
 
 export const httpAxios = {
   get: axios.get,
@@ -71,6 +71,5 @@ export const httpFetch = {
   },
   ...httpCommon,
 }
-
 
 export const httpHelper = isWebWorker ? httpFetch : httpAxios
