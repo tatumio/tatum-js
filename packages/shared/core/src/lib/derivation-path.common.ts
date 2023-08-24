@@ -29,6 +29,7 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   XLM: "m/44'/148'/0'",
   XRP: "m/44'/144'/0'/0",
   BNB: "m/44'/714'/0'/0",
+  TEZOS: "m/44'/1729'/0'/0",
 }
 
 export const COMMON_TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"

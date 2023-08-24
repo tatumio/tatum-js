@@ -1,6 +1,6 @@
 {
   "name": "tatumio",
-  "version": "2.2.24",
+  "version": "2.2.25",
   "license": "MIT",
   "repository": "https://github.com/tatumio/tatum-js",
   "scripts": {
@@ -42,8 +42,11 @@
     "@onflow/sdk": "^1.1.2",
     "@onflow/types": "^1.0.5",
     "@onflow/util-encode-key": "^1.0.3",
+    "@oxheadalpha/fa2-interfaces": "^9.0.0",
     "@solana/spl-token": "0.3.6",
     "@solana/web3.js": "1.56.2",
+    "@taquito/signer": "^17.2.0",
+    "@taquito/taquito": "^17.2.0",
     "@tatumio/bitcoincashjs2-lib": "^4.1.2",
     "@vespaiach/axios-fetch-adapter": "^0.3.1",
     "algosdk": "^1.13.1",
