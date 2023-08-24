@@ -3,7 +3,7 @@ import { AddressEventNotificationChain, Chain, Network } from '../dto'
 export const Constant = {
   TATUM_API_URL: {
     V1: 'https://api.tatum.io/v3/',
-    V2: 'https://api.tatum.com/v1/',
+    V2: 'https://api.tatum.io/v4/',
   },
   NETWORK: {
     ChainMapInverse: {
