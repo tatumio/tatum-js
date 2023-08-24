@@ -1,3 +1,7 @@
+## [3.0.14] - 2023.08.24
+### Updated
+- Update Tatum API URL to v4 from v1
+
 ## [3.0.12] - 2023.08.22
 ### Fixed
 - Fixed Load Balancer issue with process is undefined on the pure browser
