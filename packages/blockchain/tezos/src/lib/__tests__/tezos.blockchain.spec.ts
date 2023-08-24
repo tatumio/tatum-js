@@ -1,15 +1,14 @@
 import { TatumTezosSDK } from '../tezos.sdk'
-import { DeployTezosNft } from '../services/tezos.tzip'
+import { DeployTezosNft, MintTezosNft, Nft } from '../services/tezos.tzip'
 
-describe.skip('TatumTezosSDK - blockchain', () => {
+describe('TatumTezosSDK - blockchain', () => {
   jest.setTimeout(15000)
 
   describe('Tezos NFT', () => {
-    it('Should deploy TZIP-12 contract on testnet', async () => {
+    const testnet = 'https://rpc.ghostnet.teztnets.xyz'
+    it.skip('Should deploy TZIP-12 contract on testnet', async () => {
       const sdk = TatumTezosSDK()
       const tezosWeb = sdk.tezosWeb
-
-      const testnet = 'https://rpc.ghostnet.teztnets.xyz'
 
       const body: DeployTezosNft = {
         privateKey: '',
@@ -17,9 +16,30 @@ describe.skip('TatumTezosSDK - blockchain', () => {
         metadata: JSON.stringify({ name: 'contract name', symbol: 'TZ-gold' }),
       }
 
-      const contractAddress = await sdk.nft({ tezosWeb }).deploy.deployTzip12(body, testnet)
+      const contractAddress = await sdk.nft({ tezosWeb }).deploy.tzip12(body, testnet)
 
       console.log(contractAddress)
+    })
+
+    it('Should mint a new NFT on testnet', async () => {
+      const sdk = TatumTezosSDK()
+      const tezosWeb = sdk.tezosWeb
+
+      const token: Nft = {
+        id: '1',
+        ipfs: 'ipfs://Qmcz7iquheYehi4rmA2v9ZWakxMJCJusC5K7Harz8WNdza',
+      }
+
+      const body: MintTezosNft = {
+        contractAddress: 'KT1Th4M8mbfS1PfEidswXp4pX5xcH4tdzKbD',
+        to: 'tz1cCRCbBwnazV6howgD84a6fuhikKTnsWHZ',
+        nfts: [token],
+        privateKey: '',
+      }
+
+      const tx = await sdk.nft({ tezosWeb }).mintNft(body, testnet)
+
+      console.log(tx)
     })
   })
 })
