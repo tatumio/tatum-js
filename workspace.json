@@ -47,6 +47,7 @@
     "shared-testing-xrp-based": "packages/shared/testing/xrp-based",
     "solana": "packages/blockchain/solana",
     "solana-example": "examples/solana-example",
+    "tezos": "packages/blockchain/tezos",
     "tron": "packages/blockchain/tron",
     "tron-example": "examples/tron-example",
     "xdc": "packages/blockchain/xdc",

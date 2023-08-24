@@ -10,10 +10,7 @@
     "importHelpers": true,
     "target": "es2016",
     "module": "esnext",
-    "lib": [
-      "es2017",
-      "dom"
-    ],
+    "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "esModuleInterop": true,
@@ -22,106 +19,40 @@
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "@tatumio/algo": [
-        "packages/blockchain/algo/src/index.ts"
-      ],
-      "@tatumio/api-client": [
-        "packages/api-client/src/index.ts"
-      ],
-      "@tatumio/bch": [
-        "packages/blockchain/bch/src/index.ts"
-      ],
-      "@tatumio/bnb": [
-        "packages/blockchain/bnb/src/index.ts"
-      ],
-      "@tatumio/bsc": [
-        "packages/blockchain/bsc/src/index.ts"
-      ],
-      "@tatumio/btc": [
-        "packages/blockchain/btc/src/index.ts"
-      ],
-      "@tatumio/cardano": [
-        "packages/blockchain/cardano/src/index.ts"
-      ],
-      "@tatumio/celo": [
-        "packages/blockchain/celo/src/index.ts"
-      ],
-      "@tatumio/doge": [
-        "packages/blockchain/doge/src/index.ts"
-      ],
-      "@tatumio/egld": [
-        "packages/blockchain/egld/src/index.ts"
-      ],
-      "@tatumio/eth": [
-        "packages/blockchain/eth/src/index.ts"
-      ],
-      "@tatumio/flow": [
-        "packages/blockchain/flow/src/index.ts"
-      ],
-      "@tatumio/kcs": [
-        "packages/blockchain/kcs/src/index.ts"
-      ],
-      "@tatumio/klaytn": [
-        "packages/blockchain/klaytn/src/index.ts"
-      ],
-      "@tatumio/ltc": [
-        "packages/blockchain/ltc/src/index.ts"
-      ],
-      "@tatumio/one": [
-        "packages/blockchain/one/src/index.ts"
-      ],
-      "@tatumio/polygon": [
-        "packages/blockchain/polygon/src/index.ts"
-      ],
-      "@tatumio/sdk": [
-        "packages/sdk/src/index.ts"
-      ],
-      "@tatumio/shared-abstract-sdk": [
-        "packages/shared/abstract-sdk/src/index.ts"
-      ],
-      "@tatumio/shared-blockchain-abstract": [
-        "packages/shared/blockchain/abstract/src/index.ts"
-      ],
-      "@tatumio/shared-blockchain-btc-based": [
-        "packages/shared/blockchain/btc-based/src/index.ts"
-      ],
-      "@tatumio/shared-blockchain-evm-based": [
-        "packages/shared/blockchain/evm-based/src/index.ts"
-      ],
-      "@tatumio/shared-core": [
-        "packages/shared/core/src/index.ts"
-      ],
-      "@tatumio/shared-testing-btc-based": [
-        "packages/shared/testing/btc-based/src/index.ts"
-      ],
-      "@tatumio/shared-testing-common": [
-        "packages/shared/testing/common/src/index.ts"
-      ],
-      "@tatumio/shared-testing-evm-based": [
-        "packages/shared/testing/evm-based/src/index.ts"
-      ],
-      "@tatumio/shared-testing-xrp-based": [
-        "packages/shared/testing/xrp-based/src/index.ts"
-      ],
-      "@tatumio/solana": [
-        "packages/blockchain/solana/src/index.ts"
-      ],
-      "@tatumio/tron": [
-        "packages/blockchain/tron/src/index.ts"
-      ],
-      "@tatumio/xdc": [
-        "packages/blockchain/xdc/src/index.ts"
-      ],
-      "@tatumio/xlm": [
-        "packages/blockchain/xlm/src/index.ts"
-      ],
-      "@tatumio/xrp": [
-        "packages/blockchain/xrp/src/index.ts"
-      ]
+      "@tatumio/algo": ["packages/blockchain/algo/src/index.ts"],
+      "@tatumio/api-client": ["packages/api-client/src/index.ts"],
+      "@tatumio/bch": ["packages/blockchain/bch/src/index.ts"],
+      "@tatumio/bnb": ["packages/blockchain/bnb/src/index.ts"],
+      "@tatumio/bsc": ["packages/blockchain/bsc/src/index.ts"],
+      "@tatumio/btc": ["packages/blockchain/btc/src/index.ts"],
+      "@tatumio/cardano": ["packages/blockchain/cardano/src/index.ts"],
+      "@tatumio/celo": ["packages/blockchain/celo/src/index.ts"],
+      "@tatumio/doge": ["packages/blockchain/doge/src/index.ts"],
+      "@tatumio/egld": ["packages/blockchain/egld/src/index.ts"],
+      "@tatumio/eth": ["packages/blockchain/eth/src/index.ts"],
+      "@tatumio/flow": ["packages/blockchain/flow/src/index.ts"],
+      "@tatumio/kcs": ["packages/blockchain/kcs/src/index.ts"],
+      "@tatumio/klaytn": ["packages/blockchain/klaytn/src/index.ts"],
+      "@tatumio/ltc": ["packages/blockchain/ltc/src/index.ts"],
+      "@tatumio/one": ["packages/blockchain/one/src/index.ts"],
+      "@tatumio/polygon": ["packages/blockchain/polygon/src/index.ts"],
+      "@tatumio/sdk": ["packages/sdk/src/index.ts"],
+      "@tatumio/shared-abstract-sdk": ["packages/shared/abstract-sdk/src/index.ts"],
+      "@tatumio/shared-blockchain-abstract": ["packages/shared/blockchain/abstract/src/index.ts"],
+      "@tatumio/shared-blockchain-btc-based": ["packages/shared/blockchain/btc-based/src/index.ts"],
+      "@tatumio/shared-blockchain-evm-based": ["packages/shared/blockchain/evm-based/src/index.ts"],
+      "@tatumio/shared-core": ["packages/shared/core/src/index.ts"],
+      "@tatumio/shared-testing-btc-based": ["packages/shared/testing/btc-based/src/index.ts"],
+      "@tatumio/shared-testing-common": ["packages/shared/testing/common/src/index.ts"],
+      "@tatumio/shared-testing-evm-based": ["packages/shared/testing/evm-based/src/index.ts"],
+      "@tatumio/shared-testing-xrp-based": ["packages/shared/testing/xrp-based/src/index.ts"],
+      "@tatumio/solana": ["packages/blockchain/solana/src/index.ts"],
+      "@tatumio/tron": ["packages/blockchain/tron/src/index.ts"],
+      "@tatumio/tezos": ["packages/blockchain/tezos/src/index.ts"],
+      "@tatumio/xdc": ["packages/blockchain/xdc/src/index.ts"],
+      "@tatumio/xlm": ["packages/blockchain/xlm/src/index.ts"],
+      "@tatumio/xrp": ["packages/blockchain/xrp/src/index.ts"]
     }
   },
-  "exclude": [
-    "node_modules",
-    "tmp"
-  ]
+  "exclude": ["node_modules", "tmp"]
 }
