@@ -11,24 +11,24 @@ export type DeployTezosNft = {
   metadata: string
 }
 
-export type MintTezosNft = {
+export type MintTezosToken = {
   privateKey: string
   contractAddress: string
-  nfts: Nft[]
+  nfts: Token[]
   owner: string
 }
-export type Nft = {
+export type Token = {
   id: string
   ipfs: string
 }
-export type BurnTezosNft = {
+export type BurnTezosToken = {
   privateKey: string
   contractAddress: string
   tokens: string[]
   owner: string
 }
 
-export type TransferTezosNft = {
+export type TransferTezosToken = {
   privateKey: string
   contractAddress: string
   tokenId: string
@@ -37,7 +37,7 @@ export type TransferTezosNft = {
   amount: string
 }
 
-export type UpdateOperatorTezosNft = {
+export type UpdateOperatorTezosToken = {
   privateKey: string
   contractAddress: string
   tokenId: string
@@ -55,14 +55,14 @@ const deployTzip12 = async (body: DeployTezosNft, tronWeb: ITezosWeb, provider?:
 
   const storage = createStorage({ metadata, owner })
 
-  const { contractAddress } = await client.contract.originate({
+  const { hash } = await client.contract.originate({
     code: Tezos_TZIP_12.michelson,
     storage,
   })
 
-  return contractAddress
+  return hash
 }
-const mintNft = async (body: MintTezosNft, tronWeb: ITezosWeb, provider?: string): Promise<string> => {
+const mintToken = async (body: MintTezosToken, tronWeb: ITezosWeb, provider?: string): Promise<string> => {
   const { contractAddress, nfts, owner, privateKey } = body
 
   const client = tronWeb.getClient(provider)
@@ -89,7 +89,7 @@ const mintNft = async (body: MintTezosNft, tronWeb: ITezosWeb, provider?: string
   return opHash
 }
 
-const burnNft = async (body: BurnTezosNft, tronWeb: ITezosWeb, provider?: string): Promise<string> => {
+const burnToken = async (body: BurnTezosToken, tronWeb: ITezosWeb, provider?: string): Promise<string> => {
   const { contractAddress, tokens, privateKey, owner } = body
 
   const client = tronWeb.getClient(provider)
@@ -110,8 +110,8 @@ const burnNft = async (body: BurnTezosNft, tronWeb: ITezosWeb, provider?: string
   return opHash
 }
 
-const transferNft = async (
-  body: TransferTezosNft,
+const transferToken = async (
+  body: TransferTezosToken,
   tronWeb: ITezosWeb,
   provider?: string,
 ): Promise<string> => {
@@ -143,7 +143,7 @@ const transferNft = async (
 }
 
 const updateOperator = async (
-  body: UpdateOperatorTezosNft,
+  body: UpdateOperatorTezosToken,
   tronWeb: ITezosWeb,
   addOperator: boolean,
   provider?: string,
@@ -178,7 +178,7 @@ export const tezosTzip = (args: { tezosWeb: ITezosWeb }) => ({
      * Deploy tzip-12 contract with additional details in request body
      * @param body content for deploying contract to Tezos network
      * @param provider
-     * @returns address of the deployed contract
+     * @returns The hash (ID) of the transaction
      */
     tzip12: async (body: DeployTezosNft, provider?: string) => deployTzip12(body, args.tezosWeb, provider),
   },
@@ -188,22 +188,22 @@ export const tezosTzip = (args: { tezosWeb: ITezosWeb }) => ({
    * @param provider
    * @returns The hash (ID) of the transaction
    */
-  mintNft: async (body: MintTezosNft, provider?: string) => mintNft(body, args.tezosWeb, provider),
+  mintTzip12: async (body: MintTezosToken, provider?: string) => mintToken(body, args.tezosWeb, provider),
   /**
    * Burn an NFT
    * @param body content for burning NFTs on the Tezos network
    * @param provider
    * @returns The hash (ID) of the transaction
    */
-  burnNft: async (body: BurnTezosNft, provider?: string) => burnNft(body, args.tezosWeb, provider),
+  burnTzip12: async (body: BurnTezosToken, provider?: string) => burnToken(body, args.tezosWeb, provider),
   /**
    * Transfer an NFT
    * @param body content for transfering an NFT on the Tezos network
    * @param provider
    * @returns The hash (ID) of the transaction
    */
-  transferNft: async (body: TransferTezosNft, provider?: string) =>
-    transferNft(body, args.tezosWeb, provider),
+  transferTzip12: async (body: TransferTezosToken, provider?: string) =>
+    transferToken(body, args.tezosWeb, provider),
   /**
    * Update operator of the token
    * @param body content for updating operators of the NFT on the Tezos network
@@ -211,7 +211,7 @@ export const tezosTzip = (args: { tezosWeb: ITezosWeb }) => ({
    * @param provider
    * @returns The hash (ID) of the transaction
    */
-  updateOperator: async (body: UpdateOperatorTezosNft, addOperator: boolean, provider?: string) =>
+  updateOperator: async (body: UpdateOperatorTezosToken, addOperator: boolean, provider?: string) =>
     updateOperator(body, args.tezosWeb, addOperator, provider),
 })
 
