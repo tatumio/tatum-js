@@ -47,19 +47,20 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | Documentation                                                                                            |
 |----------------------------------------------------------------------------------------------------------|
 | **EVM Blockchains**                                                                                      |
-| [Ethereum RPC documentation](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-rpc-documentation)  |
-| [Polygon RPC documentation](https://docs.tatum.io/docs/rpc/evm-blockchains/polygon-rpc-documentation)    |
-| [Flare RPC documentation](https://docs.tatum.io/docs/rpc/evm-blockchains/flare-rpc-documentation)        |
-| [Haqq RPC documentation](https://docs.tatum.io/docs/rpc/evm-blockchains/haqq-rpc-documentation)          |
-| [Optimism RPC documentation](https://docs.tatum.io/docs/rpc/evm-blockchains/optimism-rpc-documentation)  |
+| [Ethereum RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-rpc-documentation)        |
+| [Polygon RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/polygon-rpc-documentation)          |
+| [Flare RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/flare-rpc-documentation)              |
+| [Haqq RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/haqq-rpc-documentation)                |
+| [Optimism RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/optimism-rpc-documentation)        |
+| [Horizen EON RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/horizen-eon-rpc-documentation)  |
 | **UTXO Blockchains**                                                                                     |
-| [Bitcoin RPC documentation](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)   |
-| [Litecoin RPC documentation](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation) |
-| [Dogecoin RPC documentation](https://docs.tatum.io/docs/rpc/utxo-blockchains/dogecoin-rpc-documentation) |
+| [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)   |
+| [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation) |
+| [Dogecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/dogecoin-rpc-documentation) |
 | **Other Blockchains**                                                                                    |
-| [Solana RPC documentation](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                      |
-| [XPR RPC documentation](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                            |
-| [Tron RPC documentation](https://docs.tatum.io/docs/rpc/tron-rpc-documentation)                          |
+| [Solana RPC](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                      |
+| [XPR RPC](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                            |
+| [Tron RPC](https://docs.tatum.io/docs/rpc/tron-rpc-documentation)                          |
 
 ### 🔔 Create Notifications
 
