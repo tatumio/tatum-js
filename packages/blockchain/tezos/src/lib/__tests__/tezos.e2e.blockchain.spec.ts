@@ -1,7 +1,6 @@
 import { TatumTezosSDK } from '../tezos.sdk'
 import {
   BurnTezosToken,
-  DeployTezosNft,
   MintTezosToken,
   Token,
   TransferTezosToken,
@@ -26,14 +25,17 @@ describe.skip('TatumTezosSDK - blockchain', () => {
       const sdk = TatumTezosSDK()
       const tezosWeb = sdk.tezosWeb
 
-      const body: DeployTezosNft = {
+      const body = {
         privateKey,
         owner: addr1,
-        metadata: JSON.stringify({ name: 'contract name', symbol: 'TZ-gold' }),
+        metadata: JSON.stringify({
+          name: 'contract name',
+          symbol: 'TZ-gold',
+          version: '1.26.0',
+        }),
       }
 
       const opHash = await sdk.nft({ tezosWeb }).deploy.tzip12(body, testnet)
-
       console.log(opHash)
     })
 
@@ -42,24 +44,22 @@ describe.skip('TatumTezosSDK - blockchain', () => {
       const tezosWeb = sdk.tezosWeb
 
       const token: Token = {
-        id: '6',
+        id: '1',
         ipfs: 'ipfs://Qmcz7iquheYehi4rmA2v9ZWakxMJCJusC5K7Harz8WNdza',
       }
 
       const token2: Token = {
-        id: '7',
+        id: '2',
         ipfs: 'ipfs://QmS7W7vtC6f3kSPUUkapVtW5bAXQvtn2tDDBDiBH1R3g2h',
       }
-
       const body: MintTezosToken = {
         contractAddress,
-        owner: addr1,
+        owner: addr2,
         nfts: [token, token2],
         privateKey,
       }
 
       const tx = await sdk.nft({ tezosWeb }).mintTzip12(body, testnet)
-
       console.log(tx)
     })
 
@@ -70,14 +70,14 @@ describe.skip('TatumTezosSDK - blockchain', () => {
       const body: BurnTezosToken = {
         contractAddress,
         owner: addr1,
-        tokens: ['6'],
-        privateKey,
+        tokens: ['1'],
+        privateKey: privateKey,
       }
 
       const tx = await sdk.nft({ tezosWeb }).burnTzip12(body, testnet)
-
       console.log(tx)
     })
+
     it('Should add an operator to a token on testnet', async () => {
       const sdk = TatumTezosSDK()
       const tezosWeb = sdk.tezosWeb
@@ -100,16 +100,76 @@ describe.skip('TatumTezosSDK - blockchain', () => {
 
       const body: TransferTezosToken = {
         contractAddress,
-        from: addr1,
+        from: addr2,
         to: addr3,
-        tokenId: '7',
+        tokenId: '1',
         amount: '1',
         privateKey: privateKey2,
       }
 
       const tx = await sdk.nft({ tezosWeb }).transferTzip12(body, testnet)
-
       console.log(tx)
+    })
+
+    it('Should estimate contract origination on testnet', async () => {
+      const sdk = TatumTezosSDK()
+      const tezosWeb = sdk.tezosWeb
+
+      const body = {
+        privateKey,
+        owner: addr1,
+        metadata: JSON.stringify({
+          name: 'contract name',
+          symbol: 'TZ-gold',
+          version: '1.26.0',
+        }),
+      }
+
+      const totalCost = await sdk.nft({ tezosWeb }).estimate.contractDeploy(body, testnet)
+      console.log(totalCost)
+    })
+
+    it('Should estimate a token mint on testnet', async () => {
+      const sdk = TatumTezosSDK()
+      const tezosWeb = sdk.tezosWeb
+
+      const token: Token = {
+        id: '1',
+        ipfs: 'ipfs://Qmcz7iquheYehi4rmA2v9ZWakxMJCJusC5K7Harz8WNdza',
+      }
+
+      const token2: Token = {
+        id: '2',
+        ipfs: 'ipfs://QmS7W7vtC6f3kSPUUkapVtW5bAXQvtn2tDDBDiBH1R3g2h',
+      }
+
+      const body: MintTezosToken = {
+        contractAddress,
+        owner: addr1,
+        nfts: [token, token2],
+        privateKey,
+      }
+
+      const totalCost = await sdk.nft({ tezosWeb }).estimate.tokenMint(body, testnet)
+
+      console.log(totalCost)
+    })
+
+    it('Should estimate a token transfer on testnet', async () => {
+      const sdk = TatumTezosSDK()
+      const tezosWeb = sdk.tezosWeb
+      const body: TransferTezosToken = {
+        contractAddress,
+        from: addr2,
+        to: addr3,
+        tokenId: '1',
+        amount: '1',
+        privateKey: privateKey2,
+      }
+
+      const totalCost = await sdk.nft({ tezosWeb }).estimate.tokenTransfer(body, testnet)
+
+      console.log(totalCost)
     })
   })
 })

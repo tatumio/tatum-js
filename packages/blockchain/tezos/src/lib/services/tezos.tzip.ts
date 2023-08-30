@@ -5,12 +5,11 @@ import { char2Bytes } from '@taquito/utils'
 import * as fa2 from '@oxheadalpha/fa2-interfaces'
 import { MichelsonMap } from '@taquito/taquito'
 
-export type DeployTezosNft = {
+export type DeployContractData = {
   privateKey: string
   owner: string
   metadata: string
 }
-
 export type MintTezosToken = {
   privateKey: string
   contractAddress: string
@@ -45,7 +44,11 @@ export type UpdateOperatorTezosToken = {
   operator: string
 }
 
-const deployTzip12 = async (body: DeployTezosNft, tronWeb: ITezosWeb, provider?: string): Promise<string> => {
+const deployTzip12 = async (
+  body: DeployContractData,
+  tronWeb: ITezosWeb,
+  provider?: string,
+): Promise<string> => {
   const client = tronWeb.getClient(provider)
   const { privateKey, owner, metadata } = body
 
@@ -62,6 +65,7 @@ const deployTzip12 = async (body: DeployTezosNft, tronWeb: ITezosWeb, provider?:
 
   return hash
 }
+
 const mintToken = async (body: MintTezosToken, tronWeb: ITezosWeb, provider?: string): Promise<string> => {
   const { contractAddress, nfts, owner, privateKey } = body
 
@@ -172,6 +176,94 @@ const updateOperator = async (
   return opHash
 }
 
+const estimateContractDeploy = async (
+  body: DeployContractData,
+  tronWeb: ITezosWeb,
+  provider?: string,
+): Promise<number> => {
+  const client = tronWeb.getClient(provider)
+  const { privateKey, owner, metadata } = body
+
+  const memorySigner = new InMemorySigner(privateKey)
+
+  client.setSignerProvider(memorySigner)
+
+  const storage = createStorage({ metadata, owner })
+
+  const { burnFeeMutez, suggestedFeeMutez } = await client.estimate.originate({
+    code: Tezos_TZIP_12.michelson,
+    storage,
+  })
+
+  return burnFeeMutez + suggestedFeeMutez
+}
+
+const estimateTokenMint = async (
+  body: MintTezosToken,
+  tronWeb: ITezosWeb,
+  provider?: string,
+): Promise<number> => {
+  const { contractAddress, nfts, owner, privateKey } = body
+
+  const client = tronWeb.getClient(provider)
+  const memorySigner = new InMemorySigner(privateKey)
+
+  client.setSignerProvider(memorySigner)
+
+  const contract = await client.contract.at(contractAddress)
+  const tokens = nfts.map(({ id, ipfs }) => {
+    const tokenInfoMap = new MichelsonMap<string, string>()
+
+    tokenInfoMap.set('', char2Bytes(ipfs))
+    return { token_id: id, token_info: tokenInfoMap }
+  })
+
+  const mintParams = [
+    {
+      owner,
+      tokens,
+    },
+  ]
+
+  const op = contract.methods.mint(mintParams)
+
+  const { burnFeeMutez, suggestedFeeMutez } = await client.estimate.contractCall(op)
+  return burnFeeMutez + suggestedFeeMutez
+}
+
+const estimateTransferToken = async (
+  body: TransferTezosToken,
+  tronWeb: ITezosWeb,
+  provider?: string,
+): Promise<number> => {
+  const { contractAddress, privateKey, from, to, tokenId, amount } = body
+
+  const client = tronWeb.getClient(provider)
+  const memorySigner = new InMemorySigner(privateKey)
+
+  client.setSignerProvider(memorySigner)
+
+  const contract = await client.contract.at(contractAddress)
+
+  const transferParams = [
+    {
+      from_: from,
+      txs: [
+        {
+          to_: to,
+          token_id: tokenId,
+          amount: amount,
+        },
+      ],
+    },
+  ]
+
+  const op = contract.methods.transfer(transferParams)
+
+  const { burnFeeMutez, suggestedFeeMutez } = await client.estimate.contractCall(op)
+  return burnFeeMutez + suggestedFeeMutez
+}
+
 export const tezosTzip = (args: { tezosWeb: ITezosWeb }) => ({
   deploy: {
     /**
@@ -180,7 +272,16 @@ export const tezosTzip = (args: { tezosWeb: ITezosWeb }) => ({
      * @param provider
      * @returns The hash (ID) of the transaction
      */
-    tzip12: async (body: DeployTezosNft, provider?: string) => deployTzip12(body, args.tezosWeb, provider),
+    tzip12: async (body: DeployContractData, provider?: string) =>
+      deployTzip12(body, args.tezosWeb, provider),
+  },
+  estimate: {
+    contractDeploy: async (body: DeployContractData, provider?: string) =>
+      estimateContractDeploy(body, args.tezosWeb, provider),
+    tokenMint: async (body: MintTezosToken, provider?: string) =>
+      estimateTokenMint(body, args.tezosWeb, provider),
+    tokenTransfer: async (body: TransferTezosToken, provider?: string) =>
+      estimateTransferToken(body, args.tezosWeb, provider),
   },
   /**
    * Mint a new NFT collection
