@@ -35,6 +35,12 @@ interface UrlIndex {
   index: number
 }
 
+interface InitRemoteHostsParams {
+  nodeType: RpcNodeType
+  nodes: RpcNode[]
+  noSSRFCheck?: boolean
+}
+
 @Service({
   factory: (data: { id: string }) => {
     return new LoadBalancerRpc(data.id)
@@ -88,8 +94,8 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
   }
 
   private initCustomNodes(nodes: RpcNode[]) {
-    this.initRemoteHosts(RpcNodeType.NORMAL, nodes)
-    this.initRemoteHosts(RpcNodeType.ARCHIVE, nodes)
+    this.initRemoteHosts({ nodeType: RpcNodeType.NORMAL, nodes: nodes, noSSRFCheck: true })
+    this.initRemoteHosts({ nodeType: RpcNodeType.ARCHIVE, nodes: nodes, noSSRFCheck: true })
     if (nodes?.length) {
       for (const node of nodes) {
         if (node.type === RpcNodeType.NORMAL) {
@@ -265,8 +271,33 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     return this.activeUrl[nodeType]?.index as number
   }
 
-  private initRemoteHosts(nodeType: RpcNodeType, nodes: RpcNode[]) {
-    const filteredNodes = nodes.filter((node) => node.type === nodeType)
+  private checkSSRF(url: string) {
+    return url.endsWith('rpc.tatum.io') || url.endsWith('rpc.tatum.io/')
+  }
+
+  private initRemoteHosts({ nodeType, nodes, noSSRFCheck }: InitRemoteHostsParams) {
+    const filteredNodes = nodes.filter((node) => {
+      // Check if the node type matches.
+      const typeMatch = node.type === nodeType
+
+      // If noSSRFCheck is true, skip the SSRF check.
+      if (noSSRFCheck) {
+        return typeMatch
+      }
+
+      // If noSSRFCheck is false or undefined, check if the URL ends with 'rpc.tatum.io'.
+      const ssrfCheckPassed = this.checkSSRF(node.url)
+
+      // Log if the URL doesn't pass the SSRF check
+      if (!ssrfCheckPassed) {
+        Utils.log({
+          id: this.id,
+          message: `Skipping URL ${node.url} as it doesn't pass the SSRF check.`,
+        })
+      }
+
+      return typeMatch && ssrfCheckPassed
+    })
 
     if (filteredNodes.length === 0) {
       return
@@ -306,8 +337,8 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
       const [normal, archive] = await Promise.all(rpcList.map((url) => fetch(url)))
       if (normal.ok) {
         const nodes: RpcNode[] = await normal.json()
-        this.initRemoteHosts(RpcNodeType.NORMAL, nodes)
-        this.initRemoteHosts(RpcNodeType.ARCHIVE, nodes)
+        this.initRemoteHosts({ nodeType: RpcNodeType.NORMAL, nodes: nodes })
+        this.initRemoteHosts({ nodeType: RpcNodeType.ARCHIVE, nodes: nodes })
       } else {
         Utils.log({
           id: this.id,
@@ -317,8 +348,8 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
 
       if (archive.ok) {
         const nodes: RpcNode[] = await archive.json()
-        this.initRemoteHosts(RpcNodeType.NORMAL, nodes)
-        this.initRemoteHosts(RpcNodeType.ARCHIVE, nodes)
+        this.initRemoteHosts({ nodeType: RpcNodeType.NORMAL, nodes: nodes })
+        this.initRemoteHosts({ nodeType: RpcNodeType.ARCHIVE, nodes: nodes })
       } else {
         Utils.log({
           id: this.id,
