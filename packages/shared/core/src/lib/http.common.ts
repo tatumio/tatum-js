@@ -28,6 +28,7 @@ const EndpointsMapping: Record<Blockchain, string> = {
   KLAY: 'klaytn',
   BNB: 'bnb',
   TEZOS: 'tezos',
+  EON: 'eon',
 }
 
 const isWebWorker =
