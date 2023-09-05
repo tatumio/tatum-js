@@ -272,7 +272,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
   }
 
   private checkSSRF(url: string) {
-    return url.endsWith('rpc.tatum.io') || url.endsWith('rpc.tatum.io/')
+    return url.endsWith('rpc.tatum.io') || url.endsWith('rpc.tatum.io/') || url.endsWith('rpc.tatum.io/ethv1')
   }
 
   private initRemoteHosts({ nodeType, nodes, noSSRFCheck }: InitRemoteHostsParams) {

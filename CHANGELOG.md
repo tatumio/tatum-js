@@ -1,3 +1,7 @@
+## [3.0.16] - 2023.09.05
+### Updated
+ - Extend allowed list of urls for SSRF check
+
 ## [3.0.15] - 2023.08.30
 ### Updated
  - This commit introduces a Server Side Request Forgery (SSRF) check to the `initRemoteHosts` method within `LoadBalancerRpc.ts`. This check ensures that URLs end with 'rpc.tatum.io' before loading them to avoid potential SSRF attacks. To accommodate this change, `initRemoteHosts` has also been refactored to accept an `InitRemoteHostsParams` object. In addition, an optional parameter `noSSRFCheck` has been added to bypass the SSRF check when necessary.
