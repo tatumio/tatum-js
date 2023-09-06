@@ -4,6 +4,7 @@ import {
   BaseTatumSdk,
   Bitcoin,
   Dogecoin,
+  Eon,
   Ethereum,
   Litecoin,
   Solana,
@@ -329,6 +330,29 @@ describe.skip('Address', () => {
         })
       })
     })
+
+    describe('getBalance EON', () => {
+      let tatum: Eon
+
+      beforeEach(async () => {
+        tatum = await TatumSDK.init({
+          network: Network.EON,
+          version: ApiVersion.V2,
+          apiKey: { v2: process.env.V2_API_KEY },
+        })
+      })
+
+      afterEach(() => {
+        tatum.destroy()
+      })
+
+      it('should get balance from eon network', async () => {
+        const { data } = await tatum.address.getBalance({
+          addresses: ['0xb056B90572e6d840409210d13b2742a0F6739337'],
+        })
+        expect(data.length).toBeGreaterThan(0)
+      })
+    })
   })
 
   describe('getTransactions', () => {
@@ -635,6 +659,67 @@ describe.skip('Address', () => {
           transactionIndex: expect.any(Number),
           transactionSubtype: expect.any(String),
           transactionType: 'native',
+        })
+      })
+    })
+
+    describe('getTransactions EON', () => {
+      let tatum: Eon
+
+      beforeEach(async () => {
+        tatum = await TatumSDK.init({
+          network: Network.EON,
+          version: ApiVersion.V2,
+          apiKey: { v2: process.env.V2_API_KEY },
+        })
+      })
+
+      afterEach(() => {
+        tatum.destroy()
+      })
+
+      it('should get transactions - native only', async () => {
+        const txs = await tatum.address.getTransactions({
+          address: '0xE9c542ceCD8c8aD86A3E53d4f695F4eaCE156515',
+          transactionTypes: ['native'],
+        })
+        expect(txs.status === Status.SUCCESS)
+        // at least one transaction
+        expect(txs.data).not.toHaveLength(0)
+        expect(txs.data[0]).toStrictEqual({
+          address: expect.any(String),
+          amount: expect.any(String),
+          blockNumber: expect.any(Number),
+          chain: 'eon-mainnet',
+          counterAddress: expect.any(String),
+          hash: expect.any(String),
+          timestamp: expect.any(Number),
+          transactionIndex: expect.any(Number),
+          transactionSubtype: expect.any(String),
+          transactionType: 'native',
+        })
+      })
+
+      it('should get transactions - tokens only', async () => {
+        const txs = await tatum.address.getTransactions({
+          address: '0xE9c542ceCD8c8aD86A3E53d4f695F4eaCE156515',
+          transactionTypes: ['nft'],
+        })
+        expect(txs.status === Status.SUCCESS)
+        expect(txs.data).not.toHaveLength(0)
+        expect(txs.data[0]).toStrictEqual({
+          address: '0xe9c542cecd8c8ad86a3e53d4f695f4eace156515',
+          amount: '1',
+          blockNumber: 149413,
+          chain: 'eon-mainnet',
+          counterAddress: '0x0000000000000000000000000000000000000000',
+          hash: '0x519b18c25965524b8d6a687c18818131450d2c812e90761cff4ff93e8984d4fc',
+          timestamp: 1690923199000,
+          tokenAddress: '0x6ea7d015342b7eb7344f7ebf0150234f41f524d6',
+          tokenId: '38',
+          transactionIndex: 0,
+          transactionSubtype: 'incoming',
+          transactionType: 'nft',
         })
       })
     })

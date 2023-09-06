@@ -1,3 +1,6 @@
+## [3.0.19] - 2023.09.07
+### Added
+ - Enable data-api for Horizen EON
 ## [3.0.18] - 2023.09.06
 ### Fixed
 - improve URL parsing for SSRF check

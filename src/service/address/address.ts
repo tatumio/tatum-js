@@ -469,6 +469,12 @@ export class Address {
           },
         })
         .then((r) => [r.reduce((acc, val) => acc + val.value, 0).toString()])
+    } else if (network === Network.EON) {
+      const rpc = Utils.getRpc<EvmRpc>(this.id, this.config)
+      const result = await Promise.all(addresses.map((a) => rpc.getBalance(a)))
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      return result.map((e) => new BigNumber(e.result).dividedBy(10 ** Constant.DECIMALS[network]).toString())
     }
     // TODO: implement for other networks - TRON, XLM etc etc
     throw new Error(`Unsupported network ${network} for now.`)
