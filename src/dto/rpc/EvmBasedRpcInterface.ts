@@ -137,6 +137,12 @@ export interface EvmBasedRpcInterface {
 
   getTokenName(tokenAddress: string): Promise<JsonRpcResponse<string>>
 
+  getTokenCap(tokenAddress: string): Promise<JsonRpcResponse<BigNumber>>
+
+  getTokenTotalSupply(tokenAddress: string): Promise<JsonRpcResponse<BigNumber>>
+
+  supportsInterfaceERC1155(tokenAddress: string): Promise<JsonRpcResponse<boolean>>
+
   getContractAddress(txHash: string): Promise<string | null>
 
   // web3_ methods

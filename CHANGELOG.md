@@ -1,3 +1,6 @@
+## [3.0.17] - 2023.09.06
+### Added
+ - Add functions to EVM rpc interface: getTokenTotalSupply, getTokenCap, supportsInterfaceERC1155
 ## [3.0.16] - 2023.09.05
 ### Updated
  - Extend allowed list of urls for SSRF check

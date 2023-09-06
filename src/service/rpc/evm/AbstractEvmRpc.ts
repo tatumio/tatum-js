@@ -10,7 +10,7 @@ import {
   TraceType,
   TxPayload,
 } from '../../../dto'
-import { decodeHexString } from '../../../util/decode';
+import { decodeHexString, decodeUInt256 } from '../../../util/decode'
 
 @Service()
 export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
@@ -72,7 +72,6 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     }
     return this.rpcCall<JsonRpcResponse<any>>('debug_traceBlock', params)
   }
-
 
   async debugTraceBlockByHash(blockHash: string, traceOptions?: TraceOptions): Promise<JsonRpcResponse<any>> {
     const params: unknown[] = [blockHash]
@@ -138,7 +137,10 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     return response
   }
 
-  async getBalance(address: string, blockNumber: BlockNumber = 'latest'): Promise<JsonRpcResponse<BigNumber>> {
+  async getBalance(
+    address: string,
+    blockNumber: BlockNumber = 'latest',
+  ): Promise<JsonRpcResponse<BigNumber>> {
     const response = await this.rpcCall<JsonRpcResponse<any>>('eth_getBalance', [
       address,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
@@ -178,6 +180,43 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     ])
     if (response.result) {
       response.result = decodeHexString(response.result)
+    }
+    return response
+  }
+
+  async getTokenCap(tokenAddress: string): Promise<JsonRpcResponse<BigNumber>> {
+    const response = await this.rpcCall<JsonRpcResponse<any>>('eth_call', [
+      { to: tokenAddress, data: '0x355274ea' },
+      'latest',
+    ])
+    if (response.result) {
+      response.result = new BigNumber(response.result)
+    }
+    return response
+  }
+
+  async getTokenTotalSupply(tokenAddress: string): Promise<JsonRpcResponse<BigNumber>> {
+    const response = await this.rpcCall<JsonRpcResponse<any>>('eth_call', [
+      { to: tokenAddress, data: '0x18160ddd' },
+      'latest',
+    ])
+    if (response.result) {
+      response.result = new BigNumber(response.result)
+    }
+    return response
+  }
+
+  async supportsInterfaceERC1155(tokenAddress: string): Promise<JsonRpcResponse<boolean>> {
+    const response = await this.rpcCall<JsonRpcResponse<any>>('eth_call', [
+      {
+        to: tokenAddress,
+        //kecakk256 of supportsInterface(bytes4) + ERC1155 interface id + padding to 64 bytes
+        data: '0x01ffc9a7d9b67a2600000000000000000000000000000000000000000000000000000000',
+      },
+      'latest',
+    ])
+    if (response.result) {
+      response.result = decodeUInt256(response.result) === 1
     }
     return response
   }
@@ -297,11 +336,9 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     return this.rpcCall<JsonRpcResponse<any>>('eth_getTransactionReceipt', [transactionHash])
   }
 
-  async getBlockReceipts(
-    blockNumber: string | number,
-  ): Promise<JsonRpcResponse<any>> {
+  async getBlockReceipts(blockNumber: string | number): Promise<JsonRpcResponse<any>> {
     return this.rpcCall<JsonRpcResponse<any>>('eth_getBlockReceipts', [
-      `0x${new BigNumber(blockNumber).toString(16)}`
+      `0x${new BigNumber(blockNumber).toString(16)}`,
     ])
   }
 
