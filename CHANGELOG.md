@@ -1,6 +1,6 @@
 ## [3.0.19] - 2023.09.07
 ### Added
- - Enable data-api for Horizen EON
+ - Users can access data from the Horizen EON chain by using the `address` submodule. - `address.getTransactions({...})`, `address.getBalance({...})`
 ## [3.0.18] - 2023.09.06
 ### Fixed
 - improve URL parsing for SSRF check
