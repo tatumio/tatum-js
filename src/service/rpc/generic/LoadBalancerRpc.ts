@@ -271,8 +271,17 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     return this.activeUrl[nodeType]?.index as number
   }
 
-  private checkSSRF(url: string) {
-    return url.endsWith('rpc.tatum.io') || url.endsWith('rpc.tatum.io/') || url.endsWith('rpc.tatum.io/ethv1')
+  private checkSSRF(url: string): boolean {
+    try {
+      const parsedUrl = new URL(url)
+      return parsedUrl.hostname.endsWith('rpc.tatum.io')
+    } catch (e) {
+      Utils.log({
+        id: this.id,
+        message: `Failed to parse URL ${url}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
+      })
+      return false
+    }
   }
 
   private initRemoteHosts({ nodeType, nodes, noSSRFCheck }: InitRemoteHostsParams) {
