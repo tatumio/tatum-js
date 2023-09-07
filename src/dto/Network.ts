@@ -171,6 +171,7 @@ export const DATA_API_EVM_NETWORKS = [
   Network.BINANCE_SMART_CHAIN_TESTNET,
   Network.CELO,
   Network.CELO_ALFAJORES,
+  Network.EON,
 ]
 
 export const DATA_API_NETWORKS = [...DATA_API_EVM_NETWORKS, Network.TEZOS]
