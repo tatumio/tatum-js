@@ -28,7 +28,7 @@ export class EvmRpc extends AbstractEvmRpc {
     return (await this.genericRpc.rawRpcCall(body)) as T
   }
 
-  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
+  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[] | JsonRpcResponse<any>> {
     return this.genericRpc.rawBatchRpcCall(body)
   }
 

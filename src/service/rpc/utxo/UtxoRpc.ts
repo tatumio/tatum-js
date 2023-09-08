@@ -24,7 +24,7 @@ export class UtxoRpc extends AbstractUtxoRpc implements UtxoBasedRpcSuite {
     return (await this.genericRpc.rawRpcCall(preparedCall)) as T
   }
 
-  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
+  async rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[] | JsonRpcResponse<any>> {
     return this.genericRpc.rawBatchRpcCall(body)
   }
 

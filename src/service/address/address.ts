@@ -433,8 +433,12 @@ export class Address {
         .rawBatchRpcCall(
           addresses.map((a, i) => Utils.prepareRpcCall('getBalance', [a, { commitment: 'processed' }], i)),
         )
-        .then((r) =>
-          r.map((e) => new BigNumber(e.result.value).dividedBy(10 ** Constant.DECIMALS[network]).toString()),
+        .then((r) =>{
+          if(Array.isArray(r)){
+            return r.map((e) => new BigNumber(e.result.value).dividedBy(10 ** Constant.DECIMALS[network]).toString())
+          }
+          return [new BigNumber(r.result.value).dividedBy(10 ** Constant.DECIMALS[network]).toString()]
+        }
         )
     } else if ([Network.XRP, Network.XRP_TESTNET].includes(network)) {
       if (addresses.length !== 1) {

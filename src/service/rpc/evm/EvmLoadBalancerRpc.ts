@@ -28,7 +28,7 @@ export class EvmLoadBalancerRpc extends AbstractEvmRpc implements EvmBasedRpcSui
     return this.loadBalancerRpc.rawRpcCall(body)
   }
 
-  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
+  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[] | JsonRpcResponse<any>> {
     return this.loadBalancerRpc.rawBatchRpcCall(body)
   }
 

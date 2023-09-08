@@ -30,7 +30,7 @@ export abstract class AbstractBatchRpc implements AbstractRpcInterface {
     return this.connector.rpcCall(this.getRpcNodeUrl(), body)
   }
 
-  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
+  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[] | JsonRpcResponse<any>> {
     return this.connector.rpcCall(this.getRpcNodeUrl(), body)
   }
 

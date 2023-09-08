@@ -1,3 +1,7 @@
+## [3.0.20] - 2023.09.08
+### Fixed
+- fix batched raw RPC call return type to also include method level error
+
 ## [3.0.19] - 2023.09.07
 ### Added
  - Users can access data from the Horizen EON chain by using the `address` submodule. - `address.getTransactions({...})`, `address.getBalance({...})`
@@ -8,7 +12,7 @@
 ## [3.0.17] - 2023.09.06
 ### Added
  - Add functions to EVM rpc interface: getTokenTotalSupply, getTokenCap, supportsInterfaceERC1155
- -
+
 ## [3.0.16] - 2023.09.05
 ### Updated
  - Extend allowed list of urls for SSRF check
