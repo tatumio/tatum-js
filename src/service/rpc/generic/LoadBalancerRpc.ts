@@ -431,7 +431,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     }
   }
 
-  async rawBatchRpcCall(rpcCall: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
+  async rawBatchRpcCall(rpcCall: JsonRpcCall[]): Promise<JsonRpcResponse<any>[] | JsonRpcResponse<any>> {
     const { url, type } = this.getActiveArchiveUrlWithFallback()
     try {
       return await this.connector.rpcCall(url, rpcCall)

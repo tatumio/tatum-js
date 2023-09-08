@@ -94,7 +94,7 @@ export class EvmArchiveLoadBalancerRpc extends AbstractEvmRpc implements EvmBase
     return this.loadBalancerRpc.rawRpcCall(body, isArchive)
   }
 
-  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[]> {
+  rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[] | JsonRpcResponse<any>> {
     return this.loadBalancerRpc.rawBatchRpcCall(body)
   }
 
