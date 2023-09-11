@@ -1,3 +1,7 @@
+## [3.0.21] - 2023.09.11
+### Fixed
+- The 'estimateSmartFee' method in AbstractUtxoRpc.ts has been updated to include the 'estimateMode' parameter as optional. Previously, if estimate mode was not provided, it would default to 'CONSERVATIVE'.
+
 ## [3.0.20] - 2023.09.08
 ### Fixed
 - fix batched raw RPC call return type to also include method level error
