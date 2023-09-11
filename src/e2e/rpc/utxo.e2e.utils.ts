@@ -60,5 +60,13 @@ export const UtxoE2eUtils = {
       expect(result).toBeDefined()
       tatum.destroy()
     })
+
+    it('estimatesmartfee', async () => {
+      const tatum = await UtxoE2eUtils.initTatum(network)
+      const result = await tatum.rpc.estimateSmartFee(6)
+
+      expect(result.result).not.toBeNull()
+      tatum.destroy()
+    })
   },
 }

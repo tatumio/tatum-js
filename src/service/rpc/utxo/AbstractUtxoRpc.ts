@@ -28,8 +28,12 @@ export abstract class AbstractUtxoRpc implements UtxoBasedRpcInterface {
     return this.rpcCall<JsonRpcResponse<any>>('decodescript', [hexstring])
   }
 
-  async estimateSmartFee(blocks: number, estimateMode = 'CONSERVATIVE'): Promise<JsonRpcResponse<any>> {
-    return this.rpcCall<JsonRpcResponse<any>>('estimatesmartfee', [blocks, estimateMode])
+  async estimateSmartFee(blocks: number, estimateMode?: string): Promise<JsonRpcResponse<any>> {
+    const params: unknown[] = [blocks]
+    if (estimateMode) {
+      params.push(estimateMode)
+    }
+    return this.rpcCall<JsonRpcResponse<any>>('estimatesmartfee', params)
   }
 
   async getBestBlockHash(): Promise<JsonRpcResponse<string>> {
