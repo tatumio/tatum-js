@@ -9,6 +9,7 @@ export type DeployContractData = {
   privateKey: string
   owner: string
   metadata: string
+  minter: string
 }
 export type MintTezosToken = {
   privateKey: string
@@ -44,20 +45,27 @@ export type UpdateOperatorTezosToken = {
   operator: string
 }
 
+export type AddRemoveTokenMinter = {
+  privateKey: string
+  contractAddress: string
+  minter: string
+}
+
 const deployTzip12 = async (
   body: DeployContractData,
   tronWeb: ITezosWeb,
   provider?: string,
 ): Promise<string> => {
   const client = tronWeb.getClient(provider)
-  const { privateKey, owner, metadata } = body
+  const { privateKey, owner, metadata, minter } = body
 
   const memorySigner = new InMemorySigner(privateKey)
 
   client.setSignerProvider(memorySigner)
 
-  const storage = createStorage({ metadata, owner })
+  const storage = createStorage({ metadata, owner, minter })
 
+  storage.minter_admin.set(owner, null)
   const { hash } = await client.contract.originate({
     code: Tezos_TZIP_12.michelson,
     storage,
@@ -176,19 +184,40 @@ const updateOperator = async (
   return opHash
 }
 
+const addRemoveMinter = async (
+  body: AddRemoveTokenMinter,
+  tronWeb: ITezosWeb,
+  addMinter: boolean,
+  provider?: string,
+): Promise<string> => {
+  const { contractAddress, privateKey, minter } = body
+
+  const client = tronWeb.getClient(provider)
+  const memorySigner = new InMemorySigner(privateKey)
+
+  client.setSignerProvider(memorySigner)
+
+  const contract = await client.wallet.at(contractAddress)
+
+  if (addMinter) {
+    return (await contract.methods.add_minter(minter).send()).opHash
+  }
+  return (await contract.methods.remove_minter(minter).send()).opHash
+}
+
 const estimateContractDeploy = async (
   body: DeployContractData,
   tronWeb: ITezosWeb,
   provider?: string,
 ): Promise<number> => {
   const client = tronWeb.getClient(provider)
-  const { privateKey, owner, metadata } = body
+  const { privateKey, owner, metadata, minter } = body
 
   const memorySigner = new InMemorySigner(privateKey)
 
   client.setSignerProvider(memorySigner)
 
-  const storage = createStorage({ metadata, owner })
+  const storage = createStorage({ metadata, owner, minter })
 
   const { burnFeeMutez, suggestedFeeMutez } = await client.estimate.originate({
     code: Tezos_TZIP_12.michelson,
@@ -314,6 +343,18 @@ export const tezosTzip = (args: { tezosWeb: ITezosWeb }) => ({
    */
   updateOperator: async (body: UpdateOperatorTezosToken, addOperator: boolean, provider?: string) =>
     updateOperator(body, args.tezosWeb, addOperator, provider),
+  /**
+   * Add or remove minter
+   * @param body content for adding or removing minter on the Tezos network
+   * @param addMinter boolean to add or remove minter
+   * @param provider
+   * @returns The hash (ID) of the transaction
+   */
+  addRemoveMinter: async (body: AddRemoveTokenMinter, addMinter: boolean, provider?: string) =>
+    addRemoveMinter(body, args.tezosWeb, addMinter, provider),
 })
 
-const createStorage = fa2.contractStorage.with(fa2.simpleAdminStorage).with(fa2.nftStorage).build
+const createStorage = fa2.contractStorage
+  .with(fa2.simpleAdminStorage)
+  .with(fa2.nftStorage)
+  .with(fa2.multiMinterAdminStorage).build
