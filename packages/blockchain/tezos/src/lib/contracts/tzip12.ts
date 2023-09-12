@@ -7,7 +7,7 @@ export const Tezos_TZIP_12 = {
                       (pair (address %owner)
                             (list %tokens (pair (nat %token_id) (map %token_info string bytes))))))
                (never %never)))
-        (or (never %minter_admin)
+        (or (or %minter_admin (address %add_minter) (address %remove_minter))
             (or %tokens
                (or (pair %balance_of
                       (list %requests (pair (address %owner) (nat %token_id)))
@@ -22,7 +22,7 @@ export const Tezos_TZIP_12 = {
     (pair (pair (pair (pair %admin (address %admin) (option %pending_admin address))
                       (big_map %metadata string bytes))
                 (unit %minter)
-                (unit %minter_admin))
+                (big_map %minter_admin address unit))
           (pair %tokens
              (pair (big_map %ledger nat address)
                    (big_map %operators (pair address address nat) unit))
@@ -76,14 +76,15 @@ export const Tezos_TZIP_12 = {
                  UPDATE 1 ;
                  UPDATE 1 ;
                  SWAP }
-               { DUP 2 ;
-                 CAR ;
-                 CAR ;
-                 CAR ;
-                 DIG 5 ;
-                 SWAP ;
-                 EXEC ;
+               { DIG 4 ;
                  DROP ;
+                 DUP 2 ;
+                 CAR ;
+                 CDR ;
+                 CDR ;
+                 SENDER ;
+                 MEM ;
+                 IF {} { PUSH string "NOT_MINTER" ; FAILWITH } ;
                  DUP 2 ;
                  CAR ;
                  CDR ;
@@ -202,28 +203,33 @@ export const Tezos_TZIP_12 = {
                { DIG 2 ;
                  DIG 3 ;
                  DIG 4 ;
-                 DROP 4 ;
-                 DUP ;
+                 DROP 3 ;
+                 DUP 2 ;
                  CAR ;
                  CAR ;
                  CAR ;
-                 DIG 2 ;
+                 DIG 3 ;
                  SWAP ;
                  EXEC ;
                  DROP ;
-                 DUP ;
                  DUP 2 ;
                  CAR ;
-                 DUP ;
                  CDR ;
+                 CDR ;
+                 SWAP ;
+                 IF_LEFT
+                   { SWAP ; UNIT ; DIG 2 ; SWAP ; SOME ; SWAP ; UPDATE }
+                   { NONE unit ; SWAP ; UPDATE } ;
+                 NIL operation ;
+                 DUP 3 ;
                  DIG 3 ;
                  CAR ;
+                 DUP ;
                  CDR ;
-                 CDR ;
+                 DIG 4 ;
                  UPDATE 2 ;
                  UPDATE 2 ;
-                 UPDATE 1 ;
-                 NIL operation }
+                 UPDATE 1 }
                { DIG 5 ;
                  DROP ;
                  DUP 2 ;
@@ -387,7 +393,7 @@ export const Tezos_TZIP_12 = {
                      UPDATE 1 ;
                      NIL operation } ;
                  DUG 2 ;
-                 UPDATE 2 ;
-                 SWAP } } ;
+                 UPDATE 2 } ;
+             SWAP } ;
          PAIR } }`,
 }
