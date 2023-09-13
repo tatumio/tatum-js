@@ -1,3 +1,7 @@
+## [3.0.22] - 2023.09.13
+### Fixed
+- Fix loadbalancer logic to work without api key
+
 ## [3.0.21] - 2023.09.11
 ### Fixed
 - The 'estimateSmartFee' method in AbstractUtxoRpc.ts has been updated to include the 'estimateMode' parameter as optional. Previously, if estimate mode was not provided, it would default to 'CONSERVATIVE'.
