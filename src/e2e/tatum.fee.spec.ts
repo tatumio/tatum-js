@@ -8,7 +8,7 @@ describe('Fee', () => {
       network: Network.ETHEREUM_SEPOLIA,
       retryDelay: 1000,
       retryCount: 2,
-      version: ApiVersion.V1,
+      version: ApiVersion.V3,
     })
 
     const { data, status } = await tatum.fee.getCurrentFee()
@@ -22,7 +22,7 @@ describe('Fee', () => {
       network: Network.BITCOIN_TESTNET,
       retryDelay: 1000,
       retryCount: 2,
-      version: ApiVersion.V1,
+      version: ApiVersion.V3,
     })
 
     const { data, status } = await tatum.fee.getCurrentFee()

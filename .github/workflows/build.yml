@@ -5,8 +5,11 @@ on:
 
 env:
   SDK_ERROR_MESSAGES_VERSION: "master"
-  V2_API_KEY: ${{ secrets.V2_API_KEY }}
+  V4_API_KEY_MAINNET: ${{ secrets.V4_API_KEY_MAINNET }}
+  V3_API_KEY_MAINNET: ${{ secrets.V3_API_KEY_MAINNET }}
+  V3_API_KEY_TESTNET: ${{ secrets.V3_API_KEY_TESTNET }}
   NON_TATUM_RPC_ETH_URL: ${{ secrets.NON_TATUM_RPC_ETH_URL }}
+  VERBOSE: ${{ secrets.verbose }}
 
 jobs:
   metadata:
@@ -89,9 +92,11 @@ jobs:
     - run: yarn lint
     - run: yarn test
       env:
-        TATUM_API_URL: ${{ secrets.TATUM_API_URL }}
-        TESTNET_API_KEY: ${{ secrets.TESTNET_API_KEY }}
-        MAINNET_API_KEY: ${{ secrets.MAINNET_API_KEY }}
+        V4_API_KEY_MAINNET: ${{ secrets.V4_API_KEY_MAINNET }}
+        V3_API_KEY_MAINNET: ${{ secrets.V3_API_KEY_MAINNET }}
+        V3_API_KEY_TESTNET: ${{ secrets.V3_API_KEY_TESTNET }}
+        NON_TATUM_RPC_ETH_URL: ${{ secrets.NON_TATUM_RPC_ETH_URL }}
+        VERBOSE: ${{ secrets.verbose }}
 
   release:
     runs-on: ubuntu-latest

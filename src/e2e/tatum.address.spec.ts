@@ -23,7 +23,7 @@ describe.skip('Address', () => {
       beforeEach(async () => {
         tatum = await TatumSDK.init<Ethereum>({
           network: Network.ETHEREUM_SEPOLIA,
-          apiKey: { v2: process.env.V2_API_KEY },
+          apiKey: { v4: process.env.V2_API_KEY },
         })
       })
 
@@ -300,7 +300,7 @@ describe.skip('Address', () => {
       beforeEach(async () => {
         tatum = await TatumSDK.init<Tron>({
           network: Network.TRON_SHASTA,
-          version: ApiVersion.V1,
+          version: ApiVersion.V3,
         })
       })
 
@@ -336,9 +336,9 @@ describe.skip('Address', () => {
 
       beforeEach(async () => {
         tatum = await TatumSDK.init({
-          network: Network.EON,
-          version: ApiVersion.V2,
-          apiKey: { v2: process.env.V2_API_KEY },
+          network: Network.HORIZEN_EON,
+          version: ApiVersion.V4,
+          apiKey: { v4: process.env.V2_API_KEY },
         })
       })
 
@@ -668,9 +668,9 @@ describe.skip('Address', () => {
 
       beforeEach(async () => {
         tatum = await TatumSDK.init({
-          network: Network.EON,
-          version: ApiVersion.V2,
-          apiKey: { v2: process.env.V2_API_KEY },
+          network: Network.HORIZEN_EON,
+          version: ApiVersion.V4,
+          apiKey: { v4: process.env.V2_API_KEY },
         })
       })
 

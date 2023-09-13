@@ -14,7 +14,7 @@ import {
 } from '../../dto'
 import { CONFIG, Constant, ErrorUtils, ResponseDto, Utils } from '../../util'
 import { decodeHexString, decodeUInt256 } from '../../util/decode'
-import { EvmRpc, GenericRpc, TronRpc } from '../rpc'
+import { AbstractTronRpc, EvmRpc, GenericRpc } from '../rpc'
 import { Network, TatumConfig } from '../tatum'
 import {
   AddressBalance,
@@ -181,12 +181,12 @@ export class AddressTron {
     const serializedTokenBalance: AddressBalance[] = []
     for (const token of tokenBalances) {
       const tokenAddress = Object.keys(token)[0]
-      const asset = await Utils.getRpc<TronRpc>(this.id, this.config)
+      const asset = await Utils.getRpc<AbstractTronRpc>(this.id, this.config)
         .triggerConstantContract(tokenAddress, tokenAddress, 'symbol()', '', {
           visible: true,
         })
         .then((r) => decodeHexString(r.constant_result[0]))
-      const decimals = await Utils.getRpc<TronRpc>(this.id, this.config)
+      const decimals = await Utils.getRpc<AbstractTronRpc>(this.id, this.config)
         .triggerConstantContract(tokenAddress, tokenAddress, 'decimals()', '', {
           visible: true,
         })
@@ -362,7 +362,7 @@ export class Address {
         }>
       >({
         path,
-        basePath: Constant.TATUM_API_URL.V1,
+        basePath: Constant.TATUM_API_URL.V3,
         params: {
           pageSize,
           offset: page * pageSize,
@@ -433,13 +433,14 @@ export class Address {
         .rawBatchRpcCall(
           addresses.map((a, i) => Utils.prepareRpcCall('getBalance', [a, { commitment: 'processed' }], i)),
         )
-        .then((r) =>{
-          if(Array.isArray(r)){
-            return r.map((e) => new BigNumber(e.result.value).dividedBy(10 ** Constant.DECIMALS[network]).toString())
+        .then((r) => {
+          if (Array.isArray(r)) {
+            return r.map((e) =>
+              new BigNumber(e.result.value).dividedBy(10 ** Constant.DECIMALS[network]).toString(),
+            )
           }
           return [new BigNumber(r.result.value).dividedBy(10 ** Constant.DECIMALS[network]).toString()]
-        }
-        )
+        })
     } else if ([Network.XRP, Network.XRP_TESTNET].includes(network)) {
       if (addresses.length !== 1) {
         throw new Error(`UTXO based networks like ${network} support only one address per call.`)
@@ -473,7 +474,7 @@ export class Address {
           },
         })
         .then((r) => [r.reduce((acc, val) => acc + val.value, 0).toString()])
-    } else if (network === Network.EON) {
+    } else if (network === Network.HORIZEN_EON) {
       const rpc = Utils.getRpc<EvmRpc>(this.id, this.config)
       const result = await Promise.all(addresses.map((a) => rpc.getBalance(a)))
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment

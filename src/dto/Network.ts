@@ -2,7 +2,7 @@ export enum Network {
   // Mainnets
   ALGORAND = 'algorand-mainnet',
   ARBITRUM_NOVA = 'arb-nova-mainnet',
-  ARBITRUM_ONE = 'arb-one-mainnet',
+  ARBITRUM_ONE = 'arbitrum-one-mainnet',
   AURORA = 'aurora-mainnet',
   AVALANCHE_C = 'avax-mainnet',
   AVALANCHE_P = 'avax-p-mainnet',
@@ -15,7 +15,7 @@ export enum Network {
   CRONOS = 'cro-mainnet',
   DOGECOIN = 'doge-mainnet',
   EOS = 'eos-mainnet',
-  EON = 'eon-mainnet',
+  HORIZEN_EON = 'eon-mainnet',
   ETHEREUM = 'ethereum-mainnet',
   ETHEREUM_CLASSIC = 'ethereum-classic-mainnet',
   FANTOM = 'fantom-mainnet',
@@ -109,7 +109,6 @@ export const EVM_BASED_NETWORKS = [
   Network.AURORA_TESTNET,
   Network.CELO,
   Network.CELO_ALFAJORES,
-  Network.BINANCE_SMART_CHAIN,
   Network.BINANCE_SMART_CHAIN_TESTNET,
   Network.VECHAIN,
   Network.VECHAIN_TESTNET,
@@ -135,6 +134,10 @@ export const EVM_BASED_NETWORKS = [
   Network.FLARE_SONGBIRD,
   Network.HAQQ,
   Network.HAQQ_TESTNET,
+  Network.ARBITRUM_NOVA,
+  Network.ARBITRUM_NOVA_TESTNET,
+  Network.ARBITRUM_ONE,
+  Network.BINANCE_SMART_CHAIN,
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -171,7 +174,7 @@ export const DATA_API_EVM_NETWORKS = [
   Network.BINANCE_SMART_CHAIN_TESTNET,
   Network.CELO,
   Network.CELO_ALFAJORES,
-  Network.EON,
+  Network.HORIZEN_EON,
 ]
 
 export const DATA_API_NETWORKS = [...DATA_API_EVM_NETWORKS, Network.TEZOS]
@@ -198,10 +201,18 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.POLYGON_MUMBAI,
   Network.OPTIMISM,
   Network.OPTIMISM_TESTNET,
-  Network.EON,
+  Network.HORIZEN_EON,
+  Network.ARBITRUM_ONE,
+  Network.BINANCE_SMART_CHAIN,
 ]
 
-export const LOAD_BALANCER_NETWORKS = [...UTXO_LOAD_BALANCER_NETWORKS, ...EVM_LOAD_BALANCER_NETWORKS]
+export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
+
+export const LOAD_BALANCER_NETWORKS = [
+  ...UTXO_LOAD_BALANCER_NETWORKS,
+  ...EVM_LOAD_BALANCER_NETWORKS,
+  ...TRON_LOAD_BALANCER_NETWORKS,
+]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
   Network.ETHEREUM,
@@ -239,3 +250,5 @@ export const isEvmLoadBalancerNetwork = (network: Network) => EVM_LOAD_BALANCER_
 
 export const isEvmArchiveNonArchiveLoadBalancerNetwork = (network: Network) =>
   EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isTronLoadBalancerNetwork = (network: Network) => TRON_LOAD_BALANCER_NETWORKS.includes(network)

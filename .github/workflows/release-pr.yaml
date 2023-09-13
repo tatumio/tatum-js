@@ -6,8 +6,11 @@ on:
       - master
 
 env:
-  V2_API_KEY: ${{ secrets.V2_API_KEY }}
+  V4_API_KEY_MAINNET: ${{ secrets.V4_API_KEY_MAINNET }}
+  V3_API_KEY_MAINNET: ${{ secrets.V3_API_KEY_MAINNET }}
+  V3_API_KEY_TESTNET: ${{ secrets.V3_API_KEY_TESTNET }}
   NON_TATUM_RPC_ETH_URL: ${{ secrets.NON_TATUM_RPC_ETH_URL }}
+  VERBOSE: ${{ secrets.verbose }}
 jobs:
   checks:
     runs-on: ubuntu-latest

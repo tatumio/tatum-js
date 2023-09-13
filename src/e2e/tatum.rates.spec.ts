@@ -8,7 +8,7 @@ describe('Rates', () => {
       network: Network.ETHEREUM_SEPOLIA,
       retryDelay: 1000,
       retryCount: 2,
-      version: ApiVersion.V2,
+      version: ApiVersion.V4,
     })
   })
 

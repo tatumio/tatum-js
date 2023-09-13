@@ -1,6 +1,5 @@
 import { Network } from '../dto'
 import { Bitcoin, TatumSDK } from '../service'
-import { e2eUtil } from './e2e.util'
 
 describe('Tatum Init', () => {
   describe('IP auth', () => {
@@ -8,11 +7,8 @@ describe('Tatum Init', () => {
       const tatum = await TatumSDK.init<Bitcoin>({
         network: Network.BITCOIN_TESTNET,
       })
-      await e2eUtil.subscriptions.testAddressBasedSubscription(
-        tatum,
-        e2eUtil.subscriptions.getAddress(Network.BITCOIN_TESTNET),
-        tatum.notification.subscribe.addressEvent,
-      )
+      const { result } = await tatum.rpc.getBlockChainInfo()
+      expect(result.chain).toBe('test')
       tatum.destroy()
     })
 
@@ -20,21 +16,8 @@ describe('Tatum Init', () => {
       const tatum = await TatumSDK.init<Bitcoin>({
         network: Network.BITCOIN,
       })
-      await e2eUtil.subscriptions.testAddressBasedSubscription(
-        tatum,
-        e2eUtil.subscriptions.getAddress(Network.BITCOIN),
-        tatum.notification.subscribe.addressEvent,
-      )
-      tatum.destroy()
-    })
-
-    it('Empty', async () => {
-      const tatum = await TatumSDK.init<Bitcoin>({ network: Network.BITCOIN })
-      await e2eUtil.subscriptions.testAddressBasedSubscription(
-        tatum,
-        e2eUtil.subscriptions.getAddress(Network.BITCOIN),
-        tatum.notification.subscribe.addressEvent,
-      )
+      const { result } = await tatum.rpc.getBlockChainInfo()
+      expect(result.chain).toBe('main')
       tatum.destroy()
     })
   })
@@ -47,16 +30,13 @@ describe('Tatum Init', () => {
       const testnet = await TatumSDK.init<Bitcoin>({
         network: Network.BITCOIN_TESTNET,
       })
-      await e2eUtil.subscriptions.testAddressBasedSubscription(
-        mainnet,
-        e2eUtil.subscriptions.getAddress(Network.BITCOIN),
-        mainnet.notification.subscribe.addressEvent,
-      )
-      await e2eUtil.subscriptions.testAddressBasedSubscription(
-        testnet,
-        e2eUtil.subscriptions.getAddress(Network.BITCOIN_TESTNET),
-        testnet.notification.subscribe.addressEvent,
-      )
+
+      const { result: resultMainnet } = await mainnet.rpc.getBlockChainInfo()
+      expect(resultMainnet.chain).toBe('main')
+
+      const { result: resultTestnet } = await testnet.rpc.getBlockChainInfo()
+      expect(resultTestnet.chain).toBe('test')
+
       testnet.destroy()
       mainnet.destroy()
     })

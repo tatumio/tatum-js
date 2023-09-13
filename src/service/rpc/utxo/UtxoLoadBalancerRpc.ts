@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { JsonRpcCall, JsonRpcResponse, UtxoBasedRpcSuite } from '../../../dto'
-import { AbstractUtxoRpc } from './AbstractUtxoRpc'
-import { LoadBalancerRpc } from '../generic'
 import { Utils } from '../../../util'
+import { LoadBalancer } from '../generic'
+import { AbstractUtxoRpc } from './AbstractUtxoRpc'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -12,11 +12,11 @@ import { Utils } from '../../../util'
   transient: true,
 })
 export class UtxoLoadBalancerRpc extends AbstractUtxoRpc implements UtxoBasedRpcSuite {
-  protected readonly loadBalancerRpc: LoadBalancerRpc
+  protected readonly loadBalancerRpc: LoadBalancer
 
   constructor(id: string) {
     super()
-    this.loadBalancerRpc = Container.of(id).get(LoadBalancerRpc)
+    this.loadBalancerRpc = Container.of(id).get(LoadBalancer)
   }
 
   protected async rpcCall<T>(method: string, params?: unknown[]): Promise<T> {

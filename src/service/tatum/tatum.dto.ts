@@ -7,7 +7,7 @@ export interface TatumConfig {
   network: Network
 
   /**
-   * API Version of Tatum. Use V1 for api.tatum.io/v3 API keys and V2 for api.tatum.com/v1 API keys. Defaults to V2.
+   * API Version of Tatum. Use V3 for api.tatum.io/v3 API keys and V4 for api.tatum.io/v4 API keys. Defaults to V4.
    */
   version?: ApiVersion
 
@@ -18,13 +18,13 @@ export interface TatumConfig {
    */
   apiKey?: {
     /**
-     * API Key for ApiVersion.V1
+     * API Key for ApiVersion.V3
      */
-    v1?: string
+    v3?: string
     /**
-     * API Key for ApiVersion.V2
+     * API Key for ApiVersion.V4
      */
-    v2?: string
+    v4?: string
   }
 
   /**
@@ -64,8 +64,8 @@ export interface TatumConfig {
 }
 
 export enum ApiVersion {
-  V1 = 'V1',
-  V2 = 'V2',
+  V3 = 'V3',
+  V4 = 'V4',
 }
 
 export interface ApiInfoResponse {

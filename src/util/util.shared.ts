@@ -8,6 +8,7 @@ import {
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
   isSolanaEnabledNetwork,
+  isTronLoadBalancerNetwork,
   isTronNetwork,
   isUtxoBasedNetwork,
   isUtxoLoadBalancerNetwork,
@@ -52,7 +53,6 @@ import {
   TatumConfig,
   Tezos,
   Tron,
-  TronRpc,
   UtxoLoadBalancerRpc,
   UtxoRpc,
   Vechain,
@@ -61,6 +61,8 @@ import {
   XrpRpc,
 } from '../service'
 import { EvmArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmArchiveLoadBalancerRpc'
+import { TronLoadBalancerRpc } from '../service/rpc/evm/TronLoadBalancerRpc'
+import { TronRpc } from '../service/rpc/evm/TronRpc'
 import { CONFIG } from './di.tokens'
 
 export const Utils = {
@@ -92,14 +94,30 @@ export const Utils = {
     if (isSolanaEnabledNetwork(network)) {
       return Container.of(id).get(SolanaRpc) as T
     }
+
+    if (isTronLoadBalancerNetwork(network)) {
+      return Container.of(id).get(TronLoadBalancerRpc) as T
+    }
+
     if (isTronNetwork(network)) {
       return Container.of(id).get(TronRpc) as T
     }
+
     console.warn(`RPC Network ${network} is not supported.`)
     return Container.of(id).get(GenericRpc) as T
   },
   getRpcListUrl: (network: Network): string[] => {
-    return [`https://rpc.tatum.io/${network}/list.json`, `https://rpc.tatum.io/${network}-archive/list.json`]
+    const mappedNetwork = Utils.mapRpcListUrl(network)
+    return [
+      `https://rpc.tatum.io/${mappedNetwork}/list.json`,
+      `https://rpc.tatum.io/${mappedNetwork}-archive/list.json`,
+    ]
+  },
+  mapRpcListUrl: (network: Network): string => {
+    if (network === Network.HORIZEN_EON) {
+      return 'horizen-eon-mainnet'
+    }
+    return network
   },
   getStatusPayload: (network: Network) => {
     if (isUtxoBasedNetwork(network)) {
@@ -110,7 +128,7 @@ export const Utils = {
         id: 1,
       }
     }
-    if (isEvmBasedNetwork(network)) {
+    if (isEvmBasedNetwork(network) || isTronNetwork(network)) {
       return {
         jsonrpc: '2.0',
         method: 'eth_blockNumber',
@@ -222,13 +240,13 @@ export const Utils = {
     return { responseTime, response }
   },
   headersToJson(headers: any) {
-    const headersObj = {}
-    for (const [key, value] of headers.entries()) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
+    const headersObj: Record<string, string> = {}
+
+    headers.forEach((value: string, key: string) => {
       headersObj[key] = value
-    }
-    return JSON.stringify(headersObj, null, 2) // the last two arguments prettify the output
+    })
+
+    return JSON.stringify(headersObj)
   },
   getHeaders: (id: string) => {
     const config = Container.of(id).get(CONFIG)
@@ -240,10 +258,10 @@ export const Utils = {
     })
 
     if (config.apiKey) {
-      if (config.version === ApiVersion.V1 && config.apiKey.v1) {
-        headers.append('x-api-key', config.apiKey.v1)
-      } else if (config.version === ApiVersion.V2 && config.apiKey.v2) {
-        headers.append('x-api-key', config.apiKey.v2)
+      if (config.version === ApiVersion.V3 && config.apiKey.v3) {
+        headers.append('x-api-key', config.apiKey.v3)
+      } else if (config.version === ApiVersion.V4 && config.apiKey.v4) {
+        headers.append('x-api-key', config.apiKey.v4)
       }
     }
     return headers
@@ -360,7 +378,7 @@ export const Utils = {
         return new Tron(id) as T
       case Network.TEZOS:
         return new Tezos(id) as T
-      case Network.EON:
+      case Network.HORIZEN_EON:
         return new Eon(id) as T
       default:
         return new BaseTatumSdk(id) as T
@@ -412,5 +430,15 @@ export const Utils = {
     })
 
     return output
+  },
+  getV1RpcUrl: (config: TatumConfig, path?: string): string => {
+    const { apiKey, rpc, network } = config
+    if (apiKey) {
+      const url =
+        rpc?.nodes?.[0].url ||
+        `https://api.tatum.io/v3/blockchain/node/${network}/${apiKey.v3 ? apiKey.v3 : apiKey.v4}`
+      return url.concat(path || '')
+    }
+    return rpc?.nodes?.[0].url || `https://api.tatum.io/v3/blockchain/node/${network}`.concat(path || '')
   },
 }

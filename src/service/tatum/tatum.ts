@@ -1,5 +1,5 @@
 import { Container, Service } from 'typedi'
-import { LOAD_BALANCER_NETWORKS } from '../../dto'
+import { isLoadBalancerNetwork } from '../../dto'
 import { EvmBasedRpcSuite, SolanaRpcSuite, TronRpcSuite, UtxoBasedRpcSuite, XrpRpcSuite } from '../../dto/rpc'
 import { CONFIG, Constant, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
@@ -7,7 +7,7 @@ import { FeeEvm, FeeUtxo } from '../fee'
 import { Nft } from '../nft'
 import { Notification } from '../notification'
 import { Rates } from '../rate'
-import { LoadBalancerRpc } from '../rpc/generic/LoadBalancerRpc'
+import { LoadBalancer } from '../rpc/generic/LoadBalancer'
 import { Token } from '../token'
 import { WalletProvider } from '../walletProvider'
 import { ApiVersion, TatumConfig } from './tatum.dto'
@@ -161,7 +161,7 @@ export class TatumSDK {
    */
   public static async init<T>(config: TatumConfig): Promise<T> {
     const defaultConfig: Partial<TatumConfig> = {
-      version: ApiVersion.V2,
+      version: ApiVersion.V4,
       retryCount: 1,
       retryDelay: 1000,
       rpc: {
@@ -177,8 +177,8 @@ export class TatumSDK {
 
     const id = TatumSDK.generateRandomString()
     Container.of(id).set(CONFIG, mergedConfig)
-    if (LOAD_BALANCER_NETWORKS.includes(mergedConfig.network)) {
-      const loadBalancer = Container.of(id).get(LoadBalancerRpc)
+    if (isLoadBalancerNetwork(mergedConfig.network)) {
+      const loadBalancer = Container.of(id).get(LoadBalancer)
       await loadBalancer.init()
     }
 

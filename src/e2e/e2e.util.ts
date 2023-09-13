@@ -1,12 +1,11 @@
 import {
   AddressBasedNotification,
   AddressBasedNotificationDetail,
-  BaseTatumSdk,
+  BaseEvmClass,
   BlockBasedNotification,
   BlockBasedNotificationDetail,
   ContractBasedNotification,
   ContractBasedNotificationDetail,
-  Ethereum,
   Network,
 } from '../service'
 import { ResponseDto } from '../util'
@@ -69,7 +68,7 @@ export const e2eUtil = {
       }
     },
     testAddressBasedSubscription: async (
-      tatum: BaseTatumSdk,
+      tatum: BaseEvmClass,
       address: string,
       func: (
         addressBasedNotificationDetail: AddressBasedNotificationDetail,
@@ -90,10 +89,11 @@ export const e2eUtil = {
       expect(error).toBeUndefined()
       expect(data.address.toLowerCase()).toEqual(address.toLowerCase())
       expect(url).toBeDefined()
+      tatum.destroy()
       return data.id
     },
     testContractBasedSubscription: async (
-      tatum: Ethereum,
+      tatum: BaseEvmClass,
       contractAddress: string,
       func: (
         contractBasedNotificationDetail: ContractBasedNotificationDetail,
@@ -119,9 +119,10 @@ export const e2eUtil = {
       expect(error).toBeUndefined()
       expect(data.contractAddress.toLowerCase()).toEqual(contractAddress.toLowerCase())
       expect(url).toBeDefined()
+      tatum.destroy()
     },
     testBlockBasedSubscription: async (
-      tatum: Ethereum,
+      tatum: BaseEvmClass,
       func: (
         blockBasedNotificationDetail: BlockBasedNotificationDetail,
       ) => Promise<ResponseDto<BlockBasedNotification>>,
@@ -135,6 +136,8 @@ export const e2eUtil = {
       expect(error).toBeUndefined()
       expect(data.id).toBeDefined()
       expect(url).toBeDefined()
+      tatum.destroy()
     },
   },
+  isVerbose: process.env.E2E_VERBOSE === 'true',
 }

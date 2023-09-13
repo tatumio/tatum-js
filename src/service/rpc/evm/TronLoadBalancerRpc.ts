@@ -2,16 +2,16 @@
 import { Container, Service } from 'typedi'
 import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
 import { Utils } from '../../../util'
+import { AbstractTronRpc, PostI } from '../AbstractTronRpc'
 import { LoadBalancer } from '../generic/LoadBalancer'
-import { AbstractEvmRpc } from './AbstractEvmRpc'
 
 @Service({
   factory: (data: { id: string }) => {
-    return new EvmLoadBalancerRpc(data.id)
+    return new TronLoadBalancerRpc(data.id)
   },
   transient: true,
 })
-export class EvmLoadBalancerRpc extends AbstractEvmRpc implements EvmBasedRpcSuite {
+export class TronLoadBalancerRpc extends AbstractTronRpc implements EvmBasedRpcSuite {
   protected readonly loadBalancer: LoadBalancer
 
   constructor(id: string) {
@@ -34,5 +34,9 @@ export class EvmLoadBalancerRpc extends AbstractEvmRpc implements EvmBasedRpcSui
 
   public destroy() {
     this.loadBalancer.destroy()
+  }
+
+  protected post<T>(post: PostI): Promise<T> {
+    return this.loadBalancer.post(post)
   }
 }

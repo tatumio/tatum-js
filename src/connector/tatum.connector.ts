@@ -112,7 +112,7 @@ export class TatumConnector {
     const config = Container.of(this.id).get(CONFIG)
     const url = new URL(
       path || '',
-      basePath || (config.version === ApiVersion.V1 ? Constant.TATUM_API_URL.V1 : Constant.TATUM_API_URL.V2),
+      basePath || (config.version === ApiVersion.V3 ? Constant.TATUM_API_URL.V3 : Constant.TATUM_API_URL.V4),
     )
 
     if (params) {

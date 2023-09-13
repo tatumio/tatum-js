@@ -43,11 +43,11 @@ interface InitRemoteHostsParams {
 
 @Service({
   factory: (data: { id: string }) => {
-    return new LoadBalancerRpc(data.id)
+    return new LoadBalancer(data.id)
   },
   transient: true,
 })
-export class LoadBalancerRpc implements AbstractRpcInterface {
+export class LoadBalancer implements AbstractRpcInterface {
   protected readonly connector: TatumConnector
 
   private rpcUrls: RpcUrl = {
@@ -196,7 +196,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
      * The fastest node will be selected and will be used.
      */
     await Promise.allSettled(all).then(() => {
-      const { fastestServer, index } = LoadBalancerRpc.getFastestServer(
+      const { fastestServer, index } = LoadBalancer.getFastestServer(
         this.rpcUrls[nodeType],
         rpc?.allowedBlocksBehind as number,
       )
@@ -400,7 +400,7 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
      */
     const servers = this.rpcUrls[nodeType] as RpcStatus[]
     servers[activeIndex].failed = true
-    const { index, fastestServer } = LoadBalancerRpc.getFastestServer(
+    const { index, fastestServer } = LoadBalancer.getFastestServer(
       servers,
       rpcConfig?.allowedBlocksBehind as number,
     )
@@ -438,6 +438,19 @@ export class LoadBalancerRpc implements AbstractRpcInterface {
     } catch (e) {
       await this.handleFailedRpcCall(rpcCall, e, type)
       return await this.rawBatchRpcCall(rpcCall)
+    }
+  }
+
+  async post<T>({ path, body }: { path: string; body?: any }): Promise<T> {
+    try {
+      const { url } = this.getActiveNormalUrlWithFallback()
+      return await this.connector.post<T>({ basePath: url, path, body })
+    } catch (e) {
+      Utils.log({
+        id: this.id,
+        message: `Failed to call API ${path}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
+      })
+      throw e
     }
   }
 }
