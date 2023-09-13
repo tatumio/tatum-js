@@ -65,12 +65,12 @@ import { CONFIG } from './di.tokens'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
-    const { network, apiKey } = config
+    const { network } = config
     if (isUtxoLoadBalancerNetwork(network)) {
       return Container.of(id).get(UtxoLoadBalancerRpc) as T
     }
 
-    if (isEvmArchiveNonArchiveLoadBalancerNetwork(network) && apiKey?.v2) {
+    if (isEvmArchiveNonArchiveLoadBalancerNetwork(network)) {
       return Container.of(id).get(EvmArchiveLoadBalancerRpc) as T
     }
 
