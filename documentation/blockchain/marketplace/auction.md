@@ -18,7 +18,7 @@ import {
     sendAuctionBid,
     sendAuctionApproveNftTransfer,
     celoGetCurrentBlock
-} from '@tatumio/tatum';
+} from '@tatumio/tatum-v1';
 ```
 
 ## Deploy the auction smart contract

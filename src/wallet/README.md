@@ -6,7 +6,7 @@ or [Github Pages](https://tatumio.github.io/tatum-js/) to see how to use other w
 ## Import required libraries
 
 ```typescript
-import { generateWallet } from '@tatumio/tatum';
+import { generateWallet } from '@tatumio/tatum-v1';
 ```
 
 ## Generate a wallet

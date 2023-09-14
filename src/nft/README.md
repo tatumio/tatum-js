@@ -7,7 +7,7 @@ In following guide we will see how to work with NFT endpoints. Each endpoint bel
 First, we must import the required libraries from Tatum JS. 
 
 ```typescript
-import { mintNFTWithUri } from '@tatumio/tatum';
+import { mintNFTWithUri } from '@tatumio/tatum-v1';
 ```
 ## Deploy NFT
 Next, we must [deploy an NFT smart contract](https://apidoc.tatum.io/.php#operation/NftDeployErc721) on our blockchain of choice.

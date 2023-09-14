@@ -6,7 +6,7 @@ or [Github Pages](https://tatumio.github.io/tatum-js/) to see how to use other l
 ## Import required libraries
 
 ```typescript
-import { getAccountById } from '@tatumio/tatum';
+import { getAccountById } from '@tatumio/tatum-v1';
 ```
 
 ## Account endpoints
