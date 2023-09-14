@@ -1,3 +1,7 @@
+## [3.0.23] - 2023.09.14
+### Update
+- Minor version update to fix npm package issue
+
 ## [3.0.22] - 2023.09.13
 ### Fixed
 - Fix loadbalancer logic to work without api key
