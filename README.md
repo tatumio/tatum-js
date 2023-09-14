@@ -1,6 +1,11 @@
 # [Tatum API client](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum-v1)](https://img.shields.io/npm/dm/@tatumio/tatum-v1) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum-v1)](https://img.shields.io/npm/v/@tatumio/tatum-v1) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
 Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.
 
+> **Package name change**
+>
+> Important notice about package name change. Starting from version **1.37.36**, package name is changed from `@tatumio/tatum` to `@tatumio/tatum-v1`. Please update your package.json accordingly if you're using v1 sdk.
+
+
 > **Warning**
 >
 > Important notice about using ETH and CELO: Please upgrade to version 1.37.22 or newer (all previous versions depend on https://ethgasstation.info which will stop working from 12.12.2022)
