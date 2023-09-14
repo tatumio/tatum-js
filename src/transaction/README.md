@@ -6,7 +6,7 @@ or [Github Pages](https://tatumio.github.io/tatum-js/) to see how to use other t
 ## Import required libraries
 
 ```typescript
-import { sendBitcoinTransaction } from '@tatumio/tatum';
+import { sendBitcoinTransaction } from '@tatumio/tatum-v1';
 ```
 
 ## Send bitcoin transaction - from address
