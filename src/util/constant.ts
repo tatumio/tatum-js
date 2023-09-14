@@ -2,8 +2,8 @@ import { AddressEventNotificationChain, Chain, Network } from '../dto'
 
 export const Constant = {
   TATUM_API_URL: {
-    V1: 'https://api.tatum.io/v3/',
-    V2: 'https://api.tatum.io/v4/',
+    V3: 'https://api.tatum.io/v3/',
+    V4: 'https://api.tatum.io/v4/',
   },
   NETWORK: {
     ChainMapInverse: {
@@ -81,7 +81,7 @@ export const Constant = {
     [Network.KUCOIN_TESTNET]: 18,
     [Network.ETHEREUM_CLASSIC]: 18,
     [Network.EOS]: 4,
-    [Network.EON]: 18,
+    [Network.HORIZEN_EON]: 18,
     [Network.EOS_TESTNET]: 4,
     [Network.TEZOS]: 6,
     [Network.TEZOS_TESTNET]: 6,
@@ -175,7 +175,7 @@ export const Constant = {
     [Network.KUCOIN_TESTNET]: 'KCS',
     [Network.ETHEREUM_CLASSIC]: 'ETC',
     [Network.EOS]: 'EOS',
-    [Network.EON]: 'EON',
+    [Network.HORIZEN_EON]: 'EON',
     [Network.EOS_TESTNET]: 'EOS',
     [Network.TEZOS]: 'XTZ',
     [Network.TEZOS_TESTNET]: 'XTZ',
@@ -290,5 +290,9 @@ export const Constant = {
   OPEN_RPC: {
     LB_INTERVAL: 60_000,
     ALLOWED_BLOCKS_BEHIND: 10,
+  },
+  TRON_SHASTA_BASE_URL: {
+    BASE: 'https://api.shasta.trongrid.io',
+    RPC: 'https://api.shasta.trongrid.io/jsonrpc',
   },
 }

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
-import { LoadBalancerRpc } from '../generic/LoadBalancerRpc'
 import { Utils } from '../../../util'
+import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractEvmRpc } from './AbstractEvmRpc'
 
 const ARCHIVE_METHODS = [
@@ -50,11 +50,11 @@ const POSSIBLE_ARCHIVE_METHODS = [
   transient: true,
 })
 export class EvmArchiveLoadBalancerRpc extends AbstractEvmRpc implements EvmBasedRpcSuite {
-  protected readonly loadBalancerRpc: LoadBalancerRpc
+  protected readonly loadBalancerRpc: LoadBalancer
 
   constructor(id: string) {
     super()
-    this.loadBalancerRpc = Container.of(id).get(LoadBalancerRpc)
+    this.loadBalancerRpc = Container.of(id).get(LoadBalancer)
   }
 
   private isParamForArchiveNode(param: unknown): boolean {
@@ -62,14 +62,14 @@ export class EvmArchiveLoadBalancerRpc extends AbstractEvmRpc implements EvmBase
   }
 
   private isArchiveMethod(rpc: JsonRpcCall): boolean {
-
-
     const isArchiveMethod = ARCHIVE_METHODS.includes(rpc.method)
     if (isArchiveMethod) {
       return true
     }
 
-    const possibleArchiveMethod = POSSIBLE_ARCHIVE_METHODS.find((possibleArchiveMethod) => possibleArchiveMethod.method === rpc.method)
+    const possibleArchiveMethod = POSSIBLE_ARCHIVE_METHODS.find(
+      (possibleArchiveMethod) => possibleArchiveMethod.method === rpc.method,
+    )
     if (possibleArchiveMethod) {
       const param = rpc?.params?.[possibleArchiveMethod.index]
       return this.isParamForArchiveNode(param)

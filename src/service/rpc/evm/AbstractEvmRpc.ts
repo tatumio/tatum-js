@@ -240,7 +240,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     return this.rpcCall<JsonRpcResponse<number>>('eth_getBlockTransactionCountByHash', [blockHash])
   }
 
-  async getBlockByNumber(blockNumber: BlockNumber, full?: boolean): Promise<JsonRpcResponse<any>> {
+  async getBlockByNumber(blockNumber: BlockNumber, full = true): Promise<JsonRpcResponse<any>> {
     return this.rpcCall<JsonRpcResponse<any>>('eth_getBlockByNumber', [
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
       full,

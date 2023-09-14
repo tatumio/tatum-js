@@ -1,9 +1,14 @@
-import { Network } from '../../dto'
-import { BaseUtxoClass, TatumSDK } from '../../service'
-import { RpcE2eUtils } from './rpc.e2e.utils'
+import { Network } from '../../../dto'
+import { BaseUtxoClass, TatumSDK } from '../../../service'
+import { RpcE2eUtils } from '../rpc.e2e.utils'
+
+export enum UtxoNetworkType {
+  MAIN = 'main',
+  TEST = 'test',
+}
 
 interface TatumBtcUtils {
-  type: string
+  type: UtxoNetworkType
   network: Network
 }
 

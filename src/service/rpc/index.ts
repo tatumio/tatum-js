@@ -1,5 +1,5 @@
+export * from './AbstractTronRpc'
 export * from './SolanaRpc'
-export * from './TronRpc'
 export * from './XrpRpc'
 export * from './evm'
 export * from './generic'

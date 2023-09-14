@@ -1,3 +1,8 @@
+## [3.1.0] - 2023.09.14
+### Updated
+- Updated correctly V1 -> V3 and V2 -> V4 config options
+- Integrated Tron, BSC Arbitrum One to new infra
+
 ## [3.0.23] - 2023.09.14
 ### Update
 - Minor version update to fix npm package issue
