@@ -25,6 +25,21 @@ export interface CreateNftCollection extends CreateMultiTokenNftCollection {
   symbol: string
 }
 
+export interface CreateNftCollectionTezos {
+  /**
+   * Name of the NFT collection, e.g. Bored Ape Yacht Club
+   */
+  name: string
+  /**
+   * Symbol of the NFT collection, e.g. BAYC
+   */
+  symbol: string
+  /**
+   * Address of the NFT collection owner
+   */
+  owner: string
+}
+
 export interface MetadataResponse {
   url: string
   metadata: object

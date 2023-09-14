@@ -1,3 +1,7 @@
+## [3.1.5] - 2023.09.21
+### Added
+- Add support for deploying NFT contract on Tezos chain https://docs.tatum.io/docs/nfts/create-nft-collection.
+
 ## [3.1.4] - 2023.09.20
 ### Added
 - Expose active RPC node url in the `Rpc` module

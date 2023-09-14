@@ -8,6 +8,7 @@ import {
   CheckTokenOwner,
   CreateMultiTokenNftCollection,
   CreateNftCollection,
+  CreateNftCollectionTezos,
   GetAllNftTransactionsByAddress,
   GetAllNftTransactionsQuery,
   GetCollection,
@@ -17,6 +18,42 @@ import {
   NftTokenDetail,
   NftTransaction,
 } from './nft.dto'
+
+@Service({
+  factory: (data: { id: string }) => {
+    return new NftTezos(data.id)
+  },
+  transient: true,
+})
+export class NftTezos {
+  protected readonly connector: TatumConnector
+  protected readonly config: TatumConfig
+
+  constructor(private readonly id: string) {
+    this.config = Container.of(this.id).get(CONFIG)
+    this.connector = Container.of(this.id).get(TatumConnector)
+  }
+
+  /**
+   * Create new NFT collection (Tzip12 compatible smart contract). This operation deploys a new smart contract to the blockchain and sets the owner of the collection.
+   * You don't need to specify the default minter of the collection, as the owner of the collection is the default minter.
+   * You don't have to have any funds on the address, as the smart contract is deployed by Tatum.
+   * @param body Body of the request.
+   * @returns ResponseDto<{txId: string}> Transaction ID of the deployment transaction. You can get the contract address from the transaction details using rpc.getContractAddress(transactionId) function, once transaction is included in the block.
+   */
+  async createNftCollection(body: CreateNftCollectionTezos): Promise<ResponseDto<{ txId: string }>> {
+    return ErrorUtils.tryFail(() =>
+      this.connector.post<{ txId: string }>({
+        path: `contract/deploy`,
+        body: {
+          ...body,
+          chain: this.config.network,
+          contractType: 'nft',
+        },
+      }),
+    )
+  }
+}
 
 @Service({
   factory: (data: { id: string }) => {
