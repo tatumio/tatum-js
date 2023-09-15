@@ -1,3 +1,7 @@
+## [3.1.1] - 2023.09.15
+### Updated
+- Updated links to the status and list.json pages for new and changed chains
+
 ## [3.1.0] - 2023.09.14
 ### Updated
 - Updated correctly V1 -> V3 and V2 -> V4 config options

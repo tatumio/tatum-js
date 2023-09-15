@@ -252,3 +252,15 @@ export const isEvmArchiveNonArchiveLoadBalancerNetwork = (network: Network) =>
   EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isTronLoadBalancerNetwork = (network: Network) => TRON_LOAD_BALANCER_NETWORKS.includes(network)
+
+export enum MappedNetwork {
+  HORIZEN_EON = 'horizen-eon-mainnet',
+  DOGECOIN_MAINNET = 'dogecoin-mainnet',
+  DOGECOIN_TESTNET = 'dogecoin-testnet',
+}
+
+export const MAPPED_NETWORK = {
+  [Network.HORIZEN_EON]: MappedNetwork.HORIZEN_EON,
+  [Network.DOGECOIN]: MappedNetwork.DOGECOIN_MAINNET,
+  [Network.DOGECOIN_TESTNET]: MappedNetwork.DOGECOIN_TESTNET,
+}
