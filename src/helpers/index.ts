@@ -1,4 +1,4 @@
-import { ClassType } from 'class-transformer/ClassTransformer';
+import { ClassConstructor } from 'class-transformer';
 import Web3 from 'web3';
 import {
     bscBroadcast,
@@ -74,7 +74,7 @@ export const helperGetWeb3Client = (testnet: boolean, chain: Currency, provider?
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const helperPrepareSCCall = async (testnet: boolean, body: any, clazz: ClassType<object>, methodName: string, params: any[], methodSig?: string,
+export const helperPrepareSCCall = async (testnet: boolean, body: any, clazz: ClassConstructor<object>, methodName: string, params: any[], methodSig?: string,
                                           provider?: string, abi: any[] = listing.abi) => {
   let r: SmartContractMethodInvocation | CeloSmartContractMethodInvocation;
   if (body.chain === Currency.CELO) {

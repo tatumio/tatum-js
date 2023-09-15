@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum-v1",
-  "version": "1.37.36",
+  "version": "1.37.37",
   "description": "Tatum API client allows browsers and Node.js clients to interact with Tatum API.",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -61,8 +61,8 @@
     "cardano-crypto.js": "^6.0.0",
     "cashaddrjs": "^0.4.4",
     "caver-js": "1.8.2",
-    "class-transformer": "^0.2.3",
-    "class-validator": "0.13.0",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.14.0",
     "coininfo": "^5.1.0",
     "dedent-js": "^1.0.1",
     "ed25519-hd-key": "^1.1.2",
@@ -78,7 +78,7 @@
     "stellar-sdk": "^8.1.0",
     "thorify": "^1.5.2",
     "tronweb": "^3.2.2",
-    "url-parse": "^1.5.3",
+    "url-parse": "^1.5.10",
     "web3": "^1.7.0",
     "web3-eth": "^1.7.0"
   },
@@ -116,5 +116,8 @@
     ],
     "coverageDirectory": "../coverage",
     "testEnvironment": "node"
+  },
+  "resolutions": {
+    "scrypt": "github:barrysteyn/node-scrypt#fb60a8d3c158fe115a624b5ffa7480f3a24b03fb"
   }
 }
