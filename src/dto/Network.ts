@@ -138,6 +138,7 @@ export const EVM_BASED_NETWORKS = [
   Network.ARBITRUM_NOVA_TESTNET,
   Network.ARBITRUM_ONE,
   Network.BINANCE_SMART_CHAIN,
+  Network.HORIZEN_EON,
 ]
 
 export const UTXO_BASED_NETWORKS = [

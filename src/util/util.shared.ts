@@ -170,6 +170,8 @@ export const Utils = {
         return Network.TRON
       case AddressEventNotificationChain.KLAY:
         return Network.KLAYTN
+      case AddressEventNotificationChain.EON:
+        return Network.HORIZEN_EON
       default:
         throw new Error(`Chain ${chain} is not supported.`)
     }
@@ -215,6 +217,8 @@ export const Utils = {
         return AddressEventNotificationChain.KLAY
       case Network.TEZOS:
         return AddressEventNotificationChain.TEZOS
+      case Network.HORIZEN_EON:
+        return AddressEventNotificationChain.EON
       default:
         throw new Error(`Network ${network} is not supported.`)
     }
