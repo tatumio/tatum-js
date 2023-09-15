@@ -1,13 +1,13 @@
 import a from 'axios';
 import axiosRetry, {isNetworkOrIdempotentRequestError} from 'axios-retry';
 import {plainToClass} from 'class-transformer';
-import {ClassType} from 'class-transformer/ClassTransformer';
 import {validateOrReject} from 'class-validator';
 import FormData from 'form-data';
 import http from 'http';
 import https from 'https';
 import { version } from '../../package.json'
 import {TATUM_API_URL, TATUM_RETRIES, TATUM_RETRY_DELAY} from '../constants';
+import {ClassConstructor} from "class-transformer/types/interfaces";
 
 export const axios = a.create({
   httpAgent: new http.Agent({keepAlive: true}),
@@ -31,7 +31,7 @@ export const get = async <T>(url: string): Promise<T> => {
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const post = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>): Promise<V> => {
+export const post = async <T extends object, U, V>(url: string, body?: U, classType?: ClassConstructor<T>): Promise<V> => {
   await validateBody(body, classType);
   const {data} = await axios.post(`${baseUrl()}${url}`, body, headers());
   return data;
@@ -46,7 +46,7 @@ export const postMultiForm = async (url: string, body: FormData): Promise<any> =
 };
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const put = async <T extends object, U, V>(url: string, body?: U, classType?: ClassType<T>): Promise<V> => {
+export const put = async <T extends object, U, V>(url: string, body?: U, classType?: ClassConstructor<T>): Promise<V> => {
   await validateBody(body, classType)
   const { data } = await axios.put(`${baseUrl()}${url}`, body, headers())
   return data
@@ -57,7 +57,7 @@ export const httpDelete = async (url: string): Promise<void> => {
 }
 
 // eslint-disable-next-line @typescript-eslint/ban-types
-export const validateBody = async <T extends object, U>(body: U, classType?: ClassType<T>): Promise<void> => {
+export const validateBody = async <T extends object, U>(body: U, classType?: ClassConstructor<T>): Promise<void> => {
   if (classType) {
     const classInstance = plainToClass(classType, body)
     await validateOrReject(classInstance)
