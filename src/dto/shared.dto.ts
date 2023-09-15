@@ -53,7 +53,7 @@ export interface TokenDetails {
   /**
    * Type of the token
    */
-  tokenTyoe: 'fungbile' | 'nft' | 'multitoken'
+  tokenType: 'fungbile' | 'nft' | 'multitoken'
   /**
    * Decimals of the token. Available only for `fungible` tokens
    */

@@ -1,3 +1,8 @@
+## [3.1.2] - 2023.09.15
+### Fixed
+- Horizen EON notifications
+- Typos
+
 ## [3.1.1] - 2023.09.15
 ### Updated
 - Updated links to the status and list.json pages for new and changed chains
