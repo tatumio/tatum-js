@@ -15,6 +15,8 @@ import {
   isXrpNetwork,
   JsonRpcCall,
   JsonRpcResponse,
+  MAPPED_NETWORK,
+  MappedNetwork,
   Network,
 } from '../dto'
 import {
@@ -114,10 +116,8 @@ export const Utils = {
     ]
   },
   mapRpcListUrl: (network: Network): string => {
-    if (network === Network.HORIZEN_EON) {
-      return 'horizen-eon-mainnet'
-    }
-    return network
+    const mappedNetwork = (MAPPED_NETWORK as Record<string, MappedNetwork>)[network]
+    return mappedNetwork ?? network
   },
   getStatusPayload: (network: Network) => {
     if (isUtxoBasedNetwork(network)) {
