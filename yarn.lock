@@ -10549,11 +10549,6 @@ mute-stream@~1.0.0:
   resolved "https://registry.yarnpkg.com/mute-stream/-/mute-stream-1.0.0.tgz#e31bd9fe62f0aed23520aa4324ea6671531e013e"
   integrity sha512-avsJQhyd+680gKXyG/sQc0nXaC6rBkPOfyHYcFb9+hdkqQkR9bdnkJ0AMZhke0oesPqIO+mFFJ+IdBc7mst4IA==
 
-nan@^2.0.8:
-  version "2.18.0"
-  resolved "https://registry.yarnpkg.com/nan/-/nan-2.18.0.tgz#26a6faae7ffbeb293a39660e88a76b82e30b7554"
-  integrity sha512-W7tfG7vMOGtD30sHoZSSc/JVYiyDPEyQVso/Zz+/uQd0B0L46gtC+pHha5FFMRpil6fm/AoEcRWyOVi4+E/f8w==
-
 nan@^2.13.2, nan@^2.14.0, nan@^2.14.2:
   version "2.17.0"
   resolved "https://registry.yarnpkg.com/nan/-/nan-2.17.0.tgz#c0150a2368a182f033e9aa5195ec76ea41a199cb"
@@ -12555,12 +12550,11 @@ scrypt.js@^0.3.0:
   optionalDependencies:
     scrypt "^6.0.2"
 
-scrypt@^6.0.2:
+scrypt@^6.0.2, "scrypt@github:barrysteyn/node-scrypt#fb60a8d3c158fe115a624b5ffa7480f3a24b03fb":
   version "6.0.3"
-  resolved "https://registry.yarnpkg.com/scrypt/-/scrypt-6.0.3.tgz#04e014a5682b53fa50c2d5cce167d719c06d870d"
-  integrity sha512-NDrWb9hCm6Ev170XYVl7TSgu4R44Rjc8EVw1ce0TMN8EkfLvkhlwcfp61OVNc8EJDiHaQwVErn1fIU0RO3kSZw==
+  resolved "https://codeload.github.com/barrysteyn/node-scrypt/tar.gz/fb60a8d3c158fe115a624b5ffa7480f3a24b03fb"
   dependencies:
-    nan "^2.0.8"
+    nan "^2.14.0"
 
 scryptsy@2.1.0:
   version "2.1.0"

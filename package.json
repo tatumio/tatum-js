@@ -1,6 +1,6 @@
 {
   "name": "tatumio",
-  "version": "2.2.33",
+  "version": "2.2.34",
   "license": "MIT",
   "repository": "https://github.com/tatumio/tatum-js",
   "scripts": {
@@ -125,6 +125,7 @@
     "typescript": "4.8.4"
   },
   "resolutions": {
-    "@solana/web3.js": "1.56.2"
+    "@solana/web3.js": "1.56.2",
+    "scrypt": "github:barrysteyn/node-scrypt#fb60a8d3c158fe115a624b5ffa7480f3a24b03fb"
   }
 }
