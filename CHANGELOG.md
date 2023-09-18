@@ -1,3 +1,7 @@
+## [3.1.3] - 2023.09.18
+### Fixed
+- Update horizen class
+
 ## [3.1.2] - 2023.09.15
 ### Fixed
 - Horizen EON notifications
