@@ -87,7 +87,7 @@ export class Palm extends BaseEvmClass {}
 export class Polygon extends BaseEvmClass {}
 export class Vechain extends BaseEvmClass {}
 export class Xdc extends BaseEvmClass {}
-export class Eon extends BaseEvmClass {}
+export class HorizenEon extends BaseEvmClass {}
 
 // UTXO chains
 export class Bitcoin extends BaseUtxoClass {}

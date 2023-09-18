@@ -4,8 +4,8 @@ import {
   BaseTatumSdk,
   Bitcoin,
   Dogecoin,
-  Eon,
   Ethereum,
+  HorizenEon,
   Litecoin,
   Solana,
   TatumSDK,
@@ -332,7 +332,7 @@ describe.skip('Address', () => {
     })
 
     describe('getBalance EON', () => {
-      let tatum: Eon
+      let tatum: HorizenEon
 
       beforeEach(async () => {
         tatum = await TatumSDK.init({
@@ -664,7 +664,7 @@ describe.skip('Address', () => {
     })
 
     describe('getTransactions EON', () => {
-      let tatum: Eon
+      let tatum: HorizenEon
 
       beforeEach(async () => {
         tatum = await TatumSDK.init({

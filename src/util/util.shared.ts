@@ -32,7 +32,6 @@ import {
   Celo,
   Cronos,
   Dogecoin,
-  Eon,
   Ethereum,
   EthereumClassic,
   EvmLoadBalancerRpc,
@@ -43,6 +42,7 @@ import {
   Gnosis,
   Haqq,
   HarmonyOne,
+  HorizenEon,
   Klaytn,
   Kucoin,
   Litecoin,
@@ -383,7 +383,7 @@ export const Utils = {
       case Network.TEZOS:
         return new Tezos(id) as T
       case Network.HORIZEN_EON:
-        return new Eon(id) as T
+        return new HorizenEon(id) as T
       default:
         return new BaseTatumSdk(id) as T
     }
