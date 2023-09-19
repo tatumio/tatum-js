@@ -28,6 +28,9 @@
     "build-all": "yarn clean && yarn build"
   },
   "dependencies": {
+    "@walletconnect/encoding": "^1.0.2",
+    "@walletconnect/modal": "^2.6.2",
+    "@walletconnect/sign-client": "^2.10.1",
     "bignumber.js": "^9.1.1",
     "reflect-metadata": "^0.1.13",
     "typedi": "^0.10.0"
