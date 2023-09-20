@@ -1,3 +1,7 @@
+## [3.1.4] - 2023.09.20
+### Added
+- Expose active RPC node url in the `Rpc` module
+
 ## [3.1.3] - 2023.09.18
 ### Fixed
 - Update horizen class

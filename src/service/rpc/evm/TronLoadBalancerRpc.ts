@@ -39,4 +39,8 @@ export class TronLoadBalancerRpc extends AbstractTronRpc implements EvmBasedRpcS
   protected post<T>(post: PostI): Promise<T> {
     return this.loadBalancer.post(post)
   }
+
+  getRpcNodeUrl(): string {
+    return this.loadBalancer.getActiveNormalUrlWithFallback().url
+  }
 }

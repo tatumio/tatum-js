@@ -35,4 +35,8 @@ export class UtxoLoadBalancerRpc extends AbstractUtxoRpc implements UtxoBasedRpc
   public destroy() {
     this.loadBalancerRpc.destroy()
   }
+
+  getRpcNodeUrl(): string {
+    return this.loadBalancerRpc.getActiveNormalUrlWithFallback().url
+  }
 }
