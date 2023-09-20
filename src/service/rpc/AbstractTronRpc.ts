@@ -39,6 +39,7 @@ export interface PostI {
 export abstract class AbstractTronRpc extends AbstractEvmRpc implements TronRpcSuite {
   protected abstract post<T>(post: PostI): Promise<T>
   abstract destroy(): void
+  abstract getRpcNodeUrl(): string
 
   abstract rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[] | JsonRpcResponse<any>>
 
