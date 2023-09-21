@@ -7,8 +7,8 @@ import { TatumConfig } from '../tatum'
 import {
   CheckTokenOwner,
   CreateMultiTokenNftCollection,
-  CreateNftCollection,
-  CreateNftCollectionTezos,
+  CreateNftCollectionBase,
+  CreateNftEvmCollection,
   GetAllNftTransactionsByAddress,
   GetAllNftTransactionsQuery,
   GetCollection,
@@ -41,7 +41,7 @@ export class NftTezos {
    * @param body Body of the request.
    * @returns ResponseDto<{txId: string}> Transaction ID of the deployment transaction. You can get the contract address from the transaction details using rpc.getContractAddress(transactionId) function, once transaction is included in the block.
    */
-  async createNftCollection(body: CreateNftCollectionTezos): Promise<ResponseDto<{ txId: string }>> {
+  async createNftCollection(body: CreateNftCollectionBase): Promise<ResponseDto<{ txId: string }>> {
     return ErrorUtils.tryFail(() =>
       this.connector.post<{ txId: string }>({
         path: `contract/deploy`,
@@ -77,7 +77,7 @@ export class Nft {
    * @param body Body of the request.
    * @returns ResponseDto<{txId: string}> Transaction ID of the deployment transaction. You can get the contract address from the transaction details using rpc.getContractAddress(transactionId) function, once transaction is included in the block.
    */
-  async createNftCollection(body: CreateNftCollection): Promise<ResponseDto<{ txId: string }>> {
+  async createNftCollection(body: CreateNftEvmCollection): Promise<ResponseDto<{ txId: string }>> {
     return ErrorUtils.tryFail(() =>
       this.connector.post<{ txId: string }>({
         path: `contract/deploy`,
