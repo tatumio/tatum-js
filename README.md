@@ -560,7 +560,7 @@ const tatum = await TatumSDK.init<Ethereum>({
     nodes: [
       {
         url: 'https://api.tatum.io/v3/blockchain/node/ethereum-mainnet',
-        type: NodeType.Normal,
+        type: RpcNodeType.NORMAL,
       },
     ],
     allowedBlocksBehind: 20,
