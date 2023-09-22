@@ -1,4 +1,4 @@
-import { Container, Service} from 'typedi'
+import { Container, Service } from 'typedi'
 import { isLoadBalancerNetwork } from '../../dto'
 import { EvmBasedRpcSuite, SolanaRpcSuite, TronRpcSuite, UtxoBasedRpcSuite, XrpRpcSuite } from '../../dto/rpc'
 import { CONFIG, Constant, Utils } from '../../util'
