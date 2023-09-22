@@ -17,4 +17,5 @@ export type ExtensionWithConfig = {
 
 export type ExtensionConstructorOrConfig = ExtensionConstructor | ExtensionWithConfig
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type ServiceConstructor<T> = new (...args: any[]) => T
