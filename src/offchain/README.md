@@ -5,7 +5,7 @@ or [Github Pages](https://tatumio.github.io/tatum-js/) to see how to use other o
 
 ## Import required libraries
 ```typescript
-import { sendBitcoinOffchainTransaction } from '@tatumio/tatum-v1';
+import { sendBitcoinOffchainTransaction } from '@tatumio/tatum';
 ```
 
 ## Send bitcoin offchain transaction

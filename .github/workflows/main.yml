@@ -58,6 +58,6 @@ jobs:
 
       - run: yarn lint
 
-      - run: yarn publish --access public
+      - run: yarn publish --access public --tag 1.x.x
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

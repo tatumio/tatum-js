@@ -1,10 +1,5 @@
-# [Tatum API client](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum-v1)](https://img.shields.io/npm/dm/@tatumio/tatum-v1) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum-v1)](https://img.shields.io/npm/v/@tatumio/tatum-v1) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
+# [Tatum API client](http://tatum.io/) &middot; [![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum) [![GitHub license](https://img.shields.io/npm/v/@tatumio/tatum)](https://img.shields.io/npm/v/@tatumio/tatum) [![CI](https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg)](https://github.com/tatumio/tatum-js/actions/workflows/main.yml)
 Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.
-
-> **Package name change**
->
-> Important notice about package name change. Starting from version **1.37.36**, package name is changed from `@tatumio/tatum` to `@tatumio/tatum-v1`. Please update your package.json accordingly if you're using v1 sdk.
-
 
 > **Warning**
 >
@@ -24,7 +19,7 @@ You can find API documentation at [Github Pages](https://tatumio.github.io/tatum
 ### Node.js
 1. Install module:
 
-   `npm install @tatumio/tatum-v1`
+   `npm install @tatumio/tatum`
 
 ### Node.JS & Browser support
 Library is written in TypeScript with ES2017 as the target JS version. Library should work in Node.JS current LTS. 
@@ -87,7 +82,7 @@ If you want to work with TRON locally, you need to enter API Key for [Trongrid](
 
 ```js
 // In Node.js
-const Tatum = require('@tatumio/tatum-v1');
+const Tatum = require('@tatumio/tatum');
 const btcWallet = await Tatum.generateWallet(Tatum.Currency.BTC, true);
 
 console.log(btcWallet);
@@ -102,10 +97,10 @@ console.log(btcWallet);
 
 We support types within the repo itself. Please open an issue here if you find any wrong types.
 
-You can use `@tatumio/tatum-v1` as follows:
+You can use `@tatumio/tatum` as follows:
 
 ```typescript
-import { generateWallet, Currency } from '@tatumio/tatum-v1';
+import { generateWallet, Currency } from '@tatumio/tatum';
 const btcWallet = await generateWallet(Currency.BTC, true);
 ```
 
@@ -133,7 +128,7 @@ Tatum js use core node js modules or browser APIs that are not available in Reac
 ```
 npm i rn-nodeify -g
 npm i react-native-randombytes --save
-npm i @tatumio/tatum-v1 --save
+npm i @tatumio/tatum --save
 rn-nodeify --install http,https,path,crypto,fs,stream,os --hack
 cd ios && pod install
 ```
