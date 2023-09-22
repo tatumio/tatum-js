@@ -1,3 +1,11 @@
+## [3.1.8] - 2023.09.22
+### Added
+- Capability to initialize `TatumSDK` with various extensions from Extension Ecosystem using the init() method and `TatumConfig.configureExtensions`.
+- Encapsulation of `typedi` functionalities within `TatumSdkContainer`, ensuring that there are no enforced dependencies on the extensions.
+- `TatumSdkExtension` abstract class that allows extension creators to utilize services or other extensions from withing the `TatumSdkContainer`.
+- `async init()` method call for each registered extension
+- `destroy()` method call for each registered extension
+
 ## [3.1.7] - 2023.09.22
 ### Fixed
 - Fixed 'tokenType' field to 'type' in Non-Fungible Token (NFT) Data Transfer Object (DTO) to match the API response.

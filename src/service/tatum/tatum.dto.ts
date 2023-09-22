@@ -1,4 +1,5 @@
 import { Network } from '../../dto/Network'
+import { ExtensionConstructorOrConfig } from "../extensions";
 
 export interface TatumConfig {
   /**
@@ -61,6 +62,11 @@ export interface TatumConfig {
      */
     oneTimeLoadBalancing?: boolean
   }
+
+  /**
+   * Optional list of TatumSdkExtensions.
+   */
+  configureExtensions?: ExtensionConstructorOrConfig[]
 }
 
 export enum ApiVersion {

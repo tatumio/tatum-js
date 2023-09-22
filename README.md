@@ -584,6 +584,33 @@ Explore various applications that utilize the Tatum SDK. These examples help ill
 - [Metamask portfolio](https://github.com/tatumio/example-apps/tree/master/Metamask/portfolio)
 - [Metamask transfer](https://github.com/tatumio/example-apps/tree/master/Metamask/transfer)
 
+## Extension Ecosystem
+
+### Quickstart
+
+Import any Tatum SDK extension to your project and start using it right away.
+
+```typescript
+import { TatumSDK, Ethereum, Network, ApiVersion } from '@tatumio/tatum'
+import { HelloWorldExtension } from "@tatumio/hello-world"
+
+const tatumSdk = await TatumSDK.init<Ethereum>({
+    network: Network.ETHEREUM_SEPOLIA,
+    configureExtensions: [
+        HelloWorldExtension,
+    ]
+})
+```
+
+After that you can use the extension in your code with full intellisense.
+
+```typescript
+await tatumSdk.extension(HelloWorldExtension).sayHello()
+````
+
+
+Learn more about Tatum SDK Extension ecosystem here - [Tatum SDK Extensions](https://github.com/tatumio/ecosystem-addons)
+
 ## Legacy versions
 
 Older versions of the Tatum SDK has been moved to long living branches [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1) and [`Tatum SDK V2`](https://github.com/tatumio/tatum-js/tree/v2).
