@@ -1,14 +1,10 @@
-import { Constructable } from "typedi/types/types/constructable.type";
-import { AbstractConstructable } from "typedi/types/types/abstract-constructable.type";
-import { Token as DiToken } from "typedi/types/token.class";
-import { ContainerInstance, ServiceIdentifier } from "typedi";
+import { ContainerInstance } from "typedi";
+import { ServiceConstructor } from "./tatumsdk.extensions.dto";
+import { TatumConfig } from "../tatum";
+import { CONFIG } from "../../util";
 
 export interface ITatumSdkContainer {
-    get<T>(type: Constructable<T>): T;
-    get<T>(type: AbstractConstructable<T>): T;
-    get<T>(id: string): T;
-    get<T>(id: DiToken<T>): T;
-    get<T>(id: ServiceIdentifier<T>): T;
+    get<T>(type: ServiceConstructor<T>): T;
 }
 
 export class TatumSdkContainer implements ITatumSdkContainer {
@@ -16,7 +12,11 @@ export class TatumSdkContainer implements ITatumSdkContainer {
 
     }
 
-    get<T>(typeOrId: Constructable<T> | AbstractConstructable<T> | string | DiToken<T> | ServiceIdentifier<T>): T {
-        return this.containerInstance.get(typeOrId);
+    get<T>(type: ServiceConstructor<T>): T {
+        return this.containerInstance.get(type);
+    }
+
+    getConfig(): TatumConfig {
+        return this.containerInstance.get(CONFIG);
     }
 }
