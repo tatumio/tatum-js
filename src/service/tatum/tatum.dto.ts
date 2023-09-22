@@ -63,6 +63,9 @@ export interface TatumConfig {
     oneTimeLoadBalancing?: boolean
   }
 
+  /**
+   * Optional list of TatumSdkExtensions.
+   */
   configureExtensions?: ExtensionConstructorOrConfig[]
 }
 
