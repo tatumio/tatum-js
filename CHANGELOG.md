@@ -1,3 +1,7 @@
+## [3.1.6] - 2023.09.22
+### Fixed
+- Fix eth_getLogs method when no fromBlock or toBlock was provided
+
 ## [3.1.5] - 2023.09.21
 ### Added
 - Add support for deploying NFT contract on Tezos chain https://docs.tatum.io/docs/nfts/create-nft-collection.
