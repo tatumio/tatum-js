@@ -101,4 +101,8 @@ export class EvmArchiveLoadBalancerRpc extends AbstractEvmRpc implements EvmBase
   public destroy() {
     this.loadBalancerRpc.destroy()
   }
+
+  public getRpcNodeUrl(): string {
+    return this.loadBalancerRpc.getActiveArchiveUrlWithFallback().url
+  }
 }

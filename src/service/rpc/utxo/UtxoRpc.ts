@@ -2,8 +2,8 @@
 import { Container, Service } from 'typedi'
 import { JsonRpcCall, JsonRpcResponse, UtxoBasedRpcSuite } from '../../../dto'
 import { Utils } from '../../../util'
-import { AbstractUtxoRpc } from './AbstractUtxoRpc'
 import { GenericRpc } from '../generic'
+import { AbstractUtxoRpc } from './AbstractUtxoRpc'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -34,5 +34,9 @@ export class UtxoRpc extends AbstractUtxoRpc implements UtxoBasedRpcSuite {
 
   destroy(): void {
     // do nothing
+  }
+
+  getRpcNodeUrl(): string {
+    return this.genericRpc.getRpcNodeUrl()
   }
 }

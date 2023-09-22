@@ -453,4 +453,8 @@ export class LoadBalancer implements AbstractRpcInterface {
       throw e
     }
   }
+
+  getRpcNodeUrl(): string {
+    return this.getActiveNormalUrlWithFallback().url
+  }
 }

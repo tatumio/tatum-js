@@ -35,4 +35,8 @@ export class EvmLoadBalancerRpc extends AbstractEvmRpc implements EvmBasedRpcSui
   public destroy() {
     this.loadBalancer.destroy()
   }
+
+  public getRpcNodeUrl(): string {
+    return this.loadBalancer.getActiveNormalUrlWithFallback().url
+  }
 }

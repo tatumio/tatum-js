@@ -4,7 +4,7 @@ import { EvmBasedRpcSuite, SolanaRpcSuite, TronRpcSuite, UtxoBasedRpcSuite, XrpR
 import { CONFIG, Constant, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
 import { FeeEvm, FeeUtxo } from '../fee'
-import { Nft } from '../nft'
+import { Nft, NftTezos } from '../nft'
 import { Notification } from '../notification'
 import { Rates } from '../rate'
 import { LoadBalancer } from '../rpc/generic/LoadBalancer'
@@ -166,11 +166,13 @@ export class Tron extends TatumSdkChain {
 export class Tezos extends TatumSdkChain {
   notification: Notification
   address: AddressTezos
+  nft: NftTezos
 
   constructor(id: string) {
     super(id)
     this.notification = Container.of(id).get(Notification)
     this.address = Container.of(id).get(AddressTezos)
+    this.nft = Container.of(this.id).get(NftTezos)
   }
 }
 

@@ -1,4 +1,4 @@
-import { Ethereum, Network, TatumSDK } from '../service'
+import { Ethereum, Network, TatumSDK, Tezos } from '../service'
 
 describe('Tatum NFT', () => {
   let client: Ethereum
@@ -225,5 +225,23 @@ describe('Tatum NFT', () => {
       })
       expect(result.data).toStrictEqual({ txId: expect.any(String) })
     })
+  })
+})
+
+describe('Tatum NFT - Tezos', () => {
+  let client: Tezos
+
+  beforeAll(async () => {
+    client = await TatumSDK.init<Tezos>({
+      network: Network.TEZOS_TESTNET,
+    })
+  })
+  it.skip('Should deploy contract on Tezos testnet', async () => {
+    const result = await client.nft.createNftCollection({
+      name: 'Test contract',
+      symbol: 'TST',
+      owner: 'tz1f1nboqWEhZJHwZnxnokQ9QoTiT21qMZxG',
+    })
+    expect(result.data).toStrictEqual({ txId: expect.any(String) })
   })
 })

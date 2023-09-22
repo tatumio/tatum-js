@@ -48,4 +48,8 @@ export class TronRpc extends AbstractTronRpc {
   destroy(): void {
     // do nothing
   }
+
+  getRpcNodeUrl(): string {
+    return this.genericRpc.getRpcNodeUrl()
+  }
 }

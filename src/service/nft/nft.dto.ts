@@ -1,4 +1,19 @@
 import { TokenIdContractAddress } from '../../dto'
+export interface CreateNftCollectionBase {
+  /**
+   * Name of the NFT collection, e.g. Bored Ape Yacht Club
+   */
+  name: string
+  /**
+   * Symbol of the NFT collection, e.g. BAYC
+   */
+  symbol: string
+  /**
+   * Address of the NFT collection owner
+   */
+  owner: string
+}
+
 export interface CreateMultiTokenNftCollection {
   /**
    * Address of the NFT collection owner
@@ -14,15 +29,15 @@ export interface CreateMultiTokenNftCollection {
   baseURI?: string
 }
 
-export interface CreateNftCollection extends CreateMultiTokenNftCollection {
+export interface CreateNftEvmCollection extends CreateNftCollectionBase {
   /**
-   * Name of the NFT collection, e.g. Bored Ape Yacht Club
+   * Address of the NFT collection minter, this is optional and defaults to the owner address
    */
-  name: string
+  minter?: string
   /**
-   * Symbol of the NFT collection, e.g. BAYC
+   * Optional base URI, which will be prepended to the token URI. If not specified, the token should be minted with the URI
    */
-  symbol: string
+  baseURI?: string
 }
 
 export interface MetadataResponse {
