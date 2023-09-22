@@ -11,16 +11,16 @@ import { LoadBalancer } from '../rpc/generic/LoadBalancer'
 import { Token } from '../token'
 import { WalletProvider } from '../walletProvider'
 import { ApiVersion, TatumConfig } from './tatum.dto'
-import { TatumSdkContainer, TatumSdkExtension } from "../extensions";
+import { ITatumSdkContainer, TatumSdkContainer, TatumSdkExtension } from "../extensions";
 
 export interface ITatumSdkChain {
-    extension<T extends TatumSdkExtension>(type: new (tatumSdkContainer: TatumSdkContainer, ...args: unknown[]) => T): T
+    extension<T extends TatumSdkExtension>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T): T
 }
 
 export abstract class TatumSdkChain implements ITatumSdkChain {
     protected constructor(readonly id: string) { }
 
-    extension<T extends TatumSdkExtension>(type: new (tatumSdkContainer: TatumSdkContainer, ...args: unknown[]) => T): T {
+    extension<T extends TatumSdkExtension>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T): T {
         return Container.of(this.id).get(type);
     }
 
@@ -191,7 +191,7 @@ export class TatumSDK {
 
   private static async configureExtensions(config: TatumConfig, id: string) {
     for (const extensionConfig of config?.configureExtensions ?? []) {
-      let type: new (container: TatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
+      let type: new (container: ITatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
       const args: unknown[] = []
 
       if ('type' in extensionConfig) {

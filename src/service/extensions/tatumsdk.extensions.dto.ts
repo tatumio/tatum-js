@@ -1,14 +1,15 @@
-import { TatumSdkContainer } from "./tatumsdk.container"
+import { ITatumSdkContainer } from "./tatumsdk.container"
 
 export abstract class TatumSdkExtension {
-    protected constructor(protected readonly tatumSdkContainer: TatumSdkContainer) {
+    protected constructor(
+        protected readonly tatumSdkContainer: ITatumSdkContainer) {
     }
 
     abstract init(...args: unknown[]): Promise<void>
     abstract destroy(): void
 }
 
-export type ExtensionConstructor = new (tatumSdkContainer: TatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
+export type ExtensionConstructor = new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
 
 export type ExtensionWithConfig = {
     type: ExtensionConstructor
