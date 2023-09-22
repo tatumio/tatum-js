@@ -1,3 +1,7 @@
+## [3.1.7] - 2023.09.22
+### Fixed
+- Fixed 'tokenType' field to 'type' in Non-Fungible Token (NFT) Data Transfer Object (DTO) to match the API response.
+
 ## [3.1.6] - 2023.09.22
 ### Fixed
 - Fix eth_getLogs method when no fromBlock or toBlock was provided
