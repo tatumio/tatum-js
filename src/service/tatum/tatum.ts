@@ -1,4 +1,4 @@
-import { Container, ContainerInstance, Service, ServiceIdentifier, Token as DiToken } from 'typedi'
+import { Container, Service} from 'typedi'
 import { isLoadBalancerNetwork } from '../../dto'
 import { EvmBasedRpcSuite, SolanaRpcSuite, TronRpcSuite, UtxoBasedRpcSuite, XrpRpcSuite } from '../../dto/rpc'
 import { CONFIG, Constant, Utils } from '../../util'
@@ -11,13 +11,7 @@ import { LoadBalancer } from '../rpc/generic/LoadBalancer'
 import { Token } from '../token'
 import { WalletProvider } from '../walletProvider'
 import { ApiVersion, TatumConfig } from './tatum.dto'
-import { Constructable } from "typedi/types/types/constructable.type";
-import { AbstractConstructable } from "typedi/types/types/abstract-constructable.type";
-
-export interface TatumSdkExtension {
-  init(...args: unknown[]): Promise<void>;
-  destroy(): void;
-}
+import { TatumSdkContainer, TatumSdkExtension } from "../extensions";
 
 export interface ITatumSdkChain {
     extension<T extends TatumSdkExtension>(type: new (tatumSdkContainer: TatumSdkContainer, ...args: unknown[]) => T): T
@@ -34,23 +28,7 @@ export abstract class TatumSdkChain implements ITatumSdkChain {
       Container.of(this.id).reset( {strategy: 'resetServices' })
     }
 }
-interface ITatumSdkContainer {
-  get<T>(type: Constructable<T>): T;
-  get<T>(type: AbstractConstructable<T>): T;
-  get<T>(id: string): T;
-  get<T>(id: DiToken<T>): T;
-  get<T>(id: ServiceIdentifier<T>): T;
-}
 
-export class TatumSdkContainer implements ITatumSdkContainer {
-  constructor(private readonly containerInstance: ContainerInstance) {
-
-  }
-
-  get<T>(typeOrId: Constructable<T> | AbstractConstructable<T> | string | DiToken<T> | ServiceIdentifier<T>): T {
-    return this.containerInstance.get(typeOrId);
-  }
-}
 export class BaseTatumSdk extends TatumSdkChain {
   notification: Notification
   nft: Nft

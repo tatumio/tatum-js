@@ -1,5 +1,5 @@
 import { Network } from '../../dto/Network'
-import { TatumSdkContainer, TatumSdkExtension } from "./tatum";
+import { ExtensionConstructorOrConfig } from "../extensions";
 
 export interface TatumConfig {
   /**
@@ -68,15 +68,6 @@ export interface TatumConfig {
    */
   configureExtensions?: ExtensionConstructorOrConfig[]
 }
-
-type ExtensionConstructor = new (tatumSdkContainer: TatumSdkContainer, ...args: unknown[]) => TatumSdkExtension;
-
-type ExtensionWithConfig = {
-  type: ExtensionConstructor;
-  config: unknown;
-};
-
-type ExtensionConstructorOrConfig = ExtensionConstructor | ExtensionWithConfig;
 
 export enum ApiVersion {
   V3 = 'V3',
