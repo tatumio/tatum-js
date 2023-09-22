@@ -1,3 +1,8 @@
+## [3.1.6] - 2023.09.22
+### Added
+- Generic extension point for Extension Ecosystem
+
+
 ## [3.1.5] - 2023.09.21
 ### Added
 - Add support for deploying NFT contract on Tezos chain https://docs.tatum.io/docs/nfts/create-nft-collection.

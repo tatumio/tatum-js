@@ -584,6 +584,10 @@ Explore various applications that utilize the Tatum SDK. These examples help ill
 - [Metamask portfolio](https://github.com/tatumio/example-apps/tree/master/Metamask/portfolio)
 - [Metamask transfer](https://github.com/tatumio/example-apps/tree/master/Metamask/transfer)
 
+## Extension Ecosystem
+
+Learn more about Tatum SDK Extension ecosystem here - [Tatum SDK Extensions](https://github.com/tatumio/ecosystem-addons)
+
 ## Legacy versions
 
 Older versions of the Tatum SDK has been moved to long living branches [`Tatum SDK V1`](https://github.com/tatumio/tatum-js/tree/v1) and [`Tatum SDK V2`](https://github.com/tatumio/tatum-js/tree/v2).
