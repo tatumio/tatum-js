@@ -592,14 +592,14 @@ Import any Tatum SDK extension to your project and start using it right away.
 
 ```typescript
 import { TatumSDK, Ethereum, Network, ApiVersion } from '@tatumio/tatum'
-import { HelloWorldExtension } from "@tatumio/hello-world";
+import { HelloWorldExtension } from "@tatumio/hello-world"
 
 const tatumSdk = await TatumSDK.init<Ethereum>({
-        network: Network.ETHEREUM_SEPOLIA,
-        configureExtensions: [
-            HelloWorldExtension,
-        ]
-      })
+    network: Network.ETHEREUM_SEPOLIA,
+    configureExtensions: [
+        HelloWorldExtension,
+    ]
+})
 ```
 
 After that you can use the extension in your code with full intellisense.
