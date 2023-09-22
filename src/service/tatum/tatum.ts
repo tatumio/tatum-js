@@ -1,4 +1,4 @@
-import { Container, Service } from 'typedi'
+import { Container, ContainerInstance, Service, ServiceIdentifier, Token as DiToken } from 'typedi'
 import { isLoadBalancerNetwork } from '../../dto'
 import { EvmBasedRpcSuite, SolanaRpcSuite, TronRpcSuite, UtxoBasedRpcSuite, XrpRpcSuite } from '../../dto/rpc'
 import { CONFIG, Constant, Utils } from '../../util'
@@ -11,8 +11,47 @@ import { LoadBalancer } from '../rpc/generic/LoadBalancer'
 import { Token } from '../token'
 import { WalletProvider } from '../walletProvider'
 import { ApiVersion, TatumConfig } from './tatum.dto'
+import { Constructable } from "typedi/types/types/constructable.type";
+import { AbstractConstructable } from "typedi/types/types/abstract-constructable.type";
 
-export class BaseTatumSdk {
+export interface TatumSdkExtension {
+  init(...args: unknown[]): Promise<void>;
+  destroy(): void;
+}
+
+export interface ITatumSdkChain {
+    extension<T extends TatumSdkExtension>(type: new (tatumSdkContainer: TatumSdkContainer, ...args: unknown[]) => T): T
+}
+
+export abstract class TatumSdkChain implements ITatumSdkChain {
+    protected constructor(readonly id: string) { }
+
+    extension<T extends TatumSdkExtension>(type: new (tatumSdkContainer: TatumSdkContainer, ...args: unknown[]) => T): T {
+        return Container.of(this.id).get(type);
+    }
+
+    destroy(): void {
+      Container.of(this.id).reset( {strategy: 'resetServices' })
+    }
+}
+interface ITatumSdkContainer {
+  get<T>(type: Constructable<T>): T;
+  get<T>(type: AbstractConstructable<T>): T;
+  get<T>(id: string): T;
+  get<T>(id: DiToken<T>): T;
+  get<T>(id: ServiceIdentifier<T>): T;
+}
+
+export class TatumSdkContainer implements ITatumSdkContainer {
+  constructor(private readonly containerInstance: ContainerInstance) {
+
+  }
+
+  get<T>(typeOrId: Constructable<T> | AbstractConstructable<T> | string | DiToken<T> | ServiceIdentifier<T>): T {
+    return this.containerInstance.get(typeOrId);
+  }
+}
+export class BaseTatumSdk extends TatumSdkChain {
   notification: Notification
   nft: Nft
   token: Token
@@ -20,8 +59,9 @@ export class BaseTatumSdk {
   walletProvider: WalletProvider
   rates: Rates
 
-  constructor(private readonly id: string) {
-    this.notification = Container.of(this.id).get(Notification)
+  constructor(id: string) {
+    super(id)
+    this.notification = Container.of(id).get(Notification)
     this.nft = Container.of(id).get(Nft)
     this.token = Container.of(id).get(Token)
     this.walletProvider = Container.of(id).get(WalletProvider)
@@ -39,10 +79,6 @@ export abstract class BaseUtxoClass extends BaseTatumSdk {
     this.rpc = Utils.getRpc<UtxoBasedRpcSuite>(id, Container.of(id).get(CONFIG))
     this.fee = Container.of(id).get(FeeUtxo)
   }
-
-  destroy(): void {
-    this.rpc.destroy()
-  }
 }
 
 export abstract class BaseEvmClass extends BaseTatumSdk {
@@ -51,10 +87,6 @@ export abstract class BaseEvmClass extends BaseTatumSdk {
   constructor(id: string) {
     super(id)
     this.rpc = Utils.getRpc<EvmBasedRpcSuite>(id, Container.of(id).get(CONFIG))
-  }
-
-  destroy(): void {
-    this.rpc.destroy()
   }
 }
 
@@ -102,10 +134,6 @@ export class Xrp extends BaseTatumSdk {
     super(id)
     this.rpc = Utils.getRpc<XrpRpcSuite>(id, Container.of(id).get(CONFIG))
   }
-
-  destroy(): void {
-    this.rpc.destroy()
-  }
 }
 export class Solana extends BaseTatumSdk {
   rpc: SolanaRpcSuite
@@ -113,12 +141,8 @@ export class Solana extends BaseTatumSdk {
     super(id)
     this.rpc = Utils.getRpc<SolanaRpcSuite>(id, Container.of(id).get(CONFIG))
   }
-
-  destroy(): void {
-    this.rpc.destroy()
-  }
 }
-export class Tron {
+export class Tron extends TatumSdkChain {
   notification: Notification
   nft: Nft
   token: Token
@@ -127,8 +151,9 @@ export class Tron {
   rates: Rates
   rpc: TronRpcSuite
 
-  constructor(private readonly id: string) {
-    this.notification = Container.of(this.id).get(Notification)
+  constructor(id: string) {
+    super(id)
+    this.notification = Container.of(id).get(Notification)
     this.nft = Container.of(id).get(Nft)
     this.token = Container.of(id).get(Token)
     this.walletProvider = Container.of(id).get(WalletProvider)
@@ -136,19 +161,16 @@ export class Tron {
     this.rates = Container.of(id).get(Rates)
     this.rpc = Utils.getRpc<TronRpcSuite>(id, Container.of(id).get(CONFIG))
   }
-
-  destroy(): void {
-    this.rpc.destroy()
-  }
 }
 
-export class Tezos {
+export class Tezos extends TatumSdkChain {
   notification: Notification
   address: AddressTezos
 
-  constructor(private readonly id: string) {
-    this.notification = Container.of(this.id).get(Notification)
-    this.address = Container.of(this.id).get(AddressTezos)
+  constructor(id: string) {
+    super(id)
+    this.notification = Container.of(id).get(Notification)
+    this.address = Container.of(id).get(AddressTezos)
   }
 }
 
@@ -159,7 +181,7 @@ export class TatumSDK {
    * Default configuration is used if no configuration is provided.
    * @param config
    */
-  public static async init<T>(config: TatumConfig): Promise<T> {
+  public static async init<T extends ITatumSdkChain>(config: TatumConfig): Promise<T> {
     const defaultConfig: Partial<TatumConfig> = {
       version: ApiVersion.V4,
       retryCount: 1,
@@ -182,7 +204,28 @@ export class TatumSDK {
       await loadBalancer.init()
     }
 
+    await this.configureExtensions(config, id)
+
     return Utils.getClient<T>(id, mergedConfig.network)
+  }
+
+  private static async configureExtensions(config: TatumConfig, id: string) {
+    for (const extensionConfig of config?.configureExtensions ?? []) {
+      let type: new (container: TatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
+      const args: unknown[] = []
+
+      if ('type' in extensionConfig) {
+        type = extensionConfig.type
+        args.push(extensionConfig.config)
+      } else {
+        type = extensionConfig
+      }
+
+      const containerInstance = new TatumSdkContainer(Container.of(id))
+      const instance = new type(containerInstance, ...args)
+      await instance.init(...args)
+      Container.of(id).set(type, instance)
+    }
   }
 
   private static generateRandomString() {
