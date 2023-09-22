@@ -76,7 +76,7 @@ export class EvmArchiveLoadBalancerRpc extends AbstractEvmRpc implements EvmBase
     }
 
     if (rpc.method === 'eth_getLogs') {
-      const param = rpc?.params?.[1]
+      const param = rpc?.params?.[1] || {}
       return this.isParamForArchiveNode(param.fromBlock) || this.isParamForArchiveNode(param.toBlock)
     }
 
