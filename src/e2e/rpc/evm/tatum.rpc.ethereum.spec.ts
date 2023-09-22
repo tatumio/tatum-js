@@ -69,8 +69,7 @@ describe('Ethereum', () => {
       }
     )
 
+    expect(result.result).toStrictEqual([])
     tatum.destroy()
-
-    console.log(result)
   })
 })
