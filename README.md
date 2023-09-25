@@ -280,7 +280,7 @@ import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
-const account: string = await tatum.walletProvider.use(MetaMask).connect()
+const account: string = await tatum.walletProvider.use(MetaMask).getWallet()
 const txId: string = await tatum.walletProvider.use(MetaMask).transferNative(
   '0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848',
   '1',
