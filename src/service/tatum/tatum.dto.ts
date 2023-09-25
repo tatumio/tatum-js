@@ -71,7 +71,7 @@ export interface TatumConfig {
   /**
    * Optional list of TatumSdkWalletExtensions.
    */
-  configureWalletProviders?: WalletProviderConstructorOrConfig[]
+  configureWalletProviders?: WalletProviderConstructorOrConfig<unknown, unknown>[]
 }
 
 export enum ApiVersion {
