@@ -3,8 +3,8 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>@tatumio/tatum-v1 - v1.37.37</title>
-	<meta name="description" content="Documentation for @tatumio/tatum-v1 - v1.37.37">
+	<title>@tatumio/tatum - v1.37.38</title>
+	<meta name="description" content="Documentation for @tatumio/tatum - v1.37.38">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
 	<script async src="assets/js/search.js" id="search-script"></script>
@@ -23,7 +23,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">@tatumio/tatum-v1 - v1.37.37</a>
+					<a href="index.html" class="title">@tatumio/tatum - v1.37.38</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -50,7 +50,7 @@
 	</div>
 	<div class="tsd-page-title">
 		<div class="container">
-			<h1>@tatumio/tatum-v1 - v1.37.37</h1>
+			<h1>@tatumio/tatum - v1.37.38</h1>
 		</div>
 	</div>
 </header>
@@ -59,13 +59,9 @@
 		<div class="col-8 col-content">
 			<div class="tsd-panel tsd-typography">
 				<a href="#tatum-api-client-middot---" id="tatum-api-client-middot---" style="color: inherit; text-decoration: none;">
-					<h1><a href="http://tatum.io/">Tatum API client</a> &middot; <a href="https://img.shields.io/npm/dm/@tatumio/tatum-v1"><img src="https://img.shields.io/npm/dm/@tatumio/tatum-v1" alt="GitHub license"></a> <a href="https://img.shields.io/npm/v/@tatumio/tatum-v1"><img src="https://img.shields.io/npm/v/@tatumio/tatum-v1" alt="GitHub license"></a> <a href="https://github.com/tatumio/tatum-js/actions/workflows/main.yml"><img src="https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg" alt="CI"></a></h1>
+					<h1><a href="http://tatum.io/">Tatum API client</a> &middot; <a href="https://img.shields.io/npm/dm/@tatumio/tatum"><img src="https://img.shields.io/npm/dm/@tatumio/tatum" alt="GitHub license"></a> <a href="https://img.shields.io/npm/v/@tatumio/tatum"><img src="https://img.shields.io/npm/v/@tatumio/tatum" alt="GitHub license"></a> <a href="https://github.com/tatumio/tatum-js/actions/workflows/main.yml"><img src="https://github.com/tatumio/tatum-js/actions/workflows/main.yml/badge.svg" alt="CI"></a></h1>
 				</a>
 				<p>Tatum API client allows browsers and Node.js clients to interact with Tatum API. It includes the following core components.</p>
-				<blockquote>
-					<p><strong>Package name change</strong></p>
-					<p>Important notice about package name change. Starting from version <strong>1.37.36</strong>, package name is changed from <code>@tatumio/tatum</code> to <code>@tatumio/tatum-v1</code>. Please update your package.json accordingly if you&#39;re using v1 sdk.</p>
-				</blockquote>
 				<blockquote>
 					<p><strong>Warning</strong></p>
 					<p>Important notice about using ETH and CELO: Please upgrade to version 1.37.22 or newer (all previous versions depend on <a href="https://ethgasstation.info">https://ethgasstation.info</a> which will stop working from 12.12.2022)</p>
@@ -87,7 +83,7 @@
 				</a>
 				<ol>
 					<li><p>Install module:</p>
-						<p><code>npm install @tatumio/tatum-v1</code></p>
+						<p><code>npm install @tatumio/tatum</code></p>
 					</li>
 				</ol>
 				<a href="#nodejs-amp-browser-support" id="nodejs-amp-browser-support" style="color: inherit; text-decoration: none;">
@@ -143,7 +139,7 @@
 					<h2>Usage</h2>
 				</a>
 				<pre><code class="language-js"><span style="color: #008000">// In Node.js</span>
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Tatum</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;@tatumio/tatum-v1&#039;</span><span style="color: #000000">);</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">Tatum</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;@tatumio/tatum&#039;</span><span style="color: #000000">);</span>
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">btcWallet</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #001080">Tatum</span><span style="color: #000000">.</span><span style="color: #795E26">generateWallet</span><span style="color: #000000">(</span><span style="color: #001080">Tatum</span><span style="color: #000000">.</span><span style="color: #001080">Currency</span><span style="color: #000000">.</span><span style="color: #0070C1">BTC</span><span style="color: #000000">, </span><span style="color: #0000FF">true</span><span style="color: #000000">);</span>
 
 <span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">btcWallet</span><span style="color: #000000">);</span>
@@ -157,8 +153,8 @@
 					<h3>Usage with TypeScript</h3>
 				</a>
 				<p>We support types within the repo itself. Please open an issue here if you find any wrong types.</p>
-				<p>You can use <code>@tatumio/tatum-v1</code> as follows:</p>
-				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">generateWallet</span><span style="color: #000000">, </span><span style="color: #001080">Currency</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@tatumio/tatum-v1&#039;</span><span style="color: #000000">;</span>
+				<p>You can use <code>@tatumio/tatum</code> as follows:</p>
+				<pre><code class="language-typescript"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">generateWallet</span><span style="color: #000000">, </span><span style="color: #001080">Currency</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;@tatumio/tatum&#039;</span><span style="color: #000000">;</span>
 <span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">btcWallet</span><span style="color: #000000"> = </span><span style="color: #AF00DB">await</span><span style="color: #000000"> </span><span style="color: #795E26">generateWallet</span><span style="color: #000000">(</span><span style="color: #001080">Currency</span><span style="color: #000000">.</span><span style="color: #0070C1">BTC</span><span style="color: #000000">, </span><span style="color: #0000FF">true</span><span style="color: #000000">);</span>
 </code></pre>
 				<p>More examples are available here:</p>
@@ -183,7 +179,7 @@
 				<p>Tatum js use core node js modules or browser APIs that are not available in React Native, so in order to be able to run Tatum js in React Native we need to install and use some additional dependencies.</p>
 				<pre><code><span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">i</span><span style="color: #000000"> </span><span style="color: #001080">rn</span><span style="color: #000000">-</span><span style="color: #001080">nodeify</span><span style="color: #000000"> -</span><span style="color: #001080">g</span>
 <span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">i</span><span style="color: #000000"> </span><span style="color: #001080">react</span><span style="color: #000000">-</span><span style="color: #001080">native</span><span style="color: #000000">-</span><span style="color: #001080">randombytes</span><span style="color: #000000"> --</span><span style="color: #001080">save</span>
-<span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">i</span><span style="color: #000000"> @</span><span style="color: #001080">tatumio</span><span style="color: #000000">/</span><span style="color: #001080">tatum</span><span style="color: #000000">-</span><span style="color: #001080">v1</span><span style="color: #000000"> --</span><span style="color: #001080">save</span>
+<span style="color: #001080">npm</span><span style="color: #000000"> </span><span style="color: #001080">i</span><span style="color: #000000"> @</span><span style="color: #001080">tatumio</span><span style="color: #000000">/</span><span style="color: #001080">tatum</span><span style="color: #000000"> --</span><span style="color: #001080">save</span>
 <span style="color: #001080">rn</span><span style="color: #000000">-</span><span style="color: #001080">nodeify</span><span style="color: #000000"> --</span><span style="color: #001080">install</span><span style="color: #000000"> </span><span style="color: #001080">http</span><span style="color: #000000">,</span><span style="color: #001080">https</span><span style="color: #000000">,</span><span style="color: #001080">path</span><span style="color: #000000">,</span><span style="color: #001080">crypto</span><span style="color: #000000">,</span><span style="color: #001080">fs</span><span style="color: #000000">,</span><span style="color: #001080">stream</span><span style="color: #000000">,</span><span style="color: #001080">os</span><span style="color: #000000"> --</span><span style="color: #001080">hack</span>
 <span style="color: #001080">cd</span><span style="color: #000000"> </span><span style="color: #001080">ios</span><span style="color: #000000"> &amp;&amp; </span><span style="color: #001080">pod</span><span style="color: #000000"> </span><span style="color: #001080">install</span>
 </code></pre>
