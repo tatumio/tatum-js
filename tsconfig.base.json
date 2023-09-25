@@ -29,6 +29,7 @@
       "@tatumio/celo": ["packages/blockchain/celo/src/index.ts"],
       "@tatumio/doge": ["packages/blockchain/doge/src/index.ts"],
       "@tatumio/egld": ["packages/blockchain/egld/src/index.ts"],
+      "@tatumio/eon": ["packages/blockchain/eon/src/index.ts"],
       "@tatumio/eth": ["packages/blockchain/eth/src/index.ts"],
       "@tatumio/flow": ["packages/blockchain/flow/src/index.ts"],
       "@tatumio/kcs": ["packages/blockchain/kcs/src/index.ts"],
