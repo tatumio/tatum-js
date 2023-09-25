@@ -2,7 +2,7 @@ import { Ethereum, Network, TatumSDK } from '../../service'
 import { TestExtension, TestWalletProvider } from "./e2e.extensions";
 
 const mockTestExtension = {
-  sayHello: jest.fn(),
+  dummyMethod: jest.fn(),
   init: jest.fn(),
   destroy: jest.fn(),
   network: jest.fn()
@@ -25,7 +25,7 @@ describe('Tatum Extension Ecosystem', () => {
 
       tatum.destroy()
 
-      expect(mockTestExtension.sayHello).toHaveBeenCalled()
+      expect(mockTestExtension.dummyMethod).toHaveBeenCalled()
       expect(mockTestExtension.init).toHaveBeenCalled()
       expect(mockTestExtension.destroy).toHaveBeenCalled()
       expect(mockTestExtension.network).toBeCalledWith(Network.ETHEREUM_SEPOLIA)
@@ -41,7 +41,9 @@ describe('Tatum Extension Ecosystem', () => {
         ]
       })
 
-      const result = await tatum.walletProvider.use(TestWalletProvider).connect()
+      const result = await tatum.walletProvider.use(TestWalletProvider).getWallet()
+
+      await tatum.walletProvider.use(TestWalletProvider).signAndBroadcast('payload')
 
       tatum.destroy()
 
@@ -49,6 +51,7 @@ describe('Tatum Extension Ecosystem', () => {
       expect(mockTestExtension.init).toHaveBeenCalled()
       expect(mockTestExtension.destroy).toHaveBeenCalled()
       expect(mockTestExtension.network).toBeCalledWith(Network.ETHEREUM_SEPOLIA)
+      expect(mockTestExtension.dummyMethod).toBeCalledTimes(2)
     })
   })
 })

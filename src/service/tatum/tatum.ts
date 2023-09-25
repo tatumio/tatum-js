@@ -18,6 +18,10 @@ import {
   TatumSdkExtension,
 } from "../extensions";
 
+/**
+ * Works as an entrypoint to interact with extension of choice.
+ * @param type - Extension type imported to the SDK instance
+ */
 export interface ITatumSdkChain {
     extension<T extends TatumSdkExtension>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T): T
 }

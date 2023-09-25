@@ -1,4 +1,4 @@
-import { ITatumSdkContainer, TatumConfig, TatumSdkExtension, TatumSdkWalletProvider } from "../../service";
+import { ITatumSdkContainer, TatumConfig, TatumSdkExtension, TatumSdkWalletProvider, TxId } from "../../service";
 
 export class TestExtension extends TatumSdkExtension {
     private readonly sdkConfig: TatumConfig
@@ -9,7 +9,7 @@ export class TestExtension extends TatumSdkExtension {
     }
 
     async sayHello(){
-        this.mockTestExtension.sayHello()
+        this.mockTestExtension.dummyMethod()
         this.mockTestExtension.network(this.sdkConfig.network)
     }
 
@@ -23,7 +23,7 @@ export class TestExtension extends TatumSdkExtension {
     }
 }
 
-export class TestWalletProvider extends TatumSdkWalletProvider {
+export class TestWalletProvider extends TatumSdkWalletProvider<string, string> {
     private readonly sdkConfig: TatumConfig
 
     constructor(tatumSdkContainer: ITatumSdkContainer, private readonly mockTestExtension: any) {
@@ -31,8 +31,9 @@ export class TestWalletProvider extends TatumSdkWalletProvider {
         this.sdkConfig = this.tatumSdkContainer.getConfig()
     }
 
-    async connect(){
+    async getWallet(){
         this.mockTestExtension.network(this.sdkConfig.network)
+        this.mockTestExtension.dummyMethod()
         return 'connected'
     }
 
@@ -43,5 +44,10 @@ export class TestWalletProvider extends TatumSdkWalletProvider {
 
     destroy(): void {
         this.mockTestExtension.destroy()
+    }
+
+    signAndBroadcast(payload: string): Promise<TxId> {
+        this.mockTestExtension.dummyMethod()
+        return Promise.resolve(payload);
     }
 }

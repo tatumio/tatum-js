@@ -11,7 +11,7 @@ import { ITatumSdkContainer, TatumSdkWalletProvider } from "../../extensions";
 import { TatumConfig } from "../../tatum";
 import { EvmRpc } from "../../rpc";
 
-export class MetaMask extends TatumSdkWalletProvider {
+export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
   private readonly config: TatumConfig
   private readonly rpc: EvmRpc
   private readonly connector: TatumConnector
@@ -28,7 +28,7 @@ export class MetaMask extends TatumSdkWalletProvider {
    * If so, it returns the address of the connected account. If not, it throws an error.
    * @returns address of the connected account.
    */
-  async connect(): Promise<string> {
+  async getWallet(): Promise<string> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (typeof window.ethereum === 'undefined') {
@@ -54,7 +54,7 @@ export class MetaMask extends TatumSdkWalletProvider {
   async transferNative(recipient: string, amount: string): Promise<string> {
     const payload: TxPayload = {
       to: recipient,
-      from: await this.connect(),
+      from: await this.getWallet(),
       value: `0x${new BigNumber(amount)
         .multipliedBy(10 ** Constant.DECIMALS[this.config.network])
         .toString(16)}`,
@@ -84,7 +84,7 @@ export class MetaMask extends TatumSdkWalletProvider {
     const { result: decimals } = await this.rpc.getTokenDecimals(tokenAddress)
     const payload: TxPayload = {
       to: tokenAddress,
-      from: await this.connect(),
+      from: await this.getWallet(),
       data: `0xa9059cbb${Utils.padWithZero(recipient)}${new BigNumber(amount)
         .multipliedBy(10 ** decimals!.toNumber())
         .toString(16)
@@ -110,7 +110,7 @@ export class MetaMask extends TatumSdkWalletProvider {
    */
   async createNftCollection(body: CreateNftCollection): Promise<string> {
     const { name, symbol, baseURI, author, minter } = body
-    const from = await this.connect()
+    const from = await this.getWallet()
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
       body: {
@@ -141,7 +141,7 @@ export class MetaMask extends TatumSdkWalletProvider {
    * If so, it returns the signed transaction hash. If not, it throws an error.
    */
   async createFungibleToken(body: CreateFungibleToken): Promise<string> {
-    const from = await this.connect()
+    const from = await this.getWallet()
     const decimals = body.decimals || 18
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
@@ -183,7 +183,7 @@ export class MetaMask extends TatumSdkWalletProvider {
    */
   async createErc1155NftCollection(body?: CreateErc1155NftCollection): Promise<string> {
     const { author, minter, baseURI } = body || {}
-    const from = await this.connect()
+    const from = await this.getWallet()
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
       body: {
@@ -217,7 +217,7 @@ export class MetaMask extends TatumSdkWalletProvider {
    * @param tokenAddress address of the token contract
    */
   async transferNft(recipient: string, tokenId: string, tokenAddress: string): Promise<string> {
-    const from = await this.connect()
+    const from = await this.getWallet()
     const payload: TxPayload = {
       to: tokenAddress,
       from: from,
@@ -250,7 +250,7 @@ export class MetaMask extends TatumSdkWalletProvider {
     const { result: decimals } = await this.rpc.getTokenDecimals(tokenAddress)
     const payload: TxPayload = {
       to: tokenAddress,
-      from: await this.connect(),
+      from: await this.getWallet(),
       data: `0x095ea7b3${Utils.padWithZero(spender)}${new BigNumber(amount)
         .multipliedBy(10 ** decimals!.toNumber())
         .toString(16)
@@ -275,8 +275,8 @@ export class MetaMask extends TatumSdkWalletProvider {
    * If so, it returns the signed transaction hash. If not, it throws an error.
    * @param payload Transaction payload. From field is ignored and will be overwritten by the connected account.
    */
-  async customPayload(payload: TxPayload): Promise<string> {
-    payload.from = await this.connect()
+  async signAndBroadcast(payload: TxPayload): Promise<string> {
+    payload.from = await this.getWallet()
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

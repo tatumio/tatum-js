@@ -11,7 +11,11 @@ export class WalletProvider {
   constructor(private readonly id: string) {
   }
 
-  use<T extends TatumSdkWalletProvider>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T): T {
+  /**
+   * Works are an entrypoint to interact with wallet providers of choice.
+   * @param type - Wallet Provider type imported to the SDK instance
+   */
+  use<T, P>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => TatumSdkWalletProvider<T, P>): TatumSdkWalletProvider<T, P> {
     return Container.of(this.id).get(type);
   }
 }
