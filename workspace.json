@@ -20,6 +20,7 @@
     "doge-example": "examples/doge-example",
     "egld": "packages/blockchain/egld",
     "egld-example": "examples/egld-example",
+    "eon": "packages/blockchain/eon",
     "eth": "packages/blockchain/eth",
     "eth-example": "examples/eth-example",
     "example": "examples/sdk-example",

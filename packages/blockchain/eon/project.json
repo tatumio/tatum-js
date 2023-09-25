@@ -1,0 +1,38 @@
+{
+  "sourceRoot": "packages/blockchain/eon/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/eon",
+        "tsConfig": "packages/blockchain/eon/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/eon/package.json",
+        "main": "packages/blockchain/eon/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/eon/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/eon"],
+      "options": {
+        "jestConfig": "packages/blockchain/eon/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:sdk", "scope:evm-based"]
+}
