@@ -1,7 +1,7 @@
 import { ITatumSdkContainer } from "./tatumsdk.container";
 import { TatumSdkExtension } from "./tatumsdk.extensions.dto";
 
-export abstract class TatumSdkWalletProviders extends TatumSdkExtension {
+export abstract class TatumSdkWalletProvider extends TatumSdkExtension {
     protected constructor(tatumSdkContainer: ITatumSdkContainer) {
         super(tatumSdkContainer)
     }
@@ -9,7 +9,7 @@ export abstract class TatumSdkWalletProviders extends TatumSdkExtension {
     abstract connect(): Promise<string>
 }
 
-export type WalletProviderConstructor = new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => TatumSdkWalletProviders
+export type WalletProviderConstructor = new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => TatumSdkWalletProvider
 
 export type WalletProviderWithConfig = {
     type: WalletProviderConstructor

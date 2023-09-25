@@ -7,11 +7,11 @@ import {
   CreateNftCollection,
 } from '../../../dto/walletProvider'
 import { Constant, Utils } from '../../../util'
-import { ITatumSdkContainer, TatumSdkWalletProviders } from "../../extensions";
+import { ITatumSdkContainer, TatumSdkWalletProvider } from "../../extensions";
 import { TatumConfig } from "../../tatum";
 import { EvmRpc } from "../../rpc";
 
-export class MetaMask extends TatumSdkWalletProviders {
+export class MetaMask extends TatumSdkWalletProvider {
   private readonly config: TatumConfig
   private readonly rpc: EvmRpc
   private readonly connector: TatumConnector

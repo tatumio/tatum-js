@@ -614,7 +614,7 @@ Tatum SDK supports wallet provider extensions for various wallets. You can use t
 
 ```typescript
 import { TatumSDK, Ethereum, Network, ApiVersion } from '@tatumio/tatum'
-import { HelloWorldExtension } from "@tatumio/wallet-provider-demo"
+import { WalletProviderDemo } from "@tatumio/wallet-provider-demo"
 
 const tatumSdk = await TatumSDK.init<Ethereum>({
     network: Network.ETHEREUM_SEPOLIA,

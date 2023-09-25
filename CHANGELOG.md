@@ -1,7 +1,7 @@
 ## [4.0.0] - 2023.09.25
 ### Added
 - Leveraging Extension Ecosystem a specialised Wallet Provider type of extensions was added.
-- `tatumSdk.walletProvider.use(type: TatumSdkWalletProviders)` method was added.
+- `tatumSdk.walletProvider.use(type: TatumSdkWalletProvider)` method was added.
 
 ### Changed
 - **[BREAKING CHANGE]** `tatumSdk.walletProvider.metaMask` was replaced with `tatumSdk.walletProvider.use(MetaMask)`.
