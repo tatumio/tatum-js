@@ -1,6 +1,5 @@
 import { Container, Service } from 'typedi'
-import { MetaMask } from './metaMask'
-import { EvmRpc } from '../rpc'
+import { ITatumSdkContainer, TatumSdkWalletProviders } from "../extensions";
 
 @Service({
   factory: (data: { id: string }) => {
@@ -9,9 +8,10 @@ import { EvmRpc } from '../rpc'
   transient: true,
 })
 export class WalletProvider {
-  readonly metaMask: MetaMask<EvmRpc>
-
   constructor(private readonly id: string) {
-    this.metaMask = Container.of(this.id).get(MetaMask)
+  }
+
+  use<T extends TatumSdkWalletProviders>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T): T {
+    return Container.of(this.id).get(type);
   }
 }

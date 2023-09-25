@@ -1,5 +1,5 @@
 import { Network } from '../../dto/Network'
-import { ExtensionConstructorOrConfig } from "../extensions";
+import { ExtensionConstructorOrConfig, WalletProviderConstructorOrConfig } from "../extensions";
 
 export interface TatumConfig {
   /**
@@ -67,6 +67,11 @@ export interface TatumConfig {
    * Optional list of TatumSdkExtensions.
    */
   configureExtensions?: ExtensionConstructorOrConfig[]
+
+  /**
+   * Optional list of TatumSdkWalletExtensions.
+   */
+  configureWalletProviders?: WalletProviderConstructorOrConfig[]
 }
 
 export enum ApiVersion {

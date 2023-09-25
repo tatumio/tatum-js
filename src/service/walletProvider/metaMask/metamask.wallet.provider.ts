@@ -1,31 +1,26 @@
 import { BigNumber } from 'bignumber.js'
-import { Container, Service } from 'typedi'
-import { TatumConnector } from '../../connector/tatum.connector'
-import { TxPayload } from '../../dto'
+import { TatumConnector } from '../../../connector/tatum.connector'
+import { TxPayload } from '../../../dto'
 import {
   CreateErc1155NftCollection,
   CreateFungibleToken,
   CreateNftCollection,
-} from '../../dto/walletProvider'
-import { CONFIG, Constant, Utils } from '../../util'
-import { EvmRpc } from '../rpc'
-import { TatumConfig } from '../tatum'
+} from '../../../dto/walletProvider'
+import { Constant, Utils } from '../../../util'
+import { ITatumSdkContainer, TatumSdkWalletProviders } from "../../extensions";
+import { TatumConfig } from "../../tatum";
+import { EvmRpc } from "../../rpc";
 
-@Service({
-  factory: (data: { id: string }) => {
-    return new MetaMask(data.id)
-  },
-  transient: true,
-})
-export class MetaMask<T extends EvmRpc> {
+export class MetaMask extends TatumSdkWalletProviders {
   private readonly config: TatumConfig
-  private readonly rpc: T
+  private readonly rpc: EvmRpc
   private readonly connector: TatumConnector
 
-  constructor(private readonly id: string) {
-    this.config = Container.of(this.id).get(CONFIG)
-    this.rpc = Utils.getRpc<T>(this.id, this.config)
-    this.connector = Container.of(this.id).get(TatumConnector)
+  constructor(tatumSdkContainer: ITatumSdkContainer) {
+    super(tatumSdkContainer)
+    this.config = this.tatumSdkContainer.getConfig()
+    this.rpc = this.tatumSdkContainer.get(EvmRpc)
+    this.connector = this.tatumSdkContainer.get(TatumConnector)
   }
 
   /**
@@ -294,5 +289,14 @@ export class MetaMask<T extends EvmRpc> {
       console.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  destroy(): void {
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  init(..._: unknown[]): Promise<void> {
+    return Promise.resolve(undefined);
   }
 }

@@ -9,9 +9,14 @@ import { Notification } from '../notification'
 import { Rates } from '../rate'
 import { LoadBalancer } from '../rpc/generic/LoadBalancer'
 import { Token } from '../token'
-import { WalletProvider } from '../walletProvider'
+import { MetaMask, WalletProvider } from '../walletProvider'
 import { ApiVersion, TatumConfig } from './tatum.dto'
-import { ITatumSdkContainer, TatumSdkContainer, TatumSdkExtension } from "../extensions";
+import {
+  ExtensionConstructorOrConfig,
+  ITatumSdkContainer,
+  TatumSdkContainer,
+  TatumSdkExtension,
+} from "../extensions";
 
 export interface ITatumSdkChain {
     extension<T extends TatumSdkExtension>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T): T
@@ -185,27 +190,40 @@ export class TatumSDK {
     }
 
     await this.configureExtensions(config, id)
+    await this.addBuiltInExtensions(id);
 
     return Utils.getClient<T>(id, mergedConfig.network)
   }
 
+  private static async addBuiltInExtensions(id: string) {
+    await this.addExtension(MetaMask, id);
+  }
+
   private static async configureExtensions(config: TatumConfig, id: string) {
     for (const extensionConfig of config?.configureExtensions ?? []) {
-      let type: new (container: ITatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
-      const args: unknown[] = []
-
-      if ('type' in extensionConfig) {
-        type = extensionConfig.type
-        args.push(extensionConfig.config)
-      } else {
-        type = extensionConfig
-      }
-
-      const containerInstance = new TatumSdkContainer(Container.of(id))
-      const instance = new type(containerInstance, ...args)
-      await instance.init(...args)
-      Container.of(id).set(type, instance)
+      await this.addExtension(extensionConfig, id);
     }
+
+    for (const walletProviderConfig of config?.configureWalletProviders ?? []) {
+      await this.addExtension(walletProviderConfig, id);
+    }
+  }
+
+  private static async addExtension(extensionConfig: ExtensionConstructorOrConfig, id: string) {
+    let type: new (container: ITatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
+    const args: unknown[] = []
+
+    if ('type' in extensionConfig) {
+      type = extensionConfig.type
+      args.push(extensionConfig.config)
+    } else {
+      type = extensionConfig
+    }
+
+    const containerInstance = new TatumSdkContainer(Container.of(id))
+    const instance = new type(containerInstance, ...args)
+    await instance.init(...args)
+    Container.of(id).set(type, instance)
   }
 
   private static generateRandomString() {

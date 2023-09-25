@@ -1,3 +1,11 @@
+## [4.0.0] - 2023.09.25
+### Added
+- Leveraging Extension Ecosystem a specialised Wallet Provider type of extensions was added.
+- `tatumSdk.walletProvider.use(type: TatumSdkWalletProviders)` method was added.
+
+### Changed
+- **[BREAKING CHANGE]** `tatumSdk.walletProvider.metaMask` was replaced with `tatumSdk.walletProvider.use(MetaMask)`.
+
 ## [3.1.8] - 2023.09.22
 ### Added
 - Capability to initialize `TatumSDK` with various extensions from Extension Ecosystem using the init() method and `TatumConfig.configureExtensions`.
