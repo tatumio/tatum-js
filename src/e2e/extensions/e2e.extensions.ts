@@ -31,12 +31,8 @@ export class TestWalletProvider extends TatumSdkWalletProvider {
         this.sdkConfig = this.tatumSdkContainer.getConfig()
     }
 
-    async sayHello(){
-        this.mockTestExtension.sayHello()
-        this.mockTestExtension.network(this.sdkConfig.network)
-    }
-
     async connect(){
+        this.mockTestExtension.network(this.sdkConfig.network)
         return 'connected'
     }
 

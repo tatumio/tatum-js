@@ -46,7 +46,6 @@ describe('Tatum Extension Ecosystem', () => {
       tatum.destroy()
 
       expect(result).toBe('connected')
-      expect(mockTestExtension.sayHello).toHaveBeenCalled()
       expect(mockTestExtension.init).toHaveBeenCalled()
       expect(mockTestExtension.destroy).toHaveBeenCalled()
       expect(mockTestExtension.network).toBeCalledWith(Network.ETHEREUM_SEPOLIA)
