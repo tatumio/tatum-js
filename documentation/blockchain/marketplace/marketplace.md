@@ -13,7 +13,7 @@ import {
     sendMarketplaceCreateListing,
     sendCeloSmartContractReadMethodInvocationTransaction,
     sendAuctionApproveNftTransfer
-} from '@tatumio/tatum-v1';
+} from '@tatumio/tatum';
 ```
 
 ## Deploy the smart contract for marketplace

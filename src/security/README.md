@@ -5,7 +5,7 @@ or [Github Pages](https://tatumio.github.io/tatum-js/) to see how to use other s
 
 ## Import required libraries
 ```typescript
-import { getTransactionKMS } from '@tatumio/tatum-v1';
+import { getTransactionKMS } from '@tatumio/tatum';
 ```
 
 ## Get a KMS transaction

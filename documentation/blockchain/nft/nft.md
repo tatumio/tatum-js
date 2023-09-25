@@ -6,7 +6,7 @@ or [Github Pages](https://tatumio.github.io/tatum-js/) to see how to use other N
 ## Import required libraries
 
 ```typescript
-import { mintNFTWithUri } from '@tatumio/tatum-v1';
+import { mintNFTWithUri } from '@tatumio/tatum';
 ```
 
 ## Get NFTs

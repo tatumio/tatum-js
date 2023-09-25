@@ -6,7 +6,7 @@ Just browse source code or [Github Pages](https://tatumio.github.io/tatum-js/) t
 ## Import required libraries
 
 ```typescript
-import { btcGetCurrentBlock } from '@tatumio/tatum-v1';
+import { btcGetCurrentBlock } from '@tatumio/tatum';
 ```
 
 ## Get Current BTC block
