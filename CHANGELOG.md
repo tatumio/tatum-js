@@ -5,6 +5,8 @@
 
 ### Changed
 - **[BREAKING CHANGE]** `tatumSdk.walletProvider.metaMask` was replaced with `tatumSdk.walletProvider.use(MetaMask)`.
+- **[BREAKING CHANGE]** `tatumSdk.walletProvider.metaMask.connect()` was replaced with `tatumSdk.walletProvider.use(MetaMask).getWallet()`.
+- **[BREAKING CHANGE]** `tatumSdk.walletProvider.metaMask.customPayload()` was replaced with `tatumSdk.walletProvider.use(MetaMask).signAndBroadcast()`.
 
 ## [3.1.8] - 2023.09.22
 ### Added
