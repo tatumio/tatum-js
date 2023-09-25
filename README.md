@@ -629,7 +629,7 @@ Usage for wallet providers is similar to the extensions.
 ```typescript
 await tatumSdk.walletProvider.use(WalletProviderDemo).connect()
 ````
-
+🔍 Check out our [built-in MetaMask wallet provider](./src/service/walletProvider/metaMask/metamask.wallet.provider.ts)
 
 📚 **Learn more about Tatum SDK Extension ecosystem here - [Tatum SDK Extensions](https://github.com/tatumio/ecosystem-addons)**
 
