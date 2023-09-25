@@ -23,23 +23,12 @@ const deploySignedTransaction = async ({
   chainId: number
   estimateGasFn: (tx: any) => Promise<number>
 }) => {
-  const { fromPrivateKey, fee, name, symbol, nonce, signatureId, provenance, cashback, publicMint } = body
-
-  if (provenance && cashback) {
-    throw new Error('Only one of provenance or cashback must be present and true.')
-  }
+  const { fromPrivateKey, fee, name, symbol, nonce, signatureId, publicMint } = body
 
   const client = await web3.getClient(provider, fromPrivateKey)
 
   let abi = Erc721Token_General.abi
   let deployData = Erc721Token_General.bytecode
-  if (body.provenance) {
-    abi = Erc721_Provenance.abi
-    deployData = Erc721_Provenance.bytecode
-  } else if (body.cashback) {
-    abi = Erc721Token_Cashback.abi
-    deployData = Erc721Token_Cashback.bytecode
-  }
 
   const contract = new client.eth.Contract(abi as any)
 
