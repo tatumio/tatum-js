@@ -1,5 +1,5 @@
 import { Ethereum, Network, TatumSDK } from '../../service'
-import { TestExtension, TestWalletProvider } from "./e2e.extensions.utils";
+import { TestExtension, TestWalletProvider } from "./e2e.extensions";
 
 const mockTestExtension = {
   sayHello: jest.fn(),
@@ -9,6 +9,9 @@ const mockTestExtension = {
 }
 
 describe('Tatum Extension Ecosystem', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
   describe('General Extension', () => {
     it('should work after being registered', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
