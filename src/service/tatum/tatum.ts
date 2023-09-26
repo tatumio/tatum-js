@@ -23,18 +23,22 @@ import {
  * @param type - Extension type imported to the SDK instance
  */
 export interface ITatumSdkChain {
-    extension<T extends TatumSdkExtension>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T): T
+  extension<T extends TatumSdkExtension>(
+    type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T,
+  ): T
 }
 
 export abstract class TatumSdkChain implements ITatumSdkChain {
-    protected constructor(readonly id: string) { }
+  protected constructor(readonly id: string) {}
 
-    extension<T extends TatumSdkExtension>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T): T {
-        return Container.of(this.id).get(type);
-    }
+  extension<T extends TatumSdkExtension>(
+    type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T,
+  ): T {
+    return Container.of(this.id).get(type)
+  }
 
-    async destroy(): Promise<void> {
-      const config = Container.of(this.id).get(CONFIG)
+  async destroy(): Promise<void> {
+    const config = Container.of(this.id).get(CONFIG)
       for (const extensionConfig of config?.configureExtensions ?? []) {
         await this.destroyExtension(extensionConfig, this.id);
       }
@@ -129,6 +133,7 @@ export class Polygon extends BaseEvmClass {}
 export class Vechain extends BaseEvmClass {}
 export class Xdc extends BaseEvmClass {}
 export class HorizenEon extends BaseEvmClass {}
+export class Chiliz extends BaseEvmClass {}
 
 // UTXO chains
 export class Bitcoin extends BaseUtxoClass {}

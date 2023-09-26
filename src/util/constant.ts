@@ -82,6 +82,7 @@ export const Constant = {
     [Network.ETHEREUM_CLASSIC]: 18,
     [Network.EOS]: 4,
     [Network.HORIZEN_EON]: 18,
+    [Network.HORIZEN_EON_GOBI]: 18,
     [Network.EOS_TESTNET]: 4,
     [Network.TEZOS]: 6,
     [Network.TEZOS_TESTNET]: 6,
@@ -109,6 +110,7 @@ export const Constant = {
     [Network.FLARE_SONGBIRD]: 18,
     [Network.HAQQ]: 18,
     [Network.HAQQ_TESTNET]: 18,
+    [Network.CHILIZ]: 18,
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -176,6 +178,7 @@ export const Constant = {
     [Network.ETHEREUM_CLASSIC]: 'ETC',
     [Network.EOS]: 'EOS',
     [Network.HORIZEN_EON]: 'EON',
+    [Network.HORIZEN_EON_GOBI]: 'EON',
     [Network.EOS_TESTNET]: 'EOS',
     [Network.TEZOS]: 'XTZ',
     [Network.TEZOS_TESTNET]: 'XTZ',
@@ -199,6 +202,7 @@ export const Constant = {
     [Network.ZILLIQA_TESTNET]: 'ZIL',
     [Network.HAQQ]: 'HAQQ',
     [Network.HAQQ_TESTNET]: 'HAQQ',
+    [Network.CHILIZ]: 'CHILIZ',
   },
   RPC: {
     MAINNETS: [
@@ -243,6 +247,7 @@ export const Constant = {
       Network.XRP,
       Network.ZCASH,
       Network.ZILLIQA,
+      Network.CHILIZ,
     ],
     TESTNETS: [
       Network.ALGORAND_TESTNET,
@@ -285,6 +290,7 @@ export const Constant = {
       Network.XRP_TESTNET,
       Network.ZCASH_TESTNET,
       Network.ZILLIQA_TESTNET,
+      Network.HORIZEN_EON_GOBI,
     ],
   },
   OPEN_RPC: {

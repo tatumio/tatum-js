@@ -16,6 +16,7 @@ export enum Network {
   DOGECOIN = 'doge-mainnet',
   EOS = 'eos-mainnet',
   HORIZEN_EON = 'eon-mainnet',
+  CHILIZ = 'chiliz-mainnet',
   ETHEREUM = 'ethereum-mainnet',
   ETHEREUM_CLASSIC = 'ethereum-classic-mainnet',
   FANTOM = 'fantom-mainnet',
@@ -70,6 +71,7 @@ export enum Network {
   GNOSIS_TESTNET = 'gno-testnet',
   HAQQ_TESTNET = 'haqq-testnet',
   HARMONY_ONE_TESTNET_SHARD_0 = 'one-testnet-s0',
+  HORIZEN_EON_GOBI = 'horizen-eon-gobi',
   KLAYTN_BAOBAB = 'klaytn-baobab',
   KUCOIN_TESTNET = 'kcs-testnet',
   LITECOIN_TESTNET = 'litecoin-testnet',
@@ -139,6 +141,8 @@ export const EVM_BASED_NETWORKS = [
   Network.ARBITRUM_ONE,
   Network.BINANCE_SMART_CHAIN,
   Network.HORIZEN_EON,
+  Network.HORIZEN_EON_GOBI,
+  Network.CHILIZ,
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -203,8 +207,10 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.OPTIMISM,
   Network.OPTIMISM_TESTNET,
   Network.HORIZEN_EON,
+  Network.HORIZEN_EON_GOBI,
   Network.ARBITRUM_ONE,
   Network.BINANCE_SMART_CHAIN,
+  Network.CHILIZ,
 ]
 
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
@@ -222,6 +228,7 @@ export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
   Network.HAQQ_TESTNET,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
+  Network.CHILIZ,
 ]
 
 export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
