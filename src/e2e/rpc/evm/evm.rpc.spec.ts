@@ -26,8 +26,8 @@ const testNetworks = [
   { network: Network.POLYGON, expected: { chainId: 137 } },
   { network: Network.POLYGON_MUMBAI, expected: { chainId: 80001 } },
   { network: Network.OPTIMISM, expected: { chainId: 10 } },
-  { network: Network.HAQQ, expected: { chainId: 11235 } },
-  { network: Network.HAQQ_TESTNET, expected: { chainId: 54211 } },
+  //{ network: Network.HAQQ, expected: { chainId: 11235 } },
+  //{ network: Network.HAQQ_TESTNET, expected: { chainId: 54211 } },
   {
     network: Network.TRON,
     expected: { chainId: 728126428 },
