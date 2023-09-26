@@ -301,4 +301,5 @@ export const Constant = {
     BASE: 'https://api.shasta.trongrid.io',
     RPC: 'https://api.shasta.trongrid.io/jsonrpc',
   },
+  EOS_PREFIX: 'v1/chain/',
 }

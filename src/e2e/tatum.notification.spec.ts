@@ -412,8 +412,7 @@ describe.skip('notification', () => {
         v4: process.env.V4_API_KEY_MAINNET,
       },
     })
-    const { data, error } = await tatum.notification.getAll()
-    console.log(new Date().toISOString(), error)
+    const { data } = await tatum.notification.getAll()
     expect(data).not.toHaveLength(0)
     expect(data[0].id).toBeDefined()
     expect(data[0].network).toBeDefined()

@@ -1,7 +1,8 @@
 import BigNumber from 'bignumber.js'
 import * as process from 'process'
-import { BlockIdentifier } from '../../dto'
-import { Network, TatumSDK, Tron } from '../../service'
+import { BlockIdentifier } from '../../../dto'
+import { Network, TatumSDK, Tron } from '../../../service'
+import { e2eUtil } from '../../e2e.util'
 
 const getTronRpc = async (testnet?: boolean) =>
   await TatumSDK.init<Tron>({
@@ -11,6 +12,7 @@ const getTronRpc = async (testnet?: boolean) =>
     },
     retryCount: 1,
     retryDelay: 2000,
+    verbose: e2eUtil.isVerbose,
   })
 describe('RPCs', () => {
   describe('TRON', () => {

@@ -4,6 +4,13 @@ import { Container } from 'typedi'
 import { version } from '../../package.json'
 import {
   AddressEventNotificationChain,
+  JsonRpcCall,
+  JsonRpcResponse,
+  MAPPED_NETWORK,
+  MappedNetwork,
+  Network,
+  isEosLoadBalancerNetwork,
+  isEosNetwork,
   isEvmArchiveNonArchiveLoadBalancerNetwork,
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
@@ -13,11 +20,6 @@ import {
   isUtxoBasedNetwork,
   isUtxoLoadBalancerNetwork,
   isXrpNetwork,
-  JsonRpcCall,
-  JsonRpcResponse,
-  MAPPED_NETWORK,
-  MappedNetwork,
-  Network,
 } from '../dto'
 import {
   ApiVersion,
@@ -33,6 +35,7 @@ import {
   Chiliz,
   Cronos,
   Dogecoin,
+  Eos,
   Ethereum,
   EthereumClassic,
   EvmLoadBalancerRpc,
@@ -66,6 +69,9 @@ import {
 import { EvmArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmArchiveLoadBalancerRpc'
 import { TronLoadBalancerRpc } from '../service/rpc/evm/TronLoadBalancerRpc'
 import { TronRpc } from '../service/rpc/evm/TronRpc'
+import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
+import { EosRpc } from '../service/rpc/other/EosRpc'
+import { Constant } from './constant'
 import { CONFIG } from './di.tokens'
 
 export const Utils = {
@@ -106,6 +112,14 @@ export const Utils = {
       return Container.of(id).get(TronRpc) as T
     }
 
+    if (isEosLoadBalancerNetwork(network)) {
+      return Container.of(id).get(EosLoadBalancerRpc) as T
+    }
+
+    if (isEosNetwork(network)) {
+      return Container.of(id).get(EosRpc) as T
+    }
+
     console.warn(`RPC Network ${network} is not supported.`)
     return Container.of(id).get(GenericRpc) as T
   },
@@ -137,12 +151,44 @@ export const Utils = {
         id: 1,
       }
     }
+
+    if (isEosNetwork(network)) {
+      return null
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
-  parseStatusPayload: (network: Network, response: JsonRpcResponse<any>) => {
-    if (isUtxoBasedNetwork(network) || isEvmBasedNetwork(network)) {
+  getStatusUrl(network: Network, url: string): string {
+    if (isEosNetwork(network)) {
+      return `${url}${Constant.EOS_PREFIX}get_info`
+    }
+
+    if (isUtxoBasedNetwork(network) || isEvmBasedNetwork(network) || isTronNetwork(network)) {
+      return url
+    }
+
+    throw new Error(`Network ${network} is not supported.`)
+  },
+  parseStatusPayload: (network: Network, response: JsonRpcResponse<any> | any) => {
+    if (isUtxoBasedNetwork(network) || isEvmBasedNetwork(network) || isTronNetwork(network)) {
       return new BigNumber((response.result as number) || -1).toNumber()
     }
+
+    if (isEosNetwork(network)) {
+      return new BigNumber((response.head_block_num as number) || -1).toNumber()
+    }
+
+    throw new Error(`Network ${network} is not supported.`)
+  },
+  isResponseOk: (network: Network, response: JsonRpcResponse<any> | any) => {
+    if (isEosNetwork(network)) {
+      return response.head_block_num !== undefined
+    }
+
+    if (isUtxoBasedNetwork(network) || isEvmBasedNetwork(network) || isTronNetwork(network)) {
+      return response.result !== undefined
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
   mapNotificationChainToNetwork: (chain: AddressEventNotificationChain): Network => {
@@ -240,6 +286,7 @@ export const Utils = {
       signal: controller.signal,
       headers: Utils.getHeaders(containerId),
     })
+
     const responseTime = Date.now() - start
     clearTimeout(id)
     return { responseTime, response }
@@ -386,6 +433,9 @@ export const Utils = {
       case Network.HORIZEN_EON:
       case Network.HORIZEN_EON_GOBI:
         return new HorizenEon(id) as T
+      case Network.EOS:
+      case Network.EOS_TESTNET:
+        return new Eos(id) as T
       case Network.CHILIZ:
         return new Chiliz(id) as T
       default:
@@ -439,14 +489,14 @@ export const Utils = {
 
     return output
   },
-  getV1RpcUrl: (config: TatumConfig, path?: string): string => {
+  getV3RpcUrl: (config: TatumConfig, path?: string): string => {
     const { apiKey, rpc, network } = config
     if (apiKey) {
       const url =
         rpc?.nodes?.[0].url ||
-        `https://api.tatum.io/v3/blockchain/node/${network}/${apiKey.v3 ? apiKey.v3 : apiKey.v4}`
+        `${Constant.TATUM_API_URL.V3}blockchain/node/${network}/${apiKey.v3 ? apiKey.v3 : apiKey.v4}`
       return url.concat(path || '')
     }
-    return rpc?.nodes?.[0].url || `https://api.tatum.io/v3/blockchain/node/${network}`.concat(path || '')
+    return rpc?.nodes?.[0].url || `${Constant.TATUM_API_URL.V3}blockchain/node/${network}`.concat(path || '')
   },
 }

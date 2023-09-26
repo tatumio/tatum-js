@@ -27,9 +27,9 @@ import {
   TxOptions,
   TypeOption,
   XrpRpcSuite,
-} from '../../dto'
-import { Utils } from '../../util'
-import { AbstractBatchRpc } from './generic'
+} from '../../../dto'
+import { Utils } from '../../../util'
+import { AbstractBatchRpc } from '../generic'
 
 const generateXrpParams = (required?: { [key: string]: any }, optional?: { [key: string]: any }) => {
   const xrpParams: { [name: string]: unknown } = {}

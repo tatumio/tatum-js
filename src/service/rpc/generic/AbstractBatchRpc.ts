@@ -16,7 +16,7 @@ export abstract class AbstractBatchRpc implements AbstractRpcInterface {
   }
 
   getRpcNodeUrl(subPath?: string): string {
-    return Utils.getV1RpcUrl(this.config, subPath)
+    return Utils.getV3RpcUrl(this.config, subPath)
   }
 
   rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<any>> {

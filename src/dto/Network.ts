@@ -214,11 +214,13 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
 ]
 
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
+export const EOS_LOAD_BALANCER_NETWORKS = [Network.EOS]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
   ...EVM_LOAD_BALANCER_NETWORKS,
   ...TRON_LOAD_BALANCER_NETWORKS,
+  ...EOS_LOAD_BALANCER_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -233,6 +235,7 @@ export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
 
 export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
 export const TRON_NETWORKS = [Network.TRON, Network.TRON_SHASTA]
+export const EOS_NETWORKS = [Network.EOS, Network.EOS_TESTNET]
 
 export const isEvmBasedNetwork = (network: Network) => EVM_BASED_NETWORKS.includes(network)
 
@@ -250,6 +253,8 @@ export const isSolanaEnabledNetwork = (network: Network) => SOLANA_NETWORKS.incl
 
 export const isTronNetwork = (network: Network) => TRON_NETWORKS.includes(network)
 
+export const isEosNetwork = (network: Network) => EOS_NETWORKS.includes(network)
+
 export const isLoadBalancerNetwork = (network: Network) => LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isUtxoLoadBalancerNetwork = (network: Network) => UTXO_LOAD_BALANCER_NETWORKS.includes(network)
@@ -260,6 +265,8 @@ export const isEvmArchiveNonArchiveLoadBalancerNetwork = (network: Network) =>
   EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isTronLoadBalancerNetwork = (network: Network) => TRON_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isEosLoadBalancerNetwork = (network: Network) => EOS_LOAD_BALANCER_NETWORKS.includes(network)
 
 export enum MappedNetwork {
   HORIZEN_EON = 'horizen-eon-mainnet',

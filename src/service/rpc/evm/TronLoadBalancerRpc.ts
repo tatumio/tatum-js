@@ -1,9 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
+import { PostI } from '../../../dto/PostI'
 import { Utils } from '../../../util'
-import { AbstractTronRpc, PostI } from '../AbstractTronRpc'
 import { LoadBalancer } from '../generic/LoadBalancer'
+import { AbstractTronRpc } from './AbstractTronRpc'
 
 @Service({
   factory: (data: { id: string }) => {

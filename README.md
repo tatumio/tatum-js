@@ -63,6 +63,7 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Solana RPC](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                           |
 | [XPR RPC](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                                 |
 | [Tron RPC](https://docs.tatum.io/docs/rpc/tron-rpc-documentation)                               |
+| [Eos One RPC](https://docs.tatum.io/docs/rpc/eos-rpc-documentation)                             |
 
 ### 🔔 Create Notifications
 
@@ -394,6 +395,7 @@ This section provides a list of various blockchain network status pages, powered
 | [bitcoin-testnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)                           |
 | [dogecoin-mainnet.status.tatum.io](https://dogecoin-mainnet.status.tatum.io)                         |
 | [dogecoin-testnet.status.tatum.io](https://dogecoin-testnet.status.tatum.io)                         |
+| [eos-mainnet-archive.status.tatum.io](https://eos-mainnet-archive.status.tatum.io)                   |
 | [ethereum-mainnet-archive.status.tatum.io](https://ethereum-mainnet-archive.status.tatum.io)         |
 | [ethereum-mainnet.status.tatum.io](https://ethereum-mainnet.status.tatum.io)                         |
 | [ethereum-sepolia-archive.status.tatum.io](https://ethereum-sepolia-archive.status.tatum.io)         |
@@ -476,6 +478,7 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/bitcoin-testnet/list.json](https://rpc.tatum.io/bitcoin-testnet/list.json)                           |
 | [rpc.tatum.io/dogecoin-mainnet/list.json](https://rpc.tatum.io/dogecoin-mainnet/list.json)                         |
 | [rpc.tatum.io/dogecoin-testnet/list.json](https://rpc.tatum.io/dogecoin-testnet/list.json)                         |
+| [rpc.tatum.io/eos-mainnet-archive/list.json](https://rpc.tatum.io/eos-mainnet-archive/list.json)                   |
 | [rpc.tatum.io/ethereum-mainnet-archive/list.json](https://rpc.tatum.io/ethereum-mainnet-archive/list.json)         |
 | [rpc.tatum.io/ethereum-mainnet/list.json](https://rpc.tatum.io/ethereum-mainnet/list.json)                         |
 | [rpc.tatum.io/ethereum-sepolia-archive/list.json](https://rpc.tatum.io/ethereum-sepolia-archive/list.json)         |

@@ -26,14 +26,10 @@ import {
   UpdateAssetOptions,
   VisibleAndPermissionIdOptions,
   VisibleOption,
-} from '../../dto'
-import { Utils } from '../../util'
-import { AbstractEvmRpc } from './evm/AbstractEvmRpc'
-
-export interface PostI {
-  path: string
-  body?: any
-}
+} from '../../../dto'
+import { PostI } from '../../../dto/PostI'
+import { Utils } from '../../../util'
+import { AbstractEvmRpc } from './AbstractEvmRpc'
 
 @Service()
 export abstract class AbstractTronRpc extends AbstractEvmRpc implements TronRpcSuite {

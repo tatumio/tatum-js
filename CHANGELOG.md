@@ -1,3 +1,7 @@
+## [4.0.3] - 2023.09.27
+### Added
+- Added RPC support for the Eos network. Users can now make RPC calls to these network using the `Network.EOS` network.
+
 ## [4.0.2] - 2023.09.26
 ### Added
 - Added RPC support for the Horizen Eon Gobi and Chiliz networks. Users can now make RPC calls to these networks using the `Network.HORIZEN_EON_GOBI` and `Network.CHILIZ` network.
