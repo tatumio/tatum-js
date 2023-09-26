@@ -1,3 +1,4 @@
+import { CustomFee } from '@tatumio/api-client'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import {
   ChainAddMinterErc721,
@@ -7,7 +8,7 @@ import {
   ChainTransferErc721,
 } from '@tatumio/shared-blockchain-abstract'
 import {
-  Erc721Token_General,
+  EonERC721,
   EvmBasedSdkError,
   EvmBasedWeb3,
   evmBasedUtils,
@@ -17,27 +18,58 @@ import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
 import { TransactionConfig } from 'web3-core'
 
+export type DeployErc721 = {
+  /**
+   * Name of the NFT token
+   */
+  name: string
+  /**
+   * Symbol of the NFT token
+   */
+  symbol: string
+  /**
+   * Private key of account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
+   */
+  fromPrivateKey: string
+
+  signatureId?: string
+  /**
+   * The nonce to be set to the transaction; if not present, the last known nonce will be used
+   */
+  nonce?: number
+  fee?: CustomFee
+  baseUri?: string
+  owner?: string
+  minter?: string
+}
+
 const deploySignedTransaction = async ({
   body,
   web3,
   provider,
   chainId,
 }: {
-  body: ChainDeployErc721
+  body: DeployErc721
   web3: EvmBasedWeb3
   provider?: string
   chainId: number
 }) => {
-  const { fromPrivateKey, fee, name, symbol, nonce, signatureId, publicMint } = body
+  const { fromPrivateKey, fee, name, symbol, nonce, signatureId, baseUri, owner, minter } = body
   const client = await web3.getClient(provider, fromPrivateKey)
 
-  let abi = Erc721Token_General.abi
-  let deployData = Erc721Token_General.bytecode
+  let abi = EonERC721.abi
+  let deployData = EonERC721.bytecode
 
   const contract = new client.eth.Contract(abi as any)
 
+  let address
+  if (fromPrivateKey) {
+    const sender = client.eth.accounts.privateKeyToAccount(fromPrivateKey)
+    address = sender.address
+  }
+
   const deploy = contract.deploy({
-    arguments: [name, symbol, publicMint ?? false],
+    arguments: [name, symbol, baseUri || '', owner || address, minter || address],
     data: deployData,
   })
 
@@ -75,7 +107,7 @@ const mintSignedTransaction = async ({
   const to = body.to.trim()
 
   const client = web3.getClient(provider, fromPrivateKey)
-  const contract = new client.eth.Contract(Erc721Token_General.abi as any, contractAddress)
+  const contract = new client.eth.Contract(EonERC721.abi as any, contractAddress)
 
   const alreadyMinted = await evmBasedUtils.alreadyMinted(contract, tokenId)
   if (alreadyMinted) {
@@ -86,7 +118,7 @@ const mintSignedTransaction = async ({
     const tx: TransactionConfig = {
       from: 0,
       to: contractAddress,
-      data: contract.methods.mintWithTokenURI(to, tokenId, url).encodeABI(),
+      data: contract.methods.safeMint(to, tokenId, url).encodeABI(),
       nonce: nonce,
       chainId,
     }
@@ -121,7 +153,7 @@ const burnSignedTransaction = async ({
 
   const client = web3.getClient(provider, fromPrivateKey)
 
-  const contract = new client.eth.Contract(Erc721Token_General.abi as any, contractAddress)
+  const contract = new client.eth.Contract(EonERC721.abi as any, contractAddress)
   const tx: TransactionConfig = {
     from: 0,
     to: contractAddress,
@@ -159,7 +191,7 @@ const addMinterSignedTransaction = async ({
 
   const client = web3.getClient(provider, fromPrivateKey)
 
-  const contract = new client.eth.Contract(Erc721Token_General.abi as any, contractAddress)
+  const contract = new client.eth.Contract(EonERC721.abi as any, contractAddress)
   const tx: TransactionConfig = {
     from: 0,
     to: contractAddress,
@@ -193,27 +225,24 @@ const transferSignedTransaction = async ({
   provider?: string
   chainId: number
 }) => {
-  const { fromPrivateKey, tokenId, fee, nonce, signatureId, value, provenance, provenanceData, tokenPrice } =
-    body
+  const { fromPrivateKey, tokenId, fee, nonce, signatureId } = body
   const contractAddress = body.contractAddress?.trim()
   const to = body.to?.trim()
 
   const client = await web3.getClient(provider, fromPrivateKey)
 
-  const contract = new client.eth.Contract(Erc721Token_General.abi as any, contractAddress)
-  const dataBytes = provenance
-    ? Buffer.from(provenanceData + "'''###'''" + client.utils.toWei(tokenPrice!, 'ether'), 'utf8')
-    : ''
-  const tokenData = provenance
-    ? contract.methods.safeTransfer(to, tokenId, `0x${dataBytes.toString('hex')}`).encodeABI()
-    : contract.methods.safeTransfer(to, tokenId).encodeABI()
+  const contract = new client.eth.Contract(EonERC721.abi as any, contractAddress)
+
+  const sender = client.eth.accounts.privateKeyToAccount(fromPrivateKey)
+  const from = sender.address
+
+  const tokenData = contract.methods.safeTransferFrom(from, to, tokenId).encodeABI()
 
   const tx: TransactionConfig = {
     from: 0,
     to: contractAddress,
     data: tokenData,
     nonce,
-    value: value ? `0x${new BigNumber(value).multipliedBy(1e18).toString(16)}` : undefined,
     chainId,
   }
 
@@ -280,7 +309,7 @@ export const eonTxService = (args: { blockchain: EvmBasedBlockchain; web3: EvmBa
          * @param provider url of the Server to connect to. If not set, default public server will be used.
          * @returns transaction data to be broadcast to blockchain.
          */
-        deploySignedTransaction: async (body: ChainDeployErc721, chainId: number, provider?: string) =>
+        deploySignedTransaction: async (body: DeployErc721, chainId: number, provider?: string) =>
           deploySignedTransaction({
             body,
             web3: args.web3,
