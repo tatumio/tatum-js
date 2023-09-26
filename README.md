@@ -280,8 +280,8 @@ import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
-const account: string = await tatum.walletProvider.metaMask.connect()
-const txId: string = await tatum.walletProvider.metaMask.transferNative(
+const account: string = await tatum.walletProvider.use(MetaMask).getWallet()
+const txId: string = await tatum.walletProvider.use(MetaMask).transferNative(
   '0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848',
   '1',
 )
@@ -584,7 +584,7 @@ Explore various applications that utilize the Tatum SDK. These examples help ill
 - [Metamask portfolio](https://github.com/tatumio/example-apps/tree/master/Metamask/portfolio)
 - [Metamask transfer](https://github.com/tatumio/example-apps/tree/master/Metamask/transfer)
 
-## Extension Ecosystem
+## 🌐 Extension Ecosystem
 
 ### Quickstart
 
@@ -608,8 +608,31 @@ After that you can use the extension in your code with full intellisense.
 await tatumSdk.extension(HelloWorldExtension).sayHello()
 ````
 
+### Wallet Providers
 
-Learn more about Tatum SDK Extension ecosystem here - [Tatum SDK Extensions](https://github.com/tatumio/ecosystem-addons)
+Tatum SDK supports wallet provider extensions for various wallets. You can use them to integrate your application with the wallet of your choice.
+
+```typescript
+import { TatumSDK, Ethereum, Network, ApiVersion } from '@tatumio/tatum'
+import { WalletProviderDemo } from "@tatumio/wallet-provider-demo"
+
+const tatumSdk = await TatumSDK.init<Ethereum>({
+    network: Network.ETHEREUM_SEPOLIA,
+    configureWalletProviders: [
+        WalletProviderDemo,
+    ]
+})
+```
+
+Usage for wallet providers is similar to the extensions.
+
+```typescript
+await tatumSdk.walletProvider.use(WalletProviderDemo).connect()
+````
+🔍 Check out our [built-in MetaMask wallet provider](./src/service/walletProvider/metaMask/metamask.wallet.provider.ts)
+
+📚 **Learn more about Tatum SDK Extension ecosystem here - [Tatum SDK Extensions](https://github.com/tatumio/ecosystem-addons)**
+
 
 ## Legacy versions
 

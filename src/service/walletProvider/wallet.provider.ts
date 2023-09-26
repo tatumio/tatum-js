@@ -1,6 +1,5 @@
 import { Container, Service } from 'typedi'
-import { MetaMask } from './metaMask'
-import { EvmRpc } from '../rpc'
+import { ITatumSdkContainer, TatumSdkWalletProvider } from "../extensions";
 
 @Service({
   factory: (data: { id: string }) => {
@@ -9,9 +8,14 @@ import { EvmRpc } from '../rpc'
   transient: true,
 })
 export class WalletProvider {
-  readonly metaMask: MetaMask<EvmRpc>
-
   constructor(private readonly id: string) {
-    this.metaMask = Container.of(this.id).get(MetaMask)
+  }
+
+  /**
+   * Works are an entrypoint to interact with wallet providers of choice.
+   * @param type - Wallet Provider type imported to the SDK instance
+   */
+  use<T, P>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => TatumSdkWalletProvider<T, P>): TatumSdkWalletProvider<T, P> {
+    return Container.of(this.id).get(type);
   }
 }

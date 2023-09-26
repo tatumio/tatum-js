@@ -4,12 +4,12 @@ import { TatumConfig } from "../tatum";
 import { CONFIG } from "../../util";
 
 export interface ITatumSdkContainer {
-    get<T>(type: ServiceConstructor<T>): T;
+    get<T>(type: ServiceConstructor<T>): T
+    getConfig(): TatumConfig
 }
 
 export class TatumSdkContainer implements ITatumSdkContainer {
     constructor(private readonly containerInstance: ContainerInstance) {
-
     }
 
     get<T>(type: ServiceConstructor<T>): T {

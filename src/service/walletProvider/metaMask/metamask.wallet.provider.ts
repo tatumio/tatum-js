@@ -1,31 +1,26 @@
 import { BigNumber } from 'bignumber.js'
-import { Container, Service } from 'typedi'
-import { TatumConnector } from '../../connector/tatum.connector'
-import { TxPayload } from '../../dto'
+import { TatumConnector } from '../../../connector/tatum.connector'
+import { TxPayload } from '../../../dto'
 import {
   CreateErc1155NftCollection,
   CreateFungibleToken,
   CreateNftCollection,
-} from '../../dto/walletProvider'
-import { CONFIG, Constant, Utils } from '../../util'
-import { EvmRpc } from '../rpc'
-import { TatumConfig } from '../tatum'
+} from '../../../dto/walletProvider'
+import { Constant, Utils } from '../../../util'
+import { ITatumSdkContainer, TatumSdkWalletProvider } from "../../extensions";
+import { TatumConfig } from "../../tatum";
+import { EvmRpc } from "../../rpc";
 
-@Service({
-  factory: (data: { id: string }) => {
-    return new MetaMask(data.id)
-  },
-  transient: true,
-})
-export class MetaMask<T extends EvmRpc> {
+export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
   private readonly config: TatumConfig
-  private readonly rpc: T
+  private readonly rpc: EvmRpc
   private readonly connector: TatumConnector
 
-  constructor(private readonly id: string) {
-    this.config = Container.of(this.id).get(CONFIG)
-    this.rpc = Utils.getRpc<T>(this.id, this.config)
-    this.connector = Container.of(this.id).get(TatumConnector)
+  constructor(tatumSdkContainer: ITatumSdkContainer) {
+    super(tatumSdkContainer)
+    this.config = this.tatumSdkContainer.getConfig()
+    this.rpc = this.tatumSdkContainer.get(EvmRpc)
+    this.connector = this.tatumSdkContainer.get(TatumConnector)
   }
 
   /**
@@ -33,7 +28,7 @@ export class MetaMask<T extends EvmRpc> {
    * If so, it returns the address of the connected account. If not, it throws an error.
    * @returns address of the connected account.
    */
-  async connect(): Promise<string> {
+  async getWallet(): Promise<string> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (typeof window.ethereum === 'undefined') {
@@ -59,7 +54,7 @@ export class MetaMask<T extends EvmRpc> {
   async transferNative(recipient: string, amount: string): Promise<string> {
     const payload: TxPayload = {
       to: recipient,
-      from: await this.connect(),
+      from: await this.getWallet(),
       value: `0x${new BigNumber(amount)
         .multipliedBy(10 ** Constant.DECIMALS[this.config.network])
         .toString(16)}`,
@@ -89,7 +84,7 @@ export class MetaMask<T extends EvmRpc> {
     const { result: decimals } = await this.rpc.getTokenDecimals(tokenAddress)
     const payload: TxPayload = {
       to: tokenAddress,
-      from: await this.connect(),
+      from: await this.getWallet(),
       data: `0xa9059cbb${Utils.padWithZero(recipient)}${new BigNumber(amount)
         .multipliedBy(10 ** decimals!.toNumber())
         .toString(16)
@@ -115,7 +110,7 @@ export class MetaMask<T extends EvmRpc> {
    */
   async createNftCollection(body: CreateNftCollection): Promise<string> {
     const { name, symbol, baseURI, author, minter } = body
-    const from = await this.connect()
+    const from = await this.getWallet()
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
       body: {
@@ -146,7 +141,7 @@ export class MetaMask<T extends EvmRpc> {
    * If so, it returns the signed transaction hash. If not, it throws an error.
    */
   async createFungibleToken(body: CreateFungibleToken): Promise<string> {
-    const from = await this.connect()
+    const from = await this.getWallet()
     const decimals = body.decimals || 18
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
@@ -188,7 +183,7 @@ export class MetaMask<T extends EvmRpc> {
    */
   async createErc1155NftCollection(body?: CreateErc1155NftCollection): Promise<string> {
     const { author, minter, baseURI } = body || {}
-    const from = await this.connect()
+    const from = await this.getWallet()
     const { data } = await this.connector.post<{ data: string }>({
       path: `contract/deploy/prepare`,
       body: {
@@ -222,7 +217,7 @@ export class MetaMask<T extends EvmRpc> {
    * @param tokenAddress address of the token contract
    */
   async transferNft(recipient: string, tokenId: string, tokenAddress: string): Promise<string> {
-    const from = await this.connect()
+    const from = await this.getWallet()
     const payload: TxPayload = {
       to: tokenAddress,
       from: from,
@@ -255,7 +250,7 @@ export class MetaMask<T extends EvmRpc> {
     const { result: decimals } = await this.rpc.getTokenDecimals(tokenAddress)
     const payload: TxPayload = {
       to: tokenAddress,
-      from: await this.connect(),
+      from: await this.getWallet(),
       data: `0x095ea7b3${Utils.padWithZero(spender)}${new BigNumber(amount)
         .multipliedBy(10 ** decimals!.toNumber())
         .toString(16)
@@ -280,8 +275,8 @@ export class MetaMask<T extends EvmRpc> {
    * If so, it returns the signed transaction hash. If not, it throws an error.
    * @param payload Transaction payload. From field is ignored and will be overwritten by the connected account.
    */
-  async customPayload(payload: TxPayload): Promise<string> {
-    payload.from = await this.connect()
+  async signAndBroadcast(payload: TxPayload): Promise<string> {
+    payload.from = await this.getWallet()
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
@@ -294,5 +289,14 @@ export class MetaMask<T extends EvmRpc> {
       console.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
+  destroy(): void {
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  init(..._: unknown[]): Promise<void> {
+    return Promise.resolve(undefined);
   }
 }
