@@ -28,7 +28,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(() => {
-        await tatum.destroy()
+        tatum.destroy()
       })
 
       it('should get balance with native assets only', async () => {
@@ -105,7 +105,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(() => {
-        await tatum.destroy()
+        tatum.destroy()
       })
 
       it('should get balance with native assets only', async () => {
@@ -131,7 +131,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(() => {
-        await tatum.destroy()
+        tatum.destroy()
       })
 
       it('should get balance with native assets only', async () => {
@@ -157,7 +157,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(() => {
-        await tatum.destroy()
+        tatum.destroy()
       })
 
       it('should get balance with native assets only', async () => {
@@ -183,7 +183,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(() => {
-        await tatum.destroy()
+        tatum.destroy()
       })
 
       it('should get balance with native assets only', async () => {
@@ -231,7 +231,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(() => {
-        await tatum.destroy()
+        tatum.destroy()
       })
 
       it('should get balance with native assets only', async () => {
@@ -305,7 +305,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(() => {
-        await tatum.destroy()
+        tatum.destroy()
       })
 
       it('should get balance with native and erc20 assets', async () => {
@@ -343,7 +343,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(() => {
-        await tatum.destroy()
+        tatum.destroy()
       })
 
       it('should get balance from eon network', async () => {
@@ -364,7 +364,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(() => {
-        await tatum.destroy()
+        tatum.destroy()
       })
 
       it('should get transactions - native only', async () => {
@@ -675,7 +675,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(() => {
-        await tatum.destroy()
+        tatum.destroy()
       })
 
       it('should get transactions - native only', async () => {
