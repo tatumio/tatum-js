@@ -54,6 +54,7 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Optimism RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/optimism-rpc-documentation)       |
 | [Horizen EON RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/horizen-eon-rpc-documentation) |
 | [Arbitrum One RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/arbitrum-rpc-documentation)   |
+| [Chiliz RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/chiliz-rpc-documentation)                |
 | **UTXO Blockchains**                                                                            |
 | [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)        |
 | [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation)      |
@@ -404,12 +405,15 @@ This section provides a list of various blockchain network status pages, powered
 | [haqq-mainnet-archive.status.tatum.io](https://haqq-mainnet-archive.status.tatum.io)                 |
 | [haqq-mainnet.status.tatum.io](https://haqq-mainnet.status.tatum.io)                                 |
 | [haqq-testnet.status.tatum.io](https://haqq-testnet.status.tatum.io)                                 |
+| [chiliz-mainnet.status.tatum.io](https://chiliz-mainnet.status.tatum.io)                             |
+| [chiliz-mainnet-archive.status.tatum.io](https://chiliz-mainnet-archive.status.tatum.io)             |
 | [litecoin-mainnet.status.tatum.io](https://litecoin-mainnet.status.tatum.io)                         |
 | [litecoin-testnet.status.tatum.io](https://litecoin-testnet.status.tatum.io)                         |
 | [optimism-mainnet-archive.status.tatum.io](https://optimism-mainnet-archive.status.tatum.io)         |
 | [polygon-mainnet-archive.status.tatum.io](https://polygon-mainnet-archive.status.tatum.io)           |
 | [polygon-mainnet.status.tatum.io](https://polygon-mainnet.status.tatum.io)                           |
 | [horizen-eon-mainnet-archive.status.tatum.io](https://horizen-eon-mainnet-archive.status.tatum.io)   |
+| [horizen-eon-gobi.status.tatum.io](https://horizen-eon-gobi.status.tatum.io)                            |
 | [bsc-mainnet-archive.status.tatum.io](https://bsc-mainnet-archive.status.tatum.io)                   |
 | [polygon-mumbai-archive.status.tatum.io](https://polygon-mumbai-archive.status.tatum.io)             |
 | [polygon-mumbai.status.tatum.io](https://polygon-mumbai.status.tatum.io)                             |
@@ -483,15 +487,18 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/haqq-mainnet-archive/list.json](https://rpc.tatum.io/haqq-mainnet-archive/list.json)                 |
 | [rpc.tatum.io/haqq-mainnet/list.json](https://rpc.tatum.io/haqq-mainnet/list.json)                                 |
 | [rpc.tatum.io/haqq-testnet/list.json](https://rpc.tatum.io/haqq-testnet/list.json)                                 |
+| [rpc.tatum.io/chiliz-mainnet/list.json](https://rpc.tatum.io/chiliz-mainnet/list.json)                             |
+| [rpc.tatum.io/chiliz-mainnet-archive/list.json](https://rpc.tatum.io/chiliz-mainnet-archive/list.json)             |
 | [rpc.tatum.io/litecoin-mainnet/list.json](https://rpc.tatum.io/litecoin-mainnet/list.json)                         |
 | [rpc.tatum.io/litecoin-testnet/list.json](https://rpc.tatum.io/litecoin-testnet/list.json)                         |
 | [rpc.tatum.io/optimism-mainnet-archive/list.json](https://rpc.tatum.io/optimism-mainnet-archive/list.json)         |
 | [rpc.tatum.io/polygon-mainnet-archive/list.json](https://rpc.tatum.io/polygon-mainnet-archive/list.json)           |
 | [rpc.tatum.io/polygon-mainnet/list.json](https://rpc.tatum.io/polygon-mainnet/list.json)                           |
 | [rpc.tatum.io/horizen-eon-mainnet-archive/list.json](https://rpc.tatum.io/horizen-eon-mainnet-archive/list.json)   |
+| [rpc.tatum.io/horizen-eon-gobi/list.json](https://rpc.tatum.io/horizen-eon-gobi/list.json)                         |
 | [rpc.tatum.io/bsc-mainnet-archive/list.json](https://rpc.tatum.io/bsc-mainnet-archive/list.json)                   |
-| [rpc.tatum.io/polygon-mumbai-archive/list.json](https://rpc.tatum.io/polygon-mumbai-archive/list.json)            |
-| [rpc.tatum.io/polygon-mumbai/list.json](https://rpc.tatum.io/polygon-mumbai/list.json)                           |
+| [rpc.tatum.io/polygon-mumbai-archive/list.json](https://rpc.tatum.io/polygon-mumbai-archive/list.json)             |
+| [rpc.tatum.io/polygon-mumbai/list.json](https://rpc.tatum.io/polygon-mumbai/list.json)                             |
 | [rpc.tatum.io/tron-mainnet-archive/list.json](https://rpc.tatum.io/tron-mainnet-archive/list.json)                 |
 | [rpc.tatum.io/arbitrum-one-mainnet-archive/list.json](https://rpc.tatum.io/arbitrum-one-mainnet-archive/list.json) |
 
