@@ -2,6 +2,7 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../../connector/tatum.connector'
 import { JsonRpcCall, JsonRpcResponse, Network } from '../../../dto'
+import { PostI } from '../../../dto/PostI'
 import { AbstractRpcInterface } from '../../../dto/rpc/AbstractJsonRpcInterface'
 import { CONFIG, Constant, Utils } from '../../../util'
 import { RpcNode, RpcNodeType } from '../../tatum'
@@ -145,14 +146,17 @@ export class LoadBalancer implements AbstractRpcInterface {
      * If the node is not responding, it will be marked as failed.
      * If the node is responding, it will be marked as not failed and the last block will be updated.
      */
+    const statusPayload = Utils.getStatusPayload(network)
     for (const server of this.rpcUrls[nodeType]) {
       Utils.log({ id: this.id, message: `Checking status of ${server.node.url}` })
       all.push(
-        Utils.fetchWithTimeout(server.node.url, this.id, {
+        Utils.fetchWithTimeout(Utils.getStatusUrl(network, server.node.url), this.id, {
           method: 'POST',
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
-          body: JSON.stringify(Utils.getStatusPayload(network)),
+          // body: statusPayload ? JSON.stringify(statusPayload) : undefined,
+          // add body only if is defined
+          ...(statusPayload && { body: JSON.stringify(statusPayload) }),
         })
           .then(async ({ response: res, responseTime }) => {
             server.lastResponseTime = responseTime
@@ -162,7 +166,7 @@ export class LoadBalancer implements AbstractRpcInterface {
               message: `Response time of ${server.node.url} is ${server.lastResponseTime}ms with response: `,
               data: response,
             })
-            if (res.ok && response.result) {
+            if (res.ok && Utils.isResponseOk(network, response)) {
               server.failed = false
               server.lastBlock = Utils.parseStatusPayload(network, response)
             } else {
@@ -373,16 +377,44 @@ export class LoadBalancer implements AbstractRpcInterface {
     }
   }
 
-  async handleFailedRpcCall(rpcCall: JsonRpcCall | JsonRpcCall[], e: unknown, nodeType: RpcNodeType) {
+  async handleFailedRpcCall(rpcCall: JsonRpcCall | JsonRpcCall[] | PostI, e: unknown, nodeType: RpcNodeType) {
     const { rpc: rpcConfig } = Container.of(this.id).get(CONFIG)
     const { url } = this.getActiveUrl(nodeType)
     const activeIndex = this.getActiveIndex(nodeType)
-    Utils.log({
-      id: this.id,
-      message: `Failed to call RPC ${
-        Array.isArray(rpcCall) ? 'methods' : rpcCall.method
-      } on ${url}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
-    })
+    if ('method' in rpcCall && typeof rpcCall.method === 'string') {
+      Utils.log({
+        id: this.id,
+        message: `Failed to call RPC ${rpcCall.method} on ${url}. Error: ${JSON.stringify(
+          e,
+          Object.getOwnPropertyNames(e),
+        )}`,
+      })
+    } else if (Array.isArray(rpcCall) && rpcCall.every((item) => 'method' in item)) {
+      const methods = rpcCall.map((item) => item.method).join(', ')
+      Utils.log({
+        id: this.id,
+        message: `Failed to call RPC methods [${methods}] on ${url}. Error: ${JSON.stringify(
+          e,
+          Object.getOwnPropertyNames(e),
+        )}`,
+      })
+    } else if ('path' in rpcCall && typeof rpcCall.path === 'string') {
+      Utils.log({
+        id: this.id,
+        message: `Failed to call request on url ${rpcCall.basePath}${rpcCall.path} with body ${JSON.stringify(
+          rpcCall.body,
+        )}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
+      })
+    } else {
+      // Handle other cases
+      Utils.log({
+        id: this.id,
+        message: `Failed to call request on url ${url}. Error: ${JSON.stringify(
+          e,
+          Object.getOwnPropertyNames(e),
+        )}`,
+      })
+    }
 
     Utils.log({
       id: this.id,
@@ -390,7 +422,9 @@ export class LoadBalancer implements AbstractRpcInterface {
     })
 
     if (activeIndex == null) {
-      console.error(`No active server found for node type ${NODE_TYPE_LABEL[nodeType]}.`)
+      console.error(
+        `No active node found for node type ${NODE_TYPE_LABEL[nodeType]}. Looks like your request is malformed or all nodes are down. Turn on verbose mode to see more details and check status pages.`,
+      )
       throw e
     }
 
@@ -405,7 +439,9 @@ export class LoadBalancer implements AbstractRpcInterface {
       rpcConfig?.allowedBlocksBehind as number,
     )
     if (index === -1) {
-      console.error(`All RPC nodes are unavailable.`)
+      console.error(
+        `All RPC nodes are unavailable. Looks like your request is malformed or all nodes are down. Turn on verbose mode to see more details and check status pages.`,
+      )
       throw e
     }
     Utils.log({
@@ -441,16 +477,13 @@ export class LoadBalancer implements AbstractRpcInterface {
     }
   }
 
-  async post<T>({ path, body }: { path: string; body?: any }): Promise<T> {
+  async post<T>({ path, body, basePath }: PostI): Promise<T> {
+    const { url, type } = this.getActiveNormalUrlWithFallback()
     try {
-      const { url } = this.getActiveNormalUrlWithFallback()
-      return await this.connector.post<T>({ basePath: url, path, body })
+      return await this.connector.post<T>({ basePath: basePath ?? url, path, body })
     } catch (e) {
-      Utils.log({
-        id: this.id,
-        message: `Failed to call API ${path}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
-      })
-      throw e
+      await this.handleFailedRpcCall({ path, body, basePath }, e, type)
+      return await this.post({ path, body, basePath })
     }
   }
 

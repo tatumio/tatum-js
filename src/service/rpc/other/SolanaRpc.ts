@@ -50,9 +50,9 @@ import {
   SolanaTypeWithContext,
   SolanaVersion,
   SolanaVoteAccount,
-} from '../../dto'
-import { Utils } from '../../util'
-import { AbstractBatchRpc } from './generic'
+} from '../../../dto'
+import { Utils } from '../../../util'
+import { AbstractBatchRpc } from '../generic'
 
 @Service({
   factory: (data: { id: string }) => {

@@ -2,10 +2,11 @@
 import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../../connector/tatum.connector'
 import { JsonRpcCall, JsonRpcResponse } from '../../../dto'
+import { PostI } from '../../../dto/PostI'
 import { CONFIG, Constant, Utils } from '../../../util'
 import { TatumConfig } from '../../tatum'
-import { AbstractTronRpc, PostI } from '../AbstractTronRpc'
 import { GenericRpc } from '../generic/GenericRpc'
+import { AbstractTronRpc } from './AbstractTronRpc'
 
 @Service({
   factory: (data: { id: string }) => {

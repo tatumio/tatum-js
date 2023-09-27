@@ -1,5 +1,5 @@
-import { Commitment, Encoding } from '../../dto'
-import { Network, Solana, TatumSDK } from '../../service'
+import { Commitment, Encoding } from '../../../dto'
+import { Network, Solana, TatumSDK } from '../../../service'
 
 const getClient = async (testnet?: boolean): Promise<Solana> =>
   await TatumSDK.init<Solana>({

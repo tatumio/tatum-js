@@ -1,8 +1,15 @@
 import { Container, Service } from 'typedi'
 import { isLoadBalancerNetwork } from '../../dto'
 import { EvmBasedRpcSuite, SolanaRpcSuite, TronRpcSuite, UtxoBasedRpcSuite, XrpRpcSuite } from '../../dto/rpc'
+import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
 import { CONFIG, Constant, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
+import {
+  ExtensionConstructorOrConfig,
+  ITatumSdkContainer,
+  TatumSdkContainer,
+  TatumSdkExtension,
+} from '../extensions'
 import { FeeEvm, FeeUtxo } from '../fee'
 import { Nft, NftTezos } from '../nft'
 import { Notification } from '../notification'
@@ -11,12 +18,6 @@ import { LoadBalancer } from '../rpc/generic/LoadBalancer'
 import { Token } from '../token'
 import { MetaMask, WalletProvider } from '../walletProvider'
 import { ApiVersion, TatumConfig } from './tatum.dto'
-import {
-  ExtensionConstructorOrConfig,
-  ITatumSdkContainer,
-  TatumSdkContainer,
-  TatumSdkExtension,
-} from "../extensions";
 
 /**
  * Works as an entrypoint to interact with extension of choice.
@@ -43,12 +44,12 @@ export abstract class TatumSdkChain implements ITatumSdkChain {
         await this.destroyExtension(extensionConfig, this.id);
       }
 
-      for (const walletProviderConfig of config?.configureWalletProviders ?? []) {
+  for (const walletProviderConfig of config?.configureWalletProviders ?? []) {
         await this.destroyExtension(walletProviderConfig, this.id);
       }
 
       // calls destroy on load balancer
-      Container.of(this.id).remove( LoadBalancer )
+    Container.of(this.id).remove( LoadBalancer )
     }
 
   private async destroyExtension(extensionConfig: ExtensionConstructorOrConfig, id: string) {
@@ -156,6 +157,15 @@ export class Solana extends BaseTatumSdk {
     this.rpc = Utils.getRpc<SolanaRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
+
+export class Eos extends TatumSdkChain {
+  rpc: EosRpcSuite
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<EosRpcSuite>(id, Container.of(id).get(CONFIG))
+  }
+}
+
 export class Tron extends TatumSdkChain {
   notification: Notification
   nft: Nft
@@ -221,22 +231,22 @@ export class TatumSDK {
     }
 
     await this.configureExtensions(config, id)
-    await this.addBuiltInExtensions(id);
+    await this.addBuiltInExtensions(id)
 
     return Utils.getClient<T>(id, mergedConfig.network)
   }
 
   private static async addBuiltInExtensions(id: string) {
-    await this.addExtension(MetaMask, id);
+    await this.addExtension(MetaMask, id)
   }
 
   private static async configureExtensions(config: TatumConfig, id: string) {
     for (const extensionConfig of config?.configureExtensions ?? []) {
-      await this.addExtension(extensionConfig, id);
+      await this.addExtension(extensionConfig, id)
     }
 
     for (const walletProviderConfig of config?.configureWalletProviders ?? []) {
-      await this.addExtension(walletProviderConfig, id);
+      await this.addExtension(walletProviderConfig, id)
     }
   }
 

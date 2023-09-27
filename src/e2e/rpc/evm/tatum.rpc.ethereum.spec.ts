@@ -56,18 +56,15 @@ describe('Ethereum', () => {
       '0x0000000000000000000000000000000000000000000000000000000000000000',
       '1',
     )
-
+    expect(result).toBeDefined()
     await tatum.destroy()
-
-    console.log(result)
   })
 
   it('get logs', async () => {
     const tatum = await EvmE2eUtils.initTatum(Network.ETHEREUM, process.env.V4_API_KEY_MAINNET)
     const result = await tatum.rpc.getLogs({
-      address:'0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5'
-      }
-    )
+      address: '0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5',
+    })
 
     expect(result.result).toStrictEqual([])
     await tatum.destroy()
