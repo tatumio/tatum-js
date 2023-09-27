@@ -30,6 +30,7 @@ import {
   Bitcoin,
   BitcoinCash,
   Celo,
+  Chiliz,
   Cronos,
   Dogecoin,
   Ethereum,
@@ -383,7 +384,10 @@ export const Utils = {
       case Network.TEZOS:
         return new Tezos(id) as T
       case Network.HORIZEN_EON:
+      case Network.HORIZEN_EON_GOBI:
         return new HorizenEon(id) as T
+      case Network.CHILIZ:
+        return new Chiliz(id) as T
       default:
         return new BaseTatumSdk(id) as T
     }
