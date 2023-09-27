@@ -15,6 +15,8 @@ import { FromPrivateKeyOrSignatureIdTron } from '@tatumio/shared-blockchain-abst
 import { CallSmartContract, TronGenerateCustodialWallet } from './tron.tx'
 import { WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { Blockchain } from '@tatumio/shared-core'
+// @ts-ignore
+import TronWeb from 'tronweb'
 
 const NATIVE_ASSET_CONTRACT_TYPE = 3
 const NON_FUNGIBLE_TOKEN_CONTRACT_TYPE = 1
@@ -25,6 +27,8 @@ type TronTransferBatchCustodial = WithoutChain<
   FromPrivateKeyOrSignatureIdTron<TransferCustodialWalletBatchTron>
 >
 
+const convertAddressToHex = (address: string) => TronWeb.address.toHex(address)
+
 const prepareTransferFromCustodialWallet = async (
   body: TronTransferCustodial,
   getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<number>,
@@ -33,7 +37,7 @@ const prepareTransferFromCustodialWallet = async (
   decimals = 18,
   testnet = false,
 ) => {
-  const methodName = 'transfer'
+  const methodName = 'transfer(address,uint256,address,uint256,uint256)'
 
   let tokenId = new BigNumber(body.tokenId ?? 0)
   let amount = new BigNumber(body.amount ?? 0)
@@ -51,18 +55,29 @@ const prepareTransferFromCustodialWallet = async (
     )
   }
 
+  const fee = {
+    gasLimit: body.feeLimit.toString(),
+    gasPrice: '0',
+  }
+
+  const { tokenAddress, contractType, recipient } = body
+
   const params: CallSmartContract = {
     ...body,
     methodName,
     contractAddress: body.custodialAddress,
     methodABI: CustodialFullTokenWallet.abi.find((abi) => abi.name === methodName),
     params: [
-      body.tokenAddress || '0x000000000000000000000000000000000000dEaD',
-      body.contractType,
-      body.recipient,
-      `0x${amount.toString(16)}`,
-      `0x${new BigNumber(tokenId).toString(16)}`,
+      {
+        type: 'address',
+        value: convertAddressToHex(tokenAddress || '0x000000000000000000000000000000000000dEaD'),
+      },
+      { type: 'uint256', value: contractType },
+      { type: 'address', value: convertAddressToHex(recipient) },
+      { type: 'uint256', value: `0x${amount.toString(16)}` },
+      { type: 'uint256', value: `0x${new BigNumber(tokenId).toString(16)}` },
     ],
+    fee,
   }
 
   return tronTx({ tronWeb }).smartContract.prepare.smartContractInvocation(params, provider)
