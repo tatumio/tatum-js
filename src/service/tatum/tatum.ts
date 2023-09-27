@@ -33,9 +33,31 @@ export abstract class TatumSdkChain implements ITatumSdkChain {
         return Container.of(this.id).get(type);
     }
 
-    destroy(): void {
-      Container.of(this.id).reset( {strategy: 'resetServices' })
+    async destroy(): Promise<void> {
+      const config = Container.of(this.id).get(CONFIG)
+      for (const extensionConfig of config?.configureExtensions ?? []) {
+        await this.destroyExtension(extensionConfig, this.id);
+      }
+
+      for (const walletProviderConfig of config?.configureWalletProviders ?? []) {
+        await this.destroyExtension(walletProviderConfig, this.id);
+      }
+
+      // calls destroy on load balancer
+      Container.of(this.id).remove( LoadBalancer )
     }
+
+  private async destroyExtension(extensionConfig: ExtensionConstructorOrConfig, id: string) {
+    let type: new (container: ITatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
+
+    if ('type' in extensionConfig) {
+      type = extensionConfig.type
+    } else {
+      type = extensionConfig
+    }
+
+    await Container.of(id).get(type)?.destroy()
+  }
 }
 
 export class BaseTatumSdk extends TatumSdkChain {
@@ -226,7 +248,7 @@ export class TatumSDK {
 
     const containerInstance = new TatumSdkContainer(Container.of(id))
     const instance = new type(containerInstance, ...args)
-    await instance.init(...args)
+    await instance.init()
     Container.of(id).set(type, instance)
   }
 

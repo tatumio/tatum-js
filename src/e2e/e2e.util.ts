@@ -89,7 +89,7 @@ export const e2eUtil = {
       expect(error).toBeUndefined()
       expect(data.address.toLowerCase()).toEqual(address.toLowerCase())
       expect(url).toBeDefined()
-      tatum.destroy()
+      await tatum.destroy()
       return data.id
     },
     testContractBasedSubscription: async (
@@ -119,7 +119,7 @@ export const e2eUtil = {
       expect(error).toBeUndefined()
       expect(data.contractAddress.toLowerCase()).toEqual(contractAddress.toLowerCase())
       expect(url).toBeDefined()
-      tatum.destroy()
+      await tatum.destroy()
     },
     testBlockBasedSubscription: async (
       tatum: BaseEvmClass,
@@ -136,7 +136,7 @@ export const e2eUtil = {
       expect(error).toBeUndefined()
       expect(data.id).toBeDefined()
       expect(url).toBeDefined()
-      tatum.destroy()
+      await tatum.destroy()
     },
   },
   isVerbose: process.env.E2E_VERBOSE === 'true',

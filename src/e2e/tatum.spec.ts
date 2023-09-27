@@ -9,7 +9,7 @@ describe('Tatum Init', () => {
       })
       const { result } = await tatum.rpc.getBlockChainInfo()
       expect(result.chain).toBe('test')
-      tatum.destroy()
+      await tatum.destroy()
     })
 
     it('Mainnet', async () => {
@@ -18,7 +18,7 @@ describe('Tatum Init', () => {
       })
       const { result } = await tatum.rpc.getBlockChainInfo()
       expect(result.chain).toBe('main')
-      tatum.destroy()
+      await tatum.destroy()
     })
   })
 
@@ -37,8 +37,8 @@ describe('Tatum Init', () => {
       const { result: resultTestnet } = await testnet.rpc.getBlockChainInfo()
       expect(resultTestnet.chain).toBe('test')
 
-      testnet.destroy()
-      mainnet.destroy()
+      await testnet.destroy()
+      await mainnet.destroy()
     })
   })
 })

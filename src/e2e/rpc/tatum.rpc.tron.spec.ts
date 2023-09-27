@@ -19,21 +19,21 @@ describe('RPCs', () => {
         const tatum = await getTronRpc(true)
         const result = await tatum.rpc.getNowBlock()
         expect(result.block_header.raw_data.number).toBeGreaterThan(0)
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('getChainParameters', async () => {
         const tatum = await getTronRpc(true)
         const result = await tatum.rpc.getChainParameters()
         expect(result.chainParameter.length).toBeGreaterThan(0)
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('getBlockByNum', async () => {
         const tatum = await getTronRpc(true)
         const result = await tatum.rpc.getBlock('1000000')
         expect(result.block_header.raw_data.number).toBeGreaterThan(0)
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('getBlockById', async () => {
@@ -42,7 +42,7 @@ describe('RPCs', () => {
           '00000000000f424013e51b18e0782a32fa079ddafdb2f4c343468cf8896dc887',
         )
         expect(result.block_header.raw_data.number).toBeGreaterThan(0)
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('getTransactionById', async () => {
@@ -51,7 +51,7 @@ describe('RPCs', () => {
           '7c2d4206c03a883dd9066d620335dc1be272a8dc733cfa3f6d10308faa37facc',
         )
         expect(result.txID).toBe('7c2d4206c03a883dd9066d620335dc1be272a8dc733cfa3f6d10308faa37facc')
-        tatum.destroy()
+        await tatum.destroy()
       })
     })
     describe('mainnet', () => {
@@ -59,21 +59,21 @@ describe('RPCs', () => {
         const tatum = await getTronRpc(false)
         const result = await tatum.rpc.getNowBlock()
         expect(result.block_header.raw_data.number).toBeGreaterThan(0)
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('getChainParameters', async () => {
         const tatum = await getTronRpc(false)
         const result = await tatum.rpc.getChainParameters()
         expect(result.chainParameter.length).toBeGreaterThan(0)
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('getBlockByNum', async () => {
         const tatum = await getTronRpc(false)
         const result = await tatum.rpc.getBlock('51173114')
         expect(result.block_header.raw_data.number).toBeGreaterThan(0)
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('getBlockById', async () => {
@@ -82,7 +82,7 @@ describe('RPCs', () => {
           '00000000030cd6faf6c282df598285c51bd61e108f98e90ea8a0ef4bd0b2d9ec',
         )
         expect(result.block_header.raw_data.number).toBeGreaterThan(0)
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('getTransactionById', async () => {
@@ -91,7 +91,7 @@ describe('RPCs', () => {
           'eb49c1c052fb23a9b909a0f487602459112d1fb41276361752e9bc491e649598',
         )
         expect(result.txID).toBe('eb49c1c052fb23a9b909a0f487602459112d1fb41276361752e9bc491e649598')
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('getBlockByLimitNext', async () => {
@@ -99,7 +99,7 @@ describe('RPCs', () => {
         const result = await tatum.rpc.getBlockByLimitNext(1, 5)
         expect(result.block).toHaveLength(4)
         expect(result.block[0].block_header.raw_data.number).toBeGreaterThan(0)
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('getAccountBalance', async () => {
@@ -126,7 +126,7 @@ describe('RPCs', () => {
             number: 51723491,
           },
         })
-        tatum.destroy()
+        await tatum.destroy()
       })
     })
   })

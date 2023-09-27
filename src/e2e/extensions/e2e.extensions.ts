@@ -18,8 +18,9 @@ export class TestExtension extends TatumSdkExtension {
         return Promise.resolve(undefined)
     }
 
-    destroy(): void {
+    destroy(): Promise<void> {
         this.mockTestExtension.destroy()
+        return Promise.resolve(undefined)
     }
 }
 
@@ -42,8 +43,9 @@ export class TestWalletProvider extends TatumSdkWalletProvider<string, string> {
         return Promise.resolve(undefined)
     }
 
-    destroy(): void {
+    destroy(): Promise<void> {
         this.mockTestExtension.destroy()
+        return Promise.resolve(undefined)
     }
 
     signAndBroadcast(payload: string): Promise<TxId> {

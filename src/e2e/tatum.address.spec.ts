@@ -470,7 +470,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(async () => {
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('should get transactions', async () => {
@@ -516,7 +516,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(async () => {
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('should get transactions', async () => {
@@ -563,7 +563,7 @@ describe.skip('Address', () => {
       })
 
       afterEach(async () => {
-        tatum.destroy()
+        await tatum.destroy()
       })
 
       it('should get transactions', async () => {

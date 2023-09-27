@@ -333,7 +333,7 @@ describe.skip('notification', () => {
         /^Subscription for type ADDRESS_EVENT on the address id 0xbaf6dc2e647aeb6f510f9e318856a1bcd66c5e19 and currency ETH already exists./,
       )
       expect(error?.code).toEqual('subscription.exists.on.address-and-currency')
-      tatum.destroy()
+      await tatum.destroy()
     })
 
     it('NOK - invalid address', async () => {
@@ -355,7 +355,7 @@ describe.skip('notification', () => {
         'address must be a valid ETH address. Address must start with 0x and must contain 40 hexadecimal characters after and have the correct checksum. ',
       ])
       expect(error?.code).toEqual('validation.failed')
-      tatum.destroy()
+      await tatum.destroy()
     })
   })
 
@@ -381,7 +381,7 @@ describe.skip('notification', () => {
         (s) => s.network === Network.ETHEREUM && s.address?.toLowerCase() === address.toLowerCase(),
       ) as NotificationSubscription
       expect(subscriptions).toEqual(undefined)
-      tatum.destroy()
+      await tatum.destroy()
     })
 
     it('NOK - invalid subscription', async () => {
@@ -399,7 +399,7 @@ describe.skip('notification', () => {
       expect((error?.message as object[])[0]).toEqual(
         'id should be valid id and 24 characters long, e.g. 6398ded68bfa23a9709b1b17',
       )
-      tatum.destroy()
+      await tatum.destroy()
     })
   })
 
@@ -421,7 +421,7 @@ describe.skip('notification', () => {
     expect(data[0].url).toBeDefined()
     expect(data[0].type).toBeDefined()
     expect(data.length).toBeGreaterThan(0)
-    tatum.destroy()
+    await tatum.destroy()
   })
 
   // TODO pipeline dont work with this test - IP auth
@@ -443,6 +443,6 @@ describe.skip('notification', () => {
     expect(data[0].timestamp).toBeDefined()
     expect(data[0].failed).toBeDefined()
     expect(data[0].response).toBeDefined()
-    tatum.destroy()
+    await tatum.destroy()
   })
 })

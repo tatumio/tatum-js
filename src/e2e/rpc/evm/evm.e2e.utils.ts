@@ -24,7 +24,7 @@ export const EvmE2eUtils = {
       const tatum = await EvmE2eUtils.initTatum(network, apiKey)
       const { result } = await tatum.rpc.blockNumber()
 
-      tatum.destroy()
+      await tatum.destroy()
       expect(result?.toNumber()).toBeGreaterThan(0)
     })
 
@@ -45,7 +45,7 @@ export const EvmE2eUtils = {
           value: '0x0',
         }
         const { result } = await tatum.rpc.estimateGas(estimateGas)
-        tatum.destroy()
+        await tatum.destroy()
         expect(result?.toNumber()).toBeGreaterThanOrEqual(0)
       })
     }
@@ -54,7 +54,7 @@ export const EvmE2eUtils = {
       const tatum = await EvmE2eUtils.initTatum(network, apiKey)
       const { result } = await tatum.rpc.gasPrice()
 
-      tatum.destroy()
+      await tatum.destroy()
       expect(result?.toNumber()).toBeGreaterThan(0)
     })
 
@@ -62,7 +62,7 @@ export const EvmE2eUtils = {
       const tatum = await EvmE2eUtils.initTatum(network, apiKey)
       const { result } = await tatum.rpc.clientVersion()
 
-      tatum.destroy()
+      await tatum.destroy()
       expect(result).toBeTruthy()
     })
 
@@ -70,7 +70,7 @@ export const EvmE2eUtils = {
       const tatum = await EvmE2eUtils.initTatum(network, apiKey)
       const { result } = await tatum.rpc.blockNumber()
       const { result: block } = await tatum.rpc.getBlockByNumber((result as BigNumber).toNumber() - 1000)
-      tatum.destroy()
+      await tatum.destroy()
       expect(block.timestamp).toBeDefined()
       expect(block.size).toBeDefined()
     })
