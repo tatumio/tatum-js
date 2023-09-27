@@ -6,7 +6,7 @@ describe('Ethereum', () => {
   it('should get token total supply', async () => {
     const tatum = await EvmE2eUtils.initTatum(Network.ETHEREUM, process.env.V4_API_KEY_MAINNET)
     const { result } = await tatum.rpc.getTokenTotalSupply('0xdac17f958d2ee523a2206206994597c13d831ec7')
-    tatum.destroy()
+    await tatum.destroy()
     expect(result).toBeDefined()
     expect(result?.isGreaterThan(1))
   })
@@ -14,7 +14,7 @@ describe('Ethereum', () => {
   it('should get token cap', async () => {
     const tatum = await EvmE2eUtils.initTatum(Network.ETHEREUM, process.env.V4_API_KEY_MAINNET)
     const { result } = await tatum.rpc.getTokenCap('0x43044f861ec040DB59A7e324c40507adDb673142')
-    tatum.destroy()
+    await tatum.destroy()
     expect(result).toBeDefined()
     expect(result?.isGreaterThan(1))
   })
@@ -22,7 +22,7 @@ describe('Ethereum', () => {
   it('should return true if contract is a multitoken', async () => {
     const tatum = await EvmE2eUtils.initTatum(Network.ETHEREUM, process.env.V4_API_KEY_MAINNET)
     const { result } = await tatum.rpc.supportsInterfaceERC1155('0xF4Dd946D1406e215a87029db56C69e1Bcf3e1773')
-    tatum.destroy()
+    await tatum.destroy()
     expect(result).toBeDefined()
     expect(result).toBeTruthy()
   })
@@ -43,7 +43,7 @@ describe('Ethereum', () => {
       },
     })
     const { result } = await tatum.rpc.chainId()
-    tatum.destroy()
+    await tatum.destroy()
     expect(result?.toNumber()).toBe(1)
   })
 
@@ -57,7 +57,7 @@ describe('Ethereum', () => {
       '1',
     )
 
-    tatum.destroy()
+    await tatum.destroy()
 
     console.log(result)
   })
@@ -70,6 +70,6 @@ describe('Ethereum', () => {
     )
 
     expect(result.result).toStrictEqual([])
-    tatum.destroy()
+    await tatum.destroy()
   })
 })

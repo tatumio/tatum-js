@@ -23,7 +23,7 @@ describe('Tatum Extension Ecosystem', () => {
 
       await tatum.extension(TestExtension).sayHello()
 
-      tatum.destroy()
+      await tatum.destroy()
 
       expect(mockTestExtension.dummyMethod).toHaveBeenCalled()
       expect(mockTestExtension.init).toHaveBeenCalled()
@@ -45,7 +45,7 @@ describe('Tatum Extension Ecosystem', () => {
 
       await tatum.walletProvider.use(TestWalletProvider).signAndBroadcast('payload')
 
-      tatum.destroy()
+      await tatum.destroy()
 
       expect(result).toBe('connected')
       expect(mockTestExtension.init).toHaveBeenCalled()

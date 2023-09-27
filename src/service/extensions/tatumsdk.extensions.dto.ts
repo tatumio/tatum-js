@@ -18,8 +18,12 @@ export abstract class TatumSdkExtension {
         protected readonly tatumSdkContainer: ITatumSdkContainer) {
     }
 
-    abstract init(...args: unknown[]): Promise<void>
-    abstract destroy(): void
+    init(): Promise<void> {
+        return Promise.resolve(undefined)
+    }
+    destroy(): Promise<void> {
+        return Promise.resolve(undefined)
+    }
 }
 
 export type ExtensionConstructor = new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => TatumSdkExtension

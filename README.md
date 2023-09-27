@@ -204,7 +204,7 @@ import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
 // Destroy Tatum SDK - needed for stopping background jobs
-tatum.destroy()
+await tatum.destroy()
 ```
 
 For more details, check out the [Get started documentation](https://docs.tatum.io/sdk/javascript-typescript-sdk).
@@ -222,7 +222,7 @@ const { result } = await tatum.rpc.getBalance('0x742d35Cc6634C0532925a3b844Bc454
 console.log(`Balance: ${data}`)
 
 // Destroy Tatum SDK - needed for stopping background jobs
-tatum.destroy()
+await tatum.destroy()
 ```
 For more details, check out the [RPC documentation](https://docs.tatum.io/docs/rpc).
 
@@ -245,7 +245,7 @@ console.log(response)
 // 🎉  Now your address is subscribed for any events!
 
 // Destroy Tatum SDK - needed for stopping background jobs
-tatum.destroy()
+await tatum.destroy()
 ```
 
 For more details, check out the [Notifications documentation](https://docs.tatum.io/docs/notifications).
@@ -266,7 +266,7 @@ const balances: NftAddressBalance[] = await tatum.nft.getBalance({
 console.log(balances)
 
 // Destroy Tatum SDK - needed for stopping background jobs
-tatum.destroy()
+await tatum.destroy()
 ```
 
 For more details, check out the [NFTs documentation](https://docs.tatum.io/docs/nfts).
@@ -289,7 +289,7 @@ const txId: string = await tatum.walletProvider.use(MetaMask).transferNative(
 console.log(txId)
 
 // Destroy Tatum SDK - needed for stopping background jobs
-tatum.destroy()
+await tatum.destroy()
 ```
 
 For more details, check out the [Wallet Provider documentation](https://docs.tatum.io/docs/wallet-provider).
@@ -308,7 +308,7 @@ const res = await tatum.rates.getCurrentRate('BTC', 'EUR')
 console.log(res.data)
 
 // Destroy Tatum SDK - needed for stopping background jobs
-tatum.destroy()
+await tatum.destroy()
 ```
 
 For more details, check out the [Exchange Rates documentation](https://docs.tatum.io/docs/exchange-rates).
@@ -333,7 +333,7 @@ const result = await tatum.fee.getCurrentFee()
 console.log(result.data)
 
 // Destroy Tatum SDK - needed for stopping background jobs
-tatum.destroy()
+await tatum.destroy()
 ```
 
 For more details, check out the [Fee Estimation documentation](https://docs.tatum.io/docs/fee-estimation).
@@ -354,7 +354,7 @@ const { data: balances } = await tatum.token.getBalance({
 console.log(balances)
 
 // Destroy Tatum SDK - needed for stopping background jobs
-tatum.destroy()
+await tatum.destroy()
 ```
 
 For more details, check out the [Fungible Tokens documentation](https://docs.tatum.io/docs/fungible-tokens).
@@ -374,7 +374,7 @@ const { data: txs } = await tatum.address.getTransactions({
 console.log(txs);
 
 // Destroy Tatum SDK - needed for stopping background jobs
-tatum.destroy()
+await tatum.destroy()
 ```
 
 For more details, check out the [Wallet address operations documentation](https://docs.tatum.io/docs/wallet-address-operations).

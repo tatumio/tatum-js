@@ -12,7 +12,7 @@ describe('Fee', () => {
     })
 
     const { data, status } = await tatum.fee.getCurrentFee()
-    tatum.destroy()
+    await tatum.destroy()
     expect(status).toBe(Status.SUCCESS)
     expect(data.gasPrice.fast).toBeDefined()
   })
@@ -26,7 +26,7 @@ describe('Fee', () => {
     })
 
     const { data, status } = await tatum.fee.getCurrentFee()
-    tatum.destroy()
+    await tatum.destroy()
     expect(status).toBe(Status.SUCCESS)
     expect(data.fast).toBeDefined()
   })

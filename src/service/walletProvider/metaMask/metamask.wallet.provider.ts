@@ -290,13 +290,4 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
-
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  destroy(): void {
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  init(..._: unknown[]): Promise<void> {
-    return Promise.resolve(undefined);
-  }
 }

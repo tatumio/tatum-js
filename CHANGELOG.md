@@ -1,3 +1,11 @@
+## [4.0.1] - 2023.09.27
+### Added
+- Extension lifetime management methods made optional to implement.
+- Extension lifetime management method destroy() made async and awaited.
+
+### Changed
+- **[BREAKING CHANGE]** `tatumSdk.destroy(): void` was replaced with `tatumSdk.destroy(): Promise<void>`.
+
 ## [4.0.0] - 2023.09.25
 ### Added
 - Leveraging Extension Ecosystem a specialised Wallet Provider type of extensions was added.

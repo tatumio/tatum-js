@@ -13,7 +13,7 @@ describe('Rates', () => {
   })
 
   afterEach(() => {
-    tatum.destroy()
+    await tatum.destroy()
   })
 
   it('get ETH/EUR', async () => {

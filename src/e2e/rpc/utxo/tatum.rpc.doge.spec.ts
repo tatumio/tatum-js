@@ -18,7 +18,7 @@ describe('Doge', () => {
       )
 
       expect(result.result).not.toBeNull()
-      tatum.destroy()
+      await tatum.destroy()
     })
   })
 })
