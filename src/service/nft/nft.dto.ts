@@ -40,6 +40,21 @@ export interface CreateNftEvmCollection extends CreateNftCollectionBase {
   baseURI?: string
 }
 
+export interface MintNft {
+  /**
+   * Address to send NFT to
+   */
+  to: string
+  /**
+   * Address of the NFT collection minter, this is optional and defaults to the owner address
+   */
+  minter?: string
+  /**
+   * The URL pointing to the NFT metadata; for more information, see EIP-721
+   */
+  url: string
+}
+
 export interface MetadataResponse {
   url: string
   metadata: object
