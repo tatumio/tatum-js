@@ -1,6 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 import { TatumConnector } from '../../../connector/tatum.connector'
-import { TxPayload } from '../../../dto'
+import { EVM_BASED_NETWORKS, Network, TxPayload } from '../../../dto'
 import {
   CreateErc1155NftCollection,
   CreateFungibleToken,
@@ -12,6 +12,7 @@ import { TatumConfig } from "../../tatum";
 import { EvmRpc } from "../../rpc";
 
 export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
+  supportedNetworks: Network[] = EVM_BASED_NETWORKS
   private readonly config: TatumConfig
   private readonly rpc: EvmRpc
   private readonly connector: TatumConnector

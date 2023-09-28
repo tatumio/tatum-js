@@ -1,4 +1,5 @@
 import { ITatumSdkContainer } from "./tatumsdk.container"
+import { Network } from "../../dto";
 
 /**
  * `TatumSdkExtension` is the base class for all extensions integrated into the Tatum SDK.
@@ -7,8 +8,11 @@ import { ITatumSdkContainer } from "./tatumsdk.container"
  *
  * @property tatumSdkContainer Provides access to the SDK configuration and internal sub-modules along with other registered extensions.
  *
+ *
+ * @property supportedNetworks An abstract property that needs to be defined by the extending classes.
+ *                             It represents an array of networks that the extension supports.
+ *
  * @method init Intended to handle the setup or initialization logic for the extension.
- *              This method can accept a variable number of arguments.
  *
  * @method destroy Intended to handle the teardown or disposal logic for the extension,
  *                 ensuring resources are freed and cleanup is performed appropriately.
@@ -18,12 +22,10 @@ export abstract class TatumSdkExtension {
         protected readonly tatumSdkContainer: ITatumSdkContainer) {
     }
 
-    init(): Promise<void> {
-        return Promise.resolve(undefined)
-    }
-    destroy(): Promise<void> {
-        return Promise.resolve(undefined)
-    }
+    abstract supportedNetworks: Network[]
+
+    init(): Promise<void> { return Promise.resolve(undefined) }
+    destroy(): Promise<void> { return Promise.resolve(undefined) }
 }
 
 export type ExtensionConstructor = new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => TatumSdkExtension

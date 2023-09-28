@@ -263,8 +263,17 @@ export class TatumSDK {
 
     const containerInstance = new TatumSdkContainer(Container.of(id))
     const instance = new type(containerInstance, ...args)
+
+    this.checkIfNetworkSupportedInExtension(instance, id, type);
+
     await instance.init()
     Container.of(id).set(type, instance)
+  }
+
+  private static checkIfNetworkSupportedInExtension(instance: TatumSdkExtension, id: string, type: { new(container: ITatumSdkContainer, ...args: unknown[]): TatumSdkExtension }) {
+    if (!instance.supportedNetworks.includes(Container.of(id).get(CONFIG).network)) {
+      throw new Error(`Extension ${type.name} is not supported on ${Container.of(id).get(CONFIG).network} network.`)
+    }
   }
 
   private static generateRandomString() {
