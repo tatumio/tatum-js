@@ -5,6 +5,7 @@ import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
 import { CONFIG, Constant, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
 import {
+  ExtensionConstructor,
   ExtensionConstructorOrConfig,
   ITatumSdkContainer,
   TatumSdkContainer,
@@ -49,7 +50,7 @@ export abstract class TatumSdkChain implements ITatumSdkChain {
       }
 
       // calls destroy on load balancer
-    Container.of(this.id).remove( LoadBalancer )
+    Container.of(this.id).remove(LoadBalancer)
     }
 
   private async destroyExtension(extensionConfig: ExtensionConstructorOrConfig, id: string) {
@@ -230,27 +231,39 @@ export class TatumSDK {
       await loadBalancer.init()
     }
 
-    await this.configureExtensions(config, id)
-    await this.addBuiltInExtensions(id)
+    const containerInstance = new TatumSdkContainer(Container.of(id))
+
+    await this.configureExtensions(config, id, containerInstance)
+    await this.addBuiltInExtensions(id, containerInstance)
 
     return Utils.getClient<T>(id, mergedConfig.network)
   }
 
-  private static async addBuiltInExtensions(id: string) {
-    await this.addExtension(MetaMask, id)
+
+  private static builtInExtensions : ExtensionConstructor[] = [MetaMask]
+
+  private static async addBuiltInExtensions(id: string, containerInstance: TatumSdkContainer) {
+    for (const extension of this.builtInExtensions){
+      const instance = new extension(containerInstance)
+
+      if (instance.supportedNetworks.includes(Container.of(id).get(CONFIG).network)) {
+        await instance.init()
+        Container.of(id).set(extension, instance)
+      }
+    }
   }
 
-  private static async configureExtensions(config: TatumConfig, id: string) {
+  private static async configureExtensions(config: TatumConfig, id: string, containerInstance: TatumSdkContainer) {
     for (const extensionConfig of config?.configureExtensions ?? []) {
-      await this.addExtension(extensionConfig, id)
+      await this.addExtension(extensionConfig, id, containerInstance)
     }
 
     for (const walletProviderConfig of config?.configureWalletProviders ?? []) {
-      await this.addExtension(walletProviderConfig, id)
+      await this.addExtension(walletProviderConfig, id, containerInstance)
     }
   }
 
-  private static async addExtension(extensionConfig: ExtensionConstructorOrConfig, id: string) {
+  private static async addExtension(extensionConfig: ExtensionConstructorOrConfig, id: string, containerInstance: TatumSdkContainer) {
     let type: new (container: ITatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
     const args: unknown[] = []
 
@@ -261,7 +274,6 @@ export class TatumSDK {
       type = extensionConfig
     }
 
-    const containerInstance = new TatumSdkContainer(Container.of(id))
     const instance = new type(containerInstance, ...args)
 
     this.checkIfNetworkSupportedInExtension(instance, id, type);
