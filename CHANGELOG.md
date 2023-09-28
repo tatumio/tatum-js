@@ -1,3 +1,10 @@
+## [4.0.4] - 2023.09.28
+### Added
+- Extension now has to implement list of supported `Network`.
+
+### Changed
+- **[BREAKING CHANGE]** `TatumSdkExtension` now contains `abstract supportedNetworks: Network[]`.
+
 ## [4.0.3] - 2023.09.27
 ### Added
 - Added RPC support for the Eos network. Users can now make RPC calls to these network using the `Network.EOS` network.

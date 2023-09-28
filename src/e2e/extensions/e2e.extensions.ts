@@ -1,4 +1,12 @@
-import { ITatumSdkContainer, TatumConfig, TatumSdkExtension, TatumSdkWalletProvider, TxId } from "../../service";
+import {
+    ITatumSdkContainer,
+    Network,
+    TatumConfig,
+    TatumSdkExtension,
+    TatumSdkWalletProvider,
+    TxId
+} from "../../service";
+import { EVM_BASED_NETWORKS } from "../../dto";
 
 export class TestExtension extends TatumSdkExtension {
     private readonly sdkConfig: TatumConfig
@@ -22,6 +30,8 @@ export class TestExtension extends TatumSdkExtension {
         this.mockTestExtension.destroy()
         return Promise.resolve(undefined)
     }
+
+    supportedNetworks: Network[] = EVM_BASED_NETWORKS
 }
 
 export class TestWalletProvider extends TatumSdkWalletProvider<string, string> {
@@ -52,4 +62,6 @@ export class TestWalletProvider extends TatumSdkWalletProvider<string, string> {
         this.mockTestExtension.dummyMethod()
         return Promise.resolve(payload);
     }
+
+    supportedNetworks: Network[] = EVM_BASED_NETWORKS
 }

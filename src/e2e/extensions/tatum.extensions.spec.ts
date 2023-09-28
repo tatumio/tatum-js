@@ -30,6 +30,26 @@ describe('Tatum Extension Ecosystem', () => {
       expect(mockTestExtension.destroy).toHaveBeenCalled()
       expect(mockTestExtension.network).toBeCalledWith(Network.ETHEREUM_SEPOLIA)
     })
+    it('should fail if network not supported', async () => {
+      try {
+        const tatum = await TatumSDK.init<Ethereum>({
+          network: Network.BITCOIN,
+          configureExtensions: [
+            TestExtension
+          ]
+        })
+
+        expect(true).toBe(false)
+
+        await tatum.destroy()
+      } catch (e) {
+        if (e instanceof Error) {
+          expect(e.message).toBe('Extension TestExtension is not supported on bitcoin-mainnet network.')
+        } else {
+          expect(true).toBe(false)
+        }
+      }
+    })
   })
 
   describe('Wallet Extension', () => {
