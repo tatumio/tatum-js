@@ -284,7 +284,6 @@ export const Utils = {
     let lastError: unknown = null
     while (timeoutInMs + startTime > Date.now()) {
       try {
-        console.log('Call--')
         const result: T = await action()
         if (result === null || result === undefined) {
           throw new Error('Null result')
