@@ -279,6 +279,24 @@ export const Utils = {
     }
   },
   delay: (t: number) => new Promise((resolve) => setTimeout(resolve, t)),
+  retryWithTimeout: async <T>(action: () => Promise<T>, timeoutInMs = 10000, delayInMs = 500): Promise<T> => {
+    const startTime = Date.now()
+    let lastError: unknown = null
+    while (timeoutInMs + startTime > Date.now()) {
+      try {
+        console.log('Call--')
+        const result: T = await action()
+        if (result === null || result === undefined) {
+          throw new Error('Null result')
+        }
+        return result
+      } catch (e: unknown) {
+        lastError = e
+        await Utils.delay(delayInMs)
+      }
+    }
+    throw lastError ?? new Error('Retry timeout failed')
+  },
   fetchWithTimeout: async (
     url: string,
     containerId: string,

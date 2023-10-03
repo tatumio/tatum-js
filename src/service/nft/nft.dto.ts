@@ -46,13 +46,21 @@ export interface MintNft {
    */
   to: string
   /**
-   * Address of the NFT collection minter, this is optional and defaults to the owner address
-   */
-  minter?: string
-  /**
    * The URL pointing to the NFT metadata; for more information, see EIP-721
    */
   url: string
+  /**
+   * Smart contract address of the NFT collection
+   */
+  contractAddress: string
+  /**
+   * Token Id of NFT to be minted
+   */
+  tokenId: string
+  /**
+   * Address of the NFT collection minter, this is optional and defaults to the owner address
+   */
+  minter?: string
 }
 
 export interface MetadataResponse {
