@@ -7,7 +7,7 @@ export interface TronTxRawBody {
   raw_data?: any
   raw_data_hex?: string
   signature?: string[]
-  txId?: string
+  txID?: string
 }
 
 export interface TronPrices {

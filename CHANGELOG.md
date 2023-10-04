@@ -1,3 +1,7 @@
+## [4.0.6] - 2023.10.04
+### Changed
+- Exposed tatum connector types from the root of the package.
+
 ## [4.0.5] - 2023.10.04
 ### Changed
 - Wallet provider `use()` method now returns properly typed extension instance.
