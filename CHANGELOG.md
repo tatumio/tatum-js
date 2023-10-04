@@ -1,3 +1,7 @@
+## [4.0.7] - 2023.10.04
+### Changed
+- Fixed signed raw transaction body conversion for Tron.
+
 ## [4.0.6] - 2023.10.04
 ### Changed
 - Exposed tatum connector types from the root of the package.

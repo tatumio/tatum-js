@@ -84,6 +84,7 @@ export abstract class AbstractTronRpc extends AbstractEvmRpc implements TronRpcS
     return this.sendPost({
       path: '/wallet/broadcasttransaction',
       body: rawBody,
+      notConvertCamelToSnake: true,
     })
   }
 
