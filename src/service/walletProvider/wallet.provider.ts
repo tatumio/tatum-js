@@ -15,7 +15,7 @@ export class WalletProvider {
    * Works are an entrypoint to interact with wallet providers of choice.
    * @param type - Wallet Provider type imported to the SDK instance
    */
-  use<T, P>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => TatumSdkWalletProvider<T, P>): TatumSdkWalletProvider<T, P> {
+  use<T, P, E extends TatumSdkWalletProvider<T, P>>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => E): E {
     return Container.of(this.id).get(type);
   }
 }
