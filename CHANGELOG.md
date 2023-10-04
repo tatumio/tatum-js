@@ -1,3 +1,8 @@
+## [4.0.5] - 2023.10.04
+### Changed
+- Wallet provider `use()` method now returns properly typed extension instance.
+- Exposed wallet provider types from the root of the package.
+
 ## [4.0.4] - 2023.09.28
 ### Added
 - Extension now has to implement list of supported `Network`.
