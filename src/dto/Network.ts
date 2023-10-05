@@ -211,6 +211,7 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.ARBITRUM_ONE,
   Network.BINANCE_SMART_CHAIN,
   Network.CHILIZ,
+  Network.ETHEREUM_CLASSIC,
 ]
 
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
