@@ -60,6 +60,7 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)                  |
 | [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation)                |
 | [Dogecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/dogecoin-rpc-documentation)                |
+| [ZCash RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/zcash-rpc-documentation)                      |
 | **Other Blockchains**                                                                                     |
 | [Solana RPC](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                                     |
 | [XPR RPC](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                                           |
@@ -423,6 +424,7 @@ This section provides a list of various blockchain network status pages, powered
 | [tron-mainnet-archive.status.tatum.io](https://tron-mainnet-archive.status.tatum.io)                         |
 | [arbitrum-one-mainnet-archive.status.tatum.io](https://arbitrum-one-mainnet-archive.status.tatum.io)         |
 | [ethereum-classic-mainnet-archive.status.tatum.io](https://ethereum-classic-mainnet-archive.status.tatum.io) |
+| [zcash-mainnet.status.tatum.io](https://zcash-mainnet.status.tatum.io)                               |
 
 
 ### Load Balancer
@@ -507,6 +509,7 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/tron-mainnet-archive/list.json](https://rpc.tatum.io/tron-mainnet-archive/list.json)                         |
 | [rpc.tatum.io/arbitrum-one-mainnet-archive/list.json](https://rpc.tatum.io/arbitrum-one-mainnet-archive/list.json)         |
 | [rpc.tatum.io/ethereum-classic-mainnet-archive/list.json](https://rpc.tatum.io/ethereum-classic-mainnet-archive/list.json) |
+| [rpc.tatum.io/zcash-mainnet/list.json](https://rpc.tatum.io/zcash-mainnet/list.json)                                   |
 
 
 Following pattern defines the URL for fetching the list of nodes:

@@ -8,12 +8,17 @@ const utxoTestNetworks = [
   { network: Network.DOGECOIN, type: UtxoNetworkType.MAIN },
   { network: Network.LITECOIN_TESTNET, type: UtxoNetworkType.TEST },
   { network: Network.LITECOIN, type: UtxoNetworkType.MAIN },
+  {
+    network: Network.ZCASH_TESTNET,
+    type: UtxoNetworkType.TEST,
+    apiKey: process.env.V3_API_KEY_TESTNET,
+    skipEstimateSmartFee: true,
+  },
+  { network: Network.ZCASH, type: UtxoNetworkType.MAIN, skipEstimateSmartFee: true },
 ]
 
 describe.each(utxoTestNetworks)('UTXO E2E Test Suite', (testNetwork) => {
-  const { network, type } = testNetwork
-
-  describe(network, () => {
-    UtxoE2eUtils.e2e({ network, type })
+  describe(testNetwork.network, () => {
+    UtxoE2eUtils.e2e(testNetwork)
   })
 })

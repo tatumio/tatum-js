@@ -191,6 +191,7 @@ export const UTXO_LOAD_BALANCER_NETWORKS = [
   Network.LITECOIN_TESTNET,
   Network.DOGECOIN,
   Network.DOGECOIN_TESTNET,
+  Network.ZCASH,
 ]
 
 export const EVM_LOAD_BALANCER_NETWORKS = [

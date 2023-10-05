@@ -4,11 +4,6 @@ import { Container } from 'typedi'
 import { version } from '../../package.json'
 import {
   AddressEventNotificationChain,
-  JsonRpcCall,
-  JsonRpcResponse,
-  MAPPED_NETWORK,
-  MappedNetwork,
-  Network,
   isEosLoadBalancerNetwork,
   isEosNetwork,
   isEvmArchiveNonArchiveLoadBalancerNetwork,
@@ -20,6 +15,11 @@ import {
   isUtxoBasedNetwork,
   isUtxoLoadBalancerNetwork,
   isXrpNetwork,
+  JsonRpcCall,
+  JsonRpcResponse,
+  MAPPED_NETWORK,
+  MappedNetwork,
+  Network,
 } from '../dto'
 import {
   ApiVersion,
@@ -65,6 +65,7 @@ import {
   Xdc,
   Xrp,
   XrpRpc,
+  ZCash,
 } from '../service'
 import { EvmArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmArchiveLoadBalancerRpc'
 import { TronLoadBalancerRpc } from '../service/rpc/evm/TronLoadBalancerRpc'
@@ -348,6 +349,9 @@ export const Utils = {
       case Network.BITCOIN_CASH:
       case Network.BITCOIN_CASH_TESTNET:
         return new BitcoinCash(id) as T
+      case Network.ZCASH:
+      case Network.ZCASH_TESTNET:
+        return new ZCash(id) as T
       case Network.ETHEREUM:
       case Network.ETHEREUM_SEPOLIA:
       case Network.ETHEREUM_GOERLI:

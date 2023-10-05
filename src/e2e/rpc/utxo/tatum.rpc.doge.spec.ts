@@ -1,10 +1,10 @@
 import { Network } from '../../../service'
-import { UtxoE2eUtils } from './utxo.e2e.utils'
+import { UtxoE2eUtils, UtxoNetworkType } from './utxo.e2e.utils'
 
 describe('Doge', () => {
   describe('mainnet', () => {
     it('createrawtransaction', async () => {
-      const tatum = await UtxoE2eUtils.initTatum(Network.DOGECOIN)
+      const tatum = await UtxoE2eUtils.initTatum({ network: Network.DOGECOIN, type: UtxoNetworkType.MAIN })
       const result = await tatum.rpc.createRawTransaction(
         [
           {
