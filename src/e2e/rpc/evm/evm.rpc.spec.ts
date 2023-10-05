@@ -55,7 +55,7 @@ const testNetworks = [
 
 describe.each(testNetworks)('E2E Test Suite', (testNetwork) => {
   const { network } = testNetwork
-  describe(`${network}`, () => {
+  describe(network, () => {
     EvmE2eUtils.e2e(testNetwork)
   })
 })

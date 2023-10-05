@@ -41,17 +41,17 @@ export abstract class TatumSdkChain implements ITatumSdkChain {
 
   async destroy(): Promise<void> {
     const config = Container.of(this.id).get(CONFIG)
-      for (const extensionConfig of config?.configureExtensions ?? []) {
-        await this.destroyExtension(extensionConfig, this.id);
-      }
-
-  for (const walletProviderConfig of config?.configureWalletProviders ?? []) {
-        await this.destroyExtension(walletProviderConfig, this.id);
-      }
-
-      // calls destroy on load balancer
-    Container.of(this.id).remove(LoadBalancer)
+    for (const extensionConfig of config?.configureExtensions ?? []) {
+      await this.destroyExtension(extensionConfig, this.id)
     }
+
+    for (const walletProviderConfig of config?.configureWalletProviders ?? []) {
+      await this.destroyExtension(walletProviderConfig, this.id)
+    }
+
+    // calls destroy on load balancer
+    Container.of(this.id).remove(LoadBalancer)
+  }
 
   private async destroyExtension(extensionConfig: ExtensionConstructorOrConfig, id: string) {
     let type: new (container: ITatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
@@ -142,6 +142,7 @@ export class Bitcoin extends BaseUtxoClass {}
 export class Litecoin extends BaseUtxoClass {}
 export class Dogecoin extends BaseUtxoClass {}
 export class BitcoinCash extends BaseUtxoClass {}
+export class ZCash extends BaseUtxoClass {}
 
 // other chains
 export class Xrp extends BaseTatumSdk {
@@ -239,11 +240,10 @@ export class TatumSDK {
     return Utils.getClient<T>(id, mergedConfig.network)
   }
 
-
-  private static builtInExtensions : ExtensionConstructor[] = [MetaMask]
+  private static builtInExtensions: ExtensionConstructor[] = [MetaMask]
 
   private static async addBuiltInExtensions(id: string, containerInstance: TatumSdkContainer) {
-    for (const extension of this.builtInExtensions){
+    for (const extension of this.builtInExtensions) {
       const instance = new extension(containerInstance)
 
       if (instance.supportedNetworks.includes(Container.of(id).get(CONFIG).network)) {
@@ -253,7 +253,11 @@ export class TatumSDK {
     }
   }
 
-  private static async configureExtensions(config: TatumConfig, id: string, containerInstance: TatumSdkContainer) {
+  private static async configureExtensions(
+    config: TatumConfig,
+    id: string,
+    containerInstance: TatumSdkContainer,
+  ) {
     for (const extensionConfig of config?.configureExtensions ?? []) {
       await this.addExtension(extensionConfig, id, containerInstance)
     }
@@ -263,7 +267,11 @@ export class TatumSDK {
     }
   }
 
-  private static async addExtension(extensionConfig: ExtensionConstructorOrConfig, id: string, containerInstance: TatumSdkContainer) {
+  private static async addExtension(
+    extensionConfig: ExtensionConstructorOrConfig,
+    id: string,
+    containerInstance: TatumSdkContainer,
+  ) {
     let type: new (container: ITatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
     const args: unknown[] = []
 
@@ -276,15 +284,21 @@ export class TatumSDK {
 
     const instance = new type(containerInstance, ...args)
 
-    this.checkIfNetworkSupportedInExtension(instance, id, type);
+    this.checkIfNetworkSupportedInExtension(instance, id, type)
 
     await instance.init()
     Container.of(id).set(type, instance)
   }
 
-  private static checkIfNetworkSupportedInExtension(instance: TatumSdkExtension, id: string, type: { new(container: ITatumSdkContainer, ...args: unknown[]): TatumSdkExtension }) {
+  private static checkIfNetworkSupportedInExtension(
+    instance: TatumSdkExtension,
+    id: string,
+    type: { new (container: ITatumSdkContainer, ...args: unknown[]): TatumSdkExtension },
+  ) {
     if (!instance.supportedNetworks.includes(Container.of(id).get(CONFIG).network)) {
-      throw new Error(`Extension ${type.name} is not supported on ${Container.of(id).get(CONFIG).network} network.`)
+      throw new Error(
+        `Extension ${type.name} is not supported on ${Container.of(id).get(CONFIG).network} network.`,
+      )
     }
   }
 
