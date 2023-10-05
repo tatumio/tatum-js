@@ -1,3 +1,7 @@
+## [4.0.8] - 2023.10.05
+### Added
+- Added RPC support for the Ethereum Classic network. Users can now make RPC calls to these network using the `Network.ETHEREUM_CLASSIC` network.
+
 ## [4.0.7] - 2023.10.04
 ### Changed
 - Fixed signed raw transaction body conversion for Tron.
