@@ -401,6 +401,7 @@ This section provides a list of various blockchain network status pages, powered
 | [ethereum-mainnet-archive.status.tatum.io](https://ethereum-mainnet-archive.status.tatum.io)                 |
 | [ethereum-mainnet.status.tatum.io](https://ethereum-mainnet.status.tatum.io)                                 |
 | [ethereum-sepolia-archive.status.tatum.io](https://ethereum-sepolia-archive.status.tatum.io)                 |
+| [ethereum-holesky-archive.status.tatum.io](https://ethereum-holesky-archive.status.tatum.io)                 |
 | [ethereum-sepolia.status.tatum.io](https://ethereum-sepolia.status.tatum.io)                                 |
 | [flare-coston-archive.status.tatum.io](https://flare-coston-archive.status.tatum.io)                         |
 | [flare-coston2-archive.status.tatum.io](https://flare-coston2-archive.status.tatum.io)                       |
@@ -424,7 +425,9 @@ This section provides a list of various blockchain network status pages, powered
 | [tron-mainnet-archive.status.tatum.io](https://tron-mainnet-archive.status.tatum.io)                         |
 | [arbitrum-one-mainnet-archive.status.tatum.io](https://arbitrum-one-mainnet-archive.status.tatum.io)         |
 | [ethereum-classic-mainnet-archive.status.tatum.io](https://ethereum-classic-mainnet-archive.status.tatum.io) |
-| [zcash-mainnet.status.tatum.io](https://zcash-mainnet.status.tatum.io)                               |
+| [zcash-mainnet.status.tatum.io](https://zcash-mainnet.status.tatum.io)                                       |
+| [ripple-mainnet.status.tatum.io](https://ripple-mainnet.status.tatum.io)                                     |
+| [ripple-testnet.status.tatum.io](https://ripple-testnet.status.tatum.io)                                     |
 
 
 ### Load Balancer
@@ -486,6 +489,7 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/ethereum-mainnet-archive/list.json](https://rpc.tatum.io/ethereum-mainnet-archive/list.json)                 |
 | [rpc.tatum.io/ethereum-mainnet/list.json](https://rpc.tatum.io/ethereum-mainnet/list.json)                                 |
 | [rpc.tatum.io/ethereum-sepolia-archive/list.json](https://rpc.tatum.io/ethereum-sepolia-archive/list.json)                 |
+| [rpc.tatum.io/ethereum-holesky-archive/list.json](https://rpc.tatum.io/ethereum-holesky-archive/list.json)                 |
 | [rpc.tatum.io/ethereum-sepolia/list.json](https://rpc.tatum.io/ethereum-sepolia/list.json)                                 |
 | [rpc.tatum.io/flare-coston-archive/list.json](https://rpc.tatum.io/flare-coston-archive/list.json)                         |
 | [rpc.tatum.io/flare-coston2-archive/list.json](https://rpc.tatum.io/flare-coston2-archive/list.json)                       |
@@ -509,7 +513,9 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/tron-mainnet-archive/list.json](https://rpc.tatum.io/tron-mainnet-archive/list.json)                         |
 | [rpc.tatum.io/arbitrum-one-mainnet-archive/list.json](https://rpc.tatum.io/arbitrum-one-mainnet-archive/list.json)         |
 | [rpc.tatum.io/ethereum-classic-mainnet-archive/list.json](https://rpc.tatum.io/ethereum-classic-mainnet-archive/list.json) |
-| [rpc.tatum.io/zcash-mainnet/list.json](https://rpc.tatum.io/zcash-mainnet/list.json)                                   |
+| [rpc.tatum.io/zcash-mainnet/list.json](https://rpc.tatum.io/zcash-mainnet/list.json)                                       |
+| [rpc.tatum.io/ripple-mainnet/list.json](https://rpc.tatum.io/ripple-mainnet/list.json)                                     |
+| [rpc.tatum.io/ripple-testnet/list.json](https://rpc.tatum.io/ripple-testnet/list.json)                                     |
 
 
 Following pattern defines the URL for fetching the list of nodes:
