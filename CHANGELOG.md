@@ -1,3 +1,7 @@
+## [4.0.11] - 2023.10.07
+### Added
+- Added RPC support for the Holesky network. Users can now make RPC calls to these network using the `Network.ETHEREUM_HOLESKY` network.
+
 ## [4.0.10] - 2023.10.06
 ### Added
 - Added RPC support for the XRP network. Users can now make RPC calls to these network using the `Network.XRP` network.

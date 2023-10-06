@@ -356,6 +356,7 @@ export const Utils = {
       case Network.ETHEREUM:
       case Network.ETHEREUM_SEPOLIA:
       case Network.ETHEREUM_GOERLI:
+      case Network.ETHEREUM_HOLESKY:
         return new Ethereum(id) as T
       case Network.ETHEREUM_CLASSIC:
         return new EthereumClassic(id) as T

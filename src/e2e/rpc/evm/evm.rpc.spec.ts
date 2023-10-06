@@ -25,6 +25,7 @@ const testNetworks = [
   { network: Network.FLARE_COSTON_2, expected: { chainId: 114 } },
   { network: Network.ETHEREUM, expected: { chainId: 1 } },
   { network: Network.ETHEREUM_SEPOLIA, expected: { chainId: 11155111 } },
+  { network: Network.ETHEREUM_HOLESKY, expected: { chainId: 17000 } },
   { network: Network.ETHEREUM_CLASSIC, expected: { chainId: 61 } },
   { network: Network.POLYGON, expected: { chainId: 137 } },
   { network: Network.POLYGON_MUMBAI, expected: { chainId: 80001 } },
