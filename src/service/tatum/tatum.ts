@@ -1,6 +1,12 @@
 import { Container, Service } from 'typedi'
 import { isLoadBalancerNetwork } from '../../dto'
-import { EvmBasedRpcSuite, SolanaRpcSuite, TronRpcSuite, UtxoBasedRpcSuite, XrpRpcSuite } from '../../dto/rpc'
+import {
+  EvmBasedRpcSuite,
+  SolanaRpcSuite,
+  TronRpcSuite,
+  UtxoBasedRpcSuite,
+  XrpRpcInterface,
+} from '../../dto/rpc'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
 import { CONFIG, Constant, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
@@ -146,10 +152,10 @@ export class ZCash extends BaseUtxoClass {}
 
 // other chains
 export class Xrp extends BaseTatumSdk {
-  rpc: XrpRpcSuite
+  rpc: XrpRpcInterface
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<XrpRpcSuite>(id, Container.of(id).get(CONFIG))
+    this.rpc = Utils.getRpc<XrpRpcInterface>(id, Container.of(id).get(CONFIG))
   }
 }
 export class Solana extends BaseTatumSdk {
