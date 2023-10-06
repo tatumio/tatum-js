@@ -217,12 +217,14 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
 
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
 export const EOS_LOAD_BALANCER_NETWORKS = [Network.EOS]
+export const XRP_LOAD_BALANCER_NETWORKS = [Network.XRP, Network.XRP_TESTNET]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
   ...EVM_LOAD_BALANCER_NETWORKS,
   ...TRON_LOAD_BALANCER_NETWORKS,
   ...EOS_LOAD_BALANCER_NETWORKS,
+  ...XRP_LOAD_BALANCER_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -269,6 +271,8 @@ export const isEvmArchiveNonArchiveLoadBalancerNetwork = (network: Network) =>
 export const isTronLoadBalancerNetwork = (network: Network) => TRON_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isEosLoadBalancerNetwork = (network: Network) => EOS_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isXrpLoadBalancerNetwork = (network: Network) => XRP_LOAD_BALANCER_NETWORKS.includes(network)
 
 export enum MappedNetwork {
   HORIZEN_EON = 'horizen-eon-mainnet',

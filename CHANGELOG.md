@@ -1,3 +1,7 @@
+## [4.0.10] - 2023.10.06
+### Added
+- Added RPC support for the XRP network. Users can now make RPC calls to these network using the `Network.XRP` network.
+
 ## [4.0.9] - 2023.10.05
 ### Added
 - Added RPC support for the ZCash network. Users can now make RPC calls to these network using the `Network.ZCASH` network.

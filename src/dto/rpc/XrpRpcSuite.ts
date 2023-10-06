@@ -237,7 +237,9 @@ export type RipplePathFindOptions = Ledger & {
   sourceCurrencies?: Currency[]
 }
 
-export interface XrpRpcSuite extends AbstractRpcInterface {
+export interface XrpRpcSuite extends XrpRpcInterface, AbstractRpcInterface {}
+
+export interface XrpRpcInterface {
   // account methods
 
   /**

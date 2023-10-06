@@ -64,7 +64,6 @@ import {
   Vechain,
   Xdc,
   Xrp,
-  XrpRpc,
   ZCash,
 } from '../service'
 import { EvmArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmArchiveLoadBalancerRpc'
@@ -72,6 +71,7 @@ import { TronLoadBalancerRpc } from '../service/rpc/evm/TronLoadBalancerRpc'
 import { TronRpc } from '../service/rpc/evm/TronRpc'
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
+import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
 import { Constant } from './constant'
 import { CONFIG } from './di.tokens'
 
@@ -99,8 +99,9 @@ export const Utils = {
     }
 
     if (isXrpNetwork(network)) {
-      return Container.of(id).get(XrpRpc) as T
+      return Container.of(id).get(XrpLoadBalancerRpc) as T
     }
+
     if (isSolanaEnabledNetwork(network)) {
       return Container.of(id).get(SolanaRpc) as T
     }
