@@ -1,3 +1,7 @@
+## [4.0.12] - 2023.10.09
+### Added
+- Added RPC support for the KLAYTN network. Users can now make RPC calls to these network using the `Network.KLAYTN` network.
+
 ## [4.0.11] - 2023.10.07
 ### Added
 - Added RPC support for the Holesky network. Users can now make RPC calls to these network using the `Network.ETHEREUM_HOLESKY` network.

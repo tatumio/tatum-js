@@ -52,9 +52,18 @@ const testNetworks = [
     skipEstimateGas: true,
     apiKey: process.env.V3_API_KEY_TESTNET,
   },
+  {
+    network: Network.KLAYTN,
+    expected: { chainId: 8217 },
+  },
+  {
+    network: Network.KLAYTN_BAOBAB,
+    expected: { chainId: 1001 },
+    apiKey: process.env.V4_API_KEY_TESTNET,
+  },
 ]
 
-describe.each(testNetworks)('E2E Test Suite', (testNetwork) => {
+describe.each(testNetworks)('RPC EVM', (testNetwork) => {
   const { network } = testNetwork
   describe(network, () => {
     EvmE2eUtils.e2e(testNetwork)

@@ -9,6 +9,7 @@ import {
   isEvmArchiveNonArchiveLoadBalancerNetwork,
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
+  isNativeEvmLoadBalancerNetwork,
   isSolanaEnabledNetwork,
   isTronLoadBalancerNetwork,
   isTronNetwork,
@@ -67,6 +68,7 @@ import {
   ZCash,
 } from '../service'
 import { EvmArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmArchiveLoadBalancerRpc'
+import { NativeEvmArchiveLoadBalancerRpc } from '../service/rpc/evm/NativeEvmArchiveLoadBalancerRpc'
 import { TronLoadBalancerRpc } from '../service/rpc/evm/TronLoadBalancerRpc'
 import { TronRpc } from '../service/rpc/evm/TronRpc'
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
@@ -80,6 +82,10 @@ export const Utils = {
     const { network } = config
     if (isUtxoLoadBalancerNetwork(network)) {
       return Container.of(id).get(UtxoLoadBalancerRpc) as T
+    }
+
+    if (isNativeEvmLoadBalancerNetwork(network)) {
+      return Container.of(id).get(NativeEvmArchiveLoadBalancerRpc) as T
     }
 
     if (isEvmArchiveNonArchiveLoadBalancerNetwork(network)) {

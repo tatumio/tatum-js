@@ -16,8 +16,8 @@ interface evmE2eI {
 }
 
 export const EvmE2eUtils = {
-  initTatum: async (network: Network, apiKey?: string) =>
-    TatumSDK.init<BaseEvmClass>(RpcE2eUtils.initConfig(network, apiKey)),
+  initTatum: async <T extends BaseEvmClass>(network: Network, apiKey?: string) =>
+    TatumSDK.init<T>(RpcE2eUtils.initConfig(network, apiKey)),
   e2e: (evmE2eI: evmE2eI) => {
     const { network, expected, data, skipEstimateGas, apiKey } = evmE2eI
     it('eth_blockNumber', async () => {

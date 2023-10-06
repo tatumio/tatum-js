@@ -8,6 +8,7 @@ import {
   XrpRpcInterface,
 } from '../../dto/rpc'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
+import { NativeEvmBasedRpcSuite } from '../../dto/rpc/NativeEvmBasedRpcInterface'
 import { CONFIG, Constant, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
 import {
@@ -119,6 +120,16 @@ export class Ethereum extends BaseEvmClass {
     this.fee = Container.of(id).get(FeeEvm)
   }
 }
+
+export class Klaytn extends BaseTatumSdk {
+  rpc: NativeEvmBasedRpcSuite
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<EvmBasedRpcSuite>(id, Container.of(id).get(CONFIG))
+  }
+}
+
 export class ArbitrumNova extends BaseEvmClass {}
 export class ArbitrumOne extends BaseEvmClass {}
 export class Aurora extends BaseEvmClass {}
@@ -132,7 +143,6 @@ export class Gnosis extends BaseEvmClass {}
 export class Haqq extends BaseEvmClass {}
 export class Flare extends BaseEvmClass {}
 export class HarmonyOne extends BaseEvmClass {}
-export class Klaytn extends BaseEvmClass {}
 export class Kucoin extends BaseEvmClass {}
 export class Oasis extends BaseEvmClass {}
 export class Optimism extends BaseEvmClass {}
