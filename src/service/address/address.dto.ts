@@ -30,7 +30,7 @@ export interface AddressBalance {
   /**
    * Block number of the last balance update.
    */
-  lastUpdatedBlock?: number
+  lastUpdatedBlockNumber?: number
 }
 
 export interface GetAddressTransactionsQuery {
