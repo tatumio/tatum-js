@@ -204,6 +204,7 @@ export class LoadBalancer implements AbstractRpcInterface {
         this.rpcUrls[nodeType],
         rpc?.allowedBlocksBehind as number,
       )
+
       Utils.log({
         id: this.id,
         data: this.rpcUrls[nodeType],
@@ -212,7 +213,7 @@ export class LoadBalancer implements AbstractRpcInterface {
       if (fastestServer && index !== -1) {
         Utils.log({
           id: this.id,
-          message: `Server ${fastestServer.node.url} is selected as active server.`,
+          message: `Server ${fastestServer.node.url} is selected as active server for ${RpcNodeType[nodeType]}.`,
           data: { url: fastestServer.node.url, index },
         })
         this.activeUrl[nodeType] = { url: fastestServer.node.url, index }
@@ -423,7 +424,7 @@ export class LoadBalancer implements AbstractRpcInterface {
 
     if (activeIndex == null) {
       console.error(
-        `No active node found for node type ${NODE_TYPE_LABEL[nodeType]}. Looks like your request is malformed or all nodes are down. Turn on verbose mode to see more details and check status pages.`,
+        `No active node found for node type ${RpcNodeType[nodeType]}. Looks like your request is malformed or all nodes are down. Turn on verbose mode to see more details and check status pages.`,
       )
       throw e
     }
@@ -458,7 +459,7 @@ export class LoadBalancer implements AbstractRpcInterface {
     try {
       Utils.log({
         id: this.id,
-        message: `Sending RPC ${rpcCall.method} to ${url} for ${this.network} blockchain node type ${type}.`,
+        message: `Sending RPC ${rpcCall.method} to ${url} for ${this.network} blockchain node type ${RpcNodeType[type]}.`,
       })
       return await this.connector.rpcCall(url, rpcCall)
     } catch (e) {

@@ -25,7 +25,7 @@ export enum Network {
   GNOSIS = 'gno-mainnet',
   HAQQ = 'haqq-mainnet',
   HARMONY_ONE_SHARD_0 = 'one-mainnet-s0',
-  KLAYTN = 'klaytn-cypress',
+  KLAYTN = 'klaytn-mainnet',
   KUCOIN = 'kcs-mainnet',
   LITECOIN = 'litecoin-mainnet',
   MULTIVERSX = 'egld-mainnet',
@@ -221,6 +221,7 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
 export const EOS_LOAD_BALANCER_NETWORKS = [Network.EOS]
 export const XRP_LOAD_BALANCER_NETWORKS = [Network.XRP, Network.XRP_TESTNET]
+export const NATIVE_EVM_LOAD_BALANCER_NETWORKS = [Network.KLAYTN, Network.KLAYTN_BAOBAB]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -228,6 +229,7 @@ export const LOAD_BALANCER_NETWORKS = [
   ...TRON_LOAD_BALANCER_NETWORKS,
   ...EOS_LOAD_BALANCER_NETWORKS,
   ...XRP_LOAD_BALANCER_NETWORKS,
+  ...NATIVE_EVM_LOAD_BALANCER_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -277,6 +279,9 @@ export const isEosLoadBalancerNetwork = (network: Network) => EOS_LOAD_BALANCER_
 
 export const isXrpLoadBalancerNetwork = (network: Network) => XRP_LOAD_BALANCER_NETWORKS.includes(network)
 
+export const isNativeEvmLoadBalancerNetwork = (network: Network) =>
+  NATIVE_EVM_LOAD_BALANCER_NETWORKS.includes(network)
+
 export enum MappedNetwork {
   HORIZEN_EON = 'horizen-eon-mainnet',
   DOGECOIN_MAINNET = 'dogecoin-mainnet',
@@ -287,4 +292,9 @@ export const MAPPED_NETWORK = {
   [Network.HORIZEN_EON]: MappedNetwork.HORIZEN_EON,
   [Network.DOGECOIN]: MappedNetwork.DOGECOIN_MAINNET,
   [Network.DOGECOIN_TESTNET]: MappedNetwork.DOGECOIN_TESTNET,
+}
+
+export const NATIVE_PREFIX_MAPPING: { [key: string]: string } = {
+  [Network.KLAYTN]: 'klay_',
+  [Network.KLAYTN_BAOBAB]: 'klay_',
 }

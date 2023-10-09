@@ -295,6 +295,7 @@ export const Constant = {
       Network.ZILLIQA_TESTNET,
       Network.HORIZEN_EON_GOBI,
     ],
+    METHOD_PREFIX: 'eth_',
   },
   OPEN_RPC: {
     LB_INTERVAL: 60_000,
