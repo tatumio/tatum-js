@@ -23,8 +23,8 @@ export const UtxoE2eUtils = {
       const tatum = await UtxoE2eUtils.initTatum(params)
       const { result } = await tatum.rpc.getBlockChainInfo()
 
-      expect(result.chain).toBe(type)
       await tatum.destroy()
+      expect(result.chain).toBe(type)
     })
 
     it('chain info raw call', async () => {
@@ -34,40 +34,40 @@ export const UtxoE2eUtils = {
         id: '1',
         jsonrpc: '2.0',
       })
-      expect(info.result.chain).toBe(type)
       await tatum.destroy()
+      expect(info.result.chain).toBe(type)
     })
 
     it('best block hash', async () => {
       const tatum = await UtxoE2eUtils.initTatum(params)
       const { result } = await tatum.rpc.getBestBlockHash()
 
-      expect(result).toBeTruthy()
       await tatum.destroy()
+      expect(result).toBeTruthy()
     })
 
     it('block count', async () => {
       const tatum = await UtxoE2eUtils.initTatum(params)
       const { result } = await tatum.rpc.getBlockCount()
 
-      expect(result).toBeGreaterThan(0)
       await tatum.destroy()
+      expect(result).toBeGreaterThan(0)
     })
 
     it('difficulty', async () => {
       const tatum = await UtxoE2eUtils.initTatum(params)
       const { result } = await tatum.rpc.getDifficulty()
 
-      expect(result).toBeGreaterThan(0)
       await tatum.destroy()
+      expect(result).toBeGreaterThan(0)
     })
 
     it('mempool info', async () => {
       const tatum = await UtxoE2eUtils.initTatum(params)
       const { result } = await tatum.rpc.getMempoolInfo()
 
-      expect(result).toBeDefined()
       await tatum.destroy()
+      expect(result).toBeDefined()
     })
 
     if (!params.skipEstimateSmartFee) {
@@ -75,8 +75,8 @@ export const UtxoE2eUtils = {
         const tatum = await UtxoE2eUtils.initTatum(params)
         const result = await tatum.rpc.estimateSmartFee(6)
 
-        expect(result.result).not.toBeNull()
         await tatum.destroy()
+        expect(result.result).not.toBeNull()
       })
     }
   },

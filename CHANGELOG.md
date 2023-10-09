@@ -1,3 +1,7 @@
+## [4.0.13] - 2023.10.09
+### Added
+- Added RPC support for the BITCOIN_CASH network. Users can now make RPC calls to these network using the `Network.BITCOIN_CASH` network.
+
 ## [4.0.12] - 2023.10.09
 ### Added
 - Added RPC support for the KLAYTN network. Users can now make RPC calls to these network using the `Network.KLAYTN` network.

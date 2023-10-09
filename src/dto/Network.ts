@@ -9,7 +9,7 @@ export enum Network {
   AVALANCHE_X = 'avax-x-mainnet',
   BINANCE_SMART_CHAIN = 'bsc-mainnet',
   BITCOIN = 'bitcoin-mainnet',
-  BITCOIN_CASH = 'bch-mainnet',
+  BITCOIN_CASH = 'bitcoin-cash-mainnet',
   CARDANO = 'cardano-mainnet',
   CELO = 'celo-mainnet',
   CRONOS = 'cro-mainnet',
@@ -194,6 +194,7 @@ export const UTXO_LOAD_BALANCER_NETWORKS = [
   Network.DOGECOIN,
   Network.DOGECOIN_TESTNET,
   Network.ZCASH,
+  Network.BITCOIN_CASH,
 ]
 
 export const EVM_LOAD_BALANCER_NETWORKS = [
