@@ -1,7 +1,8 @@
 import { Container, Service } from 'typedi'
 
 import { TatumConnector } from '../../connector/tatum.connector'
-import { ErrorUtils, ResponseDto } from '../../util'
+import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
+import { TatumConfig } from '../tatum'
 
 import { FaucetRequest, TxIdResponse } from './faucet.dto'
 
@@ -12,16 +13,18 @@ import { FaucetRequest, TxIdResponse } from './faucet.dto'
   transient: true,
 })
 export class Faucet {
-  private connector: TatumConnector
+  private readonly connector: TatumConnector
+  private readonly config: TatumConfig
 
   constructor(private readonly id: string) {
     this.connector = Container.of(this.id).get(TatumConnector)
+    this.config = Container.of(this.id).get(CONFIG)
   }
 
-  getCurrentRateBatch({ chain, address }: FaucetRequest): Promise<ResponseDto<TxIdResponse>> {
+  getFaucetFunds({ address, chain }: FaucetRequest): Promise<ResponseDto<TxIdResponse>> {
     return ErrorUtils.tryFail(async () => {
       return this.connector.post<TxIdResponse>({
-        path: `faucet/${chain}/${address}`,
+        path: `faucet/${chain || this.config.network}/${address}`,
       })
     })
   }

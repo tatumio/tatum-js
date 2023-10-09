@@ -14,4 +14,6 @@ TatumSDK is thoughtfully designed and organized into these submodules to provide
 
 * **Rate Exchange submodule - `tatum.rates.*`**: This submodule enables allows you to easily obtain exchange rates for fiat/crypto.
 
+* **Faucet submodule - `tatum.faucet.*`**: This submodule allows you to get testnet faucet funds for all supported chains (http://faucets.tatum.io).
+
 By dividing the library into these submodules, TatumSDK offers an organized, easy-to-use interface that makes interacting with Ethereum and other blockchains a breeze. Both beginners and advanced developers can benefit from the streamlined architecture, enabling them to focus on building powerful blockchain applications.

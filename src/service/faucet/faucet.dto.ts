@@ -12,12 +12,13 @@ export interface TxIdResponse {
 
 export interface FaucetRequest {
   /**
-   * One of the supported testnet chains
-   */
-  chain: Chain
-
-  /**
    * Address of wallet requesting funds
    */
   address: string
+
+  /**
+   * One of the supported testnet chains
+   * By default it is selected based on network
+   */
+  chain?: Chain
 }
