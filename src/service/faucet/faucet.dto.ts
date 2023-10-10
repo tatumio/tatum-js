@@ -1,8 +1,8 @@
-export type Chain =
+export type FaucetNetwork =
   | 'ethereum-sepolia'
   | 'ethereum-holesky'
   | 'polygon-mumbai'
-  | 'eon-testnet'
+  | 'horizen-eon-gobi' // eon-testnet
   | 'celo-testnet'
   | 'bsc-testnet'
 
@@ -20,5 +20,5 @@ export interface FaucetRequest {
    * One of the supported testnet chains
    * By default it is selected based on network
    */
-  chain?: Chain
+  chain?: FaucetNetwork
 }
