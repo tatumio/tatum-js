@@ -56,11 +56,13 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Arbitrum One RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/arbitrum-rpc-documentation)             |
 | [Chiliz RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/chiliz-rpc-documentation)                     |
 | [Ethereum Classic RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-classic-rpc-documentation) |
+| [Klaytn RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/klaytn-rpc-documentation)                     |
 | **UTXO Blockchains**                                                                                      |
 | [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)                  |
 | [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation)                |
 | [Dogecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/dogecoin-rpc-documentation)                |
 | [ZCash RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/zcash-rpc-documentation)                      |
+| [Bitcoin Cash RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcion-cash-rpc-documentation)        |
 | **Other Blockchains**                                                                                     |
 | [Solana RPC](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                                     |
 | [XPR RPC](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                                           |
@@ -329,7 +331,7 @@ const tatum = await TatumSDK.init<Ethereum>({
   verbose: true,
   retryDelay: 1000,
   retryCount: 2,
-  version: ApiVersion.V1,
+  version: ApiVersion.V3,
 })
 
 const result = await tatum.fee.getCurrentFee()
@@ -428,6 +430,11 @@ This section provides a list of various blockchain network status pages, powered
 | [zcash-mainnet.status.tatum.io](https://zcash-mainnet.status.tatum.io)                                       |
 | [ripple-mainnet.status.tatum.io](https://ripple-mainnet.status.tatum.io)                                     |
 | [ripple-testnet.status.tatum.io](https://ripple-testnet.status.tatum.io)                                     |
+| [bitcoin-cash-mainnet.status.tatum.io](https://bitcoin-cash-mainnet.status.tatum.io)                         |
+| [klaytn-mainnet.status.tatum.io](https://klaytn-mainnet.status.tatum.io)                                     |
+| [klaytn-mainnet-archive.status.tatum.io](https://klaytn-mainnet-archive.status.tatum.io)                     |
+| [klaytn-baobab.status.tatum.io](https://klaytn-baobab.status.tatum.io)                                       |
+| [klaytn-baobab-archive.status.tatum.io](https://klaytn-baobab-archive.status.tatum.io)                       |
 
 
 ### Load Balancer
@@ -516,6 +523,11 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/zcash-mainnet/list.json](https://rpc.tatum.io/zcash-mainnet/list.json)                                       |
 | [rpc.tatum.io/ripple-mainnet/list.json](https://rpc.tatum.io/ripple-mainnet/list.json)                                     |
 | [rpc.tatum.io/ripple-testnet/list.json](https://rpc.tatum.io/ripple-testnet/list.json)                                     |
+| [rpc.tatum.io/klaytn-mainnet/list.json](https://rpc.tatum.io/klaytn-mainnet/list.json)                                     |
+| [rpc.tatum.io/klaytn-mainnet-archive/list.json](https://rpc.tatum.io/klaytn-mainnet-archive/list.json)                     |
+| [rpc.tatum.io/klaytn-baobab/list.json](https://rpc.tatum.io/klaytn-baobab/list.json)                                       |
+| [rpc.tatum.io/klaytn-baobab-archive/list.json](https://rpc.tatum.io/klaytn-baobab-archive/list.json)                       |
+| [rpc.tatum.io/bitcoin-cash-mainnet/list.json](https://rpc.tatum.io/bitcoin-cash-mainnet/list.json)                        |
 
 
 Following pattern defines the URL for fetching the list of nodes:
