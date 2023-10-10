@@ -1,6 +1,10 @@
-## [4.0.14] - 2023.10.10
+## [4.0.15] - 2023.10.10
 ### Changed
 - Loosen types for extension registration purposes to better support optional config.
+
+## [4.0.14] - 2023.10.10
+### Added
+- Nft express minting over created collection for EVM chains.
 
 ## [4.0.13] - 2023.10.09
 ### Added
