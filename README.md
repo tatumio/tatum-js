@@ -387,7 +387,7 @@ await tatum.destroy()
 For more details, check out the [Wallet address operations documentation](https://docs.tatum.io/docs/wallet-address-operations).
 
 ### Get testnet faucet funds
-Using TatumSDK, you can request testnet token sums of cryptocurrency from our [Faucets](http://faucets.tatum.io).
+Using TatumSDK, you can request testnet native token sums of cryptocurrency from our [Faucets](http://faucets.tatum.io).
 
 ```ts
 import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
