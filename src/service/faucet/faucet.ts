@@ -21,7 +21,7 @@ export class Faucet {
     this.config = Container.of(this.id).get(CONFIG)
   }
 
-  async getFaucetFunds({ address, chain }: FaucetRequest): Promise<ResponseDto<TxIdResponse>> {
+  async fund({ address, chain }: FaucetRequest): Promise<ResponseDto<TxIdResponse>> {
     const faucetChain = this.convertToFaucetChain(chain || this.config.network)
 
     return ErrorUtils.tryFail(async () => {

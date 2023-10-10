@@ -397,11 +397,15 @@ await TatumSDK.init<Ethereum>({
   version: ApiVersion.V4,
 })
 
-const { txId } = await tatum.faucet.getFaucetFunds({
+const res = await tatum.faucet.fund({
   address: '0x514d547c8ac8ccbec29b5144810454bd7d3625ca',
 })
 
-console.log(txId);
+if (res.data) {
+  console.log(res.data);
+} else {
+  console.error(res.error);
+}
 
 // Destroy Tatum SDK - needed for stopping background jobs
 await tatum.destroy()
