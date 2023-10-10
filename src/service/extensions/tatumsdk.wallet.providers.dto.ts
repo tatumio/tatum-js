@@ -17,11 +17,13 @@ export abstract class TatumSdkWalletProvider<T, P> extends TatumSdkExtension {
     abstract signAndBroadcast(payload: P): Promise<TxId>
 }
 
-export type WalletProviderConstructor<T, P> = new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => TatumSdkWalletProvider<T, P>
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type WalletProviderConstructor = new (tatumSdkContainer: ITatumSdkContainer, ...args: any[]) => TatumSdkWalletProvider<any, any>
 
-export type WalletProviderWithConfig<T, P> = {
-    type: WalletProviderConstructor<T, P>
-    config: unknown
+export type WalletProviderWithConfig = {
+    type: WalletProviderConstructor
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    config: any
 }
 
-export type WalletProviderConstructorOrConfig<T, P> = WalletProviderConstructor<T, P> | WalletProviderWithConfig<T, P>
+export type WalletProviderConstructorOrConfig = WalletProviderConstructor | WalletProviderWithConfig

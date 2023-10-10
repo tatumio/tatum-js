@@ -37,9 +37,17 @@ export class TestExtension extends TatumSdkExtension {
 export class TestWalletProvider extends TatumSdkWalletProvider<string, string> {
     private readonly sdkConfig: TatumConfig
 
-    constructor(tatumSdkContainer: ITatumSdkContainer, private readonly mockTestExtension: any) {
+    constructor(tatumSdkContainer: ITatumSdkContainer, private readonly mockTestExtension?: any) {
         super(tatumSdkContainer)
         this.sdkConfig = this.tatumSdkContainer.getConfig()
+        if(!mockTestExtension){
+            this.mockTestExtension = {
+                dummyMethod: jest.fn(),
+                init: jest.fn(),
+                destroy: jest.fn(),
+                network: jest.fn()
+            }
+        }
     }
 
     async getWallet(){

@@ -27,12 +27,13 @@ export abstract class TatumSdkExtension {
     init(): Promise<void> { return Promise.resolve(undefined) }
     destroy(): Promise<void> { return Promise.resolve(undefined) }
 }
-
-export type ExtensionConstructor = new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => TatumSdkExtension
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type ExtensionConstructor = new (tatumSdkContainer: ITatumSdkContainer, ...args: any[]) => TatumSdkExtension
 
 export type ExtensionWithConfig = {
     type: ExtensionConstructor
-    config: unknown
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    config: any
 }
 
 export type ExtensionConstructorOrConfig = ExtensionConstructor | ExtensionWithConfig
