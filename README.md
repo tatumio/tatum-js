@@ -392,7 +392,7 @@ Using TatumSDK, you can request testnet native token sums of cryptocurrency from
 ```ts
 import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 
-await TatumSDK.init<Ethereum>({
+const tatum = await TatumSDK.init<Ethereum>({
   network: Network.ETHEREUM_SEPOLIA,
   version: ApiVersion.V4,
 })
