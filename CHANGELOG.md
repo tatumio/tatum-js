@@ -1,3 +1,7 @@
+## [4.0.16] - 2023.10.10
+### Changed
+- Fixed `tatumSdk.walletProvider.use()` method to return properly typed extension instance is case of custom typed configurations.
+
 ## [4.0.15] - 2023.10.10
 ### Changed
 - Loosen types for extension registration purposes to better support optional config.
