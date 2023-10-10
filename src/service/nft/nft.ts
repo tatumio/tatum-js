@@ -14,6 +14,7 @@ import {
   GetCollection,
   GetNftMetadata,
   GetTokenOwner,
+  MintNft,
   NftAddressBalance,
   NftTokenDetail,
   NftTransaction,
@@ -111,6 +112,26 @@ export class Nft {
       }),
     )
   }
+
+  /**
+   * Mint new NFT (using ERC-721 compatible smart contract). This operation mints nft using smart contract on blockchain.
+   * You don't need to specify the default minter of the collection, as the owner of the collection is the default minter.
+   * You don't have to have any funds on the address, as the nft is minted by Tatum.
+   * @param body Body of the request.
+   * @returns ResponseDto<{txId: string}> Transaction ID of the mint transaction. {
+   */
+  async mintNft(body: MintNft): Promise<ResponseDto<{ txId: string }>> {
+    return ErrorUtils.tryFail(() =>
+      this.connector.post<{ txId: string }>({
+        path: `contract/erc721/mint`,
+        body: {
+          ...body,
+          chain: this.config.network,
+        },
+      }),
+    )
+  }
+
   /**
    * Get balance of NFT for given address.
    * You can get balance of multiple addresses in one call.

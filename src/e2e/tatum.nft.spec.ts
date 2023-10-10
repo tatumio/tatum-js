@@ -1,4 +1,5 @@
-import { Ethereum, Network, TatumSDK, Tezos } from '../service'
+import { Ethereum, Network, Polygon, TatumSDK, Tezos } from '../service'
+import { Utils } from '../util'
 
 describe('Tatum NFT', () => {
   let client: Ethereum
@@ -243,5 +244,72 @@ describe('Tatum NFT - Tezos', () => {
       owner: 'tz1f1nboqWEhZJHwZnxnokQ9QoTiT21qMZxG',
     })
     expect(result.data).toStrictEqual({ txId: expect.any(String) })
+  })
+})
+
+describe.skip('Tatum NFT - Test mint flow', () => {
+  it('Test', async () => {
+    const toAddress = '0xb361d67c8a573a510cea04c2fa22bc311dd6dc01'
+    const ownerAddress = '0x89144c7c7b4d44e9f99a465f58f47ae62f018a4c'
+
+    const client = await TatumSDK.init<Polygon>({
+      network: Network.POLYGON_MUMBAI,
+    })
+
+    const result = await client.nft.createNftCollection({
+      name: 'Test contract',
+      symbol: 'MUMBAI_TEST',
+      owner: ownerAddress,
+    })
+    console.log('deploy result', JSON.stringify(result))
+
+    const scAddress = await Utils.retryWithTimeout(() => {
+      return client.rpc.getContractAddress(result.data.txId)
+    }, 20000)
+
+    console.log('sc address', scAddress)
+
+    const nft1 = await client.nft.mintNft({
+      to: toAddress,
+      url: 'ipfs://bafkreiallhajtd2j57lkuufjtabe6be2m3qh672nmnmkhvttv6d44cezaa',
+      contractAddress: scAddress ?? '',
+      tokenId: '1',
+    })
+    console.log('nft txid 1', JSON.stringify(nft1))
+    await Utils.retryWithTimeout(() => {
+      return client.rpc.getTransactionByHash(nft1.data.txId)
+    }, 20000)
+
+    const nft2 = await Utils.retryWithTimeout(async () => {
+      const res = await client.nft.mintNft({
+        to: toAddress,
+        url: 'ipfs://bafkreiallhajtd2j57lkuufjtabe6be2m3qh672nmnmkhvttv6d44cezaa',
+        contractAddress: scAddress ?? '',
+        tokenId: '2',
+      })
+      return res?.data?.txId
+    }, 20000)
+
+    console.log('nft txid 2', nft2)
+    await Utils.retryWithTimeout(() => {
+      return client.rpc.getTransactionByHash(nft2)
+    }, 20000)
+
+    const nft3 = await Utils.retryWithTimeout(async () => {
+      const res = await client.nft.mintNft({
+        to: toAddress,
+        url: 'ipfs://bafkreiallhajtd2j57lkuufjtabe6be2m3qh672nmnmkhvttv6d44cezaa',
+        contractAddress: scAddress ?? '',
+        tokenId: '3',
+      })
+      return res?.data?.txId
+    }, 20000)
+
+    console.log('nft txid 3', nft3)
+    await Utils.retryWithTimeout(() => {
+      return client.rpc.getTransactionByHash(nft3)
+    }, 20000)
+
+    expect(nft3).toStrictEqual(expect.any(String))
   })
 })
