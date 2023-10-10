@@ -4,7 +4,7 @@ import { TatumConnector } from '../../connector/tatum.connector'
 import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
 import { Network, TatumConfig } from '../tatum'
 
-import { FaucetNetwork, FaucetRequest, TxIdResponse } from './faucet.dto'
+import { TxIdResponse } from './faucet.dto'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -21,17 +21,17 @@ export class Faucet {
     this.config = Container.of(this.id).get(CONFIG)
   }
 
-  async fund({ address, chain }: FaucetRequest): Promise<ResponseDto<TxIdResponse>> {
-    const faucetChain = this.convertToFaucetChain(chain || this.config.network)
+  async fund(address: string): Promise<ResponseDto<TxIdResponse>> {
+    const chain = this.convertToFaucetChain(this.config.network)
 
     return ErrorUtils.tryFail(async () => {
       return this.connector.post<TxIdResponse>({
-        path: `faucet/${faucetChain}/${address}`,
+        path: `faucet/${chain}/${address}`,
       })
     })
   }
 
-  private convertToFaucetChain(network: FaucetNetwork | Network) {
+  private convertToFaucetChain(network: Network) {
     return network === Network.HORIZEN_EON_GOBI ? 'eon-testnet' : network
   }
 }
