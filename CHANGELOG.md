@@ -1,3 +1,7 @@
+## [4.0.14] - 2023.10.10
+### Changed
+- Loosen types for extension registration purposes to better support optional config.
+
 ## [4.0.13] - 2023.10.09
 ### Added
 - Added RPC support for the BITCOIN_CASH network. Users can now make RPC calls to these network using the `Network.BITCOIN_CASH` network.

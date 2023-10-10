@@ -74,4 +74,22 @@ describe('Tatum Extension Ecosystem', () => {
       expect(mockTestExtension.dummyMethod).toBeCalledTimes(2)
     })
   })
+  describe('Configurable Wallet Extension', () => {
+    it('should work after being registered without config if optional', async () => {
+      const tatum = await TatumSDK.init<Ethereum>({
+        network: Network.ETHEREUM_SEPOLIA,
+        configureWalletProviders:[
+          TestWalletProvider
+        ]
+      })
+
+      const result = await tatum.walletProvider.use(TestWalletProvider).getWallet()
+
+      await tatum.walletProvider.use(TestWalletProvider).signAndBroadcast('payload')
+
+      await tatum.destroy()
+
+      expect(result).toBe('connected')
+    })
+  })
 })
