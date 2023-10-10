@@ -400,9 +400,9 @@ const tatum = await TatumSDK.init<Ethereum>({
 const res = await tatum.faucet.fund('0x514d547c8ac8ccbec29b5144810454bd7d3625ca')
 
 if (res.data) {
-  console.log(res.data);
+  console.log(res.data)
 } else {
-  console.error(res.error);
+  console.error(res.error)
 }
 
 // Destroy Tatum SDK - needed for stopping background jobs
