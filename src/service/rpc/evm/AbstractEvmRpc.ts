@@ -54,7 +54,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
     txIndex: number,
     contractAddress: string,
     startKey: string,
-    maxResult: string,
+    maxResult: number,
   ): Promise<JsonRpcResponse<any>> {
     return this.rpcCall<JsonRpcResponse<any>>('debug_storageRangeAt', [
       blockHash,

@@ -1,3 +1,7 @@
+## [4.0.18] - 2023.10.11
+### Fixed
+- Update debug storage range parameters. The `debugStorageRangeAt` function in the EvmRpc now takes a number instead of a string for the `maxResults` parameter.
+
 ## [4.0.17] - 2023.10.11
 ### Added
 - Added RPC support for the AVALANCHE_C network. Users can now make RPC calls to these network using the `Network.AVALANCHE_C` network.
