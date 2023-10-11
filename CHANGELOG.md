@@ -1,3 +1,7 @@
+## [4.0.17] - 2023.10.11
+### Added
+- Added RPC support for the AVALANCHE_C network. Users can now make RPC calls to these network using the `Network.AVALANCHE_C` network.
+
 ## [4.0.16] - 2023.10.10
 ### Changed
 - Fixed `tatumSdk.walletProvider.use()` method to return properly typed extension instance is case of custom typed configurations.

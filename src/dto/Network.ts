@@ -4,7 +4,7 @@ export enum Network {
   ARBITRUM_NOVA = 'arb-nova-mainnet',
   ARBITRUM_ONE = 'arbitrum-one-mainnet',
   AURORA = 'aurora-mainnet',
-  AVALANCHE_C = 'avax-mainnet',
+  AVALANCHE_C = 'avalanche-c-mainnet',
   AVALANCHE_P = 'avax-p-mainnet',
   AVALANCHE_X = 'avax-x-mainnet',
   BINANCE_SMART_CHAIN = 'bsc-mainnet',
@@ -217,6 +217,7 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.BINANCE_SMART_CHAIN,
   Network.CHILIZ,
   Network.ETHEREUM_CLASSIC,
+  Network.AVALANCHE_C,
 ]
 
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]

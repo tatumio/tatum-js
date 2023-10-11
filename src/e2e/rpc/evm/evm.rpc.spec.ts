@@ -61,6 +61,15 @@ const testNetworks = [
     expected: { chainId: 1001 },
     apiKey: process.env.V4_API_KEY_TESTNET,
   },
+  {
+    network: Network.AVALANCHE_C,
+    expected: { chainId: 43114 },
+  },
+  {
+    network: Network.AVALANCHE_C_TESTNET,
+    expected: { chainId: 43113 },
+    apiKey: process.env.V3_API_KEY_TESTNET,
+  },
 ]
 
 describe.each(testNetworks)('RPC EVM', (testNetwork) => {
