@@ -341,7 +341,9 @@ export type SolanaAddressSignature = {
 
 export type SolanaInflationRate = { total: number; validator: number; foundation: number; epoch: number }
 
-export interface SolanaRpcSuite extends AbstractRpcInterface {
+export interface SolanaRpcSuite extends SolanaRpcInterface, AbstractRpcInterface {}
+
+export interface SolanaRpcInterface {
   /**
    * Get info about the account on the Solana blockchain.
    * @param pubkey - Pubkey of account to query, as base-58 encoded string

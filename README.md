@@ -457,6 +457,8 @@ This section provides a list of various blockchain network status pages, powered
 | [klaytn-baobab.status.tatum.io](https://klaytn-baobab.status.tatum.io)                                       |
 | [klaytn-baobab-archive.status.tatum.io](https://klaytn-baobab-archive.status.tatum.io)                       |
 | [avalanche-c-mainnet-archive.status.tatum.io](https://avalanche-c-mainnet-archive.status.tatum.io)           |
+| [solana-mainnet.status.tatum.io](https://solana-mainnet.status.tatum.io)                                     |
+| [solana-devnet.status.tatum.io](https://solana-devnet.status.tatum.io)                         |
 
 
 ### Load Balancer
@@ -549,8 +551,10 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/klaytn-mainnet-archive/list.json](https://rpc.tatum.io/klaytn-mainnet-archive/list.json)                     |
 | [rpc.tatum.io/klaytn-baobab/list.json](https://rpc.tatum.io/klaytn-baobab/list.json)                                       |
 | [rpc.tatum.io/klaytn-baobab-archive/list.json](https://rpc.tatum.io/klaytn-baobab-archive/list.json)                       |
-| [rpc.tatum.io/bitcoin-cash-mainnet/list.json](https://rpc.tatum.io/bitcoin-cash-mainnet/list.json)                        |
-| [rpc.tatum.io/avalanche-c-mainnet-archive/list.json](https://rpc.tatum.io/avalanche-c-mainnet-archive/list.json)                        |
+| [rpc.tatum.io/bitcoin-cash-mainnet/list.json](https://rpc.tatum.io/bitcoin-cash-mainnet/list.json)                         |
+| [rpc.tatum.io/avalanche-c-mainnet-archive/list.json](https://rpc.tatum.io/avalanche-c-mainnet-archive/list.json)           |
+| [rpc.tatum.io/solana-mainnet/list.json](https://rpc.tatum.io/solana-mainnet/list.json)                                     |
+| [rpc.tatum.io/solana-devnet/list.json](https://rpc.tatum.io/solana-devnet/list.json)                                       |
 
 
 Following pattern defines the URL for fetching the list of nodes:
