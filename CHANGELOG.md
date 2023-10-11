@@ -1,3 +1,7 @@
+## [4.1.0] - 2023.10.11
+### Added
+- Added `faucet` submodule with `fund` method for requesting testnet native tokens from available `Tatum` faucets.
+
 ## [4.0.19] - 2023.10.11
 ### Added
 - Updated loadbalancer logging with detailed logs

@@ -386,6 +386,26 @@ await tatum.destroy()
 
 For more details, check out the [Wallet address operations documentation](https://docs.tatum.io/docs/wallet-address-operations).
 
+### Get testnet faucet funds
+Using TatumSDK, you can request testnet native token sums of cryptocurrency from our [Faucets](http://faucets.tatum.io).
+
+```ts
+import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
+
+const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA })
+
+const res = await tatum.faucet.fund('0x712e3a792c974b3e3dbe41229ad4290791c75a82')
+
+if (res.data) {
+  console.log(res.data)
+} else {
+  console.error(res.error)
+}
+
+// Destroy Tatum SDK - needed for stopping background jobs
+await tatum.destroy()
+```
+
 ## RPC calls
 All RPC calls are implemented in the `tatum.rpc.*` submodule.
 
