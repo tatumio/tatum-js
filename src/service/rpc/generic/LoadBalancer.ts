@@ -331,6 +331,11 @@ export class LoadBalancer implements AbstractRpcInterface {
       })),
     ]
 
+    Utils.log({
+      id: this.id,
+      message: `Added ${filteredNodes.length} nodes (${filteredNodes.map(s => s.url).join(', ')}) for ${this.network} blockchain during the initialization for node ${NODE_TYPE_LABEL[nodeType]}.`,
+    })
+
     const randomIndex = Math.floor(Math.random() * this.rpcUrls[nodeType].length)
 
     Utils.log({
@@ -349,32 +354,26 @@ export class LoadBalancer implements AbstractRpcInterface {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const [normal, archive] = await Promise.all(rpcList.map((url) => fetch(url)))
-      if (normal.ok) {
-        const nodes: RpcNode[] = await normal.json()
-        this.initRemoteHosts({ nodeType: RpcNodeType.NORMAL, nodes: nodes })
-        this.initRemoteHosts({ nodeType: RpcNodeType.ARCHIVE, nodes: nodes })
-      } else {
-        Utils.log({
-          id: this.id,
-          message: `Failed to fetch RPC configuration for ${network} blockchain for normal nodes`,
-        })
-      }
-
-      if (archive.ok) {
-        const nodes: RpcNode[] = await archive.json()
-        this.initRemoteHosts({ nodeType: RpcNodeType.NORMAL, nodes: nodes })
-        this.initRemoteHosts({ nodeType: RpcNodeType.ARCHIVE, nodes: nodes })
-      } else {
-        Utils.log({
-          id: this.id,
-          message: `Failed to fetch RPC configuration for ${network} blockchain for archive nodes`,
-        })
-      }
+      await this.initRemoteHostsFromResponse(normal, RpcNodeType.NORMAL)
+      await this.initRemoteHostsFromResponse(archive, RpcNodeType.ARCHIVE)
     } catch (e) {
       console.error(
         new Date().toISOString(),
         `Failed to initialize RPC module. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
       )
+    }
+  }
+
+  async initRemoteHostsFromResponse(response: Response, nodeType: RpcNodeType) {
+    if (response.ok) {
+      const nodes: RpcNode[] = await response.json()
+      this.initRemoteHosts({ nodeType: RpcNodeType.NORMAL, nodes: nodes })
+      this.initRemoteHosts({ nodeType: RpcNodeType.ARCHIVE, nodes: nodes })
+    } else {
+      Utils.log({
+        id: this.id,
+        message: `Failed to fetch RPC configuration for ${this.network} blockchain for ${RpcNodeType[nodeType]} nodes`,
+      })
     }
   }
 
