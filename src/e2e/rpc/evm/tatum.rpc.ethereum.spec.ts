@@ -49,15 +49,15 @@ describe('Ethereum', () => {
 
   it('debug storage range at', async () => {
     const tatum = await EvmE2eUtils.initTatum(Network.ETHEREUM, process.env.V4_API_KEY_MAINNET)
-    const result = await tatum.rpc.debugStorageRangeAt(
-      '0x76f64c40d6493cf00426be2eecdaf3f968768619bfb21ce6c57921be497ab3f7',
+    const { result } = await tatum.rpc.debugStorageRangeAt(
+      "0xc20f6b582e0c7923341cdb1299a94ea00c8a23e1ccabc532955a2a07b27121dc",
       0,
-      '0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5',
-      '0x0000000000000000000000000000000000000000000000000000000000000000',
-      '1',
+      "0x5799e216fb6825f21e6f20af22836303edc45df3",
+      "0x0000000000000000000000000000000000000000000000000000000000000000",
+      5
     )
-    expect(result).toBeDefined()
     await tatum.destroy()
+    expect(result).toBeDefined()
   })
 
   it('get logs', async () => {
@@ -66,7 +66,7 @@ describe('Ethereum', () => {
       address: '0xdafea492d9c6733ae3d56b7ed1adb60692c98bc5',
     })
 
-    expect(result.result).toStrictEqual([])
     await tatum.destroy()
+    expect(result.result).toStrictEqual([])
   })
 })

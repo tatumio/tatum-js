@@ -158,7 +158,7 @@ export interface EvmBasedRpcInterface {
     txIndex: number,
     contractAddress: string,
     startKey: string,
-    maxResult: string,
+    maxResult: number,
   ): Promise<JsonRpcResponse<any>>
 
   debugTraceCall(
