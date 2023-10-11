@@ -1,3 +1,7 @@
+## [4.1.1] - 2023.10.11
+### Added
+- Added RPC support for the SOLANA network. Users can now make RPC calls to these network using the `Network.SOLANA` network.
+
 ## [4.1.0] - 2023.10.11
 ### Added
 - Added `faucet` submodule with `fund` method for requesting testnet native tokens from available `Tatum` faucets.

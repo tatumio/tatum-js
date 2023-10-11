@@ -9,8 +9,8 @@ import {
   isEvmArchiveNonArchiveLoadBalancerNetwork,
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
-  isNativeEvmLoadBalancerNetwork,
-  isSolanaEnabledNetwork,
+  isNativeEvmLoadBalancerNetwork, isSameGetBlockNetwork,
+  isSolanaNetwork,
   isTronLoadBalancerNetwork,
   isTronNetwork,
   isUtxoBasedNetwork,
@@ -56,7 +56,6 @@ import {
   Palm,
   Polygon,
   Solana,
-  SolanaRpc,
   TatumConfig,
   Tezos,
   Tron,
@@ -76,6 +75,7 @@ import { EosRpc } from '../service/rpc/other/EosRpc'
 import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
 import { Constant } from './constant'
 import { CONFIG } from './di.tokens'
+import { SolanaLoadBalancerRpc } from '../service/rpc/other/SolanaLoadBalancerRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
@@ -108,8 +108,8 @@ export const Utils = {
       return Container.of(id).get(XrpLoadBalancerRpc) as T
     }
 
-    if (isSolanaEnabledNetwork(network)) {
-      return Container.of(id).get(SolanaRpc) as T
+    if (isSolanaNetwork(network)) {
+      return Container.of(id).get(SolanaLoadBalancerRpc) as T
     }
 
     if (isTronLoadBalancerNetwork(network)) {
@@ -151,10 +151,20 @@ export const Utils = {
         id: 1,
       }
     }
+
     if (isEvmBasedNetwork(network) || isTronNetwork(network)) {
       return {
         jsonrpc: '2.0',
         method: 'eth_blockNumber',
+        params: [],
+        id: 1,
+      }
+    }
+
+    if (isSolanaNetwork(network)) {
+      return {
+        jsonrpc: '2.0',
+        method: 'getBlockHeight',
         params: [],
         id: 1,
       }
@@ -171,14 +181,14 @@ export const Utils = {
       return `${url}${Constant.EOS_PREFIX}get_info`
     }
 
-    if (isUtxoBasedNetwork(network) || isEvmBasedNetwork(network) || isTronNetwork(network)) {
+    if (isSameGetBlockNetwork(network)) {
       return url
     }
 
     throw new Error(`Network ${network} is not supported.`)
   },
   parseStatusPayload: (network: Network, response: JsonRpcResponse<any> | any) => {
-    if (isUtxoBasedNetwork(network) || isEvmBasedNetwork(network) || isTronNetwork(network)) {
+    if (isSameGetBlockNetwork(network)) {
       return new BigNumber((response.result as number) || -1).toNumber()
     }
 
@@ -193,7 +203,7 @@ export const Utils = {
       return response.head_block_num !== undefined
     }
 
-    if (isUtxoBasedNetwork(network) || isEvmBasedNetwork(network) || isTronNetwork(network)) {
+    if (isSameGetBlockNetwork(network)) {
       return response.result !== undefined
     }
 

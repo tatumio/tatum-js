@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "4.1.0",
+  "version": "4.1.1",
   "description": "Tatum JS SDK",
   "author": "Tatum",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -20,7 +20,7 @@
   "types": "./dist/src/main.d.ts",
   "scripts": {
     "cli": "ts-node src/cli.ts",
-    "lint": "eslint src/ --ext .js,.jsx,.ts,.tsx && prettier --write src/",
+    "lint": "eslint --fix src/ --ext .js,.jsx,.ts,.tsx && prettier --write src/",
     "test": "jest --forceExit",
     "clean": "rm -rf dist build package",
     "ts-node": "ts-node",

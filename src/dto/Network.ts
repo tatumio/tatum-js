@@ -224,6 +224,7 @@ export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
 export const EOS_LOAD_BALANCER_NETWORKS = [Network.EOS]
 export const XRP_LOAD_BALANCER_NETWORKS = [Network.XRP, Network.XRP_TESTNET]
 export const NATIVE_EVM_LOAD_BALANCER_NETWORKS = [Network.KLAYTN, Network.KLAYTN_BAOBAB]
+export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -232,6 +233,7 @@ export const LOAD_BALANCER_NETWORKS = [
   ...EOS_LOAD_BALANCER_NETWORKS,
   ...XRP_LOAD_BALANCER_NETWORKS,
   ...NATIVE_EVM_LOAD_BALANCER_NETWORKS,
+  ...SOLANA_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -244,7 +246,6 @@ export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
   Network.CHILIZ,
 ]
 
-export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
 export const TRON_NETWORKS = [Network.TRON, Network.TRON_SHASTA]
 export const EOS_NETWORKS = [Network.EOS, Network.EOS_TESTNET]
 
@@ -260,7 +261,7 @@ export const isDataApiEnabledNetwork = (network: Network) => DATA_API_NETWORKS.i
 
 export const isDataApiUtxoEnabledNetwork = (network: Network) => DATA_API_UTXO_NETWORKS.includes(network)
 
-export const isSolanaEnabledNetwork = (network: Network) => SOLANA_NETWORKS.includes(network)
+export const isSolanaNetwork = (network: Network) => SOLANA_NETWORKS.includes(network)
 
 export const isTronNetwork = (network: Network) => TRON_NETWORKS.includes(network)
 
@@ -283,6 +284,8 @@ export const isXrpLoadBalancerNetwork = (network: Network) => XRP_LOAD_BALANCER_
 
 export const isNativeEvmLoadBalancerNetwork = (network: Network) =>
   NATIVE_EVM_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isSameGetBlockNetwork = (network: Network) => isUtxoBasedNetwork(network) || isEvmBasedNetwork(network) || isTronNetwork(network) || isSolanaNetwork(network)
 
 export enum MappedNetwork {
   HORIZEN_EON = 'horizen-eon-mainnet',
