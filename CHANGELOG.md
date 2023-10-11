@@ -1,3 +1,7 @@
+## [4.0.19] - 2023.10.11
+### Added
+- Updated loadbalancer logging with detailed logs
+
 ## [4.0.18] - 2023.10.11
 ### Fixed
 - Update debug storage range parameters. The `debugStorageRangeAt` function in the EvmRpc now takes a number instead of a string for the `maxResults` parameter.
