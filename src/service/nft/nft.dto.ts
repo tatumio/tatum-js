@@ -155,7 +155,7 @@ export interface NftAddressBalance extends NftTokenDetail {
   /**
    * Block number of the last balance update.
    */
-  lastUpdatedBlock: number
+  lastUpdatedBlockNumber: number
 }
 
 export interface GetAllNftTransactionsQuery extends GetAllNftTransactionsQueryDetails {

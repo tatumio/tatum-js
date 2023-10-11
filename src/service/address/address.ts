@@ -326,8 +326,8 @@ export class Address {
         balance: tokenBalance.balance,
         type: tokenBalance.type,
       }
-      if (tokenBalance.lastUpdatedBlock) {
-        item.lastUpdatedBlock = tokenBalance.lastUpdatedBlock
+      if (tokenBalance.lastUpdatedBlockNumber) {
+        item.lastUpdatedBlockNumber = tokenBalance.lastUpdatedBlockNumber
       }
       if (details[i].symbol) {
         item.asset = details[i].symbol
