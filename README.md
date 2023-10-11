@@ -57,6 +57,7 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Chiliz RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/chiliz-rpc-documentation)                     |
 | [Ethereum Classic RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-classic-rpc-documentation) |
 | [Klaytn RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/klaytn-rpc-documentation)                     |
+| [Avalanche RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/avalanche-rpc-documentation)               |
 | **UTXO Blockchains**                                                                                      |
 | [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)                  |
 | [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation)                |
@@ -435,6 +436,7 @@ This section provides a list of various blockchain network status pages, powered
 | [klaytn-mainnet-archive.status.tatum.io](https://klaytn-mainnet-archive.status.tatum.io)                     |
 | [klaytn-baobab.status.tatum.io](https://klaytn-baobab.status.tatum.io)                                       |
 | [klaytn-baobab-archive.status.tatum.io](https://klaytn-baobab-archive.status.tatum.io)                       |
+| [avalanche-c-mainnet-archive.status.tatum.io](https://avalanche-c-mainnet-archive.status.tatum.io)           |
 
 
 ### Load Balancer
@@ -528,6 +530,7 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/klaytn-baobab/list.json](https://rpc.tatum.io/klaytn-baobab/list.json)                                       |
 | [rpc.tatum.io/klaytn-baobab-archive/list.json](https://rpc.tatum.io/klaytn-baobab-archive/list.json)                       |
 | [rpc.tatum.io/bitcoin-cash-mainnet/list.json](https://rpc.tatum.io/bitcoin-cash-mainnet/list.json)                        |
+| [rpc.tatum.io/avalanche-c-mainnet-archive/list.json](https://rpc.tatum.io/avalanche-c-mainnet-archive/list.json)                        |
 
 
 Following pattern defines the URL for fetching the list of nodes:
