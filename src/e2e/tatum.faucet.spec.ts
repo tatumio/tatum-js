@@ -12,8 +12,8 @@ describe('Tatum faucet', () => {
       })
       const res = await tatum.faucet.fund(SEPOLIA_VAULT)
 
-      expect(res.error?.code).toBe(EXPECTED_RES)
       await tatum.destroy()
+      expect(res.error?.code).toBe(EXPECTED_RES)
     })
 
     it('should get error due to unsupported mainnet', async () => {
@@ -22,8 +22,8 @@ describe('Tatum faucet', () => {
       })
       const res = await tatum.faucet.fund(SEPOLIA_VAULT)
 
-      expect(res.error?.code).toBe(EXPECTED_RES)
       await tatum.destroy()
+      expect(res.error?.code).toBe(EXPECTED_RES)
     })
   })
 
@@ -36,8 +36,8 @@ describe('Tatum faucet', () => {
       })
       const res = await tatum.faucet.fund(SEPOLIA_VAULT)
 
-      expect(res.error?.code).toBe(EXPECTED_RES)
       await tatum.destroy()
+      expect(res.error?.code).toBe(EXPECTED_RES)
     })
   })
 })
