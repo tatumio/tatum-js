@@ -46,10 +46,6 @@ export interface MintNft {
    */
   to: string
   /**
-   * The URL pointing to the NFT metadata; for more information, see EIP-721
-   */
-  url: string
-  /**
    * Smart contract address of the NFT collection
    */
   contractAddress: string
@@ -61,6 +57,27 @@ export interface MintNft {
    * Address of the NFT collection minter, this is optional and defaults to the owner address
    */
   minter?: string
+}
+
+export interface MintNftWithUrl extends MintNft {
+  /**
+   * The URL pointing to the NFT metadata; for more information, see EIP-721
+   */
+  url: string
+}
+
+export interface MintNftWithMetadata extends MintNft {
+  /**
+   * File to be uploaded as NFT metadata
+   */
+  file: BlobPart
+  /**
+   * NFT metadata to be stored on IPFS along with the file
+   */
+  metadata: {
+    name: string
+    description?: string
+  } & Record<string, unknown>
 }
 
 export interface MetadataResponse {

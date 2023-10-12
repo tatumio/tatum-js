@@ -105,4 +105,11 @@ export const ErrorUtils = {
       typeof (e as Record<string, unknown>).message === 'string'
     )
   },
+  toErrorResponse<T>(error: ErrorWithMessage): ResponseDto<T> {
+    return {
+      data: null as unknown as T,
+      status: Status.ERROR,
+      error: error,
+    }
+  },
 }

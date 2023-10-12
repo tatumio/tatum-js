@@ -34,7 +34,10 @@ export class TatumConnector {
   public async uploadFile<RESPONSE>(request: FileUploadRequest) {
     const formData = new FormData()
     formData.append('file', new Blob([request.body]))
-    return this.request<RESPONSE>({ ...request, method: 'POST', body: formData }, 0)
+    return this.request<RESPONSE>(
+      { ...request, method: 'POST', body: formData, basePath: Constant.TATUM_API_URL.V3 },
+      0,
+    )
   }
 
   private async request<
