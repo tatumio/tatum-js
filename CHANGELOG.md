@@ -1,3 +1,6 @@
+## [4.1.2] - 2023.10.12
+### Added
+- Added `walletProvider` to TatumSdkChain class so any chain can support wallet extensions.
 ## [4.1.1] - 2023.10.11
 ### Added
 - Added RPC support for the SOLANA network. Users can now make RPC calls to these network using the `Network.SOLANA` network.
