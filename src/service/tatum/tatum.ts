@@ -20,6 +20,7 @@ import {
 } from '../extensions'
 import { Faucet } from '../faucet'
 import { FeeEvm, FeeUtxo } from '../fee'
+import { Ipfs } from '../ipfs'
 import { Nft, NftTezos } from '../nft'
 import { Notification } from '../notification'
 import { Rates } from '../rate'
@@ -85,6 +86,7 @@ export class BaseTatumSdk extends TatumSdkChain {
   address: Address
   rates: Rates
   faucet: Faucet
+  ipfs: Ipfs //TODO maybe not for all chains
 
   constructor(id: string) {
     super(id)
@@ -94,6 +96,7 @@ export class BaseTatumSdk extends TatumSdkChain {
     this.address = Container.of(id).get(Address)
     this.rates = Container.of(id).get(Rates)
     this.faucet = Container.of(id).get(Faucet)
+    this.ipfs = Container.of(id).get(Ipfs)
   }
 }
 

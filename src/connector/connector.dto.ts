@@ -1,5 +1,5 @@
 export type DefaultParamsType = { [key: string]: string | number | boolean | undefined }
-export type DefaultBodyType = object | object[]
+export type DefaultBodyType = object | object[] | FormData
 
 export interface GetUrl<PARAMS = DefaultParamsType> {
   path?: string
@@ -10,4 +10,8 @@ export interface GetUrl<PARAMS = DefaultParamsType> {
 export interface SdkRequest<PARAMS = DefaultParamsType, BODY = DefaultBodyType> extends GetUrl<PARAMS> {
   body?: BODY
   method?: string
+}
+
+export interface FileUploadRequest<PARAMS = DefaultParamsType> extends SdkRequest<PARAMS, BlobPart> {
+  body: BlobPart
 }
