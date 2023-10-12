@@ -153,6 +153,14 @@ Access the latest crypto exchange rates and supported currency information to st
 | [Supported Crypto Currencies](https://docs.tatum.io/docs/exchange-rates/supported-crypto-currencies) |
 | [Supported Fiats](https://docs.tatum.io/docs/exchange-rates/supported-fiats) |
 
+### ⛽ Faucets
+
+Request testnet token sums of cryptocurrency from our [Faucets](http://faucets.tatum.io).
+
+| Documentation |
+| ----- |
+| [Get testnet native tokens](https://docs.tatum.io/docs/faucets/fund) |
+
 
 ### 📘 Getting Started with TatumSDK
 
@@ -405,6 +413,8 @@ if (res.data) {
 // Destroy Tatum SDK - needed for stopping background jobs
 await tatum.destroy()
 ```
+
+For more details, check out the [Faucets documentation](https://docs.tatum.io/docs/faucets).
 
 ## RPC calls
 All RPC calls are implemented in the `tatum.rpc.*` submodule.
