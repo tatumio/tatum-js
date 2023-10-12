@@ -39,7 +39,11 @@ export interface ITatumSdkChain {
 }
 
 export abstract class TatumSdkChain implements ITatumSdkChain {
-  protected constructor(readonly id: string) {}
+  walletProvider: WalletProvider
+
+  protected constructor(readonly id: string) {
+    this.walletProvider = Container.of(id).get(WalletProvider)
+  }
 
   extension<T extends TatumSdkExtension>(
     type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T,
@@ -79,7 +83,6 @@ export class BaseTatumSdk extends TatumSdkChain {
   nft: Nft
   token: Token
   address: Address
-  walletProvider: WalletProvider
   rates: Rates
   faucet: Faucet
 
@@ -88,7 +91,6 @@ export class BaseTatumSdk extends TatumSdkChain {
     this.notification = Container.of(id).get(Notification)
     this.nft = Container.of(id).get(Nft)
     this.token = Container.of(id).get(Token)
-    this.walletProvider = Container.of(id).get(WalletProvider)
     this.address = Container.of(id).get(Address)
     this.rates = Container.of(id).get(Rates)
     this.faucet = Container.of(id).get(Faucet)
@@ -192,7 +194,6 @@ export class Tron extends TatumSdkChain {
   nft: Nft
   token: Token
   address: AddressTron
-  walletProvider: WalletProvider
   rates: Rates
   rpc: TronRpcSuite
 
@@ -201,7 +202,6 @@ export class Tron extends TatumSdkChain {
     this.notification = Container.of(id).get(Notification)
     this.nft = Container.of(id).get(Nft)
     this.token = Container.of(id).get(Token)
-    this.walletProvider = Container.of(id).get(WalletProvider)
     this.address = Container.of(id).get(AddressTron)
     this.rates = Container.of(id).get(Rates)
     this.rpc = Utils.getRpc<TronRpcSuite>(id, Container.of(id).get(CONFIG))
