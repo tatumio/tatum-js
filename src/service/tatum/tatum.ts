@@ -86,7 +86,7 @@ export class BaseTatumSdk extends TatumSdkChain {
   address: Address
   rates: Rates
   faucet: Faucet
-  ipfs: Ipfs //TODO maybe not for all chains
+  ipfs: Ipfs
 
   constructor(id: string) {
     super(id)
