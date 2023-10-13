@@ -60,7 +60,6 @@ import {
   TatumConfig,
   Tezos,
   Tron,
-  UtxoLoadBalancerRpc,
   UtxoRpc,
   Vechain,
   Xdc,
@@ -77,6 +76,7 @@ import { SolanaLoadBalancerRpc } from '../service/rpc/other/SolanaLoadBalancerRp
 import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
 import { Constant } from './constant'
 import { CONFIG } from './di.tokens'
+import { UtxoLoadBalancerRpc } from "../service/rpc/utxo/UtxoLoadBalancerRpc"
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
