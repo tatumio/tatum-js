@@ -1,6 +1,11 @@
+## [4.1.3] - 2023.10.12
+### Added
+- Added IPFS upload and NFT mint in one action. Metadata will be prepared and uploaded automatically
+
 ## [4.1.2] - 2023.10.12
 ### Added
 - Added `walletProvider` to TatumSdkChain class so any chain can support wallet extensions.
+
 ## [4.1.1] - 2023.10.11
 ### Added
 - Added RPC support for the SOLANA network. Users can now make RPC calls to these network using the `Network.SOLANA` network.

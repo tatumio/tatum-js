@@ -9,7 +9,8 @@ import {
   isEvmArchiveNonArchiveLoadBalancerNetwork,
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
-  isNativeEvmLoadBalancerNetwork, isSameGetBlockNetwork,
+  isNativeEvmLoadBalancerNetwork,
+  isSameGetBlockNetwork,
   isSolanaNetwork,
   isTronLoadBalancerNetwork,
   isTronNetwork,
@@ -72,10 +73,10 @@ import { TronLoadBalancerRpc } from '../service/rpc/evm/TronLoadBalancerRpc'
 import { TronRpc } from '../service/rpc/evm/TronRpc'
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
+import { SolanaLoadBalancerRpc } from '../service/rpc/other/SolanaLoadBalancerRpc'
 import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
 import { Constant } from './constant'
 import { CONFIG } from './di.tokens'
-import { SolanaLoadBalancerRpc } from '../service/rpc/other/SolanaLoadBalancerRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
@@ -336,9 +337,13 @@ export const Utils = {
     return JSON.stringify(headersObj)
   },
   getHeaders: (id: string) => {
+    const basicHeaders = Utils.getBasicHeaders(id)
+    basicHeaders.set('Content-Type', 'application/json')
+    return basicHeaders
+  },
+  getBasicHeaders: (id: string) => {
     const config = Container.of(id).get(CONFIG)
     const headers = new Headers({
-      'Content-Type': 'application/json',
       'x-ttm-sdk-version': version,
       'x-ttm-sdk-product': 'JS',
       'x-ttm-sdk-debug': `${config.verbose}`,

@@ -3,6 +3,7 @@ import { ApiBalanceRequest } from '../../api/api.dto'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { AddressBalanceDetails } from '../../dto'
 import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
+import { Ipfs } from '../ipfs'
 import { TatumConfig } from '../tatum'
 import {
   CheckTokenOwner,
@@ -14,7 +15,8 @@ import {
   GetCollection,
   GetNftMetadata,
   GetTokenOwner,
-  MintNft,
+  MintNftWithMetadata,
+  MintNftWithUrl,
   NftAddressBalance,
   NftTokenDetail,
   NftTransaction,
@@ -65,10 +67,12 @@ export class NftTezos {
 export class Nft {
   private readonly connector: TatumConnector
   private readonly config: TatumConfig
+  private readonly ipfs: Ipfs
 
   constructor(private readonly id: string) {
     this.config = Container.of(this.id).get(CONFIG)
     this.connector = Container.of(this.id).get(TatumConnector)
+    this.ipfs = Container.of(this.id).get(Ipfs)
   }
 
   /**
@@ -120,12 +124,51 @@ export class Nft {
    * @param body Body of the request.
    * @returns ResponseDto<{txId: string}> Transaction ID of the mint transaction. {
    */
-  async mintNft(body: MintNft): Promise<ResponseDto<{ txId: string }>> {
+  async mintNft(body: MintNftWithUrl): Promise<ResponseDto<{ txId: string }>> {
     return ErrorUtils.tryFail(() =>
       this.connector.post<{ txId: string }>({
         path: `contract/erc721/mint`,
         body: {
           ...body,
+          chain: this.config.network,
+        },
+      }),
+    )
+  }
+
+  /**
+   * Mint new NFT (using ERC-721 compatible smart contract).
+   * This operation uploads file to IPFS, prepares and uploads metadata to IPFS and mints nft using prepared metadata's IPFS url.
+   * You don't need to specify the default minter of the collection, as the owner of the collection is the default minter.
+   * You don't have to have any funds on the address, as the nft is minted by Tatum.
+   * @param body Body of the request.
+   * @returns ResponseDto<{txId: string}> Transaction ID of the mint transaction. {
+   */
+  async mintNftWithMetadata(body: MintNftWithMetadata): Promise<ResponseDto<{ txId: string }>> {
+    const imageUpload = await this.ipfs.uploadFile({ file: body.file })
+    if (imageUpload.error) {
+      return ErrorUtils.toErrorResponse(imageUpload.error)
+    }
+
+    const metadataUpload = await this.ipfs.uploadFile({
+      file: Buffer.from(
+        JSON.stringify({
+          ...body.metadata,
+          image: `ipfs://${imageUpload.data.ipfsHash}`,
+        }),
+      ),
+    })
+
+    if (metadataUpload.error) {
+      return ErrorUtils.toErrorResponse(metadataUpload.error)
+    }
+
+    return ErrorUtils.tryFail(() =>
+      this.connector.post<{ txId: string }>({
+        path: `contract/erc721/mint`,
+        body: {
+          ...body,
+          url: `ipfs://${metadataUpload.data.ipfsHash}`,
           chain: this.config.network,
         },
       }),

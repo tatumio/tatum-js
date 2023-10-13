@@ -2,7 +2,7 @@ import { Container, Service } from 'typedi'
 import { JsonRpcCall } from '../dto'
 import { ApiVersion } from '../service'
 import { CONFIG, Constant, Utils } from '../util'
-import { DefaultBodyType, DefaultParamsType, GetUrl, SdkRequest } from './connector.dto'
+import { DefaultBodyType, DefaultParamsType, FileUploadRequest, GetUrl, SdkRequest } from './connector.dto'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -31,6 +31,15 @@ export class TatumConnector {
     return this.request<RESPONSE>({ ...request, method: 'DELETE' })
   }
 
+  public async uploadFile<RESPONSE>(request: FileUploadRequest) {
+    const formData = new FormData()
+    formData.append('file', new Blob([request.body]))
+    return this.request<RESPONSE>(
+      { ...request, method: 'POST', body: formData, basePath: Constant.TATUM_API_URL.V3 },
+      0,
+    )
+  }
+
   private async request<
     RESPONSE,
     PARAMS extends DefaultParamsType = DefaultParamsType,
@@ -41,11 +50,20 @@ export class TatumConnector {
     externalUrl?: string,
   ): Promise<RESPONSE> {
     const url = externalUrl || this.getUrl({ path, params, basePath })
-    const headers = await Utils.getHeaders(this.id)
+    const isUpload = body && body instanceof FormData
+    const headers = isUpload ? Utils.getBasicHeaders(this.id) : Utils.getHeaders(this.id)
+
+    let requestBody: string | FormData | null = null
+    if (isUpload) {
+      requestBody = body
+    } else if (body) {
+      requestBody = JSON.stringify(body)
+    }
+
     const request: RequestInit = {
-      headers,
+      headers: headers,
       method,
-      body: body ? JSON.stringify(body) : null,
+      body: requestBody,
     }
 
     const start = Date.now()
