@@ -1,3 +1,7 @@
+## [4.1.3] - 2023.10.13
+### Added
+- Addition of `getRpc<T>(): T` to `ITatumSdkContainer` for best RPC support in extensions.
+
 ## [4.1.3] - 2023.10.12
 ### Added
 - Added IPFS upload and NFT mint in one action. Metadata will be prepared and uploaded automatically

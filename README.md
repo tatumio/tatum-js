@@ -685,12 +685,12 @@ Tatum SDK supports wallet provider extensions for various wallets. You can use t
 
 ```typescript
 import { TatumSDK, Ethereum, Network, ApiVersion } from '@tatumio/tatum'
-import { WalletProviderDemo } from "@tatumio/wallet-provider-demo"
+import { EvmWalletProvider } from "@tatumio/evm-wallet-provider"
 
 const tatumSdk = await TatumSDK.init<Ethereum>({
     network: Network.ETHEREUM_SEPOLIA,
     configureWalletProviders: [
-        WalletProviderDemo,
+        EvmWalletProvider,
     ]
 })
 ```
@@ -698,7 +698,7 @@ const tatumSdk = await TatumSDK.init<Ethereum>({
 Usage for wallet providers is similar to the extensions.
 
 ```typescript
-await tatumSdk.walletProvider.use(WalletProviderDemo).connect()
+await tatumSdk.walletProvider.use(EvmWalletProvider).getWallet()
 ````
 🔍 Check out our [built-in MetaMask wallet provider](./src/service/walletProvider/metaMask/metamask.wallet.provider.ts)
 
