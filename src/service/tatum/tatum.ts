@@ -35,7 +35,8 @@ import { ApiVersion, TatumConfig } from './tatum.dto'
  */
 export interface ITatumSdkChain {
   extension<T extends TatumSdkExtension>(
-    type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    type: new (tatumSdkContainer: ITatumSdkContainer, ...args: any[]) => T,
   ): T
 }
 

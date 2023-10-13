@@ -1,4 +1,8 @@
-## [4.1.3] - 2023.10.13
+## [4.1.5] - 2023.10.13
+### Changed
+- Loosen types for extension usage to better support optional configs.
+
+## [4.1.4] - 2023.10.13
 ### Added
 - Addition of `getRpc<T>(): T` to `ITatumSdkContainer` for best RPC support in extensions.
 
