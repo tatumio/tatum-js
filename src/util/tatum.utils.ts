@@ -2,17 +2,21 @@ import { Network } from '../dto'
 import { Constant } from './constant'
 
 export const TatumUtils = {
-  getChainId: (network: Network): number | undefined => {
+  getChainId: (network: Network): number => {
     if (network in Constant.NETWORK.ChainId) {
       return Constant.NETWORK.ChainId[network as keyof typeof Constant.NETWORK.ChainId]
     }
-    return undefined
+    throw new Error(`Tatum Network to ChainId for network ${network} does not exist`)
   },
-  getNetwork: (chainId: number): keyof typeof Constant.NETWORK.ChainId | undefined => {
+  getNetwork: (chainId: number): Network => {
     if (Object.keys(chainIdToNetworkCache).length === 0) {
       buildChainIdToNetworkCache()
     }
-    return chainIdToNetworkCache[chainId] || undefined
+    const network = chainIdToNetworkCache[chainId]
+    if (!network) {
+      throw new Error(`ChainId to Tatum Network for chainId ${chainId} does not exist`)
+    }
+    return network
   },
 }
 
