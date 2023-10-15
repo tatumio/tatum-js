@@ -51,7 +51,7 @@ describe('Network to chainId mapping check', () => {
       const chainId = TatumUtils.getChainId(network)
 
       expect(chainId).toBeGreaterThan(0)
-      expect(TatumUtils.getNetwork(chainId as number)).toBe(network)
+      expect(TatumUtils.getNetwork(chainId)).toBe(network)
     })
   }
 })

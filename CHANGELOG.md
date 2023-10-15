@@ -1,3 +1,7 @@
+## [4.1.7] - 2023.10.15
+### Changed
+- `TatumUtils` chainId <-> `Network` mappings always return usable value or throw error for ease of use.
+
 ## [4.1.6] - 2023.10.15
 ### Added
 - `TatumUtils` added with access to chainId <-> `Network` mapping
