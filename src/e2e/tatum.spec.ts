@@ -1,5 +1,6 @@
-import { Network } from '../dto'
+import { EVM_BASED_NETWORKS, Network } from '../dto'
 import { Bitcoin, TatumSDK } from '../service'
+import { TatumUtils } from '../util'
 
 describe('Tatum Init', () => {
   describe('IP auth', () => {
@@ -41,4 +42,16 @@ describe('Tatum Init', () => {
       await mainnet.destroy()
     })
   })
+})
+describe('Network to chainId mapping check', () => {
+  const networks = Object.values(EVM_BASED_NETWORKS)
+
+  for (const network of networks) {
+    it(`${network} should have chainId mapped`, async () => {
+      const chainId = TatumUtils.getChainId(network)
+
+      expect(chainId).toBeGreaterThan(0)
+      expect(TatumUtils.getNetwork(chainId as number)).toBe(network)
+    })
+  }
 })

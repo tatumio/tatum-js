@@ -1,3 +1,7 @@
+## [4.1.6] - 2023.10.15
+### Added
+- `TatumUtils` added with access to chainId <-> `Network` mapping
+
 ## [4.1.5] - 2023.10.13
 ### Changed
 - Loosen types for extension usage to better support optional configs.
