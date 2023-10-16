@@ -34,7 +34,7 @@ const prepareTransferFromCustodialWallet = async (
   getContractDecimals: (contractAddress: string, provider?: string, testnet?: boolean) => Promise<number>,
   tronWeb: ITronWeb,
   provider?: string,
-  decimals = 18,
+  decimals = 6,
   testnet = false,
 ) => {
   const methodName = 'transfer(address,uint256,address,uint256,uint256)'
@@ -160,7 +160,7 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
           testnet?: boolean,
         ) => Promise<number>,
         provider?: string,
-        decimals = 18,
+        decimals = 6,
         testnet = false,
       ) =>
         prepareTransferFromCustodialWallet(
@@ -223,7 +223,7 @@ export const tronCustodial = (args: { tronWeb: ITronWeb }) => {
           testnet?: boolean,
         ) => Promise<number>,
         provider?: string,
-        decimals = 18,
+        decimals = 6,
         testnet = false,
       ) => {
         if (body.signatureId) {
