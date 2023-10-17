@@ -58,6 +58,7 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Ethereum Classic RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-classic-rpc-documentation) |
 | [Klaytn RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/klaytn-rpc-documentation)                     |
 | [Avalanche RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/avalanche-rpc-documentation)               |
+| [Celo RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/celo-rpc-documentation)                         |
 | **UTXO Blockchains**                                                                                      |
 | [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)                  |
 | [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation)                |
@@ -468,7 +469,9 @@ This section provides a list of various blockchain network status pages, powered
 | [klaytn-baobab-archive.status.tatum.io](https://klaytn-baobab-archive.status.tatum.io)                       |
 | [avalanche-c-mainnet-archive.status.tatum.io](https://avalanche-c-mainnet-archive.status.tatum.io)           |
 | [solana-mainnet.status.tatum.io](https://solana-mainnet.status.tatum.io)                                     |
-| [solana-devnet.status.tatum.io](https://solana-devnet.status.tatum.io)                         |
+| [solana-devnet.status.tatum.io](https://solana-devnet.status.tatum.io)                                       |
+| [celo-mainnet-archive.status.tatum.io](https://celo-mainnet-archive.status.tatum.io)                         |
+| [celo-testnet-archive.status.tatum.io](https://celo-testnet-archive.status.tatum.io)                         |
 
 
 ### Load Balancer
@@ -565,6 +568,8 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/avalanche-c-mainnet-archive/list.json](https://rpc.tatum.io/avalanche-c-mainnet-archive/list.json)           |
 | [rpc.tatum.io/solana-mainnet/list.json](https://rpc.tatum.io/solana-mainnet/list.json)                                     |
 | [rpc.tatum.io/solana-devnet/list.json](https://rpc.tatum.io/solana-devnet/list.json)                                       |
+| [rpc.tatum.io/celo-mainnet-archive/list.json](https://rpc.tatum.io/celo-mainnet-archive/list.json)                                |
+| [rpc.tatum.io/celo-testnet-archive/list.json](https://rpc.tatum.io/celo-testnet-archive/list.json)                                |
 
 
 Following pattern defines the URL for fetching the list of nodes:

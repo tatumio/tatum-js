@@ -218,6 +218,8 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.CHILIZ,
   Network.ETHEREUM_CLASSIC,
   Network.AVALANCHE_C,
+  Network.CELO,
+  Network.CELO_ALFAJORES
 ]
 
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
