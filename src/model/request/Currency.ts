@@ -94,6 +94,7 @@ export enum Currency {
   ZCASH = 'ZCASH',
   ZEC = 'ZEC',
   ZEN = 'ZEN',
+  CHZ = 'CHZ',
 }
 
 export const ERC20_CURRENCIES = [
