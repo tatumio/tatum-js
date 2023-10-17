@@ -24,6 +24,7 @@ export enum Blockchain {
   KLAY = 'KLAY',
   TEZOS = 'TEZOS',
   EON = 'EON',
+  CHILIZ = 'CHILIZ',
 }
 
 export const EvmBasedBlockchains = [
@@ -34,6 +35,7 @@ export const EvmBasedBlockchains = [
   Blockchain.POLYGON,
   Blockchain.KCS,
   Blockchain.EON,
+  Blockchain.CHILIZ,
 ]
 
 // @TODO tmp solution
@@ -50,3 +52,4 @@ export type EvmBasedBlockchain =
   | Blockchain.KLAY
   | Blockchain.XDC
   | Blockchain.EON
+  | Blockchain.CHILIZ
