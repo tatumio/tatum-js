@@ -285,6 +285,8 @@ export const Utils = {
         return AddressEventNotificationChain.TEZOS
       case Network.HORIZEN_EON:
         return AddressEventNotificationChain.EON
+      case Network.CHILIZ:
+        return AddressEventNotificationChain.CHZ
       default:
         throw new Error(`Network ${network} is not supported.`)
     }
