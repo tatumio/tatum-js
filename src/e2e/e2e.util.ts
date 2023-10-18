@@ -1,11 +1,10 @@
 import {
   AddressBasedNotification,
   AddressBasedNotificationDetail,
-  BaseEvmClass,
   BlockBasedNotification,
   BlockBasedNotificationDetail,
   ContractBasedNotification,
-  ContractBasedNotificationDetail,
+  ContractBasedNotificationDetail, FullSdk,
   Network,
 } from '../service'
 import { ResponseDto } from '../util'
@@ -68,7 +67,7 @@ export const e2eUtil = {
       }
     },
     testAddressBasedSubscription: async (
-      tatum: BaseEvmClass,
+      tatum: FullSdk,
       address: string,
       func: (
         addressBasedNotificationDetail: AddressBasedNotificationDetail,
@@ -93,7 +92,7 @@ export const e2eUtil = {
       return data.id
     },
     testContractBasedSubscription: async (
-      tatum: BaseEvmClass,
+      tatum: FullSdk,
       contractAddress: string,
       func: (
         contractBasedNotificationDetail: ContractBasedNotificationDetail,
@@ -122,7 +121,7 @@ export const e2eUtil = {
       await tatum.destroy()
     },
     testBlockBasedSubscription: async (
-      tatum: BaseEvmClass,
+      tatum: FullSdk,
       func: (
         blockBasedNotificationDetail: BlockBasedNotificationDetail,
       ) => Promise<ResponseDto<BlockBasedNotification>>,

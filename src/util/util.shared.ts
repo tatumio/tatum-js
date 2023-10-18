@@ -29,7 +29,6 @@ import {
   ArbitrumOne,
   Aurora,
   AvalancheC,
-  BaseTatumSdk,
   BinanceSmartChain,
   Bitcoin,
   BitcoinCash,
@@ -43,7 +42,7 @@ import {
   EvmLoadBalancerRpc,
   EvmRpc,
   Fantom,
-  Flare,
+  Flare, FullSdk,
   GenericRpc,
   Gnosis,
   Haqq,
@@ -483,7 +482,7 @@ export const Utils = {
       case Network.CHILIZ:
         return new Chiliz(id) as T
       default:
-        return new BaseTatumSdk(id) as T
+        return new FullSdk(id) as T
     }
   },
 

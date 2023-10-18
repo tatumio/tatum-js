@@ -1,5 +1,5 @@
 import process from 'process'
-import { BaseEvmClass, Network, RpcNodeType, TatumSDK } from '../../../service'
+import { BaseEvm, Network, RpcNodeType, TatumSDK } from '../../../service'
 import { EvmE2eUtils } from './evm.e2e.utils'
 
 describe('Ethereum', () => {
@@ -28,7 +28,7 @@ describe('Ethereum', () => {
   })
 
   it('custom rpc provider', async () => {
-    const tatum = await TatumSDK.init<BaseEvmClass>({
+    const tatum = await TatumSDK.init<BaseEvm>({
       network: Network.ETHEREUM,
       rpc: {
         nodes: [

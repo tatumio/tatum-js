@@ -1,6 +1,6 @@
 import { BigNumber } from 'bignumber.js'
 import { Network } from '../../../dto'
-import { BaseEvmClass, TatumSDK } from '../../../service'
+import { BaseEvm, TatumSDK } from '../../../service'
 import { RpcE2eUtils } from '../rpc.e2e.utils'
 
 interface evmE2eI {
@@ -16,7 +16,7 @@ interface evmE2eI {
 }
 
 export const EvmE2eUtils = {
-  initTatum: async <T extends BaseEvmClass>(network: Network, apiKey?: string) =>
+  initTatum: async <T extends BaseEvm>(network: Network, apiKey?: string) =>
     TatumSDK.init<T>(RpcE2eUtils.initConfig(network, apiKey)),
   e2e: (evmE2eI: evmE2eI) => {
     const { network, expected, data, skipEstimateGas, apiKey } = evmE2eI
