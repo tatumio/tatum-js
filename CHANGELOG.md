@@ -1,3 +1,7 @@
+## [4.1.10] - 2023.10.18
+### Changed
+- Chiliz notification access
+
 ## [4.1.9] - 2023.10.18
 ### Added
 - Chiliz notification support
