@@ -78,7 +78,7 @@ export class Optimism extends BaseEvm {}
 export class Palm extends BaseEvm {}
 export class Vechain extends BaseEvm {}
 export class Xdc extends BaseEvm {}
-export class Chiliz extends BaseEvm {}
+export class Chiliz extends NotificationEvm {}
 
 export class HorizenEon extends FaucetEvm {
   address: Address
