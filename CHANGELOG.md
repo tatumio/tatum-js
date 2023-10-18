@@ -1,3 +1,7 @@
+## [4.1.9] - 2023.10.18
+### Added
+- Chiliz notification support
+
 ## [4.1.8] - 2023.10.18
 ### Changed
 - Make Blockchain Classes type safe
