@@ -4,7 +4,8 @@ import {
   BlockBasedNotification,
   BlockBasedNotificationDetail,
   ContractBasedNotification,
-  ContractBasedNotificationDetail, FullSdk,
+  ContractBasedNotificationDetail,
+  FullSdk,
   Network,
 } from '../service'
 import { ResponseDto } from '../util'

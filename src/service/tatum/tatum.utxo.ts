@@ -1,18 +1,17 @@
-import { UtxoBasedRpcSuite } from '../../dto'
-import { Ipfs } from '../ipfs'
-import { Rates } from '../rate'
-import { CONFIG, Utils } from '../../util'
 import { Container } from 'typedi'
-import { FeeUtxo } from '../fee'
-import { Notification } from '../notification'
+import { UtxoBasedRpcSuite } from '../../dto'
+import { CONFIG, Utils } from '../../util'
 import { Address } from '../address'
+import { FeeUtxo } from '../fee'
+import { Ipfs } from '../ipfs'
+import { Notification } from '../notification'
+import { Rates } from '../rate'
 import { TatumSdkChain } from './tatum'
 
 export abstract class BaseUtxo extends TatumSdkChain {
   rpc: UtxoBasedRpcSuite
   ipfs: Ipfs
   rates: Rates
-
 
   constructor(id: string) {
     super(id)

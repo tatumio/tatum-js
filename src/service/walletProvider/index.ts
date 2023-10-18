@@ -1,2 +1,2 @@
-export * from './wallet.provider'
 export * from './metaMask'
+export * from './wallet.provider'

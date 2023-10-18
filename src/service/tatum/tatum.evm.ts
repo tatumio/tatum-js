@@ -1,17 +1,16 @@
-import { Notification } from '../notification'
-import { Nft } from '../nft'
-import { Token } from '../token'
-import { Rates } from '../rate'
-import { Faucet } from '../faucet'
-import { Ipfs } from '../ipfs'
 import { Container } from 'typedi'
 import { EvmBasedRpcSuite } from '../../dto'
-import { CONFIG, Utils } from '../../util'
-import { FeeEvm } from '../fee'
 import { NativeEvmBasedRpcSuite } from '../../dto/rpc/NativeEvmBasedRpcInterface'
-import { TatumSdkChain } from './tatum'
+import { CONFIG, Utils } from '../../util'
 import { Address } from '../address'
-
+import { Faucet } from '../faucet'
+import { FeeEvm } from '../fee'
+import { Ipfs } from '../ipfs'
+import { Nft } from '../nft'
+import { Notification } from '../notification'
+import { Rates } from '../rate'
+import { Token } from '../token'
+import { TatumSdkChain } from './tatum'
 
 export abstract class BaseEvm extends TatumSdkChain {
   rpc: EvmBasedRpcSuite
@@ -46,7 +45,6 @@ export class NotificationEvm extends BaseEvm {
   }
 }
 
-
 export class FullEvm extends NotificationEvm {
   nft: Nft
   token: Token
@@ -61,7 +59,6 @@ export class FullEvm extends NotificationEvm {
     this.address = Container.of(id).get(Address)
   }
 }
-
 
 // Base class for all EVM based chains
 export class ArbitrumNova extends BaseEvm {}
@@ -106,7 +103,3 @@ export class Ethereum extends FullEvm {}
 export class Polygon extends FullEvm {}
 export class Celo extends FullEvm {}
 export class BinanceSmartChain extends FullEvm {}
-
-
-
-

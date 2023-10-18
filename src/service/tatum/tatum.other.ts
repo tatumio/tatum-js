@@ -1,15 +1,15 @@
-import { SolanaRpcSuite, TronRpcSuite, XrpRpcInterface } from '../../dto'
-import { CONFIG, Utils } from '../../util'
 import { Container } from 'typedi'
-import { TatumSdkChain } from './tatum'
+import { SolanaRpcSuite, TronRpcSuite, XrpRpcInterface } from '../../dto'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
-import { Nft, NftTezos } from '../nft'
+import { CONFIG, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
-import { Rates } from '../rate'
-import { Ipfs } from '../ipfs'
-import { Token } from '../token'
-import { Notification } from '../notification'
 import { Faucet } from '../faucet'
+import { Ipfs } from '../ipfs'
+import { Nft, NftTezos } from '../nft'
+import { Notification } from '../notification'
+import { Rates } from '../rate'
+import { Token } from '../token'
+import { TatumSdkChain } from './tatum'
 
 export abstract class BaseOther extends TatumSdkChain {
   ipfs: Ipfs
@@ -102,4 +102,3 @@ export class FullSdk extends TatumSdkChain {
     this.ipfs = Container.of(id).get(Ipfs)
   }
 }
-

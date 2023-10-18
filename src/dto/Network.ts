@@ -285,7 +285,11 @@ export const isXrpLoadBalancerNetwork = (network: Network) => XRP_LOAD_BALANCER_
 export const isNativeEvmLoadBalancerNetwork = (network: Network) =>
   NATIVE_EVM_LOAD_BALANCER_NETWORKS.includes(network)
 
-export const isSameGetBlockNetwork = (network: Network) => isUtxoBasedNetwork(network) || isEvmBasedNetwork(network) || isTronNetwork(network) || isSolanaNetwork(network)
+export const isSameGetBlockNetwork = (network: Network) =>
+  isUtxoBasedNetwork(network) ||
+  isEvmBasedNetwork(network) ||
+  isTronNetwork(network) ||
+  isSolanaNetwork(network)
 
 export enum MappedNetwork {
   HORIZEN_EON = 'horizen-eon-mainnet',

@@ -42,7 +42,8 @@ import {
   EvmLoadBalancerRpc,
   EvmRpc,
   Fantom,
-  Flare, FullSdk,
+  Flare,
+  FullSdk,
   GenericRpc,
   Gnosis,
   Haqq,
@@ -73,9 +74,9 @@ import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
 import { SolanaLoadBalancerRpc } from '../service/rpc/other/SolanaLoadBalancerRpc'
 import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
+import { UtxoLoadBalancerRpc } from '../service/rpc/utxo/UtxoLoadBalancerRpc'
 import { Constant } from './constant'
 import { CONFIG } from './di.tokens'
-import { UtxoLoadBalancerRpc } from "../service/rpc/utxo/UtxoLoadBalancerRpc"
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {

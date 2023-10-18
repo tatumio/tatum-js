@@ -7,9 +7,9 @@ import {
   CreateNftCollection,
 } from '../../../dto/walletProvider'
 import { Constant, Utils } from '../../../util'
-import { ITatumSdkContainer, TatumSdkWalletProvider } from "../../extensions";
-import { TatumConfig } from "../../tatum";
-import { EvmRpc } from "../../rpc";
+import { ITatumSdkContainer, TatumSdkWalletProvider } from '../../extensions'
+import { EvmRpc } from '../../rpc'
+import { TatumConfig } from '../../tatum'
 
 export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
   supportedNetworks: Network[] = EVM_BASED_NETWORKS

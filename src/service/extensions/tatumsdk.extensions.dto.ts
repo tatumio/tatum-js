@@ -1,5 +1,5 @@
-import { ITatumSdkContainer } from "./tatumsdk.container"
-import { Network } from "../../dto";
+import { Network } from '../../dto'
+import { ITatumSdkContainer } from './tatumsdk.container'
 
 /**
  * `TatumSdkExtension` is the base class for all extensions integrated into the Tatum SDK.
@@ -18,22 +18,27 @@ import { Network } from "../../dto";
  *                 ensuring resources are freed and cleanup is performed appropriately.
  */
 export abstract class TatumSdkExtension {
-    protected constructor(
-        protected readonly tatumSdkContainer: ITatumSdkContainer) {
-    }
+  protected constructor(protected readonly tatumSdkContainer: ITatumSdkContainer) {}
 
-    abstract supportedNetworks: Network[]
+  abstract supportedNetworks: Network[]
 
-    init(): Promise<void> { return Promise.resolve(undefined) }
-    destroy(): Promise<void> { return Promise.resolve(undefined) }
+  init(): Promise<void> {
+    return Promise.resolve(undefined)
+  }
+  destroy(): Promise<void> {
+    return Promise.resolve(undefined)
+  }
 }
+export type ExtensionConstructor = new (
+  tatumSdkContainer: ITatumSdkContainer,
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type ExtensionConstructor = new (tatumSdkContainer: ITatumSdkContainer, ...args: any[]) => TatumSdkExtension
+  ...args: any[]
+) => TatumSdkExtension
 
 export type ExtensionWithConfig = {
-    type: ExtensionConstructor
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    config: any
+  type: ExtensionConstructor
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  config: any
 }
 
 export type ExtensionConstructorOrConfig = ExtensionConstructor | ExtensionWithConfig

@@ -63,7 +63,6 @@ export abstract class TatumSdkChain implements ITatumSdkChain {
   }
 }
 
-
 @Service({ transient: true })
 export class TatumSDK {
   /**

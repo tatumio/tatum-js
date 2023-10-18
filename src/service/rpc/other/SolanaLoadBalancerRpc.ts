@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
+import { JsonRpcCall, JsonRpcResponse, SolanaRpcSuite } from '../../../dto'
 import { Utils } from '../../../util'
 import { LoadBalancer } from '../generic'
 import { AbstractSolanaRpc } from './AbstractSolanaRpc'
-import { JsonRpcCall, JsonRpcResponse, SolanaRpcSuite } from '../../../dto'
 
 @Service({
   factory: (data: { id: string }) => {

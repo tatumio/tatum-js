@@ -267,6 +267,5 @@ describe('Tatum token', () => {
       })
       expect(result.data).toStrictEqual({ txId: expect.any(String) })
     })
-
   })
 })
