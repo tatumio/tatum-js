@@ -1,5 +1,5 @@
-import { ITatumSdkContainer } from "./tatumsdk.container";
-import { TatumSdkExtension } from "./tatumsdk.extensions.dto";
+import { ITatumSdkContainer } from './tatumsdk.container'
+import { TatumSdkExtension } from './tatumsdk.extensions.dto'
 
 export type TxId = string
 
@@ -13,17 +13,21 @@ export type TxId = string
  * @method signAndBroadcast Signs a transaction based on the provided payload of type P and broadcasts it to the network.
  */
 export abstract class TatumSdkWalletProvider<T, P> extends TatumSdkExtension {
-    abstract getWallet(): Promise<T>
-    abstract signAndBroadcast(payload: P): Promise<TxId>
+  abstract getWallet(): Promise<T>
+  abstract signAndBroadcast(payload: P): Promise<TxId>
 }
 
+export type WalletProviderConstructor = new (
+  tatumSdkContainer: ITatumSdkContainer,
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type WalletProviderConstructor = new (tatumSdkContainer: ITatumSdkContainer, ...args: any[]) => TatumSdkWalletProvider<any, any>
+  ...args: any[]
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+) => TatumSdkWalletProvider<any, any>
 
 export type WalletProviderWithConfig = {
-    type: WalletProviderConstructor
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    config: any
+  type: WalletProviderConstructor
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  config: any
 }
 
 export type WalletProviderConstructorOrConfig = WalletProviderConstructor | WalletProviderWithConfig

@@ -1,11 +1,11 @@
 import { Ethereum, Network, TatumSDK } from '../../service'
-import { TestExtension, TestWalletProvider } from "./e2e.extensions";
+import { TestExtension, TestWalletProvider } from './e2e.extensions'
 
 const mockTestExtension = {
   dummyMethod: jest.fn(),
   init: jest.fn(),
   destroy: jest.fn(),
-  network: jest.fn()
+  network: jest.fn(),
 }
 
 describe('Tatum Extension Ecosystem', () => {
@@ -16,9 +16,7 @@ describe('Tatum Extension Ecosystem', () => {
     it('should work after being registered', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM_SEPOLIA,
-        configureExtensions:[
-          {type: TestExtension, config: mockTestExtension}
-        ]
+        configureExtensions: [{ type: TestExtension, config: mockTestExtension }],
       })
 
       await tatum.extension(TestExtension).sayHello()
@@ -34,9 +32,7 @@ describe('Tatum Extension Ecosystem', () => {
       try {
         const tatum = await TatumSDK.init<Ethereum>({
           network: Network.BITCOIN,
-          configureExtensions: [
-            TestExtension
-          ]
+          configureExtensions: [TestExtension],
         })
 
         expect(true).toBe(false)
@@ -56,9 +52,7 @@ describe('Tatum Extension Ecosystem', () => {
     it('should work after being registered', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM_SEPOLIA,
-        configureWalletProviders:[
-          {type: TestWalletProvider, config: mockTestExtension}
-        ]
+        configureWalletProviders: [{ type: TestWalletProvider, config: mockTestExtension }],
       })
 
       const result = await tatum.walletProvider.use(TestWalletProvider).getWallet()
@@ -78,9 +72,7 @@ describe('Tatum Extension Ecosystem', () => {
     it('should work after being registered without config if optional', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM_SEPOLIA,
-        configureWalletProviders:[
-          TestWalletProvider
-        ]
+        configureWalletProviders: [TestWalletProvider],
       })
 
       const result = await tatum.walletProvider.use(TestWalletProvider).getWallet()

@@ -1,16 +1,6 @@
 import { Container, Service } from 'typedi'
 import { isLoadBalancerNetwork } from '../../dto'
-import {
-  EvmBasedRpcSuite,
-  SolanaRpcSuite,
-  TronRpcSuite,
-  UtxoBasedRpcSuite,
-  XrpRpcInterface,
-} from '../../dto/rpc'
-import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
-import { NativeEvmBasedRpcSuite } from '../../dto/rpc/NativeEvmBasedRpcInterface'
 import { CONFIG, Constant, Utils } from '../../util'
-import { Address, AddressTezos, AddressTron } from '../address'
 import {
   ExtensionConstructor,
   ExtensionConstructorOrConfig,
@@ -18,14 +8,7 @@ import {
   TatumSdkContainer,
   TatumSdkExtension,
 } from '../extensions'
-import { Faucet } from '../faucet'
-import { FeeEvm, FeeUtxo } from '../fee'
-import { Ipfs } from '../ipfs'
-import { Nft, NftTezos } from '../nft'
-import { Notification } from '../notification'
-import { Rates } from '../rate'
 import { LoadBalancer } from '../rpc/generic/LoadBalancer'
-import { Token } from '../token'
 import { MetaMask, WalletProvider } from '../walletProvider'
 import { ApiVersion, TatumConfig } from './tatum.dto'
 
@@ -77,151 +60,6 @@ export abstract class TatumSdkChain implements ITatumSdkChain {
     }
 
     await Container.of(id).get(type)?.destroy()
-  }
-}
-
-export class BaseTatumSdk extends TatumSdkChain {
-  notification: Notification
-  nft: Nft
-  token: Token
-  address: Address
-  rates: Rates
-  faucet: Faucet
-  ipfs: Ipfs
-
-  constructor(id: string) {
-    super(id)
-    this.notification = Container.of(id).get(Notification)
-    this.nft = Container.of(id).get(Nft)
-    this.token = Container.of(id).get(Token)
-    this.address = Container.of(id).get(Address)
-    this.rates = Container.of(id).get(Rates)
-    this.faucet = Container.of(id).get(Faucet)
-    this.ipfs = Container.of(id).get(Ipfs)
-  }
-}
-
-export abstract class BaseUtxoClass extends BaseTatumSdk {
-  rpc: UtxoBasedRpcSuite
-  fee: FeeUtxo
-
-  constructor(id: string) {
-    super(id)
-    this.rpc = Utils.getRpc<UtxoBasedRpcSuite>(id, Container.of(id).get(CONFIG))
-    this.fee = Container.of(id).get(FeeUtxo)
-  }
-}
-
-export abstract class BaseEvmClass extends BaseTatumSdk {
-  rpc: EvmBasedRpcSuite
-
-  constructor(id: string) {
-    super(id)
-    this.rpc = Utils.getRpc<EvmBasedRpcSuite>(id, Container.of(id).get(CONFIG))
-  }
-}
-
-export class Ethereum extends BaseEvmClass {
-  fee: FeeEvm
-
-  constructor(id: string) {
-    super(id)
-    this.fee = Container.of(id).get(FeeEvm)
-  }
-}
-
-export class Klaytn extends BaseTatumSdk {
-  rpc: NativeEvmBasedRpcSuite
-
-  constructor(id: string) {
-    super(id)
-    this.rpc = Utils.getRpc<EvmBasedRpcSuite>(id, Container.of(id).get(CONFIG))
-  }
-}
-
-export class ArbitrumNova extends BaseEvmClass {}
-export class ArbitrumOne extends BaseEvmClass {}
-export class Aurora extends BaseEvmClass {}
-export class AvalancheC extends BaseEvmClass {}
-export class BinanceSmartChain extends BaseEvmClass {}
-export class Celo extends BaseEvmClass {}
-export class Cronos extends BaseEvmClass {}
-export class EthereumClassic extends BaseEvmClass {}
-export class Fantom extends BaseEvmClass {}
-export class Gnosis extends BaseEvmClass {}
-export class Haqq extends BaseEvmClass {}
-export class Flare extends BaseEvmClass {}
-export class HarmonyOne extends BaseEvmClass {}
-export class Kucoin extends BaseEvmClass {}
-export class Oasis extends BaseEvmClass {}
-export class Optimism extends BaseEvmClass {}
-export class Palm extends BaseEvmClass {}
-export class Polygon extends BaseEvmClass {}
-export class Vechain extends BaseEvmClass {}
-export class Xdc extends BaseEvmClass {}
-export class HorizenEon extends BaseEvmClass {}
-export class Chiliz extends BaseEvmClass {}
-
-// UTXO chains
-export class Bitcoin extends BaseUtxoClass {}
-export class Litecoin extends BaseUtxoClass {}
-export class Dogecoin extends BaseUtxoClass {}
-export class BitcoinCash extends BaseUtxoClass {}
-export class ZCash extends BaseUtxoClass {}
-
-// other chains
-export class Xrp extends BaseTatumSdk {
-  rpc: XrpRpcInterface
-  constructor(id: string) {
-    super(id)
-    this.rpc = Utils.getRpc<XrpRpcInterface>(id, Container.of(id).get(CONFIG))
-  }
-}
-export class Solana extends BaseTatumSdk {
-  rpc: SolanaRpcSuite
-  constructor(id: string) {
-    super(id)
-    this.rpc = Utils.getRpc<SolanaRpcSuite>(id, Container.of(id).get(CONFIG))
-  }
-}
-
-export class Eos extends TatumSdkChain {
-  rpc: EosRpcSuite
-  constructor(id: string) {
-    super(id)
-    this.rpc = Utils.getRpc<EosRpcSuite>(id, Container.of(id).get(CONFIG))
-  }
-}
-
-export class Tron extends TatumSdkChain {
-  notification: Notification
-  nft: Nft
-  token: Token
-  address: AddressTron
-  rates: Rates
-  rpc: TronRpcSuite
-
-  constructor(id: string) {
-    super(id)
-    this.notification = Container.of(id).get(Notification)
-    this.nft = Container.of(id).get(Nft)
-    this.token = Container.of(id).get(Token)
-    this.address = Container.of(id).get(AddressTron)
-    this.rates = Container.of(id).get(Rates)
-    this.rpc = Utils.getRpc<TronRpcSuite>(id, Container.of(id).get(CONFIG))
-  }
-}
-
-export class Tezos extends TatumSdkChain {
-  notification: Notification
-  address: AddressTezos
-  nft: NftTezos
-
-  constructor(id: string) {
-    super(id)
-    this.notification = Container.of(id).get(Notification)
-    this.address = Container.of(id).get(AddressTezos)
-    this.nft = Container.of(this.id).get(NftTezos)
   }
 }
 

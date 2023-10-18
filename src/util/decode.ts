@@ -14,8 +14,7 @@ export function decodeHexString(hex: string): string {
   }
 
   return bytes
-    .map(byte => String.fromCharCode(byte))
-    .filter(char => /[a-zA-Z0-9]/.test(char))
+    .map((byte) => String.fromCharCode(byte))
+    .filter((char) => /[a-zA-Z0-9]/.test(char))
     .join('')
 }
-

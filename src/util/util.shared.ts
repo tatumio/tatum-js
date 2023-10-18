@@ -29,7 +29,6 @@ import {
   ArbitrumOne,
   Aurora,
   AvalancheC,
-  BaseTatumSdk,
   BinanceSmartChain,
   Bitcoin,
   BitcoinCash,
@@ -44,6 +43,7 @@ import {
   EvmRpc,
   Fantom,
   Flare,
+  FullSdk,
   GenericRpc,
   Gnosis,
   Haqq,
@@ -74,9 +74,9 @@ import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
 import { SolanaLoadBalancerRpc } from '../service/rpc/other/SolanaLoadBalancerRpc'
 import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
+import { UtxoLoadBalancerRpc } from '../service/rpc/utxo/UtxoLoadBalancerRpc'
 import { Constant } from './constant'
 import { CONFIG } from './di.tokens'
-import { UtxoLoadBalancerRpc } from "../service/rpc/utxo/UtxoLoadBalancerRpc"
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
@@ -483,7 +483,7 @@ export const Utils = {
       case Network.CHILIZ:
         return new Chiliz(id) as T
       default:
-        return new BaseTatumSdk(id) as T
+        return new FullSdk(id) as T
     }
   },
 

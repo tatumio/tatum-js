@@ -1,5 +1,5 @@
 import { Network } from '../../dto'
-import { ExtensionConstructorOrConfig, WalletProviderConstructorOrConfig } from "../extensions";
+import { ExtensionConstructorOrConfig, WalletProviderConstructorOrConfig } from '../extensions'
 
 export interface TatumConfig {
   /**

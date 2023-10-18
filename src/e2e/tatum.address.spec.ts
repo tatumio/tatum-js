@@ -1,10 +1,10 @@
 import { Network } from '../dto'
 import {
   ApiVersion,
-  BaseTatumSdk,
   Bitcoin,
   Dogecoin,
   Ethereum,
+  FullSdk,
   HorizenEon,
   Litecoin,
   Solana,
@@ -202,7 +202,7 @@ describe.skip('Address', () => {
     })
 
     describe('getBalance CARDANO', () => {
-      let tatum: BaseTatumSdk
+      let tatum: FullSdk
 
       beforeAll(async () => {
         tatum = await TatumSDK.init({ network: Network.CARDANO_PREPROD })

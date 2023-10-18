@@ -1,5 +1,5 @@
 import { Container, Service } from 'typedi'
-import { ITatumSdkContainer, TatumSdkWalletProvider } from "../extensions";
+import { ITatumSdkContainer, TatumSdkWalletProvider } from '../extensions'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -8,15 +8,16 @@ import { ITatumSdkContainer, TatumSdkWalletProvider } from "../extensions";
   transient: true,
 })
 export class WalletProvider {
-  constructor(private readonly id: string) {
-  }
+  constructor(private readonly id: string) {}
 
   /**
    * Works are an entrypoint to interact with wallet providers of choice.
    * @param type - Wallet Provider type imported to the SDK instance
    */
+  use<T, P, E extends TatumSdkWalletProvider<T, P>>(
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  use<T, P, E extends TatumSdkWalletProvider<T, P>>(type: new (tatumSdkContainer: ITatumSdkContainer, ...args: any[]) => E): E {
-    return Container.of(this.id).get(type);
+    type: new (tatumSdkContainer: ITatumSdkContainer, ...args: any[]) => E,
+  ): E {
+    return Container.of(this.id).get(type)
   }
 }

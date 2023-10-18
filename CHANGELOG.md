@@ -1,3 +1,7 @@
+## [4.1.8] - 2023.10.18
+### Changed
+- Make Blockchain Classes type safe
+
 ## [4.1.7] - 2023.10.15
 ### Changed
 - `TatumUtils` chainId <-> `Network` mappings always return usable value or throw error for ease of use.

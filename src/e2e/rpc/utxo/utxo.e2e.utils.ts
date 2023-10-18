@@ -1,5 +1,5 @@
 import { Network } from '../../../dto'
-import { BaseUtxoClass, TatumSDK } from '../../../service'
+import { BaseUtxo, TatumSDK } from '../../../service'
 import { RpcE2eUtils } from '../rpc.e2e.utils'
 
 export enum UtxoNetworkType {
@@ -16,7 +16,7 @@ interface TatumBtcUtils {
 
 export const UtxoE2eUtils = {
   initTatum: async (params: TatumBtcUtils) =>
-    TatumSDK.init<BaseUtxoClass>(RpcE2eUtils.initConfig(params.network, params.apiKey)),
+    TatumSDK.init<BaseUtxo>(RpcE2eUtils.initConfig(params.network, params.apiKey)),
   e2e: (params: TatumBtcUtils) => {
     const { type } = params
     it('chain info', async () => {

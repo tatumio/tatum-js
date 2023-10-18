@@ -234,7 +234,9 @@ describe('Solana', () => {
     describe('getInflationReward', () => {
       it.skip('should return inflation reward', async () => {
         const tatum = await getClient()
-        const { result } = await tatum.rpc.getInflationReward(['GUP3BG93X9EoDor3bDarTqv8n653u1Bkr2NbQqRqBZwF'])
+        const { result } = await tatum.rpc.getInflationReward([
+          'GUP3BG93X9EoDor3bDarTqv8n653u1Bkr2NbQqRqBZwF',
+        ])
         const item = result![0]
         await tatum.destroy()
         expect(item.epoch).toBeGreaterThan(0)
@@ -277,7 +279,9 @@ describe('Solana', () => {
       it('should return account info', async () => {
         const tatum = await getClient()
         //binance validator
-        const { result } = await tatum.rpc.getMultipleAccounts(['DRpbCBMxVnDK7maPM5tGv6MvB3v1sRMC86PZ8okm21hy'])
+        const { result } = await tatum.rpc.getMultipleAccounts([
+          'DRpbCBMxVnDK7maPM5tGv6MvB3v1sRMC86PZ8okm21hy',
+        ])
         await tatum.destroy()
         expect(result?.context.slot).toBeGreaterThan(0)
         expect(result?.value[0]?.lamports).toBeGreaterThan(0)
@@ -358,13 +362,16 @@ describe('Solana', () => {
       it.skip('should return account data', async () => {
         const tatum = await getClient(true)
 
-        const { result } = await tatum.rpc.getProgramAccounts('FriELggez2Dy3phZeHHAdpcoEXkKQVkv6tx3zDtCVP8T', {
-          filters: [
-            {
-              dataSize: 165, // number of bytes
-            },
-          ],
-        })
+        const { result } = await tatum.rpc.getProgramAccounts(
+          'FriELggez2Dy3phZeHHAdpcoEXkKQVkv6tx3zDtCVP8T',
+          {
+            filters: [
+              {
+                dataSize: 165, // number of bytes
+              },
+            ],
+          },
+        )
         await tatum.destroy()
         expect(result).toBeTruthy()
       })

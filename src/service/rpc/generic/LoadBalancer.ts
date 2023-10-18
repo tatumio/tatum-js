@@ -333,7 +333,9 @@ export class LoadBalancer implements AbstractRpcInterface {
 
     Utils.log({
       id: this.id,
-      message: `Added ${filteredNodes.length} nodes (${filteredNodes.map(s => s.url).join(', ')}) for ${this.network} blockchain during the initialization for node ${NODE_TYPE_LABEL[nodeType]}.`,
+      message: `Added ${filteredNodes.length} nodes (${filteredNodes.map((s) => s.url).join(', ')}) for ${
+        this.network
+      } blockchain during the initialization for node ${NODE_TYPE_LABEL[nodeType]}.`,
     })
 
     const randomIndex = Math.floor(Math.random() * this.rpcUrls[nodeType].length)
