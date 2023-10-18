@@ -238,6 +238,8 @@ export const Utils = {
         return Network.KLAYTN
       case AddressEventNotificationChain.EON:
         return Network.HORIZEN_EON
+      case AddressEventNotificationChain.CHZ:
+        return Network.CHILIZ
       default:
         throw new Error(`Chain ${chain} is not supported.`)
     }
