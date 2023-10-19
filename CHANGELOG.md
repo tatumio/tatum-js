@@ -1,3 +1,7 @@
+## [4.1.12] - 2023.10.19
+### Added
+- Fixed response parsing for calls where the body is not defined e.g. DELETE endpoints
+
 ## [4.1.11] - 2023.10.19
 ### Added
 - Added RPC support for the CELO network. Users can now make RPC calls to these network using the `Network.CELO` network.

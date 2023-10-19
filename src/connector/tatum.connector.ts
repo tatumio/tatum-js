@@ -93,7 +93,7 @@ export class TatumConnector {
       })
 
       if (res.ok) {
-        return await res.json()
+        return responseBody ? await res.json() : undefined
       }
 
       // Retry only in case of 5xx error
