@@ -2,7 +2,8 @@ import { Network } from '../../../dto'
 import { EvmE2eUtils } from './evm.e2e.utils'
 
 const testNetworks = [
-  { network: Network.CELO, expected: { chainId: 42220 }, apiKey: process.env.V3_API_KEY_MAINNET },
+  { network: Network.CELO, expected: { chainId: 42220 } },
+  { network: Network.CELO_ALFAJORES, expected: { chainId: 44787 } },
   { network: Network.ARBITRUM_ONE, expected: { chainId: 42161 } },
   { network: Network.ARBITRUM_NOVA, expected: { chainId: 42170 }, apiKey: process.env.V3_API_KEY_MAINNET },
   {

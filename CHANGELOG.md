@@ -1,3 +1,7 @@
+## [4.1.11] - 2023.10.19
+### Added
+- Added RPC support for the CELO network. Users can now make RPC calls to these network using the `Network.CELO` network.
+
 ## [4.1.10] - 2023.10.18
 ### Changed
 - Chiliz notification access
