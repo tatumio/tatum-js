@@ -256,6 +256,12 @@ export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
   Network.CHILIZ,
 ]
 
+export const EVM_ARCHIVE_NON_ARCHIVE_BEACON_LOAD_BALANCER_NETWORKS = [
+  Network.ETHEREUM,
+  Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
+]
+
 export const TRON_NETWORKS = [Network.TRON, Network.TRON_SHASTA]
 export const EOS_NETWORKS = [Network.EOS, Network.EOS_TESTNET]
 
@@ -290,6 +296,9 @@ export const isEvmLoadBalancerNetwork = (network: Network) => EVM_LOAD_BALANCER_
 
 export const isEvmArchiveNonArchiveLoadBalancerNetwork = (network: Network) =>
   EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isEvmArchiveNonArchiveBeaconLoadBalancerNetwork = (network: Network) =>
+  EVM_ARCHIVE_NON_ARCHIVE_BEACON_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isTronLoadBalancerNetwork = (network: Network) => TRON_LOAD_BALANCER_NETWORKS.includes(network)
 

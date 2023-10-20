@@ -1,3 +1,7 @@
+## [4.1.16] - 2023.10.24
+### Added
+- Added Beacon chain v1 support for the Ethereum
+
 ## [4.1.15] - 2023.10.24
 ### Added
 - Added estimatefee rpc method to the Bitcoin Cash network

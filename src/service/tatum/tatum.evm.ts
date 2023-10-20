@@ -1,5 +1,5 @@
 import { Container } from 'typedi'
-import { EvmBasedRpcSuite } from '../../dto'
+import { EvmBasedBeaconRpcSuite, EvmBasedRpcSuite } from '../../dto'
 import { NativeEvmBasedRpcSuite } from '../../dto/rpc/NativeEvmBasedRpcInterface'
 import { CONFIG, Utils } from '../../util'
 import { Address } from '../address'
@@ -99,7 +99,14 @@ export class Klaytn extends NotificationEvm {
 }
 
 // Full support for chains
-export class Ethereum extends FullEvm {}
+export class Ethereum extends FullEvm {
+  rpc: EvmBasedBeaconRpcSuite
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<EvmBasedBeaconRpcSuite>(id, Container.of(id).get(CONFIG))
+  }
+}
 export class Polygon extends FullEvm {}
 export class Celo extends FullEvm {}
 export class BinanceSmartChain extends FullEvm {}

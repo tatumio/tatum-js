@@ -6,6 +6,7 @@ import { PostI } from '../../../dto/PostI'
 import { AbstractRpcInterface } from '../../../dto/rpc/AbstractJsonRpcInterface'
 import { CONFIG, Constant, Utils } from '../../../util'
 import { RpcNode, RpcNodeType } from '../../tatum'
+import { GetI } from '../../../dto/GetI'
 
 interface RpcStatus {
   node: {
@@ -40,6 +41,20 @@ interface InitRemoteHostsParams {
   nodeType: RpcNodeType
   nodes: RpcNode[]
   noSSRFCheck?: boolean
+}
+
+enum RequestType {
+  RPC = 'RPC',
+  POST = 'POST',
+  GET = 'GET',
+  BATCH = 'BATCH',
+}
+
+interface HandleFailedRpcCallParams {
+  rpcCall: JsonRpcCall | JsonRpcCall[] | PostI | GetI
+  e: unknown
+  nodeType: RpcNodeType
+  requestType: RequestType
 }
 
 @Service({
@@ -379,11 +394,11 @@ export class LoadBalancer implements AbstractRpcInterface {
     }
   }
 
-  async handleFailedRpcCall(rpcCall: JsonRpcCall | JsonRpcCall[] | PostI, e: unknown, nodeType: RpcNodeType) {
+  async handleFailedRpcCall({rpcCall, e, nodeType, requestType}: HandleFailedRpcCallParams) {
     const { rpc: rpcConfig } = Container.of(this.id).get(CONFIG)
     const { url } = this.getActiveUrl(nodeType)
     const activeIndex = this.getActiveIndex(nodeType)
-    if ('method' in rpcCall && typeof rpcCall.method === 'string') {
+    if (requestType === RequestType.RPC && 'method' in rpcCall) {
       Utils.log({
         id: this.id,
         message: `Failed to call RPC ${rpcCall.method} on ${url}. Error: ${JSON.stringify(
@@ -391,7 +406,7 @@ export class LoadBalancer implements AbstractRpcInterface {
           Object.getOwnPropertyNames(e),
         )}`,
       })
-    } else if (Array.isArray(rpcCall) && rpcCall.every((item) => 'method' in item)) {
+    } else if (requestType === RequestType.BATCH && Array.isArray(rpcCall)) {
       const methods = rpcCall.map((item) => item.method).join(', ')
       Utils.log({
         id: this.id,
@@ -400,12 +415,20 @@ export class LoadBalancer implements AbstractRpcInterface {
           Object.getOwnPropertyNames(e),
         )}`,
       })
-    } else if ('path' in rpcCall && typeof rpcCall.path === 'string') {
+    } else if (requestType === RequestType.POST && 'path' in rpcCall && 'body' in rpcCall) {
       Utils.log({
         id: this.id,
         message: `Failed to call request on url ${rpcCall.basePath}${rpcCall.path} with body ${JSON.stringify(
           rpcCall.body,
         )}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
+      })
+    } else if (requestType === RequestType.GET && 'path' in rpcCall) {
+      Utils.log({
+        id: this.id,
+        message: `Failed to call request on url ${rpcCall.basePath}${rpcCall.path}. Error: ${JSON.stringify(
+          e,
+          Object.getOwnPropertyNames(e),
+        )}`,
       })
     } else {
       // Handle other cases
@@ -464,7 +487,7 @@ export class LoadBalancer implements AbstractRpcInterface {
       })
       return await this.connector.rpcCall(url, rpcCall)
     } catch (e) {
-      await this.handleFailedRpcCall(rpcCall, e, type)
+      await this.handleFailedRpcCall({ rpcCall, e, nodeType: type, requestType: RequestType.RPC })
       return await this.rawRpcCall(rpcCall)
     }
   }
@@ -474,18 +497,35 @@ export class LoadBalancer implements AbstractRpcInterface {
     try {
       return await this.connector.rpcCall(url, rpcCall)
     } catch (e) {
-      await this.handleFailedRpcCall(rpcCall, e, type)
+      await this.handleFailedRpcCall({ rpcCall, e, nodeType: type, requestType: RequestType.BATCH })
       return await this.rawBatchRpcCall(rpcCall)
     }
   }
 
   async post<T>({ path, body, basePath }: PostI): Promise<T> {
     const { url, type } = this.getActiveNormalUrlWithFallback()
+    const basePathUrl= basePath ?? url
     try {
-      return await this.connector.post<T>({ basePath: basePath ?? url, path, body })
+      return await this.connector.post<T>({ basePath: basePathUrl, path, body })
     } catch (e) {
-      await this.handleFailedRpcCall({ path, body, basePath }, e, type)
+      await this.handleFailedRpcCall({
+        rpcCall: { path, body, basePath: basePathUrl },
+        e,
+        nodeType: type,
+        requestType: RequestType.POST,
+      })
       return await this.post({ path, body, basePath })
+    }
+  }
+
+  async get<T>({ path, basePath }: GetI): Promise<T> {
+    const { url, type } = this.getActiveNormalUrlWithFallback()
+    const basePathUrl= basePath ?? url
+    try {
+      return await this.connector.get<T>({ basePath: basePathUrl, path })
+    } catch (e) {
+      await this.handleFailedRpcCall({ rpcCall: { path, basePath: basePathUrl }, e, nodeType: type, requestType: RequestType.GET })
+      return await this.get({ path, basePath })
     }
   }
 
