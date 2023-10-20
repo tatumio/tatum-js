@@ -1,6 +1,6 @@
 ## [4.1.13] - 2023.10.20
 ### Changed
-- Fix CONTRACT_ADDRESS_LOG_EVENT data in getAll() Notification method
+- Fixed CONTRACT_ADDRESS_LOG_EVENT data in getAll() Notification method
 
 ## [4.1.12] - 2023.10.19
 ### Added

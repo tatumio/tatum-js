@@ -45,31 +45,27 @@ export class Notification {
           ...(body?.address && { address: body.address }),
         },
       })
+
       return subscriptions.map((notification) => {
-        let result: Partial<NotificationSubscription> = {
+        const result: Partial<NotificationSubscription> = {
           id: notification.id,
           network: Utils.mapNotificationChainToNetwork(notification.attr.chain),
           url: notification.attr.url,
           type: notification.type,
         }
 
-        switch (notification.type) {
-          case NotificationType.CONTRACT_ADDRESS_LOG_EVENT:
-            result = {
-              ...result,
-              contractAddress: notification.attr.contractAddress,
-              event: notification.attr.event,
-            }
-            break
-          default:
-            result = {
-              ...result,
-              address: notification.attr.address,
-            }
-            break
+        if (notification.type === NotificationType.CONTRACT_ADDRESS_LOG_EVENT) {
+          return {
+            ...result,
+            contractAddress: notification.attr.contractAddress,
+            event: notification.attr.event,
+          } as NotificationSubscription
         }
 
-        return result as NotificationSubscription
+        return {
+          ...result,
+          address: notification.attr.address,
+        } as NotificationSubscription
       })
     })
   }
