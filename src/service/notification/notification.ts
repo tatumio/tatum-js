@@ -1,11 +1,13 @@
 import { Container, Service } from 'typedi'
-import { TatumConnector } from '../../connector/tatum.connector'
+import { TatumConnector } from '../../connector'
 import { ErrorUtils, ResponseDto, Utils } from '../../util'
 import {
   AddressEventNotificationApi,
+  ContractAddressLogEventNotificationApi,
   GetAllExecutedWebhooksQuery,
   GetAllSubscriptionsQuery,
   NotificationSubscription,
+  NotificationType,
   Webhook,
 } from './notification.dto'
 import { Subscribe } from './subscribe'
@@ -33,7 +35,9 @@ export class Notification {
    */
   async getAll(body?: GetAllSubscriptionsQuery): Promise<ResponseDto<NotificationSubscription[]>> {
     return ErrorUtils.tryFail(async () => {
-      const subscriptions = await this.connector.get<AddressEventNotificationApi[]>({
+      const subscriptions = await this.connector.get<
+        [AddressEventNotificationApi | ContractAddressLogEventNotificationApi]
+      >({
         path: 'subscription',
         params: {
           pageSize: body?.pageSize?.toString() ?? '10',
@@ -41,13 +45,32 @@ export class Notification {
           ...(body?.address && { address: body.address }),
         },
       })
-      return subscriptions.map((notification) => ({
-        id: notification.id,
-        network: Utils.mapNotificationChainToNetwork(notification.attr.chain),
-        address: notification.attr.address,
-        url: notification.attr.url,
-        type: notification.type,
-      }))
+      return subscriptions.map((notification) => {
+        let result: Partial<NotificationSubscription> = {
+          id: notification.id,
+          network: Utils.mapNotificationChainToNetwork(notification.attr.chain),
+          url: notification.attr.url,
+          type: notification.type,
+        }
+
+        switch (notification.type) {
+          case NotificationType.CONTRACT_ADDRESS_LOG_EVENT:
+            result = {
+              ...result,
+              contractAddress: notification.attr.contractAddress,
+              event: notification.attr.event,
+            }
+            break
+          default:
+            result = {
+              ...result,
+              address: notification.attr.address,
+            }
+            break
+        }
+
+        return result as NotificationSubscription
+      })
     })
   }
 

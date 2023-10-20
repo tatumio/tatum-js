@@ -15,7 +15,7 @@ export class WalletProvider {
    * @param type - Wallet Provider type imported to the SDK instance
    */
   use<T, P, E extends TatumSdkWalletProvider<T, P>>(
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     type: new (tatumSdkContainer: ITatumSdkContainer, ...args: any[]) => E,
   ): E {
     return Container.of(this.id).get(type)

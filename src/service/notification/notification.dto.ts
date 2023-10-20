@@ -36,6 +36,14 @@ export interface NotificationSubscription {
    * Address to monitor, valid for some of the types only.
    */
   address?: string
+  /**
+   * Contract Address to monitor, valid for some of the types only.
+   */
+  contractAddress?: string
+  /**
+   * topic[0] event to be tracked.
+   */
+  event?: string
 }
 
 export interface ContractBasedNotificationDetail {
@@ -111,6 +119,17 @@ export interface AddressEventNotificationApi {
   attr: {
     chain: AddressEventNotificationChain
     address: string
+    url: string
+  }
+}
+
+export interface ContractAddressLogEventNotificationApi {
+  id: string
+  type: NotificationType.CONTRACT_ADDRESS_LOG_EVENT
+  attr: {
+    chain: AddressEventNotificationChain
+    contractAddress: string
+    event: string
     url: string
   }
 }
