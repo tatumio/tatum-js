@@ -62,10 +62,14 @@ export class Notification {
           } as NotificationSubscription
         }
 
-        return {
-          ...result,
-          address: notification.attr.address,
-        } as NotificationSubscription
+        if(notification.attr.address) {
+          return {
+            ...result,
+            address: notification.attr.address,
+          } as NotificationSubscription
+        }
+
+        return result as NotificationSubscription
       })
     })
   }
