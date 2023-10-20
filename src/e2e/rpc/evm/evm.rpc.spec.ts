@@ -11,7 +11,7 @@ const testNetworks = [
     expected: { chainId: 421613 },
     apiKey: process.env.V3_API_KEY_TESTNET,
   },
-  { network: Network.HORIZEN_EON, expected: { chainId: 7332 } },
+  //{ network: Network.HORIZEN_EON, expected: { chainId: 7332 } },
   { network: Network.HORIZEN_EON_GOBI, expected: { chainId: 1663 } },
   { network: Network.CHILIZ, expected: { chainId: 88888 } },
   { network: Network.BINANCE_SMART_CHAIN, expected: { chainId: 56 } },

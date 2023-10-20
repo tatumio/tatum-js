@@ -19,10 +19,10 @@ export abstract class TatumSdkWalletProvider<T, P> extends TatumSdkExtension {
 
 export type WalletProviderConstructor = new (
   tatumSdkContainer: ITatumSdkContainer,
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   ...args: any[]
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-) => TatumSdkWalletProvider<any, any>
+) => // eslint-disable-next-line @typescript-eslint/no-explicit-any
+TatumSdkWalletProvider<any, any>
 
 export type WalletProviderWithConfig = {
   type: WalletProviderConstructor
