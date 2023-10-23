@@ -119,6 +119,15 @@ Explore the world of fungible tokens, manage their properties, and track your as
 | [Get metadata of a fungible token](https://docs.tatum.io/docs/fungible-tokens/get-metadata-of-a-fungible-token) |
 | [Create a fungible token](https://docs.tatum.io/docs/fungible-tokens/create-a-fungible-token) |
 
+### 📁 IPFS
+
+Enables you as a developer to use IPFS to store and retrieve your media.
+
+| Documentation                                                      |
+|--------------------------------------------------------------------|
+| [Upload file to IPFS](https://docs.tatum.io/docs/ipfs/upload-file) |
+
+
 ### ⛽ Fee Estimation
 
 Stay updated with real-time fee insights and ensure smooth transactions without overpaying.

@@ -2,7 +2,7 @@ import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
 import { TatumConfig } from '../tatum'
-import { UploadFile } from './ipfs.dto'
+import { GetFile, UploadFile } from './ipfs.dto'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -29,6 +29,20 @@ export class Ipfs {
       this.connector.uploadFile<{ ipfsHash: string }>({
         path: `ipfs`,
         body: body.file,
+      }),
+    )
+  }
+
+  /**
+   * Get file binary data from the IPFS storage.
+   * @param body Body of the request with file to be uploaded.
+   * @returns Blob IPFS file binary data.
+   * @returns ResponseDto<null> is error occurred.
+   */
+  async getFile(body: GetFile): Promise<Blob | ResponseDto<null>> {
+    return ErrorUtils.tryFailBlob(() =>
+      this.connector.getFile<Blob>({
+        path: `ipfs/${body.id}`,
       }),
     )
   }

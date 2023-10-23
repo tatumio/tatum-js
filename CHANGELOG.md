@@ -1,3 +1,7 @@
+## [4.1.14] - 2023.10.23
+### Added
+- Added IPFS get file data method
+
 ## [4.1.13] - 2023.10.20
 ### Changed
 - Fixed CONTRACT_ADDRESS_LOG_EVENT data in getAll() Notification method

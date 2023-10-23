@@ -56,6 +56,17 @@ export const ErrorUtils = {
       }
     }
   },
+  tryFailBlob: async (f: (() => Promise<Blob>) | (() => Blob)): Promise<Blob | ResponseDto<null>> => {
+    try {
+      return await f()
+    } catch (e) {
+      return {
+        data: null,
+        status: Status.ERROR,
+        error: ErrorUtils.toErrorWithMessage(e),
+      }
+    }
+  },
   formatErrorMsg: (message: string) => {
     return message.replace('attr.', '')
   },
