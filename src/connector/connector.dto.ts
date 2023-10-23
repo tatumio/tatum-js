@@ -5,6 +5,7 @@ export interface GetUrl<PARAMS = DefaultParamsType> {
   path?: string
   basePath?: string
   params?: PARAMS
+  isDownload?: boolean
 }
 
 export interface SdkRequest<PARAMS = DefaultParamsType, BODY = DefaultBodyType> extends GetUrl<PARAMS> {

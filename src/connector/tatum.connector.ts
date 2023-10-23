@@ -14,21 +14,24 @@ export class TatumConnector {
   constructor(private readonly id: string) {}
 
   public async get<RESPONSE, PARAMS extends DefaultParamsType = DefaultParamsType>(request: GetUrl<PARAMS>) {
-    return this.request<RESPONSE, PARAMS>({ ...request, method: 'GET' })
+    return this.request<RESPONSE, PARAMS>({ ...request, method: 'GET' }) as Promise<RESPONSE>
   }
 
   public async rpcCall<RESPONSE>(url: string, body: JsonRpcCall | JsonRpcCall[]) {
-    return this.request<RESPONSE>({ body, method: 'POST' }, 0, url)
+    return this.request<RESPONSE>({ body, method: 'POST' }, 0, url) as Promise<RESPONSE>
   }
 
   public async post<RESPONSE, BODY extends DefaultBodyType = DefaultBodyType>(
     request: SdkRequest<DefaultParamsType, BODY>,
   ) {
-    return this.request<RESPONSE, DefaultParamsType, BODY>({ ...request, method: 'POST' })
+    return this.request<RESPONSE, DefaultParamsType, BODY>({
+      ...request,
+      method: 'POST',
+    }) as Promise<RESPONSE>
   }
 
   public async delete<RESPONSE>(request: GetUrl) {
-    return this.request<RESPONSE>({ ...request, method: 'DELETE' })
+    return this.request<RESPONSE>({ ...request, method: 'DELETE' }) as Promise<RESPONSE>
   }
 
   public async uploadFile<RESPONSE>(request: FileUploadRequest) {
@@ -37,7 +40,13 @@ export class TatumConnector {
     return this.request<RESPONSE>(
       { ...request, method: 'POST', body: formData, basePath: Constant.TATUM_API_URL.V3 },
       0,
-    )
+    ) as Promise<RESPONSE>
+  }
+
+  public async getFile<RESPONSE, PARAMS extends DefaultParamsType = DefaultParamsType>(
+    request: GetUrl<PARAMS>,
+  ) {
+    return this.request<RESPONSE, PARAMS>({ ...request, method: 'GET', isDownload: true }) as Promise<Blob>
   }
 
   private async request<
@@ -45,10 +54,10 @@ export class TatumConnector {
     PARAMS extends DefaultParamsType = DefaultParamsType,
     BODY extends DefaultBodyType = DefaultBodyType,
   >(
-    { path, params, body, method, basePath }: SdkRequest<PARAMS, BODY>,
+    { path, params, body, method, basePath, isDownload }: SdkRequest<PARAMS, BODY>,
     retry = 0,
     externalUrl?: string,
-  ): Promise<RESPONSE> {
+  ): Promise<RESPONSE | Blob | undefined> {
     const url = externalUrl || this.getUrl({ path, params, basePath })
     const isUpload = body && body instanceof FormData
     const headers = isUpload ? Utils.getBasicHeaders(this.id) : Utils.getHeaders(this.id)
@@ -71,7 +80,7 @@ export class TatumConnector {
     try {
       const res = await fetch(url, request)
       const end = Date.now() - start
-      const responseBody = await res.clone().text()
+      const responseBody = isDownload ? `Binary data` : await res.clone().text()
 
       // Structure your log entry here
       Utils.log({
@@ -93,7 +102,13 @@ export class TatumConnector {
       })
 
       if (res.ok) {
-        return responseBody ? await res.json() : undefined
+        if (!responseBody) {
+          return undefined
+        }
+        if (isDownload) {
+          return await res.blob()
+        }
+        return await res.json()
       }
 
       // Retry only in case of 5xx error
@@ -101,7 +116,7 @@ export class TatumConnector {
         return await this.retry(url, request, res, retry)
       }
 
-      return await Promise.reject(responseBody)
+      throw responseBody
     } catch (error) {
       const end = Date.now() - start
       Utils.log({
@@ -151,7 +166,7 @@ export class TatumConnector {
     request: RequestInit,
     response: Response,
     retry: number,
-  ): Promise<RESPONSE> {
+  ): Promise<RESPONSE | Blob | undefined> {
     const { retryDelay, retryCount } = Container.of(this.id).get(CONFIG)
     if (!retryCount) {
       Utils.log({
