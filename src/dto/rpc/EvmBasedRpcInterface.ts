@@ -216,3 +216,82 @@ export interface EvmBasedRpcInterface {
 
   txPoolInspect(): Promise<JsonRpcResponse<any>>
 }
+
+export interface EvmBeaconResponse<T> {
+  data: T
+  execution_optimistic?: boolean
+  finalized?: boolean
+}
+
+export type StateId = 'head' | 'genesis' | 'finalized' | 'justified' | string;
+export type BlockId = 'head' | 'genesis' | 'finalized' | string;
+
+export interface BlockQuery {
+  blockId: BlockId
+}
+
+export interface StateCommitteesQuery {
+  stateId: StateId
+  epoch?: string;
+  index?: string;
+  slot?: string;
+}
+
+export interface StateQuery {
+  stateId: StateId
+}
+
+export interface StateSyncCommitteesQuery extends StateQuery {
+  epoch?: string;
+}
+
+export interface ValidatorBalancesQuery extends StateQuery {
+  id?: string[];  // Array of either hex encoded public key or validator index
+}
+
+export type ValidatorStatus =
+  | 'pending_initialized'
+  | 'pending_queued'
+  | 'active_ongoing'
+  | 'active_exiting'
+  | 'active_slashed'
+  | 'exited_unslashed'
+  | 'exited_slashed'
+  | 'withdrawal_possible'
+  | 'withdrawal_done'
+  | 'active'
+  | 'pending'
+  | 'exited'
+  | 'withdrawal';
+
+export interface ValidatorsQuery extends StateQuery {
+  id?: string[];  // Array of either hex encoded public key or validator index
+  status?: ValidatorStatus[];
+}
+
+export interface ValidatorQuery extends StateQuery {
+  validatorId: string;  // Either a hex encoded public key or validator index
+}
+
+
+export interface EvmBeaconV1Interface {
+  getGenesis(): Promise<EvmBeaconResponse<any>>
+  getBlockHeaders(query?: { slot?: string, parentRoot?: string }): Promise<EvmBeaconResponse<any>>
+  getBlockHeader(query:BlockQuery): Promise<EvmBeaconResponse<any>>
+  getBlockRoot(query: BlockQuery): Promise<EvmBeaconResponse<any>>
+  getBlockAttestations(query: BlockQuery): Promise<EvmBeaconResponse<any>>
+  getStateCommittees(query: StateCommitteesQuery): Promise<EvmBeaconResponse<any>>
+  getStateFinalityCheckpoints(query: StateQuery): Promise<EvmBeaconResponse<any>>
+  getStateFork(query: StateQuery): Promise<EvmBeaconResponse<any>>
+  getStateRoot(query: StateQuery): Promise<EvmBeaconResponse<any>>
+  getStateSyncCommittees(query: StateSyncCommitteesQuery): Promise<EvmBeaconResponse<any>>
+  getStateValidatorBalances(query: ValidatorBalancesQuery): Promise<EvmBeaconResponse<any>>
+  getStateValidators(query: ValidatorsQuery): Promise<EvmBeaconResponse<any>>
+  getStateValidator(query: ValidatorQuery): Promise<EvmBeaconResponse<any>>
+}
+
+export interface EvmBasedBeaconRpcSuite extends EvmBasedRpcInterface, AbstractRpcInterface {
+  beacon: {
+    v1: EvmBeaconV1Interface
+  }
+}

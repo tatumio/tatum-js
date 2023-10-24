@@ -6,6 +6,7 @@ import {
   AddressEventNotificationChain,
   isEosLoadBalancerNetwork,
   isEosNetwork,
+  isEvmArchiveNonArchiveBeaconLoadBalancerNetwork,
   isEvmArchiveNonArchiveLoadBalancerNetwork,
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
@@ -77,6 +78,7 @@ import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
 import { UtxoLoadBalancerRpc } from '../service/rpc/utxo/UtxoLoadBalancerRpc'
 import { Constant } from './constant'
 import { CONFIG } from './di.tokens'
+import { EvmBeaconArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmBeaconArchiveLoadBalancerRpc'
 import { UtxoLoadBalancerRpcEstimateFee } from '../service/rpc/utxo/UtxoLoadBalancerRpcEstimateFee'
 import { UtxoRpcEstimateFee } from '../service/rpc/utxo/UtxoRpcEstimateFee'
 
@@ -97,6 +99,10 @@ export const Utils = {
 
     if (isNativeEvmLoadBalancerNetwork(network)) {
       return Container.of(id).get(NativeEvmArchiveLoadBalancerRpc) as T
+    }
+
+    if (isEvmArchiveNonArchiveBeaconLoadBalancerNetwork(network)) {
+      return Container.of(id).get(EvmBeaconArchiveLoadBalancerRpc) as T
     }
 
     if (isEvmArchiveNonArchiveLoadBalancerNetwork(network)) {
@@ -556,5 +562,29 @@ export const Utils = {
       return url.concat(path || '')
     }
     return rpc?.nodes?.[0].url || `${Constant.TATUM_API_URL.V3}blockchain/node/${network}`.concat(path || '')
+  },
+  addQueryParams: (basePath: string, queryParams?: Record<string, string | string[]>): string => {
+    let queryString = '';
+
+    if (queryParams) {
+      const query = Utils.convertObjCamelToSnake(queryParams);
+      const params: string[] = [];
+
+      Object.entries(query).forEach(([key, value]) => {
+        if (Array.isArray(value)) {
+          value.forEach(val => {
+            params.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`);
+          });
+        } else {
+          params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`);
+        }
+      });
+
+      if (params.length > 0) {
+        queryString = '?' + params.join('&');
+      }
+    }
+
+    return basePath + queryString;
   },
 }

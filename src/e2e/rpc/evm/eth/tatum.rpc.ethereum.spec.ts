@@ -1,6 +1,6 @@
 import process from 'process'
-import { BaseEvm, Network, RpcNodeType, TatumSDK } from '../../../service'
-import { EvmE2eUtils } from './evm.e2e.utils'
+import { BaseEvm, Network, RpcNodeType, TatumSDK } from '../../../../service'
+import { EvmE2eUtils } from '../evm.e2e.utils'
 
 describe('Ethereum', () => {
   it('should get token total supply', async () => {
