@@ -45,3 +45,9 @@ export interface UtxoBasedRpcInterface {
   validateAddress(address: string): Promise<JsonRpcResponse<any>>
   verifyMessage(address: string, signature: string, message: string): Promise<JsonRpcResponse<boolean>>
 }
+
+export interface UtxoBasedRpcInterfaceEstimateFee extends UtxoBasedRpcInterface {
+  estimateFee(): Promise<JsonRpcResponse<any>>
+}
+
+export interface UtxoBasedRpcSuiteEstimateFee extends UtxoBasedRpcSuite, UtxoBasedRpcInterfaceEstimateFee {}
