@@ -14,7 +14,7 @@ import {
   isSolanaNetwork,
   isTronLoadBalancerNetwork,
   isTronNetwork,
-  isUtxoBasedNetwork,
+  isUtxoBasedNetwork, isUtxoEstimateFeeNetwork, isUtxoLoadBalancerEstimateFeeNetwork,
   isUtxoLoadBalancerNetwork,
   isXrpNetwork,
   JsonRpcCall,
@@ -77,10 +77,20 @@ import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
 import { UtxoLoadBalancerRpc } from '../service/rpc/utxo/UtxoLoadBalancerRpc'
 import { Constant } from './constant'
 import { CONFIG } from './di.tokens'
+import { UtxoLoadBalancerRpcEstimateFee } from '../service/rpc/utxo/UtxoLoadBalancerRpcEstimateFee'
+import { UtxoRpcEstimateFee } from '../service/rpc/utxo/UtxoRpcEstimateFee'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+    if (isUtxoLoadBalancerEstimateFeeNetwork(network)) {
+      return Container.of(id).get(UtxoLoadBalancerRpcEstimateFee) as T
+    }
+
+    if (isUtxoEstimateFeeNetwork(network)) {
+      return Container.of(id).get(UtxoRpcEstimateFee) as T
+    }
+
     if (isUtxoLoadBalancerNetwork(network)) {
       return Container.of(id).get(UtxoLoadBalancerRpc) as T
     }

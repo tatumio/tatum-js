@@ -15,8 +15,8 @@ interface TatumBtcUtils {
 }
 
 export const UtxoE2eUtils = {
-  initTatum: async (params: TatumBtcUtils) =>
-    TatumSDK.init<BaseUtxo>(RpcE2eUtils.initConfig(params.network, params.apiKey)),
+  initTatum: async <T extends BaseUtxo>(params: TatumBtcUtils) =>
+    TatumSDK.init<T>(RpcE2eUtils.initConfig(params.network, params.apiKey)),
   e2e: (params: TatumBtcUtils) => {
     const { type } = params
     it('chain info', async () => {

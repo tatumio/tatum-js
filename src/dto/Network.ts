@@ -160,6 +160,14 @@ export const UTXO_BASED_NETWORKS = [
   Network.DOGECOIN_TESTNET,
 ]
 
+export const UTXO_LOAD_BALANCER_ESTIMATE_FEE_NETWORKS = [
+  Network.BITCOIN_CASH,
+]
+
+export const UTXO_ESTIMATE_FEE_NETWORKS = [
+  Network.BITCOIN_CASH_TESTNET,
+]
+
 export const DATA_API_UTXO_NETWORKS = [
   Network.BITCOIN,
   Network.BITCOIN_TESTNET,
@@ -255,6 +263,12 @@ export const isEvmBasedNetwork = (network: Network) => EVM_BASED_NETWORKS.includ
 
 export const isUtxoBasedNetwork = (network: Network) => UTXO_BASED_NETWORKS.includes(network)
 
+export const isUtxoLoadBalancerEstimateFeeNetwork = (network: Network) => UTXO_LOAD_BALANCER_ESTIMATE_FEE_NETWORKS.includes(network)
+
+export const isUtxoEstimateFeeNetwork = (network: Network) => UTXO_ESTIMATE_FEE_NETWORKS.includes(network)
+
+export const isUtxoLoadBalancerNetwork = (network: Network) => UTXO_LOAD_BALANCER_NETWORKS.includes(network)
+
 export const isXrpNetwork = (network: Network) => [Network.XRP, Network.XRP_TESTNET].includes(network)
 
 export const isDataApiEvmEnabledNetwork = (network: Network) => DATA_API_EVM_NETWORKS.includes(network)
@@ -271,7 +285,6 @@ export const isEosNetwork = (network: Network) => EOS_NETWORKS.includes(network)
 
 export const isLoadBalancerNetwork = (network: Network) => LOAD_BALANCER_NETWORKS.includes(network)
 
-export const isUtxoLoadBalancerNetwork = (network: Network) => UTXO_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isEvmLoadBalancerNetwork = (network: Network) => EVM_LOAD_BALANCER_NETWORKS.includes(network)
 

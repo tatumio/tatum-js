@@ -1,3 +1,7 @@
+## [4.1.15] - 2023.10.24
+### Added
+- Added estimatefee rpc method to the Bitcoin Cash network
+
 ## [4.1.14] - 2023.10.23
 ### Added
 - Added IPFS get file data method
