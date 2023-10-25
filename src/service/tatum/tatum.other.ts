@@ -10,6 +10,7 @@ import { Notification } from '../notification'
 import { Rates } from '../rate'
 import { Token } from '../token'
 import { TatumSdkChain } from './tatum'
+import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
 
 export abstract class BaseOther extends TatumSdkChain {
   ipfs: Ipfs
@@ -19,6 +20,19 @@ export abstract class BaseOther extends TatumSdkChain {
     super(id)
     this.ipfs = Container.of(id).get(Ipfs)
     this.rates = Container.of(id).get(Rates)
+  }
+}
+
+export class Bnb extends BaseOther {
+  rpc: BnbRpcSuite
+  notification: Notification
+  address: Address
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<BnbRpcSuite>(id, Container.of(id).get(CONFIG))
+    this.notification = Container.of(id).get(Notification)
+    this.address = Container.of(id).get(Address)
   }
 }
 
