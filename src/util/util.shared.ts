@@ -3,7 +3,7 @@ import { BigNumber } from 'bignumber.js'
 import { Container } from 'typedi'
 import { version } from '../../package.json'
 import {
-  AddressEventNotificationChain,
+  AddressEventNotificationChain, isBnbLoadBalancerNetwork,
   isEosLoadBalancerNetwork,
   isEosNetwork,
   isEvmArchiveNonArchiveBeaconLoadBalancerNetwork,
@@ -32,7 +32,7 @@ import {
   AvalancheC,
   BinanceSmartChain,
   Bitcoin,
-  BitcoinCash,
+  BitcoinCash, Bnb,
   Celo,
   Chiliz,
   Cronos,
@@ -81,10 +81,16 @@ import { CONFIG } from './di.tokens'
 import { EvmBeaconArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmBeaconArchiveLoadBalancerRpc'
 import { UtxoLoadBalancerRpcEstimateFee } from '../service/rpc/utxo/UtxoLoadBalancerRpcEstimateFee'
 import { UtxoRpcEstimateFee } from '../service/rpc/utxo/UtxoRpcEstimateFee'
+import { BnbLoadBalancerRpc } from '../service/rpc/other/BnbLoadBalancerRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+
+    if(isBnbLoadBalancerNetwork(network)) {
+      return Container.of(id).get(BnbLoadBalancerRpc) as T
+    }
+
     if (isUtxoLoadBalancerEstimateFeeNetwork(network)) {
       return Container.of(id).get(UtxoLoadBalancerRpcEstimateFee) as T
     }
@@ -187,6 +193,15 @@ export const Utils = {
       }
     }
 
+    if (isBnbLoadBalancerNetwork(network)) {
+      return {
+        jsonrpc: '2.0',
+        method: 'block',
+        params: {},
+        id: 1,
+      }
+    }
+
     if (isEosNetwork(network)) {
       return null
     }
@@ -202,11 +217,19 @@ export const Utils = {
       return url
     }
 
+    if (isBnbLoadBalancerNetwork(network)) {
+      return url
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
   parseStatusPayload: (network: Network, response: JsonRpcResponse<any> | any) => {
     if (isSameGetBlockNetwork(network)) {
       return new BigNumber((response.result as number) || -1).toNumber()
+    }
+
+    if (isBnbLoadBalancerNetwork(network)) {
+      return new BigNumber((response.result.block.header.height as number) || -1).toNumber()
     }
 
     if (isEosNetwork(network)) {
@@ -218,6 +241,10 @@ export const Utils = {
   isResponseOk: (network: Network, response: JsonRpcResponse<any> | any) => {
     if (isEosNetwork(network)) {
       return response.head_block_num !== undefined
+    }
+
+    if (isBnbLoadBalancerNetwork(network)) {
+      return response.result.block.header.height !== undefined
     }
 
     if (isSameGetBlockNetwork(network)) {
@@ -502,6 +529,8 @@ export const Utils = {
         return new Eos(id) as T
       case Network.CHILIZ:
         return new Chiliz(id) as T
+      case Network.BNB:
+        return new Bnb(id) as T
       default:
         return new FullSdk(id) as T
     }

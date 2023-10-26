@@ -8,6 +8,7 @@ export enum Network {
   AVALANCHE_P = 'avax-p-mainnet',
   AVALANCHE_X = 'avax-x-mainnet',
   BINANCE_SMART_CHAIN = 'bsc-mainnet',
+  BNB = 'bnb-beacon-chain-mainnet',
   BITCOIN = 'bitcoin-mainnet',
   BITCOIN_CASH = 'bitcoin-cash-mainnet',
   CARDANO = 'cardano-mainnet',
@@ -235,6 +236,7 @@ export const EOS_LOAD_BALANCER_NETWORKS = [Network.EOS]
 export const XRP_LOAD_BALANCER_NETWORKS = [Network.XRP, Network.XRP_TESTNET]
 export const NATIVE_EVM_LOAD_BALANCER_NETWORKS = [Network.KLAYTN, Network.KLAYTN_BAOBAB]
 export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
+export const BNB_LOAD_BALANCER_NETWORKS = [Network.BNB]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -244,6 +246,7 @@ export const LOAD_BALANCER_NETWORKS = [
   ...XRP_LOAD_BALANCER_NETWORKS,
   ...NATIVE_EVM_LOAD_BALANCER_NETWORKS,
   ...SOLANA_NETWORKS,
+  ...BNB_LOAD_BALANCER_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -291,7 +294,6 @@ export const isEosNetwork = (network: Network) => EOS_NETWORKS.includes(network)
 
 export const isLoadBalancerNetwork = (network: Network) => LOAD_BALANCER_NETWORKS.includes(network)
 
-
 export const isEvmLoadBalancerNetwork = (network: Network) => EVM_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isEvmArchiveNonArchiveLoadBalancerNetwork = (network: Network) =>
@@ -308,6 +310,8 @@ export const isXrpLoadBalancerNetwork = (network: Network) => XRP_LOAD_BALANCER_
 
 export const isNativeEvmLoadBalancerNetwork = (network: Network) =>
   NATIVE_EVM_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isBnbLoadBalancerNetwork = (network: Network) => BNB_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isSameGetBlockNetwork = (network: Network) =>
   isUtxoBasedNetwork(network) ||

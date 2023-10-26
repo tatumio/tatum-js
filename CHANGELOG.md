@@ -1,3 +1,7 @@
+## [4.1.17] - 2023.10.26
+### Added
+- Added RPC support for the BNB network. Users can now make RPC calls to these network using the `Network.BNB` network.
+
 ## [4.1.16] - 2023.10.24
 ### Added
 - Added Beacon chain v1 support for the Ethereum
