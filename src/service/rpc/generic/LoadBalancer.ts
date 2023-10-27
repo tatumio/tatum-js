@@ -166,7 +166,7 @@ export class LoadBalancer implements AbstractRpcInterface {
       Utils.log({ id: this.id, message: `Checking status of ${server.node.url}` })
       all.push(
         Utils.fetchWithTimeout(Utils.getStatusUrl(network, server.node.url), this.id, {
-          method: 'POST',
+          method: Utils.getStatusMethod(network),
           // eslint-disable-next-line @typescript-eslint/ban-ts-comment
           // @ts-ignore
           // body: statusPayload ? JSON.stringify(statusPayload) : undefined,
