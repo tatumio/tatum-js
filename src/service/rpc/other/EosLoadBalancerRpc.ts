@@ -3,7 +3,8 @@ import { Container, Service } from 'typedi'
 import { PostI } from '../../../dto/PostI'
 import { EosRpcSuite } from '../../../dto/rpc/EosRpcSuite'
 import { Constant } from '../../../util'
-import { LoadBalancer } from '../generic'
+// Need to import like this to keep browser working
+import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractEosRpc } from './AbstractEosRpc'
 
 @Service({

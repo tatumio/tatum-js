@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
+// Need to import like this to keep browser working
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractBeaconV1EvmRpc } from './AbstractBeaconV1EvmRpc'
 import { GetI } from '../../../dto/GetI'

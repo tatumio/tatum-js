@@ -2,6 +2,7 @@
 import { Container, Service } from 'typedi'
 import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
 import { Utils } from '../../../util'
+// Need to import like this to keep browser working
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractEvmRpc } from './AbstractEvmRpc'
 import { EvmUtils } from './EvmUtils'
@@ -13,33 +14,33 @@ import { EvmUtils } from './EvmUtils'
   transient: true,
 })
 export class EvmArchiveLoadBalancerRpc extends AbstractEvmRpc implements EvmBasedRpcSuite {
-  protected readonly loadBalancerRpc: LoadBalancer
+  protected readonly loadBalancer: LoadBalancer
 
   constructor(id: string) {
     super()
-    this.loadBalancerRpc = Container.of(id).get(LoadBalancer)
+    this.loadBalancer = Container.of(id).get(LoadBalancer)
   }
 
   protected async rpcCall<T>(method: string, params?: unknown[]): Promise<T> {
     const preparedCall = Utils.prepareRpcCall(method, params)
     const isArchive = EvmUtils.isArchiveMethod(preparedCall)
-    return (await this.loadBalancerRpc.rawRpcCall(preparedCall, isArchive)) as T
+    return (await this.loadBalancer.rawRpcCall(preparedCall, isArchive)) as T
   }
 
   async rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<any>> {
     const isArchive = EvmUtils.isArchiveMethod(body)
-    return this.loadBalancerRpc.rawRpcCall(body, isArchive)
+    return this.loadBalancer.rawRpcCall(body, isArchive)
   }
 
   rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[] | JsonRpcResponse<any>> {
-    return this.loadBalancerRpc.rawBatchRpcCall(body)
+    return this.loadBalancer.rawBatchRpcCall(body)
   }
 
   public destroy() {
-    this.loadBalancerRpc.destroy()
+    this.loadBalancer.destroy()
   }
 
   public getRpcNodeUrl(): string {
-    return this.loadBalancerRpc.getActiveArchiveUrlWithFallback().url
+    return this.loadBalancer.getActiveArchiveUrlWithFallback().url
   }
 }

@@ -6,7 +6,8 @@ import {
   UtxoBasedRpcSuiteEstimateFee,
 } from '../../../dto'
 import { Utils } from '../../../util'
-import { LoadBalancer } from '../generic'
+// Need to import like this to keep browser working
+import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractUtxoRpcEstimateFee } from './AbstractUtxoRpcEstimateFee'
 
 @Service({
@@ -16,31 +17,31 @@ import { AbstractUtxoRpcEstimateFee } from './AbstractUtxoRpcEstimateFee'
   transient: true,
 })
 export class UtxoLoadBalancerRpcEstimateFee extends AbstractUtxoRpcEstimateFee implements UtxoBasedRpcSuiteEstimateFee {
-  protected readonly loadBalancerRpc: LoadBalancer
+  protected readonly loadBalancer: LoadBalancer
 
   constructor(id: string) {
     super()
-    this.loadBalancerRpc = Container.of(id).get(LoadBalancer)
+    this.loadBalancer = Container.of(id).get(LoadBalancer)
   }
 
   protected async rpcCall<T>(method: string, params?: unknown[]): Promise<T> {
     const preparedCall = Utils.prepareRpcCall(method, params)
-    return (await this.loadBalancerRpc.rawRpcCall(preparedCall)) as T
+    return (await this.loadBalancer.rawRpcCall(preparedCall)) as T
   }
 
   async rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<any>> {
-    return this.loadBalancerRpc.rawRpcCall(body)
+    return this.loadBalancer.rawRpcCall(body)
   }
 
   rawBatchRpcCall(body: JsonRpcCall[]): Promise<JsonRpcResponse<any>[] | JsonRpcResponse<any>> {
-    return this.loadBalancerRpc.rawBatchRpcCall(body)
+    return this.loadBalancer.rawBatchRpcCall(body)
   }
 
   public destroy() {
-    this.loadBalancerRpc.destroy()
+    this.loadBalancer.destroy()
   }
 
   getRpcNodeUrl(): string {
-    return this.loadBalancerRpc.getActiveNormalUrlWithFallback().url
+    return this.loadBalancer.getActiveNormalUrlWithFallback().url
   }
 }
