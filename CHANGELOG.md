@@ -1,3 +1,7 @@
+## [4.1.18] - 2023.10.30
+### Fixed
+- Fixed LoadBalancer class import which cause to fail import in the browser/codepen
+
 ## [4.1.17] - 2023.10.26
 ### Added
 - Added RPC support for the BNB network. Users can now make RPC calls to these network using the `Network.BNB` network.

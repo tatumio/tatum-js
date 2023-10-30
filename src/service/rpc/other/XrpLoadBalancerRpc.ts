@@ -2,6 +2,7 @@
 import { Container, Service } from 'typedi'
 import { JsonRpcCall, JsonRpcResponse, XrpRpcSuite } from '../../../dto'
 import { Utils } from '../../../util'
+// Need to import like this to keep browser working
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractXrpRpc } from './AbstractXrpRpc'
 

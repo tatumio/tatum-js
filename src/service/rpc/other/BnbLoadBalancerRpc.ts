@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
-import { LoadBalancer } from '../generic'
+// Need to import like this to keep browser working
+import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractBnbRpc } from './AbstractBnbRpc'
 import { BnbRpcSuite, JsonBnbRpcCall } from '../../../dto/rpc/BnbRpcSuite'
 import { JsonRpcResponse } from '../../../dto'

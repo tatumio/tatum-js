@@ -3,6 +3,7 @@ import { Container, Service } from 'typedi'
 import { JsonRpcCall, JsonRpcResponse, NATIVE_PREFIX_MAPPING, Network } from '../../../dto'
 import { NativeEvmBasedRpcSuite } from '../../../dto/rpc/NativeEvmBasedRpcInterface'
 import { CONFIG, Utils } from '../../../util'
+// Need to import like this to keep browser working
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractNativeEvmRpc } from './AbstractNativeEvmRpc'
 import { EvmUtils } from './EvmUtils'

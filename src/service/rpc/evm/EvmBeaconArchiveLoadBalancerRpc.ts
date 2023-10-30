@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { EvmBasedBeaconRpcSuite } from '../../../dto'
+// Need to import like this to keep browser working
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { EvmArchiveLoadBalancerRpc } from './EvmArchiveLoadBalancerRpc'
 import { BeaconV1EvmRpc } from './BeaconV1EvmRpc'
@@ -12,13 +13,13 @@ import { BeaconV1EvmRpc } from './BeaconV1EvmRpc'
   transient: true,
 })
 export class EvmBeaconArchiveLoadBalancerRpc extends EvmArchiveLoadBalancerRpc implements EvmBasedBeaconRpcSuite {
-  protected readonly loadBalancerRpc: LoadBalancer
+  protected readonly loadBalancer: LoadBalancer
   public readonly beacon = {
     v1: Container.of(this.id).get(BeaconV1EvmRpc),
   };
 
   constructor(private id: string) {
     super(id);
-    this.loadBalancerRpc = Container.of(id).get(LoadBalancer);
+    this.loadBalancer = Container.of(id).get(LoadBalancer);
   }
 }
