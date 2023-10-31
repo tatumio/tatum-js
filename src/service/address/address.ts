@@ -300,7 +300,16 @@ export class Address {
         // TODO: implement for other networks - TRON, XRP, CARDANO, SOL, XLM etc etc
         throw new Error(`Not supported for ${chain} network.`)
       }
-      return this.processUtxoBasedTxs(path, pageSize, page, transactionDirection, chain, address)
+      return this.processUtxoBasedTxs(
+        path,
+        pageSize,
+        page,
+        transactionDirection,
+        chain,
+        address,
+        fromBlock,
+        toBlock,
+      )
     })
   }
 
@@ -350,6 +359,8 @@ export class Address {
     transactionDirection: 'incoming' | 'outgoing' | undefined,
     chain: Network,
     address: string,
+    fromBlock: number | undefined,
+    toBlock: number | undefined,
   ) {
     return this.connector
       .get<
@@ -367,6 +378,8 @@ export class Address {
           pageSize,
           offset: page * pageSize,
           txType: transactionDirection,
+          blockFrom: fromBlock,
+          blockTo: toBlock,
         },
       })
       .then((r) => {
