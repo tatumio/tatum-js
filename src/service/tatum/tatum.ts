@@ -31,7 +31,8 @@ export abstract class TatumSdkChain implements ITatumSdkChain {
   }
 
   extension<T extends TatumSdkExtension>(
-    type: new (tatumSdkContainer: ITatumSdkContainer, ...args: unknown[]) => T,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    type: new (tatumSdkContainer: ITatumSdkContainer, ...args: any[]) => T,
   ): T {
     return Container.of(this.id).get(type)
   }

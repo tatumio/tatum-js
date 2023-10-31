@@ -1,3 +1,7 @@
+## [4.1.19] - 2023.10.31
+### Fixed
+- Configurable extension usage typing
+
 ## [4.1.18] - 2023.10.30
 ### Fixed
 - Fixed LoadBalancer class import which cause to fail import in the browser/codepen
