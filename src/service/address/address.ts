@@ -359,8 +359,8 @@ export class Address {
     transactionDirection: 'incoming' | 'outgoing' | undefined,
     chain: Network,
     address: string,
-    fromBlock: number | undefined,
-    toBlock: number | undefined,
+    blockFrom: number | undefined,
+    blockTo: number | undefined,
   ) {
     return this.connector
       .get<
@@ -378,8 +378,8 @@ export class Address {
           pageSize,
           offset: page * pageSize,
           txType: transactionDirection,
-          blockFrom: fromBlock,
-          blockTo: toBlock,
+          blockFrom,
+          blockTo,
         },
       })
       .then((r) => {
