@@ -507,6 +507,25 @@ describe.skip('Address', () => {
           transactionType: 'incoming',
         })
       })
+
+      it('should get transactions by block with cursor pagination', async () => {
+        const txs = await tatum.address.getTransactions({
+          address: 'tb1qrd9jz8ksy3qqm400vt296udlvk89z96p443mv0',
+          fromBlock: 2427335,
+          toBlock: 2427654,
+        })
+        expect(txs.status === Status.SUCCESS)
+        expect(txs.data).toHaveLength(1)
+        expect(txs.data[0]).toStrictEqual({
+          address: 'tb1qrd9jz8ksy3qqm400vt296udlvk89z96p443mv0',
+          amount: '0.01796111',
+          blockNumber: 2427335,
+          chain: 'bitcoin-testnet',
+          hash: 'ea428edd33dbadf1c9fc11320ab8d4cac4a3b52fc5f086ab46c8b02c71b1e53e',
+          timestamp: 1680597327,
+          transactionType: 'outgoing',
+        })
+      })
     })
     describe('getTransactions DOGECOIN', () => {
       let tatum: Dogecoin
@@ -551,6 +570,25 @@ describe.skip('Address', () => {
           chain: 'doge-testnet',
           hash: '7fd8c504d5af06b840fa2a95a256b22bbbc72285d1962daacac097326d4f4450',
           timestamp: 1680110393,
+          transactionType: 'outgoing',
+        })
+      })
+
+      it('should get transactions by block with cursor pagination', async () => {
+        const txs = await tatum.address.getTransactions({
+          address: 'nqNmVv1PCPFbNQLBMbeKhW4YrswqEgpVsr',
+          fromBlock: 4334638,
+          toBlock: 4373217,
+        })
+        expect(txs.status === Status.SUCCESS)
+        expect(txs.data).toHaveLength(1)
+        expect(txs.data[0]).toStrictEqual({
+          address: 'nqNmVv1PCPFbNQLBMbeKhW4YrswqEgpVsr',
+          amount: '2',
+          blockNumber: 4334638,
+          chain: 'doge-testnet',
+          hash: 'b417a1b5ffa6aec9d6f6ba2895876ac9036353efc555bdb660194a5af3b88036',
+          timestamp: 1680110455,
           transactionType: 'outgoing',
         })
       })
@@ -607,6 +645,25 @@ describe.skip('Address', () => {
           hash: '472329bfef53408df028c3689ed31767d52aa5cf4469762dff0f494b2e5d854d',
           timestamp: 1679137321,
           transactionType: 'incoming',
+        })
+      })
+
+      it('should get transactions by block with cursor pagination', async () => {
+        const txs = await tatum.address.getTransactions({
+          address: 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
+          fromBlock: 2719828,
+          toBlock: 2719829,
+        })
+        expect(txs.status === Status.SUCCESS)
+        expect(txs.data).toHaveLength(1)
+        expect(txs.data[0]).toStrictEqual({
+          address: 'n22dLZeTMRCUpaLMdgDcQzUXJJnfKcsnS3',
+          amount: '0.0009',
+          blockNumber: 2719828,
+          chain: 'litecoin-testnet',
+          hash: '7643cfd74bfd6cea2fc6f2b80ebbe03d3f1673125d445b63f23a32f83d1438c6',
+          timestamp: 1680110627,
+          transactionType: 'outgoing',
         })
       })
     })
