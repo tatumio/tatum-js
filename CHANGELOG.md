@@ -1,3 +1,7 @@
+## [4.1.20] - 2023.10.31
+### Fixed
+- Fixed usage of `fromBlock` and `toBlock` params for UTXO-based blockchains in `Address.getTransactions`
+
 ## [4.1.19] - 2023.10.31
 ### Fixed
 - Configurable extension usage typing
