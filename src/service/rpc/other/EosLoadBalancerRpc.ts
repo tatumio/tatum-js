@@ -26,7 +26,7 @@ export class EosLoadBalancerRpc extends AbstractEosRpc implements EosRpcSuite {
   }
 
   protected post<T>(post: PostI): Promise<T> {
-    return this.loadBalancer.post({ ...post, basePath: `${this.getRpcNodeUrl()}${Constant.EOS_PREFIX}` })
+    return this.loadBalancer.post({ ...post, prefix: Constant.EOS_PREFIX })
   }
 
   getRpcNodeUrl(): string {

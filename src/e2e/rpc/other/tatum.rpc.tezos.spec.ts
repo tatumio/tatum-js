@@ -11,7 +11,7 @@ const getTezosRpc = async (testnet?: boolean) =>
     verbose: e2eUtil.isVerbose,
   })
 
-  describe.each([true, false])(`Tezos`, (testnet: boolean) => {
+  describe.each([false, true])(`Tezos`, (testnet: boolean) => {
     describe(`${testnet ? 'Testnet' : 'Mainnet'}`, () => {
 
       it('getBlock', async () => {
@@ -38,7 +38,7 @@ const getTezosRpc = async (testnet?: boolean) =>
       if (!testnet) {
         it('getContract', async () => {
           const tatum = await getTezosRpc(testnet)
-          const result = await tatum.rpc.getContracts({
+          const result = await tatum.rpc.getContract({
             chainId: 'main',
             contractId: 'KT1Hkg5qeNhfwpKW4fXvq7HGZB9z2EnmCCA9',
             block: '3000000'
@@ -49,7 +49,7 @@ const getTezosRpc = async (testnet?: boolean) =>
 
         it('getContractBalanceAndFrozenBonds', async () => {
           const tatum = await getTezosRpc(testnet)
-          const result = await tatum.rpc.getContractsBalanceAndFrozenBonds({
+          const result = await tatum.rpc.getContractBalanceAndFrozenBonds({
             chainId: 'main',
             contractId: 'KT1Hkg5qeNhfwpKW4fXvq7HGZB9z2EnmCCA9',
             block: '3000000'
@@ -60,7 +60,7 @@ const getTezosRpc = async (testnet?: boolean) =>
 
         it('getContractsEntrypoints', async () => {
           const tatum = await getTezosRpc(testnet)
-          const result = await tatum.rpc.getContractsEntrypoints({
+          const result = await tatum.rpc.getContractEntrypoints({
             chainId: 'main',
             contractId: 'KT1Hkg5qeNhfwpKW4fXvq7HGZB9z2EnmCCA9',
             block: '3000000'

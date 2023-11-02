@@ -67,3 +67,6 @@ export interface TokenDetails {
    */
   cap?: string
 }
+
+export type QueryValue = string | number | boolean | string[] | number[] | boolean[]
+export type QueryParams = Record<string, QueryValue>

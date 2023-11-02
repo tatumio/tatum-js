@@ -1,3 +1,7 @@
+## [4.1.22] - 2023.11.2
+### Updated
+- Naming of the Tezos RPC methods
+
 ## [4.1.21] - 2023.11.2
 ### Added
 - Added RPC support for the TEZOS network. Users can now make RPC calls to these network using the `Network.TEZOS` network.
