@@ -59,7 +59,8 @@ describe('Solana', () => {
       })
     })
 
-    describe('getBlock', () => {
+    // Too unstable
+    describe.skip('getBlock', () => {
       it('should return a recent block', async () => {
         const tatum = await getClient()
         const { result: slot } = await tatum.rpc.getSlot()

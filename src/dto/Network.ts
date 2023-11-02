@@ -237,6 +237,7 @@ export const XRP_LOAD_BALANCER_NETWORKS = [Network.XRP, Network.XRP_TESTNET]
 export const NATIVE_EVM_LOAD_BALANCER_NETWORKS = [Network.KLAYTN, Network.KLAYTN_BAOBAB]
 export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
 export const BNB_LOAD_BALANCER_NETWORKS = [Network.BNB]
+export const TEZOS_NETWORKS = [Network.TEZOS, Network.TEZOS_TESTNET]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -247,6 +248,7 @@ export const LOAD_BALANCER_NETWORKS = [
   ...NATIVE_EVM_LOAD_BALANCER_NETWORKS,
   ...SOLANA_NETWORKS,
   ...BNB_LOAD_BALANCER_NETWORKS,
+  ...TEZOS_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -312,6 +314,8 @@ export const isNativeEvmLoadBalancerNetwork = (network: Network) =>
   NATIVE_EVM_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isBnbLoadBalancerNetwork = (network: Network) => BNB_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isTezosNetwork = (network: Network) => TEZOS_NETWORKS.includes(network)
 
 export const isSameGetBlockNetwork = (network: Network) =>
   isUtxoBasedNetwork(network) ||

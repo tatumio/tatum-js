@@ -11,6 +11,7 @@ import { Rates } from '../rate'
 import { Token } from '../token'
 import { TatumSdkChain } from './tatum'
 import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
+import { TezosRpcInterface } from '../../dto/rpc/TezosRpcSuite'
 
 export abstract class BaseOther extends TatumSdkChain {
   ipfs: Ipfs
@@ -87,9 +88,11 @@ export class Tezos extends BaseOther {
   notification: Notification
   address: AddressTezos
   nft: NftTezos
+  rpc: TezosRpcInterface
 
   constructor(id: string) {
     super(id)
+    this.rpc = Utils.getRpc<TezosRpcInterface>(id, Container.of(id).get(CONFIG))
     this.notification = Container.of(id).get(Notification)
     this.address = Container.of(id).get(AddressTezos)
     this.nft = Container.of(this.id).get(NftTezos)

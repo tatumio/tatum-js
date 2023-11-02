@@ -3,7 +3,8 @@ import { BigNumber } from 'bignumber.js'
 import { Container } from 'typedi'
 import { version } from '../../package.json'
 import {
-  AddressEventNotificationChain, isBnbLoadBalancerNetwork,
+  AddressEventNotificationChain,
+  isBnbLoadBalancerNetwork,
   isEosLoadBalancerNetwork,
   isEosNetwork,
   isEvmArchiveNonArchiveBeaconLoadBalancerNetwork,
@@ -13,9 +14,12 @@ import {
   isNativeEvmLoadBalancerNetwork,
   isSameGetBlockNetwork,
   isSolanaNetwork,
+  isTezosNetwork,
   isTronLoadBalancerNetwork,
   isTronNetwork,
-  isUtxoBasedNetwork, isUtxoEstimateFeeNetwork, isUtxoLoadBalancerEstimateFeeNetwork,
+  isUtxoBasedNetwork,
+  isUtxoEstimateFeeNetwork,
+  isUtxoLoadBalancerEstimateFeeNetwork,
   isUtxoLoadBalancerNetwork,
   isXrpNetwork,
   JsonRpcCall,
@@ -82,12 +86,17 @@ import { EvmBeaconArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmBeaconArc
 import { UtxoLoadBalancerRpcEstimateFee } from '../service/rpc/utxo/UtxoLoadBalancerRpcEstimateFee'
 import { UtxoRpcEstimateFee } from '../service/rpc/utxo/UtxoRpcEstimateFee'
 import { BnbLoadBalancerRpc } from '../service/rpc/other/BnbLoadBalancerRpc'
+import { TezosLoadBalancerRpc } from '../service/rpc/other/TezosLoadBalancerRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
 
-    if(isBnbLoadBalancerNetwork(network)) {
+    if (isTezosNetwork(network)) {
+      return Container.of(id).get(TezosLoadBalancerRpc) as T
+    }
+
+    if (isBnbLoadBalancerNetwork(network)) {
       return Container.of(id).get(BnbLoadBalancerRpc) as T
     }
 
@@ -202,7 +211,7 @@ export const Utils = {
       }
     }
 
-    if (isEosNetwork(network)) {
+    if (isEosNetwork(network) || isTezosNetwork(network)) {
       return null
     }
 
@@ -221,7 +230,17 @@ export const Utils = {
       return url
     }
 
+    if (isTezosNetwork(network)) {
+      return `${url}chains/main/blocks/head/header`
+    }
+
     throw new Error(`Network ${network} is not supported.`)
+  },
+  getStatusMethod(network: Network): string {
+    if (isTezosNetwork(network)) {
+      return 'GET'
+    }
+    return 'POST'
   },
   parseStatusPayload: (network: Network, response: JsonRpcResponse<any> | any) => {
     if (isSameGetBlockNetwork(network)) {
@@ -234,6 +253,10 @@ export const Utils = {
 
     if (isEosNetwork(network)) {
       return new BigNumber((response.head_block_num as number) || -1).toNumber()
+    }
+
+    if (isTezosNetwork(network)) {
+      return new BigNumber((response.level as number) || -1).toNumber()
     }
 
     throw new Error(`Network ${network} is not supported.`)
@@ -249,6 +272,10 @@ export const Utils = {
 
     if (isSameGetBlockNetwork(network)) {
       return response.result !== undefined
+    }
+
+    if (isTezosNetwork(network)) {
+      return response.level !== undefined
     }
 
     throw new Error(`Network ${network} is not supported.`)
@@ -520,6 +547,7 @@ export const Utils = {
       case Network.TRON_SHASTA:
         return new Tron(id) as T
       case Network.TEZOS:
+      case Network.TEZOS_TESTNET:
         return new Tezos(id) as T
       case Network.HORIZEN_EON:
       case Network.HORIZEN_EON_GOBI:

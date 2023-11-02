@@ -1,3 +1,7 @@
+## [4.1.21] - 2023.11.2
+### Added
+- Added RPC support for the TEZOS network. Users can now make RPC calls to these network using the `Network.TEZOS` network.
+
 ## [4.1.20] - 2023.10.31
 ### Fixed
 - Fixed usage of `fromBlock` and `toBlock` params for UTXO-based blockchains in `Address.getTransactions`
