@@ -26,7 +26,7 @@ import {
   JsonRpcResponse,
   MAPPED_NETWORK,
   MappedNetwork,
-  Network,
+  Network, QueryParams, QueryValue,
 } from '../dto'
 import {
   ApiVersion,
@@ -620,11 +620,13 @@ export const Utils = {
     }
     return rpc?.nodes?.[0].url || `${Constant.TATUM_API_URL.V3}blockchain/node/${network}`.concat(path || '')
   },
-  addQueryParams: (basePath: string, queryParams?: Record<string, string | string[]>): string => {
+  addQueryParams: (basePath: string, queryParams?: QueryParams): string => {
     let queryString = '';
 
     if (queryParams) {
-      const query = Utils.convertObjCamelToSnake(queryParams);
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      const query: Record<string, QueryValue> = Utils.convertObjCamelToSnake(queryParams);
       const params: string[] = [];
 
       Object.entries(query).forEach(([key, value]) => {
@@ -633,7 +635,7 @@ export const Utils = {
             params.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`);
           });
         } else {
-          params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value as string)}`);
+          params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
         }
       });
 

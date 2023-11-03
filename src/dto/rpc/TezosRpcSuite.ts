@@ -24,17 +24,13 @@ export interface GetContractBase extends GetBlock {
   contractId: string
 }
 
-export interface GetContractsBigMapGet extends GetContractBase {
+export interface GetContractBigMapValue extends GetContractBase {
   key: any
   type: any
 }
 
 export interface GetContractsEntrypoints extends GetContract {
   entrypoint: string
-}
-
-export interface GetBlockHash extends GetBlock {
-  hash: string
 }
 
 export interface SimulateOperation extends RPCSimulateOperationParam, GetBlock {
@@ -49,7 +45,7 @@ export interface GetProtocol {
 }
 
 export interface InjectBase {
-  async?: string
+  async?: boolean
   chain?: string
 }
 
@@ -58,7 +54,7 @@ export interface InjectOperation extends InjectBase {
 }
 
 export interface InjectBlock extends InjectBase {
- force?: string
+ force?: boolean
  data: string
   operations: { branch: string, data: string }[][]
 }
@@ -70,7 +66,7 @@ export interface InjectProtocol {
     interface: string
     implementation: string
   }[]
-  async?: string
+  async?: boolean
 }
 
 export interface TezosRpcInterface {
@@ -78,29 +74,31 @@ export interface TezosRpcInterface {
 
   getBlockHashes(params: GetBlockHashes): Promise<any>
 
-  getContracts(params: GetContract): Promise<any>
+  getContract(params: GetContract): Promise<any>
 
-  getContractsTickets(params: GetContractBase): Promise<any>
+  getContractTickets(params: GetContractBase): Promise<any>
 
-  getContractsBalance(params: GetContractBase): Promise<any>
+  getContractBalance(params: GetContractBase): Promise<any>
 
-  getContractsBalanceAndFrozenBonds(params: GetContractBase): Promise<any>
+  getContractBalanceAndFrozenBonds(params: GetContractBase): Promise<any>
 
-  getContractsBigMapGet(params: GetContractsBigMapGet): Promise<any>
+  getContractBigMapValue(params: GetContractBigMapValue): Promise<any>
 
-  getContractsCounter(params: GetContractBase): Promise<any>
+  getContractCounter(params: GetContractBase): Promise<any>
 
   getContractDelegate(params: GetContractBase): Promise<any>
 
-  getContractsEntrypoints(params: GetContract): Promise<any>
+  getContractEntrypoints(params: GetContract): Promise<any>
 
-  getContractsEntrypoint(params: GetContractsEntrypoints): Promise<any>
+  getContractEntrypoint(params: GetContractsEntrypoints): Promise<any>
 
-  getContractsManagerKey(params: GetContractBase): Promise<any>
+  getContractManagerKey(params: GetContractBase): Promise<any>
+
+  getContracts(params: GetBlock): Promise<any>
 
   getBlock(params: GetBlock): Promise<any>
 
-  getBlockHash(params: GetBlockHash): Promise<any>
+  getBlockHash(params: GetBlock): Promise<any>
 
   getOperationHashes(params: GetBlock): Promise<any>
 
@@ -124,7 +122,7 @@ export interface TezosRpcInterface {
 
   getLevelsCaboose(params: GetChainId): Promise<any>
 
-  getLevelsSavePoint(params: GetChainId): Promise<any>
+  getLevelsSavepoint(params: GetChainId): Promise<any>
 
   getErrorsSchema(): Promise<any>
 

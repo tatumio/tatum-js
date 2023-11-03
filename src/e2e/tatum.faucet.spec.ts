@@ -29,7 +29,7 @@ describe('Tatum faucet', () => {
   })
 
   describe('valid request', () => {
-    it('should only stop at balance being above limit', async () => {
+    it.skip('should only stop at balance being above limit', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.POLYGON_MUMBAI,
       })

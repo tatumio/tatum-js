@@ -43,10 +43,10 @@ export class TezosLoadBalancerRpc extends AbstractTezosRpc {
   }
 
   protected get<T>(get: GetI): Promise<T> {
-    return this.loadBalancer.get({ ...get, basePath: this.getRpcNodeUrl() })
+    return this.loadBalancer.get(get)
   }
 
   protected post<T>(post: PostI): Promise<T> {
-    return this.loadBalancer.post({ ...post, basePath: this.getRpcNodeUrl() })
+    return this.loadBalancer.post(post)
   }
 }

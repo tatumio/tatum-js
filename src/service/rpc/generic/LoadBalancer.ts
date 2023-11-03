@@ -55,6 +55,7 @@ interface HandleFailedRpcCallParams {
   e: unknown
   nodeType: RpcNodeType
   requestType: RequestType
+  url: string
 }
 
 @Service({
@@ -394,9 +395,8 @@ export class LoadBalancer implements AbstractRpcInterface {
     }
   }
 
-  async handleFailedRpcCall({rpcCall, e, nodeType, requestType}: HandleFailedRpcCallParams) {
+  async handleFailedRpcCall({ rpcCall, e, nodeType, requestType, url }: HandleFailedRpcCallParams) {
     const { rpc: rpcConfig } = Container.of(this.id).get(CONFIG)
-    const { url } = this.getActiveUrl(nodeType)
     const activeIndex = this.getActiveIndex(nodeType)
     if (requestType === RequestType.RPC && 'method' in rpcCall) {
       Utils.log({
@@ -418,14 +418,14 @@ export class LoadBalancer implements AbstractRpcInterface {
     } else if (requestType === RequestType.POST && 'path' in rpcCall && 'body' in rpcCall) {
       Utils.log({
         id: this.id,
-        message: `Failed to call request on url ${rpcCall.basePath}${rpcCall.path} with body ${JSON.stringify(
+        message: `Failed to call request on url ${url}${rpcCall.path} with body ${JSON.stringify(
           rpcCall.body,
         )}. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
       })
     } else if (requestType === RequestType.GET && 'path' in rpcCall) {
       Utils.log({
         id: this.id,
-        message: `Failed to call request on url ${rpcCall.basePath}${rpcCall.path}. Error: ${JSON.stringify(
+        message: `Failed to call request on url ${url}${rpcCall.path}. Error: ${JSON.stringify(
           e,
           Object.getOwnPropertyNames(e),
         )}`,
@@ -487,7 +487,7 @@ export class LoadBalancer implements AbstractRpcInterface {
       })
       return await this.connector.rpcCall(url, rpcCall)
     } catch (e) {
-      await this.handleFailedRpcCall({ rpcCall, e, nodeType: type, requestType: RequestType.RPC })
+      await this.handleFailedRpcCall({ rpcCall, e, nodeType: type, requestType: RequestType.RPC, url })
       return await this.rawRpcCall(rpcCall)
     }
   }
@@ -497,35 +497,42 @@ export class LoadBalancer implements AbstractRpcInterface {
     try {
       return await this.connector.rpcCall(url, rpcCall)
     } catch (e) {
-      await this.handleFailedRpcCall({ rpcCall, e, nodeType: type, requestType: RequestType.BATCH })
+      await this.handleFailedRpcCall({ rpcCall, e, nodeType: type, requestType: RequestType.BATCH, url })
       return await this.rawBatchRpcCall(rpcCall)
     }
   }
 
-  async post<T>({ path, body, basePath }: PostI): Promise<T> {
+  async post<T>({ path, body, prefix }: PostI): Promise<T> {
     const { url, type } = this.getActiveNormalUrlWithFallback()
-    const basePathUrl= basePath ?? url
+    const basePath = prefix ? `${url}${prefix}` : url
     try {
-      return await this.connector.post<T>({ basePath: basePathUrl, path, body })
+      return await this.connector.post<T>({ basePath, path, body })
     } catch (e) {
       await this.handleFailedRpcCall({
-        rpcCall: { path, body, basePath: basePathUrl },
+        rpcCall: { path, body },
         e,
         nodeType: type,
         requestType: RequestType.POST,
+        url: basePath,
       })
-      return await this.post({ path, body, basePath })
+      return await this.post({ path, body, prefix })
     }
   }
 
-  async get<T>({ path, basePath }: GetI): Promise<T> {
+  async get<T>({ path, prefix }: GetI): Promise<T> {
     const { url, type } = this.getActiveNormalUrlWithFallback()
-    const basePathUrl= basePath ?? url
+    const basePath = prefix ? `${url}${prefix}` : url
     try {
-      return await this.connector.get<T>({ basePath: basePathUrl, path })
+      return await this.connector.get<T>({ basePath, path })
     } catch (e) {
-      await this.handleFailedRpcCall({ rpcCall: { path, basePath: basePathUrl }, e, nodeType: type, requestType: RequestType.GET })
-      return await this.get({ path, basePath })
+      await this.handleFailedRpcCall({
+        rpcCall: { path },
+        e,
+        nodeType: type,
+        requestType: RequestType.GET,
+        url: basePath,
+      })
+      return await this.get({ path, prefix })
     }
   }
 
