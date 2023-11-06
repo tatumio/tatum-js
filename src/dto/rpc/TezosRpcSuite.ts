@@ -9,7 +9,7 @@ export interface GetBlockHashes extends GetChainId {
 }
 
 export interface GetContract extends GetContractBase {
-  normalizeTypes?: string
+  normalizeTypes?: boolean
 }
 
 export interface GetChainId {

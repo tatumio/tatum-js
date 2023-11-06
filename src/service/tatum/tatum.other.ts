@@ -1,8 +1,6 @@
 import { Container } from 'typedi'
 import { SolanaRpcSuite, TronRpcSuite, XrpRpcInterface } from '../../dto'
-import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
-import { TezosRpcInterface } from '../../dto'
 import { CONFIG, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
 import { Faucet } from '../faucet'
@@ -12,6 +10,10 @@ import { Notification } from '../notification'
 import { Rates } from '../rate'
 import { Token } from '../token'
 import { TatumSdkChain } from './tatum'
+import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
+import { TezosRpcInterface } from '../../dto/rpc/TezosRpcSuite'
+import { AlgorandAlgodRpcSuite } from '../../dto/rpc/AlgorandAlgodRpcSuite'
+import { AlgorandIndexerRpcSuite } from '../../dto/rpc/AlgorandIndexerRpcSuite'
 
 export abstract class BaseOther extends TatumSdkChain {
   ipfs: Ipfs
@@ -96,6 +98,24 @@ export class Tezos extends BaseOther {
     this.notification = Container.of(id).get(Notification)
     this.address = Container.of(id).get(AddressTezos)
     this.nft = Container.of(this.id).get(NftTezos)
+  }
+}
+
+export class AlgorandAlgod extends BaseOther {
+  rpc: AlgorandAlgodRpcSuite
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<AlgorandAlgodRpcSuite>(id, Container.of(id).get(CONFIG))
+  }
+}
+
+export class AlgorandIndexer extends BaseOther {
+  rpc: AlgorandIndexerRpcSuite
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<AlgorandIndexerRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 

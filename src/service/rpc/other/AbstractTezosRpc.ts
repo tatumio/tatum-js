@@ -33,10 +33,10 @@ export abstract class AbstractTezosRpc implements TezosRpcInterface {
     queryParams,
   }: {
     path: string
-    queryParams?: Record<string, string | string[] | number>
+    queryParams?: QueryParams
   }): Promise<T> {
     if (queryParams && Object.keys(queryParams).length > 0) {
-      return this.get({ path: `${path}${Utils.convertObjCamelToSnake(queryParams)}` })
+      return this.get({ path: Utils.addQueryParams(path, Utils.camelToSnakeCase, queryParams) })
     }
 
     return this.get({ path })
@@ -56,7 +56,7 @@ export abstract class AbstractTezosRpc implements TezosRpcInterface {
     }
 
     if (queryParams && Object.keys(queryParams).length > 0) {
-      post.path = `${path}${Utils.convertObjCamelToSnake(queryParams)}`
+      post.path = Utils.addQueryParams(path, Utils.camelToSnakeCase, queryParams)
     }
 
     if (body) {

@@ -1,6 +1,7 @@
 export enum Network {
   // Mainnets
-  ALGORAND = 'algorand-mainnet',
+  ALGORAND_ALGOD = 'algorand-mainnet-algod',
+  ALGORAND_INDEXER = 'algorand-mainnet-indexer',
   ARBITRUM_NOVA = 'arb-nova-mainnet',
   ARBITRUM_ONE = 'arbitrum-one-mainnet',
   AURORA = 'aurora-mainnet',
@@ -48,7 +49,8 @@ export enum Network {
   ZILLIQA = 'zilliqa-mainnet',
 
   // Testnets
-  ALGORAND_TESTNET = 'algorand-testnet',
+  ALGORAND_ALGOD_TESTNET = 'algorand-testnet-algod',
+  ALGORAND_INDEXER_TESTNET = 'algorand-testnet-indexer',
   ARBITRUM_NOVA_TESTNET = 'arb-testnet',
   AURORA_TESTNET = 'aurora-testnet',
   AVALANCHE_C_TESTNET = 'avax-testnet',
@@ -234,6 +236,8 @@ export const NATIVE_EVM_LOAD_BALANCER_NETWORKS = [Network.KLAYTN, Network.KLAYTN
 export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
 export const BNB_LOAD_BALANCER_NETWORKS = [Network.BNB]
 export const TEZOS_NETWORKS = [Network.TEZOS, Network.TEZOS_TESTNET]
+export const ALGORAND_ALGOD_NETWORKS = [Network.ALGORAND_ALGOD, Network.ALGORAND_ALGOD_TESTNET]
+export const ALGORAND_INDEXER_NETWORKS = [Network.ALGORAND_INDEXER, Network.ALGORAND_INDEXER_TESTNET]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -245,6 +249,8 @@ export const LOAD_BALANCER_NETWORKS = [
   ...SOLANA_NETWORKS,
   ...BNB_LOAD_BALANCER_NETWORKS,
   ...TEZOS_NETWORKS,
+  ...ALGORAND_ALGOD_NETWORKS,
+  ...ALGORAND_INDEXER_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -313,6 +319,10 @@ export const isNativeEvmLoadBalancerNetwork = (network: Network) =>
 export const isBnbLoadBalancerNetwork = (network: Network) => BNB_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isTezosNetwork = (network: Network) => TEZOS_NETWORKS.includes(network)
+
+export const isAlgorandAlgodNetwork = (network: Network) => ALGORAND_ALGOD_NETWORKS.includes(network)
+
+export const isAlgorandIndexerNetwork = (network: Network) => ALGORAND_INDEXER_NETWORKS.includes(network)
 
 export const isSameGetBlockNetwork = (network: Network) =>
   isUtxoBasedNetwork(network) ||
