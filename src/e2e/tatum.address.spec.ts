@@ -258,39 +258,24 @@ describe.skip('Address', () => {
         })
       })
 
-      it('should get balance with native assets only', async () => {
-        const { data } = await tatum.address.getBalance({
-          addresses: ['tz1irJKkXS2DBWkU1NnmFQx1c1L7pbGg4yhk'],
-        })
-        expect(data).toHaveLength(1)
+      it('should get all balances for address', async () => {
+        const { data } = await tatum.address.getBalance({ address: 'tz1irJKkXS2DBWkU1NnmFQx1c1L7pbGg4yhk' })
+        expect(data.length).toBeGreaterThan(1)
         expect(data[0]).toStrictEqual({
           asset: 'XTZ',
-          decimals: 6,
           address: 'tz1irJKkXS2DBWkU1NnmFQx1c1L7pbGg4yhk',
           balance: expect.any(String),
           type: 'native',
         })
       })
 
-      it('should get balance with native assets only for 2 addresses', async () => {
+      it('should get balance for nft tokens only', async () => {
         const { data } = await tatum.address.getBalance({
-          addresses: ['tz1irJKkXS2DBWkU1NnmFQx1c1L7pbGg4yhk', 'tz1YkqJKPWXjREzs9L32AZqe3yiEdfhSYx3x'],
-        })
-        expect(data).toHaveLength(2)
-        expect(data[0]).toStrictEqual({
-          asset: 'XTZ',
           address: 'tz1irJKkXS2DBWkU1NnmFQx1c1L7pbGg4yhk',
-          decimals: 6,
-          balance: expect.any(String),
-          type: 'native',
+          tokenTypes: ['nft'],
         })
-        expect(data[1]).toStrictEqual({
-          asset: 'XTZ',
-          address: 'tz1YkqJKPWXjREzs9L32AZqe3yiEdfhSYx3x',
-          decimals: 6,
-          balance: expect.any(String),
-          type: 'native',
-        })
+        expect(data.length).toBeGreaterThan(1)
+        data.every((token) => expect(token.type).toBe('nft'))
       })
     })
 

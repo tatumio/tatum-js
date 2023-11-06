@@ -3,8 +3,8 @@ import { Container, Service } from 'typedi'
 import { ApiBalanceRequest } from '../../api/api.dto'
 import { TatumConnector } from '../../connector/tatum.connector'
 import {
-  AddressBalanceDetails,
   AddressBalanceFilters,
+  AddressBalanceFiltersTezos,
   AddressBalanceFiltersTron,
   TokenDetails,
   isDataApiEnabledNetwork,
@@ -18,6 +18,7 @@ import { AbstractTronRpc, EvmRpc, GenericRpc } from '../rpc'
 import { Network, TatumConfig } from '../tatum'
 import {
   AddressBalance,
+  AddressBalanceDataApi,
   AddressTransaction,
   GetAddressTransactionsQuery,
   GetAddressTransactionsQueryTezos,
@@ -37,30 +38,46 @@ export class AddressTezos {
   }
 
   /**
-   * Get balance of XTZ for a given Tezos address.
-   * You can get balance of multiple addresses in one call.
+   * Get balance of all tokens for a given Tezos address.
    */
-  async getBalance({ addresses }: AddressBalanceFilters): Promise<ResponseDto<AddressBalance[]>> {
+  async getBalance({
+    address,
+    tokenTypes,
+    page,
+    pageSize,
+  }: AddressBalanceFiltersTezos): Promise<ResponseDto<AddressBalance[]>> {
     const chain = this.config.network
 
     return ErrorUtils.tryFail(async () => {
-      const data = await this.connector.get<{ result: AddressBalance[] }, ApiBalanceRequest>({
+      const data = await this.connector.get<{ result: AddressBalanceDataApi[] }, ApiBalanceRequest>({
         path: `data/balances`,
         params: {
-          pageSize: 50,
-          offset: 0,
+          pageSize,
+          offset: page,
           chain,
-          addresses: addresses.join(','),
+          addresses: address,
+          tokenTypes: tokenTypes?.join(','),
         },
       })
 
-      return data.result.map((value) => ({
-        address: value.address,
-        asset: Constant.CURRENCY_NAMES[chain],
-        decimals: Constant.DECIMALS[chain],
-        balance: value.balance,
-        type: 'native',
-      }))
+      return data.result.map(({ address, symbol, balance, type, tokenAddress, tokenId }) => {
+        let tokenBalance = {
+          address,
+          asset: symbol,
+          balance,
+          type,
+          tokenAddress,
+          tokenId,
+        } as AddressBalance
+
+        if (type === 'native') {
+          tokenBalance.asset = Constant.CURRENCY_NAMES[chain]
+          delete tokenBalance.tokenAddress
+          delete tokenBalance.tokenId
+        }
+
+        return tokenBalance
+      })
     })
   }
 
@@ -228,7 +245,7 @@ export class Address {
     page = 0,
     pageSize = 10,
     addresses,
-  }: AddressBalanceDetails): Promise<ResponseDto<AddressBalance[]>> {
+  }: AddressBalanceFilters): Promise<ResponseDto<AddressBalance[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(async () => {
       const nativeBalances = await this.getNativeBalance(addresses)

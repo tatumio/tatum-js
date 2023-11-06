@@ -1,3 +1,7 @@
+## [4.1.23] - 2023.11.6
+### Changed
+- Tezos address balances fixes. Call to `address.getBalance` returns balances of all tokens for a given address. This call accepts only one `address` as a parameter, not an array of addresses.
+
 ## [4.1.22] - 2023.11.2
 ### Updated
 - Naming of the Tezos RPC methods

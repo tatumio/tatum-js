@@ -1,7 +1,7 @@
 import { Container, Service } from 'typedi'
 import { ApiBalanceRequest } from '../../api/api.dto'
 import { TatumConnector } from '../../connector/tatum.connector'
-import { AddressBalanceDetails } from '../../dto'
+import { AddressBalanceFilters } from '../../dto'
 import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
 import { Ipfs } from '../ipfs'
 import { TatumConfig } from '../tatum'
@@ -183,7 +183,7 @@ export class Nft {
     page = 0,
     pageSize = 50,
     addresses,
-  }: AddressBalanceDetails): Promise<ResponseDto<NftAddressBalance[]>> {
+  }: AddressBalanceFilters): Promise<ResponseDto<NftAddressBalance[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(() =>
       this.connector

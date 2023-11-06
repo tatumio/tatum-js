@@ -1,6 +1,6 @@
 import { Container, Service } from 'typedi'
 import { TatumApi } from '../../api/tatum.api'
-import { AddressBalanceDetails, isDataApiEvmEnabledNetwork } from '../../dto'
+import { AddressBalanceFilters, isDataApiEvmEnabledNetwork } from '../../dto'
 import { CONFIG, ErrorUtils, ResponseDto } from '../../util'
 import { TatumConfig } from '../tatum'
 import {
@@ -38,7 +38,7 @@ export class Token {
     page = 0,
     pageSize = 50,
     addresses,
-  }: AddressBalanceDetails): Promise<ResponseDto<FungibleTokenBalance[]>> {
+  }: AddressBalanceFilters): Promise<ResponseDto<FungibleTokenBalance[]>> {
     const chain = this.config.network
     if (isDataApiEvmEnabledNetwork(chain)) {
       return ErrorUtils.tryFail(() =>

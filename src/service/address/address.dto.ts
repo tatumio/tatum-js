@@ -33,6 +33,16 @@ export interface AddressBalance {
   lastUpdatedBlockNumber?: number
 }
 
+export interface AddressBalanceDataApi {
+  address: string
+  symbol?: string
+  name?: string
+  balance: string
+  type: string
+  tokenAddress?: string
+  tokenId?: string
+}
+
 export interface GetAddressTransactionsQuery {
   /**
    * Blockchain address to get transactions for.
