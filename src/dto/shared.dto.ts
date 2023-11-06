@@ -16,7 +16,7 @@ export interface TokenIdContractAddress extends TokenAddress {
   tokenId: string
 }
 
-export interface AddressBalanceDetails extends AddressBalanceFilters {
+interface Pagination {
   /**
    * Optional page size. If not specified, the default page size is used, which is 10.
    */
@@ -27,7 +27,7 @@ export interface AddressBalanceDetails extends AddressBalanceFilters {
   page?: number
 }
 
-export interface AddressBalanceFilters {
+export interface AddressBalanceFilters extends Pagination {
   /**
    * List of addresses to check.
    */
@@ -39,6 +39,18 @@ export interface AddressBalanceFiltersTron {
    * Address to check.
    */
   address: string
+}
+
+export interface AddressBalanceFiltersTezos extends Pagination {
+  /**
+   * Address to check.
+   */
+  address: string
+
+  /**
+   * Optional filter for token types. If not specified, all token types are returned. Allowed values are `fungible`, `nft` and `multitoken`.
+   */
+  tokenTypes?: string[]
 }
 
 export interface TokenDetails {
