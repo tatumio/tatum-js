@@ -1,6 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Service } from 'typedi'
+import { QueryParams } from '../../../dto'
+import { GetI } from '../../../dto/GetI'
+import { PostI } from '../../../dto/PostI'
 import {
   GetBlock,
   GetBlockHashes,
@@ -10,40 +13,40 @@ import {
   GetContractBigMapValue,
   GetContractsEntrypoints,
   GetInvalidBlocks,
-  GetProtocol, InjectBlock,
-  InjectOperation, InjectProtocol,
+  GetProtocol,
+  InjectBlock,
+  InjectOperation,
+  InjectProtocol,
+  PreapplyOperations,
   SimulateOperation,
   TezosRpcInterface,
-} from '../../../dto/rpc/TezosRpcSuite'
+} from '../../../dto'
 import { Utils } from '../../../util'
-import { GetI } from '../../../dto/GetI'
-import { PostI } from '../../../dto/PostI'
-import { QueryParams } from '../../../dto'
 
 @Service()
 export abstract class AbstractTezosRpc implements TezosRpcInterface {
   protected abstract get<T>(post: GetI): Promise<T>
   protected abstract post<T>(post: PostI): Promise<T>
 
-  private async sendGet<T> ({
-                       path,
-                       queryParams
-                      }: {
-    path: string,
+  private async sendGet<T>({
+    path,
+    queryParams,
+  }: {
+    path: string
     queryParams?: Record<string, string | string[] | number>
   }): Promise<T> {
     if (queryParams && Object.keys(queryParams).length > 0) {
-      return this.get({ path: `${path}${Utils.convertObjCamelToSnake(queryParams)}`})
+      return this.get({ path: `${path}${Utils.convertObjCamelToSnake(queryParams)}` })
     }
 
     return this.get({ path })
   }
 
   private async sendPost<T>({
-                              path,
-                              body,
-                              queryParams
-                            }: {
+    path,
+    body,
+    queryParams,
+  }: {
     path: string
     body?: any
     queryParams?: QueryParams
@@ -58,9 +61,9 @@ export abstract class AbstractTezosRpc implements TezosRpcInterface {
 
     if (body) {
       if (typeof body === 'object') {
-        post.body = Utils.convertObjCamelToSnake(body);
+        post.body = Utils.convertObjCamelToSnake(body)
       } else {
-        post.body = body;
+        post.body = body
       }
     }
 
@@ -69,12 +72,24 @@ export abstract class AbstractTezosRpc implements TezosRpcInterface {
 
   getBlock(params: GetBlock): Promise<any> {
     const { chainId, block } = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}`})
+    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}` })
+  }
+
+  getManagerKey(address: string, params: GetBlock): Promise<any> {
+    const { chainId, block } = params
+    return this.sendGet({
+      path: `/chains/${chainId}/blocks/${block}/context/constants/${address}/manager_key`,
+    })
+  }
+
+  getConstants(params: GetBlock): Promise<any> {
+    const { chainId, block } = params
+    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/constants` })
   }
 
   getBlockHash(params: GetBlock): Promise<any> {
     const { chainId, block } = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/hash`})
+    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/hash` })
   }
 
   getBlockHashes(params: GetBlockHashes): Promise<any> {
@@ -84,27 +99,27 @@ export abstract class AbstractTezosRpc implements TezosRpcInterface {
 
   getBlockHeader(params: GetBlock): Promise<any> {
     const { chainId, block } = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/header`})
+    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/header` })
   }
 
   getBlockShell(params: GetBlock): Promise<any> {
     const { chainId, block } = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/header/shell`})
+    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/header/shell` })
   }
 
   getBlocksHead(params: GetChainId): Promise<any> {
     const { chainId } = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/head`})
+    return this.sendGet({ path: `/chains/${chainId}/blocks/head` })
   }
 
   getChainId(params: GetChainId): Promise<any> {
     const { chainId } = params
-    return this.sendGet({ path: `/chains/${chainId}/chain_id`})
+    return this.sendGet({ path: `/chains/${chainId}/chain_id` })
   }
 
   getCheckpoint(params: GetChainId): Promise<any> {
     const { chainId } = params
-    return this.sendGet({ path: `/chains/${chainId}/checkpoint`})
+    return this.sendGet({ path: `/chains/${chainId}/checkpoint` })
   }
 
   getConfig(): Promise<any> {
@@ -113,57 +128,81 @@ export abstract class AbstractTezosRpc implements TezosRpcInterface {
 
   getContractDelegate(params: GetContractBase): Promise<any> {
     const { chainId, block, contractId } = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/delegate`})
+    return this.sendGet({
+      path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/delegate`,
+    })
   }
 
   getContract(params: GetContract): Promise<any> {
     const { chainId, contractId, block, ...rest } = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}`, queryParams: rest })
+    return this.sendGet({
+      path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}`,
+      queryParams: rest,
+    })
   }
 
   getContractBalance(params: GetContractBase): Promise<any> {
     const { chainId, block, contractId } = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/balance`})
+    return this.sendGet({
+      path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/balance`,
+    })
   }
 
   getContractBalanceAndFrozenBonds(params: GetContractBase): Promise<any> {
     const { chainId, block, contractId } = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/balance_and_frozen_bonds`})
+    return this.sendGet({
+      path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/balance_and_frozen_bonds`,
+    })
   }
 
   getContractBigMapValue(params: GetContractBigMapValue): Promise<any> {
     const { chainId, block, contractId, ...rest } = params
-    return this.sendPost({ path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/big_map_get`, body: rest })
+    return this.sendPost({
+      path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/big_map_get`,
+      body: rest,
+    })
   }
 
   getContractCounter(params: GetContractBase): Promise<any> {
-    const { chainId, block, contractId} = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/counter`})
+    const { chainId, block, contractId } = params
+    return this.sendGet({
+      path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/counter`,
+    })
   }
 
   getContractEntrypoint(params: GetContractsEntrypoints): Promise<any> {
-    const { chainId, block, contractId, entrypoint, ...rest} = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/entrypoints/${entrypoint}`, queryParams: rest })
+    const { chainId, block, contractId, entrypoint, ...rest } = params
+    return this.sendGet({
+      path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/entrypoints/${entrypoint}`,
+      queryParams: rest,
+    })
   }
 
   getContractEntrypoints(params: GetContract): Promise<any> {
-    const { chainId, block, contractId, ...rest} = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/entrypoints`, queryParams: rest })
+    const { chainId, block, contractId, ...rest } = params
+    return this.sendGet({
+      path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/entrypoints`,
+      queryParams: rest,
+    })
   }
 
   getContractManagerKey(params: GetContractBase): Promise<any> {
-    const { chainId, block, contractId} = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/manager_key`})
+    const { chainId, block, contractId } = params
+    return this.sendGet({
+      path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/manager_key`,
+    })
   }
 
   getContractTickets(params: GetContractBase): Promise<any> {
-    const { chainId, block, contractId} = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/all_ticket_balances` })
+    const { chainId, block, contractId } = params
+    return this.sendGet({
+      path: `/chains/${chainId}/blocks/${block}/context/contracts/${contractId}/all_ticket_balances`,
+    })
   }
 
   getContracts(params: GetBlock): Promise<any> {
     const { chainId, block } = params
-    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/contracts`})
+    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/context/contracts` })
   }
 
   getErrorsSchema(): Promise<any> {
@@ -175,22 +214,22 @@ export abstract class AbstractTezosRpc implements TezosRpcInterface {
   }
 
   getInvalidBlocks(params: GetInvalidBlocks): Promise<any> {
-    const { chainId} = params
+    const { chainId } = params
     return this.sendGet({ path: `/chains/${chainId}/invalid_blocks` })
   }
 
   getLevelsCaboose(params: GetChainId): Promise<any> {
-    const { chainId, } = params
+    const { chainId } = params
     return this.sendGet({ path: `/chains/${chainId}/levels/caboose` })
   }
 
   getLevelsCheckpoint(params: GetChainId): Promise<any> {
-    const { chainId, } = params
+    const { chainId } = params
     return this.sendGet({ path: `/chains/${chainId}/levels/checkpoint` })
   }
 
   getLevelsSavepoint(params: GetChainId): Promise<any> {
-    const { chainId, } = params
+    const { chainId } = params
     return this.sendGet({ path: `/chains/${chainId}/levels/savepoint` })
   }
 
@@ -203,18 +242,23 @@ export abstract class AbstractTezosRpc implements TezosRpcInterface {
   }
 
   getOperationHashes(params: GetBlock): Promise<any> {
-    const { chainId, block} = params
+    const { chainId, block } = params
     return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/operations_hashes` })
   }
 
   getOperations(params: GetBlock): Promise<any> {
-    const { chainId, block} = params
+    const { chainId, block } = params
     return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/operations_hashes` })
   }
 
   getProtocol(params: GetProtocol): Promise<any> {
-    const { protocolHash } = params
-    return this.sendGet({ path: `/protocols/${protocolHash}` })
+    const { protocolHash, chainId, block } = params
+    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/protocols/${protocolHash}` })
+  }
+
+  getProtocols(params: GetBlock): Promise<any> {
+    const { chainId, block } = params
+    return this.sendGet({ path: `/chains/${chainId}/blocks/${block}/protocols` })
   }
 
   getUserActivatedProtocolOverrides(): Promise<any> {
@@ -232,7 +276,18 @@ export abstract class AbstractTezosRpc implements TezosRpcInterface {
 
   simulateOperation(params: SimulateOperation): Promise<any> {
     const { chainId, block, ...rest } = params
-    return this.sendPost({ path: `/chains/${chainId}/blocks/${block}/helpers/scripts/simulate_operation`, body: rest })
+    return this.sendPost({
+      path: `/chains/${chainId}/blocks/${block}/helpers/scripts/simulate_operation`,
+      body: rest,
+    })
+  }
+
+  preapplyOperations(params: PreapplyOperations): Promise<any> {
+    const { chainId, block, operations } = params
+    return this.sendPost({
+      path: `/chains/${chainId}/blocks/${block}/helpers/preapply/operations`,
+      body: operations,
+    })
   }
 
   injectOperation(params: InjectOperation): Promise<string> {
@@ -241,12 +296,16 @@ export abstract class AbstractTezosRpc implements TezosRpcInterface {
   }
 
   injectBlock(params: InjectBlock): Promise<string> {
-    const {data, operations, ...rest } = params
+    const { data, operations, ...rest } = params
     return this.sendPost({ path: `/injection/block`, body: { data, operations }, queryParams: rest })
   }
 
   injectProtocol(params: InjectProtocol): Promise<string> {
     const { components, expectedEnvVersion, ...rest } = params
-    return this.sendPost({ path: `/injection/protocol`, body: { components, expectedEnvVersion }, queryParams: rest })
+    return this.sendPost({
+      path: `/injection/protocol`,
+      body: { components, expectedEnvVersion },
+      queryParams: rest,
+    })
   }
 }

@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
-import { TatumConnector } from '../../../connector/tatum.connector'
+import { TatumConnector } from '../../../connector'
 import { JsonRpcCall, JsonRpcResponse, Network } from '../../../dto'
+import { GetI } from '../../../dto/GetI'
 import { PostI } from '../../../dto/PostI'
 import { AbstractRpcInterface } from '../../../dto/rpc/AbstractJsonRpcInterface'
 import { CONFIG, Constant, Utils } from '../../../util'
 import { RpcNode, RpcNodeType } from '../../tatum'
-import { GetI } from '../../../dto/GetI'
 
 interface RpcStatus {
   node: {

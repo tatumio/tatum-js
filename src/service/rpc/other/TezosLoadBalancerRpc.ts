@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { JsonRpcCall, JsonRpcResponse } from '../../../dto'
-import { Utils } from '../../../util'
-import { LoadBalancer } from '../generic/LoadBalancer'
-import { AbstractTezosRpc } from './AbstractTezosRpc'
 import { GetI } from '../../../dto/GetI'
 import { PostI } from '../../../dto/PostI'
+import { Utils } from '../../../util'
+import { LoadBalancer } from '../generic'
+import { AbstractTezosRpc } from './AbstractTezosRpc'
 
 @Service({
   factory: (data: { id: string }) => {

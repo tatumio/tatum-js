@@ -10,7 +10,7 @@ export const RpcE2eUtils = {
       retryDelay: 2000,
       apiKey: {
         v4: apiKey ?? process.env.V4_API_KEY_MAINNET,
-      }
+      },
     }
   },
 }

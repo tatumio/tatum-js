@@ -1,3 +1,7 @@
+## [4.1.24] - 2023.11.9
+### Added
+- Tezos methods to support local signing and injection of operations.
+
 ## [4.1.23] - 2023.11.6
 ### Changed
 - Tezos address balances fixes. Call to `address.getBalance` returns balances of all tokens for a given address. This call accepts only one `address` as a parameter, not an array of addresses.

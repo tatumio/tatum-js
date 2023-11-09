@@ -1,6 +1,8 @@
 import { Container } from 'typedi'
 import { SolanaRpcSuite, TronRpcSuite, XrpRpcInterface } from '../../dto'
+import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
+import { TezosRpcInterface } from '../../dto'
 import { CONFIG, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
 import { Faucet } from '../faucet'
@@ -10,8 +12,6 @@ import { Notification } from '../notification'
 import { Rates } from '../rate'
 import { Token } from '../token'
 import { TatumSdkChain } from './tatum'
-import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
-import { TezosRpcInterface } from '../../dto/rpc/TezosRpcSuite'
 
 export abstract class BaseOther extends TatumSdkChain {
   ipfs: Ipfs

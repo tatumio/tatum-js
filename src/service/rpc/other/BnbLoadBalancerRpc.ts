@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 // Need to import like this to keep browser working
-import { LoadBalancer } from '../generic/LoadBalancer'
-import { AbstractBnbRpc } from './AbstractBnbRpc'
-import { BnbRpcSuite, JsonBnbRpcCall } from '../../../dto/rpc/BnbRpcSuite'
 import { JsonRpcResponse } from '../../../dto'
 import { PostI } from '../../../dto/PostI'
+import { BnbRpcSuite, JsonBnbRpcCall } from '../../../dto/rpc/BnbRpcSuite'
+import { LoadBalancer } from '../generic'
+import { AbstractBnbRpc } from './AbstractBnbRpc'
 
 @Service({
   factory: (data: { id: string }) => {
