@@ -6,7 +6,7 @@ export interface Height {
 }
 
 export interface AbciQuery {
-  path: string,
+  path: string
   data: string
   height?: string
   prove?: boolean
@@ -18,15 +18,29 @@ export interface Validators {
   perPage?: string
 }
 
-export interface Tx { hash: string, prove?: boolean }
+export interface Tx {
+  hash: string
+  prove?: boolean
+}
 
-export interface TxSearch { query: string, prove?: boolean, page?: string }
+export interface TxSearch {
+  query: string
+  prove?: boolean
+  page?: string
+}
 
-export interface Broadcast { tx: string }
+export interface Broadcast {
+  tx: string
+}
 
-export interface Blockchain { minHeight?: string, maxHeight?: string }
+export interface Blockchain {
+  minHeight?: string
+  maxHeight?: string
+}
 
-export interface UnconfirmedTxs { limit?: string }
+export interface UnconfirmedTxs {
+  limit?: string
+}
 
 export interface BnbRpcInterface {
   status(): Promise<JsonRpcResponse<any>>
@@ -57,7 +71,7 @@ export interface JsonBnbRpcCall {
 }
 
 export interface Params {
-  [key: string]: unknown;
+  [key: string]: unknown
 }
 
 export interface AbstractBnbRpcInterface {

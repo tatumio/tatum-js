@@ -1,7 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { JsonRpcResponse } from '../../../dto'
-import { Height, AbciQuery, BnbRpcInterface, Blockchain, Tx, Broadcast, TxSearch } from '../../../dto/rpc/BnbRpcSuite'
 import { PostI } from '../../../dto/PostI'
+import {
+  AbciQuery,
+  Blockchain,
+  BnbRpcInterface,
+  Broadcast,
+  Height,
+  Tx,
+  TxSearch,
+} from '../../../dto/rpc/BnbRpcSuite'
 import { Utils } from '../../../util'
 
 export abstract class AbstractBnbRpc implements BnbRpcInterface {

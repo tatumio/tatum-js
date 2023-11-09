@@ -26,7 +26,9 @@ import {
   JsonRpcResponse,
   MAPPED_NETWORK,
   MappedNetwork,
-  Network, QueryParams, QueryValue,
+  Network,
+  QueryParams,
+  QueryValue,
 } from '../dto'
 import {
   ApiVersion,
@@ -36,7 +38,8 @@ import {
   AvalancheC,
   BinanceSmartChain,
   Bitcoin,
-  BitcoinCash, Bnb,
+  BitcoinCash,
+  Bnb,
   Celo,
   Chiliz,
   Cronos,
@@ -72,21 +75,21 @@ import {
   ZCash,
 } from '../service'
 import { EvmArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmArchiveLoadBalancerRpc'
+import { EvmBeaconArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmBeaconArchiveLoadBalancerRpc'
 import { NativeEvmArchiveLoadBalancerRpc } from '../service/rpc/evm/NativeEvmArchiveLoadBalancerRpc'
 import { TronLoadBalancerRpc } from '../service/rpc/evm/TronLoadBalancerRpc'
 import { TronRpc } from '../service/rpc/evm/TronRpc'
+import { BnbLoadBalancerRpc } from '../service/rpc/other/BnbLoadBalancerRpc'
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
 import { SolanaLoadBalancerRpc } from '../service/rpc/other/SolanaLoadBalancerRpc'
+import { TezosLoadBalancerRpc } from '../service/rpc/other/TezosLoadBalancerRpc'
 import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
 import { UtxoLoadBalancerRpc } from '../service/rpc/utxo/UtxoLoadBalancerRpc'
-import { Constant } from './constant'
-import { CONFIG } from './di.tokens'
-import { EvmBeaconArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmBeaconArchiveLoadBalancerRpc'
 import { UtxoLoadBalancerRpcEstimateFee } from '../service/rpc/utxo/UtxoLoadBalancerRpcEstimateFee'
 import { UtxoRpcEstimateFee } from '../service/rpc/utxo/UtxoRpcEstimateFee'
-import { BnbLoadBalancerRpc } from '../service/rpc/other/BnbLoadBalancerRpc'
-import { TezosLoadBalancerRpc } from '../service/rpc/other/TezosLoadBalancerRpc'
+import { Constant } from './constant'
+import { CONFIG } from './di.tokens'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
@@ -434,7 +437,10 @@ export const Utils = {
   },
   padWithZero: (data: string, length = 64) => data.replace('0x', '').padStart(length, '0'),
   camelToSnakeCase: (str: string) => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),
-  convertObjCamelToSnake: (obj: object) => {
+  convertObjCamelToSnake: (obj: object): Record<string, unknown> | Record<string, unknown>[] => {
+    if (Array.isArray(obj)) {
+      return obj.map(Utils.convertObjCamelToSnake) as Record<string, unknown>[]
+    }
     const snakeObj: Record<string, unknown> = {}
     for (const [key, value] of Object.entries(obj)) {
       const snakeKey = Utils.camelToSnakeCase(key)
@@ -621,29 +627,29 @@ export const Utils = {
     return rpc?.nodes?.[0].url || `${Constant.TATUM_API_URL.V3}blockchain/node/${network}`.concat(path || '')
   },
   addQueryParams: (basePath: string, queryParams?: QueryParams): string => {
-    let queryString = '';
+    let queryString = ''
 
     if (queryParams) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const query: Record<string, QueryValue> = Utils.convertObjCamelToSnake(queryParams);
-      const params: string[] = [];
+      const query: Record<string, QueryValue> = Utils.convertObjCamelToSnake(queryParams)
+      const params: string[] = []
 
       Object.entries(query).forEach(([key, value]) => {
         if (Array.isArray(value)) {
-          value.forEach(val => {
-            params.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`);
-          });
+          value.forEach((val) => {
+            params.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
+          })
         } else {
-          params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
+          params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
         }
-      });
+      })
 
       if (params.length > 0) {
-        queryString = '?' + params.join('&');
+        queryString = '?' + params.join('&')
       }
     }
 
-    return basePath + queryString;
+    return basePath + queryString
   },
 }

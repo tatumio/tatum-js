@@ -1,7 +1,7 @@
 import { BigNumber } from 'bignumber.js'
 import { Container, Service } from 'typedi'
 import { ApiBalanceRequest } from '../../api/api.dto'
-import { TatumConnector } from '../../connector/tatum.connector'
+import { TatumConnector } from '../../connector'
 import {
   AddressBalanceFilters,
   AddressBalanceFiltersTezos,
@@ -61,7 +61,7 @@ export class AddressTezos {
       })
 
       return data.result.map(({ address, symbol, balance, type, tokenAddress, tokenId }) => {
-        let tokenBalance = {
+        const tokenBalance = {
           address,
           asset: symbol,
           balance,

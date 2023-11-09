@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "4.1.23",
+  "version": "4.1.24",
   "description": "Tatum JS SDK",
   "author": "Tatum",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -25,7 +25,8 @@
     "clean": "rm -rf dist build package",
     "ts-node": "ts-node",
     "build": "tsc -p tsconfig.json",
-    "build-all": "yarn clean && yarn build"
+    "build-all": "yarn clean && yarn build",
+    "pack-all": "yarn build-all && yarn pack"
   },
   "dependencies": {
     "bignumber.js": "^9.1.1",

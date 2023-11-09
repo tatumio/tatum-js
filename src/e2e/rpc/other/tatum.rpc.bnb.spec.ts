@@ -6,7 +6,7 @@ const getBnbRpc = async () =>
   await TatumSDK.init<Bnb>({
     network: Network.BNB,
     apiKey: {
-      v4: process.env.V4_API_KEY_MAINNET
+      v4: process.env.V4_API_KEY_MAINNET,
     },
     verbose: e2eUtil.isVerbose,
   })

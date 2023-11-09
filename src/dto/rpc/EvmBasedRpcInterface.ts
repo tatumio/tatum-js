@@ -223,8 +223,8 @@ export interface EvmBeaconResponse<T> {
   finalized?: boolean
 }
 
-export type StateId = 'head' | 'genesis' | 'finalized' | 'justified' | string;
-export type BlockId = 'head' | 'genesis' | 'finalized' | string;
+export type StateId = 'head' | 'genesis' | 'finalized' | 'justified' | string
+export type BlockId = 'head' | 'genesis' | 'finalized' | string
 
 export interface BlockQuery {
   blockId: BlockId
@@ -232,9 +232,9 @@ export interface BlockQuery {
 
 export interface StateCommitteesQuery {
   stateId: StateId
-  epoch?: string;
-  index?: string;
-  slot?: string;
+  epoch?: string
+  index?: string
+  slot?: string
 }
 
 export interface StateQuery {
@@ -242,11 +242,11 @@ export interface StateQuery {
 }
 
 export interface StateSyncCommitteesQuery extends StateQuery {
-  epoch?: string;
+  epoch?: string
 }
 
 export interface ValidatorBalancesQuery extends StateQuery {
-  id?: string[];  // Array of either hex encoded public key or validator index
+  id?: string[] // Array of either hex encoded public key or validator index
 }
 
 export type ValidatorStatus =
@@ -262,22 +262,21 @@ export type ValidatorStatus =
   | 'active'
   | 'pending'
   | 'exited'
-  | 'withdrawal';
+  | 'withdrawal'
 
 export interface ValidatorsQuery extends StateQuery {
-  id?: string[];  // Array of either hex encoded public key or validator index
-  status?: ValidatorStatus[];
+  id?: string[] // Array of either hex encoded public key or validator index
+  status?: ValidatorStatus[]
 }
 
 export interface ValidatorQuery extends StateQuery {
-  validatorId: string;  // Either a hex encoded public key or validator index
+  validatorId: string // Either a hex encoded public key or validator index
 }
-
 
 export interface EvmBeaconV1Interface {
   getGenesis(): Promise<EvmBeaconResponse<any>>
-  getBlockHeaders(query?: { slot?: string, parentRoot?: string }): Promise<EvmBeaconResponse<any>>
-  getBlockHeader(query:BlockQuery): Promise<EvmBeaconResponse<any>>
+  getBlockHeaders(query?: { slot?: string; parentRoot?: string }): Promise<EvmBeaconResponse<any>>
+  getBlockHeader(query: BlockQuery): Promise<EvmBeaconResponse<any>>
   getBlockRoot(query: BlockQuery): Promise<EvmBeaconResponse<any>>
   getBlockAttestations(query: BlockQuery): Promise<EvmBeaconResponse<any>>
   getStateCommittees(query: StateCommitteesQuery): Promise<EvmBeaconResponse<any>>

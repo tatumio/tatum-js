@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
-import { RPCSimulateOperationParam } from './tezos.types'
+import { PreapplyParams, RPCSimulateOperationParam } from './tezos.types'
 
 export interface GetBlockHashes extends GetChainId {
   length?: number
@@ -33,14 +33,17 @@ export interface GetContractsEntrypoints extends GetContract {
   entrypoint: string
 }
 
-export interface SimulateOperation extends RPCSimulateOperationParam, GetBlock {
+export interface SimulateOperation extends RPCSimulateOperationParam, GetBlock {}
+
+export interface PreapplyOperations extends GetBlock {
+  operations: PreapplyParams
 }
 
 export interface GetInvalidBlocks extends GetChainId {
   blockHash: string
 }
 
-export interface GetProtocol {
+export interface GetProtocol extends GetBlock {
   protocolHash: string
 }
 
@@ -54,9 +57,9 @@ export interface InjectOperation extends InjectBase {
 }
 
 export interface InjectBlock extends InjectBase {
- force?: boolean
- data: string
-  operations: { branch: string, data: string }[][]
+  force?: boolean
+  data: string
+  operations: { branch: string; data: string }[][]
 }
 
 export interface InjectProtocol {
@@ -70,6 +73,12 @@ export interface InjectProtocol {
 }
 
 export interface TezosRpcInterface {
+  getProtocols(params: GetBlock): Promise<any>
+
+  getManagerKey(address: string, params: GetBlock): Promise<any>
+
+  getConstants(params: GetBlock): Promise<any>
+
   getBlocksHead(params: GetChainId): Promise<any>
 
   getBlockHashes(params: GetBlockHashes): Promise<any>
@@ -109,6 +118,8 @@ export interface TezosRpcInterface {
   getBlockHeader(params: GetBlock): Promise<any>
 
   simulateOperation(params: SimulateOperation): Promise<any>
+
+  preapplyOperations(params: PreapplyOperations): Promise<any>
 
   getChainId(params: GetChainId): Promise<any>
 

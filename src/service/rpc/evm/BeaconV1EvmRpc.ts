@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 // Need to import like this to keep browser working
-import { LoadBalancer } from '../generic/LoadBalancer'
-import { AbstractBeaconV1EvmRpc } from './AbstractBeaconV1EvmRpc'
 import { GetI } from '../../../dto/GetI'
+import { LoadBalancer } from '../generic'
+import { AbstractBeaconV1EvmRpc } from './AbstractBeaconV1EvmRpc'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -26,5 +26,4 @@ export class BeaconV1EvmRpc extends AbstractBeaconV1EvmRpc {
   protected get<T>(get: GetI): Promise<T> {
     return this.loadBalancer.get(get)
   }
-
 }

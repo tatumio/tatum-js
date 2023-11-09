@@ -1,13 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
-import {
-  JsonRpcCall,
-  JsonRpcResponse,
-  UtxoBasedRpcSuiteEstimateFee,
-} from '../../../dto'
+import { JsonRpcCall, JsonRpcResponse, UtxoBasedRpcSuiteEstimateFee } from '../../../dto'
 import { Utils } from '../../../util'
 // Need to import like this to keep browser working
-import { LoadBalancer } from '../generic/LoadBalancer'
+import { LoadBalancer } from '../generic'
 import { AbstractUtxoRpcEstimateFee } from './AbstractUtxoRpcEstimateFee'
 
 @Service({
@@ -16,7 +12,10 @@ import { AbstractUtxoRpcEstimateFee } from './AbstractUtxoRpcEstimateFee'
   },
   transient: true,
 })
-export class UtxoLoadBalancerRpcEstimateFee extends AbstractUtxoRpcEstimateFee implements UtxoBasedRpcSuiteEstimateFee {
+export class UtxoLoadBalancerRpcEstimateFee
+  extends AbstractUtxoRpcEstimateFee
+  implements UtxoBasedRpcSuiteEstimateFee
+{
   protected readonly loadBalancer: LoadBalancer
 
   constructor(id: string) {
