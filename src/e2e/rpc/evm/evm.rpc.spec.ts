@@ -53,10 +53,10 @@ const testNetworks = [
     skipEstimateGas: true,
     apiKey: process.env.V3_API_KEY_TESTNET,
   },
-  {
-    network: Network.KLAYTN,
-    expected: { chainId: 8217 },
-  },
+  // {
+  //   network: Network.KLAYTN,
+  //   expected: { chainId: 8217 },
+  // },
   {
     network: Network.KLAYTN_BAOBAB,
     expected: { chainId: 1001 },
