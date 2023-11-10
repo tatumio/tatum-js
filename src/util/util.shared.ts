@@ -4,6 +4,8 @@ import { Container } from 'typedi'
 import { version } from '../../package.json'
 import {
   AddressEventNotificationChain,
+  isAlgorandAlgodNetwork,
+  isAlgorandIndexerNetwork,
   isBnbLoadBalancerNetwork,
   isEosLoadBalancerNetwork,
   isEosNetwork,
@@ -31,6 +33,8 @@ import {
   QueryValue,
 } from '../dto'
 import {
+  AlgorandAlgod,
+  AlgorandIndexer,
   ApiVersion,
   ArbitrumNova,
   ArbitrumOne,
@@ -79,6 +83,8 @@ import { EvmBeaconArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmBeaconArc
 import { NativeEvmArchiveLoadBalancerRpc } from '../service/rpc/evm/NativeEvmArchiveLoadBalancerRpc'
 import { TronLoadBalancerRpc } from '../service/rpc/evm/TronLoadBalancerRpc'
 import { TronRpc } from '../service/rpc/evm/TronRpc'
+import { AlgorandAlgodLoadBalancerRpc } from '../service/rpc/other/AlgorandAlgodLoadBalancerRpc'
+import { AlgorandIndexerLoadBalancerRpc } from '../service/rpc/other/AlgorandIndexerLoadBalancerRpc'
 import { BnbLoadBalancerRpc } from '../service/rpc/other/BnbLoadBalancerRpc'
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
@@ -94,6 +100,14 @@ import { CONFIG } from './di.tokens'
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+
+    if (isAlgorandIndexerNetwork(network)) {
+      return Container.of(id).get(AlgorandIndexerLoadBalancerRpc) as T
+    }
+
+    if (isAlgorandAlgodNetwork(network)) {
+      return Container.of(id).get(AlgorandAlgodLoadBalancerRpc) as T
+    }
 
     if (isTezosNetwork(network)) {
       return Container.of(id).get(TezosLoadBalancerRpc) as T
@@ -214,7 +228,12 @@ export const Utils = {
       }
     }
 
-    if (isEosNetwork(network) || isTezosNetwork(network)) {
+    if (
+      isEosNetwork(network) ||
+      isTezosNetwork(network) ||
+      isAlgorandAlgodNetwork(network) ||
+      isAlgorandIndexerNetwork(network)
+    ) {
       return null
     }
 
@@ -223,6 +242,14 @@ export const Utils = {
   getStatusUrl(network: Network, url: string): string {
     if (isEosNetwork(network)) {
       return `${url}${Constant.EOS_PREFIX}get_info`
+    }
+
+    if (isAlgorandAlgodNetwork(network)) {
+      return `${url}v2/status`
+    }
+
+    if (isAlgorandIndexerNetwork(network)) {
+      return `${url}health`
     }
 
     if (isSameGetBlockNetwork(network)) {
@@ -240,7 +267,7 @@ export const Utils = {
     throw new Error(`Network ${network} is not supported.`)
   },
   getStatusMethod(network: Network): string {
-    if (isTezosNetwork(network)) {
+    if (isTezosNetwork(network) || isAlgorandAlgodNetwork(network) || isAlgorandIndexerNetwork(network)) {
       return 'GET'
     }
     return 'POST'
@@ -262,6 +289,14 @@ export const Utils = {
       return new BigNumber((response.level as number) || -1).toNumber()
     }
 
+    if (isAlgorandAlgodNetwork(network)) {
+      return new BigNumber((response['last-round'] as number) || -1).toNumber()
+    }
+
+    if (isAlgorandIndexerNetwork(network)) {
+      return new BigNumber((response['round'] as number) || -1).toNumber()
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
   isResponseOk: (network: Network, response: JsonRpcResponse<any> | any) => {
@@ -279,6 +314,14 @@ export const Utils = {
 
     if (isTezosNetwork(network)) {
       return response.level !== undefined
+    }
+
+    if (isAlgorandAlgodNetwork(network)) {
+      return response['last-round'] !== undefined
+    }
+
+    if (isAlgorandIndexerNetwork(network)) {
+      return response['round'] !== undefined
     }
 
     throw new Error(`Network ${network} is not supported.`)
@@ -437,23 +480,29 @@ export const Utils = {
   },
   padWithZero: (data: string, length = 64) => data.replace('0x', '').padStart(length, '0'),
   camelToSnakeCase: (str: string) => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),
-  convertObjCamelToSnake: (obj: object): Record<string, unknown> | Record<string, unknown>[] => {
+  camelToDashCase: (str: string) => str.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`),
+  convertObjectWithStrategy: (
+    obj: object,
+    strategy: (key: string) => string,
+  ): Record<string, unknown> | Record<string, unknown>[] => {
     if (Array.isArray(obj)) {
       return obj.map(Utils.convertObjCamelToSnake) as Record<string, unknown>[]
     }
     const snakeObj: Record<string, unknown> = {}
     for (const [key, value] of Object.entries(obj)) {
-      const snakeKey = Utils.camelToSnakeCase(key)
+      const snakeKey = strategy(key)
       if (value instanceof BigNumber) {
         snakeObj[snakeKey] = value.toNumber()
       } else if (typeof value === 'object' && value !== null) {
-        snakeObj[snakeKey] = Utils.convertObjCamelToSnake(value)
+        snakeObj[snakeKey] = Utils.convertObjectWithStrategy(value, strategy)
       } else {
         snakeObj[snakeKey] = value
       }
     }
     return snakeObj
   },
+  convertObjCamelToSnake: (obj: object) => Utils.convertObjectWithStrategy(obj, Utils.camelToSnakeCase),
+  convertObjCamelToDash: (obj: object) => Utils.convertObjectWithStrategy(obj, Utils.camelToDashCase),
   getClient: <T>(id: string, network: Network): T => {
     switch (network) {
       case Network.BITCOIN:
@@ -565,6 +614,12 @@ export const Utils = {
         return new Chiliz(id) as T
       case Network.BNB:
         return new Bnb(id) as T
+      case Network.ALGORAND_ALGOD:
+      case Network.ALGORAND_ALGOD_TESTNET:
+        return new AlgorandAlgod(id) as T
+      case Network.ALGORAND_INDEXER:
+      case Network.ALGORAND_INDEXER_TESTNET:
+        return new AlgorandIndexer(id) as T
       default:
         return new FullSdk(id) as T
     }
@@ -626,13 +681,17 @@ export const Utils = {
     }
     return rpc?.nodes?.[0].url || `${Constant.TATUM_API_URL.V3}blockchain/node/${network}`.concat(path || '')
   },
-  addQueryParams: (basePath: string, queryParams?: QueryParams): string => {
+  addQueryParams: (
+    basePath: string,
+    strategy: (key: string) => string,
+    queryParams?: QueryParams,
+  ): string => {
     let queryString = ''
 
     if (queryParams) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const query: Record<string, QueryValue> = Utils.convertObjCamelToSnake(queryParams)
+      const query: Record<string, QueryValue> = Utils.convertObjectWithStrategy(queryParams, strategy)
       const params: string[] = []
 
       Object.entries(query).forEach(([key, value]) => {
