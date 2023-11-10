@@ -44,33 +44,34 @@ With Tatum SDK, you can:
 
 Interact seamlessly with various blockchains through native RPC calls. Say goodbye to the hassle of juggling separate RPC clients for each blockchain.
 
-| Documentation                                                                                             |
-|-----------------------------------------------------------------------------------------------------------|
-| **EVM Blockchains**                                                                                       |
-| [Ethereum RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-rpc-documentation)                 |
-| [Polygon RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/polygon-rpc-documentation)                   |
-| [Flare RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/flare-rpc-documentation)                       |
-| [Haqq RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/haqq-rpc-documentation)                         |
-| [Optimism RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/optimism-rpc-documentation)                 |
-| [Horizen EON RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/horizen-eon-rpc-documentation)           |
-| [Arbitrum One RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/arbitrum-rpc-documentation)             |
-| [Chiliz RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/chiliz-rpc-documentation)                     |
+| Documentation                                                                                            |
+|----------------------------------------------------------------------------------------------------------|
+| **EVM Blockchains**                                                                                      |
+| [Ethereum RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-rpc-documentation)                |
+| [Polygon RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/polygon-rpc-documentation)                  |
+| [Flare RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/flare-rpc-documentation)                      |
+| [Haqq RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/haqq-rpc-documentation)                        |
+| [Optimism RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/optimism-rpc-documentation)                |
+| [Horizen EON RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/horizen-eon-rpc-documentation)          |
+| [Arbitrum One RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/arbitrum-rpc-documentation)            |
+| [Chiliz RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/chiliz-rpc-documentation)                    |
 | [Ethereum Classic RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-classic-rpc-documentation) |
-| [Klaytn RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/klaytn-rpc-documentation)                     |
-| [Avalanche RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/avalanche-rpc-documentation)               |
-| [Celo RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/celo-rpc-documentation)                         |
-| **UTXO Blockchains**                                                                                      |
-| [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)                  |
-| [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation)                |
-| [Dogecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/dogecoin-rpc-documentation)                |
-| [ZCash RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/zcash-rpc-documentation)                      |
-| [Bitcoin Cash RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcion-cash-rpc-documentation)        |
-| **Other Blockchains**                                                                                     |
-| [Solana RPC](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                                     |
-| [XPR RPC](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                                           |
-| [Tron RPC](https://docs.tatum.io/docs/rpc/tron-rpc-documentation)                                         |
-| [Eos One RPC](https://docs.tatum.io/docs/rpc/eos-rpc-documentation)                                       |
-| [Tezos One RPC](https://docs.tatum.io/docs/rpc/tezos-rpc-documentation)                                   |
+| [Klaytn RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/klaytn-rpc-documentation)                    |
+| [Avalanche RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/avalanche-rpc-documentation)              |
+| [Celo RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/celo-rpc-documentation)                        |
+| **UTXO Blockchains**                                                                                     |
+| [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)                 |
+| [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation)               |
+| [Dogecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/dogecoin-rpc-documentation)               |
+| [ZCash RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/zcash-rpc-documentation)                     |
+| [Bitcoin Cash RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcion-cash-rpc-documentation)       |
+| **Other Blockchains**                                                                                    |
+| [Solana RPC](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                                    |
+| [XPR RPC](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                                          |
+| [Tron RPC](https://docs.tatum.io/docs/rpc/tron-rpc-documentation)                                        |
+| [Eos RPC](https://docs.tatum.io/docs/rpc/eos-rpc-documentation)                                      |
+| [Tezos RPC](https://docs.tatum.io/docs/rpc/tezos-rpc-documentation)                                   |
+| [Agorand RPC](https://docs.tatum.io/docs/rpc/algorand-rpc-documentation)                              |
 
 ### 🔔 Create Notifications
 
@@ -435,55 +436,60 @@ See the [RPC API Reference](https://docs.tatum.io/docs/rpc-api-reference) for mo
 ### Status Pages
 This section provides a list of various blockchain network status pages, powered by Tatum. These links direct you to real-time status updates for each network.
 
-| Status Pages                                                                                                |
-|-------------------------------------------------------------------------------------------------------------|
-| [bitcoin-mainnet.status.tatum.io](https://bitcoin-mainnet.status.tatum.io)                                  |
-| [bitcoin-testnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)                                  |
-| [dogecoin-mainnet.status.tatum.io](https://dogecoin-mainnet.status.tatum.io)                                |
-| [dogecoin-testnet.status.tatum.io](https://dogecoin-testnet.status.tatum.io)                                |
-| [eos-mainnet-archive.status.tatum.io](https://eos-mainnet-archive.status.tatum.io)                          |
-| [ethereum-mainnet-archive.status.tatum.io](https://ethereum-mainnet-archive.status.tatum.io)                |
-| [ethereum-mainnet.status.tatum.io](https://ethereum-mainnet.status.tatum.io)                                |
-| [ethereum-sepolia-archive.status.tatum.io](https://ethereum-sepolia-archive.status.tatum.io)                |
-| [ethereum-holesky-archive.status.tatum.io](https://ethereum-holesky-archive.status.tatum.io)                |
-| [ethereum-sepolia.status.tatum.io](https://ethereum-sepolia.status.tatum.io)                                |
-| [flare-coston-archive.status.tatum.io](https://flare-coston-archive.status.tatum.io)                        |
-| [flare-coston2-archive.status.tatum.io](https://flare-coston2-archive.status.tatum.io)                      |
-| [flare-songbird-archive.status.tatum.io](https://flare-songbird-archive.status.tatum.io)                    |
-| [flare-mainnet-archive.status.tatum.io](https://flare-mainnet-archive.status.tatum.io)                      |
-| [haqq-mainnet-archive.status.tatum.io](https://haqq-mainnet-archive.status.tatum.io)                        |
-| [haqq-mainnet.status.tatum.io](https://haqq-mainnet.status.tatum.io)                                        |
-| [haqq-testnet.status.tatum.io](https://haqq-testnet.status.tatum.io)                                        |
-| [chiliz-mainnet.status.tatum.io](https://chiliz-mainnet.status.tatum.io)                                    |
-| [chiliz-mainnet-archive.status.tatum.io](https://chiliz-mainnet-archive.status.tatum.io)                    |
-| [litecoin-mainnet.status.tatum.io](https://litecoin-mainnet.status.tatum.io)                                |
-| [litecoin-testnet.status.tatum.io](https://litecoin-testnet.status.tatum.io)                                |
-| [optimism-mainnet-archive.status.tatum.io](https://optimism-mainnet-archive.status.tatum.io)                |
-| [polygon-mainnet-archive.status.tatum.io](https://polygon-mainnet-archive.status.tatum.io)                  |
-| [polygon-mainnet.status.tatum.io](https://polygon-mainnet.status.tatum.io)                                  |
-| [horizen-eon-mainnet-archive.status.tatum.io](https://horizen-eon-mainnet-archive.status.tatum.io)          |
-| [horizen-eon-gobi.status.tatum.io](https://horizen-eon-gobi.status.tatum.io)                                |
-| [bsc-mainnet-archive.status.tatum.io](https://bsc-mainnet-archive.status.tatum.io)                          |
-| [polygon-mumbai-archive.status.tatum.io](https://polygon-mumbai-archive.status.tatum.io)                    |
-| [polygon-mumbai.status.tatum.io](https://polygon-mumbai.status.tatum.io)                                    |
-| [tron-mainnet-archive.status.tatum.io](https://tron-mainnet-archive.status.tatum.io)                        |
-| [arbitrum-one-mainnet-archive.status.tatum.io](https://arbitrum-one-mainnet-archive.status.tatum.io)        |
+| Status Pages                                                                                                 |
+|--------------------------------------------------------------------------------------------------------------|
+| [bitcoin-mainnet.status.tatum.io](https://bitcoin-mainnet.status.tatum.io)                                   |
+| [bitcoin-testnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)                                   |
+| [dogecoin-mainnet.status.tatum.io](https://dogecoin-mainnet.status.tatum.io)                                 |
+| [dogecoin-testnet.status.tatum.io](https://dogecoin-testnet.status.tatum.io)                                 |
+| [eos-mainnet-archive.status.tatum.io](https://eos-mainnet-archive.status.tatum.io)                           |
+| [ethereum-mainnet-archive.status.tatum.io](https://ethereum-mainnet-archive.status.tatum.io)                 |
+| [ethereum-mainnet.status.tatum.io](https://ethereum-mainnet.status.tatum.io)                                 |
+| [ethereum-sepolia-archive.status.tatum.io](https://ethereum-sepolia-archive.status.tatum.io)                 |
+| [ethereum-holesky-archive.status.tatum.io](https://ethereum-holesky-archive.status.tatum.io)                 |
+| [ethereum-sepolia.status.tatum.io](https://ethereum-sepolia.status.tatum.io)                                 |
+| [flare-coston-archive.status.tatum.io](https://flare-coston-archive.status.tatum.io)                         |
+| [flare-coston2-archive.status.tatum.io](https://flare-coston2-archive.status.tatum.io)                       |
+| [flare-songbird-archive.status.tatum.io](https://flare-songbird-archive.status.tatum.io)                     |
+| [flare-mainnet-archive.status.tatum.io](https://flare-mainnet-archive.status.tatum.io)                       |
+| [haqq-mainnet-archive.status.tatum.io](https://haqq-mainnet-archive.status.tatum.io)                         |
+| [haqq-mainnet.status.tatum.io](https://haqq-mainnet.status.tatum.io)                                         |
+| [haqq-testnet.status.tatum.io](https://haqq-testnet.status.tatum.io)                                         |
+| [chiliz-mainnet.status.tatum.io](https://chiliz-mainnet.status.tatum.io)                                     |
+| [chiliz-mainnet-archive.status.tatum.io](https://chiliz-mainnet-archive.status.tatum.io)                     |
+| [litecoin-mainnet.status.tatum.io](https://litecoin-mainnet.status.tatum.io)                                 |
+| [litecoin-testnet.status.tatum.io](https://litecoin-testnet.status.tatum.io)                                 |
+| [optimism-mainnet-archive.status.tatum.io](https://optimism-mainnet-archive.status.tatum.io)                 |
+| [polygon-mainnet-archive.status.tatum.io](https://polygon-mainnet-archive.status.tatum.io)                   |
+| [polygon-mainnet.status.tatum.io](https://polygon-mainnet.status.tatum.io)                                   |
+| [horizen-eon-mainnet-archive.status.tatum.io](https://horizen-eon-mainnet-archive.status.tatum.io)           |
+| [horizen-eon-gobi.status.tatum.io](https://horizen-eon-gobi.status.tatum.io)                                 |
+| [bsc-mainnet-archive.status.tatum.io](https://bsc-mainnet-archive.status.tatum.io)                           |
+| [polygon-mumbai-archive.status.tatum.io](https://polygon-mumbai-archive.status.tatum.io)                     |
+| [polygon-mumbai.status.tatum.io](https://polygon-mumbai.status.tatum.io)                                     |
+| [tron-mainnet-archive.status.tatum.io](https://tron-mainnet-archive.status.tatum.io)                         |
+| [arbitrum-one-mainnet-archive.status.tatum.io](https://arbitrum-one-mainnet-archive.status.tatum.io)         |
 | [ethereum-classic-mainnet-archive.status.tatum.io](https://ethereum-classic-mainnet-archive.status.tatum.io) |
-| [zcash-mainnet.status.tatum.io](https://zcash-mainnet.status.tatum.io)                                      |
-| [ripple-mainnet.status.tatum.io](https://ripple-mainnet.status.tatum.io)                                    |
-| [ripple-testnet.status.tatum.io](https://ripple-testnet.status.tatum.io)                                    |
-| [bitcoin-cash-mainnet.status.tatum.io](https://bitcoin-cash-mainnet.status.tatum.io)                        |
-| [klaytn-mainnet.status.tatum.io](https://klaytn-mainnet.status.tatum.io)                                    |
-| [klaytn-mainnet-archive.status.tatum.io](https://klaytn-mainnet-archive.status.tatum.io)                    |
-| [klaytn-baobab.status.tatum.io](https://klaytn-baobab.status.tatum.io)                                      |
-| [klaytn-baobab-archive.status.tatum.io](https://klaytn-baobab-archive.status.tatum.io)                      |
-| [avalanche-c-mainnet-archive.status.tatum.io](https://avalanche-c-mainnet-archive.status.tatum.io)          |
-| [solana-mainnet.status.tatum.io](https://solana-mainnet.status.tatum.io)                                    |
-| [solana-devnet.status.tatum.io](https://solana-devnet.status.tatum.io)                                      |
-| [celo-mainnet-archive.status.tatum.io](https://celo-mainnet-archive.status.tatum.io)                        |
-| [celo-testnet-archive.status.tatum.io](https://celo-testnet-archive.status.tatum.io)                        |
-| [tezos-testnet.status.tatum.io](https://tezos-testnet.status.tatum.io)                                      |
-| [tezos-mainnet.status.tatum.io](https://tezos-mainnet.status.tatum.io)                                      |
+| [zcash-mainnet.status.tatum.io](https://zcash-mainnet.status.tatum.io)                                       |
+| [ripple-mainnet.status.tatum.io](https://ripple-mainnet.status.tatum.io)                                     |
+| [ripple-testnet.status.tatum.io](https://ripple-testnet.status.tatum.io)                                     |
+| [bitcoin-cash-mainnet.status.tatum.io](https://bitcoin-cash-mainnet.status.tatum.io)                         |
+| [klaytn-mainnet.status.tatum.io](https://klaytn-mainnet.status.tatum.io)                                     |
+| [klaytn-mainnet-archive.status.tatum.io](https://klaytn-mainnet-archive.status.tatum.io)                     |
+| [klaytn-baobab.status.tatum.io](https://klaytn-baobab.status.tatum.io)                                       |
+| [klaytn-baobab-archive.status.tatum.io](https://klaytn-baobab-archive.status.tatum.io)                       |
+| [avalanche-c-mainnet-archive.status.tatum.io](https://avalanche-c-mainnet-archive.status.tatum.io)           |
+| [solana-mainnet.status.tatum.io](https://solana-mainnet.status.tatum.io)                                     |
+| [solana-devnet.status.tatum.io](https://solana-devnet.status.tatum.io)                                       |
+| [celo-mainnet-archive.status.tatum.io](https://celo-mainnet-archive.status.tatum.io)                         |
+| [celo-testnet-archive.status.tatum.io](https://celo-testnet-archive.status.tatum.io)                         |
+| [tezos-testnet.status.tatum.io](https://tezos-testnet.status.tatum.io)                                       |
+| [tezos-mainnet.status.tatum.io](https://tezos-mainnet.status.tatum.io)                                       |
+| [algorand-mainnet-algod.status.tatum.io](https://algorand-mainnet-algod.status.tatum.io)                     |
+| [algorand-testnet-algod.status.tatum.io](https://algorand-testnet-algod.status.tatum.io)                     |
+| [algorand-mainnet-indexer.status.tatum.io](https://algorand-mainnet-indexer.status.tatum.io)                 |
+| [algorand-testnet-indexer.status.tatum.io](https://algorand-testnet-indexer.status.tatum.io)                 |
+
 
 
 ### Load Balancer
@@ -584,6 +590,10 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/celo-testnet-archive/list.json](https://rpc.tatum.io/celo-testnet-archive/list.json)                         |
 | [rpc.tatum.io/tezos-testnet/list.json](https://rpc.tatum.io/tezos-testnet/list.json)                                       |
 | [rpc.tatum.io/tezos-mainnet/list.json](https://rpc.tatum.io/tezos-mainnet/list.json)                                       |
+| [rpc.tatum.io/algorand-mainnet-algod/list.json](https://rpc.tatum.io/algorand-mainnet-algod/list.json)                     |
+| [rpc.tatum.io/algorand-testnet-algod/list.json](https://rpc.tatum.io/algorand-testnet-algod/list.json)                     |
+| [rpc.tatum.io/algorand-mainnet-indexer/list.json](https://rpc.tatum.io/algorand-mainnet-indexer/list.json)                 |
+| [rpc.tatum.io/algorand-testnet-indexer/list.json](https://rpc.tatum.io/algorand-testnet-indexer/list.json)                 |
 
 
 Following pattern defines the URL for fetching the list of nodes:
