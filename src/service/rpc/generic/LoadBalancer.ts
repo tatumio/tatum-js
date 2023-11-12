@@ -58,11 +58,6 @@ interface HandleFailedRpcCallParams {
   url: string
 }
 
-interface NoActiveNodeError {
-  isNoActiveNode: boolean
-  error: Error
-}
-
 @Service({
   factory: (data: { id: string }) => {
     return new LoadBalancer(data.id)
@@ -82,10 +77,7 @@ export class LoadBalancer implements AbstractRpcInterface {
   }
   private timeout: unknown
   private network: Network
-  private noActiveNodeError: NoActiveNodeError = {
-    isNoActiveNode: false,
-    error: new Error('No active node found, please set node urls manually.'),
-  }
+  private noActiveNode = false
 
   constructor(private readonly id: string) {
     this.connector = Container.of(this.id).get(TatumConnector)
@@ -163,9 +155,9 @@ export class LoadBalancer implements AbstractRpcInterface {
   private checkIfNoActiveNodes() {
     if (!this.activeUrl[RpcNodeType.NORMAL].url && !this.activeUrl[RpcNodeType.ARCHIVE].url) {
       Utils.log({ id: this.id, message: 'No active node found, please set node urls manually.' })
-      this.noActiveNodeError.isNoActiveNode = true
+      this.noActiveNode = true
     } else {
-      this.noActiveNodeError.isNoActiveNode = false
+      this.noActiveNode = false
     }
   }
 
@@ -283,8 +275,8 @@ export class LoadBalancer implements AbstractRpcInterface {
       return { url: this.getActiveUrl(RpcNodeType.NORMAL).url, type: RpcNodeType.NORMAL }
     }
 
-    if (this.noActiveNodeError.isNoActiveNode) {
-      throw this.noActiveNodeError.error
+    if (this.noActiveNode) {
+      throw new Error('No active node found, please set node urls manually.')
     }
 
     throw new Error('No active node found.')
@@ -300,8 +292,8 @@ export class LoadBalancer implements AbstractRpcInterface {
       return { url: this.getActiveUrl(RpcNodeType.ARCHIVE).url, type: RpcNodeType.ARCHIVE }
     }
 
-    if (this.noActiveNodeError.isNoActiveNode) {
-      throw this.noActiveNodeError.error
+    if (this.noActiveNode) {
+      throw new Error('No active node found, please set node urls manually.')
     }
 
     throw new Error('No active node found.')
