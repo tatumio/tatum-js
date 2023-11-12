@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
-import { LoadBalancer } from '../generic/LoadBalancer'
 import { GetI } from '../../../dto/GetI'
 import { PostI } from '../../../dto/PostI'
+import { LoadBalancer } from '../generic'
 import { AbstractAlgorandAlgodRpc } from './AbstractAlgorandAlgodRpc'
 
 @Service({

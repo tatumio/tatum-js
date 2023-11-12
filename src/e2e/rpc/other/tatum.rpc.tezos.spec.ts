@@ -41,11 +41,11 @@ describe.each([false, true])(`Tezos`, (testnet: boolean) => {
           chainId: 'main',
           contractId: 'KT1Hkg5qeNhfwpKW4fXvq7HGZB9z2EnmCCA9',
           block: '3000000',
-            normalizeTypes: true
-          })
-          await tatum.destroy()
-          expect(result).toBeDefined()
+          normalizeTypes: true,
         })
+        await tatum.destroy()
+        expect(result).toBeDefined()
+      })
 
       it('getContractBalanceAndFrozenBonds', async () => {
         const tatum = await getTezosRpc(testnet)

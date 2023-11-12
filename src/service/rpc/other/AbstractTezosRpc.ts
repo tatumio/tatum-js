@@ -1,9 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { Service } from 'typedi'
-import { QueryParams } from '../../../dto'
-import { GetI } from '../../../dto/GetI'
-import { PostI } from '../../../dto/PostI'
 import {
   GetBlock,
   GetBlockHashes,
@@ -18,9 +15,12 @@ import {
   InjectOperation,
   InjectProtocol,
   PreapplyOperations,
+  QueryParams,
   SimulateOperation,
   TezosRpcInterface,
 } from '../../../dto'
+import { GetI } from '../../../dto/GetI'
+import { PostI } from '../../../dto/PostI'
 import { Utils } from '../../../util'
 
 @Service()
@@ -28,13 +28,7 @@ export abstract class AbstractTezosRpc implements TezosRpcInterface {
   protected abstract get<T>(post: GetI): Promise<T>
   protected abstract post<T>(post: PostI): Promise<T>
 
-  private async sendGet<T>({
-    path,
-    queryParams,
-  }: {
-    path: string
-    queryParams?: QueryParams
-  }): Promise<T> {
+  private async sendGet<T>({ path, queryParams }: { path: string; queryParams?: QueryParams }): Promise<T> {
     if (queryParams && Object.keys(queryParams).length > 0) {
       return this.get({ path: Utils.addQueryParams(path, Utils.camelToSnakeCase, queryParams) })
     }

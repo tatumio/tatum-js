@@ -1,4 +1,8 @@
-## [4.1.25] - 2023.11.2
+## [4.1.26] - 2023.11.12
+### Fixed
+- Fixed `LoadBalancer` throwing from setTimeout, it should now throw from actual method calls.
+
+## [4.1.25] - 2023.11.10
 ### Added
 - Added RPC support for the ALGORAND network. Users can now make RPC calls to these network using the `Network.ALGORAND_ALGOD`, `Network.ALGORAND_ALGOD_TESTNET`, `Network.ALGORAND_INDEXER`, `Network.ALGORAND_INDEXER_TESTNET` network.
 
