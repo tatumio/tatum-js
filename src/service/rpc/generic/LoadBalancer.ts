@@ -77,6 +77,7 @@ export class LoadBalancer implements AbstractRpcInterface {
   }
   private timeout: unknown
   private network: Network
+  private noActiveNode = false
 
   constructor(private readonly id: string) {
     this.connector = Container.of(this.id).get(TatumConnector)
@@ -140,10 +141,7 @@ export class LoadBalancer implements AbstractRpcInterface {
   private async checkStatuses() {
     await this.checkStatus(RpcNodeType.NORMAL)
     await this.checkStatus(RpcNodeType.ARCHIVE)
-    if (!this.activeUrl[RpcNodeType.NORMAL].url && !this.activeUrl[RpcNodeType.ARCHIVE].url) {
-      Utils.log({ id: this.id, message: 'No active node found, please set node urls manually.' })
-      throw new Error('No active node found, please set node urls manually.')
-    }
+    this.checkIfNoActiveNodes()
 
     const { rpc } = Container.of(this.id).get(CONFIG)
     if (!rpc?.oneTimeLoadBalancing) {
@@ -151,6 +149,15 @@ export class LoadBalancer implements AbstractRpcInterface {
         this.destroy()
       }
       this.timeout = setTimeout(() => this.checkStatuses(), Constant.OPEN_RPC.LB_INTERVAL)
+    }
+  }
+
+  private checkIfNoActiveNodes() {
+    if (!this.activeUrl[RpcNodeType.NORMAL].url && !this.activeUrl[RpcNodeType.ARCHIVE].url) {
+      Utils.log({ id: this.id, message: 'No active node found, please set node urls manually.' })
+      this.noActiveNode = true
+    } else {
+      this.noActiveNode = false
     }
   }
 
@@ -268,6 +275,10 @@ export class LoadBalancer implements AbstractRpcInterface {
       return { url: this.getActiveUrl(RpcNodeType.NORMAL).url, type: RpcNodeType.NORMAL }
     }
 
+    if (this.noActiveNode) {
+      throw new Error('No active node found, please set node urls manually.')
+    }
+
     throw new Error('No active node found.')
   }
 
@@ -279,6 +290,10 @@ export class LoadBalancer implements AbstractRpcInterface {
 
     if (this.getActiveUrl(RpcNodeType.ARCHIVE)?.url) {
       return { url: this.getActiveUrl(RpcNodeType.ARCHIVE).url, type: RpcNodeType.ARCHIVE }
+    }
+
+    if (this.noActiveNode) {
+      throw new Error('No active node found, please set node urls manually.')
     }
 
     throw new Error('No active node found.')

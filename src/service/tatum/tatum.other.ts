@@ -1,5 +1,8 @@
 import { Container } from 'typedi'
-import { SolanaRpcSuite, TronRpcSuite, XrpRpcInterface } from '../../dto'
+import { SolanaRpcSuite, TezosRpcInterface, TronRpcSuite, XrpRpcInterface } from '../../dto'
+import { AlgorandAlgodRpcSuite } from '../../dto/rpc/AlgorandAlgodRpcSuite'
+import { AlgorandIndexerRpcSuite } from '../../dto/rpc/AlgorandIndexerRpcSuite'
+import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
 import { CONFIG, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
@@ -10,10 +13,6 @@ import { Notification } from '../notification'
 import { Rates } from '../rate'
 import { Token } from '../token'
 import { TatumSdkChain } from './tatum'
-import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
-import { TezosRpcInterface } from '../../dto/rpc/TezosRpcSuite'
-import { AlgorandAlgodRpcSuite } from '../../dto/rpc/AlgorandAlgodRpcSuite'
-import { AlgorandIndexerRpcSuite } from '../../dto/rpc/AlgorandIndexerRpcSuite'
 
 export abstract class BaseOther extends TatumSdkChain {
   ipfs: Ipfs
