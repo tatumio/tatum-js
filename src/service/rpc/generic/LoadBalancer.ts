@@ -274,10 +274,6 @@ export class LoadBalancer implements AbstractRpcInterface {
   }
 
   public getActiveArchiveUrlWithFallback() {
-    if (this.noActiveNodeError.isNoActiveNode) {
-      throw this.noActiveNodeError.error
-    }
-
     const activeArchiveUrl = this.getActiveUrl(RpcNodeType.ARCHIVE)
     if (activeArchiveUrl?.url) {
       return { url: activeArchiveUrl.url, type: RpcNodeType.ARCHIVE }
@@ -287,14 +283,14 @@ export class LoadBalancer implements AbstractRpcInterface {
       return { url: this.getActiveUrl(RpcNodeType.NORMAL).url, type: RpcNodeType.NORMAL }
     }
 
-    throw new Error('No active node found.')
-  }
-
-  public getActiveNormalUrlWithFallback() {
     if (this.noActiveNodeError.isNoActiveNode) {
       throw this.noActiveNodeError.error
     }
 
+    throw new Error('No active node found.')
+  }
+
+  public getActiveNormalUrlWithFallback() {
     const activeNormalUrl = this.getActiveUrl(RpcNodeType.NORMAL)
     if (activeNormalUrl?.url) {
       return { url: activeNormalUrl.url, type: RpcNodeType.NORMAL }
@@ -302,6 +298,10 @@ export class LoadBalancer implements AbstractRpcInterface {
 
     if (this.getActiveUrl(RpcNodeType.ARCHIVE)?.url) {
       return { url: this.getActiveUrl(RpcNodeType.ARCHIVE).url, type: RpcNodeType.ARCHIVE }
+    }
+
+    if (this.noActiveNodeError.isNoActiveNode) {
+      throw this.noActiveNodeError.error
     }
 
     throw new Error('No active node found.')
