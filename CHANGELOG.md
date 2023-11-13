@@ -1,3 +1,7 @@
+## [4.1.27] - 2023.11.13
+### Fixed
+- Fixed Algorand `ApplicationSearchParams` to camelCase.
+
 ## [4.1.26] - 2023.11.12
 ### Fixed
 - Fixed `LoadBalancer` throwing from setTimeout, it should now throw from actual method calls.
