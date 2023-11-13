@@ -330,9 +330,9 @@ export interface IndexerStateProofMessage {
 }
 
 export interface ApplicationSearchParams {
-  'application-id'?: number
+  applicationId?: number
   creator?: string
-  'include-all'?: boolean
+  includeAll?: boolean
   limit?: number
   next?: string
 }
