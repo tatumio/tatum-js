@@ -503,7 +503,7 @@ export class LoadBalancer implements AbstractRpcInterface {
       return await this.connector.rpcCall(url, rpcCall)
     } catch (e) {
       await this.handleFailedRpcCall({ rpcCall, e, nodeType: type, requestType: RequestType.RPC, url })
-      return await this.rawRpcCall(rpcCall)
+      return await this.rawRpcCall(rpcCall, archive)
     }
   }
 

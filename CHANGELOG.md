@@ -1,3 +1,7 @@
+## [4.1.28] - 2023.11.13
+### Fixed
+- Fixed lb archive fallback
+
 ## [4.1.27] - 2023.11.13
 ### Fixed
 - Fixed Algorand `ApplicationSearchParams` to camelCase.
