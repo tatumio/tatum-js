@@ -44,34 +44,35 @@ With Tatum SDK, you can:
 
 Interact seamlessly with various blockchains through native RPC calls. Say goodbye to the hassle of juggling separate RPC clients for each blockchain.
 
-| Documentation                                                                                            |
-|----------------------------------------------------------------------------------------------------------|
-| **EVM Blockchains**                                                                                      |
-| [Ethereum RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-rpc-documentation)                |
-| [Polygon RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/polygon-rpc-documentation)                  |
-| [Flare RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/flare-rpc-documentation)                      |
-| [Haqq RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/haqq-rpc-documentation)                        |
-| [Optimism RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/optimism-rpc-documentation)                |
-| [Horizen EON RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/horizen-eon-rpc-documentation)          |
-| [Arbitrum One RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/arbitrum-rpc-documentation)            |
-| [Chiliz RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/chiliz-rpc-documentation)                    |
+| Documentation                                                                                             |
+|-----------------------------------------------------------------------------------------------------------|
+| **EVM Blockchains**                                                                                       |
+| [Ethereum RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-rpc-documentation)                 |
+| [Polygon RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/polygon-rpc-documentation)                   |
+| [Flare RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/flare-rpc-documentation)                       |
+| [Haqq RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/haqq-rpc-documentation)                         |
+| [Optimism RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/optimism-rpc-documentation)                 |
+| [Horizen EON RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/horizen-eon-rpc-documentation)           |
+| [Arbitrum One RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/arbitrum-rpc-documentation)             |
+| [Chiliz RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/chiliz-rpc-documentation)                     |
 | [Ethereum Classic RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-classic-rpc-documentation) |
-| [Klaytn RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/klaytn-rpc-documentation)                    |
-| [Avalanche RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/avalanche-rpc-documentation)              |
-| [Celo RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/celo-rpc-documentation)                        |
-| **UTXO Blockchains**                                                                                     |
-| [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)                 |
-| [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation)               |
-| [Dogecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/dogecoin-rpc-documentation)               |
-| [ZCash RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/zcash-rpc-documentation)                     |
-| [Bitcoin Cash RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcion-cash-rpc-documentation)       |
-| **Other Blockchains**                                                                                    |
-| [Solana RPC](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                                    |
-| [XPR RPC](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                                          |
-| [Tron RPC](https://docs.tatum.io/docs/rpc/tron-rpc-documentation)                                        |
-| [Eos RPC](https://docs.tatum.io/docs/rpc/eos-rpc-documentation)                                      |
-| [Tezos RPC](https://docs.tatum.io/docs/rpc/tezos-rpc-documentation)                                   |
-| [Agorand RPC](https://docs.tatum.io/docs/rpc/algorand-rpc-documentation)                              |
+| [Klaytn RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/klaytn-rpc-documentation)                     |
+| [Avalanche RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/avalanche-rpc-documentation)               |
+| [Celo RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/celo-rpc-documentation)                         |
+| **UTXO Blockchains**                                                                                      |
+| [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)                  |
+| [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation)                |
+| [Dogecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/dogecoin-rpc-documentation)                |
+| [ZCash RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/zcash-rpc-documentation)                      |
+| [Bitcoin Cash RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcion-cash-rpc-documentation)        |
+| **Other Blockchains**                                                                                     |
+| [Solana RPC](https://docs.tatum.io/docs/rpc/solana-rpc-documentation)                                     |
+| [XPR RPC](https://docs.tatum.io/docs/rpc/xrp-rpc-documentation)                                           |
+| [Tron RPC](https://docs.tatum.io/docs/rpc/tron-rpc-documentation)                                         |
+| [Eos RPC](https://docs.tatum.io/docs/rpc/eos-rpc-documentation)                                           |
+| [Tezos RPC](https://docs.tatum.io/docs/rpc/tezos-rpc-documentation)                                       |
+| [Agorand RPC](https://docs.tatum.io/docs/rpc/algo-rpc-documentation)                                      |
+| [Cardano RPC](https://docs.tatum.io/docs/rpc/cardano-rpc-documentation)                                   |
 
 ### 🔔 Create Notifications
 
@@ -489,6 +490,8 @@ This section provides a list of various blockchain network status pages, powered
 | [algorand-testnet-algod.status.tatum.io](https://algorand-testnet-algod.status.tatum.io)                     |
 | [algorand-mainnet-indexer.status.tatum.io](https://algorand-mainnet-indexer.status.tatum.io)                 |
 | [algorand-testnet-indexer.status.tatum.io](https://algorand-testnet-indexer.status.tatum.io)                 |
+| [cardano-mainnet.status.tatum.io](https://cardano-mainnet.status.tatum.io)                                   |
+| [cardano-preprod.status.tatum.io](https://cardano-preprod.status.tatum.io)                                   |
 
 
 
@@ -594,6 +597,8 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/algorand-testnet-algod/list.json](https://rpc.tatum.io/algorand-testnet-algod/list.json)                     |
 | [rpc.tatum.io/algorand-mainnet-indexer/list.json](https://rpc.tatum.io/algorand-mainnet-indexer/list.json)                 |
 | [rpc.tatum.io/algorand-testnet-indexer/list.json](https://rpc.tatum.io/algorand-testnet-indexer/list.json)                 |
+| [rpc.tatum.io/cardano-mainnet/list.json](https://rpc.tatum.io/cardano-mainnet/list.json)                          |
+| [rpc.tatum.io/cardano-preprod/list.json](https://rpc.tatum.io/cardano-preprod/list.json)                          |
 
 
 Following pattern defines the URL for fetching the list of nodes:

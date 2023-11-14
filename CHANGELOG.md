@@ -1,3 +1,7 @@
+## [4.1.29] - 2023.11.15
+### Added
+- Added RPC support for the CARDANO_ROSETTA network. Users can now make RPC calls to these network using the `Network.CARDANO_ROSETTA` network.
+
 ## [4.1.28] - 2023.11.13
 ### Fixed
 - Fixed lb archive fallback
