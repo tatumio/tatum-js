@@ -7,6 +7,7 @@ import {
   isAlgorandAlgodNetwork,
   isAlgorandIndexerNetwork,
   isBnbLoadBalancerNetwork,
+  isCardanoNetwork,
   isEosLoadBalancerNetwork,
   isEosNetwork,
   isEvmArchiveNonArchiveBeaconLoadBalancerNetwork,
@@ -44,6 +45,7 @@ import {
   Bitcoin,
   BitcoinCash,
   Bnb,
+  CardanoRosetta,
   Celo,
   Chiliz,
   Cronos,
@@ -86,6 +88,7 @@ import { TronRpc } from '../service/rpc/evm/TronRpc'
 import { AlgorandAlgodLoadBalancerRpc } from '../service/rpc/other/AlgorandAlgodLoadBalancerRpc'
 import { AlgorandIndexerLoadBalancerRpc } from '../service/rpc/other/AlgorandIndexerLoadBalancerRpc'
 import { BnbLoadBalancerRpc } from '../service/rpc/other/BnbLoadBalancerRpc'
+import { CardanoLoadBalancerRpc } from '../service/rpc/other/CardanoLoadBalancerRpc'
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
 import { SolanaLoadBalancerRpc } from '../service/rpc/other/SolanaLoadBalancerRpc'
@@ -100,6 +103,10 @@ import { CONFIG } from './di.tokens'
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+
+    if (isCardanoNetwork(network)) {
+      return Container.of(id).get(CardanoLoadBalancerRpc) as T
+    }
 
     if (isAlgorandIndexerNetwork(network)) {
       return Container.of(id).get(AlgorandIndexerLoadBalancerRpc) as T
@@ -228,6 +235,15 @@ export const Utils = {
       }
     }
 
+    if (isCardanoNetwork(network)) {
+      return {
+        network_identifier: {
+          blockchain: 'cardano',
+          network: Network.CARDANO_ROSETTA === network ? 'mainnet' : 'preprod',
+        },
+      }
+    }
+
     if (
       isEosNetwork(network) ||
       isTezosNetwork(network) ||
@@ -250,6 +266,10 @@ export const Utils = {
 
     if (isAlgorandIndexerNetwork(network)) {
       return `${url}health`
+    }
+
+    if (isCardanoNetwork(network)) {
+      return `${url}network/status`
     }
 
     if (isSameGetBlockNetwork(network)) {
@@ -297,6 +317,10 @@ export const Utils = {
       return new BigNumber((response['round'] as number) || -1).toNumber()
     }
 
+    if (isCardanoNetwork(network)) {
+      return new BigNumber((response.current_block_identifier.index as number) || -1).toNumber()
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
   isResponseOk: (network: Network, response: JsonRpcResponse<any> | any) => {
@@ -322,6 +346,10 @@ export const Utils = {
 
     if (isAlgorandIndexerNetwork(network)) {
       return response['round'] !== undefined
+    }
+
+    if (isCardanoNetwork(network)) {
+      return response.current_block_identifier.index !== undefined
     }
 
     throw new Error(`Network ${network} is not supported.`)
@@ -620,6 +648,9 @@ export const Utils = {
       case Network.ALGORAND_INDEXER:
       case Network.ALGORAND_INDEXER_TESTNET:
         return new AlgorandIndexer(id) as T
+      case Network.CARDANO_ROSETTA:
+      case Network.CARDANO_ROSETTA_PREPROD:
+        return new CardanoRosetta(id) as T
       default:
         return new FullSdk(id) as T
     }

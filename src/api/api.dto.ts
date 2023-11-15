@@ -54,8 +54,6 @@ export function networkToChain(network: Network): Chain {
       return ChainEnum.POLYGON
     case Network.POLYGON_MUMBAI:
       return ChainEnum.POLYGON_MUMBAI
-    case Network.CARDANO:
-      return ChainEnum.POLYGON_MUMBAI
     default:
       throw new Error(`Unsupported network ${network}`)
   }

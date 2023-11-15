@@ -12,7 +12,7 @@ export enum Network {
   BNB = 'bnb-beacon-chain-mainnet',
   BITCOIN = 'bitcoin-mainnet',
   BITCOIN_CASH = 'bitcoin-cash-mainnet',
-  CARDANO = 'cardano-mainnet',
+  CARDANO_ROSETTA = 'cardano-mainnet',
   CELO = 'celo-mainnet',
   CRONOS = 'cro-mainnet',
   DOGECOIN = 'doge-mainnet',
@@ -59,7 +59,7 @@ export enum Network {
   BINANCE_SMART_CHAIN_TESTNET = 'bsc-testnet',
   BITCOIN_TESTNET = 'bitcoin-testnet',
   BITCOIN_CASH_TESTNET = 'bch-testnet',
-  CARDANO_PREPROD = 'cardano-preprod',
+  CARDANO_ROSETTA_PREPROD = 'cardano-preprod',
   CELO_ALFAJORES = 'celo-testnet',
   CRONOS_TESTNET = 'cro-testnet',
   DOGECOIN_TESTNET = 'doge-testnet',
@@ -172,8 +172,8 @@ export const DATA_API_UTXO_NETWORKS = [
   Network.BITCOIN_TESTNET,
   Network.LITECOIN,
   Network.LITECOIN_TESTNET,
-  Network.CARDANO,
-  Network.CARDANO_PREPROD,
+  Network.CARDANO_ROSETTA,
+  Network.CARDANO_ROSETTA_PREPROD,
   Network.DOGECOIN,
   Network.DOGECOIN_TESTNET,
 ]
@@ -238,6 +238,7 @@ export const BNB_LOAD_BALANCER_NETWORKS = [Network.BNB]
 export const TEZOS_NETWORKS = [Network.TEZOS, Network.TEZOS_TESTNET]
 export const ALGORAND_ALGOD_NETWORKS = [Network.ALGORAND_ALGOD, Network.ALGORAND_ALGOD_TESTNET]
 export const ALGORAND_INDEXER_NETWORKS = [Network.ALGORAND_INDEXER, Network.ALGORAND_INDEXER_TESTNET]
+export const CARDANO_NETWORKS = [Network.CARDANO_ROSETTA, Network.CARDANO_ROSETTA_PREPROD]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -251,6 +252,7 @@ export const LOAD_BALANCER_NETWORKS = [
   ...TEZOS_NETWORKS,
   ...ALGORAND_ALGOD_NETWORKS,
   ...ALGORAND_INDEXER_NETWORKS,
+  ...CARDANO_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -323,6 +325,8 @@ export const isTezosNetwork = (network: Network) => TEZOS_NETWORKS.includes(netw
 export const isAlgorandAlgodNetwork = (network: Network) => ALGORAND_ALGOD_NETWORKS.includes(network)
 
 export const isAlgorandIndexerNetwork = (network: Network) => ALGORAND_INDEXER_NETWORKS.includes(network)
+
+export const isCardanoNetwork = (network: Network) => CARDANO_NETWORKS.includes(network)
 
 export const isSameGetBlockNetwork = (network: Network) =>
   isUtxoBasedNetwork(network) ||

@@ -3,6 +3,7 @@ import { SolanaRpcSuite, TezosRpcInterface, TronRpcSuite, XrpRpcInterface } from
 import { AlgorandAlgodRpcSuite } from '../../dto/rpc/AlgorandAlgodRpcSuite'
 import { AlgorandIndexerRpcSuite } from '../../dto/rpc/AlgorandIndexerRpcSuite'
 import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
+import { CardanoRpcSuite } from '../../dto/rpc/CardanoRpcSuite'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
 import { CONFIG, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
@@ -115,6 +116,15 @@ export class AlgorandIndexer extends BaseOther {
   constructor(id: string) {
     super(id)
     this.rpc = Utils.getRpc<AlgorandIndexerRpcSuite>(id, Container.of(id).get(CONFIG))
+  }
+}
+
+export class CardanoRosetta extends BaseOther {
+  rpc: CardanoRpcSuite
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<CardanoRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 

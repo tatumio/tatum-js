@@ -205,7 +205,7 @@ describe.skip('Address', () => {
       let tatum: FullSdk
 
       beforeAll(async () => {
-        tatum = await TatumSDK.init({ network: Network.CARDANO_PREPROD })
+        tatum = await TatumSDK.init({ network: Network.CARDANO_ROSETTA_PREPROD })
       })
 
       it('should get balance with native assets only', async () => {
