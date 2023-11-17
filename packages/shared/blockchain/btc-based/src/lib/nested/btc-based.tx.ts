@@ -343,6 +343,9 @@ export const btcBasedTransactions = (
 
         const fromAddress = body.fromAddress
         if (fromAddress && 'signatureId' in fromAddress[0] && fromAddress[0].signatureId) {
+          if (!options.skipAllChecks) {
+            verifyAmounts(tx, body)
+          }
           return JSON.stringify(tx)
         }
       } else if ('fromUTXO' in body) {
@@ -350,6 +353,9 @@ export const btcBasedTransactions = (
 
         const fromUTXO = body.fromUTXO
         if (fromUTXO && 'signatureId' in fromUTXO[0] && fromUTXO[0].signatureId) {
+          if (!options.skipAllChecks) {
+            verifyAmounts(tx, body)
+          }
           return JSON.stringify(tx)
         }
       }
