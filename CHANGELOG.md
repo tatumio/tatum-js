@@ -1,3 +1,7 @@
+## [4.1.30] - 2023.11.17
+### Changed
+- Improved `LoadBalancer` stability
+
 ## [4.1.29] - 2023.11.15
 ### Added
 - Added RPC support for the CARDANO_ROSETTA network. Users can now make RPC calls to these network using the `Network.CARDANO_ROSETTA` network.

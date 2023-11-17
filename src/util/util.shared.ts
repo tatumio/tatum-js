@@ -455,6 +455,24 @@ export const Utils = {
     }
     throw lastError ?? new Error('Retry timeout failed')
   },
+  fetchWithTimeoutAndRetry: async (
+    url: string,
+    containerId: string,
+    config: RequestInit,
+    timeout = 5000,
+    retry = 2,
+  ): Promise<{ response: Response; responseTime: number }> => {
+    let lastError: unknown = null
+    for (let i = 0; i < retry; i++) {
+      try {
+        const { response, responseTime } = await Utils.fetchWithTimeout(url, containerId, config, timeout)
+        return { response, responseTime }
+      } catch (e: unknown) {
+        lastError = e
+      }
+    }
+    throw lastError ?? new Error('Retry timeout failed')
+  },
   fetchWithTimeout: async (
     url: string,
     containerId: string,
