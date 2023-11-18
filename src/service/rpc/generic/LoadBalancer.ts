@@ -276,7 +276,7 @@ export class LoadBalancer implements AbstractRpcInterface {
       throw new Error('No active node found, please set node urls manually.')
     }
 
-    throw new Error('No active node found.')
+    throw new Error(`No active ${RpcNodeType.ARCHIVE} node found.`)
   }
 
   public getActiveNormalUrlWithFallback() {
@@ -293,7 +293,7 @@ export class LoadBalancer implements AbstractRpcInterface {
       throw new Error('No active node found, please set node urls manually.')
     }
 
-    throw new Error('No active node found.')
+    throw new Error(`No active ${RpcNodeType.NORMAL} node found.`)
   }
 
   public getActiveUrl(nodeType: RpcNodeType) {
