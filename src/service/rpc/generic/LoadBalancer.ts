@@ -273,7 +273,17 @@ export class LoadBalancer implements AbstractRpcInterface {
     }
 
     if (this.noActiveNode) {
-      throw new Error('No active node found, please set node urls manually.')
+      Utils.log({
+        id: this.id,
+        data: this.rpcUrls[RpcNodeType.NORMAL],
+        mode: 'table',
+      })
+      Utils.log({
+        id: this.id,
+        data: this.rpcUrls[RpcNodeType.ARCHIVE],
+        mode: 'table',
+      })
+      throw new Error(`No active ${RpcNodeType.ARCHIVE} node found, fallback failed, please set node urls manually.`)
     }
 
     throw new Error(`No active ${RpcNodeType.ARCHIVE} node found.`)
@@ -290,7 +300,17 @@ export class LoadBalancer implements AbstractRpcInterface {
     }
 
     if (this.noActiveNode) {
-      throw new Error('No active node found, please set node urls manually.')
+      Utils.log({
+        id: this.id,
+        data: this.rpcUrls[RpcNodeType.NORMAL],
+        mode: 'table',
+      })
+      Utils.log({
+        id: this.id,
+        data: this.rpcUrls[RpcNodeType.ARCHIVE],
+        mode: 'table',
+      })
+      throw new Error(`No active ${RpcNodeType.NORMAL} node found, fallback failed, please set node urls manually.`)
     }
 
     throw new Error(`No active ${RpcNodeType.NORMAL} node found.`)
