@@ -283,10 +283,10 @@ export class LoadBalancer implements AbstractRpcInterface {
         data: this.rpcUrls[RpcNodeType.ARCHIVE],
         mode: 'table',
       })
-      throw new Error(`No active ${RpcNodeType.ARCHIVE} node found, fallback failed, please set node urls manually.`)
+      throw new Error('No active ARCHIVE node found, fallback failed, please set node urls manually.')
     }
 
-    throw new Error(`No active ${RpcNodeType.ARCHIVE} node found.`)
+    throw new Error('No active ARCHIVE node found.')
   }
 
   public getActiveNormalUrlWithFallback() {
@@ -310,10 +310,10 @@ export class LoadBalancer implements AbstractRpcInterface {
         data: this.rpcUrls[RpcNodeType.ARCHIVE],
         mode: 'table',
       })
-      throw new Error(`No active ${RpcNodeType.NORMAL} node found, fallback failed, please set node urls manually.`)
+      throw new Error('No active NORMAL node found, fallback failed, please set node urls manually.')
     }
 
-    throw new Error(`No active ${RpcNodeType.NORMAL} node found.`)
+    throw new Error('No active NORMAL node found.')
   }
 
   public getActiveUrl(nodeType: RpcNodeType) {
