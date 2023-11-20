@@ -677,6 +677,7 @@ export const generateAddressFromXPub = (currency: Currency, testnet: boolean, xp
     case Currency.MATIC:
     case Currency.USDT_MATIC:
     case Currency.USDC_MATIC:
+    case Currency.USDC_MATIC_NATIVE:
     case Currency.LATOKEN:
     case Currency.COIIN:
     case Currency.BETH:
@@ -744,6 +745,7 @@ export const generatePrivateKeyFromMnemonic = (currency: Currency, testnet: bool
     case Currency.MATIC:
     case Currency.USDT_MATIC:
     case Currency.USDC_MATIC:
+    case Currency.USDC_MATIC_NATIVE:
       return generatePolygonPrivateKey(testnet, mnemonic, i)
     case Currency.FLOW:
     case Currency.FUSD:
