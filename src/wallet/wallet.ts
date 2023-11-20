@@ -391,6 +391,7 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
       return generateEthWallet(testnet, mnem)
     case Currency.MATIC:
     case Currency.USDC_MATIC:
+    case Currency.USDC_MATIC_NATIVE:
     case Currency.USDT_MATIC:
       return generatePolygonWallet(testnet, mnem)
     case Currency.XDC:

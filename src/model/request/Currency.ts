@@ -32,6 +32,7 @@ export enum Currency {
   BBCH = 'BBCH',
   MATIC = 'MATIC',
   USDC_MATIC = 'USDC_MATIC',
+  USDC_MATIC_NATIVE = 'USDC_MATIC_NATIVE',
   USDC_BSC = 'USDC_BSC',
   USDC_SOL = 'USDC_SOL',
   USDT = 'USDT',
@@ -143,6 +144,7 @@ export const BEP20_CURRENCIES = [
 
 export const MATIC20_CURRENCIES = [
   Currency.USDC_MATIC.toString(),
+  Currency.USDC_MATIC_NATIVE.toString(),
   Currency.GAMEE.toString(),
   Currency.INTENT.toString(),
   Currency.EURTENT.toString(),
