@@ -16,6 +16,7 @@ export enum Currency {
   GAMEE = 'GAMEE',
   MATIC_ETH = 'MATIC_ETH',
   USDC_MATIC = 'USDC_MATIC',
+  USDC_MATIC_NATIVE = 'USDC_MATIC_NATIVE',
   USDC_BSC = 'USDC_BSC',
   USDC_SOL = 'USDC_SOL',
   RMD = 'RMD',
@@ -172,6 +173,7 @@ export const CELO_CURRENCIES = [Currency.CELO, Currency.CEUR, Currency.CUSD]
 
 export const MATIC20_CURRENCIES = [
   Currency.USDC_MATIC,
+  Currency.USDC_MATIC_NATIVE,
   Currency.GAMEE,
   Currency.USDT_MATIC,
   Currency.INTENT,
