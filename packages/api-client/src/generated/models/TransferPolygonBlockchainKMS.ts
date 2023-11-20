@@ -18,9 +18,9 @@ export type TransferPolygonBlockchainKMS = {
      */
     to: string;
     /**
-     * Currency to transfer from Polygon Blockchain Account. ERC20 tokens like USDC_MATIC, USDT_MATIC, GAMEE, INTENT, EURTENT, GOLDAX are available only for mainnet use.
+     * Currency to transfer from Polygon Blockchain Account. ERC20 tokens like USDC_MATIC, USDT_MATIC, USDC_MATIC_NATIVE, GAMEE, INTENT, EURTENT, GOLDAX are available only for mainnet use.
      */
-    currency: 'MATIC' | 'USDC_MATIC' | 'USDT_MATIC' | 'GAMEE' | 'INTENT' | 'EURTENT' | 'GOLDAX';
+    currency: 'MATIC' | 'USDC_MATIC' | 'USDC_MATIC_NATIVE' | 'USDT_MATIC' | 'GAMEE' | 'INTENT' | 'EURTENT' | 'GOLDAX';
     fee?: CustomFee;
     /**
      * Amount to be sent.
