@@ -163,7 +163,7 @@ export class LoadBalancer implements AbstractRpcInterface {
 
   private async checkStatus(nodeType: RpcNodeType) {
     const { rpc, network } = Container.of(this.id).get(CONFIG)
-    const all = []
+
     /**
      * Check status of all nodes.
      * If the node is not responding, it will be marked as failed.
@@ -172,76 +172,73 @@ export class LoadBalancer implements AbstractRpcInterface {
     const statusPayload = Utils.getStatusPayload(network)
     for (const server of this.rpcUrls[nodeType]) {
       Utils.log({ id: this.id, message: `Checking status of ${server.node.url}` })
-      all.push(
-        Utils.fetchWithTimeout(Utils.getStatusUrl(network, server.node.url), this.id, {
-          method: Utils.getStatusMethod(network),
-          // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-          // @ts-ignore
-          // body: statusPayload ? JSON.stringify(statusPayload) : undefined,
-          // add body only if is defined
-          ...(statusPayload && { body: JSON.stringify(statusPayload) }),
-        })
-          .then(async ({ response: res, responseTime }) => {
-            server.lastResponseTime = responseTime
-            const response = await res.json()
-            Utils.log({
-              id: this.id,
-              message: `Response time of ${server.node.url} is ${server.lastResponseTime}ms with response: `,
-              data: response,
-            })
-            if (res.ok && Utils.isResponseOk(network, response)) {
-              server.failed = false
-              server.lastBlock = Utils.parseStatusPayload(network, response)
-            } else {
-              Utils.log({
-                id: this.id,
-                message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(
-                  response,
-                  Object.getOwnPropertyNames(response),
-                )}`,
-              })
-              server.failed = true
-            }
+
+      await Utils.fetchWithTimeoutAndRetry(Utils.getStatusUrl(network, server.node.url), this.id, {
+        method: Utils.getStatusMethod(network),
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        // body: statusPayload ? JSON.stringify(statusPayload) : undefined,
+        // add body only if is defined
+        ...(statusPayload && { body: JSON.stringify(statusPayload) }),
+      })
+        .then(async ({ response: res, responseTime }) => {
+          server.lastResponseTime = responseTime
+          const response = await res.json()
+          Utils.log({
+            id: this.id,
+            message: `Response time of ${server.node.url} is ${server.lastResponseTime}ms with response: `,
+            data: response,
           })
-          .catch((e) => {
+          if (res.ok && Utils.isResponseOk(network, response)) {
+            server.failed = false
+            server.lastBlock = Utils.parseStatusPayload(network, response)
+          } else {
             Utils.log({
               id: this.id,
               message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(
-                e,
-                Object.getOwnPropertyNames(e),
+                response,
+                Object.getOwnPropertyNames(response),
               )}`,
             })
-            Utils.log({
-              id: this.id,
-              message: `Server ${server.node.url} will be marked as failed and will be removed from the pool.`,
-            })
             server.failed = true
-          }),
-      )
+          }
+        })
+        .catch((e) => {
+          Utils.log({
+            id: this.id,
+            message: `Failed to check status of ${server.node.url}. Error: ${JSON.stringify(
+              e,
+              Object.getOwnPropertyNames(e),
+            )}`,
+          })
+          Utils.log({
+            id: this.id,
+            message: `Server ${server.node.url} will be marked as failed and will be removed from the pool.`,
+          })
+          server.failed = true
+        })
     }
     /**
      * The fastest node will be selected and will be used.
      */
-    await Promise.allSettled(all).then(() => {
-      const { fastestServer, index } = LoadBalancer.getFastestServer(
-        this.rpcUrls[nodeType],
-        rpc?.allowedBlocksBehind as number,
-      )
+    const { fastestServer, index } = LoadBalancer.getFastestServer(
+      this.rpcUrls[nodeType],
+      rpc?.allowedBlocksBehind as number,
+    )
 
+    Utils.log({
+      id: this.id,
+      data: this.rpcUrls[nodeType],
+      mode: 'table',
+    })
+    if (fastestServer && index !== -1) {
       Utils.log({
         id: this.id,
-        data: this.rpcUrls[nodeType],
-        mode: 'table',
+        message: `Server ${fastestServer.node.url} is selected as active server for ${RpcNodeType[nodeType]}.`,
+        data: { url: fastestServer.node.url, index },
       })
-      if (fastestServer && index !== -1) {
-        Utils.log({
-          id: this.id,
-          message: `Server ${fastestServer.node.url} is selected as active server for ${RpcNodeType[nodeType]}.`,
-          data: { url: fastestServer.node.url, index },
-        })
-        this.activeUrl[nodeType] = { url: fastestServer.node.url, index }
-      }
-    })
+      this.activeUrl[nodeType] = { url: fastestServer.node.url, index }
+    }
   }
 
   private static getFastestServer(servers: RpcStatus[], allowedBlocksBehind: number) {
@@ -276,10 +273,20 @@ export class LoadBalancer implements AbstractRpcInterface {
     }
 
     if (this.noActiveNode) {
-      throw new Error('No active node found, please set node urls manually.')
+      Utils.log({
+        id: this.id,
+        data: this.rpcUrls[RpcNodeType.NORMAL],
+        mode: 'table',
+      })
+      Utils.log({
+        id: this.id,
+        data: this.rpcUrls[RpcNodeType.ARCHIVE],
+        mode: 'table',
+      })
+      throw new Error('No active ARCHIVE node found, fallback failed, please set node urls manually.')
     }
 
-    throw new Error('No active node found.')
+    throw new Error('No active ARCHIVE node found.')
   }
 
   public getActiveNormalUrlWithFallback() {
@@ -293,10 +300,20 @@ export class LoadBalancer implements AbstractRpcInterface {
     }
 
     if (this.noActiveNode) {
-      throw new Error('No active node found, please set node urls manually.')
+      Utils.log({
+        id: this.id,
+        data: this.rpcUrls[RpcNodeType.NORMAL],
+        mode: 'table',
+      })
+      Utils.log({
+        id: this.id,
+        data: this.rpcUrls[RpcNodeType.ARCHIVE],
+        mode: 'table',
+      })
+      throw new Error('No active NORMAL node found, fallback failed, please set node urls manually.')
     }
 
-    throw new Error('No active node found.')
+    throw new Error('No active NORMAL node found.')
   }
 
   public getActiveUrl(nodeType: RpcNodeType) {
