@@ -91,6 +91,7 @@ jobs:
 
     - run: yarn install
     - run: yarn lint
+    - run: ls -la
     - run: yarn test
       env:
         V4_API_KEY_MAINNET: ${{ secrets.V4_API_KEY_MAINNET }}
@@ -98,7 +99,7 @@ jobs:
         V3_API_KEY_TESTNET: ${{ secrets.V3_API_KEY_TESTNET }}
         NON_TATUM_RPC_ETH_URL: ${{ secrets.NON_TATUM_RPC_ETH_URL }}
         VERBOSE: ${{ secrets.verbose }}
-    - run: ls -la
+
     - uses: dorny/test-reporter@v1
       if: failure()
       with:
