@@ -99,9 +99,10 @@ jobs:
         V3_API_KEY_TESTNET: ${{ secrets.V3_API_KEY_TESTNET }}
         NON_TATUM_RPC_ETH_URL: ${{ secrets.NON_TATUM_RPC_ETH_URL }}
         VERBOSE: ${{ secrets.verbose }}
-
+    - run: ls -la
+      if: success() || failure()
     - uses: dorny/test-reporter@v1
-      if: failure()
+      if: success() || failure()
       with:
         name: JEST Tests
         path: reports/jest-junit.xml
