@@ -1,5 +1,5 @@
 import { ApiVersion, Network, TatumSDK } from '../service'
-import { Bitcoin, Ethereum } from '../service/tatum'
+import { Bitcoin, Ethereum } from '../service'
 import { Status } from '../util'
 
 describe('Fee', () => {
@@ -11,10 +11,16 @@ describe('Fee', () => {
       version: ApiVersion.V3,
     })
 
-    const { data, status } = await tatum.fee.getCurrentFee()
-    await tatum.destroy()
-    expect(status).toBe(Status.SUCCESS)
-    expect(data.gasPrice.fast).toBeDefined()
+    try{
+      const { data, status } = await tatum.fee.getCurrentFee()
+
+      expect(status).toBe(Status.SUCCESS)
+      expect(data.gasPrice.fast).toBeDefined()
+    }
+    finally {
+      await tatum.destroy()
+    }
+
   })
 
   it('should return fee for btc testnet', async () => {
@@ -25,9 +31,14 @@ describe('Fee', () => {
       version: ApiVersion.V3,
     })
 
-    const { data, status } = await tatum.fee.getCurrentFee()
-    await tatum.destroy()
-    expect(status).toBe(Status.SUCCESS)
-    expect(data.fast).toBeDefined()
+    try{
+      const { data, status } = await tatum.fee.getCurrentFee()
+      await tatum.destroy()
+      expect(status).toBe(Status.SUCCESS)
+      expect(data.fast).toBeDefined()
+    }
+    finally {
+      await tatum.destroy()
+    }
   })
 })

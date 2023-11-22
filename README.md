@@ -304,7 +304,7 @@ For more details, check out the [NFTs documentation](https://docs.tatum.io/docs/
 Using TatumSDK, it's possible to connect your browser application to MetaMask and perform transactions using it. To achieve this, use the following code:
 
 ```ts
-import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
+import { TatumSDK, Network, Ethereum, MetaMask } from '@tatumio/tatum'
 
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 

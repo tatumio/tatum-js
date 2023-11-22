@@ -8,6 +8,18 @@ module.exports = {
     "^.+\\.(ts|tsx)$": "ts-jest"
   },
   testTimeout: 30000,
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts']
+  setupFilesAfterEnv: ['<rootDir>/jest.setup.ts'],
+  reporters: [
+    "default",
+    ["jest-junit", {
+      outputDirectory: "reports",
+      outputName: "jest-junit.xml",
+      ancestorSeparator: " › ",
+      uniqueOutputName: "false",
+      suiteNameTemplate: "{filepath}",
+      classNameTemplate: "{classname}",
+      titleTemplate: "{title}"
+    }]
+  ]
 }
 

@@ -1,3 +1,7 @@
+## [4.1.31] - 2023.11.22
+### Changed
+- Adjust logic redirecting for getBlockByNumber to call normal nodes for latest block
+
 ## [4.1.30] - 2023.11.17
 ### Changed
 - Improved `LoadBalancer` stability

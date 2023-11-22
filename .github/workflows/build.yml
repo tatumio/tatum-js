@@ -98,6 +98,12 @@ jobs:
         V3_API_KEY_TESTNET: ${{ secrets.V3_API_KEY_TESTNET }}
         NON_TATUM_RPC_ETH_URL: ${{ secrets.NON_TATUM_RPC_ETH_URL }}
         VERBOSE: ${{ secrets.verbose }}
+    - uses: dorny/test-reporter@v1
+      if: success() || failure()
+      with:
+        name: TEST REPORT
+        path: reports/jest-junit.xml
+        reporter: jest-junit
 
   release:
     runs-on: ubuntu-latest

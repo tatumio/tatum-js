@@ -21,7 +21,6 @@ export const ARCHIVE_METHODS = [
   'getTransactionReceipt',
   'getUncleCountByBlockHash',
   'getUncleCountByBlockNumber',
-  'getBlockByNumber',
   'getBlockTransactionCountByHash',
   'getBlockTransactionCountByNumber',
   'getBlockReceipts',
@@ -33,10 +32,11 @@ export const ARCHIVE_METHODS = [
 
 export const POSSIBLE_ARCHIVE_METHODS = [
   // Network state
-  { method: 'getStorageAt', index: 2 }, // second param block
-  { method: 'call', index: 1 }, // second param block
-  { method: 'getBalance', index: 1 }, // second param block
-  { method: 'getCode', index: 1 }, // second param block
+  { method: 'getStorageAt', index: 2 },
+  { method: 'call', index: 1 },
+  { method: 'getBalance', index: 1 },
+  { method: 'getCode', index: 1 },
+  { method: 'getBlockByNumber', index: 0 },
 ]
 
 export const EvmUtils = {
@@ -47,7 +47,7 @@ export const EvmUtils = {
     }
 
     const possibleArchiveMethod = POSSIBLE_ARCHIVE_METHODS.find(
-      (possibleArchiveMethod) => possibleArchiveMethod.method === rpc.method,
+      (possibleArchiveMethod) => rpc.method.includes(possibleArchiveMethod.method),
     )
     if (possibleArchiveMethod) {
       const param = rpc?.params?.[possibleArchiveMethod.index]
