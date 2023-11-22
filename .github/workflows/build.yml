@@ -99,6 +99,13 @@ jobs:
         NON_TATUM_RPC_ETH_URL: ${{ secrets.NON_TATUM_RPC_ETH_URL }}
         VERBOSE: ${{ secrets.verbose }}
 
+    - uses: dorny/test-reporter@v1
+      if: failure()
+      with:
+        name: JEST Tests
+        path: reports/jest-*.xml
+        reporter: jest-junit
+
   release:
     runs-on: ubuntu-latest
     if: needs.metadata.outputs.current_branch == 'master' && needs.metadata.outputs.release_exists == 'false'
