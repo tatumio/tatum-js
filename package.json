@@ -50,14 +50,5 @@
     "tslib": "^2.5.0",
     "typescript": "^5.0.4",
     "undici": "^5.21.0"
-  },
-  "jest-junit": {
-    "outputDirectory": "reports",
-    "outputName": "jest-junit.xml",
-    "ancestorSeparator": " › ",
-    "uniqueOutputName": "false",
-    "suiteNameTemplate": "{filepath}",
-    "classNameTemplate": "{classname}",
-    "titleTemplate": "{title}"
   }
 }
