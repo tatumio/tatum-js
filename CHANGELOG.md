@@ -1,3 +1,7 @@
+## [4.1.32] - 2023.11.29
+### Fixed
+- Fixed logic of IPFS upload, now upload passes request using client's version
+
 ## [4.1.31] - 2023.11.22
 ### Changed
 - Adjust logic redirecting for getBlockByNumber to call normal nodes for latest block
