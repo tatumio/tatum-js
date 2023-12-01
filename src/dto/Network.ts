@@ -43,7 +43,7 @@ export enum Network {
   TEZOS = 'tezos-mainnet',
   TRON = 'tron-mainnet',
   VECHAIN = 'vechain-mainnet',
-  XDC = 'xdc-mainnet',
+  XINFIN = 'xinfin-mainnet',
   XRP = 'ripple-mainnet',
   ZCASH = 'zcash-mainnet',
   ZILLIQA = 'zilliqa-mainnet',
@@ -92,7 +92,7 @@ export enum Network {
   TEZOS_TESTNET = 'tezos-testnet',
   TRON_SHASTA = 'tron-testnet',
   VECHAIN_TESTNET = 'vechain-testnet',
-  XDC_TESTNET = 'xdc-testnet',
+  XINFIN_TESTNET = 'xdc-testnet',
   XRP_TESTNET = 'ripple-testnet',
   ZCASH_TESTNET = 'zcash-testnet',
   ZILLIQA_TESTNET = 'zilliqa-testnet',
@@ -119,8 +119,8 @@ export const EVM_BASED_NETWORKS = [
   Network.BINANCE_SMART_CHAIN_TESTNET,
   Network.VECHAIN,
   Network.VECHAIN_TESTNET,
-  Network.XDC,
-  Network.XDC_TESTNET,
+  Network.XINFIN,
+  Network.XINFIN_TESTNET,
   Network.PALM,
   Network.PALM_TESTNET,
   Network.CRONOS,
@@ -227,6 +227,7 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.AVALANCHE_C,
   Network.CELO,
   Network.CELO_ALFAJORES,
+  Network.XINFIN,
 ]
 
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]

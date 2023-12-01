@@ -1,3 +1,7 @@
+## [4.1.33] - 2023.12.1
+### Added
+- Added RPC support for the XINFIN network. Users can now make RPC calls to these network using the `Network.XINFIN` network.
+
 ## [4.1.32] - 2023.11.29
 ### Fixed
 - Fixed logic of IPFS upload, now upload passes request using client's version
