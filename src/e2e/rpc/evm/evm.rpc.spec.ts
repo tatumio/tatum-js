@@ -11,7 +11,7 @@ const testNetworks = [
     expected: { chainId: 421613 },
     apiKey: process.env.V3_API_KEY_TESTNET,
   },
-  //{ network: Network.HORIZEN_EON, expected: { chainId: 7332 } },
+  { network: Network.HORIZEN_EON, expected: { chainId: 7332 } },
   { network: Network.HORIZEN_EON_GOBI, expected: { chainId: 1663 } },
   { network: Network.CHILIZ, expected: { chainId: 88888 } },
   { network: Network.BINANCE_SMART_CHAIN, expected: { chainId: 56 } },
@@ -29,7 +29,7 @@ const testNetworks = [
   { network: Network.ETHEREUM_HOLESKY, expected: { chainId: 17000 } },
   { network: Network.ETHEREUM_CLASSIC, expected: { chainId: 61 } },
   { network: Network.POLYGON, expected: { chainId: 137 } },
-  //{ network: Network.POLYGON_MUMBAI, expected: { chainId: 80001 } },
+  { network: Network.POLYGON_MUMBAI, expected: { chainId: 80001 } },
   { network: Network.OPTIMISM, expected: { chainId: 10 } },
   { network: Network.HAQQ, expected: { chainId: 11235 } },
   { network: Network.HAQQ_TESTNET, expected: { chainId: 54211 } },
@@ -53,10 +53,10 @@ const testNetworks = [
     skipEstimateGas: true,
     apiKey: process.env.V3_API_KEY_TESTNET,
   },
-  // {
-  //   network: Network.KLAYTN,
-  //   expected: { chainId: 8217 },
-  // },
+  {
+    network: Network.KLAYTN,
+    expected: { chainId: 8217 },
+  },
   {
     network: Network.KLAYTN_BAOBAB,
     expected: { chainId: 1001 },
@@ -70,6 +70,10 @@ const testNetworks = [
     network: Network.AVALANCHE_C_TESTNET,
     expected: { chainId: 43113 },
     apiKey: process.env.V3_API_KEY_TESTNET,
+  },
+  {
+    network: Network.XINFIN,
+    expected: { chainId: 50 },
   },
 ]
 

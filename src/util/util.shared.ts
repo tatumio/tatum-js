@@ -76,7 +76,7 @@ import {
   Tron,
   UtxoRpc,
   Vechain,
-  Xdc,
+  XinFin,
   Xrp,
   ZCash,
 } from '../service'
@@ -635,9 +635,9 @@ export const Utils = {
       case Network.VECHAIN:
       case Network.VECHAIN_TESTNET:
         return new Vechain(id) as T
-      case Network.XDC:
-      case Network.XDC_TESTNET:
-        return new Xdc(id) as T
+      case Network.XINFIN:
+      case Network.XINFIN_TESTNET:
+        return new XinFin(id) as T
       case Network.XRP:
       case Network.XRP_TESTNET:
         return new Xrp(id) as T

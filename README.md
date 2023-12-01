@@ -59,6 +59,7 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Klaytn RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/klaytn-rpc-documentation)                     |
 | [Avalanche RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/avalanche-rpc-documentation)               |
 | [Celo RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/celo-rpc-documentation)                         |
+| [XinFin RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/xinfin-rpc-documentation)                     |
 | **UTXO Blockchains**                                                                                      |
 | [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)                  |
 | [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation)                |
@@ -492,6 +493,7 @@ This section provides a list of various blockchain network status pages, powered
 | [algorand-testnet-indexer.status.tatum.io](https://algorand-testnet-indexer.status.tatum.io)                 |
 | [cardano-mainnet.status.tatum.io](https://cardano-mainnet.status.tatum.io)                                   |
 | [cardano-preprod.status.tatum.io](https://cardano-preprod.status.tatum.io)                                   |
+| [xinfin-mainnet-archive.status.tatum.io](https://xinfin-mainnet-archive.status.tatum.io)                            |
 
 
 
@@ -599,6 +601,7 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/algorand-testnet-indexer/list.json](https://rpc.tatum.io/algorand-testnet-indexer/list.json)                 |
 | [rpc.tatum.io/cardano-mainnet/list.json](https://rpc.tatum.io/cardano-mainnet/list.json)                          |
 | [rpc.tatum.io/cardano-preprod/list.json](https://rpc.tatum.io/cardano-preprod/list.json)                          |
+| [rpc.tatum.io/xinfin-mainnet-archive/list.json](https://rpc.tatum.io/xinfin-mainnet-archive/list.json)                          |
 
 
 Following pattern defines the URL for fetching the list of nodes:
