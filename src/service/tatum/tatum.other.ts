@@ -5,6 +5,7 @@ import { AlgorandIndexerRpcSuite } from '../../dto/rpc/AlgorandIndexerRpcSuite'
 import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
 import { CardanoRpcSuite } from '../../dto/rpc/CardanoRpcSuite'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
+import { StellarRpcSuite } from '../../dto/rpc/StellarRpcSuite'
 import { CONFIG, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
 import { Faucet } from '../faucet'
@@ -125,6 +126,15 @@ export class CardanoRosetta extends BaseOther {
   constructor(id: string) {
     super(id)
     this.rpc = Utils.getRpc<CardanoRpcSuite>(id, Container.of(id).get(CONFIG))
+  }
+}
+
+export class Stellar extends BaseOther {
+  rpc: StellarRpcSuite
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<StellarRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 

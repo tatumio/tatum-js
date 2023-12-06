@@ -82,7 +82,3 @@ export interface TokenDetails {
 
 export type QueryValue = string | number | boolean | string[] | number[] | boolean[]
 export type QueryParams = Record<string, QueryValue>
-export type SendGet = {
-  path: string
-  queryParams?: QueryParams
-}
