@@ -1,5 +1,6 @@
 export * from './constant'
 export * from './di.tokens'
 export * from './error'
+export * from './logger'
 export * from './tatum.utils'
 export * from './util.shared'

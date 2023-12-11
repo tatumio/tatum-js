@@ -1,6 +1,6 @@
 import { Container, Service } from 'typedi'
 import { isLoadBalancerNetwork } from '../../dto'
-import { CONFIG, Constant, Utils } from '../../util'
+import { CONFIG, Constant, Utils, logWelcomeMessage } from '../../util'
 import {
   ExtensionConstructor,
   ExtensionConstructorOrConfig,
@@ -72,6 +72,8 @@ export class TatumSDK {
    * @param config
    */
   public static async init<T extends ITatumSdkChain>(config: TatumConfig): Promise<T> {
+    logWelcomeMessage()
+
     const defaultConfig: Partial<TatumConfig> = {
       version: ApiVersion.V4,
       retryCount: 1,
