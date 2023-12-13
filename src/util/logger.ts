@@ -1,11 +1,8 @@
-import chalk, { Chalk } from 'chalk'
+import chalk from 'chalk'
 
-interface LogType {
-  chalk: Chalk
-  label: string
-}
+type Color = 'yellow' | 'green' | 'cyan' | 'red' | 'blue'
 
-type Color = 'black' | 'white' | 'yellow' | 'green' | 'cyan' | 'red' | 'blue'
+type LogType = 'error' | 'warning' | 'info'
 
 const log = console.log
 
@@ -14,7 +11,33 @@ const isBrowser = () => typeof window !== 'undefined'
 // eslint-disable-next-line no-control-regex
 const removeAnsi = (text: string) => text.replace(/\x1B\[\d+m|\n/g, '')
 
-const getStyleByColor = (color: Color | 'logo') => {
+const getConfigByType = (type: LogType): { color: Color; label: string } => {
+  switch (type) {
+    case 'error':
+      return { color: 'red', label: 'ERROR' }
+    case 'warning':
+      return { color: 'yellow', label: 'WARNING' }
+    case 'info':
+      return { color: 'cyan', label: 'INFO' }
+  }
+}
+
+const getStyleByType = (type?: LogType) => {
+  const common = 'color: white; font-weight: bold;'
+
+  switch (type) {
+    case 'error':
+      return `${common} background-color: red`
+    case 'warning':
+      return `${common} background-color: darkorange`
+    case 'info':
+      return `${common} background-color: steelblue`
+    default:
+      return `${common} background-image: linear-gradient(126deg,#513bff 9%,#89ffca 97%);`
+  }
+}
+
+const getStyleByColor = (color: Color) => {
   switch (color) {
     case 'red':
       return 'color: red;'
@@ -26,8 +49,6 @@ const getStyleByColor = (color: Color | 'logo') => {
       return 'color: yellow;'
     case 'green':
       return 'color: green;'
-    default:
-      return 'color: white; font-weight: bold; background-image: linear-gradient(126deg,#513bff 9%,#89ffca 97%);'
   }
 }
 
@@ -39,7 +60,12 @@ const center = (message: string, pl = 0) => {
   return ' '.repeat((cols - messageWithoutAnsi.length) / 2 + pl) + message
 }
 
-const colorize = (message: string, color: Color) => (isBrowser() ? `%c${message}%c` : chalk[color](message))
+const colorize = (message: string, color: Color, block?: boolean) => {
+  if (isBrowser()) {
+    return `%c${message}%c`
+  }
+  return block ? chalk.bgKeyword(color).bold.white(message) : chalk[color](message)
+}
 
 const getLine = (count?: number) => {
   const cols = count || process?.stdout?.columns || 53
@@ -64,23 +90,31 @@ const getLogo = () => {
 }
 
 const printLog = (message: string, type: LogType) => {
-  const border = getBorder()
-  const label = type.chalk.bold(` ${type.label} `)
+  const config = getConfigByType(type)
 
-  const padding = ' '.repeat(removeAnsi(label).length)
+  const label = colorize(` ${config.label} `, config.color, true)
+  const padding = ' '.repeat(config.label.length + 2)
   const space = ' '.repeat(3)
 
-  log(border)
-  log(`${label}${space}${message.split('\n').join(`\n${padding}${space}`)}`)
-  log(border)
+  const text = `${label}${space}${message.split('\n').join(`\n${padding}${space}`)}`
+
+  if (isBrowser()) {
+    log(text, getStyleByType(type), undefined)
+  } else {
+    const border = getBorder()
+
+    log(border)
+    log(text)
+    log(border)
+  }
 }
 
 export const TatumLogger = {
-  info: (message: string) => printLog(message, { chalk: chalk.bgGreen, label: 'INFO' }),
+  info: (message: string) => printLog(message, 'info'),
 
-  warning: (message: string) => printLog(message, { chalk: chalk.bgYellow, label: 'WARNING' }),
+  warning: (message: string) => printLog(message, 'warning'),
 
-  error: (message: string) => printLog(message, { chalk: chalk.bgRed, label: 'ERROR' }),
+  error: (message: string) => printLog(message, 'error'),
 
   welcome: () => {
     const hello = ' Welcome to Tatum! 👋'
@@ -90,11 +124,17 @@ export const TatumLogger = {
     const explore = `Explore all SDK capabilities at ${colorize('https://docs.tatum.io', 'cyan')}`
 
     if (isBrowser()) {
-      log(`%c Tatum %c ${hello}`, getStyleByColor('logo'), '')
-      log(title)
-      log(randomYellow, getStyleByColor('yellow'), '')
-      log(randomRed, getStyleByColor('red'), '')
-      log(explore, '', '')
+      log(
+        `%c Tatum %c ${hello}\n\n${title}\n${randomYellow}\n${randomRed}\n${explore}`,
+        getStyleByType(),
+        undefined,
+        getStyleByColor('yellow'),
+        undefined,
+        getStyleByColor('red'),
+        undefined,
+        undefined,
+        undefined,
+      )
     } else {
       const titleLine = getLine(21)
       const border = getBorder()
