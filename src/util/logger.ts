@@ -75,6 +75,10 @@ const getLine = (count?: number) => {
 const getBorder = () => `\n${getLine()}\n`
 
 const getLogo = () => {
+  if (isBrowser()) {
+    return '%c Tatum %c '
+  }
+
   const logoExtraPadding = 5
   const logoHorizontal = '#'.repeat(logoExtraPadding + 2)
 
@@ -93,18 +97,16 @@ const printLog = (message: string, type: LogType) => {
   const config = getConfigByType(type)
 
   const label = colorize(` ${config.label} `, config.color, true)
-  const padding = ' '.repeat(config.label.length + 2)
-  const space = ' '.repeat(3)
-
-  const text = `${label}${space}${message.split('\n').join(`\n${padding}${space}`)}`
 
   if (isBrowser()) {
-    log(text, getStyleByType(type), undefined)
+    log(`${getLogo()} ${label}\n\n${message}`, getStyleByType(), undefined, getStyleByType(type), undefined)
   } else {
     const border = getBorder()
+    const space = ' '.repeat(3)
+    const padding = ' '.repeat(config.label.length + 2)
 
     log(border)
-    log(text)
+    log(`${label}${space}${message.split('\n').join(`\n${padding}${space}`)}`)
     log(border)
   }
 }
@@ -117,6 +119,7 @@ export const TatumLogger = {
   error: (message: string) => printLog(message, 'error'),
 
   welcome: () => {
+    const logo = getLogo()
     const hello = ' Welcome to Tatum! 👋'
     const title = 'The complete SDK for Web3 development!\n'
     const randomYellow = `Random line with ${colorize('highligt', 'yellow')} for illustration purpose...`
@@ -125,7 +128,7 @@ export const TatumLogger = {
 
     if (isBrowser()) {
       log(
-        `%c Tatum %c ${hello}\n\n${title}\n${randomYellow}\n${randomRed}\n${explore}`,
+        `${logo}${hello}\n\n${title}\n${randomYellow}\n${randomRed}\n${explore}`,
         getStyleByType(),
         undefined,
         getStyleByColor('yellow'),
@@ -140,7 +143,7 @@ export const TatumLogger = {
       const border = getBorder()
 
       log(border)
-      log(getLogo())
+      log(logo)
 
       log(titleLine)
       log(center(chalk.green(hello)))
