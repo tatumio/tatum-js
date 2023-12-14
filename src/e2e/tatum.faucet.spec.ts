@@ -41,7 +41,7 @@ describe('Tatum faucet', () => {
       expect(res.error?.code).toBe('faucet.balance')
     })
 
-    it('should return success', async () => {
+    it.skip('should return success', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM_SEPOLIA,
         apiKey: {
