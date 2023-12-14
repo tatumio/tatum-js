@@ -96,7 +96,7 @@ export class LoadBalancer implements AbstractRpcInterface {
     }
 
     if (typeof process !== 'undefined' && process.release && process.release.name === 'node') {
-      process.on('exit', this.exitHandler)
+      process.on('exit', () => this.destroy())
     }
 
     if (!config.rpc?.oneTimeLoadBalancing) {
@@ -106,13 +106,9 @@ export class LoadBalancer implements AbstractRpcInterface {
     }
   }
 
-  private exitHandler() {
-    this.destroy()
-  }
-
   destroy() {
     clearInterval(this.interval)
-    process.off('exit', this.exitHandler)
+    process.off('exit', () => this.destroy())
   }
 
   private initCustomNodes(nodes: RpcNode[]) {
