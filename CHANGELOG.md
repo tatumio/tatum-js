@@ -1,3 +1,7 @@
+## [4.1.34] - 2023.12.14
+### Fixed
+- Fix potential memory issues with `LoadBalancer`.
+
 ## [4.1.33] - 2023.12.1
 ### Added
 - Added RPC support for the XINFIN network. Users can now make RPC calls to these network using the `Network.XINFIN` network.
