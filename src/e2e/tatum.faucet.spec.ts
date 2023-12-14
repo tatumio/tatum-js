@@ -1,4 +1,5 @@
 import { Ethereum, Network, TatumSDK } from '../service'
+import process from "process";
 
 describe('Tatum faucet', () => {
   const SEPOLIA_VAULT = '0x712e3a792c974b3e3dbe41229ad4290791c75a82'
@@ -42,6 +43,9 @@ describe('Tatum faucet', () => {
     it('should return valid transaction hash', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM_SEPOLIA,
+        apiKey: {
+          v4: process.env.V3_API_KEY_TESTNET,
+        }
       })
       const res = await tatum.faucet.fund(SEPOLIA_VAULT)
 
