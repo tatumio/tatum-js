@@ -99,7 +99,8 @@ export class LoadBalancer implements AbstractRpcInterface {
       process.on('exit', () => this.destroy())
     }
 
-    if (!config.rpc?.oneTimeLoadBalancing) {
+    if (config.rpc?.oneTimeLoadBalancing) {
+      Utils.log({ id: this.id, message: 'oneTimeLoadBalancing enabled' })
       setTimeout(() => this.checkStatuses(), Constant.OPEN_RPC.LB_INTERVAL)
     } else {
       this.interval = setInterval(() => this.checkStatuses(), Constant.OPEN_RPC.LB_INTERVAL)
@@ -107,6 +108,7 @@ export class LoadBalancer implements AbstractRpcInterface {
   }
 
   destroy() {
+    Utils.log({ id: this.id, message: 'Destroying LoadBalancer instance' })
     clearInterval(this.interval)
     process.off('exit', () => this.destroy())
   }
