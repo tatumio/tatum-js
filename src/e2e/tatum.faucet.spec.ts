@@ -45,7 +45,7 @@ describe('Tatum faucet', () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM_SEPOLIA,
         apiKey: {
-          v4: process.env.V3_API_KEY_TESTNET,
+          v4: process.env.V4_API_KEY_TESTNET,
         }
       })
       const res = await tatum.faucet.fund(SEPOLIA_VAULT)
