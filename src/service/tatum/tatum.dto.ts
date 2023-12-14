@@ -72,6 +72,11 @@ export interface TatumConfig {
    * Optional list of TatumSdkWalletExtensions.
    */
   configureWalletProviders?: WalletProviderConstructorOrConfig[]
+
+  /**
+   * If this is set to `true`, you will not be receiving verbose logs such as welcome message or additional information about errors.
+   */
+  quiet?: boolean
 }
 
 export enum ApiVersion {

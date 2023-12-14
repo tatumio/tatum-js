@@ -113,11 +113,8 @@ const printLog = (message: string, type: LogType) => {
 
 export const TatumLogger = {
   info: (message: string) => printLog(message, 'info'),
-
   warning: (message: string) => printLog(message, 'warning'),
-
   error: (message: string) => printLog(message, 'error'),
-
   welcome: () => {
     const logo = getLogo()
     const hello = ' Welcome to Tatum! 👋'

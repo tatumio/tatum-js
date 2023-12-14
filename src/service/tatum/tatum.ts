@@ -72,8 +72,6 @@ export class TatumSDK {
    * @param config
    */
   public static async init<T extends ITatumSdkChain>(config: TatumConfig): Promise<T> {
-    TatumLogger.welcome()
-
     const defaultConfig: Partial<TatumConfig> = {
       version: ApiVersion.V4,
       retryCount: 1,
@@ -95,6 +93,8 @@ export class TatumSDK {
       const loadBalancer = Container.of(id).get(LoadBalancer)
       await loadBalancer.init()
     }
+
+    if (!mergedConfig.quiet) TatumLogger.welcome()
 
     const containerInstance = new TatumSdkContainer(Container.of(id))
 
