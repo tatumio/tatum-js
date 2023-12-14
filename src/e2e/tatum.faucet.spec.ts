@@ -1,5 +1,6 @@
 import { Ethereum, Network, TatumSDK } from '../service'
 import process from "process";
+import { Status } from "../util";
 
 describe('Tatum faucet', () => {
   const SEPOLIA_VAULT = '0x712e3a792c974b3e3dbe41229ad4290791c75a82'
@@ -40,7 +41,7 @@ describe('Tatum faucet', () => {
       expect(res.error?.code).toBe('faucet.balance')
     })
 
-    it('should return valid transaction hash', async () => {
+    it('should return success', async () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM_SEPOLIA,
         apiKey: {
@@ -50,7 +51,7 @@ describe('Tatum faucet', () => {
       const res = await tatum.faucet.fund(SEPOLIA_VAULT)
 
       await tatum.destroy()
-      expect(res.data?.txId).toBeDefined()
+      expect(res.status).toBe(Status.SUCCESS)
     })
   })
 })
