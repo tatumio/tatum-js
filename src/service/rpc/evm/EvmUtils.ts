@@ -46,8 +46,8 @@ export const EvmUtils = {
       return true
     }
 
-    const possibleArchiveMethod = POSSIBLE_ARCHIVE_METHODS.find(
-      (possibleArchiveMethod) => rpc.method.includes(possibleArchiveMethod.method),
+    const possibleArchiveMethod = POSSIBLE_ARCHIVE_METHODS.find((possibleArchiveMethod) =>
+      rpc.method.includes(possibleArchiveMethod.method),
     )
     if (possibleArchiveMethod) {
       const param = rpc?.params?.[possibleArchiveMethod.index]
