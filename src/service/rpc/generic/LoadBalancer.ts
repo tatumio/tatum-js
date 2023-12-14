@@ -139,9 +139,19 @@ export class LoadBalancer implements AbstractRpcInterface {
   }
 
   private async checkStatuses() {
-    await this.checkStatus(RpcNodeType.NORMAL)
-    await this.checkStatus(RpcNodeType.ARCHIVE)
-    this.checkIfNoActiveNodes()
+    try {
+      await this.checkStatus(RpcNodeType.NORMAL)
+      await this.checkStatus(RpcNodeType.ARCHIVE)
+      this.checkIfNoActiveNodes()
+    } catch (e) {
+      Utils.log({
+        id: this.id,
+        message: `LoadBalancing failed to check statuses. Error: ${JSON.stringify(
+          e,
+          Object.getOwnPropertyNames(e),
+        )}`,
+      })
+    }
   }
 
   private checkIfNoActiveNodes() {
