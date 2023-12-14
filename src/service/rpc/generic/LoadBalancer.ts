@@ -75,7 +75,7 @@ export class LoadBalancer implements AbstractRpcInterface {
     [RpcNodeType.NORMAL]: {} as UrlIndex,
     [RpcNodeType.ARCHIVE]: {} as UrlIndex,
   }
-  private timeout: unknown
+  private interval: NodeJS.Timer
   private network: Network
   private noActiveNode = false
 
@@ -95,20 +95,24 @@ export class LoadBalancer implements AbstractRpcInterface {
       await this.initRemoteHostsUrls()
     }
 
-    // TODO: consider removing this because we already have a timeout in checkStatuses()
+    if (typeof process !== 'undefined' && process.release && process.release.name === 'node') {
+      process.on('exit', this.exitHandler)
+    }
+
     if (!config.rpc?.oneTimeLoadBalancing) {
-      this.timeout = setTimeout(() => this.checkStatuses(), Constant.OPEN_RPC.LB_INTERVAL)
-      // Check if we are running in Node.js environment
-      if (typeof process !== 'undefined' && process.release && process.release.name === 'node') {
-        process.on('exit', () => this.destroy())
-      }
+      setTimeout(() => this.checkStatuses(), Constant.OPEN_RPC.LB_INTERVAL)
     } else {
-      await this.checkStatuses()
+      this.interval = setInterval(() => this.checkStatuses(), Constant.OPEN_RPC.LB_INTERVAL)
     }
   }
 
+  private exitHandler() {
+    this.destroy()
+  }
+
   destroy() {
-    clearTimeout(this.timeout as number)
+    clearInterval(this.interval)
+    process.off('exit', this.exitHandler)
   }
 
   private initCustomNodes(nodes: RpcNode[]) {
@@ -142,14 +146,6 @@ export class LoadBalancer implements AbstractRpcInterface {
     await this.checkStatus(RpcNodeType.NORMAL)
     await this.checkStatus(RpcNodeType.ARCHIVE)
     this.checkIfNoActiveNodes()
-
-    const { rpc } = Container.of(this.id).get(CONFIG)
-    if (!rpc?.oneTimeLoadBalancing) {
-      if (this.timeout) {
-        this.destroy()
-      }
-      this.timeout = setTimeout(() => this.checkStatuses(), Constant.OPEN_RPC.LB_INTERVAL)
-    }
   }
 
   private checkIfNoActiveNodes() {
