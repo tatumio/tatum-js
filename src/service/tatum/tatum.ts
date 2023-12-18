@@ -83,25 +83,31 @@ export class TatumSDK {
     }
 
     const mergedConfig = Utils.deepMerge(defaultConfig, config) as TatumConfig
+    const keyProvided = !!mergedConfig.apiKey
 
-    // TODO: check when rpc is customized if there is allowedBlocksBehind if not throw error or set default
-    // TODO: Check if rpc works for other chains and all configurations are set correctly
+    try {
+      if (!mergedConfig.quiet) TatumLogger.welcome(keyProvided)
 
-    const id = TatumSDK.generateRandomString()
-    Container.of(id).set(CONFIG, mergedConfig)
-    if (isLoadBalancerNetwork(mergedConfig.network)) {
-      const loadBalancer = Container.of(id).get(LoadBalancer)
-      await loadBalancer.init()
+      // TODO: check when rpc is customized if there is allowedBlocksBehind if not throw error or set default
+      // TODO: Check if rpc works for other chains and all configurations are set correctly
+
+      const id = TatumSDK.generateRandomString()
+      Container.of(id).set(CONFIG, mergedConfig)
+      if (isLoadBalancerNetwork(mergedConfig.network)) {
+        const loadBalancer = Container.of(id).get(LoadBalancer)
+        await loadBalancer.init()
+      }
+
+      const containerInstance = new TatumSdkContainer(Container.of(id))
+
+      await this.configureExtensions(config, id, containerInstance)
+      await this.addBuiltInExtensions(id, containerInstance)
+
+      return Utils.getClient<T>(id, mergedConfig.network)
+    } catch (e) {
+      if (!mergedConfig.quiet) TatumLogger.welcome(keyProvided, true)
+      throw e
     }
-
-    if (!mergedConfig.quiet) TatumLogger.welcome()
-
-    const containerInstance = new TatumSdkContainer(Container.of(id))
-
-    await this.configureExtensions(config, id, containerInstance)
-    await this.addBuiltInExtensions(id, containerInstance)
-
-    return Utils.getClient<T>(id, mergedConfig.network)
   }
 
   private static builtInExtensions: ExtensionConstructor[] = [MetaMask]

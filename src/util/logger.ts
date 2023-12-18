@@ -11,6 +11,8 @@ const isBrowser = () => typeof window !== 'undefined'
 // eslint-disable-next-line no-control-regex
 const removeAnsi = (text: string) => text.replace(/\x1B\[\d+m|\n/g, '')
 
+const getRandomStr = (strs: string[]) => strs[Math.floor(Math.random() * strs.length)]
+
 const getConfigByType = (type: LogType): { color: Color; label: string } => {
   switch (type) {
     case 'error':
@@ -67,6 +69,10 @@ const colorize = (message: string, color: Color, block?: boolean) => {
   return block ? chalk.bgKeyword(color).bold.white(message) : chalk[color](message)
 }
 
+const link = (message: string) => colorize(message, 'cyan')
+
+const highlight = (message: string) => colorize(message, 'yellow')
+
 const getLine = (count?: number) => {
   const cols = count || process?.stdout?.columns || 53
   return center(chalk.blue('-'.repeat(cols)))
@@ -115,25 +121,54 @@ export const TatumLogger = {
   info: (message: string) => printLog(message, 'info'),
   warning: (message: string) => printLog(message, 'warning'),
   error: (message: string) => printLog(message, 'error'),
-  welcome: () => {
+  welcome: (keyProvided: boolean, err?: boolean) => {
     const logo = getLogo()
     const hello = ' Welcome to Tatum! 👋'
-    const title = 'The complete SDK for Web3 development!\n'
-    const randomYellow = `Random line with ${colorize('highligt', 'yellow')} for illustration purpose...`
-    const randomRed = `Random line with ${colorize('warning', 'red')} for illustration purpose...\n`
-    const explore = `Explore all SDK capabilities at ${colorize('https://docs.tatum.io', 'cyan')}`
+
+    const start = err
+      ? `Kick off your development journey by making your first call with ${highlight('Tatum')} - ${link(
+          'https://tatum-get-started.io',
+        )}`
+      : getRandomStr([
+          `Kickstart your development journey with Tatum, check out the ${highlight(
+            'available features',
+          )} - ${link('https://tatum-features.io')}`,
+          `The possibilities are endless, explore ${highlight(
+            'applications',
+          )} you can build with Tatum - ${link('https://tatum-applications.io')}`,
+        ])
+
+    const dashboard = keyProvided
+      ? `Effortlessly track your usage & insights on your ${highlight('Tatum Dashboard')} - ${link(
+          'https://tatum-dashboard-usage.io',
+        )}`
+      : `Unlock higher limits: Generate an API Key by accessing your ${highlight('Dashboard')} - ${link(
+          'https://tatum-dashboard.io',
+        )}`
+
+    const features = `Try our new ${highlight('Tatum Faucets')} to get ${highlight(
+      'Testnet Tokens',
+    )} for free on over 5 chains - ${link('https://tatum-faucets.io')}`
 
     if (isBrowser()) {
       log(
-        `${logo}${hello}\n\n${title}\n${randomYellow}\n${randomRed}\n${explore}`,
+        `${logo}${hello}\n\n${start}\n\n${dashboard}\n\n${features}`,
         getStyleByType(),
-        undefined,
+        '',
         getStyleByColor('yellow'),
-        undefined,
-        getStyleByColor('red'),
-        undefined,
-        undefined,
-        undefined,
+        '',
+        '',
+        '',
+        getStyleByColor('yellow'),
+        '',
+        '',
+        '',
+        getStyleByColor('yellow'),
+        '',
+        getStyleByColor('yellow'),
+        '',
+        '',
+        '',
       )
     } else {
       const titleLine = getLine(21)
@@ -146,11 +181,10 @@ export const TatumLogger = {
       log(center(chalk.green(hello)))
       log(titleLine, '\n')
 
-      log(center(title))
-      log(center(randomYellow))
-      log(center(randomRed))
+      log(center(start), '\n')
+      log(center(dashboard), '\n')
+      log(center(features))
 
-      log(center(explore))
       log(border)
     }
   },
