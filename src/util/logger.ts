@@ -55,11 +55,11 @@ const getStyleByColor = (color: Color) => {
 }
 
 const center = (message: string, pl = 0) => {
-  const cols = process?.stdout?.columns
-  if (!cols) return message
-
   const messageWithoutAnsi = removeAnsi(message)
-  return ' '.repeat((cols - messageWithoutAnsi.length) / 2 + pl) + message
+  const align = ((process?.stdout?.columns || 0) - (messageWithoutAnsi?.length || 0)) / 2
+
+  if (!align || align <= pl) return message
+  return ' '.repeat(align + pl) + message
 }
 
 const colorize = (message: string, color: Color, block?: boolean) => {
@@ -99,28 +99,32 @@ const getLogo = () => {
   )
 }
 
-const printLog = (message: string, type: LogType) => {
+const printLog = (message: string, type: LogType, url?: string) => {
   const config = getConfigByType(type)
 
   const label = colorize(` ${config.label} `, config.color, true)
 
   if (isBrowser()) {
-    log(`${getLogo()} ${label}\n\n${message}`, getStyleByType(), undefined, getStyleByType(type), undefined)
+    log(
+      `${getLogo()} ${label}\n\n${message}${url}`,
+      getStyleByType(),
+      undefined,
+      getStyleByType(type),
+      undefined,
+    )
   } else {
     const border = getBorder()
-    const space = ' '.repeat(3)
-    const padding = ' '.repeat(config.label.length + 2)
 
     log(border)
-    log(`${label}${space}${message.split('\n').join(`\n${padding}${space}`)}`)
+    log(`${label} ${message}${url ? link(url) : ''}`)
     log(border)
   }
 }
 
 export const TatumLogger = {
-  info: (message: string) => printLog(message, 'info'),
-  warning: (message: string) => printLog(message, 'warning'),
-  error: (message: string) => printLog(message, 'error'),
+  info: (message: string, url?: string) => printLog(message, 'info', url),
+  warning: (message: string, url?: string) => printLog(message, 'warning', url),
+  error: (message: string, url?: string) => printLog(message, 'error', url),
   welcome: (keyProvided: boolean, err?: boolean) => {
     const logo = getLogo()
     const hello = ' Welcome to Tatum! 👋'
