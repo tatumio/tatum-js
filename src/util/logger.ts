@@ -59,7 +59,12 @@ const center = (message: string, pl = 0) => {
   const align = ((process?.stdout?.columns || 0) - (messageWithoutAnsi?.length || 0)) / 2
 
   if (!align || align <= pl) return message
-  return ' '.repeat(align + pl) + message
+
+  try {
+    return ' '.repeat(align + pl) + message
+  } catch {
+    return message
+  }
 }
 
 const colorize = (message: string, color: Color, block?: boolean) => {
