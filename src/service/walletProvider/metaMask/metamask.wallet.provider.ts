@@ -6,7 +6,7 @@ import {
   CreateFungibleToken,
   CreateNftCollection,
 } from '../../../dto/walletProvider'
-import { Constant, Utils } from '../../../util'
+import { Constant, TatumLogger, Utils } from '../../../util'
 import { ITatumSdkContainer, TatumSdkWalletProvider } from '../../extensions'
 import { EvmRpc } from '../../rpc'
 import { TatumConfig } from '../../tatum'
@@ -30,6 +30,12 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
    * @returns address of the connected account.
    */
   async getWallet(): Promise<string> {
+    if (!this.config.quiet) {
+      TatumLogger.info(
+        'You can get FREE testnet tokens to work with on any number of chains - ',
+        'https://co.tatum.io/faucets',
+      )
+    }
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (typeof window.ethereum === 'undefined') {
