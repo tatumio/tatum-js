@@ -248,7 +248,7 @@ import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
 const { result } = await tatum.rpc.getBalance('0x742d35Cc6634C0532925a3b844Bc454e4438f44e')
-console.log(`Balance: ${data}`)
+console.log(`Balance: ${result}`)
 
 // Destroy Tatum SDK - needed for stopping background jobs
 await tatum.destroy()
