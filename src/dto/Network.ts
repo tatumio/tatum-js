@@ -88,7 +88,6 @@ export enum Network {
   POLKADOT_TESTNET = 'dot-testnet',
   RSK_TESTNET = 'rsk-testnet',
   SOLANA_DEVNET = 'solana-devnet',
-  STELLAR_TESTNET = 'stellar-testnet',
   TEZOS_TESTNET = 'tezos-testnet',
   TRON_SHASTA = 'tron-testnet',
   VECHAIN_TESTNET = 'vechain-testnet',
@@ -240,6 +239,7 @@ export const TEZOS_NETWORKS = [Network.TEZOS, Network.TEZOS_TESTNET]
 export const ALGORAND_ALGOD_NETWORKS = [Network.ALGORAND_ALGOD, Network.ALGORAND_ALGOD_TESTNET]
 export const ALGORAND_INDEXER_NETWORKS = [Network.ALGORAND_INDEXER, Network.ALGORAND_INDEXER_TESTNET]
 export const CARDANO_NETWORKS = [Network.CARDANO_ROSETTA, Network.CARDANO_ROSETTA_PREPROD]
+export const STELLAR_LOAD_BALANCER_NETWORKS = [Network.STELLAR]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -254,6 +254,7 @@ export const LOAD_BALANCER_NETWORKS = [
   ...ALGORAND_ALGOD_NETWORKS,
   ...ALGORAND_INDEXER_NETWORKS,
   ...CARDANO_NETWORKS,
+  ...STELLAR_LOAD_BALANCER_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -328,6 +329,9 @@ export const isAlgorandAlgodNetwork = (network: Network) => ALGORAND_ALGOD_NETWO
 export const isAlgorandIndexerNetwork = (network: Network) => ALGORAND_INDEXER_NETWORKS.includes(network)
 
 export const isCardanoNetwork = (network: Network) => CARDANO_NETWORKS.includes(network)
+
+export const isStellarLoadBalancerNetwork = (network: Network) =>
+  STELLAR_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isSameGetBlockNetwork = (network: Network) =>
   isUtxoBasedNetwork(network) ||

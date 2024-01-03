@@ -1,3 +1,7 @@
+## [4.1.35] - 2024.1.3
+### Added
+- Added RPC support for the STELLAR network. Users can now make Stellar RPC calls using the `Network.STELLAR` network.
+
 ## [4.1.34] - 2023.12.14
 ### Fixed
 - Fix potential memory issues with `LoadBalancer`.

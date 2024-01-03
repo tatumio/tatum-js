@@ -17,6 +17,7 @@ import {
   isNativeEvmLoadBalancerNetwork,
   isSameGetBlockNetwork,
   isSolanaNetwork,
+  isStellarLoadBalancerNetwork,
   isTezosNetwork,
   isTronLoadBalancerNetwork,
   isTronNetwork,
@@ -71,6 +72,7 @@ import {
   Palm,
   Polygon,
   Solana,
+  Stellar,
   TatumConfig,
   Tezos,
   Tron,
@@ -92,6 +94,7 @@ import { CardanoLoadBalancerRpc } from '../service/rpc/other/CardanoLoadBalancer
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
 import { SolanaLoadBalancerRpc } from '../service/rpc/other/SolanaLoadBalancerRpc'
+import { StellarLoadBalancerRpc } from '../service/rpc/other/StellarLoadBalancerRpc'
 import { TezosLoadBalancerRpc } from '../service/rpc/other/TezosLoadBalancerRpc'
 import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
 import { UtxoLoadBalancerRpc } from '../service/rpc/utxo/UtxoLoadBalancerRpc'
@@ -103,6 +106,10 @@ import { CONFIG } from './di.tokens'
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+
+    if (isStellarLoadBalancerNetwork(network)) {
+      return Container.of(id).get(StellarLoadBalancerRpc) as T
+    }
 
     if (isCardanoNetwork(network)) {
       return Container.of(id).get(CardanoLoadBalancerRpc) as T
@@ -248,7 +255,8 @@ export const Utils = {
       isEosNetwork(network) ||
       isTezosNetwork(network) ||
       isAlgorandAlgodNetwork(network) ||
-      isAlgorandIndexerNetwork(network)
+      isAlgorandIndexerNetwork(network) ||
+      isStellarLoadBalancerNetwork(network)
     ) {
       return null
     }
@@ -284,10 +292,19 @@ export const Utils = {
       return `${url}chains/main/blocks/head/header`
     }
 
+    if (isStellarLoadBalancerNetwork(network)) {
+      return `${url}fee_stats`
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
   getStatusMethod(network: Network): string {
-    if (isTezosNetwork(network) || isAlgorandAlgodNetwork(network) || isAlgorandIndexerNetwork(network)) {
+    if (
+      isTezosNetwork(network) ||
+      isAlgorandAlgodNetwork(network) ||
+      isAlgorandIndexerNetwork(network) ||
+      isStellarLoadBalancerNetwork(network)
+    ) {
       return 'GET'
     }
     return 'POST'
@@ -321,6 +338,10 @@ export const Utils = {
       return new BigNumber((response.current_block_identifier.index as number) || -1).toNumber()
     }
 
+    if (isStellarLoadBalancerNetwork(network)) {
+      return new BigNumber((response.last_ledger as number) || -1).toNumber()
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
   isResponseOk: (network: Network, response: JsonRpcResponse<any> | any) => {
@@ -346,6 +367,10 @@ export const Utils = {
 
     if (isAlgorandIndexerNetwork(network)) {
       return response['round'] !== undefined
+    }
+
+    if (isStellarLoadBalancerNetwork(network)) {
+      return response.last_ledger !== undefined
     }
 
     if (isCardanoNetwork(network)) {
@@ -669,6 +694,8 @@ export const Utils = {
       case Network.CARDANO_ROSETTA:
       case Network.CARDANO_ROSETTA_PREPROD:
         return new CardanoRosetta(id) as T
+      case Network.STELLAR:
+        return new Stellar(id) as T
       default:
         return new FullSdk(id) as T
     }
