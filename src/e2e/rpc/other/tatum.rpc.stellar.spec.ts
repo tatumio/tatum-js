@@ -48,4 +48,22 @@ describe('Stellar', () => {
     const response = await tatum.rpc.getOffers({})
     expect(response).toBeDefined()
   })
+
+  it('should get strict send', async () => {
+    const response = await tatum.rpc.getStrictSendPaymentPaths({
+      sourceAssetType: 'native',
+      sourceAmount: '1',
+      destinationAccount: 'GB3LIKQ6GOJ6D4EYKVS47L2SBY66SJO4MN4CZCMUPNBUJ2L3PF62ECBA',
+    })
+    expect(response).toBeDefined()
+  })
+
+  it('should get strict receive', async () => {
+    const response = await tatum.rpc.getStrictReceivePaymentPaths({
+      destinationAssetType: 'native',
+      destinationAmount: '1',
+      sourceAssets: 'USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN',
+    })
+    expect(response).toBeDefined()
+  })
 })

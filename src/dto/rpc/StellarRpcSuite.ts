@@ -1012,17 +1012,17 @@ export interface GetStrictReceivePaymentPathsParams {
   sourceAssets?: string
   destinationAssetType: string
   destinationAssetIssuer?: string
-  destinationAssetCode: string
+  destinationAssetCode?: string
   destinationAmount: string
 }
 
 export interface GetStrictSendPaymentPathsParams {
   sourceAccount?: string
   sourceAssets?: string
-  sourceAssetType?: string
+  sourceAssetType: string
   sourceAssetIssuer?: string
   sourceAssetCode?: string
-  sourceAmount?: string
+  sourceAmount: string
   destinationAccount?: string
   destinationAssets?: string
 }
@@ -1045,7 +1045,7 @@ export interface GetTransactionsParams extends BaseParams {
 }
 
 export interface StellarRpcSuite {
-  getAccounts(params: GetAccountsParams): Promise<Links & Account>
+  getAccounts(params?: GetAccountsParams): Promise<Links & Account>
   getAccount(params: GetAccountParams): Promise<Links & Account>
   getAccountTransactions(params: GetAccountTransactionsParams): Promise<Transaction>
   getAccountOperations(params: GetOperationsByAccountIdParams): Promise<OperationResponse>
@@ -1054,14 +1054,14 @@ export interface StellarRpcSuite {
   getAccountOffers(params: GetOffersByAccountIdParams): Promise<OfferResponse>
   getAccountTrades(params: GetAccountTradesParams): Promise<Trade>
   getAccountData(params: GetAccountDataParams): Promise<{ value: string }>
-  getAssets(params: GetAssetsParams): Promise<Links & Asset>
-  getClaimableBalances(params: GetClaimableBalancesParams): Promise<ClaimableBalance>
+  getAssets(params?: GetAssetsParams): Promise<Links & Asset>
+  getClaimableBalances(params?: GetClaimableBalancesParams): Promise<ClaimableBalance>
   getClaimableBalance(params: GetClaimableBalanceParams): Promise<RecordClaimableBalance>
   getClaimableTransactions(params: GetClaimableTransactionsParams): Promise<Transaction>
   getClaimableOperations(params: GetClaimableOperationsParams): Promise<Links & OperationResponse>
-  getEffects(params: GetEffectsParams): Promise<Effect>
+  getEffects(params?: GetEffectsParams): Promise<Effect>
   getFeeStats(): Promise<FeeStats>
-  getLiquidityPools(params: GetLiquidityPoolsParams): Promise<LiquidityPools>
+  getLiquidityPools(params?: GetLiquidityPoolsParams): Promise<LiquidityPools>
   getLiquidityPool(params: GetLiquidityPoolParams): Promise<RecordLiquidityPool>
   getLiquidityPoolEffects(params: GetLiquidityPoolEffectsParams): Promise<Effect>
   getLiquidityPoolTrades(params: GetLiquidityPoolTradesParams): Promise<Trade>
@@ -1072,21 +1072,21 @@ export interface StellarRpcSuite {
   getLedgerPayments(params: GetLedgerPaymentsParams): Promise<Links & Payment>
   getLedgerOperations(params: GetLedgerOperationsParams): Promise<Operation>
   getLedgerEffects(params: GetLedgerEffectsParams): Promise<Array<Links & Effect>>
-  getLedgers(params: BaseParams): Promise<Ledger>
-  getOffers(params: GetOffersParams): Promise<Offer>
+  getLedgers(params?: BaseParams): Promise<Ledger>
+  getOffers(params?: GetOffersParams): Promise<Offer>
   getOffer(params: GetOfferParams): Promise<Ledger>
   getOfferTrades(params: GetOfferTradesParams): Promise<Trade>
   getOrderBook(params: GetOrderBookParams): Promise<Order>
   getTradeAggregations(params: GetTradeAggregationsParams): Promise<TradeAggregation>
-  getTrades(params: GetTradesParams): Promise<Links & Trade>
+  getTrades(params?: GetTradesParams): Promise<Links & Trade>
   getTransaction(params: GetTransactionParams): Promise<Transaction>
   getTransactionOperations(params: GetTransactionOperationsParams): Promise<Operation>
   getTransactionEffects(params: GetTransactionEffectsParams): Promise<Links & Effect>
-  getTransactions(params: GetTransactionsParams): Promise<Links & Transaction>
+  getTransactions(params?: GetTransactionsParams): Promise<Links & Transaction>
   getOperation(params: GetOperationParams): Promise<Operation>
   getOperationEffects(params: GetOperationEffectsParams): Promise<Links & Effect>
-  getOperations(params: GetOperationsParams): Promise<Operation>
-  getPayments(params: GetPaymentsParams): Promise<Links & OperationResponse>
+  getOperations(params?: GetOperationsParams): Promise<Operation>
+  getPayments(params?: GetPaymentsParams): Promise<Links & OperationResponse>
   getStrictReceivePaymentPaths(params: GetStrictReceivePaymentPathsParams): Promise<Path>
   getStrictSendPaymentPaths(params: GetStrictSendPaymentPathsParams): Promise<Path>
   submitTransaction(params: SubmitTransactionParams): Promise<SubmitTransaction>

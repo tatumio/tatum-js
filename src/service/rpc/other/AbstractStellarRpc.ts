@@ -116,7 +116,7 @@ export abstract class AbstractStellarRpc implements StellarRpcSuite {
     return this.post(post)
   }
 
-  getAccounts(params: GetAccountsParams): Promise<Links & Account> {
+  getAccounts(params?: GetAccountsParams): Promise<Links & Account> {
     return this.sendGet({ path: '/accounts', queryParams: params as QueryParams })
   }
 
@@ -159,11 +159,11 @@ export abstract class AbstractStellarRpc implements StellarRpcSuite {
     return this.sendGet({ path: `/accounts/${accountId}/data/${rest.key}` })
   }
 
-  getAssets(params: GetAssetsParams): Promise<Links & Asset> {
+  getAssets(params?: GetAssetsParams): Promise<Links & Asset> {
     return this.sendGet({ path: '/assets', queryParams: params as QueryParams })
   }
 
-  getClaimableBalances(params: GetClaimableBalancesParams): Promise<ClaimableBalance> {
+  getClaimableBalances(params?: GetClaimableBalancesParams): Promise<ClaimableBalance> {
     return this.sendGet({ path: '/claimable_balances', queryParams: params as QueryParams })
   }
 
@@ -181,7 +181,7 @@ export abstract class AbstractStellarRpc implements StellarRpcSuite {
     return this.sendGet({ path: `/claimable_balances/${claimableBalanceId}/operations`, queryParams: rest })
   }
 
-  getEffects(params: GetEffectsParams): Promise<Effect> {
+  getEffects(params?: GetEffectsParams): Promise<Effect> {
     return this.sendGet({ path: '/effects', queryParams: params as QueryParams })
   }
 
@@ -189,7 +189,7 @@ export abstract class AbstractStellarRpc implements StellarRpcSuite {
     return this.sendGet({ path: '/fee_stats' })
   }
 
-  getLiquidityPools(params: GetLiquidityPoolsParams): Promise<LiquidityPools> {
+  getLiquidityPools(params?: GetLiquidityPoolsParams): Promise<LiquidityPools> {
     return this.sendGet({ path: '/liquidity_pools', queryParams: params as QueryParams })
   }
 
@@ -243,11 +243,11 @@ export abstract class AbstractStellarRpc implements StellarRpcSuite {
     return this.sendGet({ path: `/ledgers/${sequence}/effects`, queryParams: rest })
   }
 
-  getLedgers(params: BaseParams): Promise<Ledger> {
+  getLedgers(params?: BaseParams): Promise<Ledger> {
     return this.sendGet({ path: '/ledgers', queryParams: params as QueryParams })
   }
 
-  getOffers(params: GetOffersParams): Promise<Offer> {
+  getOffers(params?: GetOffersParams): Promise<Offer> {
     return this.sendGet({ path: '/offers', queryParams: params as QueryParams })
   }
 
@@ -274,7 +274,7 @@ export abstract class AbstractStellarRpc implements StellarRpcSuite {
     })
   }
 
-  getTrades(params: GetTradesParams): Promise<Links & Trade> {
+  getTrades(params?: GetTradesParams): Promise<Links & Trade> {
     return this.sendGet({ path: '/trades', queryParams: params as QueryParams })
   }
 
@@ -293,7 +293,7 @@ export abstract class AbstractStellarRpc implements StellarRpcSuite {
     return this.sendGet({ path: `/transactions/${transactionHash}/effects`, queryParams: rest })
   }
 
-  getTransactions(params: GetTransactionsParams): Promise<Links & Transaction> {
+  getTransactions(params?: GetTransactionsParams): Promise<Links & Transaction> {
     return this.sendGet({ path: '/transactions', queryParams: params as QueryParams })
   }
 
@@ -307,27 +307,25 @@ export abstract class AbstractStellarRpc implements StellarRpcSuite {
     return this.sendGet({ path: `/operations/${id}/effects`, queryParams: rest })
   }
 
-  getOperations(params: GetOperationsParams): Promise<Operation> {
+  getOperations(params?: GetOperationsParams): Promise<Operation> {
     return this.sendGet({ path: '/operations', queryParams: params as QueryParams })
   }
 
-  getPayments(params: GetPaymentsParams): Promise<Links & OperationResponse> {
+  getPayments(params?: GetPaymentsParams): Promise<Links & OperationResponse> {
     return this.sendGet({ path: '/payments', queryParams: params as QueryParams })
   }
 
   getStrictReceivePaymentPaths(params: GetStrictReceivePaymentPathsParams): Promise<Path> {
-    const { destinationAssetType, destinationAmount, ...rest } = params
     return this.sendGet({
-      path: `/paths/strict-receive${destinationAssetType}${destinationAmount}`,
-      queryParams: rest,
+      path: `/paths/strict-receive`,
+      queryParams: params as unknown as QueryParams,
     })
   }
 
   getStrictSendPaymentPaths(params: GetStrictSendPaymentPathsParams): Promise<Path> {
-    const { sourceAssetType, sourceAmount, ...rest } = params
     return this.sendGet({
-      path: `/paths/strict-send${sourceAssetType}${sourceAmount}`,
-      queryParams: rest,
+      path: `/paths/strict-send`,
+      queryParams: params as unknown as QueryParams,
     })
   }
 
