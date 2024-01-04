@@ -1,6 +1,6 @@
 import { Container, Service } from 'typedi'
 import { isLoadBalancerNetwork } from '../../dto'
-import { CONFIG, Constant, Utils } from '../../util'
+import { CONFIG, Constant, EnvUtils, LOGGER, LoggerUtils, Utils } from '../../util'
 import {
   ExtensionConstructor,
   ExtensionConstructorOrConfig,
@@ -84,11 +84,21 @@ export class TatumSDK {
 
     const mergedConfig = Utils.deepMerge(defaultConfig, config) as TatumConfig
 
+    LoggerUtils.setLoggerForEnv(mergedConfig, EnvUtils.isDevelopment(), EnvUtils.isBrowser())
+
     // TODO: check when rpc is customized if there is allowedBlocksBehind if not throw error or set default
     // TODO: Check if rpc works for other chains and all configurations are set correctly
 
     const id = TatumSDK.generateRandomString()
     Container.of(id).set(CONFIG, mergedConfig)
+    Container.of(id).set(LOGGER, mergedConfig.logger)
+
+    if (!mergedConfig.apiKey?.v3 || !mergedConfig.apiKey?.v4) {
+      mergedConfig.logger?.info(
+        'Unlock higher limits: generate an API Key by accessing your Dashboard: https://co.tatum.io/signup',
+      )
+    }
+
     if (isLoadBalancerNetwork(mergedConfig.network)) {
       const loadBalancer = Container.of(id).get(LoadBalancer)
       await loadBalancer.init()

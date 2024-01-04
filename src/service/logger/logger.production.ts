@@ -1,4 +1,4 @@
-import { LogLevel, Logger } from './logging'
+import { LogLevel, Logger } from './logger.types'
 
 interface TatumProductionLoggerOptions {
   level: LogLevel
@@ -14,10 +14,6 @@ export class TatumProductionLogger implements Logger {
 
   constructor(options: Partial<TatumProductionLoggerOptions> = {}) {
     this.options = { ...DEFAULT_PRODUCTION_OPTIONS, ...options }
-  }
-
-  log(...args: unknown[]): void {
-    this.logger.log(...args)
   }
 
   trace(...args: unknown[]): void {

@@ -787,4 +787,5 @@ export const Utils = {
 
     return basePath + queryString
   },
+  randomElementOf: <T>(array: T[]): T => array[Math.floor(Math.random() * array.length)],
 }

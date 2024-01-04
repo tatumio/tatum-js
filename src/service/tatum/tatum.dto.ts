@@ -1,5 +1,6 @@
 import { Network } from '../../dto'
 import { ExtensionConstructorOrConfig, WalletProviderConstructorOrConfig } from '../extensions'
+import { Logger } from '../logger'
 
 export interface TatumConfig {
   /**
@@ -72,6 +73,16 @@ export interface TatumConfig {
    * Optional list of TatumSdkWalletExtensions.
    */
   configureWalletProviders?: WalletProviderConstructorOrConfig[]
+
+  /**
+   * Quiet mode, disables all logging.
+   */
+  quiet?: boolean
+
+  /**
+   * Optional custom logger.
+   */
+  logger?: Logger
 }
 
 export enum ApiVersion {

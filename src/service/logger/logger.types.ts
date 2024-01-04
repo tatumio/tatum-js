@@ -1,5 +1,4 @@
 export interface Logger {
-  log(...args: unknown[]): void
   trace(...args: unknown[]): void
   debug(...args: unknown[]): void
   info(...args: unknown[]): void
