@@ -2,8 +2,8 @@
 import { Container, Service } from 'typedi'
 import { JsonRpcCall, JsonRpcResponse, NATIVE_PREFIX_MAPPING, Network } from '../../../dto'
 import { NativeEvmBasedRpcSuite } from '../../../dto/rpc/NativeEvmBasedRpcInterface'
-import { CONFIG, Utils } from '../../../util'
-// Need to import like this to keep browser working
+import { Logger } from '../../../service/logger'
+import { CONFIG, LOGGER, Utils } from '../../../util'
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractNativeEvmRpc } from './AbstractNativeEvmRpc'
 import { EvmUtils } from './EvmUtils'
@@ -16,12 +16,16 @@ import { EvmUtils } from './EvmUtils'
 })
 export class NativeEvmArchiveLoadBalancerRpc extends AbstractNativeEvmRpc implements NativeEvmBasedRpcSuite {
   protected readonly loadBalancer: LoadBalancer
+  protected readonly logger: Logger
+
   private network: Network
 
   constructor(id: string) {
     super()
     this.loadBalancer = Container.of(id).get(LoadBalancer)
     this.network = Container.of(id).get(CONFIG).network
+
+    this.logger = Container.of(id).get(LOGGER)
   }
 
   protected async rpcCall<T>(method: string, params?: unknown[]): Promise<T> {

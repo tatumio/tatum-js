@@ -5,7 +5,8 @@ import { JsonRpcCall, JsonRpcResponse, Network } from '../../../dto'
 import { GetI } from '../../../dto/GetI'
 import { PostI } from '../../../dto/PostI'
 import { AbstractRpcInterface } from '../../../dto/rpc/AbstractJsonRpcInterface'
-import { CONFIG, Constant, Utils } from '../../../util'
+import { Logger } from '../../../service/logger'
+import { CONFIG, Constant, LOGGER, Utils } from '../../../util'
 import { RpcNode, RpcNodeType } from '../../tatum'
 
 interface RpcStatus {
@@ -66,6 +67,7 @@ interface HandleFailedRpcCallParams {
 })
 export class LoadBalancer implements AbstractRpcInterface {
   protected readonly connector: TatumConnector
+  private readonly logger: Logger
 
   private rpcUrls: RpcUrl = {
     [RpcNodeType.NORMAL]: [],
@@ -82,6 +84,7 @@ export class LoadBalancer implements AbstractRpcInterface {
   constructor(private readonly id: string) {
     this.connector = Container.of(this.id).get(TatumConnector)
     this.network = Container.of(this.id).get(CONFIG).network
+    this.logger = Container.of(this.id).get(LOGGER)
   }
 
   async init() {
@@ -411,7 +414,7 @@ export class LoadBalancer implements AbstractRpcInterface {
       await this.initRemoteHostsFromResponse(normal, RpcNodeType.NORMAL)
       await this.initRemoteHostsFromResponse(archive, RpcNodeType.ARCHIVE)
     } catch (e) {
-      console.error(
+      this.logger.error(
         new Date().toISOString(),
         `Failed to initialize RPC module. Error: ${JSON.stringify(e, Object.getOwnPropertyNames(e))}`,
       )
@@ -483,7 +486,7 @@ export class LoadBalancer implements AbstractRpcInterface {
     })
 
     if (activeIndex == null) {
-      console.error(
+      this.logger.error(
         `No active node found for node type ${RpcNodeType[nodeType]}. Looks like your request is malformed or all nodes are down. Turn on verbose mode to see more details and check status pages.`,
       )
       throw e
@@ -500,7 +503,7 @@ export class LoadBalancer implements AbstractRpcInterface {
       rpcConfig?.allowedBlocksBehind as number,
     )
     if (index === -1) {
-      console.error(
+      this.logger.error(
         `All RPC nodes are unavailable. Looks like your request is malformed or all nodes are down. Turn on verbose mode to see more details and check status pages.`,
       )
       throw e

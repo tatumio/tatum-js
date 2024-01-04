@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { JsonRpcCall, JsonRpcResponse } from '../../../dto'
-import { Utils } from '../../../util'
+import { Logger } from '../../../service/logger'
+import { LOGGER, Utils } from '../../../util'
 import { GenericRpc } from '../generic/GenericRpc'
 import { AbstractEvmRpc } from './AbstractEvmRpc'
 
@@ -13,10 +14,12 @@ import { AbstractEvmRpc } from './AbstractEvmRpc'
 })
 export class EvmRpc extends AbstractEvmRpc {
   public readonly genericRpc: GenericRpc
+  protected readonly logger: Logger
 
   constructor(id: string) {
     super()
     this.genericRpc = Container.of(id).get(GenericRpc)
+    this.logger = Container.of(id).get(LOGGER)
   }
 
   protected async rpcCall<T>(method: string, params?: unknown[]): Promise<T> {

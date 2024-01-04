@@ -1,5 +1,4 @@
 import { BigNumber } from 'bignumber.js'
-import { Logger } from 'src/service/logger'
 import { TatumConnector } from '../../../connector/tatum.connector'
 import { EVM_BASED_NETWORKS, Network, TxPayload } from '../../../dto'
 import {
@@ -7,6 +6,7 @@ import {
   CreateFungibleToken,
   CreateNftCollection,
 } from '../../../dto/walletProvider'
+import { Logger } from '../../../service/logger'
 import { Constant, EnvUtils, Utils } from '../../../util'
 import { ITatumSdkContainer, TatumSdkWalletProvider } from '../../extensions'
 import { EvmRpc } from '../../rpc'

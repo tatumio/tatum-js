@@ -1,4 +1,4 @@
-import { TatumConfig } from 'src/service'
+import { TatumConfig } from '../service'
 import {
   TatumDevelopmentBrowserLogger,
   TatumDevelopmentLogger,

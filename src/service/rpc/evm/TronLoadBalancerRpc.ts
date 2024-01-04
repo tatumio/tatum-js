@@ -2,8 +2,8 @@
 import { Container, Service } from 'typedi'
 import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
 import { PostI } from '../../../dto/PostI'
-import { Utils } from '../../../util'
-// Need to import like this to keep browser working
+import { Logger } from '../../../service/logger'
+import { LOGGER, Utils } from '../../../util'
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractTronRpc } from './AbstractTronRpc'
 
@@ -15,10 +15,12 @@ import { AbstractTronRpc } from './AbstractTronRpc'
 })
 export class TronLoadBalancerRpc extends AbstractTronRpc implements EvmBasedRpcSuite {
   protected readonly loadBalancer: LoadBalancer
+  protected readonly logger: Logger
 
   constructor(id: string) {
     super()
     this.loadBalancer = Container.of(id).get(LoadBalancer)
+    this.logger = Container.of(id).get(LOGGER)
   }
 
   protected async rpcCall<T>(method: string, params?: unknown[]): Promise<T> {

@@ -3,7 +3,8 @@ import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../../connector/tatum.connector'
 import { JsonRpcCall, JsonRpcResponse } from '../../../dto'
 import { PostI } from '../../../dto/PostI'
-import { CONFIG, Constant, Utils } from '../../../util'
+import { Logger } from '../../../service/logger'
+import { CONFIG, Constant, LOGGER, Utils } from '../../../util'
 import { TatumConfig } from '../../tatum'
 import { GenericRpc } from '../generic/GenericRpc'
 import { AbstractTronRpc } from './AbstractTronRpc'
@@ -18,12 +19,14 @@ export class TronRpc extends AbstractTronRpc {
   public readonly genericRpc: GenericRpc
   protected readonly config: TatumConfig
   protected readonly connector: TatumConnector
+  protected readonly logger: Logger
 
   constructor(id: string) {
     super()
     this.genericRpc = Container.of(id).get(GenericRpc)
     this.config = Container.of(id).get(CONFIG)
     this.connector = Container.of(id).get(TatumConnector)
+    this.logger = Container.of(id).get(LOGGER)
   }
 
   protected async rpcCall<T>(method: string, params?: unknown[]): Promise<T> {
