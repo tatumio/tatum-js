@@ -1,5 +1,6 @@
 import { ContainerInstance } from 'typedi'
-import { CONFIG, Utils } from '../../util'
+import { CONFIG, LOGGER, Utils } from '../../util'
+import { Logger } from '../logger'
 import { TatumConfig } from '../tatum'
 import { ServiceConstructor } from './tatumsdk.extensions.dto'
 
@@ -7,6 +8,7 @@ export interface ITatumSdkContainer {
   get<T>(type: ServiceConstructor<T>): T
   getRpc<T>(): T
   getConfig(): TatumConfig
+  getLogger(): Logger
 }
 
 export class TatumSdkContainer implements ITatumSdkContainer {
@@ -22,5 +24,9 @@ export class TatumSdkContainer implements ITatumSdkContainer {
 
   getConfig(): TatumConfig {
     return this.containerInstance.get(CONFIG)
+  }
+
+  getLogger(): Logger {
+    return this.containerInstance.get(LOGGER)
   }
 }
