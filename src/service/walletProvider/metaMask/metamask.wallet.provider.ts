@@ -1,4 +1,5 @@
 import { BigNumber } from 'bignumber.js'
+import { Logger } from 'src/service/logger'
 import { TatumConnector } from '../../../connector/tatum.connector'
 import { EVM_BASED_NETWORKS, Network, TxPayload } from '../../../dto'
 import {
@@ -6,7 +7,7 @@ import {
   CreateFungibleToken,
   CreateNftCollection,
 } from '../../../dto/walletProvider'
-import { Constant, Utils } from '../../../util'
+import { Constant, EnvUtils, Utils } from '../../../util'
 import { ITatumSdkContainer, TatumSdkWalletProvider } from '../../extensions'
 import { EvmRpc } from '../../rpc'
 import { TatumConfig } from '../../tatum'
@@ -16,12 +17,14 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
   private readonly config: TatumConfig
   private readonly rpc: EvmRpc
   private readonly connector: TatumConnector
+  private readonly logger: Logger
 
   constructor(tatumSdkContainer: ITatumSdkContainer) {
     super(tatumSdkContainer)
     this.config = this.tatumSdkContainer.getConfig()
     this.rpc = this.tatumSdkContainer.get(EvmRpc)
     this.connector = this.tatumSdkContainer.get(TatumConnector)
+    this.logger = this.tatumSdkContainer.getLogger()
   }
 
   /**
@@ -33,15 +36,23 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     if (typeof window.ethereum === 'undefined') {
+      this.logger.error('MetaMask is not installed or its impossible to connect to it.')
       throw new Error('MetaMask is not installed or its impossible to connect to it.')
     }
+
+    if (EnvUtils.isDevelopment()) {
+      this.logger.info(
+        'You can get FREE testnet tokens to test your contracts on any number of chains: https://co.tatum.io/faucets',
+      )
+    }
+
     try {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
       const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' })
       return accounts[0] as string
     } catch (error) {
-      console.error('User denied account access:', error)
+      this.logger.error('User denied account access:', error)
       throw new Error(`User denied account access. Error is ${error}`)
     }
   }
@@ -69,7 +80,7 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e)
+      this.logger.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -100,7 +111,7 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e)
+      this.logger.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -132,7 +143,7 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e)
+      this.logger.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -173,7 +184,7 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e)
+      this.logger.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -205,7 +216,7 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e)
+      this.logger.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -235,7 +246,7 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e)
+      this.logger.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -266,7 +277,7 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e)
+      this.logger.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
@@ -287,7 +298,7 @@ export class MetaMask extends TatumSdkWalletProvider<string, TxPayload> {
         params: [payload],
       })
     } catch (e) {
-      console.error('User denied transaction signature:', e)
+      this.logger.error('User denied transaction signature:', e)
       throw new Error(`User denied transaction signature. Error is ${e}`)
     }
   }
