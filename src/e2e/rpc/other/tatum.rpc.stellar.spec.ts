@@ -49,21 +49,44 @@ describe('Stellar', () => {
     expect(response).toBeDefined()
   })
 
-  it('should get strict send', async () => {
-    const response = await tatum.rpc.getStrictSendPaymentPaths({
-      sourceAssetType: 'native',
-      sourceAmount: '1',
-      destinationAccount: 'GB3LIKQ6GOJ6D4EYKVS47L2SBY66SJO4MN4CZCMUPNBUJ2L3PF62ECBA',
+  describe('should get strict send', () => {
+    it('destinationAccount', async () => {
+      const response = await tatum.rpc.getStrictSendPaymentPaths({
+        sourceAssetType: 'native',
+        sourceAmount: '1',
+        destinationAccount: 'GB3LIKQ6GOJ6D4EYKVS47L2SBY66SJO4MN4CZCMUPNBUJ2L3PF62ECBA',
+      })
+      expect(response).toBeDefined()
     })
-    expect(response).toBeDefined()
+
+    it('destinationAssets', async () => {
+      const response = await tatum.rpc.getStrictSendPaymentPaths({
+        sourceAssetType: 'native',
+        sourceAmount: '1',
+        sourceAssets: ['USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN'],
+        destinationAssets: ['USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN'],
+      })
+      expect(response).toBeDefined()
+    })
   })
 
-  it('should get strict receive', async () => {
-    const response = await tatum.rpc.getStrictReceivePaymentPaths({
-      destinationAssetType: 'native',
-      destinationAmount: '1',
-      sourceAssets: 'USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN',
+  describe('should get strict receive', () => {
+    it('sourceAssets', async () => {
+      const response = await tatum.rpc.getStrictReceivePaymentPaths({
+        destinationAssetType: 'native',
+        destinationAmount: '1',
+        sourceAssets: ['USDC:GA5ZSEJYB37JRC5AVCIA5MOP4RHTM335X2KGX3IHOJAPP5RE34K4KZVN'],
+      })
+      expect(response).toBeDefined()
     })
-    expect(response).toBeDefined()
+
+    it('sourceAccount', async () => {
+      const response = await tatum.rpc.getStrictReceivePaymentPaths({
+        destinationAssetType: 'native',
+        destinationAmount: '1',
+        sourceAccount: 'GB3LIKQ6GOJ6D4EYKVS47L2SBY66SJO4MN4CZCMUPNBUJ2L3PF62ECBA',
+      })
+      expect(response).toBeDefined()
+    })
   })
 })

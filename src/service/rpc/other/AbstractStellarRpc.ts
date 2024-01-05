@@ -316,16 +316,28 @@ export abstract class AbstractStellarRpc implements StellarRpcSuite {
   }
 
   getStrictReceivePaymentPaths(params: GetStrictReceivePaymentPathsParams): Promise<Path> {
+    const { sourceAssets, ...rest } = params
+    const sourceAssetsString = sourceAssets?.join(',')
     return this.sendGet({
       path: `/paths/strict-receive`,
-      queryParams: params as unknown as QueryParams,
+      queryParams: {
+        ...rest,
+        ...(sourceAssetsString && { sourceAssets: sourceAssetsString }),
+      },
     })
   }
 
   getStrictSendPaymentPaths(params: GetStrictSendPaymentPathsParams): Promise<Path> {
+    const { destinationAssets, sourceAssets, ...rest } = params
+    const destinationAssetsString = destinationAssets?.join(',')
+    const sourceAssetsString = sourceAssets?.join(',')
     return this.sendGet({
       path: `/paths/strict-send`,
-      queryParams: params as unknown as QueryParams,
+      queryParams: {
+        ...rest,
+        ...(destinationAssetsString && { destinationAssets: destinationAssetsString }),
+        ...(sourceAssetsString && { sourceAssets: sourceAssetsString }),
+      },
     })
   }
 

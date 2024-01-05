@@ -1,3 +1,7 @@
+## [4.1.37] - 2024.1.5
+### Fixed
+- Fix get strict methods params for STELLAR network.
+
 ## [4.1.36] - 2024.1.3
 ### Fixed
 - Fix optional params for STELLAR network.

@@ -1009,7 +1009,7 @@ export interface GetPaymentsParams extends BaseParams {
 
 export interface GetStrictReceivePaymentPathsParams {
   sourceAccount?: string
-  sourceAssets?: string
+  sourceAssets?: string[]
   destinationAssetType: string
   destinationAssetIssuer?: string
   destinationAssetCode?: string
@@ -1018,13 +1018,13 @@ export interface GetStrictReceivePaymentPathsParams {
 
 export interface GetStrictSendPaymentPathsParams {
   sourceAccount?: string
-  sourceAssets?: string
+  sourceAssets?: string[]
   sourceAssetType: string
   sourceAssetIssuer?: string
   sourceAssetCode?: string
   sourceAmount: string
   destinationAccount?: string
-  destinationAssets?: string
+  destinationAssets?: string[]
 }
 
 export interface SubmitTransactionParams {
