@@ -31,6 +31,8 @@ export interface TatumConfig {
 
   /**
    * Verbose logging is disabled by default.
+   *
+   * @deprecated Use `logger` instead.
    */
   verbose?: boolean
 

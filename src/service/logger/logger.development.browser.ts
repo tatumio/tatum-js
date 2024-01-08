@@ -102,28 +102,19 @@ const bgGray = 'color: white; background-color: rgb(158, 158, 158);'
 
 const WELCOME = 'Hi! 👋 Welcome to Tatum, the Javascript SDK for Web3.'
 
+const BOLD = [initialStrong, initial]
+
 const WELCOME_MESSAGES: BrowserFormattedMessage[] = [
   [
     `%c${WELCOME}%c\nVisit our docs to see how Tatum will help you launch projects fast: https://co.tatum.io/docs`,
-    initialStrong,
-    initial,
+    ...BOLD,
   ],
-  [
-    `%c${WELCOME}%c\nKick start by making your first RPC call: https://co.tatum.io/start`,
-    initialStrong,
-    initial,
-  ],
-  [
-    `%c${WELCOME}%c\nSee what apps you can build with Tatum: https://co.tatum.io/apps`,
-    initialStrong,
-    initial,
-  ],
+  [`%c${WELCOME}%c\nKick start by making your first RPC call: https://co.tatum.io/start`, ...BOLD],
+  [`%c${WELCOME}%c\nSee what apps you can build with Tatum: https://co.tatum.io/apps`, ...BOLD],
   [
     `%c${WELCOME}%c\n%cFREE Testnet Tokens%c: Explore %cTatum Faucets%c available for over 5 chains: https://co.tatum.io/faucets`,
-    initialStrong,
-    initial,
-    initialStrong,
-    initial,
+    ...BOLD,
+    ...BOLD,
     green,
     initial,
   ],
