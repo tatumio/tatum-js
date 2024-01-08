@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
-import { Utils } from '../../../util'
-// Need to import like this to keep browser working
+import { Logger } from '../../../service/logger/logger.types'
+import { LOGGER, Utils } from '../../../util'
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractEvmRpc } from './AbstractEvmRpc'
 
@@ -14,10 +14,12 @@ import { AbstractEvmRpc } from './AbstractEvmRpc'
 })
 export class EvmLoadBalancerRpc extends AbstractEvmRpc implements EvmBasedRpcSuite {
   protected readonly loadBalancer: LoadBalancer
+  protected readonly logger: Logger
 
   constructor(id: string) {
     super()
     this.loadBalancer = Container.of(id).get(LoadBalancer)
+    this.logger = Container.of(id).get(LOGGER)
   }
 
   protected async rpcCall<T>(method: string, params?: unknown[]): Promise<T> {

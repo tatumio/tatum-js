@@ -101,7 +101,7 @@ import { UtxoLoadBalancerRpc } from '../service/rpc/utxo/UtxoLoadBalancerRpc'
 import { UtxoLoadBalancerRpcEstimateFee } from '../service/rpc/utxo/UtxoLoadBalancerRpcEstimateFee'
 import { UtxoRpcEstimateFee } from '../service/rpc/utxo/UtxoRpcEstimateFee'
 import { Constant } from './constant'
-import { CONFIG } from './di.tokens'
+import { CONFIG, LOGGER } from './di.tokens'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
@@ -191,7 +191,7 @@ export const Utils = {
       return Container.of(id).get(EosRpc) as T
     }
 
-    console.warn(`RPC Network ${network} is not supported.`)
+    Container.of(id).get(LOGGER).warn(`RPC Network ${network} is not supported.`)
     return Container.of(id).get(GenericRpc) as T
   },
   getRpcListUrl: (network: Network): string[] => {
@@ -701,6 +701,10 @@ export const Utils = {
     }
   },
 
+  /**
+   * Log message to console if verbose mode is enabled.
+   * @deprecated Use `Container.of(id).get(LOGGER)` instead.
+   */
   log: ({ id, message, data, mode }: { id: string; message?: string; data?: object; mode?: 'table' }) => {
     const config = Container.of(id).get(CONFIG)
     if (config.verbose) {

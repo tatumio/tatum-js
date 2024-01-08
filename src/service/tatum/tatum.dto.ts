@@ -1,5 +1,6 @@
 import { Network } from '../../dto'
 import { ExtensionConstructorOrConfig, WalletProviderConstructorOrConfig } from '../extensions'
+import { Logger } from '../logger/logger.types'
 
 export interface TatumConfig {
   /**
@@ -30,6 +31,8 @@ export interface TatumConfig {
 
   /**
    * Verbose logging is disabled by default.
+   *
+   * @deprecated Use `logger` instead.
    */
   verbose?: boolean
 
@@ -72,6 +75,16 @@ export interface TatumConfig {
    * Optional list of TatumSdkWalletExtensions.
    */
   configureWalletProviders?: WalletProviderConstructorOrConfig[]
+
+  /**
+   * Quiet mode, disables all logging.
+   */
+  quiet?: boolean
+
+  /**
+   * Optional custom logger.
+   */
+  logger?: Logger
 }
 
 export enum ApiVersion {

@@ -10,10 +10,12 @@ import {
   TraceType,
   TxPayload,
 } from '../../../dto'
+import { Logger } from '../../../service/logger/logger.types'
 import { decodeHexString, decodeUInt256 } from '../../../util/decode'
 
 @Service()
 export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
+  protected abstract logger: Logger
   protected abstract rpcCall<T>(method: string, params?: unknown[]): Promise<T>
 
   async blockNumber(): Promise<JsonRpcResponse<any>> {
@@ -226,7 +228,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
       const txReceipt = await this.getTransactionReceipt(txHash)
       return txReceipt.result.contractAddress
     } catch (e) {
-      console.error(
+      this.logger.error(
         'Failed to get contract address, transaction does not exist, or is not a contract creation tx or is not mined yet.',
       )
       return null

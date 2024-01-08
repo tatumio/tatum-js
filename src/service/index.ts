@@ -1,6 +1,7 @@
 export * from './address'
 export * from './extensions'
 export * from './fee'
+export * from './logger'
 export * from './nft'
 export * from './notification'
 export * from './rpc'
