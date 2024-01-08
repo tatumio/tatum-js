@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
-import { Logger } from '../../../service/logger'
+import { Logger } from '../../../service/logger/logger.types'
 import { LOGGER, Utils } from '../../../util'
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractEvmRpc } from './AbstractEvmRpc'

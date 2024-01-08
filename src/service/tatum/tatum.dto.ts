@@ -1,6 +1,6 @@
 import { Network } from '../../dto'
 import { ExtensionConstructorOrConfig, WalletProviderConstructorOrConfig } from '../extensions'
-import { Logger } from '../logger'
+import { Logger } from '../logger/logger.types'
 
 export interface TatumConfig {
   /**

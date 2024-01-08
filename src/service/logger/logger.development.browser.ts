@@ -1,4 +1,4 @@
-import { EnvUtils, Utils } from '../../util'
+import { EnvUtils } from '../../util/env'
 import { LogLevel, Logger } from './logger.types'
 
 interface TatumDevelopmentBrowserLoggerOptions {
@@ -57,7 +57,9 @@ export class TatumDevelopmentBrowserLogger implements Logger {
   }
 
   private welcome(): void {
-    this.logger.log(...this.join(this._TATUM, Utils.randomElementOf(WELCOME_MESSAGES)))
+    this.logger.log(
+      ...this.join(this._TATUM, WELCOME_MESSAGES[Math.floor(Math.random() * WELCOME_MESSAGES.length)]),
+    )
   }
 
   trace(...args: unknown[]): void {
@@ -98,24 +100,26 @@ const bgYellowStrong = 'color: white; background-color: rgb(255, 140, 0); font-w
 const bgBlue = 'color: white; background-color: rgb(81, 59, 255);'
 const bgGray = 'color: white; background-color: rgb(158, 158, 158);'
 
+const WELCOME = 'Hi! 👋 Welcome to Tatum, the Javascript SDK for Web3.'
+
 const WELCOME_MESSAGES: BrowserFormattedMessage[] = [
   [
-    '%cHi! 👋 Welcome to Tatum, the Javascript SDK for Web3.%c\nVisit our docs to see how Tatum will help you launch projects fast: https://co.tatum.io/docs',
+    `%c${WELCOME}%c\nVisit our docs to see how Tatum will help you launch projects fast: https://co.tatum.io/docs`,
     initialStrong,
     initial,
   ],
   [
-    '%cHi! 👋 Welcome to Tatum, the Javascript SDK for Web3.%c\nKick start by making your first RPC call: https://co.tatum.io/start',
+    `%c${WELCOME}%c\nKick start by making your first RPC call: https://co.tatum.io/start`,
     initialStrong,
     initial,
   ],
   [
-    '%cHi! 👋 Welcome to Tatum, the Javascript SDK for Web3.%c\nSee what apps you can build with Tatum: https://co.tatum.io/apps',
+    `%c${WELCOME}%c\nSee what apps you can build with Tatum: https://co.tatum.io/apps`,
     initialStrong,
     initial,
   ],
   [
-    '%cHi! 👋 Welcome to Tatum, the Javascript SDK for Web3.%c\n%cFREE Testnet Tokens%c: Explore %cTatum Faucets%c available for over 5 chains: https://co.tatum.io/faucets',
+    `%c${WELCOME}%c\n%cFREE Testnet Tokens%c: Explore %cTatum Faucets%c available for over 5 chains: https://co.tatum.io/faucets`,
     initialStrong,
     initial,
     initialStrong,

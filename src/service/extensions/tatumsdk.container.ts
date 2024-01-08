@@ -1,6 +1,6 @@
 import { ContainerInstance } from 'typedi'
 import { CONFIG, LOGGER, Utils } from '../../util'
-import { Logger } from '../logger'
+import { Logger } from '../logger/logger.types'
 import { TatumConfig } from '../tatum'
 import { ServiceConstructor } from './tatumsdk.extensions.dto'
 

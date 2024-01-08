@@ -1,5 +1,5 @@
 import chalk from 'chalk'
-import { EnvUtils, Utils } from '../../util'
+import { EnvUtils } from '../../util/env'
 import { LogLevel, Logger } from './logger.types'
 
 interface TatumDevelopmentLoggerOptions {
@@ -48,7 +48,7 @@ export class TatumDevelopmentLogger implements Logger {
   }
 
   private welcome(): void {
-    this.logger.log([LOGO, Utils.randomElementOf(WELCOME_MESSAGES)].join('\n'))
+    this.logger.log([LOGO, WELCOME_MESSAGES[Math.floor(Math.random() * WELCOME_MESSAGES.length)]].join('\n'))
   }
 
   trace(...args: unknown[]): void {
@@ -91,27 +91,29 @@ const LOGO = `------------------------------------------------------------------
             
 --------------------------------------------------------------------------------`
 
+const WELCOME = 'Hi! 👋 Welcome to Tatum, the Javascript SDK for Web3.'
+
 const WELCOME_MESSAGES = [
   `
-              Hi! 👋 Welcome to Tatum, the Javascript SDK for Web3.
+              ${WELCOME}
 
       Visit our docs to see how Tatum will help you launch projects fast:
                              ${chalk.blueBright('https://co.tatum.io/docs')}
   `,
   `
-              Hi! 👋 Welcome to Tatum, the Javascript SDK for Web3.
+              ${WELCOME}
 
                     Kick start by making your first RPC call:
                             ${chalk.blueBright('https://co.tatum.io/start')}
   `,
   `
-              Hi! 👋 Welcome to Tatum, the Javascript SDK for Web3.
+              ${WELCOME}
 
         Possibilities are endless - see what apps you can build with Tatum:
                              ${chalk.blueBright('https://co.tatum.io/apps')}
   `,
   `
-              Hi! 👋 Welcome to Tatum, the Javascript SDK for Web3.
+              ${WELCOME}
                           
     ${chalk.bold('FREE Testnet Tokens')}: Explore Tatum's Faucets available for over 5 chains: 
                            ${chalk.blueBright('https://co.tatum.io/faucets')}

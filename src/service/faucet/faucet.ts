@@ -4,7 +4,7 @@ import { TatumConnector } from '../../connector/tatum.connector'
 import { CONFIG, ErrorUtils, LOGGER, ResponseDto } from '../../util'
 import { Network, TatumConfig } from '../tatum'
 
-import { Logger } from '../logger'
+import { Logger } from '../logger/logger.types'
 import { TxIdResponse } from './faucet.dto'
 
 @Service({
@@ -25,10 +25,11 @@ export class Faucet {
   }
 
   async fund(address: string): Promise<ResponseDto<TxIdResponse>> {
-    if (!this.config.apiKey?.v4)
+    if (!this.config.apiKey?.v4) {
       this.logger.warn(
         'Unable to make Faucet calls, get an api key to successfully use this feature: https://co.tatum.io/signup',
       )
+    }
 
     const chain = this.convertToFaucetChain(this.config.network)
 

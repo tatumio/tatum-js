@@ -10,7 +10,7 @@ import {
   TraceType,
   TxPayload,
 } from '../../../dto'
-import { Logger } from '../../../service/logger'
+import { Logger } from '../../../service/logger/logger.types'
 import { decodeHexString, decodeUInt256 } from '../../../util/decode'
 
 @Service()

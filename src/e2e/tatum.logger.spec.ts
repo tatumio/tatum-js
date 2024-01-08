@@ -1,6 +1,6 @@
 import { Network } from '../dto'
 import { Ethereum, TatumSDK } from '../service'
-import { Logger } from '../service/logger'
+import { Logger } from '../service/logger/logger.types'
 
 describe('Logger', () => {
   let logger: Logger

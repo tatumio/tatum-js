@@ -2,7 +2,7 @@
 import { Container, Service } from 'typedi'
 import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
 import { PostI } from '../../../dto/PostI'
-import { Logger } from '../../../service/logger'
+import { Logger } from '../../../service/logger/logger.types'
 import { LOGGER, Utils } from '../../../util'
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractTronRpc } from './AbstractTronRpc'

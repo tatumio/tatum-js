@@ -5,7 +5,7 @@ import { JsonRpcCall, JsonRpcResponse, Network } from '../../../dto'
 import { GetI } from '../../../dto/GetI'
 import { PostI } from '../../../dto/PostI'
 import { AbstractRpcInterface } from '../../../dto/rpc/AbstractJsonRpcInterface'
-import { Logger } from '../../../service/logger'
+import { Logger } from '../../../service/logger/logger.types'
 import { CONFIG, Constant, LOGGER, Utils } from '../../../util'
 import { RpcNode, RpcNodeType } from '../../tatum'
 

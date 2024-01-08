@@ -1,10 +1,10 @@
-import { TatumConfig } from '../service'
 import {
   TatumDevelopmentBrowserLogger,
   TatumDevelopmentLogger,
   TatumProductionLogger,
   TatumQuietLogger,
 } from '../service/logger'
+import { TatumConfig } from '../service/tatum'
 
 export const LoggerUtils = {
   setLoggerForEnv: (config: TatumConfig, isDevelopment: boolean, isBrowser: boolean) => {

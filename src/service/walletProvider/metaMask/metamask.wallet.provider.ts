@@ -6,7 +6,7 @@ import {
   CreateFungibleToken,
   CreateNftCollection,
 } from '../../../dto/walletProvider'
-import { Logger } from '../../../service/logger'
+import { Logger } from '../../../service/logger/logger.types'
 import { Constant, EnvUtils, Utils } from '../../../util'
 import { ITatumSdkContainer, TatumSdkWalletProvider } from '../../extensions'
 import { EvmRpc } from '../../rpc'
