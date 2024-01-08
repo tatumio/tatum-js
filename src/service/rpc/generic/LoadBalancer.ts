@@ -77,7 +77,7 @@ export class LoadBalancer implements AbstractRpcInterface {
     [RpcNodeType.NORMAL]: {} as UrlIndex,
     [RpcNodeType.ARCHIVE]: {} as UrlIndex,
   }
-  private interval: NodeJS.Timer
+  private interval: ReturnType<typeof setInterval>
   private network: Network
   private noActiveNode = false
 
