@@ -8,15 +8,15 @@ interface TatumDevelopmentLoggerOptions {
 }
 
 export class TatumDevelopmentLogger implements Logger {
-  private static readonly DISABLE_WELCOME = 'TTM_DISABLE_WELCOME'
+  private static readonly DISABLE_WELCOME = '__TTM_DISABLE_WELCOME__'
   private static isWelcomeDisabled(): boolean {
-    if (!EnvUtils.isProcessAvailable()) return false
-    return process.env[TatumDevelopmentLogger.DISABLE_WELCOME] === 'true'
+    const anyGlobal = globalThis as unknown as { __TTM_DISABLE_WELCOME__: boolean }
+    return !!anyGlobal[TatumDevelopmentLogger.DISABLE_WELCOME]
   }
 
   private static disableWelcome(): void {
-    if (!EnvUtils.isProcessAvailable()) return
-    process.env[TatumDevelopmentLogger.DISABLE_WELCOME] = 'true'
+    const anyGlobal = globalThis as unknown as { __TTM_DISABLE_WELCOME__: boolean }
+    anyGlobal[TatumDevelopmentLogger.DISABLE_WELCOME] = true
   }
 
   private readonly options: TatumDevelopmentLoggerOptions
