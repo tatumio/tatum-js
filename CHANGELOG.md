@@ -1,6 +1,21 @@
+## [4.2.1] - 2024.1.9
+
+### Updated
+
+- Assert development environment if `NODE_ENV` is not set
+
+### Fixed
+
+- Use globalThis instead of `process.env` for setting `TatumDevelopmentLogger`'s `isWelcomeDisabled` flag
+
 ## [4.2.0] - 2024.1.8
 
+### Added
+
 - Added logging support
+
+### Updated
+
 - Updated dependencies
 
 ## [4.1.37] - 2024.1.5
