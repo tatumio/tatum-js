@@ -18,6 +18,7 @@ import {
   isSameGetBlockNetwork,
   isSolanaNetwork,
   isStellarLoadBalancerNetwork,
+  isStellarNetwork,
   isTezosNetwork,
   isTronLoadBalancerNetwork,
   isTronNetwork,
@@ -95,6 +96,7 @@ import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
 import { SolanaLoadBalancerRpc } from '../service/rpc/other/SolanaLoadBalancerRpc'
 import { StellarLoadBalancerRpc } from '../service/rpc/other/StellarLoadBalancerRpc'
+import { StellarRpc } from '../service/rpc/other/StellarRpc'
 import { TezosLoadBalancerRpc } from '../service/rpc/other/TezosLoadBalancerRpc'
 import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
 import { UtxoLoadBalancerRpc } from '../service/rpc/utxo/UtxoLoadBalancerRpc'
@@ -109,6 +111,10 @@ export const Utils = {
 
     if (isStellarLoadBalancerNetwork(network)) {
       return Container.of(id).get(StellarLoadBalancerRpc) as T
+    }
+
+    if (isStellarNetwork(network)) {
+      return Container.of(id).get(StellarRpc) as T
     }
 
     if (isCardanoNetwork(network)) {
@@ -695,6 +701,7 @@ export const Utils = {
       case Network.CARDANO_ROSETTA_PREPROD:
         return new CardanoRosetta(id) as T
       case Network.STELLAR:
+      case Network.STELLAR_TESTNET:
         return new Stellar(id) as T
       default:
         return new FullSdk(id) as T

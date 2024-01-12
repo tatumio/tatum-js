@@ -1,3 +1,9 @@
+## [4.2.2] - 2024.1.12
+
+### Added
+
+- Added RPC support for the STELLAR_TESTNET network. Users can now make Stellar RPC calls using the `Network.STELLAR_TESTNET` network.
+
 ## [4.2.1] - 2024.1.9
 
 ### Updated

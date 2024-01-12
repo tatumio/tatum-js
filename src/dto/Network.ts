@@ -88,6 +88,7 @@ export enum Network {
   POLKADOT_TESTNET = 'dot-testnet',
   RSK_TESTNET = 'rsk-testnet',
   SOLANA_DEVNET = 'solana-devnet',
+  STELLAR_TESTNET = 'stellar-testnet',
   TEZOS_TESTNET = 'tezos-testnet',
   TRON_SHASTA = 'tron-testnet',
   VECHAIN_TESTNET = 'vechain-testnet',
@@ -332,6 +333,9 @@ export const isCardanoNetwork = (network: Network) => CARDANO_NETWORKS.includes(
 
 export const isStellarLoadBalancerNetwork = (network: Network) =>
   STELLAR_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isStellarNetwork = (network: Network) =>
+  [Network.STELLAR, Network.STELLAR_TESTNET].includes(network)
 
 export const isSameGetBlockNetwork = (network: Network) =>
   isUtxoBasedNetwork(network) ||
