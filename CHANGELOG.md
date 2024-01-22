@@ -1,3 +1,9 @@
+## [4.2.5] - 2024.1.31
+
+### Added
+
+- Added support for Holesky Ethereum testnet for subscriptions.
+
 ## [4.2.4] - 2024.1.25
 
 ### Fixed

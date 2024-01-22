@@ -1,3 +1,5 @@
+import { Currency } from './Currency'
+
 export enum Network {
   // Mainnets
   ALGORAND_ALGOD = 'algorand-mainnet-algod',
@@ -345,17 +347,515 @@ export const isSameGetBlockNetwork = (network: Network) =>
 
 export enum MappedNetwork {
   HORIZEN_EON = 'horizen-eon-mainnet',
-  DOGECOIN_MAINNET = 'dogecoin-mainnet',
+  DOGECOIN = 'dogecoin-mainnet',
   DOGECOIN_TESTNET = 'dogecoin-testnet',
 }
 
 export const MAPPED_NETWORK = {
   [Network.HORIZEN_EON]: MappedNetwork.HORIZEN_EON,
-  [Network.DOGECOIN]: MappedNetwork.DOGECOIN_MAINNET,
+  [Network.DOGECOIN]: MappedNetwork.DOGECOIN,
   [Network.DOGECOIN_TESTNET]: MappedNetwork.DOGECOIN_TESTNET,
 }
 
 export const NATIVE_PREFIX_MAPPING: { [key: string]: string } = {
   [Network.KLAYTN]: 'klay_',
   [Network.KLAYTN_BAOBAB]: 'klay_',
+}
+
+/**
+ * Describes additional info about every chain in a system.
+ * @param testnet - If true - chain is testnet.
+ * @param currency - Currency of the chain.
+ * @param alternativeCurrencies - Alternative currencies of the chain, for case we have few currencies meaning the same chain.
+ * @param defaultTestnet - If true - this chain is default testnet among others for this currency.
+ * @param defaultMainnet - If true - this chain is default mainnet among others for this currency.
+ * @param chainId - Network id.
+ */
+export type NetworkMetadata = {
+  testnet: boolean
+  currency: Currency
+  alternativeCurrencies?: Currency[]
+  defaultTestnet?: boolean
+  defaultMainnet?: boolean
+  chainId?: number
+}
+
+export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
+  [Network.ETHEREUM_SEPOLIA]: {
+    currency: Currency.ETH,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 11155111,
+  },
+  [Network.ETHEREUM_HOLESKY]: {
+    currency: Currency.ETH,
+    testnet: true,
+    chainId: 17000,
+  },
+  [Network.ETHEREUM]: {
+    currency: Currency.ETH,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 1,
+  },
+  [Network.ETHEREUM_GOERLI]: {
+    currency: Currency.ETH,
+    testnet: true,
+    chainId: 5,
+  },
+  [Network.POLYGON_MUMBAI]: {
+    currency: Currency.MATIC,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 80001,
+  },
+  [Network.POLYGON]: {
+    currency: Currency.MATIC,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 137,
+  },
+  [Network.KLAYTN_BAOBAB]: {
+    currency: Currency.KLAY,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 1001,
+  },
+  [Network.KLAYTN]: {
+    currency: Currency.KLAY,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 8217,
+  },
+  [Network.SOLANA_DEVNET]: {
+    currency: Currency.SOL,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.SOLANA]: {
+    currency: Currency.SOL,
+    testnet: false,
+    defaultMainnet: true,
+  },
+  [Network.CELO]: {
+    currency: Currency.CELO,
+    testnet: false,
+    chainId: 42220,
+  },
+  [Network.CELO_ALFAJORES]: {
+    currency: Currency.CELO,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 44787,
+  },
+  [Network.ALGORAND_ALGOD_TESTNET]: {
+    currency: Currency.ALGO,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.ALGORAND_ALGOD]: {
+    currency: Currency.ALGO,
+    testnet: false,
+    defaultMainnet: true,
+  },
+  [Network.ALGORAND_INDEXER_TESTNET]: {
+    currency: Currency.ALGO,
+    testnet: true,
+  },
+  [Network.ALGORAND_INDEXER]: {
+    currency: Currency.ALGO,
+    testnet: false,
+  },
+  [Network.BITCOIN]: {
+    currency: Currency.BTC,
+    testnet: false,
+  },
+  [Network.BITCOIN_TESTNET]: {
+    currency: Currency.BTC,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.LITECOIN]: {
+    currency: Currency.LTC,
+    testnet: false,
+  },
+  [Network.LITECOIN_TESTNET]: {
+    currency: Currency.LTC,
+    testnet: true,
+  },
+  [Network.CARDANO_ROSETTA]: {
+    currency: Currency.ADA,
+    testnet: false,
+    defaultMainnet: true,
+  },
+  [Network.CARDANO_ROSETTA_PREPROD]: {
+    currency: Currency.ADA,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.VECHAIN_TESTNET]: {
+    currency: Currency.VET,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.VECHAIN]: {
+    currency: Currency.VET,
+    testnet: false,
+  },
+  [Network.XRP]: {
+    currency: Currency.XRP,
+    testnet: false,
+  },
+  [Network.XRP_TESTNET]: {
+    currency: Currency.XRP,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.FLOW]: {
+    currency: Currency.FLOW,
+    testnet: false,
+  },
+  [Network.FLOW_TESTNET]: {
+    currency: Currency.FLOW,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.XINFIN]: {
+    currency: Currency.XDC,
+    testnet: false,
+    chainId: 50,
+  },
+  [Network.XINFIN_TESTNET]: {
+    currency: Currency.XDC,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 51,
+  },
+  [Network.TRON]: {
+    currency: Currency.TRON,
+    testnet: false,
+    chainId: 728126428,
+  },
+  [Network.TRON_SHASTA]: {
+    currency: Currency.TRON,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 2494104990,
+  },
+  [Network.BINANCE_SMART_CHAIN]: {
+    currency: Currency.BSC,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 56,
+  },
+  [Network.BINANCE_SMART_CHAIN_TESTNET]: {
+    currency: Currency.BSC,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 97,
+  },
+  [Network.BITCOIN_CASH]: {
+    currency: Currency.BCH,
+    testnet: false,
+  },
+  [Network.BITCOIN_CASH_TESTNET]: {
+    currency: Currency.BCH,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.STELLAR]: {
+    currency: Currency.XLM,
+    testnet: false,
+  },
+  [Network.STELLAR_TESTNET]: {
+    currency: Currency.XLM,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.BNB]: {
+    currency: Currency.BNB,
+    testnet: false,
+    defaultMainnet: true,
+  },
+  [Network.DOGECOIN]: {
+    currency: Currency.DOGE,
+    testnet: false,
+  },
+  [Network.DOGECOIN_TESTNET]: {
+    currency: Currency.DOGE,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.HARMONY_ONE_SHARD_0]: {
+    currency: Currency.ONE,
+    testnet: false,
+    chainId: 1666600000,
+  },
+  [Network.HARMONY_ONE_TESTNET_SHARD_0]: {
+    currency: Currency.ONE,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 1666700000,
+  },
+  [Network.EOS]: {
+    currency: Currency.EOS,
+    testnet: false,
+    defaultMainnet: true,
+  },
+  [Network.EOS_TESTNET]: {
+    currency: Currency.EOS,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.AVALANCHE_C]: {
+    currency: Currency.AVAX,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 43114,
+  },
+  [Network.AVALANCHE_C_TESTNET]: {
+    currency: Currency.AVAX,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 43113,
+  },
+  [Network.AVALANCHE_X]: {
+    currency: Currency.AVAX,
+    testnet: false,
+  },
+  [Network.AVALANCHE_X_TESTNET]: {
+    currency: Currency.AVAX,
+    testnet: true,
+  },
+  [Network.AVALANCHE_P]: {
+    currency: Currency.AVAX,
+    testnet: false,
+  },
+  [Network.AVALANCHE_P_TESTNET]: {
+    currency: Currency.AVAX,
+    testnet: true,
+  },
+  [Network.FANTOM]: {
+    currency: Currency.FTM,
+    testnet: false,
+    chainId: 250,
+  },
+  [Network.FANTOM_TESTNET]: {
+    currency: Currency.FTM,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 4002,
+  },
+  [Network.ARBITRUM_NOVA]: {
+    currency: Currency.ARB,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 42170,
+  },
+  [Network.ARBITRUM_NOVA_TESTNET]: {
+    currency: Currency.ARB,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 421613,
+  },
+  [Network.ARBITRUM_ONE]: {
+    currency: Currency.ARB,
+    testnet: false,
+    chainId: 42161,
+  },
+  [Network.OPTIMISM]: {
+    currency: Currency.OP,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 10,
+  },
+  [Network.OPTIMISM_TESTNET]: {
+    currency: Currency.OP,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.NEAR]: {
+    currency: Currency.NEAR,
+    testnet: false,
+  },
+  [Network.NEAR_TESTNET]: {
+    currency: Currency.NEAR,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.RSK]: {
+    currency: Currency.RSK,
+    testnet: false,
+  },
+  [Network.RSK_TESTNET]: {
+    currency: Currency.RSK,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.AURORA]: {
+    currency: Currency.AURORA,
+    testnet: false,
+    chainId: 1313161554,
+  },
+  [Network.AURORA_TESTNET]: {
+    currency: Currency.AURORA,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 1313161555,
+  },
+  [Network.OASIS]: {
+    currency: Currency.XOS,
+    testnet: false,
+    chainId: 42262,
+  },
+  [Network.OASIS_TESTNET]: {
+    currency: Currency.XOS,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 42261,
+  },
+  [Network.TEZOS]: {
+    currency: Currency.TEZOS,
+    testnet: false,
+    defaultMainnet: true,
+  },
+  [Network.TEZOS_TESTNET]: {
+    currency: Currency.TEZOS,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.ZCASH]: {
+    currency: Currency.ZCASH,
+    alternativeCurrencies: [Currency.ZEC],
+    testnet: false,
+  },
+  [Network.ZCASH_TESTNET]: {
+    currency: Currency.ZCASH,
+    alternativeCurrencies: [Currency.ZEC],
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.PALM]: {
+    currency: Currency.PALM,
+    testnet: false,
+  },
+  [Network.PALM_TESTNET]: {
+    currency: Currency.PALM,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.ZILLIQA]: {
+    currency: Currency.ZIL,
+    testnet: false,
+  },
+  [Network.ZILLIQA_TESTNET]: {
+    currency: Currency.ZIL,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.ETHEREUM_CLASSIC]: {
+    currency: Currency.ETC,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 61,
+  },
+  [Network.FLARE]: {
+    currency: Currency.FLR,
+    testnet: false,
+    chainId: 14,
+  },
+  [Network.FLARE_COSTON_2]: {
+    currency: Currency.FLR,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 114,
+  },
+  [Network.FLARE_SONGBIRD]: {
+    currency: Currency.SGB,
+    testnet: false,
+    chainId: 19,
+  },
+  [Network.FLARE_COSTON]: {
+    currency: Currency.SGB,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 16,
+  },
+  [Network.HAQQ]: {
+    currency: Currency.ISLM,
+    testnet: false,
+    chainId: 11235,
+  },
+  [Network.HAQQ_TESTNET]: {
+    currency: Currency.ISLM,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 54211,
+  },
+  [Network.HORIZEN_EON]: {
+    currency: Currency.ZEN,
+    testnet: false,
+    chainId: 7332,
+  },
+  [Network.HORIZEN_EON_GOBI]: {
+    currency: Currency.ZEN,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 1663,
+  },
+  [Network.CHILIZ]: {
+    currency: Currency.CHZ,
+    testnet: false,
+    chainId: 88888,
+  },
+  [Network.GNOSIS]: {
+    currency: Currency.GNO,
+    testnet: false,
+    chainId: 100,
+  },
+  [Network.GNOSIS_TESTNET]: {
+    currency: Currency.GNO,
+    testnet: true,
+    chainId: 69,
+  },
+  [Network.CRONOS]: {
+    currency: Currency.CRO,
+    testnet: false,
+    chainId: 25,
+  },
+  [Network.CRONOS_TESTNET]: {
+    currency: Currency.CRO,
+    testnet: true,
+    chainId: 338,
+  },
+  [Network.KUCOIN]: {
+    currency: Currency.KCS,
+    testnet: false,
+    chainId: 321,
+  },
+  [Network.KUCOIN_TESTNET]: {
+    currency: Currency.KCS,
+    testnet: true,
+    chainId: 322,
+  },
+  [Network.MULTIVERSX]: {
+    currency: Currency.EGLD,
+    testnet: false,
+    chainId: 1,
+  },
+  [Network.MULTIVERSX_TESTNET]: {
+    currency: Currency.EGLD,
+    testnet: true,
+    chainId: 2,
+  },
+  [Network.POLKADOT]: {
+    currency: Currency.DOT,
+    testnet: false,
+    chainId: 0,
+  },
+  [Network.POLKADOT_TESTNET]: {
+    currency: Currency.DOT,
+    testnet: true,
+    chainId: 0,
+  },
 }
