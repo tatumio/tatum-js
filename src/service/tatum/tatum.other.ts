@@ -8,7 +8,6 @@ import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
 import { StellarRpcSuite } from '../../dto/rpc/StellarRpcSuite'
 import { CONFIG, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
-import { Faucet } from '../faucet'
 import { Ipfs } from '../ipfs'
 import { Nft, NftTezos } from '../nft'
 import { Notification } from '../notification'
@@ -144,7 +143,6 @@ export class FullSdk extends TatumSdkChain {
   token: Token
   address: Address
   rates: Rates
-  faucet: Faucet
   ipfs: Ipfs
 
   constructor(id: string) {
@@ -154,7 +152,6 @@ export class FullSdk extends TatumSdkChain {
     this.token = Container.of(id).get(Token)
     this.address = Container.of(id).get(Address)
     this.rates = Container.of(id).get(Rates)
-    this.faucet = Container.of(id).get(Faucet)
     this.ipfs = Container.of(id).get(Ipfs)
   }
 }

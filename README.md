@@ -168,15 +168,6 @@ Access the latest crypto exchange rates and supported currency information to st
 | [Supported Crypto Currencies](https://docs.tatum.io/docs/exchange-rates/supported-crypto-currencies) |
 | [Supported Fiats](https://docs.tatum.io/docs/exchange-rates/supported-fiats) |
 
-### ⛽ Faucets
-
-Request testnet token sums of cryptocurrency from our [Faucets](http://faucets.tatum.io).
-
-| Documentation |
-| ----- |
-| [Get testnet native tokens](https://docs.tatum.io/docs/faucets/fund) |
-
-
 ### 📘 Getting Started with TatumSDK
 
 This guide will lead you step by step, from basic setup and installation to harnessing the immense capabilities of our library. For a detailed walkthrough, check out the [Getting Started page](https://docs.tatum.io/sdk/get-started-with-tatum-sdk).
@@ -408,28 +399,6 @@ await tatum.destroy()
 ```
 
 For more details, check out the [Wallet address operations documentation](https://docs.tatum.io/docs/wallet-address-operations).
-
-### Get testnet faucet funds
-Using TatumSDK, you can request testnet native token sums of cryptocurrency from our [Faucets](http://faucets.tatum.io).
-
-```ts
-import { TatumSDK, Network, Ethereum } from '@tatumio/tatum'
-
-const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA })
-
-const res = await tatum.faucet.fund('0x712e3a792c974b3e3dbe41229ad4290791c75a82')
-
-if (res.data) {
-  console.log(res.data)
-} else {
-  console.error(res.error)
-}
-
-// Destroy Tatum SDK - needed for stopping background jobs
-await tatum.destroy()
-```
-
-For more details, check out the [Faucets documentation](https://docs.tatum.io/docs/faucets).
 
 ## RPC calls
 All RPC calls are implemented in the `tatum.rpc.*` submodule.

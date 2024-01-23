@@ -1,3 +1,9 @@
+## [4.2.3] - 2024.1.23
+
+### Updated
+
+- Drop support for faucet claims via SDK
+
 ## [4.2.2] - 2024.1.12
 
 ### Added
