@@ -3,7 +3,6 @@ import { EvmBasedBeaconRpcSuite, EvmBasedRpcSuite } from '../../dto'
 import { NativeEvmBasedRpcSuite } from '../../dto/rpc/NativeEvmBasedRpcInterface'
 import { CONFIG, Utils } from '../../util'
 import { Address } from '../address'
-import { Faucet } from '../faucet'
 import { FeeEvm } from '../fee'
 import { Ipfs } from '../ipfs'
 import { Nft } from '../nft'
@@ -27,15 +26,6 @@ export abstract class BaseEvm extends TatumSdkChain {
   }
 }
 
-export abstract class FaucetEvm extends BaseEvm {
-  faucet: Faucet
-
-  constructor(id: string) {
-    super(id)
-    this.faucet = Container.of(id).get(Faucet)
-  }
-}
-
 export class NotificationEvm extends BaseEvm {
   notification: Notification
 
@@ -48,14 +38,12 @@ export class NotificationEvm extends BaseEvm {
 export class FullEvm extends NotificationEvm {
   nft: Nft
   token: Token
-  faucet: Faucet
   address: Address
 
   constructor(id: string) {
     super(id)
     this.nft = Container.of(id).get(Nft)
     this.token = Container.of(id).get(Token)
-    this.faucet = Container.of(id).get(Faucet)
     this.address = Container.of(id).get(Address)
   }
 }
@@ -80,7 +68,7 @@ export class Vechain extends BaseEvm {}
 export class XinFin extends BaseEvm {}
 export class Chiliz extends NotificationEvm {}
 
-export class HorizenEon extends FaucetEvm {
+export class HorizenEon extends BaseEvm {
   address: Address
 
   constructor(id: string) {
