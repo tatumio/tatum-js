@@ -98,7 +98,6 @@ export enum Currency {
   CHZ = 'CHZ',
   ISLM = 'ISLM',
   FLR = 'FLR',
-  SGB = 'SGB',
 }
 
 export const ERC20_CURRENCIES = [
@@ -155,17 +154,8 @@ export const MATIC20_CURRENCIES = [
   Currency.USDT_MATIC.toString(),
 ]
 
-export const ETH_BASED_CURRENCIES = [
-  Currency.ETH.toString(),
-  ...ERC20_CURRENCIES,
-]
+export const ETH_BASED_CURRENCIES = [Currency.ETH.toString(), ...ERC20_CURRENCIES]
 
-export const MATIC_BASED_CURRENCIES = [
-  Currency.MATIC.toString(),
-  ...MATIC20_CURRENCIES,
-]
+export const MATIC_BASED_CURRENCIES = [Currency.MATIC.toString(), ...MATIC20_CURRENCIES]
 
-export const BSC_BASED_CURRENCIES = [
-  Currency.BSC.toString(),
-  ...BEP20_CURRENCIES,
-]
+export const BSC_BASED_CURRENCIES = [Currency.BSC.toString(), ...BEP20_CURRENCIES]
