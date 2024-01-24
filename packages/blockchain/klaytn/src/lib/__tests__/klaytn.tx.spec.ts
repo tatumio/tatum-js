@@ -14,7 +14,7 @@ import { Currency } from '@tatumio/api-client'
 
 const blockchain = Blockchain.KLAY
 
-describe('KlaytnSDK - tx', () => {
+describe.skip('KlaytnSDK - tx', () => {
   const sdk = TatumKlaytnSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
 

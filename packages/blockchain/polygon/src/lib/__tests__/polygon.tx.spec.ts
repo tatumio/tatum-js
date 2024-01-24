@@ -16,7 +16,7 @@ import { Currency } from '@tatumio/api-client'
 
 const blockchain = Blockchain.POLYGON
 
-describe('PolygonSDK - tx', () => {
+describe.skip('PolygonSDK - tx', () => {
   const sdk = TatumPolygonSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
 

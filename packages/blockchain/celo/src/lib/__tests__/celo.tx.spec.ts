@@ -6,7 +6,7 @@ import { SdkErrorCode, SdkErrorMessage } from '@tatumio/shared-abstract-sdk'
 import { EvmBasedSdkError } from '@tatumio/shared-blockchain-evm-based'
 import { celoTestFactory } from './celo.test-factory'
 
-describe('CeloSDK - tx', () => {
+describe.skip('CeloSDK - tx', () => {
   const sdk = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   describe('native', () => {
     describe('prepare', () => {

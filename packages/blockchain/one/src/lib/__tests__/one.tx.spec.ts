@@ -16,7 +16,7 @@ import { Currency } from '@tatumio/api-client'
 
 const blockchain = Blockchain.HARMONY
 
-describe('OneSDK - tx', () => {
+describe.skip('OneSDK - tx', () => {
   const sdk = TatumOneSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
 

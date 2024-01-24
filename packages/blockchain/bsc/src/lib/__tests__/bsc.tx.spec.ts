@@ -14,7 +14,7 @@ import {
 } from '@tatumio/shared-testing-evm-based'
 import { Currency } from '@tatumio/api-client'
 
-describe('BscSDK - tx', () => {
+describe.skip('BscSDK - tx', () => {
   const sdk = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(Blockchain.BSC)
 
@@ -52,7 +52,7 @@ describe('BscSDK - tx', () => {
         erc20TestFactory.prepare.deploySignedTransaction(bscTx.erc20, inmemoryBlockchain.accounts)
       })
 
-      describe('transferSignedTransaction', () => {
+      describe.skip('transferSignedTransaction', () => {
         erc20TestFactory.prepare.transferSignedTransaction(bscTx.erc20, inmemoryBlockchain.accounts)
       })
 

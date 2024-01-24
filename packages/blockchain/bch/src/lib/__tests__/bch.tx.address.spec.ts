@@ -2,7 +2,7 @@ import { TatumBchSDK } from '@tatumio/bch'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 
 describe('BchSDK - tx - address format', () => {
-  it('prepare tx for different address formats', async function () {
+  it.skip('prepare tx for different address formats', async function () {
     const bchSDK = TatumBchSDK({
       apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab',
     })

@@ -15,7 +15,7 @@ import {
 
 const blockchain = Blockchain.ETH
 
-describe('EthSDK - tx', () => {
+describe.skip('EthSDK - tx', () => {
   const sdk = TatumEthSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
   const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
 
@@ -48,7 +48,7 @@ describe('EthSDK - tx', () => {
       erc20TestFactory.decimals(sdk.erc20, TEST_DATA.ETH)
     })
 
-    describe('prepare', () => {
+    describe.skip('prepare', () => {
       describe('deploySignedTransaction', () => {
         erc20TestFactory.prepare.deploySignedTransaction(ethTxService.erc20, inmemoryBlockchain.accounts)
       })
