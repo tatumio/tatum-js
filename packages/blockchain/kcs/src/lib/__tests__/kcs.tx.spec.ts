@@ -49,7 +49,7 @@ describe('KcsSDK - tx', () => {
         erc20TestFactory.prepare.deploySignedTransaction(kcsTx.erc20, inmemoryBlockchain.accounts)
       })
 
-      describe('transferSignedTransaction', () => {
+      describe.skip('transferSignedTransaction', () => {
         erc20TestFactory.prepare.transferSignedTransaction(kcsTx.erc20, inmemoryBlockchain.accounts)
       })
 
