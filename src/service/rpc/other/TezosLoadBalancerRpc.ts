@@ -4,7 +4,8 @@ import { JsonRpcCall, JsonRpcResponse } from '../../../dto'
 import { GetI } from '../../../dto/GetI'
 import { PostI } from '../../../dto/PostI'
 import { Utils } from '../../../util'
-import { LoadBalancer } from '../generic'
+// Need to import like this to keep browser working
+import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractTezosRpc } from './AbstractTezosRpc'
 
 @Service({

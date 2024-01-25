@@ -3,6 +3,7 @@ import { Container, Service } from 'typedi'
 import { EvmBasedRpcSuite, JsonRpcCall, JsonRpcResponse } from '../../../dto'
 import { Logger } from '../../../service/logger/logger.types'
 import { LOGGER, Utils } from '../../../util'
+// Need to import like this to keep browser working
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractEvmRpc } from './AbstractEvmRpc'
 

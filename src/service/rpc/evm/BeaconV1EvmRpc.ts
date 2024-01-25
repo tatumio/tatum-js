@@ -2,7 +2,7 @@
 import { Container, Service } from 'typedi'
 // Need to import like this to keep browser working
 import { GetI } from '../../../dto/GetI'
-import { LoadBalancer } from '../generic'
+import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractBeaconV1EvmRpc } from './AbstractBeaconV1EvmRpc'
 
 @Service({

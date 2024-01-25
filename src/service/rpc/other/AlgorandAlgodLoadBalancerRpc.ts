@@ -2,7 +2,8 @@
 import { Container, Service } from 'typedi'
 import { GetI } from '../../../dto/GetI'
 import { PostI } from '../../../dto/PostI'
-import { LoadBalancer } from '../generic'
+// Need to import like this to keep browser working
+import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractAlgorandAlgodRpc } from './AbstractAlgorandAlgodRpc'
 
 @Service({
