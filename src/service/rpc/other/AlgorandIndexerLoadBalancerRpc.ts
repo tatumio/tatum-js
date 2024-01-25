@@ -1,7 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Container, Service } from 'typedi'
 import { GetI } from '../../../dto/GetI'
-import { LoadBalancer } from '../generic'
+// Need to import like this to keep browser working
+import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractAlgorandIndexerRpc } from './AbstractAlgorandIndexerRpc'
 
 @Service({

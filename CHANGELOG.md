@@ -1,3 +1,9 @@
+## [4.2.4] - 2024.1.25
+
+### Fixed
+
+- Fix import of LoadBalancer to keep it working in browser
+
 ## [4.2.3] - 2024.1.23
 
 ### Updated

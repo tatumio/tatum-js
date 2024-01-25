@@ -4,7 +4,8 @@ import { Container, Service } from 'typedi'
 import { JsonRpcResponse } from '../../../dto'
 import { PostI } from '../../../dto/PostI'
 import { BnbRpcSuite, JsonBnbRpcCall } from '../../../dto/rpc/BnbRpcSuite'
-import { LoadBalancer } from '../generic'
+// Need to import like this to keep browser working
+import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractBnbRpc } from './AbstractBnbRpc'
 
 @Service({

@@ -2,7 +2,7 @@
 import { Container, Service } from 'typedi'
 import { EvmBasedBeaconRpcSuite } from '../../../dto'
 // Need to import like this to keep browser working
-import { LoadBalancer } from '../generic'
+import { LoadBalancer } from '../generic/LoadBalancer'
 import { BeaconV1EvmRpc } from './BeaconV1EvmRpc'
 import { EvmArchiveLoadBalancerRpc } from './EvmArchiveLoadBalancerRpc'
 

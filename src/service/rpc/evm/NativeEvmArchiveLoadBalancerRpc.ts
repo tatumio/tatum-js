@@ -4,6 +4,7 @@ import { JsonRpcCall, JsonRpcResponse, NATIVE_PREFIX_MAPPING, Network } from '..
 import { NativeEvmBasedRpcSuite } from '../../../dto/rpc/NativeEvmBasedRpcInterface'
 import { Logger } from '../../../service/logger/logger.types'
 import { CONFIG, LOGGER, Utils } from '../../../util'
+// Need to import like this to keep browser working
 import { LoadBalancer } from '../generic/LoadBalancer'
 import { AbstractNativeEvmRpc } from './AbstractNativeEvmRpc'
 import { EvmUtils } from './EvmUtils'
