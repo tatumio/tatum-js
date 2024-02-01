@@ -6,13 +6,9 @@ import type { CustomFee } from './CustomFee';
 
 export type TransferNft = {
     /**
-     * If token to be transferred is Royalty NFT token, this is a value to be paid as a cashback to the authors of the token.
-     */
-    value?: string;
-    /**
      * The blockchain to work with
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'ZEN' | 'FLR';
     /**
      * Blockchain address to send NFT token to
      */
@@ -25,18 +21,6 @@ export type TransferNft = {
      * Address of NFT token
      */
     contractAddress: string;
-    /**
-     * True if the contract is provenance type
-     */
-    provenance?: boolean;
-    /**
-     * data you want to store with transaction, optional and valid only if provenance contract
-     */
-    provenanceData?: string;
-    /**
-     * current price of the token, valid only for provenance
-     */
-    tokenPrice?: string;
     /**
      * Private key of sender address. Private key, or signature Id must be present.
      */

@@ -6,10 +6,6 @@ import type { CustomFee } from './CustomFee';
 
 export type TransferNftCelo = {
     /**
-     * If token to be transferred is Royalty NFT token, this is a value to be paid as a cashback to the authors of the token.
-     */
-    value?: string;
-    /**
      * The blockchain to work with
      */
     chain: 'CELO';
@@ -21,18 +17,6 @@ export type TransferNftCelo = {
      * ID of the token.
      */
     tokenId: string;
-    /**
-     * True if the contract is provenance type
-     */
-    provenance?: boolean;
-    /**
-     * data you want to store with transaction, optional and valid only if provenance contract
-     */
-    provenanceData?: string;
-    /**
-     * current price of the token, valid only for provenance
-     */
-    tokenPrice?: string;
     /**
      * Address of NFT token
      */

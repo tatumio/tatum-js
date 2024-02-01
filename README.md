@@ -218,7 +218,7 @@ All examples of SDK usage will be found after completion at https://github.com/t
   <summary style='font-size: 16px; font-weight: bold'>Usage with create-react-app (which uses Webpack 5)</summary>
 
 Webpack v5 introduced breaking changes to Web3 library used in Tatum blockchain services. To enable Tatum SDK in React apps you need to follow workaround as per [stackoverflow discussion](https://stackoverflow.com/questions/66952972/cannot-add-web3-to-react-project)
-
+``
 #### 1. Install additional dependencies
 
 ```console
@@ -273,9 +273,42 @@ yarn add -D @esbuild-plugins/node-modules-polyfill
 
 ## Contributing
 
-Contributions to the Tatum SDK are welcome. Please ensure
-that you have tested your changes with a local client and have added unit test
-coverage for your code.
+### Development - Add a new chain (EVM)
+
+#### 1. Pull repository
+
+```console
+$ git clone https://github.com/tatumio/tatum-js.git && cd tatum-js
+```
+
+#### 2. Install root dependencies
+
+```console
+$ yarn
+```
+
+#### 3. Add chain to the core package
+
+Add currency constant to the `packages/api-client/src/lib/models/Currency.ts`.
+
+Add blockchain constant to the `packages/shared/core/src/lib/models/Blockchain.ts`.
+
+#### 4. Create a subpackage
+
+Following command will generate whole structure (files and directories).
+
+```console
+$ yarn add:chain
+```
+
+As a template is used `blockchain-evm` generator in automation package.
+
+#### 5. Generate API client from CoreApi
+Copy new api_schema.json from Tatum API and run the following command:
+
+```console
+$ yarn generate:api
+```
 
 ### Bugs and feature requests
 

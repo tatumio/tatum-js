@@ -23,7 +23,6 @@ import {
   TransferMultiTokenBatchCelo,
   TransferMultiTokenCelo,
   TransferNftCelo,
-  UpdateCashbackValueForAuthorNftCelo,
 } from '@tatumio/api-client'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
 import { BigNumber as BN } from '@ethersproject/bignumber'
@@ -32,7 +31,6 @@ import { SdkErrorCode, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { Blockchain, httpHelper } from '@tatumio/shared-core'
 import { Erc20Token, EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
-import { Eth } from 'web3-eth'
 import Web3 from 'web3'
 
 export interface CeloTransactionConfig {
@@ -62,10 +60,6 @@ export type ChainBurnErc721Celo = WithoutChain<FromPrivateKeyOrSignatureId<BurnN
 export type ChainTransferErc721Celo = WithoutChain<FromPrivateKeyOrSignatureId<TransferNftCelo>>
 
 export type ChainAddMinterErc721Celo = FromPrivateKeyOrSignatureId<WithoutChain<AddNftMinter>>
-
-export type ChainUpdateCashbackErc721Celo = WithoutChain<
-  FromPrivateKeyOrSignatureId<UpdateCashbackValueForAuthorNftCelo>
->
 
 export type ChainDeployErc721Celo = WithoutChain<FromPrivateKeyOrSignatureId<DeployNftCelo>>
 

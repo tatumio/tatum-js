@@ -6,7 +6,7 @@ import type { CallKcsSmartContractMethod } from '../models/CallKcsSmartContractM
 import type { CallKcsSmartContractMethodKMS } from '../models/CallKcsSmartContractMethodKMS';
 import type { CallKcsSmartContractReadMethod } from '../models/CallKcsSmartContractReadMethod';
 import type { Data } from '../models/Data';
-import type { EthBlock } from '../models/EthBlock';
+import type { KcsBlock } from '../models/KcsBlock';
 import type { KcsTx } from '../models/KcsTx';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
@@ -159,12 +159,12 @@ export class KuCoinService {
      * <p>Get Kcs block by block hash or block number.</p>
      *
      * @param hash Block hash or block number
-     * @returns EthBlock OK
+     * @returns KcsBlock OK
      * @throws ApiError
      */
     public static kcsGetBlock(
         hash: string,
-    ): CancelablePromise<EthBlock> {
+    ): CancelablePromise<KcsBlock> {
         return __request({
             method: 'GET',
             path: `/v3/kcs/block/${hash}`,

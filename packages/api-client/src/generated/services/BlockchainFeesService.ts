@@ -16,6 +16,7 @@ import type { EthGasEstimation } from '../models/EthGasEstimation';
 import type { EthGasEstimationBatch } from '../models/EthGasEstimationBatch';
 import type { FeeBtcBased } from '../models/FeeBtcBased';
 import type { FeeEvmBased } from '../models/FeeEvmBased';
+import type { FlareEstimateGas } from '../models/FlareEstimateGas';
 import type { GasEstimated } from '../models/GasEstimated';
 import type { KcsEstimateGas } from '../models/KcsEstimateGas';
 import type { KlaytnEstimateGas } from '../models/KlaytnEstimateGas';
@@ -33,6 +34,7 @@ export class BlockchainFeesService {
      * Get the recommended fee/gas price for a blockchain
      * <p><b>1 credit per API call</b></p>
      * <p>Get the recommended fee/gas price for a blockchain.</p>
+     * <p>Fee is in satoshis(meaning currency(BTC, DOGE,... / 100 000 000) per byte
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>Bitcoin</li>
@@ -343,6 +345,33 @@ export class BlockchainFeesService {
         return __request({
             method: 'POST',
             path: `/v3/kcs/gas`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Estimate the fee for a KuCoin Community Chain transaction
+     * <p><b>2 credits per API call</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for a Flare transaction.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/KuCoin#operation/FlareBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
+     *
+     * @param requestBody
+     * @returns GasEstimated OK
+     * @throws ApiError
+     */
+    public static flareEstimateGas(
+        requestBody: FlareEstimateGas,
+    ): CancelablePromise<GasEstimated> {
+        return __request({
+            method: 'POST',
+            path: `/v3/flare/gas`,
             body: requestBody,
             mediaType: 'application/json',
             errors: {

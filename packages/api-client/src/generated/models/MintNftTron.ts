@@ -34,12 +34,4 @@ export type MintNftTron = {
      * The private key of the blockchain address that will pay the fee for the transaction
      */
     fromPrivateKey: string;
-    /**
-     * The blockchain addresses where the royalties will be sent every time the minted NFT is transferred; the royalties are paid in the native blockchain currency, TRX
-     */
-    authorAddresses?: Array<string>;
-    /**
-     * The amounts of the royalties that will be paid to the authors of the minted NFT every time the NFT is transferred; the amount is defined as a fixed amount of the native blockchain currency
-     */
-    cashbackValues?: Array<string>;
 }

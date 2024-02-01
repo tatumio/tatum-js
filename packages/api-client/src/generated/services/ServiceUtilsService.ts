@@ -35,7 +35,6 @@ export class ServiceUtilsService {
      */
     public static getVersion(): CancelablePromise<{
         version?: string;
-        status?: string;
         testnet?: boolean;
         planName?: string;
         planCode?: string;

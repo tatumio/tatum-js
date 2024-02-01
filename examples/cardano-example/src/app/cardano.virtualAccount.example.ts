@@ -50,7 +50,6 @@ export async function cardanoVirtualAccountExample() {
     xpub,
     index: 0,
     fee: '0.1',
-    attr: addressToFund,
     address: recipientAddress,
   })
 

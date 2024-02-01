@@ -3,6 +3,6 @@
 /* eslint-disable */
 
 /**
- * Type of the token
+ * Enum representing the type of token.
  */
-export type TokenType = string;
+export type TokenType = 'native' | 'fungible' | 'nft' | 'multitoken';

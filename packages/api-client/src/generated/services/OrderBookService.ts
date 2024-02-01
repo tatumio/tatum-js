@@ -115,15 +115,20 @@ export class OrderBookService {
                      * <p>Obtain data from the closed trades for entering in the chart. Time interval is set between <i>from</i> and <i>to</i> and there is defined time frame. There can be obtained at most 200 time points in the time interval.</p>
                      *
                      * @param requestBody
+                     * @param direction Direction of sorting
                      * @returns Chart OK
                      * @throws ApiError
                      */
                     public static chartRequest(
                         requestBody: ChartRequest,
+                        direction?: 'asc' | 'desc',
                     ): CancelablePromise<Array<Chart>> {
                         return __request({
                             method: 'POST',
                             path: `/v3/trade/chart`,
+                            query: {
+                                'direction': direction,
+                            },
                             body: requestBody,
                             mediaType: 'application/json',
                             errors: {

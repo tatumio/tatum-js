@@ -130,7 +130,7 @@ export class GasPumpService {
          * <ul>
          * <li>On the <b>mainnet</b>, you have to have a <a href="https://tatum.io/pricing" target="_blank">paid pricing plan</a>.<br/>
          * Tatum pays the fees from its own blockchain address. Then, the fee amount paid by Tatum is converted to the number of credits, and these credits are deducted from the monthly credit allowance of your paid pricing plan. The transaction fees and the corresponding numbers of credits deducted from your allowance vary depending on what blockchain you activate the addresses.</li>
-         * <li>On the <b>testnet</b>, no credits are deducted from the monthly credit allowance. You can activate gas pump addresses regardless of your pricing plan.</li>
+         * <li>On the <b>testnet</b>, only one credit is deducted from the monthly credit allowance for transaction fee. You can activate gas pump addresses regardless of your pricing plan.</li>
          * </ul>
          * </li>
          * </ul>

@@ -7,9 +7,9 @@ import type { CallPolygonSmartContractMethodCaller } from '../models/CallPolygon
 import type { CallPolygonSmartContractMethodKMS } from '../models/CallPolygonSmartContractMethodKMS';
 import type { CallPolygonSmartContractReadMethod } from '../models/CallPolygonSmartContractReadMethod';
 import type { Data } from '../models/Data';
-import type { EthBlock } from '../models/EthBlock';
 import type { GeneratedAddressMatic } from '../models/GeneratedAddressMatic';
 import type { MaticBalance } from '../models/MaticBalance';
+import type { PolygonBlock } from '../models/PolygonBlock';
 import type { PolygonTx } from '../models/PolygonTx';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
@@ -157,12 +157,12 @@ export class PolygonService {
      * <p>Get Polygon block by block hash or block number.</p>
      *
      * @param hash Block hash or block number
-     * @returns EthBlock OK
+     * @returns PolygonBlock OK
      * @throws ApiError
      */
     public static polygonGetBlock(
         hash: string,
-    ): CancelablePromise<EthBlock> {
+    ): CancelablePromise<PolygonBlock> {
         return __request({
             method: 'GET',
             path: `/v3/polygon/block/${hash}`,
@@ -222,7 +222,9 @@ export class PolygonService {
     }
 
     /**
+     * @deprecated
      * Get Polygon transactions by address
+     * <p>This endpoint is deprecated. Do not use it.</p>
      * <b><p>1 credit per API call</p></b>
      * <p>Get Polygon transactions by address. This includes incoming and outgoing transactions for the address.</p>
      *

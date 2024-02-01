@@ -214,7 +214,9 @@ export class CeloService {
     }
 
     /**
+     * @deprecated
      * Get Celo transactions by address
+     * <p>This endpoint is deprecated. Do not use it.</p>
      * <p><b>1 credit per API call</b></p>
      * <p>Get Celo transactions by address. This includes incoming and outgoing transactions for the address.</p>
      *

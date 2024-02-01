@@ -28,7 +28,7 @@ export type DogeTxByAddress = {
     /**
      * Time of the transaction.
      */
-    ts?: number;
+    time?: number;
     /**
      * Index of the transaction in the block.
      */

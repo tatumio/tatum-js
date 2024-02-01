@@ -1,0 +1,2 @@
+export * from './lib/<%= name %>.sdk'
+export * from './lib/services/<%= name %>.tx'

@@ -34,7 +34,6 @@ export async function bscNftExpressExample() {
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   const nftTransferred = (await bscSDK.nft.transferNFT({
     chain: 'BSC',
-    value: '1',
     to,
     tokenId: '1000',
     contractAddress,

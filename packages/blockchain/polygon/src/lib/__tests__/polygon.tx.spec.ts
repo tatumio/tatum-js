@@ -119,28 +119,8 @@ describe.skip('PolygonSDK - tx', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
 
-      describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
-      })
-
-      describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
-      })
-
       describe('mintMultipleSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
-      })
-
-      describe('updateCashbackForAuthorSignedTransaction', () => {
-        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
-      })
-
-      describe('mintProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
-      })
-
-      describe('mintMultipleProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(sdk.nft, TEST_DATA.POLYGON)
       })
     })
   })

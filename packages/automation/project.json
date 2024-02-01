@@ -1,0 +1,61 @@
+{
+  "name": "automation",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/automation/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/automation",
+        "main": "packages/automation/src/index.ts",
+        "tsConfig": "packages/automation/tsconfig.lib.json",
+        "assets": [
+          "packages/automation/*.md",
+          {
+            "input": "./packages/automation/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/automation/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./packages/automation",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./packages/automation",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/automation/**/*.ts",
+          "packages/automation/generators.json",
+          "packages/automation/executors.json",
+          "packages/automation/package.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/automation"],
+      "options": {
+        "jestConfig": "packages/automation/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": []
+}

@@ -95,6 +95,7 @@ export const TEST_DATA = {
   TRON: TRON_TEST_DATA,
   ALGO: ALGO_TEST_DATA,
   EGLD: EGLD_TEST_DATA,
+  FLR: ETH_TEST_DATA,
 }
 
 export function expectHexString(value: string): void {

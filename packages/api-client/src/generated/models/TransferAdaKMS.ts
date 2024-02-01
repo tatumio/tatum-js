@@ -33,7 +33,7 @@ export type TransferAdaKMS = {
     /**
      * Extended public key (xpub) of the wallet associated with the accounts. XPub or attr must be used with signatureId.
      */
-    xpub?: string;
+    xpub: string;
     /**
      * Derivation index of sender address.
      */

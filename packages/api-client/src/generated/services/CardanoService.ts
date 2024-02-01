@@ -229,8 +229,6 @@ export class CardanoService {
 
     /**
      * Send ADA to Cardano addresses
-     * <p><b>Cardano transfers are in maintenance mode. For the time being, it's not possible to perform blockchain transaction due to a recent hard fork. We are working on the fix for this. Thank you for your patience.</b></p><br/>
-     * <p>You can work with Cardano by <a href="https://apidoc.tatum.io/tag/Node-RPC#operation/NodeJsonPostRpcDriver" target="_blank">connecting directly to a blockchain node provided by Tatum</a>.</b></p><br/>
      * <p><b>2 credits per API call</b></p>
      * <p>Send ADA to blockchain addresses.</p>
      * <p>Cardano transactions are based on UTXOs. "UTXO" stands for "Unspent Transaction Output". A UTXO is the amount of ADA that remains at a Cardano address after a cryptocurrency transaction involving this address has been performed. The UTXO can then be used as input for a new cryptocurrency transaction. For more information about the UTXO, see the <a href="https://developer.bitcoin.org/devguide/transactions.html" target="_blank">Bitcoin user documentation</a>.</p>

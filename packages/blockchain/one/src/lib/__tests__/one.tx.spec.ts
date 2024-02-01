@@ -59,14 +59,6 @@ describe.skip('OneSDK - tx', () => {
       xdescribe('burnSignedTransaction', () => {
         erc20TestFactory.prepare.burnSignedTransaction(oneTx.erc20, TEST_DATA.ONE)
       })
-
-      describe('mintProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.ONE)
-      })
-
-      describe('mintMultipleProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(sdk.nft, TEST_DATA.ONE)
-      })
     })
   })
 
@@ -141,20 +133,8 @@ describe.skip('OneSDK - tx', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
 
-      describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.ONE)
-      })
-
-      describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.ONE)
-      })
-
       describe('mintMultipleSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.ONE)
-      })
-
-      describe('updateCashbackForAuthorSignedTransaction', () => {
-        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(sdk.nft, TEST_DATA.ONE)
       })
     })
   })

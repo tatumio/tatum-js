@@ -64,8 +64,7 @@ export const egldUtils = {
   },
 
   getClient: (provider?: string) => {
-    const client = provider || ELROND_V3_ENDPOINT()
-    return client
+    return provider || ELROND_V3_ENDPOINT()
   },
 
   getConfig: async () => {
@@ -75,8 +74,8 @@ export const egldUtils = {
         `${gasStationUrl}/d341d8f5-5f6a-43ca-a57c-c67839d1a1cb/network/config`,
       )
       return response?.data
-    } catch (e) {
-      console.error(e)
+    } catch (e: any) {
+      console.error(e.message)
     }
     return null
   },

@@ -45,6 +45,7 @@ import type { Erc20Balance } from '../models/Erc20Balance';
 import type { Erc20BalanceForAddress } from '../models/Erc20BalanceForAddress';
 import type { FungibleTx } from '../models/FungibleTx';
 import type { SignatureId } from '../models/SignatureId';
+import type { TestnetType } from '../models/TestnetType';
 import type { TransactionHash } from '../models/TransactionHash';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
@@ -68,6 +69,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Polygon</li>
      * <li>Solana</li>
      * <li>XinFin</li>
+     * <li>Flare</li>
      * </ul>
      * <p>You can review the code of a deployed smart contract <a href="https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/token.sol" target="_blank">here</a>.</p>
      * <p><b>Signing a transaction</b><br/>
@@ -76,19 +78,24 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static erc20Deploy(
         requestBody: (ChainDeployErc20 | ChainDeploySolanaSpl | ChainDeployCeloErc20 | ChainDeployKcsErc20 | ChainDeployAlgoErc20 | ChainDeployErc20KMS | ChainDeploySolanaSplKMS | ChainDeployCeloErc20KMS | ChainDeployKcsErc20KMS | ChainDeployAlgoErc20KMS),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/token/deploy`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -115,6 +122,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>XinFin</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Signing a transaction</b><br/>
      * When minting fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -122,19 +130,24 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static erc20Mint(
         requestBody: (ChainMintErc20 | ChainMintErc20KMS | ChainMintKcsErc20 | ChainMintKcsErc20KMS | ChainMintCeloErc20 | ChainMintCeloErc20KMS),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/token/mint`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -162,6 +175,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>XinFin</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Signing a transaction</b><br/>
      * When burning fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -169,19 +183,24 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static erc20Burn(
         requestBody: (ChainBurnErc20 | ChainBurnErc20KMS | ChainBurnKcsErc20 | ChainBurnKcsErc20KMS | ChainBurnCeloErc20 | ChainBurnCeloErc20KMS | ChainBurnAlgoErc20 | ChainBurnAlgoErc20KMS),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/token/burn`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -206,6 +225,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Harmony</li>
      * <li>Klaytn</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Signing a transaction</b><br/>
      * When allowing a blockchain address to transfer and burn fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -213,19 +233,24 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static erc20Approve(
         requestBody: (ApproveErc20 | ApproveErc20KMS | ApproveCeloErc20 | ApproveCeloErc20KMS),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/token/approve`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -255,6 +280,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Polygon</li>
      * <li>Solana</li>
      * <li>XinFin</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Transferring fungible tokens on Algorand</b><br/>
      * On Algorand, the recipient has to agree in advance to receive your fungible tokens because Algorand charges users for storing the tokens on their addresses, and an Algorand blockchain address by default does not receive the tokens unless explicitly agreed. Before transferring the fungible tokens, make sure that the recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">has agreed to receive the NFT</a> to their address.</p>
@@ -275,19 +301,24 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static erc20Transfer(
         requestBody: (ChainTransferEthErc20 | ChainTransferSolanaSpl | ChainTransferBscBep20 | ChainTransferCeloErc20Token | ChainTransferAlgoErc20 | ChainTransferKcsEthErc20 | ChainTransferEthErc20KMS | ChainTransferSolanaSplKMS | ChainTransferBscBep20KMS | ChainTransferCeloErc20TokenKMS | ChainTransferAlgoErc20KMS | ChainTransferKcsEthErc20KMS),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/blockchain/token/transaction`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -368,26 +399,32 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Polygon</li>
      * <li>Solana</li>
      * <li>XinFin</li>
+     * <li>Flare</li>
      * </ul>
      *
      * @param chain Network name
      * @param address The blockchain address that you want to get the token balance of
      * @param contractAddress The address of the fungible token smart contract
-     * @param xTestnetType Type of Ethereum testnet. Defaults to Sepolia. Valid only for ETH invocations for testnet API Key. For mainnet API Key, this value is ignored.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns Erc20Balance OK
      * @throws ApiError
      */
     public static erc20GetBalance(
-        chain: 'CELO' | 'ALGO' | 'MATIC' | 'ETH' | 'BSC' | 'XDC' | 'KLAY' | 'ONE' | 'EGLD' | 'KCS' | 'SOL',
+        chain: 'CELO' | 'ALGO' | 'MATIC' | 'ETH' | 'BSC' | 'XDC' | 'KLAY' | 'ONE' | 'EGLD' | 'KCS' | 'SOL' | 'FLR',
         address: string,
         contractAddress: string,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<Erc20Balance> {
         return __request({
             method: 'GET',
             path: `/v3/blockchain/token/balance/${chain}/${contractAddress}/${address}`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,

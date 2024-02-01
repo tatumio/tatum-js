@@ -90,28 +90,8 @@ describe('KcsSDK - tx', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.KCS)
       })
 
-      describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.KCS)
-      })
-
-      describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.KCS)
-      })
-
       describe('mintMultipleSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.KCS)
-      })
-
-      describe('updateCashbackForAuthorSignedTransaction', () => {
-        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(sdk.nft, TEST_DATA.KCS)
-      })
-
-      describe('mintProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.KCS)
-      })
-
-      describe('mintMultipleProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(sdk.nft, TEST_DATA.KCS)
       })
     })
   })

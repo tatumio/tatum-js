@@ -4,10 +4,6 @@
 
 export type TransferNftTron = {
     /**
-     * If token to be transferred is Royalty NFT token, this is a value to be paid as a cashback to the authors of the token.
-     */
-    value?: string;
-    /**
      * The blockchain to work with
      */
     chain: 'TRON';

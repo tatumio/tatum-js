@@ -1,0 +1,77 @@
+import { evmBasedMarketplace, evmBasedSdk } from '@tatumio/shared-blockchain-evm-based'
+import { Blockchain, Web3Request, Web3Response } from '@tatumio/shared-core'
+import {
+  BlockchainFeesService,
+  BlockchainUtilsService,
+  <%= firstLetterUpperCaseName %>Service,
+  FungibleTokensErc20OrCompatibleService,
+} from '@tatumio/api-client'
+import { <%= name %>Web3 } from './services/<%= name %>.web3'
+import { <%= name %>KmsService } from './services/<%= name %>.kms'
+import { <%= name %>Tx } from './services/<%= name %>.tx'
+import { abstractSdkNft, SDKArguments } from '@tatumio/shared-abstract-sdk'
+import { <%= name %>AuctionService } from './services/<%= name %>.auction'
+import { virtualAccountService } from './services/<%= name %>.virtualAccount'
+
+const blockchain = Blockchain.<%= blockchain %>
+
+export const Tatum<%= firstLetterUpperCaseName %>SDK = (args: SDKArguments) => {
+  const web3 = <%= name %>Web3({
+    blockchain,
+    apiCalls: {
+      getFee: BlockchainFeesService.getBlockchainFee,
+    },
+  })
+  const api = <%= firstLetterUpperCaseName %>Service
+  const txService = <%= name %>Tx({ blockchain, web3 })
+  const virtualAccount = virtualAccountService({ blockchain, web3 })
+  const evmSdk = evmBasedSdk({ ...args, blockchain, web3 })
+  const { nft, storage } = abstractSdkNft()
+
+  return {
+    ...evmSdk,
+    kms: <%= name %>KmsService({ blockchain, web3 }),
+    transaction: txService.native,
+    erc20: {
+      ...txService.erc20,
+      getErc20TransactionByAddress: FungibleTokensErc20OrCompatibleService.erc20GetTransactionByAddress,
+      getErc20AccountBalance: FungibleTokensErc20OrCompatibleService.erc20GetBalance,
+      getErc20AccountBalances: FungibleTokensErc20OrCompatibleService.erc20GetBalanceAddress,
+    },
+    nft: {
+      ...txService.erc721,
+      ...nft,
+    },
+    storage,
+    multiToken: txService.multiToken,
+    smartContract: txService.smartContract,
+    custodial: txService.custodial,
+    gasPump: txService.gasPump,
+    marketplace: {
+      ...evmBasedMarketplace({
+        blockchain,
+        web3,
+        broadcastFunction: <%= firstLetterUpperCaseName %>Service.<%= name %>Broadcast,
+      }),
+      auction: <%= name %>AuctionService({ blockchain, web3 }),
+    },
+    httpDriver: async (request: Web3Request): Promise<Web3Response> => {
+      return api.<%= name %>Web3Driver(args.apiKey, { ...request, jsonrpc: '2.0' })
+    },
+    blockchain: {
+      broadcast: <%= firstLetterUpperCaseName %>Service.<%= name %>Broadcast,
+      getTransactionsCount: <%= firstLetterUpperCaseName %>Service.<%= name %>GetTransactionCount,
+      getCurrentBlock: <%= firstLetterUpperCaseName %>Service.<%= name %>GetCurrentBlock,
+      getBlock: <%= firstLetterUpperCaseName %>Service.<%= name %>GetBlock,
+      getBlockchainAccountBalance: <%= firstLetterUpperCaseName %>Service.<%= name %>GetBalance,
+      getTransaction: <%= firstLetterUpperCaseName %>Service.<%= name %>GetTransaction,
+      getAccountTransactions: <%= firstLetterUpperCaseName %>Service.<%= name %>GetTransactionByAddress,
+      estimateGas: BlockchainFeesService.<%= name %>EstimateGas,
+      estimateGasBatch: BlockchainFeesService.<%= name %>EstimateGasBatch,
+      smartContractInvocation: <%= firstLetterUpperCaseName %>Service.<%= name %>BlockchainSmartContractInvocation,
+      smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
+      getInternalTransaction: <%= firstLetterUpperCaseName %>Service.<%= name %>GetInternalTransactionByAddress,
+    },
+    virtualAccount,
+  }
+}

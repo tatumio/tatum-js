@@ -85,21 +85,8 @@ describe.skip('KlaytnSDK - tx', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.KLAYTN)
       })
 
-      describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.KLAYTN)
-      })
-
-      // Invalid JSON RPC response: {"code":1200503,"message":"error from node API; ","requestId":"b993772c-3427-4910-9b21-1a1fc5956f11"}
-      xdescribe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.KLAYTN)
-      })
-
       describe('mintMultipleSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.KLAYTN)
-      })
-
-      describe('updateCashbackForAuthorSignedTransaction', () => {
-        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(sdk.nft, TEST_DATA.KLAYTN)
       })
     })
   })

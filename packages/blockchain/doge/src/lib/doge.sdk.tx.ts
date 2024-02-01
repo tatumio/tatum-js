@@ -74,7 +74,7 @@ export const dogeTransactions = (
             break
           }
           const utxos = await apiCalls.getUTXOsByAddress(
-            options.testnet ? 'doge-testnet' : 'doge-mainnet',
+            options.testnet ? 'doge-testnet' : 'doge',
             item.address,
             amountUtils.fromSatoshis(totalOutputs - totalInputs),
           )

@@ -250,6 +250,8 @@ export class DogecoinService {
      * @param address Address
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
+     * @param blockFrom Only show transactions after this block height.
+     * @param blockTo Only show transactions before this block height.
      * @param txType Type of the transaction to fetch - either incoming, or outgoing. If none is present - all transactions are fetched.
      * @returns DogeTxByAddress OK
      * @throws ApiError
@@ -258,6 +260,8 @@ export class DogecoinService {
         address: string,
         pageSize: number,
         offset?: number,
+        blockFrom?: number,
+        blockTo?: number,
         txType?: 'incoming' | 'outgoing',
     ): CancelablePromise<Array<DogeTxByAddress>> {
         return __request({
@@ -266,6 +270,8 @@ export class DogecoinService {
             query: {
                 'pageSize': pageSize,
                 'offset': offset,
+                'blockFrom': blockFrom,
+                'blockTo': blockTo,
                 'txType': txType,
             },
             errors: {

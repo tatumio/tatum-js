@@ -257,12 +257,13 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
          * @returns transaction data to be broadcast to blockchain.
          */
         freezeTransaction: async (body: TronFreeze, provider?: string) =>
-          prepareFreezeTransaction(body, args.tronWeb, provider), /**
+          prepareFreezeTransaction(body, args.tronWeb, provider)
+        /**
          * Sign Tron Unfreeze balance V2 transaction with private keys locally. Nothing is broadcast to the blockchain.
          * @param body content of the transaction to broadcast
          * @param provider optional provider to enter. if not present, Tatum provider will be used.
          * @returns transaction data to be broadcast to blockchain.
-         */
+         */,
         unfreezeTransaction: async (body: TronFreeze, provider?: string) =>
           prepareUnfreezeTransaction(body, args.tronWeb, provider),
       },
@@ -298,13 +299,14 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
               txData: await prepareFreezeTransaction(body, args.tronWeb, provider),
             })
           }
-        },/**
+        }
+        /**
          * Send Tron Unfreeze balance V2 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
          * This operation is irreversible.
          * @param body content of the transaction to broadcast
          * @param provider
          * @returns transaction id of the transaction in the blockchain
-         */
+         */,
         unfreezeTransaction: async (body: TronFreeze, provider?: string) => {
           if (body.signatureId) {
             return ApiServices.blockchain.tron.tronUnfreeze(body as FreezeTronKMS)
@@ -348,29 +350,6 @@ export const tronTx = (args: { tronWeb: ITronWeb }) => {
           body: TronGenerateCustodialWallet,
           provider?: string,
         ) => prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
-      },
-      send: {
-        /**
-         * Send Tron generate custodial wallet transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-         * This operation is irreversible.
-         * @param body content of the transaction to broadcast
-         * @returns transaction id of the transaction in the blockchain
-         */
-        generateCustodialWalletSignedTransaction: async (
-          body: TronGenerateCustodialWallet,
-          provider?: string,
-        ) => {
-          if (body.signatureId) {
-            return ApiServices.custodial.custodialCreateWallet({
-              ...body,
-              chain: Blockchain.TRON,
-            })
-          } else {
-            return TronService.tronBroadcast({
-              txData: await prepareGenerateCustodialWalletSignedTransaction(body, args.tronWeb, provider),
-            })
-          }
-        },
       },
     },
     gasPump: {
