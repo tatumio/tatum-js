@@ -24,6 +24,7 @@ describe.skip('notification', () => {
     const tatum = await TatumSDK.init<Ethereum>({
       network: Network.ETHEREUM,
       retryCount: 10,
+      verbose: e2eUtil.isVerbose,
       retryDelay: 5000,
       apiKey: {
         v4: process.env.V4_API_KEY_MAINNET,
@@ -45,6 +46,7 @@ describe.skip('notification', () => {
             network,
             retryCount: 10,
             retryDelay: 5000,
+            verbose: e2eUtil.isVerbose,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
             },
@@ -62,6 +64,7 @@ describe.skip('notification', () => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
             retryCount: 10,
+            verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
@@ -80,6 +83,7 @@ describe.skip('notification', () => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
             retryCount: 10,
+            verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
@@ -97,6 +101,7 @@ describe.skip('notification', () => {
         it.each(Object.values(OutgoingFailedNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
+            verbose: e2eUtil.isVerbose,
             retryCount: 10,
             retryDelay: 5000,
             apiKey: {
@@ -116,6 +121,7 @@ describe.skip('notification', () => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
             retryCount: 10,
+            verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
@@ -134,6 +140,7 @@ describe.skip('notification', () => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
             retryCount: 10,
+            verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
@@ -151,6 +158,7 @@ describe.skip('notification', () => {
         it.each(Object.values(InternalTxNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
+            verbose: e2eUtil.isVerbose,
             retryCount: 10,
             retryDelay: 5000,
             apiKey: {
@@ -170,6 +178,7 @@ describe.skip('notification', () => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
             retryCount: 10,
+            verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
@@ -189,6 +198,7 @@ describe.skip('notification', () => {
             network,
             retryCount: 10,
             retryDelay: 5000,
+            verbose: e2eUtil.isVerbose,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
             },
@@ -205,6 +215,7 @@ describe.skip('notification', () => {
         it.each(Object.values(NftNetworks))('OK %s', async (network: Network) => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
+            verbose: e2eUtil.isVerbose,
             retryCount: 10,
             retryDelay: 5000,
             apiKey: {
@@ -225,6 +236,7 @@ describe.skip('notification', () => {
             network,
             retryCount: 10,
             retryDelay: 5000,
+            verbose: e2eUtil.isVerbose,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
             },
@@ -242,6 +254,7 @@ describe.skip('notification', () => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
             retryCount: 10,
+            verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
@@ -260,6 +273,7 @@ describe.skip('notification', () => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
             retryCount: 10,
+            verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
@@ -279,6 +293,7 @@ describe.skip('notification', () => {
             network,
             retryCount: 10,
             retryDelay: 5000,
+            verbose: e2eUtil.isVerbose,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
             },
@@ -295,6 +310,7 @@ describe.skip('notification', () => {
           const tatum = await TatumSDK.init<Ethereum>({
             network,
             retryCount: 10,
+            verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
               v4: process.env.V4_API_KEY_MAINNET,
@@ -313,6 +329,7 @@ describe.skip('notification', () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM,
         retryCount: 10,
+        verbose: e2eUtil.isVerbose,
         retryDelay: 5000,
         apiKey: {
           v4: process.env.V4_API_KEY_MAINNET,
@@ -340,6 +357,7 @@ describe.skip('notification', () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM,
         retryCount: 10,
+        verbose: e2eUtil.isVerbose,
         retryDelay: 5000,
         apiKey: {
           v4: process.env.V4_API_KEY_MAINNET,
@@ -364,6 +382,7 @@ describe.skip('notification', () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM_SEPOLIA,
         retryCount: 10,
+        verbose: e2eUtil.isVerbose,
         retryDelay: 5000,
         apiKey: {
           v4: process.env.V4_API_KEY_MAINNET,
@@ -388,6 +407,7 @@ describe.skip('notification', () => {
       const tatum = await TatumSDK.init<Ethereum>({
         network: Network.ETHEREUM_SEPOLIA,
         retryCount: 10,
+        verbose: e2eUtil.isVerbose,
         retryDelay: 5000,
         apiKey: {
           v4: process.env.V4_API_KEY_MAINNET,
@@ -407,6 +427,7 @@ describe.skip('notification', () => {
     const tatum = await TatumSDK.init<Ethereum>({
       network: Network.ETHEREUM,
       retryCount: 10,
+      verbose: e2eUtil.isVerbose,
       retryDelay: 5000,
       apiKey: {
         v4: process.env.V4_API_KEY_MAINNET,
@@ -429,6 +450,7 @@ describe.skip('notification', () => {
       network: Network.ETHEREUM_SEPOLIA,
       retryCount: 10,
       retryDelay: 5000,
+      verbose: e2eUtil.isVerbose,
       apiKey: {
         v4: process.env.V4_API_KEY_MAINNET,
       },

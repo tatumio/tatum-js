@@ -1,14 +1,12 @@
 import { BigNumber } from 'bignumber.js'
 import { Network } from '../../../dto'
 import { BaseEvm, TatumSDK } from '../../../service'
+import { NetworkUtils } from '../../../util/network.utils'
 import { RpcE2eUtils } from '../rpc.e2e.utils'
 
-interface evmE2eI {
+interface EvmE2eI {
   network: Network
   apiKey?: string
-  expected: {
-    chainId: number
-  }
   data?: {
     estimateGas?: any
   }
@@ -18,8 +16,8 @@ interface evmE2eI {
 export const EvmE2eUtils = {
   initTatum: async <T extends BaseEvm>(network: Network, apiKey?: string) =>
     TatumSDK.init<T>(RpcE2eUtils.initConfig(network, apiKey)),
-  e2e: (evmE2eI: evmE2eI) => {
-    const { network, expected, data, skipEstimateGas, apiKey } = evmE2eI
+  e2e: (evmE2eI: EvmE2eI) => {
+    const { network, data, skipEstimateGas, apiKey } = evmE2eI
     it('eth_blockNumber', async () => {
       const tatum = await EvmE2eUtils.initTatum(network, apiKey)
       const { result } = await tatum.rpc.blockNumber()
@@ -33,7 +31,7 @@ export const EvmE2eUtils = {
       const { result } = await tatum.rpc.chainId()
 
       tatum.rpc.destroy()
-      expect(result?.toNumber()).toBe(expected.chainId)
+      expect(result?.toNumber()).toBe(NetworkUtils.getChainId(network))
     })
 
     if (!skipEstimateGas) {

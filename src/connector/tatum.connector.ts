@@ -1,3 +1,4 @@
+import process from 'process'
 import { Container, Service } from 'typedi'
 import { JsonRpcCall } from '../dto'
 import { ApiVersion } from '../service'
@@ -134,16 +135,21 @@ export class TatumConnector {
     }
   }
 
+  private getBaseUrl() {
+    const config = Container.of(this.id).get(CONFIG)
+    if (process.env.TATUM_URL) {
+      return process.env.TATUM_URL
+    }
+    return config.version === ApiVersion.V3 ? Constant.TATUM_API_URL.V3 : Constant.TATUM_API_URL.V4
+  }
+
   private getUrl<PARAMS extends DefaultParamsType = DefaultParamsType>({
     path,
     params,
     basePath,
   }: GetUrl<PARAMS>) {
     const config = Container.of(this.id).get(CONFIG)
-    const url = new URL(
-      path || '',
-      basePath || (config.version === ApiVersion.V3 ? Constant.TATUM_API_URL.V3 : Constant.TATUM_API_URL.V4),
-    )
+    const url = new URL(path || '', basePath || this.getBaseUrl())
 
     if (params) {
       Object.keys(params)

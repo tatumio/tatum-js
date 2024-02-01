@@ -2,6 +2,7 @@ import { Container, Service } from 'typedi'
 import { TatumConnector } from '../../connector/tatum.connector'
 import { IdDto } from '../../dto'
 import { CONFIG, ErrorUtils, ResponseDto, Utils } from '../../util'
+import { NetworkUtils } from '../../util/network.utils'
 import { TatumConfig } from '../tatum'
 import {
   AddressBasedNotification,
@@ -34,8 +35,11 @@ export class Subscribe {
   ): Promise<ResponseDto<AddressBasedNotification>> {
     return ErrorUtils.tryFail(async () => {
       const chain = Utils.mapNetworkToNotificationChain(this.config.network)
+      const path = NetworkUtils.isAlternateTestnet(this.config.network)
+        ? `subscription?testnetType=${this.config.network}`
+        : 'subscription'
       const { id } = await this.connector.post<IdDto>({
-        path: 'subscription',
+        path,
         body: {
           type: type,
           attr: {

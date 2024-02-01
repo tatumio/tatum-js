@@ -16,6 +16,7 @@ export const AddressEventNetworks = [
   Network.DOGECOIN_TESTNET,
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
   Network.CELO,
@@ -42,6 +43,7 @@ export const IncomingNativeTxNetworks = [
   Network.DOGECOIN_TESTNET,
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
   Network.CELO,
@@ -68,6 +70,7 @@ export const OutgoingNativeTxNetworks = [
   Network.LITECOIN_TESTNET,
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
   Network.CELO,
@@ -90,6 +93,7 @@ export const OutgoingNativeTxNetworks = [
 export const OutgoingFailedNetworks = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
   Network.CELO,
@@ -104,6 +108,7 @@ export const OutgoingFailedNetworks = [
 export const PaidFeeNetworks = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
   Network.CELO,
@@ -122,6 +127,7 @@ export const PaidFeeNetworks = [
 export const FungibleTxNetworks = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
   Network.CELO,
@@ -140,6 +146,7 @@ export const FungibleTxNetworks = [
 export const NftNetworks = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
   Network.CELO,
@@ -158,6 +165,7 @@ export const NftNetworks = [
 export const MultitokenNetworks = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
   Network.CELO,
@@ -171,6 +179,7 @@ export const MultitokenNetworks = [
 export const FailedTxPerBlockNetworks = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
   Network.CELO,
@@ -189,6 +198,7 @@ export const FailedTxPerBlockNetworks = [
 export const ContractAddressLogEventNetworks = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
   Network.CELO,
@@ -202,6 +212,7 @@ export const ContractAddressLogEventNetworks = [
 export const InternalTxNetworks = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
   Network.CELO,
   Network.CELO_ALFAJORES,
   Network.TEZOS,

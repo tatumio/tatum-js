@@ -436,6 +436,7 @@ export const Utils = {
       case Network.ETHEREUM:
       case Network.ETHEREUM_SEPOLIA:
       case Network.ETHEREUM_GOERLI:
+      case Network.ETHEREUM_HOLESKY:
         return AddressEventNotificationChain.ETH
       case Network.POLYGON:
       case Network.POLYGON_MUMBAI:
