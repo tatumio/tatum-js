@@ -1,0 +1,230 @@
+import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
+import { Tatum<%= firstLetterUpperCaseName %>SDK } from '../<%= name %>.sdk'
+import { <%= name %>Tx } from '../services/<%= name %>.tx'
+import { Blockchain } from '@tatumio/shared-core'
+import {
+  custodialTestFactory,
+  erc20TestFactory,
+  erc721TestFactory,
+  ganacheHelper,
+  marketplaceTestFactory,
+  multiTokenTestFactory,
+  nativeTestFactory,
+  smartContractTestFactory,
+} from '@tatumio/shared-testing-evm-based'
+
+const blockchain = Blockchain.<%= blockchain %>
+
+describe.skip('<%= firstLetterUpperCaseName %>SDK - tx', () => {
+  const sdk = Tatum<%= firstLetterUpperCaseName %>SDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+  const inmemoryBlockchain = ganacheHelper.inmemoryBlockchain(blockchain)
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  const <%= name %>TxService = <%= name %>Tx({
+    blockchain: blockchain,
+    web3: {
+      getClient: () => inmemoryBlockchain.web3,
+      async getGasPriceInWei(): Promise<string> {
+        return '250000000'
+      },
+    },
+  })
+
+  beforeEach(async () => {
+    await ganacheHelper.initWeb3(inmemoryBlockchain.web3)
+  })
+
+  describe('transaction', () => {
+    describe('native', () => {
+      nativeTestFactory.prepare.transferSignedTransaction(<%= name %>TxService.native, inmemoryBlockchain.accounts)
+    })
+  })
+
+  describe('erc20', () => {
+    xdescribe('decimals', () => {
+      erc20TestFactory.decimals(sdk.erc20, TEST_DATA.<%= currency %>)
+    })
+
+    describe.skip('prepare', () => {
+      describe('deploySignedTransaction', () => {
+        erc20TestFactory.prepare.deploySignedTransaction(<%= name %>TxService.erc20, inmemoryBlockchain.accounts)
+      })
+
+      describe('transferSignedTransaction', () => {
+        erc20TestFactory.prepare.transferSignedTransaction(<%= name %>TxService.erc20, inmemoryBlockchain.accounts)
+      })
+
+      xdescribe('mintSignedTransaction', () => {
+        erc20TestFactory.prepare.mintSignedTransaction(<%= name %>TxService.erc20, TEST_DATA.<%= currency %>)
+      })
+
+      // TODO:  not applicable for inmemoryBlockchain
+      xdescribe('approveSignedTransaction', () => {
+        erc20TestFactory.prepare.approveSignedTransaction(<%= name %>TxService.erc20, TEST_DATA.<%= currency %>)
+      })
+
+      // TODO:  Returned error: execution reverted
+      xdescribe('burnSignedTransaction', () => {
+        erc20TestFactory.prepare.burnSignedTransaction(sdk.erc20, TEST_DATA.<%= currency %>)
+      })
+    })
+  })
+
+  describe('erc721', () => {
+    jest.setTimeout(99999)
+    describe('prepare', () => {
+      describe('deploySignedTransaction', () => {
+        erc721TestFactory.prepare.deploySignedTransaction(sdk.nft, TEST_DATA.<%= currency %>)
+      })
+
+      describe('transferSignedTransaction', () => {
+        erc721TestFactory.prepare.transferSignedTransaction(sdk.nft, TEST_DATA.<%= currency %>)
+      })
+
+      describe('mintSignedTransaction', () => {
+        erc721TestFactory.prepare.mintSignedTransaction(sdk.nft, TEST_DATA.<%= currency %>)
+      })
+
+      describe('burnSignedTransaction', () => {
+        erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.<%= currency %>)
+      })
+
+      describe('mintMultipleSignedTransaction', () => {
+        erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.<%= currency %>)
+      })
+    })
+  })
+
+  describe('marketplace', () => {
+    describe('prepare', () => {
+      describe('generateMarketplace', () => {
+        marketplaceTestFactory.prepare.generateMarketplace(
+          sdk.marketplace,
+          TEST_DATA.<%= currency %>,
+          '<%= currency %>',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('approveSpending', () => {
+        marketplaceTestFactory.prepare.approveSpending(
+          sdk.marketplace,
+          inmemoryBlockchain.accounts,
+          blockchain,
+        )
+      })
+
+      describe('sellMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.sellMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.<%= currency %>,
+          '<%= currency %>',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('buyMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.<%= currency %>,
+          '<%= currency %>',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      // @TODO: returns "Returned values aren't valid..."
+      xdescribe('buyMarketplaceListingErc20', () => {
+        marketplaceTestFactory.prepare.buyMarketplaceListingErc20(
+          sdk.marketplace,
+          TEST_DATA.<%= currency %>,
+          '<%= currency %>',
+          inmemoryBlockchain.accounts,
+        )
+      })
+
+      describe('cancelMarketplaceListing', () => {
+        marketplaceTestFactory.prepare.cancelMarketplaceListing(
+          sdk.marketplace,
+          TEST_DATA.<%= currency %>,
+          '<%= currency %>',
+          inmemoryBlockchain.accounts,
+        )
+      })
+    })
+  })
+
+  describe('multiToken', () => {
+    describe('prepare', () => {
+      describe('deployMultiToken', () => {
+        multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.<%= currency %>)
+      })
+
+      describe('mintMultiToken', () => {
+        multiTokenTestFactory.prepare.mintMultiTokenTransaction(sdk.multiToken, TEST_DATA.<%= currency %>)
+      })
+
+      describe('mintMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.mintMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.<%= currency %>)
+      })
+
+      describe('transferMultiToken', () => {
+        multiTokenTestFactory.prepare.transferMultiTokenTransaction(sdk.multiToken, TEST_DATA.<%= currency %>)
+      })
+
+      describe('transferMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.transferMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.<%= currency %>)
+      })
+
+      describe('burnMultiToken', () => {
+        multiTokenTestFactory.prepare.burnMultiTokenTransaction(sdk.multiToken, TEST_DATA.<%= currency %>)
+      })
+
+      describe('burnMultiTokenBatch', () => {
+        multiTokenTestFactory.prepare.burnMultiTokenBatchTransaction(sdk.multiToken, TEST_DATA.<%= currency %>)
+      })
+    })
+  })
+
+  describe('smart contract', () => {
+    describe('prepare', () => {
+      describe('smart contract write method invocation', () => {
+        smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(
+          sdk.smartContract,
+          TEST_DATA.<%= currency %>,
+        )
+      })
+    })
+
+    xdescribe('send', () => {
+      describe('smart contract read method invocation', () => {
+        smartContractTestFactory.send.smartContractReadMethodInvocationTransaction(
+          sdk.smartContract,
+          TEST_DATA.<%= currency %>,
+        )
+      })
+    })
+  })
+
+  describe('custodial', () => {
+    describe('prepare', () => {
+      xdescribe('transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.transferFromCustodialWallet(sdk.custodial, TEST_DATA.<%= currency %>, '<%= currency %>')
+      })
+
+      xdescribe('batch transfer from custodial wallet', () => {
+        custodialTestFactory.prepare.batchTransferFromCustodialWallet(sdk.custodial, TEST_DATA.<%= currency %>, '<%= currency %>')
+      })
+
+      xdescribe('approve from custodial wallet', () => {
+        custodialTestFactory.prepare.approveFromCustodialWallet(sdk.custodial, TEST_DATA.<%= currency %>, '<%= currency %>')
+      })
+
+      xdescribe('generate batch custodial wallet', () => {
+        custodialTestFactory.prepare.custodialWalletBatch(sdk.custodial, TEST_DATA.<%= currency %>, '<%= currency %>')
+      })
+    })
+  })
+})

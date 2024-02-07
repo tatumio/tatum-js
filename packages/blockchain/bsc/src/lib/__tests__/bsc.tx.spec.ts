@@ -12,7 +12,6 @@ import {
   nativeTestFactory,
   smartContractTestFactory,
 } from '@tatumio/shared-testing-evm-based'
-import { Currency } from '@tatumio/api-client'
 
 describe.skip('BscSDK - tx', () => {
   const sdk = TatumBscSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
@@ -88,28 +87,8 @@ describe.skip('BscSDK - tx', () => {
         erc721TestFactory.prepare.burnSignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
 
-      describe('mintCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintCashbackSignedTransaction(sdk.nft, TEST_DATA.BSC)
-      })
-
-      describe('mintMultipleCashbackSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleCashbackSignedTransaction(sdk.nft, TEST_DATA.BSC)
-      })
-
       describe('mintMultipleSignedTransaction', () => {
         erc721TestFactory.prepare.mintMultipleSignedTransaction(sdk.nft, TEST_DATA.BSC)
-      })
-
-      describe('updateCashbackForAuthorSignedTransaction', () => {
-        erc721TestFactory.prepare.updateCashbackForAuthorSignedTransaction(sdk.nft, TEST_DATA.BSC)
-      })
-
-      describe('mintProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintProvenanceSignedTransaction(sdk.nft, TEST_DATA.BSC)
-      })
-
-      describe('mintMultipleProvenanceSignedTransaction', () => {
-        erc721TestFactory.prepare.mintMultipleProvenanceSignedTransaction(sdk.nft, TEST_DATA.BSC)
       })
     })
   })

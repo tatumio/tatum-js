@@ -177,7 +177,7 @@ export class TronService {
      * <p><b>5 credits per API call</b></p>
      * <p>Get Tron account by address.</p>
      *
-     * @param address Account address.
+     * @param address Account address
      * @returns TronAccount OK
      * @throws ApiError
      */
@@ -224,7 +224,22 @@ export class TronService {
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
-    }  public static tronUnfreeze(
+    }
+
+    /**
+     * Unfreeze the balance of a TRON account
+     * <p><b>10 credits per API call</b></p>
+     * <p>Unfreeze Tron assets on the address. By unfreezing assets, you can unlock your staked TRX.</p>
+     * <p><b>Signing a transaction</b><br/>
+     * When unfreezing the balance, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
+     * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
+     * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static tronUnfreeze(
         requestBody: (FreezeTron | FreezeTronKMS),
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
@@ -251,12 +266,26 @@ export class TronService {
      *
      * @param address The address of the TRON account to get all transactions for
      * @param next The fingerprint of the transaction that follows the last (200<sup>th</sup>) transaction in the returned list of transactions. Use it to get the next 200 transactions for the specified account (for more information, see the description of this API).
+     * @param onlyConfirmed If true, only confirmed transactions are returned
+     * @param onlyUnconfirmed If true, only unconfirmed transactions are returned
+     * @param onlyTo If true, only transactions to this address are returned
+     * @param onlyFrom If true, only transactions from this address are returned
+     * @param orderBy Order of the returned transactions
+     * @param minTimestamp Minimum block_timestamp, default is 0
+     * @param maxTimestamp Maximum block_timestamp, default is now
      * @returns any OK
      * @throws ApiError
      */
     public static tronAccountTx(
         address: string,
         next?: string,
+        onlyConfirmed?: boolean,
+        onlyUnconfirmed?: boolean,
+        onlyTo?: boolean,
+        onlyFrom?: boolean,
+        orderBy?: 'block_timestamp,asc' | 'block_timestamp,desc',
+        minTimestamp?: number,
+        maxTimestamp?: number,
     ): CancelablePromise<{
         /**
          * If present, there are more transactions for the TRON account than the 200 transactions returned in the response, and this parameter specifies the fingerprint of the transaction that follows the last (200<sup>th</sup>) transaction in the returned list of transactions. Use it to get the next 200 transactions for the specified account (for more information, see the description of this API).
@@ -272,6 +301,13 @@ export class TronService {
             path: `/v3/tron/transaction/account/${address}`,
             query: {
                 'next': next,
+                'onlyConfirmed': onlyConfirmed,
+                'onlyUnconfirmed': onlyUnconfirmed,
+                'onlyTo': onlyTo,
+                'onlyFrom': onlyFrom,
+                'orderBy': orderBy,
+                'minTimestamp': minTimestamp,
+                'maxTimestamp': maxTimestamp,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -292,12 +328,28 @@ export class TronService {
      *
      * @param address The address of the TRON account to get TRC-20 transactions for
      * @param next The fingerprint of the transaction that follows the last (200<sup>th</sup>) transaction in the returned list of transactions. Use it to get the next 200 transactions for the specified account (for more information, see the description of this API).
+     * @param onlyConfirmed If true, only confirmed transactions are returned
+     * @param onlyUnconfirmed If true, only unconfirmed transactions are returned
+     * @param onlyTo If true, only transactions to this address are returned
+     * @param onlyFrom If true, only transactions from this address are returned
+     * @param orderBy Order of the returned transactions
+     * @param minTimestamp Minimum block_timestamp, default is 0
+     * @param maxTimestamp Maximum block_timestamp, default is now
+     * @param contractAddress Receive only transactions with one specific smart contract
      * @returns any OK
      * @throws ApiError
      */
     public static tronAccountTx20(
         address: string,
         next?: string,
+        onlyConfirmed?: boolean,
+        onlyUnconfirmed?: boolean,
+        onlyTo?: boolean,
+        onlyFrom?: boolean,
+        orderBy?: 'block_timestamp,asc' | 'block_timestamp,desc',
+        minTimestamp?: number,
+        maxTimestamp?: number,
+        contractAddress?: string,
     ): CancelablePromise<{
         /**
          * If present, there are more transactions for the TRON account than the 200 transactions returned in the response, and this parameter specifies the fingerprint of the transaction that follows the last (200<sup>th</sup>) transaction in the returned list of transactions. Use it to get the next 200 transactions for the specified account (for more information, see the description of this API).
@@ -313,6 +365,14 @@ export class TronService {
             path: `/v3/tron/transaction/account/${address}/trc20`,
             query: {
                 'next': next,
+                'onlyConfirmed': onlyConfirmed,
+                'onlyUnconfirmed': onlyUnconfirmed,
+                'onlyTo': onlyTo,
+                'onlyFrom': onlyFrom,
+                'orderBy': orderBy,
+                'minTimestamp': minTimestamp,
+                'maxTimestamp': maxTimestamp,
+                'contractAddress': contractAddress,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -471,7 +531,7 @@ export class TronService {
     /**
      * Create a TRC-20 token
      * <p><b>10 credits per API call</b></p>
-     * <p>Create a TRON TRC-20 token.</p>
+     * <p>Create a TRON TRC-20 capped token. A capped TRC20 token is a type of token on the TRON blockchain that has a preset limit on the total number of tokens that can be created. This limit is specified during the token creation process and cannot be exceeded. Once the limit is reached, no more tokens can be minted. This feature helps to ensure the scarcity and value of the token and can provide investors with a sense of security. It is a popular choice for fundraising, as it allows for a predetermined amount of funds to be raised through the sale of tokens, and any excess tokens that are not sold are simply not minted.</p>
      * <p><b>Signing a transaction</b><br/>
      * When creating a TRC-20 token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>

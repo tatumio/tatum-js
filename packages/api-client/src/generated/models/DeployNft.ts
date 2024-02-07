@@ -8,7 +8,7 @@ export type DeployNft = {
     /**
      * The blockchain to work with
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'ZEN' | 'FLR';
     /**
      * Name of the NFT token
      */
@@ -21,14 +21,6 @@ export type DeployNft = {
      * Private key of account address, from which gas for deployment of ERC721 will be paid. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
-    /**
-     * True if the contract is provenance percentage royalty type. False by default. <a href="https://github.com/tatumio/smart-contracts" target="_blank">Details and sources available here.</a>
-     */
-    provenance?: boolean;
-    /**
-     * True if the contract is fixed price royalty type. False by default. <a href="https://github.com/tatumio/smart-contracts" target="_blank">Details and sources available here.</a>
-     */
-    cashback?: boolean;
     /**
      * True if the contract is publicMint type. False by default.
      */

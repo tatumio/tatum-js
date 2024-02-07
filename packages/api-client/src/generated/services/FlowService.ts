@@ -57,8 +57,8 @@ export class FlowService {
 
     /**
      * Generate Flow address from Extended public key
-     * <h4>1 credit for GET operation + 3000 credits per address.</h4><br/>
-     * <p>Generate Flow address from Extended public key. This operation internally creates public key and assings it to the newly created address on the blockchain.
+     * <h4>1 credit for GET operation + 300 credits per address.</h4><br/>
+     * <p>Generate Flow address from Extended public key. This operation internally creates public key and assigns it to the newly created address on the blockchain.
      * There is minimal amount, which must be sent to the FLOW address during creation - 0.001 FLOW, which will be used from Tatum service account.<br/>
      * <b>This operation is allowed on any Testnet plan and only on Paid Mainnet plans.</b>
      * Public key is generated for the specific index - each extended public key can generate up to 2^31 addresses starting from index 0 until 2^31 - 1.</p>

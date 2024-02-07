@@ -101,16 +101,6 @@ describe('EthSDK - nft', () => {
         fromPrivateKey: testData.TESTNET.ERC_721?.PRIVATE_KEY,
       },
     ],
-    updateNFTRoyalty: [
-      api.nftUpdateCashbackErc721,
-      {
-        chain: Currency.ONE,
-        tokenId: 'erc721-token',
-        cashbackValue: '1',
-        contractAddress: testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
-        fromPrivateKey: testData.TESTNET.ERC_721?.PRIVATE_KEY,
-      },
-    ],
     getNFTTransaction: [
       api.nftGetTransactErc721,
       Currency.ONE,
@@ -122,20 +112,8 @@ describe('EthSDK - nft', () => {
       testData.TESTNET.ERC_721?.ADDRESS,
       testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
     ],
-    getNFTProvenanceData: [
-      api.nftGetProvenanceDataErc721,
-      Currency.ONE,
-      'erc721-token',
-      testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
-    ],
     getNFTMetadataURI: [
       api.nftGetMetadataErc721,
-      Currency.ONE,
-      testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
-      'erc721-token',
-    ],
-    getNFTRoyalty: [
-      api.nftGetRoyaltyErc721,
       Currency.ONE,
       testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
       'erc721-token',

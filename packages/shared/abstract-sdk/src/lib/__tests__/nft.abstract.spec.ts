@@ -49,17 +49,11 @@ describe('SDK - nft', () => {
       api.nftTransferErc721,
       { chain, tokenId, to: address, contractAddress, url, fromPrivateKey: privateKey, value: 'some-value' },
     ],
-    updateNFTRoyalty: [
-      api.nftUpdateCashbackErc721,
-      { chain, tokenId, to: address, contractAddress, fromPrivateKey: privateKey, cashbackValue: '0' },
-    ],
     getNFTTransaction: [api.nftGetTransactErc721, chain, hash],
     getNFTTransactionsByToken: [api.nftGetTransactionByToken, chain, tokenId, address, 10],
     getNFTTransactionsByAddress: [api.nftGetTransactionByAddress, chain, 'token-address', address, 10],
     getNFTsByAddress: [api.nftGetTokensByAddressErc721, chain, address],
-    getNFTProvenanceData: [api.nftGetProvenanceDataErc721, chain, tokenId, contractAddress],
     getNFTMetadataURI: [api.nftGetMetadataErc721, chain, contractAddress, tokenId, 'account-id'],
-    getNFTRoyalty: [api.nftGetRoyaltyErc721, chain, contractAddress, tokenId],
     getNFTAccountBalance: [api.nftGetBalanceErc721, chain, address, contractAddress],
   }
 

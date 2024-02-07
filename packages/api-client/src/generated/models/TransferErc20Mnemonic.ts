@@ -20,10 +20,6 @@ export type TransferErc20Mnemonic = {
      */
     compliant?: boolean;
     /**
-     * ERC20 symbol. Required only for calls.
-     */
-    currency?: string;
-    /**
      * Gas limit for transaction in gas price. If not set, automatic calculation will be used.
      */
     gasLimit?: string;

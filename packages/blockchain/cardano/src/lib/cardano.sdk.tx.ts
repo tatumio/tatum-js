@@ -20,8 +20,8 @@ export const cardanoTransactions = (
   args: SDKArguments,
   apiCalls: {
     cardanoBroadcast: typeof ApiServices.blockchain.ada.adaBroadcast
-    getUTXOsByAddress: typeof DataApiService.getUtxosByAddress,
-    rpcCall: typeof NodeRpcService.nodeJsonPostRpcDriver,
+    getUTXOsByAddress: typeof DataApiService.getUtxosByAddress
+    rpcCall: typeof NodeRpcService.nodeJsonPostRpcDriver
   } = {
     cardanoBroadcast: ApiServices.blockchain.ada.adaBroadcast,
     getUTXOsByAddress: DataApiService.getUtxosByAddress,
@@ -29,28 +29,43 @@ export const cardanoTransactions = (
   },
   cardanoWallet,
 ) => {
-
-  const signPayload = async (privateKeysToSign: { [address: string]: string }, operations: Array<any>, network_identifier): Promise<string> => {
-    const preprocess = (await apiCalls.rpcCall('ADA', {
+  const signPayload = async (
+    privateKeysToSign: { [address: string]: string },
+    operations: Array<any>,
+    network_identifier,
+    options: CardanoTxOptions,
+  ): Promise<string> => {
+    const preprocess = await apiCalls.rpcCall(
+      options?.testnet ? 'cardano-preprod' : 'cardano-mainnet',
+      {
         network_identifier,
         operations,
         metadata: {
           relative_ttl: 1000,
         },
       },
-      args.apiKey, 'construction/preprocess',
-    ))
-    const metadata = (await apiCalls.rpcCall('ADA', {
+      args.apiKey,
+      'construction/preprocess',
+    )
+    const metadata = await apiCalls.rpcCall(
+      options?.testnet ? 'cardano-preprod' : 'cardano-mainnet',
+      {
         network_identifier,
         ...preprocess,
       },
-      args.apiKey, 'construction/metadata',
-    ))
-    const { unsigned_transaction, payloads } = await apiCalls.rpcCall('ADA', {
-      network_identifier,
-      operations,
-      ...metadata,
-    }, args.apiKey, 'construction/payloads')
+      args.apiKey,
+      'construction/metadata',
+    )
+    const { unsigned_transaction, payloads } = await apiCalls.rpcCall(
+      options?.testnet ? 'cardano-preprod' : 'cardano-mainnet',
+      {
+        network_identifier,
+        operations,
+        ...metadata,
+      },
+      args.apiKey,
+      'construction/payloads',
+    )
 
     const signatures = []
     for (const signing_payload of payloads) {
@@ -68,16 +83,28 @@ export const cardanoTransactions = (
       })
     }
 
-    const { signed_transaction } = await apiCalls.rpcCall('ADA', {
-      network_identifier,
-      unsigned_transaction,
-      signatures,
-    }, args.apiKey, 'construction/combine')
+    const { signed_transaction } = await apiCalls.rpcCall(
+      options?.testnet ? 'cardano-preprod' : 'cardano-mainnet',
+      {
+        network_identifier,
+        unsigned_transaction,
+        signatures,
+      },
+      args.apiKey,
+      'construction/combine',
+    )
 
     return signed_transaction
   }
 
-  const prepareSignedTransaction = async (body: AdaTransactionFromAddress | AdaTransactionFromUTXO | AdaTransactionFromAddressKMS | AdaTransactionFromUTXOKMS, options: CardanoTxOptions): Promise<string> => {
+  const prepareSignedTransaction = async (
+    body:
+      | AdaTransactionFromAddress
+      | AdaTransactionFromUTXO
+      | AdaTransactionFromAddressKMS
+      | AdaTransactionFromUTXOKMS,
+    options: CardanoTxOptions,
+  ): Promise<string> => {
     const { network_identifier } = cardanoUtils.networkIdentifier(options.testnet)
 
     try {
@@ -127,7 +154,11 @@ export const cardanoTransactions = (
           if (totalInputs >= totalOutputs) {
             break
           }
-          const utxos = await apiCalls.getUTXOsByAddress(options.testnet ? 'cardano-preprod' : 'cardano', item.address, amountUtils.fromLovelace(totalOutputs - totalInputs))
+          const utxos = await apiCalls.getUTXOsByAddress(
+            options.testnet ? 'cardano-preprod' : 'cardano',
+            item.address,
+            amountUtils.fromLovelace(totalOutputs - totalInputs),
+          )
           for (const utxo of utxos) {
             if (totalInputs >= totalOutputs) {
               break
@@ -227,19 +258,30 @@ export const cardanoTransactions = (
       if ('fromAddress' in body && 'signatureId' in body.fromAddress[0] && body.fromAddress[0].signatureId) {
         return JSON.stringify(operations)
       }
-      return signPayload(privateKeysToSign, operations, network_identifier)
+      return signPayload(privateKeysToSign, operations, network_identifier, options)
     } catch (e: any) {
       throw new CardanoSdkError(e)
     }
   }
 
-  const sendTransaction = async (body: AdaTransactionFromAddress | AdaTransactionFromUTXO | AdaTransactionFromAddressKMS | AdaTransactionFromUTXOKMS, options: CardanoTxOptions): Promise<TransactionHash> => {
+  const sendTransaction = async (
+    body:
+      | AdaTransactionFromAddress
+      | AdaTransactionFromUTXO
+      | AdaTransactionFromAddressKMS
+      | AdaTransactionFromUTXOKMS,
+    options: CardanoTxOptions,
+  ): Promise<TransactionHash> => {
     return apiCalls.cardanoBroadcast({
       txData: await prepareSignedTransaction(body, options),
     })
   }
 
-  const signKmsTransaction = async (tx: PendingTransaction, privateKeys: string[], options = { testnet: true }): Promise<string> => {
+  const signKmsTransaction = async (
+    tx: PendingTransaction,
+    privateKeys: string[],
+    options = { testnet: true },
+  ): Promise<string> => {
     if (tx.chain !== Currency.ADA) {
       throw new SdkError({ code: SdkErrorCode.KMS_CHAIN_MISMATCH })
     }
@@ -247,10 +289,12 @@ export const cardanoTransactions = (
     const operations = JSON.parse(tx.serializedTransaction)
     const pks = {}
     for (const privateKey of privateKeys) {
-      const address = await cardanoWallet.generateAddressFromPrivateKey(privateKey, { testnet: options.testnet })
+      const address = await cardanoWallet.generateAddressFromPrivateKey(privateKey, {
+        testnet: options.testnet,
+      })
       pks[address] = privateKey
     }
-    return signPayload(pks, operations, network_identifier)
+    return signPayload(pks, operations, network_identifier, options)
   }
 
   return {

@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "name": "automation",
+  "version": "0.0.1",
+  "generators": {
+    "blockchain-evm": {
+      "factory": "./src/generators/blockchain-evm/generator",
+      "schema": "./src/generators/blockchain-evm/schema.json",
+      "description": "blockchain-evm generator"
+    }
+  }
+}

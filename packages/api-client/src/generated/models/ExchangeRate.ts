@@ -28,4 +28,8 @@ export type ExchangeRate = {
      * Source of base pair.
      */
     source: string;
+    /**
+     * Used for identification in batch calls
+     */
+    batchId?: string;
 }

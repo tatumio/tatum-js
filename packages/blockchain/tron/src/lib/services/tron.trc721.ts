@@ -10,8 +10,6 @@ import {
   TransferNftKMSTron,
   TransferNftTron,
   TronService,
-  UpdateCashbackValueForAuthorNftKMSTron,
-  UpdateCashbackValueForAuthorNftTron,
   NftErc721OrCompatibleService,
 } from '@tatumio/api-client'
 import { WithoutChain } from '@tatumio/shared-abstract-sdk'
@@ -26,9 +24,6 @@ type MintTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<MintNftTron>>
 type TransferTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<TransferNftTron>>
 type BurnTronNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<BurnNftTron>>
 type MintTronMultipleNft = WithoutChain<FromPrivateKeyOrSignatureIdTron<MintMultipleNftTron>>
-type UpdateTronCashbackValues = WithoutChain<
-  FromPrivateKeyOrSignatureIdTron<UpdateCashbackValueForAuthorNftTron>
->
 
 const prepareDeploySignedTransaction = async (body: DeployTronNft, tronWeb: ITronWeb, provider?: string) => {
   const client = tronWeb.getClient(provider)
@@ -57,76 +52,6 @@ const prepareDeploySignedTransaction = async (body: DeployTronNft, tronWeb: ITro
     )
 
     return JSON.stringify(await client.trx.sign(tx, body.fromPrivateKey))
-  }
-}
-
-const prepareMintCashbackSignedTransaction = async (
-  body: MintTronNft,
-  tronWeb: ITronWeb,
-  provider?: string,
-) => {
-  const { url, to, tokenId, contractAddress, feeLimit, authorAddresses, cashbackValues } = body
-
-  const client = tronWeb.getClient(provider)
-  client.setAddress(contractAddress)
-
-  const contractAddressHex = client.address.toHex(contractAddress)
-  const methodName = 'mintWithCashback(address,uint256,string,address[],uint256[])'
-
-  const cb: string[] = []
-  if (cashbackValues) {
-    for (const c of cashbackValues) {
-      cb.push(`0x${new BigNumber(c).multipliedBy(1e6).toString(16)}`)
-    }
-  }
-  const params = [
-    { type: 'address', value: client.address.toHex(to) },
-    {
-      type: 'uint256',
-      value: `0x${new BigNumber(tokenId).toString(16)}`,
-    },
-    {
-      type: 'string',
-      value: url,
-    },
-    {
-      type: 'address[]',
-      value: authorAddresses?.map((a) => client.address.toHex(a)),
-    },
-    {
-      type: 'uint256[]',
-      value: cb,
-    },
-  ]
-
-  if (body.signatureId) {
-    const { transaction } = await client.transactionBuilder.triggerSmartContract(
-      contractAddressHex,
-      methodName,
-      {
-        feeLimit: client.toSun(feeLimit),
-        from: body.from,
-      },
-      params,
-      body.from,
-    )
-
-    return JSON.stringify(transaction)
-  } else {
-    const sender = client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
-
-    const { transaction } = await client.transactionBuilder.triggerSmartContract(
-      contractAddressHex,
-      methodName,
-      {
-        feeLimit: client.toSun(feeLimit),
-        from: sender,
-      },
-      params,
-      sender,
-    )
-
-    return JSON.stringify(await client.trx.sign(transaction, body.fromPrivateKey))
   }
 }
 
@@ -184,7 +109,7 @@ const prepareMintSignedTransaction = async (body: MintTronNft, tronWeb: ITronWeb
 
 // TODO: do a balance check before sending tx - https://app.clickup.com/t/24443045/TT-3496
 const transferSignedTransaction = async (body: TransferTronNft, tronWeb: ITronWeb, provider?: string) => {
-  const { to, tokenId, contractAddress, feeLimit, value } = body
+  const { to, tokenId, contractAddress, feeLimit } = body
   const client = tronWeb.getClient(provider)
 
   const params = [
@@ -206,7 +131,7 @@ const transferSignedTransaction = async (body: TransferTronNft, tronWeb: ITronWe
       {
         feeLimit: client.toSun(feeLimit),
         from: body.from,
-        callValue: value ? `0x${new BigNumber(value).multipliedBy(1e6).toString(16)}` : 0,
+        callValue: 0,
       },
       params,
       body.from,
@@ -222,7 +147,7 @@ const transferSignedTransaction = async (body: TransferTronNft, tronWeb: ITronWe
       {
         feeLimit: client.toSun(feeLimit),
         from: sender,
-        callValue: value ? `0x${new BigNumber(value).multipliedBy(1e6).toString(16)}` : 0,
+        callValue: 0,
       },
       params,
       sender,
@@ -336,60 +261,6 @@ const prepareMintMultipleSignedTransaction = async (
   }
 }
 
-const prepareUpdateCashbackValueForAuthorSignedTransaction = async (
-  body: UpdateTronCashbackValues,
-  tronWeb: ITronWeb,
-  provider?: string,
-) => {
-  const { cashbackValue, tokenId, contractAddress, feeLimit } = body
-
-  const client = tronWeb.getClient(provider)
-  client.setAddress(contractAddress)
-
-  const contractAddressHex = client.address.toHex(contractAddress)
-  const methodName = 'updateCashbackForAuthor(uint256,uint256)'
-  const params = [
-    {
-      type: 'uint256',
-      value: `0x${new BigNumber(tokenId).toString(16)}`,
-    },
-    {
-      type: 'uint256',
-      value: `0x${new BigNumber(cashbackValue).multipliedBy(1e6).toString(16)}`,
-    },
-  ]
-
-  if (body.signatureId) {
-    const { transaction } = await client.transactionBuilder.triggerSmartContract(
-      contractAddressHex,
-      methodName,
-      {
-        feeLimit: client.toSun(feeLimit),
-        from: body.from,
-      },
-      params,
-      body.from,
-    )
-
-    return JSON.stringify(transaction)
-  } else {
-    const sender = client.address.fromHex(client.address.fromPrivateKey(body.fromPrivateKey))
-
-    const { transaction } = await client.transactionBuilder.triggerSmartContract(
-      contractAddressHex,
-      methodName,
-      {
-        feeLimit: client.toSun(feeLimit),
-        from: sender,
-      },
-      params,
-      sender,
-    )
-
-    return JSON.stringify(await client.trx.sign(transaction, body.fromPrivateKey))
-  }
-}
-
 export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
   return {
     prepare: {
@@ -401,14 +272,6 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        */
       deploySignedTransaction: async (body: DeployTronNft, provider?: string) =>
         prepareDeploySignedTransaction(body, args.tronWeb, provider),
-      /**
-       * Sign Tron deploy trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
-       * @param body content of the transaction to broadcast
-       * @param provider
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      mintCashbackSignedTransaction: async (body: MintTronNft, provider?: string) =>
-        prepareMintCashbackSignedTransaction(body, args.tronWeb, provider),
       /**
        * Sign Tron deploy trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
        * @param body content of the transaction to broadcast
@@ -441,16 +304,6 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
        */
       mintMultipleSignedTransaction: async (body: MintTronMultipleNft, provider?: string) =>
         prepareMintMultipleSignedTransaction(body, args.tronWeb, provider),
-      /**
-       * Sign Tron update cashback for author trc721 transaction with private keys locally. Nothing is broadcast to the blockchain.
-       * @param body content of the transaction to broadcast
-       * @param provider
-       * @returns transaction data to be broadcast to blockchain.
-       */
-      updateCashbackValueForAuthorSignedTransaction: async (
-        body: UpdateTronCashbackValues,
-        provider?: string,
-      ) => prepareUpdateCashbackValueForAuthorSignedTransaction(body, args.tronWeb, provider),
     },
     send: {
       /**
@@ -468,25 +321,6 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
         } else {
           return TronService.tronBroadcast({
             txData: await prepareDeploySignedTransaction(body, args.tronWeb, provider),
-          })
-        }
-      },
-
-      /**
-       * Send Tron mint cashback trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * This operation is irreversible.
-       * @param body content of the transaction to broadcast
-       * @returns transaction id of the transaction in the blockchain
-       */
-      mintCashbackSignedTransaction: async (body: MintTronNft, provider?: string) => {
-        if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftMintErc721({
-            ...body,
-            chain: Blockchain.TRON,
-          } as MintNftKMSTron)
-        } else {
-          return TronService.tronBroadcast({
-            txData: await prepareMintCashbackSignedTransaction(body, args.tronWeb, provider),
           })
         }
       },
@@ -561,27 +395,6 @@ export const tronTrc721 = (args: { tronWeb: ITronWeb }) => {
         } else {
           return TronService.tronBroadcast({
             txData: await prepareMintMultipleSignedTransaction(body, args.tronWeb, provider),
-          })
-        }
-      },
-      /**
-       * Send Tron update cashback for author trc721 transaction to the blockchain. This method broadcasts signed transaction to the blockchain.
-       * This operation is irreversible.
-       * @param body content of the transaction to broadcast
-       * @returns transaction id of the transaction in the blockchain
-       */
-      updateCashbackValueForAuthorSignedTransaction: async (
-        body: UpdateTronCashbackValues,
-        provider?: string,
-      ) => {
-        if (body.signatureId) {
-          return NftErc721OrCompatibleService.nftUpdateCashbackErc721({
-            ...body,
-            chain: Blockchain.TRON,
-          } as UpdateCashbackValueForAuthorNftKMSTron)
-        } else {
-          return TronService.tronBroadcast({
-            txData: await prepareUpdateCashbackValueForAuthorSignedTransaction(body, args.tronWeb, provider),
           })
         }
       },

@@ -9,6 +9,7 @@ import type { CallSmartContractMethodKMS } from '../models/CallSmartContractMeth
 import type { Data } from '../models/Data';
 import type { EthBalance } from '../models/EthBalance';
 import type { EthBlock } from '../models/EthBlock';
+import type { EthTestnetType } from '../models/EthTestnetType';
 import type { EthTx } from '../models/EthTx';
 import type { EthTxInternal } from '../models/EthTxInternal';
 import type { GeneratedAddressEth } from '../models/GeneratedAddressEth';
@@ -30,13 +31,15 @@ export class EthereumService {
      * Generates a BIP44 compatible Ethereum wallet.</p>
      *
      * @param mnemonic Mnemonic to use for generating extended public and private keys.
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns Wallet OK
      * @throws ApiError
      */
     public static ethGenerateWallet(
         mnemonic?: string,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<Wallet> {
         return __request({
             method: 'GET',
@@ -46,6 +49,7 @@ export class EthereumService {
             },
             query: {
                 'mnemonic': mnemonic,
+                'testnet-type': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -63,20 +67,25 @@ export class EthereumService {
      *
      * @param xpub Extended public key of wallet.
      * @param index Derivation index of the address to be generated.
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns GeneratedAddressEth OK
      * @throws ApiError
      */
     public static ethGenerateAddress(
         xpub: string,
         index: number,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<GeneratedAddressEth> {
         return __request({
             method: 'GET',
             path: `/v3/ethereum/address/${xpub}/${index}`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -93,19 +102,24 @@ export class EthereumService {
      * can generate up to 2^32 private keys starting from index 0 until 2^31 - 1.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns PrivKey OK
      * @throws ApiError
      */
     public static ethGenerateAddressPrivateKey(
         requestBody: PrivKeyRequest,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<PrivKey> {
         return __request({
             method: 'POST',
             path: `/v3/ethereum/wallet/priv`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -127,20 +141,25 @@ export class EthereumService {
      *
      * @param xApiKey Tatum X-API-Key used for authorization.
      * @param requestBody
-     * @param testnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */
     public static ethWeb3Driver(
         xApiKey: string,
         requestBody: any,
-        testnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<any> {
         return __request({
             method: 'POST',
             path: `/v3/ethereum/web3/${xApiKey}`,
+            headers: {
+                'x-testnet-type': xTestnetType,
+            },
             query: {
-                'testnetType': testnetType,
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -155,18 +174,23 @@ export class EthereumService {
     /**
      * Get current block number
      * <h4>1 credit per API call.</h4><br/><p>Gets the current Ethereum block number. This is the number of the latest block in the blockchain.</p>
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns number OK
      * @throws ApiError
      */
     public static ethGetCurrentBlock(
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<number> {
         return __request({
             method: 'GET',
             path: `/v3/ethereum/block/current`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
@@ -179,19 +203,24 @@ export class EthereumService {
      * Get Ethereum block by hash
      * <h4>1 credit per API call.</h4><br/><p>Gets an Ethereum block-by-block hash or block number.</p>
      * @param hash Block hash or block number
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns EthBlock OK
      * @throws ApiError
      */
     public static ethGetBlock(
         hash: string,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<EthBlock> {
         return __request({
             method: 'GET',
             path: `/v3/ethereum/block/${hash}`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -208,19 +237,24 @@ export class EthereumService {
      * <p>To get the balance of <b>tokens</b>, use the APIs for getting the balance of <a href="https://apidoc.tatum.io/tag/Fungible-Tokens-(ERC-20-or-compatible)#operation/Erc20GetBalanceAddress" target="_blank">fungible tokens (ERC-20)</a> and <a href="https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftGetTokensByAddressErc721" target="_blank">NFTs (ERC-721)</a>.</p>
      *
      * @param address Account address you want to get balance of
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns EthBalance OK
      * @throws ApiError
      */
     public static ethGetBalance(
         address: string,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<EthBalance> {
         return __request({
             method: 'GET',
             path: `/v3/ethereum/account/balance/${address}`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -236,19 +270,24 @@ export class EthereumService {
      * <p>Get Ethereum transaction by transaction hash.</p>
      *
      * @param hash Transaction hash
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns EthTx OK
      * @throws ApiError
      */
     public static ethGetTransaction(
         hash: string,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<EthTx> {
         return __request({
             method: 'GET',
             path: `/v3/ethereum/transaction/${hash}`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -267,19 +306,24 @@ export class EthereumService {
      * the order of the transaction in the list of outgoing transactions.</p>
      *
      * @param address address
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns number OK
      * @throws ApiError
      */
     public static ethGetTransactionCount(
         address: string,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<number> {
         return __request({
             method: 'GET',
             path: `/v3/ethereum/transaction/count/${address}`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -290,8 +334,12 @@ export class EthereumService {
     }
 
     /**
+     * @deprecated
      * Get Ethereum transactions by address
-     * <h4>1 credit per API call.</h4><br/><p>Get Ethereum transactions by address. This includes incoming and outgoing transactions for the address.</p>
+     * <p>This endpoint is deprecated. Do not use it.</p>
+     * <p><h4>1 credit per API call.</h4></p>
+     * <p>Get Ethereum transactions by address. This includes incoming and outgoing transactions for the address.</p>
+     *
      * @param address Account address you want to get balance of
      * @param pageSize Max number of items per page is 50.
      * @param offset Offset to obtain next page of the data.
@@ -343,19 +391,24 @@ export class EthereumService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */
     public static ethBlockchainTransfer(
         requestBody: (TransferEthBlockchain | TransferEthBlockchainKMS),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/ethereum/transaction`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -388,19 +441,24 @@ export class EthereumService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns any OK
      * @throws ApiError
      */
     public static ethBlockchainSmartContractInvocation(
         requestBody: (CallSmartContractMethod | CallReadSmartContractMethod | CallEthSmartContractMethodCaller | CallSmartContractMethodKMS),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId | Data)> {
         return __request({
             method: 'POST',
             path: `/v3/ethereum/smartcontract`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -456,19 +514,24 @@ export class EthereumService {
      * It is possible to create custom signing mechanism and use this method only for broadcasting data to the blockchain.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+     * @param testnetType Type of Ethereum testnet in query. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
+     * @param xTestnetType Type of Ethereum testnet in header. Defaults to ethereum-sepolia. For mainnet API Key, this value is ignored.
      * @returns TransactionHash OK
      * @throws ApiError
      */
     public static ethBroadcast(
         requestBody: BroadcastKMS,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: EthTestnetType,
+        xTestnetType?: EthTestnetType,
     ): CancelablePromise<TransactionHash> {
         return __request({
             method: 'POST',
             path: `/v3/ethereum/broadcast`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',

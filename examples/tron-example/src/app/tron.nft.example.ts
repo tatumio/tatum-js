@@ -81,7 +81,6 @@ export async function tronNftExample() {
   // Transfer an NFT from the smart contract (the contractAddress parameter in the request body) to the specified blockchain address (the to parameter in the request body).
   // https://apidoc.tatum.io/tag/NFT-(ERC-721-or-compatible)#operation/NftTransferErc721
   const nftTransferred = (await tronSdk.nft.send.transferSignedTransaction({
-    value: '1',
     to: receiverAddress,
     tokenId,
     contractAddress,

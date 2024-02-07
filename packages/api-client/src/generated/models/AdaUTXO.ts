@@ -4,7 +4,7 @@
 
 export type AdaUTXO = {
     /**
-     * Sent amount in Lovelace - 1/1000000 of ADA.
+     * Sent amount in ADA.
      */
     value?: string;
     /**

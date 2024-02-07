@@ -75,4 +75,8 @@ export type PolygonBlock = {
      * The root of the transaction trie of the block.
      */
     transactionsRoot?: string;
+    /**
+     * Represents the current per-unit gas price, set by the Ethereum protocol, to be burned for transaction processing.
+     */
+    baseFeePerGas?: number;
 }

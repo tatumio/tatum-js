@@ -40,7 +40,7 @@ export class NotificationSubscriptionsService {
      * <p>The following subscription types are available:</p>
      * <ul>
      * <li><b>ADDRESS_TRANSACTION</b> - Enable HTTP POST JSON notifications for any blockchain transaction (both incoming and outgoing) at a specified address. This notification applies to transactions in the native blockchain currency or with any type of blockchain tokens.<br/>
-     * - For <b>EVM-based blockchains</b> (ETH), this web hook is first invoked when a transaction appears in the mempool, and then it is invoked again once the transaction is added to a block.<br/>
+     * - For <b>EVM-based blockchains</b> (ETH), this web hook might be first invoked when a transaction appears in the mempool. In that case the webhook has a field "mempool" set to "true". Then it is invoked again once the transaction is added to a block.<br/>
      * - For the <b>other blockchains</b>, this webhook is invoked when a transaction is added to a block.<br/>
      * Free community plans can monitor up to 10 addresses per plan.<br/>
      * The following table describes the availability of this notification type on different blockchains and the credit consumption:<br/>
@@ -61,7 +61,7 @@ export class NotificationSubscriptionsService {
      * </tr>
      * <tr>
      * <td>Ethereum</td>
-     * <td>Yes (Sepolia, Goerli)/Yes</td>
+     * <td>Yes (Sepolia, Goerli, Holesky)/Yes</td>
      * <td>ETH, Internal transfers, ERC20, ERC721, ERC1155</td>
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>25 credits / day / address</td>
@@ -132,7 +132,7 @@ export class NotificationSubscriptionsService {
      * </table>
      * The request body of the POST request is a JSON object with the following structure:<br/>
      * <pre>{
-         * "address": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ", // the address on which the transaction occurs; for EVM-based chains, this is the recipient's address
+         * "address": "FykfMwA9WNShzPJbbb9DNXsfgDgS3XZzWiFgrVXfWoPJ", // the address on which the transaction occurs; for EVM-based chains, this is the sender's address
          * "txId": "2rdy3YCZHSwvpWtuDom1d4Jjy5UU9STLxF3ffXau6GToReDkfw8wEgX541fvzvh6btVC5D8iNapcKTXfPsoDBk7A", // the transaction ID
          * "blockNumber": 110827114, // the block number; does not appear if the transaction is in the mempool (for EVM-based blockchains)
          * "asset": "3gUeeR3BfVhukYJMwtHownRtRkGcf1bvwiV8TbKMZBVz", // the asset of the transaction: for token assets, this is the token address; for native blochckain assets, this is the name of the asset (for example, SOL)
@@ -158,7 +158,7 @@ export class NotificationSubscriptionsService {
          * </tr>
          * <tr>
          * <td>Ethereum</td>
-         * <td>ethereum-sepolia / ethereum-goerli / ethereum-mainnet</td>
+         * <td>ethereum-sepolia / ethereum-goerli / ethereum-holesky / ethereum-mainnet</td>
          * <td>500,000 credits / day</td>
          * </tr>
          * <tr>
@@ -214,7 +214,7 @@ export class NotificationSubscriptionsService {
                      * </tr>
                      * <tr>
                      * <td>Ethereum</td>
-                     * <td>ethereum-sepolia / ethereum-goerli / ethereum-mainnet</td>
+                     * <td>ethereum-sepolia / ethereum-goerli / ethereum-holesky / ethereum-mainnet</td>
                      * <td>500,000 credits / day</td>
                      * </tr>
                      * <tr>
@@ -270,7 +270,7 @@ export class NotificationSubscriptionsService {
                                  * </tr>
                                  * <tr>
                                  * <td>Ethereum</td>
-                                 * <td>ethereum-sepolia / ethereum-goerli / ethereum-mainnet</td>
+                                 * <td>ethereum-sepolia / ethereum-goerli / ethereum-holesky / ethereum-mainnet</td>
                                  * <td>50,000 credits / day</td>
                                  * </tr>
                                  * <tr>
@@ -434,7 +434,7 @@ export class NotificationSubscriptionsService {
                                                                          */
                                                                         public static createSubscription(
                                                                             requestBody: (CreateSubscriptionNotification | CreateSubscriptionNftTransferEvent | CreateSubscriptionMultiTokenTransferEvent | CreateSubscriptionContractLogEvent | CreateSubscriptionIncoming | CreateSubscriptionPending | CreateSubscriptionTradeMatch | CreateSubscriptionPartialTradeMatch | CreateSubscriptionKMSError | CreateSubscriptionKMSSuccess | CreateSubscriptionTxInTheBlock | CreateSubscriptionBalance | CreateSubscriptionInterval),
-                                                                            testnetType: 'ethereum-sepolia' | 'ethereum-goerli' = 'ethereum-sepolia',
+                                                                            testnetType: 'ethereum-sepolia' | 'ethereum-goerli' | 'ehtereum-holesky' = 'ethereum-sepolia',
                                                                         ): CancelablePromise<Id> {
                                                                             return __request({
                                                                                 method: 'POST',

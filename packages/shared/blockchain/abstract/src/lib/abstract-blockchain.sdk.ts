@@ -52,7 +52,6 @@ import {
   TransferMultiTokenBatch,
   TransferNft,
   TransferPolygonBlockchain,
-  UpdateCashbackValueForAuthorNft,
   UpdateFee,
   UpdateFeeRecipient,
   XlmWallet,
@@ -132,10 +131,6 @@ export type ChainBurnErc721 = FromPrivateKeyOrSignatureId<WithoutChain<BurnNft>>
 export type ChainAddMinterErc721 = FromPrivateKeyOrSignatureId<WithoutChain<AddNftMinter>>
 
 export type ChainTransferErc721 = FromPrivateKeyOrSignatureId<WithoutChain<TransferNft>>
-
-export type ChainUpdateCashbackErc721 = FromPrivateKeyOrSignatureId<
-  WithoutChain<UpdateCashbackValueForAuthorNft>
->
 
 export type ChainDeployErc721 = FromPrivateKeyOrSignatureId<WithoutChain<DeployNft>>
 
@@ -245,17 +240,6 @@ export interface SdkWithErc721Functions {
     mintSignedTransaction(body: ChainMintErc721, provider?: string): Promise<string>
     burnSignedTransaction(body: ChainBurnErc721, provider?: string): Promise<string>
     mintMultipleSignedTransaction(body: ChainMintMultipleNft, provider?: string): Promise<string>
-    mintCashbackSignedTransaction(body: ChainMintErc721, provider?: string): Promise<string>
-    mintMultipleCashbackSignedTransaction(body: ChainMintMultipleNft, provider?: string): Promise<string>
-    updateCashbackForAuthorSignedTransaction(
-      body: ChainUpdateCashbackErc721,
-      provider?: string,
-    ): Promise<string>
-    mintProvenanceSignedTransaction(body: ChainMintErc721, provider?: string): Promise<string>
-    mintMultipleProvenanceSignedTransaction(
-      body: ChainMintMultipleNft & { fixedValues: string[][] },
-      provider?: string,
-    ): Promise<string>
   }
 }
 

@@ -64,6 +64,11 @@ export class AccountService {
      * <li>If the virtual account was created with the wallet's or account's address instead of the wallet's <code>xpub</code>, <a href="https://apidoc.tatum.io/tag/Blockchain-addresses#operation/assignAddress" target="_blank">assign an existing blockchain address</a> to this account.</li>
      * </ul>
      * <p>You can connect multiple blockchain addresses to one virtual account.</p>
+     * <p>Digital assets:</p>
+     * <ul>
+     * <li><b>USDC_MATIC</b> refers to contract <code>0x2791bca1f2de4661ed88a30c99a7a9449aa84174</code> on Polygon mainnet.</li>
+     * <li><b>USDC_MATIC_NATIVE</b> refers to contract <code>0x3c499c542cef5e3811e1192ce70d8cc03d5c3359</code> on Polygon mainnet.</li>
+     * </ul>
      *
      * @param requestBody
      * @returns Account OK

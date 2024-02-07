@@ -39,15 +39,12 @@ jobs:
           node-version: '16'
       - run: yarn --ignore-scripts --frozen-lockfile
       #      - run: npx nx-cloud start-ci-run
-      - run: npx nx affected --target=build --parallel --max-parallel=3 --skip-nx-cache
+      - run: npx nx affected --target=build --parallel --max-parallel=3
       - run: yarn nx:fix
       - run: yarn test:ci
       #- run: npx nx-cloud stop-all-agents
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarcloud-github-action@v1.6
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 #  agents:
 #    if: ${{ github.head_ref != 'release'  }}

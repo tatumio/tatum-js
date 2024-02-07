@@ -1,0 +1,38 @@
+{
+  "sourceRoot": "packages/blockchain/flare/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/flare",
+        "tsConfig": "packages/blockchain/flare/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/flare/package.json",
+        "main": "packages/blockchain/flare/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/flare/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/flare"],
+      "options": {
+        "jestConfig": "packages/blockchain/flare/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:sdk", "scope:evm-based"]
+}

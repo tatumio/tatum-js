@@ -48,7 +48,8 @@ export class NodeRpcService {
                      * <p>This API is supported for the following blockchains:</p>
                      * <ul>
                      * <li><a href="https://developer.algorand.org/docs/rest-apis/restendpoints/" target="_blank">Algorand</a></li>
-                     * <li><a href="https://ethereum.org/en/developers/docs/apis/json-rpc/" target="_blank">Arbitrum</a></li>
+                     * <li><a href="https://developer.arbitrum.io/public-chains" target="_blank">Arbitrum Nova</a></li>
+                     * <li><a href="https://developer.arbitrum.io/public-chains" target="_blank">Arbitrum One</a></li>
                      * <li><a href="https://doc.aurora.dev/evm/rpc/" target="_blank">Aurora</a></li>
                      * <li><a href="https://docs.avax.network/apis/avalanchego/apis/c-chain" target="_blank">Avalanche C-Chain</a></li>
                      * <li><a href="https://docs.avax.network/apis/avalanchego/apis/p-chain" target="_blank">Avalanche P-Chain</a></li>

@@ -19,7 +19,7 @@ export class KeyManagementSystemService {
      * @throws ApiError
      */
     public static getPendingTransactionsToSign(
-        chain: 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET' | 'BSC' | 'MATIC' | 'CELO' | 'FLOW' | 'TRON' | 'ONE' | 'XDC' | 'EGLD' | 'KLAY' | 'SOL',
+        chain: 'ADA' | 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET' | 'BSC' | 'MATIC' | 'CELO' | 'FLOW' | 'TRON' | 'ONE' | 'XDC' | 'EGLD' | 'KLAY' | 'SOL',
         signatures?: string,
     ): CancelablePromise<Array<PendingTransaction>> {
         return __request({
@@ -48,7 +48,7 @@ export class KeyManagementSystemService {
      * @throws ApiError
      */
     public static receivePendingTransactionsToSign(
-        chain: 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET' | 'BSC' | 'MATIC' | 'CELO' | 'FLOW' | 'TRON' | 'ONE' | 'XDC' | 'EGLD' | 'KLAY' | 'SOL',
+        chain: 'ADA' | 'BNB' | 'BTC' | 'ETH' | 'XLM' | 'XRP' | 'BCH' | 'LTC' | 'DOGE' | 'VET' | 'BSC' | 'MATIC' | 'CELO' | 'FLOW' | 'TRON' | 'ONE' | 'XDC' | 'EGLD' | 'KLAY' | 'SOL',
         requestBody?: KmsSignatureIds,
     ): CancelablePromise<Array<PendingTransaction>> {
         return __request({

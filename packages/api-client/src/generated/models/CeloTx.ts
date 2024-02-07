@@ -28,6 +28,10 @@ export type CeloTx = {
      */
     gasPrice?: string;
     /**
+     * Address of the currency used to pay for gas.
+     */
+    feeCurrency?: string;
+    /**
      * Hash of the transaction.
      */
     transactionHash?: string;

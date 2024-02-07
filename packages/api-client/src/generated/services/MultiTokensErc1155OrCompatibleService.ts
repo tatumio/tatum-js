@@ -27,6 +27,7 @@ import type { MintMultiTokenKMS } from '../models/MintMultiTokenKMS';
 import type { MintMultiTokenKMSCelo } from '../models/MintMultiTokenKMSCelo';
 import type { MultiTx } from '../models/MultiTx';
 import type { SignatureId } from '../models/SignatureId';
+import type { TestnetType } from '../models/TestnetType';
 import type { TransactionHash } from '../models/TransactionHash';
 import type { TransferMultiToken } from '../models/TransferMultiToken';
 import type { TransferMultiTokenBatch } from '../models/TransferMultiTokenBatch';
@@ -55,6 +56,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When deploying a Multi Token smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -62,19 +64,24 @@ export class MultiTokensErc1155OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static deployMultiToken(
         requestBody: (DeployMultiToken | DeployMultiTokenKMS | DeployMultiTokenCelo | DeployMultiTokenCeloKMS),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/deploy`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -100,6 +107,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When minting a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -107,19 +115,24 @@ export class MultiTokensErc1155OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static mintMultiToken(
         requestBody: (MintMultiToken | MintMultiTokenKMS | MintMultiTokenCelo | MintMultiTokenKMSCelo),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/mint`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -145,6 +158,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When minting multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -152,19 +166,24 @@ export class MultiTokensErc1155OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static mintMultiTokenBatch(
         requestBody: (MintMultiTokenBatch | MintMultiTokenBatchKMS | MintMultiTokenBatchCelo | MintMultiTokenBatchKMSCelo),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/mint/batch`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -190,6 +209,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When burning a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -197,19 +217,24 @@ export class MultiTokensErc1155OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static burnMultiToken(
         requestBody: (BurnMultiToken | BurnMultiTokenKMS | BurnMultiTokenCelo | BurnMultiTokenKMSCelo),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/burn`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -235,6 +260,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When burning multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -242,19 +268,24 @@ export class MultiTokensErc1155OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static burnMultiTokenBatch(
         requestBody: (BurnMultiTokenBatch | BurnMultiTokenBatchKMS | BurnMultiTokenBatchCelo | BurnMultiTokenBatchKMSCelo),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/burn/batch`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -281,6 +312,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When transferring a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -288,19 +320,24 @@ export class MultiTokensErc1155OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static transferMultiToken(
         requestBody: (TransferMultiToken | TransferMultiTokenCelo | TransferMultiTokenKMS | TransferMultiTokenKMSCelo),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/transaction`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -327,6 +364,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When transferring multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -334,19 +372,24 @@ export class MultiTokensErc1155OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static transferMultiTokenBatch(
         requestBody: (TransferMultiTokenBatch | TransferMultiTokenBatchKMS | TransferMultiTokenBatchCelo | TransferMultiTokenBatchKMSCelo),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/transaction/batch`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -372,6 +415,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When adding a Multi Token minter, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -379,19 +423,24 @@ export class MultiTokensErc1155OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static addMultiTokenMinter(
         requestBody: (AddMultiTokenMinter | AddMultiTokenMinterKMS),
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(TransactionHash | SignatureId)> {
         return __request({
             method: 'POST',
             path: `/v3/multitoken/mint/add`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -464,24 +513,30 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      *
      * @param chain Blockchain to work with
      * @param hash Transaction hash
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static multiTokenGetTransaction(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR',
         hash: string,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<(CeloTx | EthTx)> {
         return __request({
             method: 'GET',
             path: `/v3/multitoken/transaction/${chain}/${hash}`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -575,22 +630,25 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      *
      * @param chain Blockchain to work with
      * @param address The blockchain address that you want to get the token balance of
      * @param contractAddress The address of the Multi Token smart contract
      * @param tokenId The ID of the Multi Token
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static multiTokenGetBalance(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR',
         address: string,
         contractAddress: string,
         tokenId: string,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<{
         /**
          * The amount of the specified Multi Token
@@ -602,6 +660,9 @@ export class MultiTokensErc1155OrCompatibleService {
             path: `/v3/multitoken/balance/${chain}/${contractAddress}/${address}/${tokenId}`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -674,20 +735,23 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
      * </ul>
      *
      * @param chain Blockchain to work with
      * @param token Token ID
      * @param contractAddress Multi Token contract address
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
     public static multiTokenGetMetadata(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR',
         token: string,
         contractAddress: string,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<{
         /**
          * Metadata associated with token.
@@ -699,6 +763,9 @@ export class MultiTokensErc1155OrCompatibleService {
             path: `/v3/multitoken/metadata/${chain}/${contractAddress}/${token}`,
             headers: {
                 'x-testnet-type': xTestnetType,
+            },
+            query: {
+                'testnet-type': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,

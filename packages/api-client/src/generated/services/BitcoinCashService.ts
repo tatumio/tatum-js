@@ -178,6 +178,7 @@ export class BitcoinCashService {
     }
 
     /**
+     * @deprecated
      * Get Bitcoin Cash Transactions by address
      * <h4>5 credits per API call.</h4><br/><p>Get Bitcoin Cash Transaction by address. Limit is 50 transaction per response.</p>
      * @param address Address

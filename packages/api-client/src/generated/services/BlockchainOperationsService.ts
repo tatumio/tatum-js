@@ -34,7 +34,6 @@ import type { Erc20Address } from '../models/Erc20Address';
 import type { Erc20Response } from '../models/Erc20Response';
 import type { OffchainTransactionResult } from '../models/OffchainTransactionResult';
 import type { OffchainTransactionSignatureResult } from '../models/OffchainTransactionSignatureResult';
-import type { TransferAdaKeyPair } from '../models/TransferAdaKeyPair';
 import type { TransferAdaKMS } from '../models/TransferAdaKMS';
 import type { TransferAdaMnemonic } from '../models/TransferAdaMnemonic';
 import type { TransferAlgo } from '../models/TransferAlgo';
@@ -1447,9 +1446,7 @@ export class BlockchainOperationsService {
     }
 
     /**
-     * @deprecated
      * Send ADA from a virtual account to the blockchain
-     * <p><b>Cardano transfers are in maintenance mode. For the time being, it's not possible to perform blockchain transaction due to a recent hard fork. We are working on the fix for this. Thank you for your patience.</b></p><br/>
      * <h4>10 credits per API call.</h4><p>Send ADA (Cardano) from a virtual account to the blockchain. This will create Tatum internal withdrawal request with ID. If every system works as expected, withdrawal request is marked as complete and transaction id is assigned to it.
      * <ul>
      * <li>If ADA server connection is unavailable, withdrawal request is cancelled.</li>
@@ -1468,7 +1465,7 @@ export class BlockchainOperationsService {
      * @throws ApiError
      */
     public static adaTransferOffchain(
-        requestBody: (TransferAdaKeyPair | TransferAdaMnemonic | TransferAdaKMS),
+        requestBody: (TransferAdaMnemonic | TransferAdaKMS),
     ): CancelablePromise<(OffchainTransactionResult | OffchainTransactionSignatureResult)> {
         return __request({
             method: 'POST',
