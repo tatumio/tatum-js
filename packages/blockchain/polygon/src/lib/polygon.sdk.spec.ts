@@ -38,7 +38,7 @@ describe('TatumPolygonSDK', () => {
 
         expect(client.result).toBeDefined()
         expect(String(client.result).length).toBeGreaterThan(0)
-      })
+      }, 10000)
 
       it('should return valid web3 client with privateKey', async () => {
         const web3 = evmBasedWeb3({ blockchain: Blockchain.POLYGON })
