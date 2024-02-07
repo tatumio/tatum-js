@@ -18,9 +18,6 @@ const blockchain = Blockchain.<%= blockchain %>
 export const Tatum<%= firstLetterUpperCaseName %>SDK = (args: SDKArguments) => {
   const web3 = <%= name %>Web3({
     blockchain,
-    apiCalls: {
-      getFee: BlockchainFeesService.getBlockchainFee,
-    },
   })
   const api = <%= firstLetterUpperCaseName %>Service
   const txService = <%= name %>Tx({ blockchain, web3 })

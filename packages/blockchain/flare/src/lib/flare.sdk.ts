@@ -15,9 +15,6 @@ const blockchain = Blockchain.FLR
 export const TatumFlareSDK = (args: SDKArguments) => {
   const web3 = flareWeb3({
     blockchain,
-    apiCalls: {
-      getFee: BlockchainFeesService.getBlockchainFee,
-    },
   })
   const api = FlareService
   const txService = flareTx({ blockchain, web3 })

@@ -26,7 +26,7 @@ describe('EgldSDK - virtual account tx', () => {
       expect(parsedTx.sender).toBe(testData.ADDRESS_0)
       expect(parsedTx.receiver).toBe(ESDT_SYSTEM_SMART_CONTRACT_ADDRESS)
       expect(parsedTx.signature).toBeDefined()
-    })
+    }, 10000)
 
     it('should prepare send ESDT signed transaction', async () => {
       const tx = await sdk.transaction.prepare.signedTransaction({

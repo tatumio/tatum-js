@@ -6,9 +6,6 @@ import { BlockchainFeesService } from '@tatumio/api-client'
 export const <%= name %>Web3 = (args: {
   blockchain: EvmBasedBlockchain
   client?: Web3
-  apiCalls: {
-    getFee: typeof BlockchainFeesService.getBlockchainFee
-  }
 }) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
 
@@ -23,9 +20,6 @@ export const <%= name %>Web3 = (args: {
       }
 
       return web3
-    },
-    async getGasPriceInWei(): Promise<string> {
-      return (await args.apiCalls.getFee('<%= currency %>')).medium.toString()
     },
   }
 }

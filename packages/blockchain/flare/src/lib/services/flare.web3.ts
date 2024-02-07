@@ -3,13 +3,7 @@ import Web3 from 'web3'
 import { EvmBasedBlockchain } from '@tatumio/shared-core'
 import { BlockchainFeesService } from '@tatumio/api-client'
 
-export const flareWeb3 = (args: {
-  blockchain: EvmBasedBlockchain
-  client?: Web3
-  apiCalls: {
-    getFee: typeof BlockchainFeesService.getBlockchainFee
-  }
-}) => {
+export const flareWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web3 }) => {
   const evmBasedWeb3Result = evmBasedWeb3(args)
 
   return {
