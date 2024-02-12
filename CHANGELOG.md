@@ -1,3 +1,9 @@
+## [4.2.6] - 2024.2.12
+
+### Added
+
+- Added support for Solana load balancer based on the method name.
+
 ## [4.2.5] - 2024.1.31
 
 ### Added
