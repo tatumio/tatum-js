@@ -8,11 +8,11 @@ import { AbstractSolanaRpc } from './AbstractSolanaRpc'
 
 @Service({
   factory: (data: { id: string }) => {
-    return new SolanaLoadBalancerRpc(data.id)
+    return new SolanaArchiveLoadBalancerRpc(data.id)
   },
   transient: true,
 })
-export class SolanaLoadBalancerRpc extends AbstractSolanaRpc implements SolanaRpcSuite {
+export class SolanaArchiveLoadBalancerRpc extends AbstractSolanaRpc implements SolanaRpcSuite {
   protected readonly loadBalancer: LoadBalancer
 
   constructor(id: string) {
@@ -22,7 +22,22 @@ export class SolanaLoadBalancerRpc extends AbstractSolanaRpc implements SolanaRp
 
   protected async rpcCall<T>(method: string, params?: unknown[]): Promise<T> {
     const preparedCall = Utils.prepareRpcCall(method, params)
-    return (await this.loadBalancer.rawRpcCall(preparedCall)) as T
+    const isArchive = this.isArchiveMethod(preparedCall)
+    return (await this.loadBalancer.rawRpcCall(preparedCall, isArchive)) as T
+  }
+
+  private isArchiveMethod(body: JsonRpcCall): boolean {
+    const archiveMethods = [
+      'getBlock',
+      'getBlocks',
+      'getBlocksWithLimit',
+      'getBlockTime',
+      'getInflationReward',
+      'getProgramAccounts',
+      'getSignaturesForAddress',
+      'getConfirmedSignaturesForAddress2',
+    ]
+    return archiveMethods.some((method) => body.method.includes(method))
   }
 
   async rawRpcCall(body: JsonRpcCall): Promise<JsonRpcResponse<any>> {

@@ -94,7 +94,7 @@ import { BnbLoadBalancerRpc } from '../service/rpc/other/BnbLoadBalancerRpc'
 import { CardanoLoadBalancerRpc } from '../service/rpc/other/CardanoLoadBalancerRpc'
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
-import { SolanaLoadBalancerRpc } from '../service/rpc/other/SolanaLoadBalancerRpc'
+import { SolanaArchiveLoadBalancerRpc } from '../service/rpc/other/SolanaArchiveLoadBalancerRpc'
 import { StellarLoadBalancerRpc } from '../service/rpc/other/StellarLoadBalancerRpc'
 import { StellarRpc } from '../service/rpc/other/StellarRpc'
 import { TezosLoadBalancerRpc } from '../service/rpc/other/TezosLoadBalancerRpc'
@@ -178,7 +178,7 @@ export const Utils = {
     }
 
     if (isSolanaNetwork(network)) {
-      return Container.of(id).get(SolanaLoadBalancerRpc) as T
+      return Container.of(id).get(SolanaArchiveLoadBalancerRpc) as T
     }
 
     if (isTronLoadBalancerNetwork(network)) {
