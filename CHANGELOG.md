@@ -1,3 +1,9 @@
+## [4.2.7] - 2024.2.12
+
+### Updated
+
+- Updated archive condition for evm rpc calls
+
 ## [4.2.6] - 2024.2.12
 
 ### Added
