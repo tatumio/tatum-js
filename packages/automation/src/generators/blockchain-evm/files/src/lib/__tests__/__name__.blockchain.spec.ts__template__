@@ -29,7 +29,7 @@ describe('<%= firstLetterUpperCaseName %>SDK - blockchain', () => {
     getBlock: [api.<%= name %>GetBlock, testData.BLOCK_HASH],
     getBlockchainAccountBalance: [api.<%= name %>GetBalance, testData.TESTNET.ADDRESS_0],
     getTransaction: [api.<%= name %>GetTransaction, testData.TX_HASH],
-    smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, 'BSC', testData.TX_HASH],
+    smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, '<%= currency %>', testData.TX_HASH],
     getAccountTransactions: [api.<%= name %>GetTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
     getInternalTransaction: [api.<%= name %>GetInternalTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
     estimateGas: [
