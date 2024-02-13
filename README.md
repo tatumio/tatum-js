@@ -487,6 +487,7 @@ This section provides a list of various blockchain network status pages, powered
 | [cardano-preprod.status.tatum.io](https://cardano-preprod.status.tatum.io)                                   |
 | [xinfin-mainnet-archive.status.tatum.io](https://xinfin-mainnet-archive.status.tatum.io)                     |
 | [stellar-mainnet-archive.status.tatum.io](https://stellar-mainnet-archive.status.tatum.io)                   |
+| [cronos-mainnet-archive.status.tatum.io](https://cronos-mainnet-archive.status.tatum.io)                     |
 
 
 
@@ -596,6 +597,7 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/cardano-preprod/list.json](https://rpc.tatum.io/cardano-preprod/list.json)                                   |
 | [rpc.tatum.io/xinfin-mainnet-archive/list.json](https://rpc.tatum.io/xinfin-mainnet-archive/list.json)                     |
 | [rpc.tatum.io/stellar-mainnet-archive/list.json](https://rpc.tatum.io/stellar-mainnet-archive/list.json)                   |
+| [rpc.tatum.io/cronos-mainnet-archive/list.json](https://rpc.tatum.io/cronos-mainnet-archive/list.json)                     |
 
 
 Following pattern defines the URL for fetching the list of nodes:

@@ -16,7 +16,7 @@ export enum Network {
   BITCOIN_CASH = 'bitcoin-cash-mainnet',
   CARDANO_ROSETTA = 'cardano-mainnet',
   CELO = 'celo-mainnet',
-  CRONOS = 'cro-mainnet',
+  CRONOS = 'cronos-mainnet',
   DOGECOIN = 'doge-mainnet',
   EOS = 'eos-mainnet',
   HORIZEN_EON = 'eon-mainnet',
@@ -230,6 +230,7 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.CELO,
   Network.CELO_ALFAJORES,
   Network.XINFIN,
+  Network.CRONOS,
 ]
 
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]

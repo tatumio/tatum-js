@@ -1,3 +1,9 @@
+## [4.2.8] - 2024.2.13
+
+### Added
+
+- Added support for CRONOS network to Load Balancer.
+
 ## [4.2.7] - 2024.2.12
 
 ### Updated
