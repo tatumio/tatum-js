@@ -405,6 +405,28 @@ All RPC calls are implemented in the `tatum.rpc.*` submodule.
 
 See the [RPC API Reference](https://docs.tatum.io/docs/rpc-api-reference) for more about supported chains and methods.
 
+### Distinguishing Between Archive and Full Nodes
+
+When interacting with the blockchain, it's essential to know whether a JSON RPC call requires an archive node or can be serviced by a full node. The distinction hinges on the type of data requested and the historical depth of that data. Here's a breakdown of the conditions under which a call is classified for an archive or a full node:
+
+#### Archive Node Calls
+
+Archive nodes store the entire history of the blockchain, including the state of all accounts at every block. Calls that require an archive node typically involve querying historical states. Conditions include:
+
+1. **Calls to Methods `getCode` or `call`**: Always require an archive node because they may query the state at any block height.
+
+2. **Calls Including `debug` or `trace` Methods**: These methods require historical data not available on full nodes.
+
+3. **Parameters Indicating a Specific Block Number**: For following methods, if the call specifies a block number, it requires an archive node. This includes:
+  - `getStorageAt` with a specific block number.
+  - `getBalance` with a specific block number.
+  - `getBlockByNumber` when a block number is specified.
+  - `getLogs` calls where `fromBlock` or `toBlock` specify a block number other than the latest.
+
+#### Full Node Calls
+
+Any other calls not meeting the conditions for archive node calls can be serviced by a full node. These calls typically involve querying the current state of the blockchain.
+
 ### Status Pages
 This section provides a list of various blockchain network status pages, powered by Tatum. These links direct you to real-time status updates for each network.
 
