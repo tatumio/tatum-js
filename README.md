@@ -1,51 +1,44 @@
-<p align="center">
-  <a href="https://tatum.io/">
-    <img src="https://assets-global.website-files.com/62624e283b503f3e68275638/62624e283b503fde012757c1_Light.svg" alt="Logo" width="200" height="100">
-  </a>
-</p>
+[![Tatum Website](https://assets-global.website-files.com/62624e283b503f3e68275638/62624e283b503fde012757c1_Light.svg)](https://tatum.io)
 
-<h3 align="center">
-Tatum
-SDK</h3>
+# 🚀 Tatum SDK – Your Gateway to Blockchain
 
-<p align="center">
-  Welcome to Tatum SDK - TypeScript/JavaScript Library for Simplifying Blockchain Development.<br>
-  <a href="https://docs.tatum.io/"><strong>Documentation</strong></a>
-  <br>
-  <br>
-  <a href="https://github.com/tatumio/tatum-js/issues/new?assignees=-&labels=bug&template=bug_report.yml">Report bug</a>
-</p>
+The Tatum SDK is a comprehensive TypeScript/JavaScript library designed to simplify blockchain application development. Whether you're monitoring blockchain addresses, making RPC calls, managing NFTs, or querying wallet balances and transactions, Tatum SDK streamlines the process with its robust features:
 
-<div align="center">
+- 🕵️‍♂️ **Blockchain Monitoring**: Easily track activities on any blockchain address.
+- 📞 **RPC Calls Simplified**: Interact with various blockchains through simplified RPC calls.
+- 🖼️ **NFT Insights**: Access detailed information on NFT balances, transactions, and ownership.
+- 💰 **Wallet Intelligence**: Get precise data on wallet balances and transaction history.
 
-<a href="">[![GitHub license](https://img.shields.io/npm/dm/@tatumio/tatum)](https://img.shields.io/npm/dm/@tatumio/tatum)</a>
-<a href="">[![npm version](https://img.shields.io/npm/v/@tatumio/tatum.svg?style=flat-square)](https://www.npmjs.com/package/@tatumio/tatum)</a>
-<a href="">[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tatumio/tatum-js/blob/master/LICENSE.txt)</a>
-<a href="">[![Build](https://img.shields.io/github/actions/workflow/status/tatumio/tatum-js/build.yml?branch=master)](https://img.shields.io/github/actions/workflow/status/tatumio/tatum-js/build.yml?branch=master)</a>
+[![GitHub Downloads](https://img.shields.io/npm/dm/@tatumio/tatum)](https://github.com/tatumio/tatum-js)
+[![NPM Version](https://img.shields.io/npm/v/@tatumio/tatum.svg?style=flat-square)](https://www.npmjs.com/package/@tatumio/tatum)
+[![GitHub License](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/tatumio/tatum-js/blob/master/LICENSE.txt)
+[![Build](https://img.shields.io/github/actions/workflow/status/tatumio/tatum-js/build.yml?branch=master)](https://img.shields.io/github/actions/workflow/status/tatumio/tatum-js/build.yml?branch=master)
 
-</div>
-<hr>
+---
 
-## 🚀 Tatum SDK
-A powerful, feature-rich TypeScript/JavaScript library that streamlines the development of blockchain applications.
+🔑 **Don't have an API key?** Unlock all networks, features, and monitor error logs & usage with ease.  
+[Create API Key for FREE](https://dashboard.tatum.io) - Start building on Tatum with full access to our powerful suite of features.
 
-🔍 **Designed For Developers**
-If you're looking to integrate blockchain functionalities into your projects, [Tatum SDK](https://docs.tatum.io/sdk/get-started-with-tatum-sdk) is for you.
+## Tailored for Developers
 
-We simplify the integration process by offering:
- - A user-friendly interface 🤝
- - Consistent interaction with a broad range of blockchains, including Ethereum 🔷, Polygon 🟣, Bitcoin ₿, and many more.
+Engineered with a developer-first approach, Tatum SDK accelerates your blockchain application development, regardless of your experience level. Explore our [Documentation](https://docs.tatum.io) and [Getting Started Guide](https://github.com/tatumio/tatum-js#getting-started) to jumpstart your projects:
 
-For more details, visit our [documentation](https://docs.tatum.io) and [getting started guide](https://github.com/tatumio/tatum-js#getting-started).
+- **Super fast development:** Start building blockchain applications in no time.
+- **No previous blockchain experience required:** Perfect for beginners and experts alike.
+- **One line of code:** Perform complex tasks with minimal effort.
 
+Need help or want to contribute? [Report Bugs](https://github.com/tatumio/tatum-js/issues/new?assignees=-&labels=bug&template=bug_report.yml), join our community, or collaborate on improvements.
 
-With Tatum SDK, you can:
+[![Join us on Discord](https://img.shields.io/discord/847940290903932939?style=social&logo=discord&label=Discord)](https://discord.gg/tatum)
+[![Follow on X (formerly Twitter)](https://img.shields.io/twitter/follow/tatum_io?style=social&logo=x)](https://twitter.com/tatum_io)
+[![Subscribe on YouTube](https://img.shields.io/youtube/channel/views/UCF-OAfXNJ9h3U2ycHE1NGNw?style=social&logo=youtube&label=Youtube)](https://www.youtube.com/channel/UCF-OAfXNJ9h3U2ycHE1NGNw)
+
 ### 🔌 Perform Native RPC Calls
 
 Interact seamlessly with various blockchains through native RPC calls. Say goodbye to the hassle of juggling separate RPC clients for each blockchain.
 
 | Documentation                                                                                             |
-|-----------------------------------------------------------------------------------------------------------|
+| --------------------------------------------------------------------------------------------------------- |
 | **EVM Blockchains**                                                                                       |
 | [Ethereum RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-rpc-documentation)                 |
 | [Polygon RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/polygon-rpc-documentation)                   |
@@ -80,93 +73,91 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 
 Effortlessly monitor wallet activities. Set up real-time notifications for events like:
 
-| Documentation |
-| ----- |
-| [Start monitoring of the address](https://docs.tatum.io/docs/notifications/notification-workflow/start-monitoring-of-the-address) |
-| [Stop monitoring of the address](https://docs.tatum.io/docs/notifications/notification-workflow/stop-monitoring-of-the-address) |
-| [Get all sent notifications](https://docs.tatum.io/docs/notifications/notification-workflow/get-all-sent-notifications) |
+| Documentation                                                                                                                                         |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Start monitoring of the address](https://docs.tatum.io/docs/notifications/notification-workflow/start-monitoring-of-the-address)                     |
+| [Stop monitoring of the address](https://docs.tatum.io/docs/notifications/notification-workflow/stop-monitoring-of-the-address)                       |
+| [Get all sent notifications](https://docs.tatum.io/docs/notifications/notification-workflow/get-all-sent-notifications)                               |
 | [Get all existing monitoring subscriptions](https://docs.tatum.io/docs/notifications/notification-workflow/get-all-existing-monitoring-subscriptions) |
-
 
 ### 👛 Access Wallet Information
 
 Through a single interface, obtain crucial wallet details such as balances, transaction history, and other pertinent information.
 
-| Documentation |
-| ----- |
-| [Get all assets the wallet holds](https://docs.tatum.io/docs/wallet-address-operations/get-all-assets-the-wallet-holds) |
+| Documentation                                                                                                                 |
+| ----------------------------------------------------------------------------------------------------------------------------- |
+| [Get all assets the wallet holds](https://docs.tatum.io/docs/wallet-address-operations/get-all-assets-the-wallet-holds)       |
 | [Get all transactions on the wallet](https://docs.tatum.io/docs/wallet-address-operations/get-all-transactions-on-the-wallet) |
 
 ### 🖼️ NFT Actions
 
 Dive into a comprehensive suite of actions related to non-fungible tokens (NFTs).
 
-| Documentation |
-| ----- |
-| [Get all NFTs the wallet holds](https://docs.tatum.io/docs/nfts/get-all-nfts-the-wallet-holds) |
-| [Get all NFTs in the NFT collection](https://docs.tatum.io/docs/nfts/get-all-nfts-in-the-nft-collection) |
-| [Trace the history of a specific NFT](https://docs.tatum.io/docs/nfts/trace-the-history-of-a-specific-nft) |
-| [Show the NFT history of a wallet](https://docs.tatum.io/docs/nfts/show-the-nft-history-of-a-wallet) |
-| [Create NFT Collection](https://docs.tatum.io/docs/nfts/create-nft-collection) |
-| [Create MultiToken NFT Collection](https://docs.tatum.io/docs/nfts/create-multitoken-nft-collection) |
-| [Retrieve the owner of the NFT](https://docs.tatum.io/docs/nfts/retrieve-the-owner-of-the-nft) |
+| Documentation                                                                                                      |
+| ------------------------------------------------------------------------------------------------------------------ |
+| [Get all NFTs the wallet holds](https://docs.tatum.io/docs/nfts/get-all-nfts-the-wallet-holds)                     |
+| [Get all NFTs in the NFT collection](https://docs.tatum.io/docs/nfts/get-all-nfts-in-the-nft-collection)           |
+| [Trace the history of a specific NFT](https://docs.tatum.io/docs/nfts/trace-the-history-of-a-specific-nft)         |
+| [Show the NFT history of a wallet](https://docs.tatum.io/docs/nfts/show-the-nft-history-of-a-wallet)               |
+| [Create NFT Collection](https://docs.tatum.io/docs/nfts/create-nft-collection)                                     |
+| [Create MultiToken NFT Collection](https://docs.tatum.io/docs/nfts/create-multitoken-nft-collection)               |
+| [Retrieve the owner of the NFT](https://docs.tatum.io/docs/nfts/retrieve-the-owner-of-the-nft)                     |
 | [Check if the wallet owns a specific NFT](https://docs.tatum.io/docs/nfts/check-if-the-wallet-owns-a-specific-nft) |
-| [Get the metadata of a specific NFT](https://docs.tatum.io/docs/nfts/get-the-metadata-of-a-specific-nft) |
+| [Get the metadata of a specific NFT](https://docs.tatum.io/docs/nfts/get-the-metadata-of-a-specific-nft)           |
 
 ### 🪙 Fungible Tokens
 
 Explore the world of fungible tokens, manage their properties, and track your assets seamlessly.
 
-| Documentation |
-| ----- |
+| Documentation                                                                                                                   |
+| ------------------------------------------------------------------------------------------------------------------------------- |
 | [Get all fungible tokens the wallet holds](https://docs.tatum.io/docs/fungible-tokens/get-all-fungible-tokens-the-wallet-holds) |
-| [Show fungible token history of a wallet](https://docs.tatum.io/docs/fungible-tokens/show-fungible-token-history-of-a-wallet) |
-| [Get metadata of a fungible token](https://docs.tatum.io/docs/fungible-tokens/get-metadata-of-a-fungible-token) |
-| [Create a fungible token](https://docs.tatum.io/docs/fungible-tokens/create-a-fungible-token) |
+| [Show fungible token history of a wallet](https://docs.tatum.io/docs/fungible-tokens/show-fungible-token-history-of-a-wallet)   |
+| [Get metadata of a fungible token](https://docs.tatum.io/docs/fungible-tokens/get-metadata-of-a-fungible-token)                 |
+| [Create a fungible token](https://docs.tatum.io/docs/fungible-tokens/create-a-fungible-token)                                   |
 
 ### 📁 IPFS
 
 Enables you as a developer to use IPFS to store and retrieve your media.
 
 | Documentation                                                      |
-|--------------------------------------------------------------------|
+| ------------------------------------------------------------------ |
 | [Upload file to IPFS](https://docs.tatum.io/docs/ipfs/upload-file) |
-
 
 ### ⛽ Fee Estimation
 
 Stay updated with real-time fee insights and ensure smooth transactions without overpaying.
 
-| Documentation |
-| ----- |
+| Documentation                                                                       |
+| ----------------------------------------------------------------------------------- |
 | [Fetch real-time fee data](https://docs.tatum.io/docs/fee-estimation/getcurrentfee) |
 
 ### 💻 Wallet Provider
 
 Integrate, transact, and manage assets using a secure and user-friendly wallet provider interface.
 
-| Documentation |
-| ----- |
-| [Connect a wallet](https://docs.tatum.io/docs/wallet-provider/metamask/connect-a-wallet) |
-| [Transfer native assets](https://docs.tatum.io/docs/wallet-provider/metamask/transfer-native-assets) |
-| [Transfer your NFT](https://docs.tatum.io/docs/wallet-provider/metamask/transfer-your-nft) |
-| [Create your NFT Collection](https://docs.tatum.io/docs/wallet-provider/metamask/create-your-nft-collection) |
-| [Create your Fungible Token](https://docs.tatum.io/docs/wallet-provider/metamask/create-your-fungible-token) |
-| [Create your NFT (ERC-1155 MultiToken) Collection](https://docs.tatum.io/docs/wallet-provider/metamask/create-your-nft-erc-1155-multitoken-collection) |
-| [Transfer fungible tokens like USDT](https://docs.tatum.io/docs/wallet-provider/metamask/transfer-fungible-tokens-like-usdt) |
+| Documentation                                                                                                                                                |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Connect a wallet](https://docs.tatum.io/docs/wallet-provider/metamask/connect-a-wallet)                                                                     |
+| [Transfer native assets](https://docs.tatum.io/docs/wallet-provider/metamask/transfer-native-assets)                                                         |
+| [Transfer your NFT](https://docs.tatum.io/docs/wallet-provider/metamask/transfer-your-nft)                                                                   |
+| [Create your NFT Collection](https://docs.tatum.io/docs/wallet-provider/metamask/create-your-nft-collection)                                                 |
+| [Create your Fungible Token](https://docs.tatum.io/docs/wallet-provider/metamask/create-your-fungible-token)                                                 |
+| [Create your NFT (ERC-1155 MultiToken) Collection](https://docs.tatum.io/docs/wallet-provider/metamask/create-your-nft-erc-1155-multitoken-collection)       |
+| [Transfer fungible tokens like USDT](https://docs.tatum.io/docs/wallet-provider/metamask/transfer-fungible-tokens-like-usdt)                                 |
 | [Approve the transfer of a fungible token like USDT](https://docs.tatum.io/docs/wallet-provider/metamask/approve-the-transfer-of-a-fungible-token-like-usdt) |
-| [Build your own custom transaction](https://docs.tatum.io/docs/wallet-provider/metamask/build-your-own-custom-transaction) |
+| [Build your own custom transaction](https://docs.tatum.io/docs/wallet-provider/metamask/build-your-own-custom-transaction)                                   |
 
 ### 💲 Exchange Rates
 
 Access the latest crypto exchange rates and supported currency information to stay ahead in the market.
 
-| Documentation |
-| ----- |
-| [Get current exchange rate of the crypto asset](https://docs.tatum.io/docs/exchange-rates/get-current-exchange-rate-of-the-crypto-asset) |
+| Documentation                                                                                                                                          |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| [Get current exchange rate of the crypto asset](https://docs.tatum.io/docs/exchange-rates/get-current-exchange-rate-of-the-crypto-asset)               |
 | [Get current rates for multiple crypto assets at once](https://docs.tatum.io/docs/exchange-rates/get-current-rates-for-multiple-crypto-assets-at-once) |
-| [Supported Crypto Currencies](https://docs.tatum.io/docs/exchange-rates/supported-crypto-currencies) |
-| [Supported Fiats](https://docs.tatum.io/docs/exchange-rates/supported-fiats) |
+| [Supported Crypto Currencies](https://docs.tatum.io/docs/exchange-rates/supported-crypto-currencies)                                                   |
+| [Supported Fiats](https://docs.tatum.io/docs/exchange-rates/supported-fiats)                                                                           |
 
 ### 📘 Getting Started with TatumSDK
 
@@ -176,8 +167,8 @@ This guide will lead you step by step, from basic setup and installation to harn
 
 Experience powerful insights into your application's usage with the [Tatum Dashboard](https://dashboard.tatum.io/). It provides real-time analytics, user engagement metrics, and an intuitive interface, seamlessly integrating with TatumSDK for optimal app monitoring.
 
-
 ### 🌱 Always Evolving
+
 Our library is on a continuous journey of growth. We regularly add new features and extend support for more blockchains. It's the go-to choice for developers aiming to craft robust, scalable, and efficient blockchain apps without the overwhelming intricacies of diverse blockchain protocols.
 
 ## Prerequisites
@@ -245,6 +236,7 @@ console.log(`Balance: ${result}`)
 // Destroy Tatum SDK - needed for stopping background jobs
 await tatum.destroy()
 ```
+
 For more details, check out the [RPC documentation](https://docs.tatum.io/docs/rpc).
 
 ### Subscribing to Notifications
@@ -302,10 +294,9 @@ import { TatumSDK, Network, Ethereum, MetaMask } from '@tatumio/tatum'
 const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM })
 
 const account: string = await tatum.walletProvider.use(MetaMask).getWallet()
-const txId: string = await tatum.walletProvider.use(MetaMask).transferNative(
-  '0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848',
-  '1',
-)
+const txId: string = await tatum.walletProvider
+  .use(MetaMask)
+  .transferNative('0x53e8577C4347C365E4e0DA5B57A589cB6f2AB848', '1')
 
 console.log(txId)
 
@@ -381,6 +372,7 @@ await tatum.destroy()
 For more details, check out the [Fungible Tokens documentation](https://docs.tatum.io/docs/fungible-tokens).
 
 ### Get all transactions on the wallet
+
 Using TatumSDK, you can obtain transaction history of the wallet.
 
 ```ts
@@ -390,9 +382,9 @@ const tatum = await TatumSDK.init<Ethereum>({ network: Network.ETHEREUM_SEPOLIA 
 
 const { data: txs } = await tatum.address.getTransactions({
   address: '0x514d547c8ac8ccbec29b5144810454bd7d3625ca',
-});
+})
 
-console.log(txs);
+console.log(txs)
 
 // Destroy Tatum SDK - needed for stopping background jobs
 await tatum.destroy()
@@ -401,6 +393,7 @@ await tatum.destroy()
 For more details, check out the [Wallet address operations documentation](https://docs.tatum.io/docs/wallet-address-operations).
 
 ## RPC calls
+
 All RPC calls are implemented in the `tatum.rpc.*` submodule.
 
 See the [RPC API Reference](https://docs.tatum.io/docs/rpc-api-reference) for more about supported chains and methods.
@@ -418,20 +411,22 @@ Archive nodes store the entire history of the blockchain, including the state of
 2. **Calls Including `debug` or `trace` Methods**: These methods require historical data not available on full nodes.
 
 3. **Parameters Indicating a Specific Block Number**: For following methods, if the call specifies a block number, it requires an archive node. This includes:
-  - `getStorageAt` with a specific block number.
-  - `getBalance` with a specific block number.
-  - `getBlockByNumber` when a block number is specified.
-  - `getLogs` calls where `fromBlock` or `toBlock` specify a block number other than the latest.
+
+- `getStorageAt` with a specific block number.
+- `getBalance` with a specific block number.
+- `getBlockByNumber` when a block number is specified.
+- `getLogs` calls where `fromBlock` or `toBlock` specify a block number other than the latest.
 
 #### Full Node Calls
 
 Any other calls not meeting the conditions for archive node calls can be serviced by a full node. These calls typically involve querying the current state of the blockchain.
 
 ### Status Pages
+
 This section provides a list of various blockchain network status pages, powered by Tatum. These links direct you to real-time status updates for each network.
 
 | Status Pages                                                                                                 |
-|--------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------ |
 | [bitcoin-mainnet.status.tatum.io](https://bitcoin-mainnet.status.tatum.io)                                   |
 | [bitcoin-testnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)                                   |
 | [dogecoin-mainnet.status.tatum.io](https://dogecoin-mainnet.status.tatum.io)                                 |
@@ -488,14 +483,12 @@ This section provides a list of various blockchain network status pages, powered
 | [xinfin-mainnet-archive.status.tatum.io](https://xinfin-mainnet-archive.status.tatum.io)                     |
 | [stellar-mainnet-archive.status.tatum.io](https://stellar-mainnet-archive.status.tatum.io)                   |
 
-
-
 ### Load Balancer
 
 Load balancer is used managing RPC calls to nodes in a blockchain network.
 It maintains a list of available nodes and their status, and it automatically selects the most responsive node for subsequent RPC calls.
 
-> **_For use of the Load Balancer, you don't need to know how it is working!._**  Load Balancer works automatically in the background and selects the most responsive node for subsequent RPC calls. You can use the SDK without any knowledge of the Load Balancer.
+> **_For use of the Load Balancer, you don't need to know how it is working!._** Load Balancer works automatically in the background and selects the most responsive node for subsequent RPC calls. You can use the SDK without any knowledge of the Load Balancer.
 
 Load Balancer implementation is available in [LoadBalancerRpc.ts](https://github.com/tatumio/tatum-js/blob/master/src/service/rpc/generic/LoadBalancerRpc.ts)
 
@@ -516,31 +509,35 @@ Using a load balancer to distribute traffic across multiple nodes, as opposed to
 - **Better User Experience:** Ultimately, all of these benefits can lead to a better user experience, with faster response times and higher availability of services.
 
 #### Initialization
+
 At start the Load Balancer is initialized with a list of nodes. List of nodes are dynamically fetched from the remote server.
 There is also option to pass your custom list of nodes instead of the dynamic list.
 From the list of the nodes is randomly selected one node as a primary node, which is kept as a primary node until first load balancing is performed.
 The Load Balancer maintain lists of two types of nodes, normal and archive nodes.
 
-
 #### Load Balancing
+
 The load balancing process is running in the background and every minute it checks the status of all nodes in the list.
 The status of each node is determined by making a request to the node's URL and checking the response.
 The fastest responding node in each category is then selected as the active node for that normal and archive category.
 The selected nodes are then used for subsequent RPC calls.
 
 #### Error Handling
+
 If a RPC call fails, failure is logged, and the current active node is marked as failed, and load balancer selects a new active node.
 
 #### Destroy
+
 When you need to stop load balancer, you should can call `destroy` method. This method stops the load balancing process on the background.
 
 #### List of nodes
+
 The list of nodes is dynamically fetched from the remote server and it is defined for every blockchain.
 
 Here are the list of nodes for each blockchain:
 
 | Nodes List                                                                                                                 |
-|----------------------------------------------------------------------------------------------------------------------------|
+| -------------------------------------------------------------------------------------------------------------------------- |
 | [rpc.tatum.io/bitcoin-mainnet/list.json](https://rpc.tatum.io/bitcoin-mainnet/list.json)                                   |
 | [rpc.tatum.io/bitcoin-testnet/list.json](https://rpc.tatum.io/bitcoin-testnet/list.json)                                   |
 | [rpc.tatum.io/dogecoin-mainnet/list.json](https://rpc.tatum.io/dogecoin-mainnet/list.json)                                 |
@@ -597,11 +594,12 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/xinfin-mainnet-archive/list.json](https://rpc.tatum.io/xinfin-mainnet-archive/list.json)                     |
 | [rpc.tatum.io/stellar-mainnet-archive/list.json](https://rpc.tatum.io/stellar-mainnet-archive/list.json)                   |
 
-
 Following pattern defines the URL for fetching the list of nodes:
+
 ```
 https://rpc.tatum.io/${network}/list.json
 ```
+
 Networks enum is available in the [Network.ts](https://github.com/tatumio/tatum-js/blob/master/src/dto/Network.ts)
 
 For instance if we will need Bitcoin mainnet nodes, we will use this URL:
@@ -641,6 +639,7 @@ The response is a list of nodes with their url, type (0 - normal, 1 - archive) a
   }
 ]
 ```
+
 Load Balancer selects from this list the most responsive node.
 
 ### Usage
@@ -666,8 +665,8 @@ const tatum = await TatumSDK.init<Ethereum>({
       },
     ],
     allowedBlocksBehind: 20,
-    oneTimeLoadBalancing: false
-  }
+    oneTimeLoadBalancing: false,
+  },
 })
 const info = await tatum.rpc.chainId()
 tatum.rpc.destroy()
@@ -679,9 +678,11 @@ tatum.rpc.destroy()
 - [Documentation section](https://github.com/tatumio/tatum-js/tree/master/docs) for more details.
 
 ## Examples
+
 Explore various applications that utilize the Tatum SDK. These examples help illustrate the SDK's functionality and offer a starting point for developers looking to integrate similar features into their applications.
 
 ![Metamask notifications](https://github.com/tatumio/example-apps/blob/master/Metamask/notifications/public/demo.png)
+
 - [Metamask notifications](https://github.com/tatumio/example-apps/tree/master/Metamask/notifications)
 - [Metamask portfolio](https://github.com/tatumio/example-apps/tree/master/Metamask/portfolio)
 - [Metamask transfer](https://github.com/tatumio/example-apps/tree/master/Metamask/transfer)
@@ -694,13 +695,11 @@ Import any Tatum SDK extension to your project and start using it right away.
 
 ```typescript
 import { TatumSDK, Ethereum, Network, ApiVersion } from '@tatumio/tatum'
-import { HelloWorldExtension } from "@tatumio/hello-world"
+import { HelloWorldExtension } from '@tatumio/hello-world'
 
 const tatumSdk = await TatumSDK.init<Ethereum>({
-    network: Network.ETHEREUM_SEPOLIA,
-    configureExtensions: [
-        HelloWorldExtension,
-    ]
+  network: Network.ETHEREUM_SEPOLIA,
+  configureExtensions: [HelloWorldExtension],
 })
 ```
 
@@ -708,7 +707,7 @@ After that you can use the extension in your code with full intellisense.
 
 ```typescript
 await tatumSdk.extension(HelloWorldExtension).sayHello()
-````
+```
 
 ### Wallet Providers
 
@@ -716,13 +715,11 @@ Tatum SDK supports wallet provider extensions for various wallets. You can use t
 
 ```typescript
 import { TatumSDK, Ethereum, Network, ApiVersion } from '@tatumio/tatum'
-import { EvmWalletProvider } from "@tatumio/evm-wallet-provider"
+import { EvmWalletProvider } from '@tatumio/evm-wallet-provider'
 
 const tatumSdk = await TatumSDK.init<Ethereum>({
-    network: Network.ETHEREUM_SEPOLIA,
-    configureWalletProviders: [
-        EvmWalletProvider,
-    ]
+  network: Network.ETHEREUM_SEPOLIA,
+  configureWalletProviders: [EvmWalletProvider],
 })
 ```
 
@@ -730,11 +727,11 @@ Usage for wallet providers is similar to the extensions.
 
 ```typescript
 await tatumSdk.walletProvider.use(EvmWalletProvider).getWallet()
-````
+```
+
 🔍 Check out our [built-in MetaMask wallet provider](./src/service/walletProvider/metaMask/metamask.wallet.provider.ts)
 
 📚 **Learn more about Tatum SDK Extension ecosystem here - [Tatum SDK Extensions](https://github.com/tatumio/ecosystem-addons)**
-
 
 ## Legacy versions
 
@@ -758,7 +755,9 @@ For every contribution, it's essential to document your changes in the changelog
 
 ```markdown
 ## [Version Number] - YYYY.MM.DD
+
 ### Added/Updated/Fixed/Changed
+
 - Description of the change
 ```
 
@@ -766,7 +765,9 @@ For instance:
 
 ```markdown
 ## [3.0.10] - 2023.08.11
+
 ### Added
+
 - New feature XYZ
 ```
 
@@ -775,15 +776,18 @@ For instance:
 Before creating a pull request or releasing a new version, ensure the `version` in `package.json` is updated to reflect the new release number.
 
 ### Release Consideration
+
 Your changes will be released after merging the pull request.
 
 ### How to add support for new RPC chain
+
 - Add new chain to the [Network.ts](./src/dto/Network.ts) enum (Check also LOAD_BALANCER_NETWORKS constants)
 - Add new class to the [tatum.ts](./src/service/tatum/tatum.ts) file
 - Add new chain getClient method in the [Utils.ts](./src/util/util.shared.ts) file
 - Add new chain CURRENCY_NAMES and DECIMALS constants in the [constants.ts](./src/util/constant.ts) file
 - Update README.md with new chain for status page and list.json
 - Add E2E test
+
 ---
 
 🙌 Thank you for helping make Tatum SDK better! Your contributions play a crucial role in its continuous improvement and growth.
