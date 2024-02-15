@@ -10,4 +10,5 @@ export enum Chain {
   Dogecoin = 'Dogecoin',
   Tron = 'Tron',
   BinanceSmartChain = 'BinanceSmartChain',
+  Flare = 'Flare',
 }

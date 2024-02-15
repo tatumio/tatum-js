@@ -16,6 +16,10 @@ export const e2eUtil = {
       switch (network) {
         case Network.ETHEREUM_SEPOLIA:
         case Network.ETHEREUM_HOLESKY:
+        case Network.FLARE:
+        case Network.FLARE_COSTON:
+        case Network.FLARE_COSTON_2:
+        case Network.FLARE_SONGBIRD:
           return '0xdb4C3b4350EE869F2D0a2F43ce0292865E2Aa149'
         case Network.CELO_ALFAJORES:
           return '0xdf083B077F1FD890fC71feCaBbd3F68F94cD21Bf'

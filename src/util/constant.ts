@@ -18,6 +18,7 @@ export const Constant = {
       [AddressEventNotificationChain.DOGE]: Chain.Dogecoin,
       [AddressEventNotificationChain.TRON]: Chain.Tron,
       [AddressEventNotificationChain.BSC]: Chain.BinanceSmartChain,
+      [AddressEventNotificationChain.FLR]: Chain.Flare,
     },
   },
   DECIMALS: {

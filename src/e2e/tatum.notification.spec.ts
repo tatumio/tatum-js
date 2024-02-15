@@ -19,7 +19,7 @@ import { e2eUtil } from './e2e.util'
 
 // TODO pipeline dont work with API keys
 
-describe.skip('notification', () => {
+describe('notification', () => {
   beforeAll(async () => {
     const tatum = await TatumSDK.init<Ethereum>({
       network: Network.ETHEREUM,
