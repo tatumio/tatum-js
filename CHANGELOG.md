@@ -1,3 +1,9 @@
+## [4.2.8] - 2024.2.15
+
+### Updated
+
+- Updated `address` module for EVM chains. Users can add parameter `tokenAddress` to `getTransactions` method to filter transactions by token address.
+
 ## [4.2.7] - 2024.2.12
 
 ### Updated

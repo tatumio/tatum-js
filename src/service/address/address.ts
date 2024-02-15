@@ -285,6 +285,7 @@ export class Address {
     toBlock,
     pageSize = 10,
     page = 0,
+    tokenAddress,
   }: GetAddressTransactionsQuery): Promise<ResponseDto<AddressTransaction[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(async () => {
@@ -301,6 +302,7 @@ export class Address {
               blockTo: toBlock,
               pageSize,
               offset: page,
+              tokenAddress,
             },
           })
           .then((r) => r.result)
