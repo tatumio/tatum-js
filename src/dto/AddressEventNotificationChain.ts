@@ -14,4 +14,5 @@ export enum AddressEventNotificationChain {
   TEZOS = 'TEZOS',
   EON = 'EON',
   CHZ = 'CHZ',
+  FLR = 'FLR',
 }

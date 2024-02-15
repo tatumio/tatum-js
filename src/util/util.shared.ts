@@ -415,6 +415,8 @@ export const Utils = {
         return Network.HORIZEN_EON
       case AddressEventNotificationChain.CHZ:
         return Network.CHILIZ
+      case AddressEventNotificationChain.FLR:
+        return Network.FLARE
       default:
         throw new Error(`Chain ${chain} is not supported.`)
     }
@@ -465,6 +467,11 @@ export const Utils = {
         return AddressEventNotificationChain.EON
       case Network.CHILIZ:
         return AddressEventNotificationChain.CHZ
+      case Network.FLARE:
+      case Network.FLARE_COSTON:
+      case Network.FLARE_COSTON_2:
+      case Network.FLARE_SONGBIRD:
+        return AddressEventNotificationChain.FLR
       default:
         throw new Error(`Network ${network} is not supported.`)
     }

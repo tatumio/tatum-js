@@ -1,3 +1,9 @@
+## [4.2.9] - 2024.2.15
+
+### Added
+
+- Added support for Flare, Flare Coston, Flare Coston 2 and Flare Songbird subscriptions.
+
 ## [4.2.8] - 2024.2.15
 
 ### Updated

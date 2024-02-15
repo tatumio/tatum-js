@@ -32,6 +32,10 @@ export const AddressEventNetworks = [
   Network.XRP,
   Network.XRP_TESTNET,
   Network.TEZOS,
+  Network.FLARE,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE_SONGBIRD,
 ]
 
 export const IncomingNativeTxNetworks = [
@@ -61,6 +65,10 @@ export const IncomingNativeTxNetworks = [
   Network.XRP,
   Network.XRP_TESTNET,
   Network.TEZOS,
+  Network.FLARE,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE_SONGBIRD,
 ]
 
 export const OutgoingNativeTxNetworks = [
@@ -88,6 +96,10 @@ export const OutgoingNativeTxNetworks = [
   Network.XRP,
   Network.XRP_TESTNET,
   Network.TEZOS,
+  Network.FLARE,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE_SONGBIRD,
 ]
 
 export const OutgoingFailedNetworks = [
@@ -103,6 +115,10 @@ export const OutgoingFailedNetworks = [
   Network.KLAYTN,
   Network.KLAYTN_BAOBAB,
   Network.TEZOS,
+  Network.FLARE,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE_SONGBIRD,
 ]
 
 export const PaidFeeNetworks = [
@@ -122,6 +138,10 @@ export const PaidFeeNetworks = [
   Network.XRP,
   Network.XRP_TESTNET,
   Network.TEZOS,
+  Network.FLARE,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE_SONGBIRD,
 ]
 
 export const FungibleTxNetworks = [
@@ -141,6 +161,10 @@ export const FungibleTxNetworks = [
   Network.SOLANA,
   Network.SOLANA_DEVNET,
   Network.TEZOS,
+  Network.FLARE,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE_SONGBIRD,
 ]
 
 export const NftNetworks = [
@@ -160,6 +184,10 @@ export const NftNetworks = [
   Network.SOLANA,
   Network.SOLANA_DEVNET,
   Network.TEZOS,
+  Network.FLARE,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE_SONGBIRD,
 ]
 
 export const MultitokenNetworks = [
@@ -174,6 +202,10 @@ export const MultitokenNetworks = [
   Network.BINANCE_SMART_CHAIN_TESTNET,
   Network.KLAYTN,
   Network.KLAYTN_BAOBAB,
+  Network.FLARE,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE_SONGBIRD,
 ]
 
 export const FailedTxPerBlockNetworks = [
@@ -193,6 +225,10 @@ export const FailedTxPerBlockNetworks = [
   Network.SOLANA,
   Network.SOLANA_DEVNET,
   Network.TEZOS,
+  Network.FLARE,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE_SONGBIRD,
 ]
 
 export const ContractAddressLogEventNetworks = [
@@ -207,6 +243,10 @@ export const ContractAddressLogEventNetworks = [
   Network.BINANCE_SMART_CHAIN_TESTNET,
   Network.KLAYTN,
   Network.KLAYTN_BAOBAB,
+  Network.FLARE,
+  Network.FLARE_COSTON,
+  Network.FLARE_COSTON_2,
+  Network.FLARE_SONGBIRD,
 ]
 
 export const InternalTxNetworks = [

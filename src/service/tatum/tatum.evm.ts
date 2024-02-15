@@ -58,7 +58,6 @@ export class EthereumClassic extends BaseEvm {}
 export class Fantom extends BaseEvm {}
 export class Gnosis extends BaseEvm {}
 export class Haqq extends BaseEvm {}
-export class Flare extends BaseEvm {}
 export class HarmonyOne extends BaseEvm {}
 export class Kucoin extends BaseEvm {}
 export class Oasis extends BaseEvm {}
@@ -66,6 +65,7 @@ export class Optimism extends BaseEvm {}
 export class Palm extends BaseEvm {}
 export class Vechain extends BaseEvm {}
 export class XinFin extends BaseEvm {}
+export class Flare extends NotificationEvm {}
 export class Chiliz extends NotificationEvm {}
 
 export class HorizenEon extends BaseEvm {

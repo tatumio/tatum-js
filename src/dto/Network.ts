@@ -763,16 +763,16 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.FLR,
     testnet: false,
     chainId: 14,
+    defaultMainnet: true,
   },
   [Network.FLARE_COSTON_2]: {
     currency: Currency.FLR,
     testnet: true,
-    defaultTestnet: true,
     chainId: 114,
   },
   [Network.FLARE_SONGBIRD]: {
     currency: Currency.SGB,
-    testnet: false,
+    testnet: true,
     chainId: 19,
   },
   [Network.FLARE_COSTON]: {
