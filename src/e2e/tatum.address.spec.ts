@@ -446,6 +446,20 @@ describe.skip('Address', () => {
         expect(page2.data).toHaveLength(1)
         expect(page2.data[0].hash).not.toBe(page1.data[0].hash)
       })
+
+      it('should get transactions for specific contract', async () => {
+        const tokenAddress = '0xdcF5D3E08c5007deCECDb34808C49331bD82a247'
+        const txs = await tatum.address.getTransactions({
+          tokenAddress,
+          address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
+        })
+        expect(txs.status === Status.SUCCESS)
+        // at least one transaction
+        expect(txs.data).not.toHaveLength(0)
+        expect(
+          txs.data.forEach((tx) => expect(tx.tokenAddress?.toLowerCase()).toBe(tokenAddress.toLowerCase())),
+        )
+      })
     })
     describe('getTransactions BITCOIN', () => {
       let tatum: Bitcoin

@@ -72,6 +72,10 @@ export interface GetAddressTransactionsQuery {
    * Optional page number. If not specified, the first page is returned.
    */
   page?: number
+  /**
+   * Optional token address. If specified, only transactions related to this token (smart contract) are returned.
+   */
+  tokenAddress?: string
 }
 
 export interface GetAddressTransactionsQueryTezos {
