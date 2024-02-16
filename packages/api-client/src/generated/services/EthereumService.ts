@@ -49,7 +49,7 @@ export class EthereumService {
             },
             query: {
                 'mnemonic': mnemonic,
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -85,7 +85,7 @@ export class EthereumService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -119,7 +119,7 @@ export class EthereumService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -159,7 +159,7 @@ export class EthereumService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -190,7 +190,7 @@ export class EthereumService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
@@ -220,7 +220,7 @@ export class EthereumService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -254,7 +254,7 @@ export class EthereumService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -287,7 +287,7 @@ export class EthereumService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -323,7 +323,7 @@ export class EthereumService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -408,7 +408,7 @@ export class EthereumService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -458,7 +458,7 @@ export class EthereumService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -531,7 +531,7 @@ export class EthereumService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',

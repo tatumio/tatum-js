@@ -29,6 +29,7 @@ import type { TokenIds } from '../models/TokenIds';
 import type { TokenTezos } from '../models/TokenTezos';
 import type { TokenType } from '../models/TokenType';
 import type { TxData } from '../models/TxData';
+import type { Utxo } from '../models/Utxo';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
 
@@ -711,36 +712,14 @@ export class DataApiService {
      * @param chain The blockchain to work with.
      * @param address The blockchain address.
      * @param totalValue The total amount of transaction you want to send. Only UTXOs up to this amount will be returned, so you will not spend more than you need.
-     * @returns any OK
+     * @returns Utxo OK
      * @throws ApiError
      */
     public static getUtxosByAddress(
         chain: ChainUtxoEnum,
         address: string,
         totalValue: number,
-    ): CancelablePromise<Array<{
-        chain: ChainUtxoEnum;
-        /**
-         * Address of the UTXO
-         */
-        address: string;
-        /**
-         * Hash of the transaction this UTXO is present in
-         */
-        txHash: string;
-        /**
-         * Index of the UTXO in the transaction
-         */
-        index: number;
-        /**
-         * Value of the UTXO, in BTC, LTC or DOGE.
-         */
-        value: number;
-        /**
-         * String representation of the value of the UTXO, in BTC, LTC or DOGE.
-         */
-        valueAsString: string;
-    }>> {
+    ): CancelablePromise<Array<Utxo>> {
         return __request({
             method: 'GET',
             path: `/v3/data/utxos`,
@@ -749,6 +728,67 @@ export class DataApiService {
                 'address': address,
                 'totalValue': totalValue,
             },
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
+            },
+        });
+    }
+
+    /**
+     * Get unspent UTXOs for a batch of addresses
+     * <p><b>100 credits per address for each API call.</b></p>
+     * <p>Retrieve unspent UTXOs for each provided address, up to a specified total amount.
+     * If you want to prepare a transaction on UTXO-based chains like Bitcoin, you need to enter unspent UTXOs to be able to perform a transaction. By providing ```totalValue``` as a total, our API will return a list of UTXOs that will be enough to cover the transaction.</p>
+     * Our API lets you get the unpenst UTXOs for a specific address on:</p>
+     * <ul>
+     * <li>Bitcoin - bitcoin / bitcoin-testnet</li>
+     * <li>Litecoin - litecoin / litecoin-testnet</li>
+     * <li>Dogecoin - doge / doge-testnet</li>
+     * <li>Cardano - cardano / cardano-preprod</li>
+     * </ul>
+     * <p>To get started:</p>
+     * <ul>
+     * <li>Provide a chain and addresses you want to list unspent UTXOs for. If available, our API will return information about the unspent UTXOs for each address. API traverses latest 200k incoming transactions.</li>
+     * </ul>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static getUtxosByAddressBatch(
+        requestBody: {
+            chain?: ChainUtxoEnum;
+            /**
+             * Addresses
+             */
+            addresses: Array<string>;
+            /**
+             * The total amount of transaction you want to send. Only UTXOs up to this amount will be returned, so you will not spend more than you need.
+             */
+            totalValue: number;
+        },
+    ): CancelablePromise<Array<{
+        /**
+         * The blockchain address.
+         */
+        address?: string;
+        /**
+         * UTXOs up to amount for address.
+         */
+        utxos?: Array<Utxo>;
+        /**
+         * Indicate whether the total value of UTXOs is sufficient for the transaction.
+         */
+        transactionPossible?: boolean;
+    }>> {
+        return __request({
+            method: 'POST',
+            path: `/v3/data/utxos/batch`,
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,

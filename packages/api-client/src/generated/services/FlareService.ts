@@ -11,7 +11,6 @@ import type { FlareBalance } from '../models/FlareBalance';
 import type { FlareBlock } from '../models/FlareBlock';
 import type { FlareTestnetType } from '../models/FlareTestnetType';
 import type { FlareTx } from '../models/FlareTx';
-import type { FlareTxInternal } from '../models/FlareTxInternal';
 import type { GeneratedAddressFlare } from '../models/GeneratedAddressFlare';
 import type { PrivKey } from '../models/PrivKey';
 import type { PrivKeyRequest } from '../models/PrivKeyRequest';
@@ -49,7 +48,7 @@ export class FlareService {
             },
             query: {
                 'mnemonic': mnemonic,
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -85,7 +84,7 @@ export class FlareService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -119,7 +118,7 @@ export class FlareService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -159,7 +158,7 @@ export class FlareService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -190,7 +189,7 @@ export class FlareService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
@@ -220,7 +219,7 @@ export class FlareService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -254,7 +253,7 @@ export class FlareService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -287,7 +286,7 @@ export class FlareService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -323,7 +322,7 @@ export class FlareService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -361,7 +360,7 @@ export class FlareService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -411,7 +410,7 @@ export class FlareService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -419,45 +418,6 @@ export class FlareService {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server during the processing of the request.`,
-            },
-        });
-    }
-
-    /**
-     * Get Flare internal transactions by address
-     * <h4>1 credit per API call.</h4><br/>
-     * <p>Get Flare internal transactions by address.<br/></p>
-     *
-     * @param address Account address you want to get balance of
-     * @param pageSize Max number of items per page is 50.
-     * @param offset Offset to obtain next page of the data.
-     * @param testnetType Type of Flare testnet in query. Defaults to flare-coston. For mainnet API Key, this value is ignored.
-     * @param xTestnetType Type of Flare testnet in header. Defaults to flare-coston. For mainnet API Key, this value is ignored.
-     * @returns FlareTxInternal OK
-     * @throws ApiError
-     */
-    public static flareGetInternalTransactionByAddress(
-        address: string,
-        pageSize: number,
-        offset?: number,
-        testnetType?: FlareTestnetType,
-        xTestnetType?: FlareTestnetType,
-    ): CancelablePromise<Array<FlareTxInternal>> {
-        return __request({
-            method: 'GET',
-            path: `/v3/flare/account/transaction/internal/${address}`,
-            headers: {
-                'x-testnet-type': xTestnetType,
-            },
-            query: {
-                'pageSize': pageSize,
-                'offset': offset,
-                'testnet-type': testnetType,
-            },
-            errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
-                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
@@ -487,7 +447,7 @@ export class FlareService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',

@@ -360,7 +360,7 @@ export class BlockchainFeesService {
      * Estimate the fee for a KuCoin Community Chain transaction
      * <p><b>2 credits per API call</b></p>
      * <p>Get an estimated gas price and the number of gas units needed for a Flare transaction.</p>
-     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/KuCoin#operation/FlareBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/Flare#operation/FlareBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
      *
      * @param requestBody
      * @returns GasEstimated OK

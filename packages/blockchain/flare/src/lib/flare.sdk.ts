@@ -50,7 +50,6 @@ export const TatumFlareSDK = (args: SDKArguments) => {
       estimateGas: BlockchainFeesService.flareEstimateGas,
       smartContractInvocation: FlareService.flareBlockchainSmartContractInvocation,
       smartContractGetAddress: BlockchainUtilsService.scGetContractAddress,
-      getInternalTransaction: FlareService.flareGetInternalTransactionByAddress,
     },
   }
 }

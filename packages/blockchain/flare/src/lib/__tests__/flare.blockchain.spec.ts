@@ -30,7 +30,6 @@ describe('FlareSDK - blockchain', () => {
     getBlockchainAccountBalance: [api.flareGetBalance, testData.TESTNET.ADDRESS_0],
     getTransaction: [api.flareGetTransaction, testData.TX_HASH],
     smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, 'FLR', testData.TX_HASH],
-    getInternalTransaction: [api.flareGetInternalTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
     estimateGas: [
       blockchain.estimateGas,
       {

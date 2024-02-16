@@ -19,6 +19,7 @@ import type { EntitiesCount } from '../models/EntitiesCount';
 import type { HmacWebHook } from '../models/HmacWebHook';
 import type { Id } from '../models/Id';
 import type { Subscription } from '../models/Subscription';
+import type { TestnetType } from '../models/TestnetType';
 import type { Transaction } from '../models/Transaction';
 import type { WebHook } from '../models/WebHook';
 import type { CancelablePromise } from '../core/CancelablePromise';
@@ -84,6 +85,13 @@ export class NotificationSubscriptionsService {
      * <td>Klaytn</td>
      * <td>Yes/Yes</td>
      * <td>Klay, ERC20, ERC721, ERC1155</td>
+     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
+     * <td>25 credits / day / address</td>
+     * </tr>
+     * <tr>
+     * <td>Flare</td>
+     * <td>Yes (Coston, Coston 2, SongBird)/Yes</td>
+     * <td>FLR, ERC20, ERC721, ERC1155</td>
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>25 credits / day / address</td>
      * </tr>
@@ -177,6 +185,11 @@ export class NotificationSubscriptionsService {
          * <td>500,000 credits / day</td>
          * </tr>
          * <tr>
+         * <td>Flare</td>
+         * <td>flare-coston / flare-coston2 / flare-songbird / flare-mainnet</td>
+         * <td>500,000 credits / day</td>
+         * </tr>
+         * <tr>
          * <td>BNB Smart Chain</td>
          * <td>bsc-testnet / bsc-mainnet</td>
          * <td>500,000 credits / day</td>
@@ -230,6 +243,11 @@ export class NotificationSubscriptionsService {
                      * <tr>
                      * <td>Klaytn</td>
                      * <td>klaytn-baobab / klaytn-cypress</td>
+                     * <td>500,000 credits / day</td>
+                     * </tr>
+                     * <tr>
+                     * <td>Flare</td>
+                     * <td>flare-coston / flare-coston2 / flare-songbird / flare-mainnet</td>
                      * <td>500,000 credits / day</td>
                      * </tr>
                      * <tr>
@@ -287,6 +305,11 @@ export class NotificationSubscriptionsService {
                                  * <td>Klaytn</td>
                                  * <td>klaytn-baobab / klaytn-cypress</td>
                                  * <td>50,000 credits / day</td>
+                                 * </tr>
+                                 * <tr>
+                                 * <td>Flare</td>
+                                 * <td>flare-coston / flare-coston2 / flare-songbird / flare-mainnet</td>
+                                 * <td>500,000 credits / day</td>
                                  * </tr>
                                  * <tr>
                                  * <td>BNB Smart Chain</td>
@@ -428,17 +451,22 @@ export class NotificationSubscriptionsService {
                                                                          * Result of the operation is subscription ID, which can be used to cancel subscription or obtain additional data connected to it like reports.</p>
                                                                          *
                                                                          * @param requestBody
-                                                                         * @param testnetType Type of Ethereum testnet. Defaults to ethereum-sepolia.
+                                                                         * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+                                                                         * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
                                                                          * @returns Id OK
                                                                          * @throws ApiError
                                                                          */
                                                                         public static createSubscription(
                                                                             requestBody: (CreateSubscriptionNotification | CreateSubscriptionNftTransferEvent | CreateSubscriptionMultiTokenTransferEvent | CreateSubscriptionContractLogEvent | CreateSubscriptionIncoming | CreateSubscriptionPending | CreateSubscriptionTradeMatch | CreateSubscriptionPartialTradeMatch | CreateSubscriptionKMSError | CreateSubscriptionKMSSuccess | CreateSubscriptionTxInTheBlock | CreateSubscriptionBalance | CreateSubscriptionInterval),
-                                                                            testnetType: 'ethereum-sepolia' | 'ethereum-goerli' | 'ehtereum-holesky' = 'ethereum-sepolia',
+                                                                            testnetType?: TestnetType,
+                                                                            xTestnetType?: TestnetType,
                                                                         ): CancelablePromise<Id> {
                                                                             return __request({
                                                                                 method: 'POST',
                                                                                 path: `/v3/subscription`,
+                                                                                headers: {
+                                                                                    'x-testnet-type': xTestnetType,
+                                                                                },
                                                                                 query: {
                                                                                     'testnetType': testnetType,
                                                                                 },

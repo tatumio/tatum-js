@@ -18,7 +18,7 @@ export type TransferFlareBlockchainKMS = {
     /**
      * Currency to transfer from Flare Blockchain Account.
      */
-    currency: 'Flare';
+    currency: 'FLR';
     /**
      * Custom defined fee. If not present, it will be calculated automatically.
      */

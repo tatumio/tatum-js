@@ -18,7 +18,7 @@ export type CreateSubscriptionNotification = {
         /**
          * Blockchain of the address.
          */
-        chain: 'SOL' | 'ETH' | 'MATIC' | 'CELO' | 'KLAY' | 'BTC' | 'LTC' | 'BCH' | 'DOGE' | 'TRON' | 'BSC';
+        chain: 'SOL' | 'ETH' | 'MATIC' | 'CELO' | 'KLAY' | 'BTC' | 'LTC' | 'BCH' | 'DOGE' | 'TRON' | 'BSC' | 'FLR';
         /**
          * URL of the endpoint, where HTTP POST request will be sent, when transaction is detected on the address.
          */

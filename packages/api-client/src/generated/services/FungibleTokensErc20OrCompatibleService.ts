@@ -78,8 +78,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
@@ -95,7 +95,7 @@ export class FungibleTokensErc20OrCompatibleService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -130,8 +130,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
@@ -147,7 +147,7 @@ export class FungibleTokensErc20OrCompatibleService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -183,8 +183,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
@@ -200,7 +200,7 @@ export class FungibleTokensErc20OrCompatibleService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -233,8 +233,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
@@ -250,7 +250,7 @@ export class FungibleTokensErc20OrCompatibleService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -301,8 +301,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
@@ -318,7 +318,7 @@ export class FungibleTokensErc20OrCompatibleService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -405,8 +405,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * @param chain Network name
      * @param address The blockchain address that you want to get the token balance of
      * @param contractAddress The address of the fungible token smart contract
-     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
      * @returns Erc20Balance OK
      * @throws ApiError
      */
@@ -424,7 +424,7 @@ export class FungibleTokensErc20OrCompatibleService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,

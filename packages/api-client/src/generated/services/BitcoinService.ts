@@ -5,6 +5,7 @@ import type { BroadcastKMS } from '../models/BroadcastKMS';
 import type { BtcBasedBalance } from '../models/BtcBasedBalance';
 import type { BtcBlock } from '../models/BtcBlock';
 import type { BtcBlockHash } from '../models/BtcBlockHash';
+import type { BtcGetTxByAddressBatch } from '../models/BtcGetTxByAddressBatch';
 import type { BtcInfo } from '../models/BtcInfo';
 import type { BtcTransactionFromAddress } from '../models/BtcTransactionFromAddress';
 import type { BtcTransactionFromAddressKMS } from '../models/BtcTransactionFromAddressKMS';
@@ -256,6 +257,41 @@ export class BitcoinService {
                 'blockTo': blockTo,
                 'txType': txType,
             },
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Get transactions for multiple Bitcoin addresses in a batch
+     * <p><b>1 credit per address for each API call</b></p>
+     * <p>Retrieve transactions for multiple Bitcoin addresses in a batch.</p>
+     *
+     * @param requestBody
+     * @returns any OK
+     * @throws ApiError
+     */
+    public static btcGetTxByAddressBatch(
+        requestBody?: BtcGetTxByAddressBatch,
+    ): CancelablePromise<Array<{
+        /**
+         * Address
+         */
+        address?: string;
+        /**
+         * Transactions for address.
+         */
+        transactions?: Array<BtcTx>;
+    }>> {
+        return __request({
+            method: 'POST',
+            path: `/v3/bitcoin/transaction/address/batch`,
+            body: requestBody,
+            mediaType: 'application/json',
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,

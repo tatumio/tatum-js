@@ -130,8 +130,8 @@ export class NftErc721OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
@@ -147,7 +147,7 @@ export class NftErc721OrCompatibleService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -184,8 +184,8 @@ export class NftErc721OrCompatibleService {
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
      *
      * @param requestBody
-     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
      * @returns any OK
      * @throws ApiError
      */
@@ -201,7 +201,7 @@ export class NftErc721OrCompatibleService {
                 'x-testnet-type': xTestnetType,
             },
             query: {
-                'testnet-type': testnetType,
+                'testnetType': testnetType,
             },
             body: requestBody,
             mediaType: 'application/json',
@@ -248,7 +248,6 @@ export class NftErc721OrCompatibleService {
      * <li>Klaytn</li>
      * <li>Polygon</li>
      * <li>Solana</li>
-     * <li>Flare</li>
      * </ul>
      * <p>Depending on what blockchain you use, choose the request body schema to use in the API call.</p>
      * <ul>
@@ -373,6 +372,7 @@ export class NftErc721OrCompatibleService {
              * <li>TRON</li>
              * <li>Tezos</li>
              * <li>Horizen Eon</li>
+             * <li>Flare</li>
              * </ul>
              * <p>Depending on what blockchain you use, choose the request body schema to use in the API call.</p>
              * <ul>
@@ -400,8 +400,8 @@ export class NftErc721OrCompatibleService {
              * </ul>
              *
              * @param requestBody
-             * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-             * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+             * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+             * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
              * @returns any OK
              * @throws ApiError
              */
@@ -417,7 +417,7 @@ export class NftErc721OrCompatibleService {
                         'x-testnet-type': xTestnetType,
                     },
                     query: {
-                        'testnet-type': testnetType,
+                        'testnetType': testnetType,
                     },
                     body: requestBody,
                     mediaType: 'application/json',
@@ -474,8 +474,8 @@ export class NftErc721OrCompatibleService {
              * <p><b>NOTE:</b> This does not apply to transferring NFTs that were minted on Algorand using NFT Express (see earlier in this section).</p>
              *
              * @param requestBody
-             * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-             * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+             * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+             * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
              * @returns any OK
              * @throws ApiError
              */
@@ -491,7 +491,7 @@ export class NftErc721OrCompatibleService {
                         'x-testnet-type': xTestnetType,
                     },
                     query: {
-                        'testnet-type': testnetType,
+                        'testnetType': testnetType,
                     },
                     body: requestBody,
                     mediaType: 'application/json',
@@ -585,8 +585,8 @@ export class NftErc721OrCompatibleService {
                  * If there are not enough coins on any testnet address, feel free to send coins there.</p>
                  *
                  * @param requestBody
-                 * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-                 * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+                 * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+                 * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
                  * @returns any OK
                  * @throws ApiError
                  */
@@ -602,7 +602,7 @@ export class NftErc721OrCompatibleService {
                             'x-testnet-type': xTestnetType,
                         },
                         query: {
-                            'testnet-type': testnetType,
+                            'testnetType': testnetType,
                         },
                         body: requestBody,
                         mediaType: 'application/json',
@@ -647,8 +647,8 @@ export class NftErc721OrCompatibleService {
                  * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
                  *
                  * @param requestBody
-                 * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-                 * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+                 * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+                 * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
                  * @returns any OK
                  * @throws ApiError
                  */
@@ -664,7 +664,7 @@ export class NftErc721OrCompatibleService {
                             'x-testnet-type': xTestnetType,
                         },
                         query: {
-                            'testnet-type': testnetType,
+                            'testnetType': testnetType,
                         },
                         body: requestBody,
                         mediaType: 'application/json',
@@ -815,8 +815,8 @@ export class NftErc721OrCompatibleService {
                  *
                  * @param chain The blockchain to work with
                  * @param hash The hash (ID) of the NFT transaction
-                 * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-                 * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+                 * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+                 * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
                  * @returns any OK
                  * @throws ApiError
                  */
@@ -833,7 +833,7 @@ export class NftErc721OrCompatibleService {
                             'x-testnet-type': xTestnetType,
                         },
                         query: {
-                            'testnet-type': testnetType,
+                            'testnetType': testnetType,
                         },
                         errors: {
                             400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -944,13 +944,13 @@ export class NftErc721OrCompatibleService {
                  * @param chain The blockchain to work with
                  * @param address The blockchain address that you want to get the token balance of
                  * @param contractAddress The address of the NFT smart contract
-                 * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-                 * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+                 * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+                 * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
                  * @returns any OK
                  * @throws ApiError
                  */
                 public static nftGetBalanceErc721(
-                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC' | 'SOL' | 'ALGO' | 'EGLD',
+                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC' | 'SOL' | 'ALGO' | 'EGLD' | 'FLR',
                     address: string,
                     contractAddress: string,
                     testnetType?: TestnetType,
@@ -963,7 +963,7 @@ export class NftErc721OrCompatibleService {
                             'x-testnet-type': xTestnetType,
                         },
                         query: {
-                            'testnet-type': testnetType,
+                            'testnetType': testnetType,
                         },
                         errors: {
                             400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -998,8 +998,8 @@ export class NftErc721OrCompatibleService {
                  * @param contractAddress The blockchain address of the NFT to get metadata for
                  * @param tokenId The ID of the NFT to get metadata for<br/>For Solana and ALGO put 0 since this parameter is irrelevant for those chains.
                  * @param account (Flow only) The account that holds the NFT
-                 * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
-                 * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. Developers must specify the currency to determine the applicable set of testnet types.
+                 * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+                 * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
                  * @returns any OK
                  * @throws ApiError
                  */
@@ -1019,7 +1019,7 @@ export class NftErc721OrCompatibleService {
                         },
                         query: {
                             'account': account,
-                            'testnet-type': testnetType,
+                            'testnetType': testnetType,
                         },
                         errors: {
                             400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
