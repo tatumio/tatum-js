@@ -3,12 +3,19 @@
 import { JsonRpcResponse } from '../JsonRpcResponse.dto'
 import { AbstractRpcInterface } from './AbstractJsonRpcInterface'
 
+export interface UtxoBasedCommonRpcSuite extends UtxoBasedRpcSuite {
+  getBlock(hashOrHeight: string, verbose?: 0 | 1 | 2): Promise<JsonRpcResponse<any>>
+}
+
+export interface DogeRpcSuite extends UtxoBasedRpcSuite {
+  getBlock(hashOrHeight: string, verbose?: boolean): Promise<JsonRpcResponse<any>>
+}
+
 export interface UtxoBasedRpcSuite extends UtxoBasedRpcInterface, AbstractRpcInterface {}
 
 export interface UtxoBasedRpcInterface {
   // blockchain methods
   getBestBlockHash(): Promise<JsonRpcResponse<string>>
-  getBlock(hashOrHeight: string, verbose?: 0 | 1 | 2): Promise<JsonRpcResponse<any>>
   getBlockChainInfo(): Promise<JsonRpcResponse<any>>
   getBlockCount(): Promise<JsonRpcResponse<number>>
   getBlockHash(height: number): Promise<JsonRpcResponse<string>>

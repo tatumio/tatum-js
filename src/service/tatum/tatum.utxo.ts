@@ -1,5 +1,10 @@
 import { Container } from 'typedi'
-import { UtxoBasedRpcSuite, UtxoBasedRpcSuiteEstimateFee } from '../../dto'
+import {
+  DogeRpcSuite,
+  UtxoBasedCommonRpcSuite,
+  UtxoBasedRpcSuite,
+  UtxoBasedRpcSuiteEstimateFee,
+} from '../../dto'
 import { CONFIG, Utils } from '../../util'
 import { Address } from '../address'
 import { FeeUtxo } from '../fee'
@@ -46,9 +51,17 @@ export abstract class FullUtxo extends NotificationUtxo {
   }
 }
 
-export class Bitcoin extends FullUtxo {}
-export class Litecoin extends FullUtxo {}
-export class Dogecoin extends FullUtxo {}
+export abstract class FullCommonUtxo extends FullUtxo {
+  rpc: UtxoBasedCommonRpcSuite
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<UtxoBasedCommonRpcSuite>(id, Container.of(id).get(CONFIG))
+  }
+}
+
+export class Bitcoin extends FullCommonUtxo {}
+export class Litecoin extends FullCommonUtxo {}
 export class BitcoinCash extends NotificationUtxo {
   rpc: UtxoBasedRpcSuiteEstimateFee
 
@@ -58,3 +71,7 @@ export class BitcoinCash extends NotificationUtxo {
   }
 }
 export class ZCash extends BaseUtxo {}
+
+export class Dogecoin extends FullUtxo {
+  rpc: DogeRpcSuite
+}
