@@ -1,10 +1,10 @@
-import { Network } from '../../../service'
+import { Dogecoin, Network } from '../../../service'
 import { UtxoE2eUtils, UtxoNetworkType } from './utxo.e2e.utils'
 
 describe('Doge', () => {
   describe('mainnet', () => {
     it('createrawtransaction', async () => {
-      const tatum = await UtxoE2eUtils.initTatum({ network: Network.DOGECOIN, type: UtxoNetworkType.MAIN })
+      const tatum = await UtxoE2eUtils.initTatum<Dogecoin>({ network: Network.DOGECOIN, type: UtxoNetworkType.MAIN })
       const result = await tatum.rpc.createRawTransaction(
         [
           {
@@ -18,6 +18,13 @@ describe('Doge', () => {
       )
 
       expect(result.result).not.toBeNull()
+      await tatum.destroy()
+    })
+
+    it('getblock', async () => {
+      const tatum = await UtxoE2eUtils.initTatum<Dogecoin>({ network: Network.DOGECOIN, type: UtxoNetworkType.MAIN })
+      await tatum.rpc.getBlock('doge10101010', true)
+
       await tatum.destroy()
     })
   })

@@ -1,5 +1,5 @@
 import { Container } from 'typedi'
-import { UtxoBasedRpcSuite, UtxoBasedRpcSuiteEstimateFee } from '../../dto'
+import { UtxoBasedRpcSuite, UtxoBasedRpcSuiteEstimateFee, DogeRpcSuite } from '../../dto'
 import { CONFIG, Utils } from '../../util'
 import { Address } from '../address'
 import { FeeUtxo } from '../fee'
@@ -48,7 +48,6 @@ export abstract class FullUtxo extends NotificationUtxo {
 
 export class Bitcoin extends FullUtxo {}
 export class Litecoin extends FullUtxo {}
-export class Dogecoin extends FullUtxo {}
 export class BitcoinCash extends NotificationUtxo {
   rpc: UtxoBasedRpcSuiteEstimateFee
 
@@ -58,3 +57,22 @@ export class BitcoinCash extends NotificationUtxo {
   }
 }
 export class ZCash extends BaseUtxo {}
+
+export class Dogecoin extends TatumSdkChain{
+  rpc: DogeRpcSuite
+  ipfs: Ipfs
+  rates: Rates
+  fee: FeeUtxo
+  notification: Notification
+  address: Address
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<DogeRpcSuite>(id, Container.of(id).get(CONFIG))
+    this.ipfs = Container.of(id).get(Ipfs)
+    this.rates = Container.of(id).get(Rates)
+    this.fee = Container.of(id).get(FeeUtxo)
+    this.notification = Container.of(id).get(Notification)
+    this.address = Container.of(id).get(Address)
+  }
+}

@@ -1,5 +1,5 @@
 import { Network } from '../../../dto'
-import { BaseUtxo, TatumSDK } from '../../../service'
+import { BaseUtxo, Dogecoin, TatumSDK } from '../../../service'
 import { RpcE2eUtils } from '../rpc.e2e.utils'
 
 export enum UtxoNetworkType {
@@ -15,7 +15,7 @@ interface TatumBtcUtils {
 }
 
 export const UtxoE2eUtils = {
-  initTatum: async <T extends BaseUtxo>(params: TatumBtcUtils) =>
+  initTatum: async <T extends BaseUtxo | Dogecoin>(params: TatumBtcUtils) =>
     TatumSDK.init<T>(RpcE2eUtils.initConfig(params.network, params.apiKey)),
   e2e: (params: TatumBtcUtils) => {
     const { type } = params
