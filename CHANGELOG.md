@@ -1,3 +1,9 @@
+## [4.2.10] - 2024.2.20
+
+### Fixed
+
+- Fixed the `getBlock` method for Doge, addressing an issue with the second boolean parameter.
+
 ## [4.2.9] - 2024.2.15
 
 ### Added
