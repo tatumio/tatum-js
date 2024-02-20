@@ -5,10 +5,9 @@ import { AbstractRpcInterface } from './AbstractJsonRpcInterface'
 
 export interface UtxoBasedRpcSuite extends UtxoBasedRpcInterface, AbstractRpcInterface {}
 
-export interface UtxoBasedRpcInterface {
+export interface UtxoBasedCommonRpcInterface {
   // blockchain methods
   getBestBlockHash(): Promise<JsonRpcResponse<string>>
-  getBlock(hashOrHeight: string, verbose?: 0 | 1 | 2): Promise<JsonRpcResponse<any>>
   getBlockChainInfo(): Promise<JsonRpcResponse<any>>
   getBlockCount(): Promise<JsonRpcResponse<number>>
   getBlockHash(height: number): Promise<JsonRpcResponse<string>>
@@ -44,6 +43,10 @@ export interface UtxoBasedRpcInterface {
   ): Promise<JsonRpcResponse<any>>
   validateAddress(address: string): Promise<JsonRpcResponse<any>>
   verifyMessage(address: string, signature: string, message: string): Promise<JsonRpcResponse<boolean>>
+}
+
+export interface UtxoBasedRpcInterface extends UtxoBasedCommonRpcInterface{
+  getBlock(hashOrHeight: string, verbose?: 0 | 1 | 2): Promise<JsonRpcResponse<any>>
 }
 
 export interface UtxoBasedRpcInterfaceEstimateFee extends UtxoBasedRpcInterface {

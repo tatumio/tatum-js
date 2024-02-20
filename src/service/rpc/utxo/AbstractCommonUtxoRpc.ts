@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { DogeRpcInterface, JsonRpcResponse } from '../../../dto'
+import { JsonRpcResponse, UtxoBasedCommonRpcInterface } from '../../../dto'
 
-export abstract class AbstractDogeRpc implements DogeRpcInterface {
+export abstract class AbstractCommonUtxoRpc implements UtxoBasedCommonRpcInterface {
   protected abstract rpcCall<T>(method: string, params?: unknown[]): Promise<T>
 
   async createRawTransaction(
@@ -38,10 +38,6 @@ export abstract class AbstractDogeRpc implements DogeRpcInterface {
 
   async getBestBlockHash(): Promise<JsonRpcResponse<string>> {
     return this.rpcCall<JsonRpcResponse<string>>('getbestblockhash')
-  }
-
-  async getBlock(hashOrHeight: string, verbose = true): Promise<JsonRpcResponse<any>> {
-    return this.rpcCall<JsonRpcResponse<any>>('getblock', [hashOrHeight, verbose])
   }
 
   async getBlockChainInfo(): Promise<JsonRpcResponse<any>> {

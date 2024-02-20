@@ -2,9 +2,9 @@
 import { Container, Service } from 'typedi'
 import { JsonRpcCall, JsonRpcResponse, DogeRpcSuite } from '../../../dto'
 import { Utils } from '../../../util'
-import { AbstractDogeRpc } from './AbstractDogeRpc'
 // Need to import like this to keep browser working
 import { LoadBalancer } from '../generic/LoadBalancer'
+import { AbstractCommonUtxoRpc } from './AbstractCommonUtxoRpc'
 
 
 @Service({
@@ -13,7 +13,7 @@ import { LoadBalancer } from '../generic/LoadBalancer'
   },
   transient: true,
 })
-export class DogeLoadBalancedRpc extends AbstractDogeRpc implements DogeRpcSuite {
+export class DogeLoadBalancedRpc extends AbstractCommonUtxoRpc implements DogeRpcSuite {
   protected readonly loadBalancer: LoadBalancer
 
   constructor(id: string) {
@@ -40,5 +40,9 @@ export class DogeLoadBalancedRpc extends AbstractDogeRpc implements DogeRpcSuite
 
   getRpcNodeUrl(): string {
     return this.loadBalancer.getActiveNormalUrlWithFallback().url
+  }
+
+  async getBlock(hashOrHeight: string, verbose = true): Promise<JsonRpcResponse<any>> {
+    return this.rpcCall<JsonRpcResponse<any>>('getblock', [hashOrHeight, verbose])
   }
 }
