@@ -7,7 +7,7 @@ import {
   isAlgorandAlgodNetwork,
   isAlgorandIndexerNetwork,
   isBnbLoadBalancerNetwork,
-  isCardanoNetwork,
+  isCardanoNetwork, isDogecoinLoadBalancedNetwork,
   isEosLoadBalancerNetwork,
   isEosNetwork,
   isEvmArchiveNonArchiveBeaconLoadBalancerNetwork,
@@ -104,6 +104,7 @@ import { UtxoLoadBalancerRpcEstimateFee } from '../service/rpc/utxo/UtxoLoadBala
 import { UtxoRpcEstimateFee } from '../service/rpc/utxo/UtxoRpcEstimateFee'
 import { Constant } from './constant'
 import { CONFIG, LOGGER } from './di.tokens'
+import { DogeLoadBalancedRpc } from '../service/rpc/utxo/DogeLoadBalancedRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
@@ -135,6 +136,10 @@ export const Utils = {
 
     if (isBnbLoadBalancerNetwork(network)) {
       return Container.of(id).get(BnbLoadBalancerRpc) as T
+    }
+
+    if (isDogecoinLoadBalancedNetwork(network)) {
+      return Container.of(id).get(DogeLoadBalancedRpc) as T
     }
 
     if (isUtxoLoadBalancerEstimateFeeNetwork(network)) {
