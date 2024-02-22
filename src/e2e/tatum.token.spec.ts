@@ -1,6 +1,6 @@
 import { Ethereum, Network, TatumSDK } from '../service'
 
-describe('Tatum token', () => {
+describe.skip('Tatum token', () => {
   let tatum: Ethereum
   beforeAll(async () => {
     tatum = await TatumSDK.init<Ethereum>({

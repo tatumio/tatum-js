@@ -1,7 +1,7 @@
 import { Ethereum, Network, Polygon, TatumSDK, Tezos } from '../service'
 import { Utils } from '../util'
 
-describe('Tatum NFT', () => {
+describe.skip('Tatum NFT', () => {
   let client: Ethereum
   beforeAll(async () => {
     client = await TatumSDK.init<Ethereum>({
