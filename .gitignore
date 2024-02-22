@@ -8,5 +8,4 @@
 coverage
 *.log
 .env
-
 jest-junit.xml

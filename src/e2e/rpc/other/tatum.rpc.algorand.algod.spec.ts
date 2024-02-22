@@ -1,15 +1,8 @@
-import process from 'process'
 import { AlgorandAlgod, Network, TatumSDK } from '../../../service'
 import { e2eUtil } from '../../e2e.util'
 
 const getAlgorandAlgodRpc = async (testnet?: boolean) =>
-  await TatumSDK.init<AlgorandAlgod>({
-    network: testnet ? Network.ALGORAND_ALGOD_TESTNET : Network.ALGORAND_ALGOD,
-    apiKey: {
-      v4: testnet ? process.env.V4_API_KEY_TESTNET : process.env.V4_API_KEY_MAINNET,
-    },
-    verbose: e2eUtil.isVerbose,
-  })
+  await TatumSDK.init<AlgorandAlgod>(e2eUtil.initConfig(testnet ? Network.ALGORAND_ALGOD_TESTNET : Network.ALGORAND_ALGOD))
 
 describe.each([false, true])('Algorand Algod', (testnet) => {
   describe(`${testnet ? 'Testnet' : 'Mainnet'}`, () => {

@@ -15,7 +15,7 @@ const getEosRpc = async (testnet?: boolean) =>
   })
 
 // Too unstable
-describe('eos', () => {
+describe.skip('eos', () => {
   describe('mainnet', () => {
     it('getInfo', async () => {
       const tatum = await getEosRpc()

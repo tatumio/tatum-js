@@ -483,6 +483,7 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   [Network.LITECOIN_TESTNET]: {
     currency: Currency.LTC,
     testnet: true,
+    defaultTestnet: true,
   },
   [Network.CARDANO_ROSETTA]: {
     currency: Currency.ADA,

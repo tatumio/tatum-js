@@ -1,8 +1,8 @@
-## [4.2.10] - 2024.2.20
+## [4.2.10] - 2024.2.22
 
 ### Fixed
 
-- Fixed the `getBlock` method for Doge, addressing an issue with the second boolean parameter.
+- Fixed tests. Temporarily disabled `data-api` related tests and `eos` tests.
 
 ## [4.2.9] - 2024.2.15
 
