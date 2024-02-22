@@ -24,9 +24,5 @@ export const celoWeb3 = (args: {
 
       return web3
     },
-    async getGasPriceInWei(): Promise<string> {
-      // TODO: SHOULD BE REPLACED TO CELO
-      return (await args.apiCalls.getFee('ETH')).medium.toString()
-    },
   }
 }
