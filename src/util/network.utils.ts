@@ -1,4 +1,5 @@
 import { Network, NETWORK_METADATA, NetworkMetadata } from '../dto'
+import process from 'process'
 
 export const NetworkUtils = {
   getNetworkMetadata: (network: Network): NetworkMetadata => {
@@ -18,4 +19,5 @@ export const NetworkUtils = {
     const metadata = NetworkUtils.getNetworkMetadata(network)
     return metadata.testnet && !metadata.defaultTestnet
   },
+  getV4ApiKeyForNetwork: (network: Network) => NetworkUtils.isTestnet(network) ? process.env.V4_API_KEY_TESTNET : process.env.V4_API_KEY_MAINNET
 }

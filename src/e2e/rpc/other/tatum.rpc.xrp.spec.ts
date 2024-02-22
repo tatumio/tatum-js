@@ -2,12 +2,7 @@ import { Network, TatumSDK, Xrp } from '../../../service'
 import { e2eUtil } from '../../e2e.util'
 
 const getXrpRpc = async (testnet?: boolean) =>
-  await TatumSDK.init<Xrp>({
-    network: testnet ? Network.XRP_TESTNET : Network.XRP,
-    verbose: e2eUtil.isVerbose,
-    retryCount: 1,
-    retryDelay: 2000,
-  })
+  await TatumSDK.init<Xrp>(e2eUtil.initConfig(testnet ? Network.XRP_TESTNET : Network.XRP))
 
 describe('RPCs', () => {
   afterEach(async () => {

@@ -1,15 +1,8 @@
-import process from 'process'
 import { AlgorandIndexer, Network, TatumSDK } from '../../../service'
 import { e2eUtil } from '../../e2e.util'
 
 const getAlgorandIndexerRpc = async (testnet?: boolean) =>
-  await TatumSDK.init<AlgorandIndexer>({
-    network: testnet ? Network.ALGORAND_INDEXER_TESTNET : Network.ALGORAND_INDEXER,
-    apiKey: {
-      v4: testnet ? process.env.V4_API_KEY_TESTNET : process.env.V4_API_KEY_MAINNET,
-    },
-    verbose: e2eUtil.isVerbose,
-  })
+  await TatumSDK.init<AlgorandIndexer>(e2eUtil.initConfig(testnet ? Network.ALGORAND_INDEXER_TESTNET : Network.ALGORAND_INDEXER))
 
 describe.each([false, true])('Algorand Indexer', (testnet) => {
   describe(`${testnet ? 'Testnet' : 'Mainnet'}`, () => {

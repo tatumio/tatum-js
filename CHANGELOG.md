@@ -1,3 +1,9 @@
+## [4.2.10] - 2024.2.22
+
+### Fixed
+
+- Fixed tests. Temporarily disabled `data-api` related tests and `eos` tests.
+
 ## [4.2.9] - 2024.2.15
 
 ### Added

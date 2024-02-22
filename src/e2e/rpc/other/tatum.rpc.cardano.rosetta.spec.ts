@@ -1,15 +1,8 @@
-import process from 'process'
 import { CardanoRosetta, Network, TatumSDK } from '../../../service'
 import { e2eUtil } from '../../e2e.util'
 
 const getCardanoRosettaRpc = async (testnet?: boolean) =>
-  await TatumSDK.init<CardanoRosetta>({
-    network: testnet ? Network.CARDANO_ROSETTA_PREPROD : Network.CARDANO_ROSETTA,
-    apiKey: {
-      v4: testnet ? process.env.V4_API_KEY_TESTNET : process.env.V4_API_KEY_MAINNET,
-    },
-    verbose: e2eUtil.isVerbose,
-  })
+  await TatumSDK.init<CardanoRosetta>(e2eUtil.initConfig(testnet ? Network.CARDANO_ROSETTA_PREPROD : Network.CARDANO_ROSETTA))
 
 const networks = [
   { testnet: false, blockchain: 'cardano', network: 'mainnet' },
