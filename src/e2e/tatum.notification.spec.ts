@@ -1,5 +1,5 @@
 import { Network } from '../dto'
-import { Ethereum, NotificationSubscription, TatumSDK } from '../service'
+import { Ethereum, FullSdk, NotificationSubscription, TatumSDK } from '../service'
 import { Status } from '../util'
 import {
   AddressEventNetworks,
@@ -16,10 +16,13 @@ import {
   TestConst,
 } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
+import process from 'process'
+import { NetworkUtils } from '../util/network.utils'
 
 // TODO pipeline dont work with API keys
 
 describe('notification', () => {
+  const getV4ApiKeyForNetwork = (network: Network) => NetworkUtils.isTestnet(network) ? process.env.V4_API_KEY_TESTNET : process.env.V4_API_KEY_MAINNET
   beforeAll(async () => {
     const tatum = await TatumSDK.init<Ethereum>({
       network: Network.ETHEREUM,
@@ -27,7 +30,7 @@ describe('notification', () => {
       verbose: e2eUtil.isVerbose,
       retryDelay: 5000,
       apiKey: {
-        v4: process.env.V4_API_KEY_MAINNET,
+        v4: getV4ApiKeyForNetwork(Network.ETHEREUM),
       },
     })
     const notifications = await tatum.notification.getAll()
@@ -42,13 +45,13 @@ describe('notification', () => {
     describe('IP auth', () => {
       describe('Address Event', () => {
         it.each(Object.values(AddressEventNetworks))('OK %s', async (network: Network) => {
-          const tatum = await TatumSDK.init<Ethereum>({
+          const tatum = await TatumSDK.init<FullSdk>({
             network,
             retryCount: 10,
             retryDelay: 5000,
             verbose: e2eUtil.isVerbose,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -67,7 +70,7 @@ describe('notification', () => {
             verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -86,7 +89,7 @@ describe('notification', () => {
             verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -105,7 +108,7 @@ describe('notification', () => {
             retryCount: 10,
             retryDelay: 5000,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -124,7 +127,7 @@ describe('notification', () => {
             verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -143,7 +146,7 @@ describe('notification', () => {
             verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -162,7 +165,7 @@ describe('notification', () => {
             retryCount: 10,
             retryDelay: 5000,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -181,7 +184,7 @@ describe('notification', () => {
             verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -200,7 +203,7 @@ describe('notification', () => {
             retryDelay: 5000,
             verbose: e2eUtil.isVerbose,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -219,7 +222,7 @@ describe('notification', () => {
             retryCount: 10,
             retryDelay: 5000,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -238,7 +241,7 @@ describe('notification', () => {
             retryDelay: 5000,
             verbose: e2eUtil.isVerbose,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -257,7 +260,7 @@ describe('notification', () => {
             verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -276,7 +279,7 @@ describe('notification', () => {
             verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testAddressBasedSubscription(
@@ -295,7 +298,7 @@ describe('notification', () => {
             retryDelay: 5000,
             verbose: e2eUtil.isVerbose,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testBlockBasedSubscription(
@@ -313,7 +316,7 @@ describe('notification', () => {
             verbose: e2eUtil.isVerbose,
             retryDelay: 5000,
             apiKey: {
-              v4: process.env.V4_API_KEY_MAINNET,
+              v4: getV4ApiKeyForNetwork(network),
             },
           })
           await e2eUtil.subscriptions.testContractBasedSubscription(
@@ -332,7 +335,7 @@ describe('notification', () => {
         verbose: e2eUtil.isVerbose,
         retryDelay: 5000,
         apiKey: {
-          v4: process.env.V4_API_KEY_MAINNET,
+          v4: getV4ApiKeyForNetwork(Network.ETHEREUM),
         },
       })
       await tatum.notification.subscribe.addressEvent({
@@ -360,7 +363,7 @@ describe('notification', () => {
         verbose: e2eUtil.isVerbose,
         retryDelay: 5000,
         apiKey: {
-          v4: process.env.V4_API_KEY_MAINNET,
+          v4: getV4ApiKeyForNetwork(Network.ETHEREUM),
         },
       })
 
@@ -385,7 +388,7 @@ describe('notification', () => {
         verbose: e2eUtil.isVerbose,
         retryDelay: 5000,
         apiKey: {
-          v4: process.env.V4_API_KEY_MAINNET,
+          v4: getV4ApiKeyForNetwork(Network.ETHEREUM_SEPOLIA),
         },
       })
       const address = e2eUtil.subscriptions.getAddress(Network.ETHEREUM_SEPOLIA)
@@ -410,7 +413,7 @@ describe('notification', () => {
         verbose: e2eUtil.isVerbose,
         retryDelay: 5000,
         apiKey: {
-          v4: process.env.V4_API_KEY_MAINNET,
+          v4: getV4ApiKeyForNetwork(Network.ETHEREUM_SEPOLIA),
         },
       })
       const { data, status, error } = await tatum.notification.unsubscribe('invalid-subscription-id')
@@ -430,7 +433,7 @@ describe('notification', () => {
       verbose: e2eUtil.isVerbose,
       retryDelay: 5000,
       apiKey: {
-        v4: process.env.V4_API_KEY_MAINNET,
+        v4: getV4ApiKeyForNetwork(Network.ETHEREUM),
       },
     })
     const { data } = await tatum.notification.getAll()
@@ -452,7 +455,7 @@ describe('notification', () => {
       retryDelay: 5000,
       verbose: e2eUtil.isVerbose,
       apiKey: {
-        v4: process.env.V4_API_KEY_MAINNET,
+        v4: getV4ApiKeyForNetwork(Network.ETHEREUM_SEPOLIA),
       },
     })
     const { data } = await tatum.notification.getAllExecutedWebhooks()
