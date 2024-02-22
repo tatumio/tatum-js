@@ -1,15 +1,8 @@
-import * as process from 'process'
 import { Network, TatumSDK, Tezos } from '../../../service'
 import { e2eUtil } from '../../e2e.util'
 
 const getTezosRpc = async (testnet?: boolean) =>
-  await TatumSDK.init<Tezos>({
-    network: testnet ? Network.TEZOS_TESTNET : Network.TEZOS,
-    apiKey: {
-      v4: testnet ? process.env.V4_API_KEY_TESTNET : process.env.V4_API_KEY_MAINNET,
-    },
-    verbose: e2eUtil.isVerbose,
-  })
+  await TatumSDK.init<Tezos>(e2eUtil.initConfig(testnet ? Network.TEZOS_TESTNET : Network.TEZOS))
 
 describe.each([false, true])(`Tezos`, (testnet: boolean) => {
   describe(`${testnet ? 'Testnet' : 'Mainnet'}`, () => {

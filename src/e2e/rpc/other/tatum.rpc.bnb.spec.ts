@@ -1,15 +1,8 @@
-import * as process from 'process'
 import { Bnb, Network, TatumSDK } from '../../../service'
 import { e2eUtil } from '../../e2e.util'
 
 const getBnbRpc = async () =>
-  await TatumSDK.init<Bnb>({
-    network: Network.BNB,
-    apiKey: {
-      v4: process.env.V4_API_KEY_MAINNET,
-    },
-    verbose: e2eUtil.isVerbose,
-  })
+  await TatumSDK.init<Bnb>(e2eUtil.initConfig(Network.BNB))
 
 // Testnet is not available
 describe('Bnb', () => {

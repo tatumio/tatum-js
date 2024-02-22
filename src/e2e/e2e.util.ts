@@ -9,8 +9,20 @@ import {
   Network,
 } from '../service'
 import { ResponseDto } from '../util'
+import { NetworkUtils } from '../util/network.utils'
 
 export const e2eUtil = {
+  initConfig: (network: Network, apiKey?: string) => {
+    return {
+      network,
+      verbose: e2eUtil.isVerbose,
+      retryCount: 5,
+      retryDelay: 2000,
+      apiKey: {
+        v4: apiKey ?? NetworkUtils.getV4ApiKeyForNetwork(network),
+      },
+    }
+  },
   subscriptions: {
     getAddress: (network: Network): string => {
       switch (network) {
