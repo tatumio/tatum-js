@@ -16,7 +16,7 @@ export enum Network {
   BITCOIN_CASH = 'bitcoin-cash-mainnet',
   CARDANO_ROSETTA = 'cardano-mainnet',
   CELO = 'celo-mainnet',
-  CRONOS = 'cro-mainnet',
+  CRONOS = 'cronos-mainnet',
   DOGECOIN = 'doge-mainnet',
   EOS = 'eos-mainnet',
   HORIZEN_EON = 'eon-mainnet',
@@ -160,7 +160,7 @@ export const UTXO_BASED_NETWORKS = [
   Network.LITECOIN,
   Network.LITECOIN_TESTNET,
   Network.ZCASH,
-  Network.ZCASH_TESTNET
+  Network.ZCASH_TESTNET,
 ]
 
 export const UTXO_LOAD_BALANCER_ESTIMATE_FEE_NETWORKS = [Network.BITCOIN_CASH]
@@ -228,6 +228,8 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.CELO,
   Network.CELO_ALFAJORES,
   Network.XINFIN,
+  Network.FANTOM,
+  Network.CRONOS,
 ]
 
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
@@ -285,7 +287,8 @@ export const isUtxoBasedNetwork = (network: Network) => UTXO_BASED_NETWORKS.incl
 export const isUtxoLoadBalancerEstimateFeeNetwork = (network: Network) =>
   UTXO_LOAD_BALANCER_ESTIMATE_FEE_NETWORKS.includes(network)
 
-export const isDogecoinLoadBalancedNetwork = (network: Network) => DOGECOIN_LOAD_BALANCED_NETWORKS.includes(network)
+export const isDogecoinLoadBalancedNetwork = (network: Network) =>
+  DOGECOIN_LOAD_BALANCED_NETWORKS.includes(network)
 
 export const isUtxoEstimateFeeNetwork = (network: Network) => UTXO_ESTIMATE_FEE_NETWORKS.includes(network)
 

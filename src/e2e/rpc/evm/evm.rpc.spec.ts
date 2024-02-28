@@ -26,7 +26,7 @@ const testNetworks = [
   { network: Network.ETHEREUM_SEPOLIA },
   { network: Network.ETHEREUM_HOLESKY },
   { network: Network.ETHEREUM_GOERLI, apiKey: process.env.V3_API_KEY_TESTNET },
-  { network: Network.FANTOM, apiKey: process.env.V3_API_KEY_MAINNET },
+  { network: Network.FANTOM },
   { network: Network.FANTOM_TESTNET, apiKey: process.env.V3_API_KEY_TESTNET },
   { network: Network.ETHEREUM_CLASSIC },
   { network: Network.POLYGON },
@@ -69,6 +69,8 @@ const testNetworks = [
   {
     network: Network.XINFIN,
   },
+  { network: Network.CRONOS },
+  { network: Network.CRONOS_TESTNET, apiKey: process.env.V3_API_KEY_TESTNET },
 ]
 
 describe.each(testNetworks)('RPC EVM', (testNetwork) => {

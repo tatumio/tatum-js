@@ -1,3 +1,9 @@
+## [4.2.12] - 2024.2.28
+
+### Added
+
+- Added support for Cronos and Fantom rpc loadbalancer.
+
 ## [4.2.11] - 2024.2.22
 
 ### Fixed
