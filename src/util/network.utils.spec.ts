@@ -29,7 +29,6 @@ describe('Network Utils', () => {
       [Network.ETHEREUM, false],
       [Network.ETHEREUM_SEPOLIA, false],
       [Network.ETHEREUM_HOLESKY, true],
-      [Network.ETHEREUM_GOERLI, true],
       [Network.CELO, false],
       [Network.CELO_ALFAJORES, false],
     ])('valid %s -> %s', (network: Network, expected: boolean) => {

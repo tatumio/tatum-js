@@ -65,7 +65,6 @@ export enum Network {
   CELO_ALFAJORES = 'celo-testnet',
   CRONOS_TESTNET = 'cro-testnet',
   DOGECOIN_TESTNET = 'doge-testnet',
-  ETHEREUM_GOERLI = 'ethereum-goerli',
   ETHEREUM_SEPOLIA = 'ethereum-sepolia',
   ETHEREUM_HOLESKY = 'ethereum-holesky',
   EOS_TESTNET = 'eos-testnet',
@@ -104,7 +103,6 @@ export const EVM_BASED_NETWORKS = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
   Network.ETHEREUM_CLASSIC,
-  Network.ETHEREUM_GOERLI,
   Network.ETHEREUM_HOLESKY,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
@@ -181,7 +179,6 @@ export const DATA_API_UTXO_NETWORKS = [
 export const DATA_API_EVM_NETWORKS = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
-  Network.ETHEREUM_GOERLI,
   Network.POLYGON,
   Network.POLYGON_MUMBAI,
   Network.BINANCE_SMART_CHAIN,
@@ -401,11 +398,6 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     testnet: false,
     defaultMainnet: true,
     chainId: 1,
-  },
-  [Network.ETHEREUM_GOERLI]: {
-    currency: Currency.ETH,
-    testnet: true,
-    chainId: 5,
   },
   [Network.POLYGON_MUMBAI]: {
     currency: Currency.MATIC,
