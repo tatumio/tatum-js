@@ -7,7 +7,8 @@ import {
   isAlgorandAlgodNetwork,
   isAlgorandIndexerNetwork,
   isBnbLoadBalancerNetwork,
-  isCardanoNetwork, isDogecoinLoadBalancedNetwork,
+  isCardanoNetwork,
+  isDogecoinLoadBalancedNetwork,
   isEosLoadBalancerNetwork,
   isEosNetwork,
   isEvmArchiveNonArchiveBeaconLoadBalancerNetwork,
@@ -99,12 +100,12 @@ import { StellarLoadBalancerRpc } from '../service/rpc/other/StellarLoadBalancer
 import { StellarRpc } from '../service/rpc/other/StellarRpc'
 import { TezosLoadBalancerRpc } from '../service/rpc/other/TezosLoadBalancerRpc'
 import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
+import { DogeLoadBalancedRpc } from '../service/rpc/utxo/DogeLoadBalancedRpc'
 import { UtxoLoadBalancerRpc } from '../service/rpc/utxo/UtxoLoadBalancerRpc'
 import { UtxoLoadBalancerRpcEstimateFee } from '../service/rpc/utxo/UtxoLoadBalancerRpcEstimateFee'
 import { UtxoRpcEstimateFee } from '../service/rpc/utxo/UtxoRpcEstimateFee'
 import { Constant } from './constant'
 import { CONFIG, LOGGER } from './di.tokens'
-import { DogeLoadBalancedRpc } from '../service/rpc/utxo/DogeLoadBalancedRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
@@ -442,7 +443,6 @@ export const Utils = {
         return AddressEventNotificationChain.DOGE
       case Network.ETHEREUM:
       case Network.ETHEREUM_SEPOLIA:
-      case Network.ETHEREUM_GOERLI:
       case Network.ETHEREUM_HOLESKY:
         return AddressEventNotificationChain.ETH
       case Network.POLYGON:
@@ -612,7 +612,6 @@ export const Utils = {
         return new ZCash(id) as T
       case Network.ETHEREUM:
       case Network.ETHEREUM_SEPOLIA:
-      case Network.ETHEREUM_GOERLI:
       case Network.ETHEREUM_HOLESKY:
         return new Ethereum(id) as T
       case Network.ETHEREUM_CLASSIC:

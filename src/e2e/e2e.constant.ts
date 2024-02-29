@@ -32,6 +32,7 @@ export const AddressEventNetworks = [
   Network.XRP,
   Network.XRP_TESTNET,
   Network.TEZOS,
+  Network.FLARE,
 ]
 
 export const IncomingNativeTxNetworks = [

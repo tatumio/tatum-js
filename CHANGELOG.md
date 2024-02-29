@@ -1,3 +1,9 @@
+## [4.2.13] - 2024.2.29
+
+### Removed
+
+- Removed support for the Goerli network.
+
 ## [4.2.12] - 2024.2.28
 
 ### Added
