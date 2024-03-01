@@ -31,6 +31,7 @@ const EndpointsMapping: Record<Blockchain, string> = {
   EON: 'eon',
   CHILIZ: 'chiliz',
   FLR: 'flare',
+  CRO: 'cronos',
 }
 
 const isWebWorker =

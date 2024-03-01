@@ -8,7 +8,7 @@ export type AddNftMinter = {
     /**
      * The blockchain to work with
      */
-    chain: 'BSC' | 'CELO' | 'ETH' | 'KLAY' | 'KCS' | 'MATIC' | 'ONE' | 'ZEN' | 'FLR';
+    chain: 'BSC' | 'CELO' | 'ETH' | 'KLAY' | 'KCS' | 'MATIC' | 'ONE' | 'ZEN' | 'FLR' | 'CRO';
     /**
      * The blockchain address of the NFT smart contract
      */

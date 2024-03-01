@@ -352,6 +352,7 @@ export class DataApiService {
      * <li>For Tezos blockchain, the API accepts only one wallet address in <code>addresses</code> query parameter. Following query parameters won't have any effect on filtering data: <code>transactionTypes</code>, <code>transactionSubtype</code>, <code>tokenId</code>, <code>blockTo</code>.</li>
      * <li>When querying Tezos transactions for a specified wallet or contract address, pagination is supported via <code>pageSize</code> and <code>offset</code> query parameters.
      * <li>When querying Tezos transactions for a specified block, pagination is supported via <code>cursor</code> query parameter, by filling in the value from <code>prevPage</code> or <code>nextPage</code> field in the response body.</li>
+     * <li><b>When you are filtering data using blockFrom and not using blockTo, query might take longer time to finish. It is always recommended to use both filters blockFrom and blockTo.</b></li>
      * </ul>
      *
      * @param chain The blockchain to work with.

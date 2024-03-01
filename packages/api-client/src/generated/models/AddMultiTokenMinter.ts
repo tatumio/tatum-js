@@ -8,7 +8,7 @@ export type AddMultiTokenMinter = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'CELO' | 'ONE' | 'BSC' | 'FLR';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'CELO' | 'ONE' | 'BSC' | 'FLR' | 'CRO';
     /**
      * Address of MultiToken token
      */

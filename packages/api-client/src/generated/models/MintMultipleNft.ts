@@ -8,7 +8,7 @@ export type MintMultipleNft = {
     /**
      * The blockchain to work with
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'FLR';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'FLR' | 'CRO';
     /**
      * Blockchain address to send NFT token to.
      */

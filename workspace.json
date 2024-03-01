@@ -17,6 +17,7 @@
     "cardano-example": "examples/cardano-example",
     "celo": "packages/blockchain/celo",
     "celo-example": "examples/celo-example",
+    "cronos": "packages/blockchain/cronos",
     "doge": "packages/blockchain/doge",
     "doge-example": "examples/doge-example",
     "egld": "packages/blockchain/egld",

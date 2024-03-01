@@ -62,7 +62,7 @@ export class NotificationSubscriptionsService {
      * </tr>
      * <tr>
      * <td>Ethereum</td>
-     * <td>Yes (Sepolia, Goerli, Holesky)/Yes</td>
+     * <td>Yes (Sepolia, Holesky)/Yes</td>
      * <td>ETH, Internal transfers, ERC20, ERC721, ERC1155</td>
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>25 credits / day / address</td>
@@ -137,6 +137,13 @@ export class NotificationSubscriptionsService {
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>40 credits / day / address</td>
      * </tr>
+     * <tr>
+     * <td>Cronos</td>
+     * <td>Yes/Yes</td>
+     * <td>CRO, ERC20, ERC721, ERC1155</td>
+     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
+     * <td>25 credits / day / address</td>
+     * </tr>
      * </table>
      * The request body of the POST request is a JSON object with the following structure:<br/>
      * <pre>{
@@ -166,7 +173,7 @@ export class NotificationSubscriptionsService {
          * </tr>
          * <tr>
          * <td>Ethereum</td>
-         * <td>ethereum-sepolia / ethereum-goerli / ethereum-holesky / ethereum-mainnet</td>
+         * <td>ethereum-sepolia / ethereum-holesky / ethereum-mainnet</td>
          * <td>500,000 credits / day</td>
          * </tr>
          * <tr>
@@ -192,6 +199,11 @@ export class NotificationSubscriptionsService {
          * <tr>
          * <td>BNB Smart Chain</td>
          * <td>bsc-testnet / bsc-mainnet</td>
+         * <td>500,000 credits / day</td>
+         * </tr>
+         * <tr>
+         * <td>Cronos</td>
+         * <td>cronos-mainnet / cronos-testnet</td>
          * <td>500,000 credits / day</td>
          * </tr>
          * </table>
@@ -227,7 +239,7 @@ export class NotificationSubscriptionsService {
                      * </tr>
                      * <tr>
                      * <td>Ethereum</td>
-                     * <td>ethereum-sepolia / ethereum-goerli / ethereum-holesky / ethereum-mainnet</td>
+                     * <td>ethereum-sepolia / ethereum-holesky / ethereum-mainnet</td>
                      * <td>500,000 credits / day</td>
                      * </tr>
                      * <tr>
@@ -253,6 +265,11 @@ export class NotificationSubscriptionsService {
                      * <tr>
                      * <td>BNB Smart Chain</td>
                      * <td>bsc-testnet / bsc-mainnet</td>
+                     * <td>500,000 credits / day</td>
+                     * </tr>
+                     * <tr>
+                     * <td>Cronos</td>
+                     * <td>cronos-mainnet / cronos-testnet</td>
                      * <td>500,000 credits / day</td>
                      * </tr>
                      * </table>
@@ -288,7 +305,7 @@ export class NotificationSubscriptionsService {
                                  * </tr>
                                  * <tr>
                                  * <td>Ethereum</td>
-                                 * <td>ethereum-sepolia / ethereum-goerli / ethereum-holesky / ethereum-mainnet</td>
+                                 * <td>ethereum-sepolia / ethereum-holesky / ethereum-mainnet</td>
                                  * <td>50,000 credits / day</td>
                                  * </tr>
                                  * <tr>
@@ -315,6 +332,11 @@ export class NotificationSubscriptionsService {
                                  * <td>BNB Smart Chain</td>
                                  * <td>bsc-testnet / bsc-mainnet</td>
                                  * <td>50,000 credits / day</td>
+                                 * </tr>
+                                 * <tr>
+                                 * <td>Cronos</td>
+                                 * <td>cronos-mainnet / cronos-testnet</td>
+                                 * <td>500,000 credits / day</td>
                                  * </tr>
                                  * </table>
                                  * The request body of the POST request is a JSON object with the following structure:<br/>
@@ -582,6 +604,36 @@ export class NotificationSubscriptionsService {
                                                                                     'offset': offset,
                                                                                     'address': address,
                                                                                 },
+                                                                                errors: {
+                                                                                    400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                                                    401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                                                                                    500: `Internal server error. There was an error on the server while processing the request.`,
+                                                                                },
+                                                                            });
+                                                                        }
+
+                                                                        /**
+                                                                         * Update subscription url
+                                                                         * <h4>1 credit for API call</h4><br/><p>Update subscription url.</p>
+                                                                         * @param id Subscription ID
+                                                                         * @param requestBody
+                                                                         * @returns void
+                                                                         * @throws ApiError
+                                                                         */
+                                                                        public static updateSubscription(
+                                                                            id: string,
+                                                                            requestBody: {
+                                                                                /**
+                                                                                 * New webhook url
+                                                                                 */
+                                                                                url: string;
+                                                                            },
+                                                                        ): CancelablePromise<void> {
+                                                                            return __request({
+                                                                                method: 'PUT',
+                                                                                path: `/v3/subscription/${id}`,
+                                                                                body: requestBody,
+                                                                                mediaType: 'application/json',
                                                                                 errors: {
                                                                                     400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
                                                                                     401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,

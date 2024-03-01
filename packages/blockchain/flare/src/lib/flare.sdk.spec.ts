@@ -25,7 +25,7 @@ describe('TatumFlareSDK', () => {
 
     describe('Web3', () => {
       // TODO: Will be implemented in the future once core api supports it
-      describe.skip('Get client', () => {
+      describe('Get client', () => {
         const provider = TEST_DATA.FLR?.PROVIDER
 
         it('should return valid web3 client', async () => {

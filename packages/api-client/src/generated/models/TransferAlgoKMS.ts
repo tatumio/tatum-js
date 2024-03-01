@@ -28,6 +28,10 @@ export type TransferAlgoKMS = {
      */
     index?: number;
     /**
+     * The blockchain address of the sender
+     */
+    from: string;
+    /**
      * Compliance check; if the withdrawal is not compliant, it will not be processed
      */
     compliant?: boolean;
