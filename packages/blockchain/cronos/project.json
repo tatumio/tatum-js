@@ -1,0 +1,38 @@
+{
+  "sourceRoot": "packages/blockchain/cronos/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/cronos",
+        "tsConfig": "packages/blockchain/cronos/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/cronos/package.json",
+        "main": "packages/blockchain/cronos/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/cronos/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/cronos"],
+      "options": {
+        "jestConfig": "packages/blockchain/cronos/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:sdk", "scope:evm-based"]
+}

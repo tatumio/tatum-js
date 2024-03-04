@@ -11,7 +11,7 @@ export type MintNft = {
     /**
      * The blockchain to work with
      */
-    chain: 'BSC' | 'ETH' | 'KLAY' | 'KCS' | 'MATIC' | 'ONE' | 'ZEN' | 'FLR';
+    chain: 'BSC' | 'ETH' | 'KLAY' | 'KCS' | 'MATIC' | 'ONE' | 'ZEN' | 'FLR' | 'CRO';
     /**
      * The blockchain address to send the NFT to
      */

@@ -57,6 +57,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Flare</li>
+     * <li>Cronos</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When deploying a Multi Token smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -108,6 +109,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Flare</li>
+     * <li>Cronos</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When minting a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -159,6 +161,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Flare</li>
+     * <li>Cronos</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When minting multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -210,6 +213,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Flare</li>
+     * <li>Cronos</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When burning a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -261,6 +265,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Flare</li>
+     * <li>Cronos</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When burning multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -313,6 +318,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Flare</li>
+     * <li>Cronos</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When transferring a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -365,6 +371,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Flare</li>
+     * <li>Cronos</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When transferring multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -416,6 +423,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Flare</li>
+     * <li>Cronos</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When adding a Multi Token minter, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -514,6 +522,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Flare</li>
+     * <li>Cronos</li>
      * </ul>
      *
      * @param chain Blockchain to work with
@@ -524,7 +533,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @throws ApiError
      */
     public static multiTokenGetTransaction(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO',
         hash: string,
         testnetType?: TestnetType,
         xTestnetType?: TestnetType,
@@ -631,6 +640,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Flare</li>
+     * <li>Cronos</li>
      * </ul>
      *
      * @param chain Blockchain to work with
@@ -643,7 +653,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @throws ApiError
      */
     public static multiTokenGetBalance(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO',
         address: string,
         contractAddress: string,
         tokenId: string,
@@ -736,6 +746,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
      * <li>Flare</li>
+     * <li>Cronos</li>
      * </ul>
      *
      * @param chain Blockchain to work with
@@ -747,7 +758,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @throws ApiError
      */
     public static multiTokenGetMetadata(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO',
         token: string,
         contractAddress: string,
         testnetType?: TestnetType,

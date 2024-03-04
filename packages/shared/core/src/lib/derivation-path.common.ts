@@ -33,6 +33,7 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   EON: "m/44'/60'/0'/0",
   CHILIZ: "m/44'/2182'/0'/0",
   FLR: "m/44'/60'/0'/0",
+  CRO: "m/44'/60'/0'/0",
 }
 
 export const COMMON_TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"

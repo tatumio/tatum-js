@@ -59,6 +59,7 @@ export const BlockchainCurrencyMapping: Record<
   EON: Currency.ZEN,
   CHILIZ: Currency.CHZ,
   FLR: Currency.FLR,
+  CRO: Currency.CRO,
 }
 
 export const CurrencyToBlockchainMapping: Record<Currency, Blockchain> = buildCurrencyBlockchainMapping()

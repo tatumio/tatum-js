@@ -8,7 +8,7 @@ export type ApproveErc20 = {
     /**
      * The blockchain to work with
      */
-    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'ONE' | 'FLR';
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'ONE' | 'FLR' | 'CRO';
     /**
      * The address of the smart contract
      */
