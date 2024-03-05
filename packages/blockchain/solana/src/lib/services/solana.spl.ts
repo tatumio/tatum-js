@@ -1,7 +1,7 @@
 import { SolanaWeb3 } from './solana.web3'
 import { ApiServices, ChainDeploySolanaSplKMS, ChainTransferSolanaSplKMS } from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
-import { Keypair, PublicKey, sendAndConfirmTransaction, SystemProgram, Transaction } from '@solana/web3.js'
+import { Keypair, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
 import {
   createInitializeMintInstruction,
   createMintToInstruction,
@@ -63,7 +63,7 @@ const transferSignedTransaction = async (
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
   return {
-    txId: await sendAndConfirmTransaction(connection, transaction, signers),
+    txId: await connection.sendTransaction(transaction, signers),
   }
 }
 
@@ -129,7 +129,7 @@ const deploySignedTransaction = async (
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
   return {
-    txId: await sendAndConfirmTransaction(connection, transaction, signers),
+    txId: await connection.sendTransaction(transaction, signers),
     contractAddress: mint.publicKey.toBase58(),
   }
 }
