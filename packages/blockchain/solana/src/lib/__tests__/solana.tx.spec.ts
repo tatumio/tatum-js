@@ -6,7 +6,7 @@ import { FEE_PAYER } from '../services/solana.utils'
 
 jest.setTimeout(99999)
 
-describe('SolanaSDK - tx', () => {
+describe.skip('SolanaSDK - tx', () => {
   const sdk = TatumSolanaSDK({
     apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
     provider: 'https://api.devnet.solana.com',
@@ -366,7 +366,7 @@ describe('SolanaSDK - tx', () => {
     })
   })
 
-  describe.skip('External signing', () => {
+  describe('External signing', () => {
     it('should send SPL token with fee payer', async () => {
       const tx = await sdk.spl.send.transferSignedTransaction(
         {

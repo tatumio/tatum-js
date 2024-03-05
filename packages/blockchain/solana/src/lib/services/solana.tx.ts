@@ -1,10 +1,4 @@
-import {
-  LAMPORTS_PER_SOL,
-  PublicKey,
-  sendAndConfirmTransaction,
-  SystemProgram,
-  Transaction,
-} from '@solana/web3.js'
+import { LAMPORTS_PER_SOL, PublicKey, SystemProgram, Transaction } from '@solana/web3.js'
 import { SolanaService, TransferSolanaBlockchainKMS } from '@tatumio/api-client'
 import { SolanaWeb3 } from './solana.web3'
 import BigNumber from 'bignumber.js'
@@ -57,7 +51,7 @@ const transferSignedTransaction = async (
   }
 
   return {
-    txId: await sendAndConfirmTransaction(connection, transaction, signers),
+    txId: await connection.sendTransaction(transaction, signers),
   }
 }
 
