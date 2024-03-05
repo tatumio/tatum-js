@@ -7,7 +7,14 @@ import {
   VerifySolanaNFTKMS,
 } from '@tatumio/api-client'
 import { Blockchain } from '@tatumio/shared-core'
-import { Keypair, PublicKey, SystemProgram, Transaction, TransactionInstruction } from '@solana/web3.js'
+import {
+  Keypair,
+  PublicKey,
+  sendAndConfirmTransaction,
+  SystemProgram,
+  Transaction,
+  TransactionInstruction,
+} from '@solana/web3.js'
 import {
   createInitializeMintInstruction,
   createMintToInstruction,
@@ -82,7 +89,7 @@ const transferSignedTransaction = async (
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
   return {
-    txId: await connection.sendTransaction(transaction, signers),
+    txId: await sendAndConfirmTransaction(connection, transaction, signers),
   }
 }
 
@@ -278,7 +285,7 @@ const burnSignedTransaction = async (
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
   return {
-    txId: await connection.sendTransaction(transaction, signers),
+    txId: await sendAndConfirmTransaction(connection, transaction, signers),
   }
 }
 
@@ -328,7 +335,7 @@ const verifySignedTransaction = async (
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
   return {
-    txId: await connection.sendTransaction(transaction, signers),
+    txId: await sendAndConfirmTransaction(connection, transaction, signers),
   }
 }
 

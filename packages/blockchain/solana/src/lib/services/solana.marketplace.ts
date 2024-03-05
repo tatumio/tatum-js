@@ -2,6 +2,7 @@ import web3, {
   Connection,
   LAMPORTS_PER_SOL,
   PublicKey,
+  sendAndConfirmTransaction,
   SYSVAR_INSTRUCTIONS_PUBKEY,
   Transaction,
   TransactionInstruction,
@@ -239,7 +240,7 @@ export const solanaMarketPlaceService = (
 
     const signers = [web3.generateKeyPair(params.fromPrivateKey)]
     return {
-      txId: await connection.sendTransaction(transaction, signers),
+      txId: await sendAndConfirmTransaction(connection, transaction, signers),
       contractAddress: auctionHouse.toBase58(),
       feeAccount: feeAccount.toBase58(),
       treasuryAccount: treasuryAccount.toBase58(),
@@ -315,7 +316,7 @@ export const solanaMarketPlaceService = (
 
     const signers = [web3.generateKeyPair(params.fromPrivateKey)]
     return {
-      txId: await connection.sendTransaction(transaction, signers),
+      txId: await sendAndConfirmTransaction(connection, transaction, signers),
     }
   }
 
@@ -446,7 +447,7 @@ export const solanaMarketPlaceService = (
     }
 
     return {
-      txId: await connection.sendTransaction(transaction, signers),
+      txId: await sendAndConfirmTransaction(connection, transaction, signers),
       listingId: receipt.toBase58(),
     }
   }
@@ -804,7 +805,7 @@ export const solanaMarketPlaceService = (
     }
 
     return {
-      txId: await connection.sendTransaction(transaction, signers),
+      txId: await sendAndConfirmTransaction(connection, transaction, signers),
     }
   }
 
@@ -895,7 +896,7 @@ export const solanaMarketPlaceService = (
     }
 
     return {
-      txId: await connection.sendTransaction(transaction, signers),
+      txId: await sendAndConfirmTransaction(connection, transaction, signers),
     }
   }
 
@@ -951,7 +952,7 @@ export const solanaMarketPlaceService = (
     const signers = [web3.generateKeyPair(fromPrivateKey)]
 
     return {
-      txId: await connection.sendTransaction(transaction, signers),
+      txId: await sendAndConfirmTransaction(connection, transaction, signers),
     }
   }
 
@@ -1005,7 +1006,7 @@ export const solanaMarketPlaceService = (
     const signers = [web3.generateKeyPair(fromPrivateKey)]
 
     return {
-      txId: await connection.sendTransaction(transaction, signers),
+      txId: await sendAndConfirmTransaction(connection, transaction, signers),
     }
   }
 
