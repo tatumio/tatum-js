@@ -11,7 +11,7 @@ import {
 } from '@tatumio/api-client'
 import { SdkErrorCode, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
-import { PublicKey, Signer, Transaction } from '@solana/web3.js'
+import { Connection, PublicKey, Signer, Transaction } from '@solana/web3.js'
 import { SolanaWeb3 } from './solana.web3'
 import { SolanaSdkError } from '../solana.sdk.errors'
 import BN from 'bn.js'
@@ -107,5 +107,20 @@ export const solanaUtils = {
       txData,
       chain: 'SOL',
     })
+  },
+  sendTransactionWithConfirm: async (connection: Connection, transaction: Transaction, signers: Signer[]) => {
+    const attempts = 5
+    const txId = await connection.sendTransaction(transaction, signers)
+    for (let attempt = 1; attempt <= attempts; attempt++) {
+      const confirmedTx = await connection.getTransaction(txId, { commitment: 'confirmed' })
+
+      if (confirmedTx && !confirmedTx.meta?.err) {
+        return { txId }
+      }
+      await new Promise((r) => setTimeout(r, 500))
+    }
+    throw new Error(
+      `Transaction not confirmed after ${attempts} attempts, please try to send transaction again.`,
+    )
   },
 }

@@ -50,9 +50,7 @@ const transferSignedTransaction = async (
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
 
-  return {
-    txId: await connection.sendTransaction(transaction, signers),
-  }
+  return await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
 }
 
 export const solanaTxService = (args: { web3: SolanaWeb3 }) => {
