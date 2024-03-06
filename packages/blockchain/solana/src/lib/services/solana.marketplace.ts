@@ -238,9 +238,8 @@ export const solanaMarketPlaceService = (
     }
 
     const signers = [web3.generateKeyPair(params.fromPrivateKey)]
-    const { txId } = await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
     return {
-      txId,
+      txId: await connection.sendTransaction(transaction, signers),
       contractAddress: auctionHouse.toBase58(),
       feeAccount: feeAccount.toBase58(),
       treasuryAccount: treasuryAccount.toBase58(),
@@ -315,7 +314,9 @@ export const solanaMarketPlaceService = (
     }
 
     const signers = [web3.generateKeyPair(params.fromPrivateKey)]
-    return await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
+    return {
+      txId: await connection.sendTransaction(transaction, signers),
+    }
   }
 
   const formatPrice = async (
@@ -443,9 +444,9 @@ export const solanaMarketPlaceService = (
     if (authorityPrivateKey) {
       signers.push(web3.generateKeyPair(authorityPrivateKey))
     }
-    const { txId } = await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
+
     return {
-      txId,
+      txId: await connection.sendTransaction(transaction, signers),
       listingId: receipt.toBase58(),
     }
   }
@@ -802,7 +803,9 @@ export const solanaMarketPlaceService = (
       signers.push(web3.generateKeyPair(authorityPrivateKey))
     }
 
-    return await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
+    return {
+      txId: await connection.sendTransaction(transaction, signers),
+    }
   }
 
   const cancelSignedTransaction = async (
@@ -891,7 +894,9 @@ export const solanaMarketPlaceService = (
       signers.push(web3.generateKeyPair(authorityPrivateKey))
     }
 
-    return await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
+    return {
+      txId: await connection.sendTransaction(transaction, signers),
+    }
   }
 
   const withdrawFromTreasurySignedTransaction = async (
@@ -945,7 +950,9 @@ export const solanaMarketPlaceService = (
 
     const signers = [web3.generateKeyPair(fromPrivateKey)]
 
-    return await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
+    return {
+      txId: await connection.sendTransaction(transaction, signers),
+    }
   }
 
   const withdrawFromFeeSignedTransaction = async (
@@ -997,7 +1004,9 @@ export const solanaMarketPlaceService = (
 
     const signers = [web3.generateKeyPair(fromPrivateKey)]
 
-    return await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
+    return {
+      txId: await connection.sendTransaction(transaction, signers),
+    }
   }
 
   return {
