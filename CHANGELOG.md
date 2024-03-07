@@ -1,3 +1,9 @@
+## [4.2.14] - 2024.3.7
+
+### Added
+
+- Added support for simplified way of configuring api key without specifying version.
+
 ## [4.2.13] - 2024.2.29
 
 ### Removed
