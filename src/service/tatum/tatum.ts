@@ -93,7 +93,10 @@ export class TatumSDK {
     Container.of(id).set(CONFIG, mergedConfig)
     Container.of(id).set(LOGGER, mergedConfig.logger)
 
-    if (!mergedConfig.apiKey) {
+    if (
+      !mergedConfig.apiKey ||
+      (typeof mergedConfig.apiKey !== 'string' && !mergedConfig.apiKey.v3 && !mergedConfig.apiKey.v4)
+    ) {
       mergedConfig.logger?.warn(
         'API key not provided - only a subset of SDK features will be enabled. Generate an API Key by accessing your Dashboard: https://co.tatum.io/signup',
       )

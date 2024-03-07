@@ -7,7 +7,7 @@ const getStellarRpc = async (testnet?: boolean) =>
     network: testnet ? Network.STELLAR_TESTNET : Network.STELLAR,
     verbose: e2eUtil.isVerbose,
     ...(testnet && { apiKey: { v3: process.env.V3_API_KEY_TESTNET } }),
-    ...(!testnet && { apiKey: { v4: process.env.V4_API_KEY_MAINNET } }),
+    ...(!testnet && { apiKey: process.env.V4_API_KEY_MAINNET }),
     version: testnet ? ApiVersion.V3 : ApiVersion.V4,
   })
 
