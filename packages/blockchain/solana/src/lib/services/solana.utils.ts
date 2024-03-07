@@ -109,7 +109,7 @@ export const solanaUtils = {
     })
   },
   sendTransactionWithConfirm: async (connection: Connection, transaction: Transaction, signers: Signer[]) => {
-    const attempts = 10
+    const attempts = 11
     const txId = await connection.sendTransaction(transaction, signers)
     let confirmedTx
     for (let attempt = 1; attempt <= attempts; attempt++) {
@@ -121,11 +121,11 @@ export const solanaUtils = {
     }
 
     if (confirmedTx && confirmedTx.meta?.err) {
-      throw new Error(`Transaction failed with error: ${confirmedTx.meta?.err}`)
+      throw new Error(`Transaction ${txId} failed with error: ${confirmedTx.meta?.err}`)
     }
 
     throw new Error(
-      `Transaction not confirmed after ${attempts} attempts, please try to send transaction again.`,
+      `Transaction ${txId} not confirmed after ${attempts} attempts, please check the status of the transaction or try again.`,
     )
   },
 }
