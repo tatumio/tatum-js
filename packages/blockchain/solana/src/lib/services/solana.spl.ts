@@ -62,9 +62,7 @@ const transferSignedTransaction = async (
   } else if (body.feePayerPrivateKey) {
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
-  return {
-    txId: await connection.sendTransaction(transaction, signers),
-  }
+  return await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
 }
 
 const deploySignedTransaction = async (
@@ -128,8 +126,10 @@ const deploySignedTransaction = async (
   } else if (body.feePayerPrivateKey) {
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
+
+  const { txId } = await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
   return {
-    txId: await connection.sendTransaction(transaction, signers),
+    txId,
     contractAddress: mint.publicKey.toBase58(),
   }
 }

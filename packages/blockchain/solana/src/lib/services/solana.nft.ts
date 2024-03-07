@@ -81,9 +81,7 @@ const transferSignedTransaction = async (
   } else if (body.feePayerPrivateKey) {
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
-  return {
-    txId: await connection.sendTransaction(transaction, signers),
-  }
+  return await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
 }
 
 const mintSignedTransaction = async (
@@ -221,8 +219,10 @@ const mintSignedTransaction = async (
   } else if (body.feePayerPrivateKey) {
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
+
+  const { txId } = await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
   return {
-    txId: await connection.sendTransaction(transaction, [wallet, ...signers]),
+    txId,
     nftAddress: mint.publicKey.toBase58(),
     nftAccountAddress: userTokenAccountAddress.toBase58(),
   }
@@ -277,9 +277,7 @@ const burnSignedTransaction = async (
   } else if (body.feePayerPrivateKey) {
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
-  return {
-    txId: await connection.sendTransaction(transaction, signers),
-  }
+  return await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
 }
 
 const verifySignedTransaction = async (
@@ -327,9 +325,7 @@ const verifySignedTransaction = async (
   } else if (body.feePayerPrivateKey) {
     signers.push(web3.generateKeyPair(body.feePayerPrivateKey))
   }
-  return {
-    txId: await connection.sendTransaction(transaction, signers),
-  }
+  return await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
 }
 
 export const solanaNftService = (args: { web3: SolanaWeb3 }) => {
