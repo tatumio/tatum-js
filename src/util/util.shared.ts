@@ -559,11 +559,14 @@ export const Utils = {
       'x-ttm-sdk-debug': `${config.verbose}`,
     })
 
+    const apiKeyHeader = 'x-api-key'
     if (config.apiKey) {
-      if (config.version === ApiVersion.V3 && config.apiKey.v3) {
-        headers.append('x-api-key', config.apiKey.v3)
+      if (typeof config.apiKey === 'string') {
+        headers.append(apiKeyHeader, config.apiKey)
+      } else if (config.version === ApiVersion.V3 && config.apiKey.v3) {
+        headers.append(apiKeyHeader, config.apiKey.v3)
       } else if (config.version === ApiVersion.V4 && config.apiKey.v4) {
-        headers.append('x-api-key', config.apiKey.v4)
+        headers.append(apiKeyHeader, config.apiKey.v4)
       }
     }
     return headers
@@ -775,7 +778,9 @@ export const Utils = {
     if (apiKey) {
       const url =
         rpc?.nodes?.[0].url ||
-        `${Constant.TATUM_API_URL.V3}blockchain/node/${network}/${apiKey.v3 ? apiKey.v3 : apiKey.v4}`
+        `${Constant.TATUM_API_URL.V3}blockchain/node/${network}/${
+          typeof apiKey === 'string' ? apiKey : apiKey.v3 || apiKey.v4
+        }`
       return url.concat(path || '')
     }
     return rpc?.nodes?.[0].url || `${Constant.TATUM_API_URL.V3}blockchain/node/${network}`.concat(path || '')
