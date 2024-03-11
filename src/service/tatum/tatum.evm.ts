@@ -65,6 +65,7 @@ export class Optimism extends BaseEvm {}
 export class Palm extends BaseEvm {}
 export class Vechain extends BaseEvm {}
 export class XinFin extends BaseEvm {}
+export class Base extends BaseEvm {}
 export class Flare extends NotificationEvm {}
 export class Chiliz extends NotificationEvm {}
 

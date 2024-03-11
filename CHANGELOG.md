@@ -1,3 +1,9 @@
+## [4.2.15] - 2024.3.11
+
+### Added
+
+- Added RPC support for the BASE network. Users can now make Base RPC calls using the `Network.BASE` network.
+
 ## [4.2.14] - 2024.3.11
 
 ### Changed

@@ -70,6 +70,7 @@ const testNetworks = [
   },
   { network: Network.CRONOS },
   { network: Network.CRONOS_TESTNET, apiKey: process.env.V3_API_KEY_TESTNET },
+  { network: Network.BASE },
 ]
 
 describe.each(testNetworks)('RPC EVM', (testNetwork) => {
