@@ -19,6 +19,10 @@ export interface TatumConfig {
    * If you are using Tatum API Key, you can use Tatum SDK without any limitations.
    */
   apiKey?:
+    | string
+    /**
+     * @deprecated Use `string` format instead.
+     */
     | {
         /**
          * API Key for ApiVersion.V3
@@ -29,10 +33,6 @@ export interface TatumConfig {
          */
         v4?: string
       }
-    /**
-     * If only string is provided, version is inferred regardless of ApiVersion
-     */
-    | string
 
   /**
    * Verbose logging is disabled by default.
