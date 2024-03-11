@@ -1,8 +1,10 @@
-## [4.2.14] - 2024.3.7
+## [4.2.14] - 2024.3.11
 
-### Added
+### Changed
 
 - Added support for simplified way of configuring api key without specifying version.
+- Marked old way of configuring api key through object specifying version as `deprecated`.
+- Fixed some tests, namely those related to `arb-testnet` `eth_chainId` RPC EVM method.
 
 ## [4.2.13] - 2024.2.29
 
