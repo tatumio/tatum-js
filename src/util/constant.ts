@@ -115,6 +115,8 @@ export const Constant = {
     [Network.HAQQ_TESTNET]: 18,
     [Network.CHILIZ]: 18,
     [Network.BNB]: 18,
+    [Network.BASE]: 18,
+    [Network.BASE_SEPOLIA]: 18,
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -210,6 +212,8 @@ export const Constant = {
     [Network.HAQQ_TESTNET]: 'HAQQ',
     [Network.CHILIZ]: 'CHILIZ',
     [Network.BNB]: 'BNB',
+    [Network.BASE]: 'BASE',
+    [Network.BASE_SEPOLIA]: 'BASE',
   },
   RPC: {
     MAINNETS: [

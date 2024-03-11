@@ -10,6 +10,7 @@ export enum Network {
   AVALANCHE_C = 'avalanche-c-mainnet',
   AVALANCHE_P = 'avax-p-mainnet',
   AVALANCHE_X = 'avax-x-mainnet',
+  BASE = 'base-mainnet',
   BINANCE_SMART_CHAIN = 'bsc-mainnet',
   BNB = 'bnb-beacon-chain-mainnet',
   BITCOIN = 'bitcoin-mainnet',
@@ -58,6 +59,7 @@ export enum Network {
   AVALANCHE_C_TESTNET = 'avax-testnet',
   AVALANCHE_P_TESTNET = 'avax-p-testnet',
   AVALANCHE_X_TESTNET = 'avax-x-testnet',
+  BASE_SEPOLIA = 'base-sepolia',
   BINANCE_SMART_CHAIN_TESTNET = 'bsc-testnet',
   BITCOIN_TESTNET = 'bitcoin-testnet',
   BITCOIN_CASH_TESTNET = 'bch-testnet',
@@ -227,6 +229,7 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.XINFIN,
   Network.FANTOM,
   Network.CRONOS,
+  Network.BASE,
 ]
 
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
@@ -854,5 +857,15 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.DOT,
     testnet: true,
     chainId: 0,
+  },
+  [Network.BASE]: {
+    currency: Currency.BASE,
+    testnet: false,
+    chainId: 8453,
+  },
+  [Network.BASE_SEPOLIA]: {
+    currency: Currency.BASE,
+    testnet: true,
+    chainId: 84532,
   },
 }

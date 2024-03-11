@@ -44,6 +44,7 @@ import {
   ArbitrumOne,
   Aurora,
   AvalancheC,
+  Base,
   BinanceSmartChain,
   Bitcoin,
   BitcoinCash,
@@ -718,6 +719,9 @@ export const Utils = {
       case Network.STELLAR:
       case Network.STELLAR_TESTNET:
         return new Stellar(id) as T
+      case Network.BASE:
+      case Network.BASE_SEPOLIA:
+        return new Base(id) as T
       default:
         return new FullSdk(id) as T
     }
