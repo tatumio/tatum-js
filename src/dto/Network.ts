@@ -653,7 +653,7 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.ARB,
     testnet: true,
     defaultTestnet: true,
-    chainId: 421613,
+    chainId: 421614,
   },
   [Network.ARBITRUM_ONE]: {
     currency: Currency.ARB,
