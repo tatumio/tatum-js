@@ -125,7 +125,7 @@ export const solanaUtils = {
     }
 
     throw new Error(
-      `Transaction ${txId} not confirmed after ${attempts} attempts, please check the status of the transaction or try again.`,
+      `Transaction ${txId} has not been confirmed yet. The transaction could still be accepted by the Solana network. We advise to manually check if the transaction has been dropped or accepted before you try to send the transaction again.`,
     )
   },
 }
