@@ -1,3 +1,4 @@
+import { Connection, PublicKey, Signer, Transaction } from '@solana/web3.js'
 import {
   BurnNftSolana,
   ChainDeploySolanaSpl,
@@ -11,10 +12,9 @@ import {
 } from '@tatumio/api-client'
 import { SdkErrorCode, WithoutChain } from '@tatumio/shared-abstract-sdk'
 import { FromPrivateKeyOrSignatureId } from '@tatumio/shared-blockchain-abstract'
-import { Connection, PublicKey, Signer, Transaction } from '@solana/web3.js'
-import { SolanaWeb3 } from './solana.web3'
-import { SolanaSdkError } from '../solana.sdk.errors'
 import BN from 'bn.js'
+import { SolanaSdkError } from '../solana.sdk.errors'
+import { SolanaWeb3 } from './solana.web3'
 // @ts-ignore
 import { encode } from 'base-58'
 import _ from 'lodash'
@@ -109,7 +109,7 @@ export const solanaUtils = {
     })
   },
   sendTransactionWithConfirm: async (connection: Connection, transaction: Transaction, signers: Signer[]) => {
-    const attempts = 11
+    const attempts = 9
     const txId = await connection.sendTransaction(transaction, signers)
     let confirmedTx
     for (let attempt = 1; attempt <= attempts; attempt++) {
