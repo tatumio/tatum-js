@@ -333,11 +333,6 @@ export class NotificationSubscriptionsService {
                                  * <td>bsc-testnet / bsc-mainnet</td>
                                  * <td>50,000 credits / day</td>
                                  * </tr>
-                                 * <tr>
-                                 * <td>Cronos</td>
-                                 * <td>cronos-mainnet / cronos-testnet</td>
-                                 * <td>500,000 credits / day</td>
-                                 * </tr>
                                  * </table>
                                  * The request body of the POST request is a JSON object with the following structure:<br/>
                                  * <pre>{

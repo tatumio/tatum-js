@@ -6,7 +6,7 @@ export type DeployMultiToken = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'FLR' | 'CRO';
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'FLR' | 'CRO' | 'BASE';
     /**
      * URI of the Multi Token token
      */

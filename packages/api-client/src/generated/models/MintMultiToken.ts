@@ -6,7 +6,7 @@ export type MintMultiToken = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'FLR' | 'CRO';
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'FLR' | 'CRO' | 'BASE';
     /**
      * ID of token to be created.
      */

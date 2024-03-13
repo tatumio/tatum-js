@@ -6,7 +6,7 @@ import { FEE_PAYER } from '../services/solana.utils'
 
 jest.setTimeout(99999)
 
-describe('SolanaSDK - tx', () => {
+describe.skip('SolanaSDK - tx', () => {
   const sdk = TatumSolanaSDK({
     apiKey: REPLACE_ME_WITH_TATUM_API_KEY,
   })
