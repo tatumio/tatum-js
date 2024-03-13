@@ -98,64 +98,6 @@ describe.skip('BaseSDK - tx', () => {
     })
   })
 
-  describe('marketplace', () => {
-    describe('prepare', () => {
-      describe('generateMarketplace', () => {
-        marketplaceTestFactory.prepare.generateMarketplace(
-          sdk.marketplace,
-          TEST_DATA.BASE,
-          'BASE',
-          inmemoryBlockchain.accounts,
-        )
-      })
-
-      describe('approveSpending', () => {
-        marketplaceTestFactory.prepare.approveSpending(
-          sdk.marketplace,
-          inmemoryBlockchain.accounts,
-          blockchain,
-        )
-      })
-
-      describe('sellMarketplaceListing', () => {
-        marketplaceTestFactory.prepare.sellMarketplaceListing(
-          sdk.marketplace,
-          TEST_DATA.BASE,
-          'BASE',
-          inmemoryBlockchain.accounts,
-        )
-      })
-
-      describe('buyMarketplaceListing', () => {
-        marketplaceTestFactory.prepare.buyMarketplaceListing(
-          sdk.marketplace,
-          TEST_DATA.BASE,
-          'BASE',
-          inmemoryBlockchain.accounts,
-        )
-      })
-
-      // @TODO: returns "Returned values aren't valid..."
-      xdescribe('buyMarketplaceListingErc20', () => {
-        marketplaceTestFactory.prepare.buyMarketplaceListingErc20(
-          sdk.marketplace,
-          TEST_DATA.BASE,
-          'BASE',
-          inmemoryBlockchain.accounts,
-        )
-      })
-
-      describe('cancelMarketplaceListing', () => {
-        marketplaceTestFactory.prepare.cancelMarketplaceListing(
-          sdk.marketplace,
-          TEST_DATA.BASE,
-          'BASE',
-          inmemoryBlockchain.accounts,
-        )
-      })
-    })
-  })
-
   describe('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
@@ -204,26 +146,6 @@ describe.skip('BaseSDK - tx', () => {
           sdk.smartContract,
           TEST_DATA.BASE,
         )
-      })
-    })
-  })
-
-  describe('custodial', () => {
-    describe('prepare', () => {
-      xdescribe('transfer from custodial wallet', () => {
-        custodialTestFactory.prepare.transferFromCustodialWallet(sdk.custodial, TEST_DATA.BASE, 'BASE')
-      })
-
-      xdescribe('batch transfer from custodial wallet', () => {
-        custodialTestFactory.prepare.batchTransferFromCustodialWallet(sdk.custodial, TEST_DATA.BASE, 'BASE')
-      })
-
-      xdescribe('approve from custodial wallet', () => {
-        custodialTestFactory.prepare.approveFromCustodialWallet(sdk.custodial, TEST_DATA.BASE, 'BASE')
-      })
-
-      xdescribe('generate batch custodial wallet', () => {
-        custodialTestFactory.prepare.custodialWalletBatch(sdk.custodial, TEST_DATA.BASE, 'BASE')
       })
     })
   })

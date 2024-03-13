@@ -2,6 +2,7 @@ import {
   AccountService,
   AlgorandService,
   AuctionService,
+  BaseService,
   BitcoinCashService,
   BitcoinService,
   BlockchainAddressesService,
@@ -82,6 +83,7 @@ export const ApiServices = {
   blockchain: {
     ada: CardanoService,
     algo: AlgorandService,
+    base: BaseService,
     bnb: BnbBeaconChainService,
     bitcoin: BitcoinService,
     bcash: BitcoinCashService,

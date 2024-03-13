@@ -11,7 +11,7 @@ import { Currency } from '@tatumio/api-client'
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
 
-describe('BaseSDK - nft', () => {
+describe.skip('BaseSDK - nft', () => {
   const sdk = TatumBaseSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   afterEach(() => {

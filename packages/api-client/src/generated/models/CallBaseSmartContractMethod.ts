@@ -2,37 +2,30 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type TransferMultiToken = {
+export type CallBaseSmartContractMethod = {
     /**
-     * Chain to work with.
-     */
-    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'FLR' | 'CRO' | 'BASE';
-    /**
-     * Blockchain address to send Multi Token token to
-     */
-    to: string;
-    /**
-     * ID of token.
-     */
-    tokenId: string;
-    /**
-     * amount of token.
-     */
-    amount: string;
-    /**
-     * Data in bytes
-     */
-    data?: string;
-    /**
-     * Address of Multi Token token
+     * The address of the smart contract
      */
     contractAddress: string;
+    /**
+     * Amount of the assets to be sent.
+     */
+    amount?: string;
+    /**
+     * Name of the method to invoke on smart contract.
+     */
+    methodName: string;
+    /**
+     * ABI of the method to invoke.
+     */
+    methodABI: any;
+    params: Array<string>;
     /**
      * Private key of sender address. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to transaction. If not present, last known nonce will be used.
+     * Nonce to be set to Base transaction. If not present, last known nonce will be used.
      */
     nonce?: number;
     /**

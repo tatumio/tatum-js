@@ -58,6 +58,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Polygon</li>
      * <li>Flare</li>
      * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When deploying a Multi Token smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -110,6 +111,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Polygon</li>
      * <li>Flare</li>
      * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When minting a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -162,6 +164,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Polygon</li>
      * <li>Flare</li>
      * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When minting multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -214,6 +217,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Polygon</li>
      * <li>Flare</li>
      * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When burning a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -266,6 +270,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Polygon</li>
      * <li>Flare</li>
      * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When burning multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -319,6 +324,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Polygon</li>
      * <li>Flare</li>
      * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When transferring a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -372,6 +378,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Polygon</li>
      * <li>Flare</li>
      * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When transferring multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -424,6 +431,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Polygon</li>
      * <li>Flare</li>
      * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When adding a Multi Token minter, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -523,6 +531,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Polygon</li>
      * <li>Flare</li>
      * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      *
      * @param chain Blockchain to work with
@@ -533,7 +542,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @throws ApiError
      */
     public static multiTokenGetTransaction(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO' | 'BASE',
         hash: string,
         testnetType?: TestnetType,
         xTestnetType?: TestnetType,
@@ -641,6 +650,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Polygon</li>
      * <li>Flare</li>
      * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      *
      * @param chain Blockchain to work with
@@ -653,7 +663,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @throws ApiError
      */
     public static multiTokenGetBalance(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO' | 'BASE',
         address: string,
         contractAddress: string,
         tokenId: string,
@@ -696,22 +706,27 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Klaytn</li>
      * <li>KuCoin Community Chain</li>
      * <li>Polygon</li>
+     * <li>Flare</li>
+     * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      *
      * @param chain Blockchain to work with
      * @param contractAddress The address of the Multi Token smart contract
      * @param tokenId Comma-separated IDs of the Multi Tokens to get the amounts for
      * @param address Comma-separated blockchain addresses to get the token balance for
-     * @param xTestnetType Type of testnet. Defaults to Sepolia. Valid only for ETH invocations.
+     * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
+     * @param xTestnetType Type of testnet in header. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
      * @returns string OK
      * @throws ApiError
      */
     public static multiTokenGetBalanceBatch(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLARE' | 'CRO' | 'BASE',
         contractAddress: string,
         tokenId: string,
         address: string,
-        xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
+        testnetType?: TestnetType,
+        xTestnetType?: TestnetType,
     ): CancelablePromise<Array<string>> {
         return __request({
             method: 'GET',
@@ -722,6 +737,7 @@ export class MultiTokensErc1155OrCompatibleService {
             query: {
                 'tokenId': tokenId,
                 'address': address,
+                'testnetType': testnetType,
             },
             errors: {
                 400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
@@ -747,6 +763,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Polygon</li>
      * <li>Flare</li>
      * <li>Cronos</li>
+     * <li>Base</li>
      * </ul>
      *
      * @param chain Blockchain to work with
@@ -758,7 +775,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @throws ApiError
      */
     public static multiTokenGetMetadata(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO' | 'BASE',
         token: string,
         contractAddress: string,
         testnetType?: TestnetType,

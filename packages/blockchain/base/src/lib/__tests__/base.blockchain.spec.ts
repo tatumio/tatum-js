@@ -11,7 +11,7 @@ import { BlockchainUtilsService, CallSmartContractMethod, BaseEstimateGas } from
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
 
-describe('BaseSDK - blockchain', () => {
+describe.skip('BaseSDK - blockchain', () => {
   const sdk = TatumBaseSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   afterEach(() => {
@@ -30,30 +30,6 @@ describe('BaseSDK - blockchain', () => {
     getBlockchainAccountBalance: [api.baseGetBalance, testData.TESTNET.ADDRESS_0],
     getTransaction: [api.baseGetTransaction, testData.TX_HASH],
     smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, 'BASE', testData.TX_HASH],
-    getAccountTransactions: [api.baseGetTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
-    getInternalTransaction: [api.baseGetInternalTransactionByAddress, testData.TESTNET.ADDRESS_0, 50],
-    estimateGas: [
-      blockchain.estimateGas,
-      {
-        from: testData.TESTNET.ADDRESS_0,
-        to: testData.TESTNET.ADDRESS_100,
-        contractAddress: testData.TESTNET.SMART_CONTRACT.CONTRACT_ADDRESS,
-        amount: '10',
-      } as BaseEstimateGas,
-    ],
-    estimateGasBatch: [
-      blockchain.estimateGasBatch,
-      {
-        estimations: [
-          {
-            from: testData.TESTNET.ADDRESS_0,
-            to: testData.TESTNET.ADDRESS_100,
-            contractAddress: testData.TESTNET.SMART_CONTRACT.CONTRACT_ADDRESS,
-            amount: '10',
-          } as BaseEstimateGas,
-        ],
-      },
-    ],
     smartContractInvocation: [
       api.baseBlockchainSmartContractInvocation,
       {

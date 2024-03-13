@@ -4,6 +4,7 @@
 import type { BlockchainFee } from '../models/BlockchainFee';
 import type { BscEstimateGas } from '../models/BscEstimateGas';
 import type { CeloEstimateGas } from '../models/CeloEstimateGas';
+import type { CronosEstimateGas } from '../models/CronosEstimateGas';
 import type { EstimateFee } from '../models/EstimateFee';
 import type { EstimateFeeBatchMintNft } from '../models/EstimateFeeBatchMintNft';
 import type { EstimateFeeDeployCustodialWallet } from '../models/EstimateFeeDeployCustodialWallet';
@@ -357,7 +358,7 @@ export class BlockchainFeesService {
     }
 
     /**
-     * Estimate the fee for a KuCoin Community Chain transaction
+     * Estimate the fee for a Flare transaction
      * <p><b>2 credits per API call</b></p>
      * <p>Get an estimated gas price and the number of gas units needed for a Flare transaction.</p>
      * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/Flare#operation/FlareBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
@@ -372,6 +373,33 @@ export class BlockchainFeesService {
         return __request({
             method: 'POST',
             path: `/v3/flare/gas`,
+            body: requestBody,
+            mediaType: 'application/json',
+            errors: {
+                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+                403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+                500: `Internal server error. There was an error on the server while processing the request.`,
+            },
+        });
+    }
+
+    /**
+     * Estimate the fee for a Cronos transaction
+     * <p><b>2 credits per API call</b></p>
+     * <p>Get an estimated gas price and the number of gas units needed for a Cronos transaction.</p>
+     * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/Cronos#operation/CronosBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
+     *
+     * @param requestBody
+     * @returns GasEstimated OK
+     * @throws ApiError
+     */
+    public static cronosEstimateGas(
+        requestBody: CronosEstimateGas,
+    ): CancelablePromise<GasEstimated> {
+        return __request({
+            method: 'POST',
+            path: `/v3/cronos/gas`,
             body: requestBody,
             mediaType: 'application/json',
             errors: {
