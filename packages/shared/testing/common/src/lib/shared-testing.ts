@@ -97,6 +97,7 @@ export const TEST_DATA = {
   EGLD: EGLD_TEST_DATA,
   FLR: ETH_TEST_DATA,
   CRO: ETH_TEST_DATA,
+  BASE: ETH_TEST_DATA,
 }
 
 export function expectHexString(value: string): void {

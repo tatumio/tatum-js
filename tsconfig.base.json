@@ -22,6 +22,7 @@
       "@tatumio/algo": ["packages/blockchain/algo/src/index.ts"],
       "@tatumio/api-client": ["packages/api-client/src/index.ts"],
       "@tatumio/automation": ["packages/automation/src/index.ts"],
+      "@tatumio/base": ["packages/blockchain/base/src/index.ts"],
       "@tatumio/bch": ["packages/blockchain/bch/src/index.ts"],
       "@tatumio/bnb": ["packages/blockchain/bnb/src/index.ts"],
       "@tatumio/bsc": ["packages/blockchain/bsc/src/index.ts"],

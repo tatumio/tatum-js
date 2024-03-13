@@ -27,6 +27,7 @@ export enum Blockchain {
   CHILIZ = 'CHILIZ',
   FLR = 'FLR',
   CRO = 'CRO',
+  BASE = 'BASE',
 }
 
 export const EvmBasedBlockchains = [
@@ -39,6 +40,7 @@ export const EvmBasedBlockchains = [
   Blockchain.EON,
   Blockchain.CHILIZ,
   Blockchain.CRO,
+  Blockchain.BASE,
 ]
 
 // @TODO tmp solution
@@ -58,3 +60,4 @@ export type EvmBasedBlockchain =
   | Blockchain.CHILIZ
   | Blockchain.FLR
   | Blockchain.CRO
+  | Blockchain.BASE
