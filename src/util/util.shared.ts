@@ -219,6 +219,22 @@ export const Utils = {
     return mappedNetwork ?? network
   },
   getStatusPayload: (network: Network) => {
+    if (isXrpNetwork(network)) {
+      return {
+        method: 'ledger',
+        params: [
+          {
+            ledger_index: 'current',
+            transactions: false,
+            expand: false,
+            owner_funds: false,
+          },
+        ],
+        id: 1,
+        jsonrpc: '2.0',
+      }
+    }
+
     if (isUtxoBasedNetwork(network)) {
       return {
         jsonrpc: '2.0',
@@ -293,6 +309,10 @@ export const Utils = {
       return `${url}network/status`
     }
 
+    if (isXrpNetwork(network)) {
+      return url
+    }
+
     if (isSameGetBlockNetwork(network)) {
       return url
     }
@@ -355,6 +375,10 @@ export const Utils = {
       return new BigNumber((response.last_ledger as number) || -1).toNumber()
     }
 
+    if (isXrpNetwork(network)) {
+      return new BigNumber((response.result.ledger_current_index as number) || -1).toNumber()
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
   isResponseOk: (network: Network, response: JsonRpcResponse<any> | any) => {
@@ -388,6 +412,10 @@ export const Utils = {
 
     if (isCardanoNetwork(network)) {
       return response.current_block_identifier.index !== undefined
+    }
+
+    if (isXrpNetwork(network)) {
+      return response.result.ledger_current_index !== undefined
     }
 
     throw new Error(`Network ${network} is not supported.`)
@@ -478,6 +506,9 @@ export const Utils = {
       case Network.FLARE_COSTON_2:
       case Network.FLARE_SONGBIRD:
         return AddressEventNotificationChain.FLR
+      case Network.CRONOS:
+      case Network.CRONOS_TESTNET:
+        return AddressEventNotificationChain.CRO
       default:
         throw new Error(`Network ${network} is not supported.`)
     }

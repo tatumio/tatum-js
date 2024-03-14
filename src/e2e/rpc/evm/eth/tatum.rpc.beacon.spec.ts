@@ -7,6 +7,13 @@ describe('Beacon', () => {
     const networks = [Network.ETHEREUM_HOLESKY, Network.ETHEREUM_SEPOLIA, Network.ETHEREUM]
 
     describe.each(networks)('%s', (network) => {
+      it('should get node version', async () => {
+        const tatum = await EvmE2eUtils.initTatum<Ethereum>(network, process.env.V4_API_KEY_TESTNET)
+        const { data } = await tatum.rpc.beacon.v1.getNodeVersion()
+        await tatum.destroy()
+        expect(data).toBeDefined()
+      })
+
       it('should get genesis', async () => {
         const tatum = await EvmE2eUtils.initTatum<Ethereum>(network, process.env.V4_API_KEY_TESTNET)
         const { data } = await tatum.rpc.beacon.v1.getGenesis()

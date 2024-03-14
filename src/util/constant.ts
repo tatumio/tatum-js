@@ -314,4 +314,5 @@ export const Constant = {
   },
   EOS_PREFIX: 'v1/chain/',
   BEACON_PREFIX: '/eth/v1/beacon',
+  BEACON_BASE_PREFIX: '/eth/v1',
 }

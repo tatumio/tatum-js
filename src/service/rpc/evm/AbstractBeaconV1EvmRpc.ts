@@ -17,8 +17,12 @@ import { Constant, Utils } from '../../../util'
 export abstract class AbstractBeaconV1EvmRpc implements EvmBeaconV1Interface {
   protected abstract get<T>(get: GetI): Promise<T>
 
-  private sendGet<T>(path: string, params: QueryParams): Promise<T> {
-    const fullPath = Utils.addQueryParams(`${Constant.BEACON_PREFIX}/${path}`, Utils.camelToSnakeCase, params)
+  private sendGet<T>(path: string, params: QueryParams, prefix?: string): Promise<T> {
+    const fullPath = Utils.addQueryParams(
+      `${prefix ?? Constant.BEACON_PREFIX}/${path}`,
+      Utils.camelToSnakeCase,
+      params,
+    )
     return this.get({ path: fullPath })
   }
 
@@ -79,5 +83,9 @@ export abstract class AbstractBeaconV1EvmRpc implements EvmBeaconV1Interface {
 
   getStateValidators({ stateId, ...rest }: ValidatorsQuery): Promise<EvmBeaconResponse<any>> {
     return this.sendGet(`states/${stateId}/validators`, rest)
+  }
+
+  getNodeVersion(): Promise<EvmBeaconResponse<any>> {
+    return this.sendGet('node/version', {}, Constant.BEACON_BASE_PREFIX)
   }
 }
