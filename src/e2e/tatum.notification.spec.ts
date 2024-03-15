@@ -17,19 +17,7 @@ import {
 } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 
-// TODO pipeline dont work with API keys
-
 describe('notification', () => {
-  beforeAll(async () => {
-    const tatum = await TatumSDK.init<Ethereum>(e2eUtil.initConfig(Network.ETHEREUM))
-    const notifications = await tatum.notification.getAll()
-
-    if (notifications?.data?.length > 0) {
-      for (const notification of notifications.data as NotificationSubscription[]) {
-        await tatum.notification.unsubscribe(notification.id)
-      }
-    }
-  })
   describe('createSubscription', () => {
     describe('IP auth', () => {
       describe('Address Event', () => {

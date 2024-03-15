@@ -822,11 +822,13 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.CRO,
     testnet: false,
     chainId: 25,
+    defaultMainnet: true,
   },
   [Network.CRONOS_TESTNET]: {
     currency: Currency.CRO,
     testnet: true,
     chainId: 338,
+    defaultTestnet: true,
   },
   [Network.KUCOIN]: {
     currency: Currency.KCS,

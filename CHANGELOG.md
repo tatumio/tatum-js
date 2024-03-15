@@ -1,3 +1,9 @@
+## [4.2.16] - 2024.2.15
+
+### Added
+
+- Added support for Cronos and Cronos testnet subscriptions.
+
 ## [4.2.15] - 2024.3.11
 
 ### Added

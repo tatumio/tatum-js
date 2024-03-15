@@ -7,6 +7,7 @@ import {
   ContractBasedNotificationDetail,
   FullSdk,
   Network,
+  NotificationSubscription,
 } from '../service'
 import { ResponseDto } from '../util'
 import { NetworkUtils } from '../util/network.utils'
@@ -32,11 +33,13 @@ export const e2eUtil = {
         case Network.FLARE_COSTON:
         case Network.FLARE_COSTON_2:
         case Network.FLARE_SONGBIRD:
+        case Network.CRONOS:
+        case Network.CRONOS_TESTNET:
           return '0xdb4C3b4350EE869F2D0a2F43ce0292865E2Aa149'
         case Network.CELO_ALFAJORES:
           return '0xdf083B077F1FD890fC71feCaBbd3F68F94cD21Bf'
         case Network.POLYGON_MUMBAI:
-          return '0xd608d48c6ddB41254d73ec0619FE31B254Fb5ab8'
+          return '0xcf3c930601111c216fc0232d32cf5c2a86f107da'
         case Network.KLAYTN_BAOBAB:
           return '0xdc7Dfb8Aa86D41b7e39441711Fe1669f2d843C06'
         case Network.BINANCE_SMART_CHAIN_TESTNET:
@@ -91,6 +94,7 @@ export const e2eUtil = {
         addressBasedNotificationDetail: AddressBasedNotificationDetail,
       ) => Promise<ResponseDto<AddressBasedNotification>>,
     ) => {
+      await e2eUtil.flushSubscriptions(tatum)
       const url = 'https://webhook.site/'
       const { data, error } = await func({
         url,
@@ -116,6 +120,7 @@ export const e2eUtil = {
         contractBasedNotificationDetail: ContractBasedNotificationDetail,
       ) => Promise<ResponseDto<ContractBasedNotification>>,
     ) => {
+      await e2eUtil.flushSubscriptions(tatum)
       const url = 'https://webhook.site/'
       const event = '0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef'
       const { data, error } = await func({
@@ -144,6 +149,7 @@ export const e2eUtil = {
         blockBasedNotificationDetail: BlockBasedNotificationDetail,
       ) => Promise<ResponseDto<BlockBasedNotification>>,
     ) => {
+      await e2eUtil.flushSubscriptions(tatum)
       const url = 'https://webhook.site/'
 
       const { data, error } = await func({
@@ -157,4 +163,18 @@ export const e2eUtil = {
     },
   },
   isVerbose: process.env.E2E_VERBOSE === 'true',
+  flushSubscriptions: async (tatum: FullSdk) => {
+    try {
+      const notifications = await tatum.notification.getAll()
+
+      if (notifications?.data?.length > 0) {
+        for (const notification of notifications.data as NotificationSubscription[]) {
+          await tatum.notification.unsubscribe(notification.id)
+        }
+      }
+    } catch (e) {
+      console.error('Error flushing subscriptions')
+      console.error(e)
+    }
+  },
 }

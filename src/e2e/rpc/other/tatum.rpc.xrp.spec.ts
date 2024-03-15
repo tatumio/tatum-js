@@ -5,11 +5,6 @@ const getXrpRpc = async (testnet?: boolean) =>
   await TatumSDK.init<Xrp>(e2eUtil.initConfig(testnet ? Network.XRP_TESTNET : Network.XRP))
 
 describe('RPCs', () => {
-  afterEach(async () => {
-    // wait for 200ms to avoid rate limit
-    await new Promise((resolve) => setTimeout(resolve, 100))
-  })
-
   describe('XRP', () => {
     describe('testnet', () => {
       it('ping', async () => {
@@ -17,6 +12,20 @@ describe('RPCs', () => {
         const { result } = await tatum.rpc.ping()
         await tatum.destroy()
         expect(result.status).toBe('success')
+      })
+
+      it('ledger_closed', async () => {
+        const tatum = await getXrpRpc(true)
+        const { result } = await tatum.rpc.ledgerClosed()
+        await tatum.destroy()
+        expect(result.ledger_index).toBeGreaterThan(0)
+      })
+
+      it('fee', async () => {
+        const tatum = await getXrpRpc(true)
+        const { result } = await tatum.rpc.fee()
+        await tatum.destroy()
+        expect(result.ledger_current_index).toBeGreaterThan(0)
       })
     })
   })

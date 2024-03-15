@@ -275,6 +275,7 @@ export interface ValidatorQuery extends StateQuery {
 
 export interface EvmBeaconV1Interface {
   getGenesis(): Promise<EvmBeaconResponse<any>>
+  getNodeVersion(): Promise<EvmBeaconResponse<any>>
   getBlockHeaders(query?: { slot?: string; parentRoot?: string }): Promise<EvmBeaconResponse<any>>
   getBlockHeader(query: BlockQuery): Promise<EvmBeaconResponse<any>>
   getBlockRoot(query: BlockQuery): Promise<EvmBeaconResponse<any>>
