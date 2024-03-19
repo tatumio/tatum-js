@@ -149,8 +149,11 @@ export abstract class AbstractSolanaRpc implements SolanaRpcInterface {
   getFeeForMessage(
     message: any,
     options?: GetCommitmentMinContextSlotOptions,
-  ): Promise<JsonRpcResponse<number | null>> {
-    return this.rpcCall<JsonRpcResponse<number | null>>('getFeeForMessage', [message, options])
+  ): Promise<JsonRpcResponse<SolanaTypeWithContext<number | null>>> {
+    return this.rpcCall<JsonRpcResponse<SolanaTypeWithContext<number | null>>>('getFeeForMessage', [
+      message,
+      options,
+    ])
   }
 
   getFirstAvailableBlock(): Promise<JsonRpcResponse<number>> {

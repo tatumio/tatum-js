@@ -1,3 +1,9 @@
+## [4.2.17] - 2024.3.19
+
+### Fixed
+
+- Fixed Solana RPC call for `getFeeForMessage` method. The result is now properly parsed and returns context information with value.
+
 ## [4.2.16] - 2024.2.15
 
 ### Added
