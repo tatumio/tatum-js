@@ -456,7 +456,7 @@ export interface SolanaRpcInterface {
   getFeeForMessage: (
     message: any,
     options?: GetCommitmentMinContextSlotOptions,
-  ) => Promise<JsonRpcResponse<number | null>>
+  ) => Promise<JsonRpcResponse<SolanaTypeWithContext<number | null>>>
 
   /**
    * Get the first available block on the Solana blockchain.
