@@ -11,7 +11,7 @@ const testNetworks = [
     apiKey: process.env.V3_API_KEY_TESTNET,
   },
   { network: Network.HORIZEN_EON },
-  { network: Network.HORIZEN_EON_GOBI },
+  // { network: Network.HORIZEN_EON_GOBI },
   { network: Network.CHILIZ },
   { network: Network.BINANCE_SMART_CHAIN },
   {
