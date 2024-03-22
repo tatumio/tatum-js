@@ -1,3 +1,9 @@
+## [4.2.18] - 2024.3.22
+
+### Added
+
+- Added support for Base and Base Sepolia testnet subscriptions.
+
 ## [4.2.17] - 2024.3.19
 
 ### Fixed
