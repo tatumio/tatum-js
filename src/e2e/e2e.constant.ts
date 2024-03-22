@@ -38,6 +38,8 @@ export const AddressEventNetworks = [
   Network.FLARE_SONGBIRD,
   Network.CRONOS,
   Network.CRONOS_TESTNET,
+  Network.BASE,
+  Network.BASE_SEPOLIA,
 ]
 
 export const IncomingNativeTxNetworks = [
@@ -73,6 +75,8 @@ export const IncomingNativeTxNetworks = [
   Network.FLARE_SONGBIRD,
   Network.CRONOS,
   Network.CRONOS_TESTNET,
+  Network.BASE,
+  Network.BASE_SEPOLIA,
 ]
 
 export const OutgoingNativeTxNetworks = [
@@ -106,6 +110,8 @@ export const OutgoingNativeTxNetworks = [
   Network.FLARE_SONGBIRD,
   Network.CRONOS,
   Network.CRONOS_TESTNET,
+  Network.BASE,
+  Network.BASE_SEPOLIA,
 ]
 
 export const OutgoingFailedNetworks = [
@@ -127,6 +133,8 @@ export const OutgoingFailedNetworks = [
   Network.FLARE_SONGBIRD,
   Network.CRONOS,
   Network.CRONOS_TESTNET,
+  Network.BASE,
+  Network.BASE_SEPOLIA,
 ]
 
 export const PaidFeeNetworks = [
@@ -152,6 +160,8 @@ export const PaidFeeNetworks = [
   Network.FLARE_SONGBIRD,
   Network.CRONOS,
   Network.CRONOS_TESTNET,
+  Network.BASE,
+  Network.BASE_SEPOLIA,
 ]
 
 export const FungibleTxNetworks = [
@@ -177,6 +187,8 @@ export const FungibleTxNetworks = [
   Network.FLARE_SONGBIRD,
   Network.CRONOS,
   Network.CRONOS_TESTNET,
+  Network.BASE,
+  Network.BASE_SEPOLIA,
 ]
 
 export const NftNetworks = [
@@ -202,6 +214,8 @@ export const NftNetworks = [
   Network.FLARE_SONGBIRD,
   Network.CRONOS,
   Network.CRONOS_TESTNET,
+  Network.BASE,
+  Network.BASE_SEPOLIA,
 ]
 
 export const MultitokenNetworks = [
@@ -222,6 +236,8 @@ export const MultitokenNetworks = [
   Network.FLARE_SONGBIRD,
   Network.CRONOS,
   Network.CRONOS_TESTNET,
+  Network.BASE,
+  Network.BASE_SEPOLIA,
 ]
 
 export const FailedTxPerBlockNetworks = [
@@ -247,6 +263,8 @@ export const FailedTxPerBlockNetworks = [
   Network.FLARE_SONGBIRD,
   Network.CRONOS,
   Network.CRONOS_TESTNET,
+  Network.BASE,
+  Network.BASE_SEPOLIA,
 ]
 
 export const ContractAddressLogEventNetworks = [
@@ -265,6 +283,8 @@ export const ContractAddressLogEventNetworks = [
   Network.FLARE_COSTON,
   Network.FLARE_COSTON_2,
   Network.FLARE_SONGBIRD,
+  Network.CRONOS,
+  Network.BASE,
 ]
 
 export const InternalTxNetworks = [
@@ -278,4 +298,6 @@ export const InternalTxNetworks = [
   Network.FLARE_COSTON,
   Network.FLARE_COSTON_2,
   Network.FLARE_SONGBIRD,
+  Network.CRONOS,
+  Network.BASE,
 ]

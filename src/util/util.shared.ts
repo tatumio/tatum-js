@@ -452,6 +452,8 @@ export const Utils = {
         return Network.CHILIZ
       case AddressEventNotificationChain.FLR:
         return Network.FLARE
+      case AddressEventNotificationChain.BASE:
+        return Network.BASE
       default:
         throw new Error(`Chain ${chain} is not supported.`)
     }
@@ -509,6 +511,9 @@ export const Utils = {
       case Network.CRONOS:
       case Network.CRONOS_TESTNET:
         return AddressEventNotificationChain.CRO
+      case Network.BASE:
+      case Network.BASE_SEPOLIA:
+        return AddressEventNotificationChain.BASE
       default:
         throw new Error(`Network ${network} is not supported.`)
     }

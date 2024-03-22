@@ -867,6 +867,7 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   },
   [Network.BASE_SEPOLIA]: {
     currency: Currency.BASE,
+    defaultTestnet: true,
     testnet: true,
     chainId: 84532,
   },

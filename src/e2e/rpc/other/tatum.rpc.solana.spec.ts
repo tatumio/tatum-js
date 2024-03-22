@@ -15,6 +15,15 @@ const blockNumber = 203046000
 // TODO: Too unstable
 describe.skip('Solana', () => {
   describe('mainnet', () => {
+    describe('getSignaturesForAddress', () => {
+      it('should return getSignatureForAddress', async () => {
+        const tatum = await getClient()
+        const r = await tatum.rpc.getSignaturesForAddress('5x4DyBUsJFYuBFBUstXVraoGG9RtzPEJqaL4F8u637vt')
+        console.log(r)
+        await tatum.destroy()
+      })
+    })
+
     describe('getAccountInfo', () => {
       it('should return account info', async () => {
         const tatum = await getClient()
