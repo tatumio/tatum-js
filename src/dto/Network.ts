@@ -30,6 +30,7 @@ export enum Network {
   GNOSIS = 'gno-mainnet',
   HAQQ = 'haqq-mainnet',
   HARMONY_ONE_SHARD_0 = 'one-mainnet-s0',
+  KADENA = 'kadena-mainnet',
   KLAYTN = 'klaytn-mainnet',
   KUCOIN = 'kcs-mainnet',
   LITECOIN = 'litecoin-mainnet',
@@ -79,6 +80,7 @@ export enum Network {
   HAQQ_TESTNET = 'haqq-testnet',
   HARMONY_ONE_TESTNET_SHARD_0 = 'one-testnet-s0',
   HORIZEN_EON_GOBI = 'horizen-eon-gobi',
+  KADENA_TESTNET = 'kadena-testnet',
   KLAYTN_BAOBAB = 'klaytn-baobab',
   KUCOIN_TESTNET = 'kcs-testnet',
   LITECOIN_TESTNET = 'litecoin-testnet',
@@ -243,6 +245,7 @@ export const ALGORAND_ALGOD_NETWORKS = [Network.ALGORAND_ALGOD, Network.ALGORAND
 export const ALGORAND_INDEXER_NETWORKS = [Network.ALGORAND_INDEXER, Network.ALGORAND_INDEXER_TESTNET]
 export const CARDANO_NETWORKS = [Network.CARDANO_ROSETTA, Network.CARDANO_ROSETTA_PREPROD]
 export const STELLAR_LOAD_BALANCER_NETWORKS = [Network.STELLAR]
+export const KADENA_LOAD_BALANCER_NETWORKS = [Network.KADENA, Network.KADENA_TESTNET]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -259,6 +262,7 @@ export const LOAD_BALANCER_NETWORKS = [
   ...ALGORAND_INDEXER_NETWORKS,
   ...CARDANO_NETWORKS,
   ...STELLAR_LOAD_BALANCER_NETWORKS,
+  ...KADENA_LOAD_BALANCER_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -323,6 +327,9 @@ export const isTronLoadBalancerNetwork = (network: Network) => TRON_LOAD_BALANCE
 export const isEosLoadBalancerNetwork = (network: Network) => EOS_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isXrpLoadBalancerNetwork = (network: Network) => XRP_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isKadenaLoadBalancerNetwork = (network: Network) =>
+  KADENA_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isNativeEvmLoadBalancerNetwork = (network: Network) =>
   NATIVE_EVM_LOAD_BALANCER_NETWORKS.includes(network)
@@ -413,6 +420,16 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     testnet: false,
     defaultMainnet: true,
     chainId: 137,
+  },
+  [Network.KADENA]: {
+    currency: Currency.KADENA,
+    testnet: false,
+    defaultMainnet: true,
+  },
+  [Network.KADENA_TESTNET]: {
+    currency: Currency.KADENA,
+    testnet: true,
+    defaultTestnet: true,
   },
   [Network.KLAYTN_BAOBAB]: {
     currency: Currency.KLAY,

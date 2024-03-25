@@ -15,6 +15,7 @@ import {
   isEvmArchiveNonArchiveLoadBalancerNetwork,
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
+  isKadenaLoadBalancerNetwork,
   isNativeEvmLoadBalancerNetwork,
   isSameGetBlockNetwork,
   isSolanaNetwork,
@@ -67,6 +68,7 @@ import {
   Haqq,
   HarmonyOne,
   HorizenEon,
+  Kadena,
   Klaytn,
   Kucoin,
   Litecoin,
@@ -96,6 +98,7 @@ import { BnbLoadBalancerRpc } from '../service/rpc/other/BnbLoadBalancerRpc'
 import { CardanoLoadBalancerRpc } from '../service/rpc/other/CardanoLoadBalancerRpc'
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
+import { KadenaLoadBalancerRpc } from '../service/rpc/other/KadenaLoadBalancerRpc'
 import { SolanaArchiveLoadBalancerRpc } from '../service/rpc/other/SolanaArchiveLoadBalancerRpc'
 import { StellarLoadBalancerRpc } from '../service/rpc/other/StellarLoadBalancerRpc'
 import { StellarRpc } from '../service/rpc/other/StellarRpc'
@@ -111,6 +114,10 @@ import { CONFIG, LOGGER } from './di.tokens'
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+
+    if (isKadenaLoadBalancerNetwork(network)) {
+      return Container.of(id).get(KadenaLoadBalancerRpc) as T
+    }
 
     if (isStellarLoadBalancerNetwork(network)) {
       return Container.of(id).get(StellarLoadBalancerRpc) as T
@@ -285,7 +292,8 @@ export const Utils = {
       isTezosNetwork(network) ||
       isAlgorandAlgodNetwork(network) ||
       isAlgorandIndexerNetwork(network) ||
-      isStellarLoadBalancerNetwork(network)
+      isStellarLoadBalancerNetwork(network) ||
+      isKadenaLoadBalancerNetwork(network)
     ) {
       return null
     }
@@ -329,6 +337,10 @@ export const Utils = {
       return `${url}fee_stats`
     }
 
+    if (isKadenaLoadBalancerNetwork(network)) {
+      return `${url}chainweb/0.0/mainnet01/cut`
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
   getStatusMethod(network: Network): string {
@@ -336,7 +348,8 @@ export const Utils = {
       isTezosNetwork(network) ||
       isAlgorandAlgodNetwork(network) ||
       isAlgorandIndexerNetwork(network) ||
-      isStellarLoadBalancerNetwork(network)
+      isStellarLoadBalancerNetwork(network) ||
+      isKadenaLoadBalancerNetwork(network)
     ) {
       return 'GET'
     }
@@ -379,6 +392,10 @@ export const Utils = {
       return new BigNumber((response.result.ledger_current_index as number) || -1).toNumber()
     }
 
+    if (isKadenaLoadBalancerNetwork(network)) {
+      return new BigNumber((response.hashes[0].height as number) || -1).toNumber()
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
   isResponseOk: (network: Network, response: JsonRpcResponse<any> | any) => {
@@ -416,6 +433,10 @@ export const Utils = {
 
     if (isXrpNetwork(network)) {
       return response.result.ledger_current_index !== undefined
+    }
+
+    if (isKadenaLoadBalancerNetwork(network)) {
+      return response?.hashes?.[0]?.height !== undefined
     }
 
     throw new Error(`Network ${network} is not supported.`)
@@ -758,6 +779,9 @@ export const Utils = {
       case Network.BASE:
       case Network.BASE_SEPOLIA:
         return new Base(id) as T
+      case Network.KADENA:
+      case Network.KADENA_TESTNET:
+        return new Kadena(id) as T
       default:
         return new FullSdk(id) as T
     }

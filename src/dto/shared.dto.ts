@@ -81,4 +81,4 @@ export interface TokenDetails {
 }
 
 export type QueryValue = string | number | boolean | string[] | number[] | boolean[]
-export type QueryParams = Record<string, QueryValue>
+export type QueryParams = Partial<Record<string, QueryValue>>

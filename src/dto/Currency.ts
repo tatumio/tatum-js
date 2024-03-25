@@ -48,6 +48,7 @@ export enum Currency {
   EGLD = 'EGLD',
   DOT = 'DOT',
   BASE = 'BASE',
+  KADENA = 'KADENA',
 }
 
 export function networkToCurrency(network: Network): Currency {
