@@ -5,6 +5,7 @@ import { AlgorandIndexerRpcSuite } from '../../dto/rpc/AlgorandIndexerRpcSuite'
 import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
 import { CardanoRpcSuite } from '../../dto/rpc/CardanoRpcSuite'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
+import { KadenaRpcInterface } from '../../dto/rpc/KadenaRpcSuite'
 import { StellarRpcSuite } from '../../dto/rpc/StellarRpcSuite'
 import { CONFIG, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
@@ -98,6 +99,15 @@ export class Tezos extends BaseOther {
     this.notification = Container.of(id).get(Notification)
     this.address = Container.of(id).get(AddressTezos)
     this.nft = Container.of(this.id).get(NftTezos)
+  }
+}
+
+export class Kadena extends BaseOther {
+  rpc: KadenaRpcInterface
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<KadenaRpcInterface>(id, Container.of(id).get(CONFIG))
   }
 }
 

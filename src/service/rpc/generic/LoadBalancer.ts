@@ -49,6 +49,7 @@ enum RequestType {
   POST = 'POST',
   GET = 'GET',
   BATCH = 'BATCH',
+  PUT = 'PUT',
 }
 
 interface HandleFailedRpcCallParams {
@@ -555,6 +556,23 @@ export class LoadBalancer implements AbstractRpcInterface {
         url: basePath,
       })
       return await this.post({ path, body, prefix })
+    }
+  }
+
+  async put<T>({ path, body, prefix }: PostI): Promise<T> {
+    const { url, type } = this.getActiveNormalUrlWithFallback()
+    const basePath = prefix ? `${url}${prefix}` : url
+    try {
+      return await this.connector.put<T>({ basePath, path, body })
+    } catch (e) {
+      await this.handleFailedRpcCall({
+        rpcCall: { path, body },
+        e,
+        nodeType: type,
+        requestType: RequestType.PUT,
+        url: basePath,
+      })
+      return await this.put({ path, body, prefix })
     }
   }
 

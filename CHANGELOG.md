@@ -1,3 +1,9 @@
+## [4.2.19] - 2024.3.27
+
+### Added
+
+- Added support for Kadena RPC calls
+
 ## [4.2.18] - 2024.3.22
 
 ### Added

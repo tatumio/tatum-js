@@ -68,7 +68,7 @@ const testNetworks = [
   {
     network: Network.XINFIN,
   },
-  { network: Network.CRONOS },
+  // { network: Network.CRONOS },
   { network: Network.CRONOS_TESTNET, apiKey: process.env.V3_API_KEY_TESTNET },
   { network: Network.BASE },
 ]

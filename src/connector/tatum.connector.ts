@@ -31,6 +31,15 @@ export class TatumConnector {
     }) as Promise<RESPONSE>
   }
 
+  public async put<RESPONSE, BODY extends DefaultBodyType = DefaultBodyType>(
+    request: SdkRequest<DefaultParamsType, BODY>,
+  ) {
+    return this.request<RESPONSE, DefaultParamsType, BODY>({
+      ...request,
+      method: 'PUT',
+    }) as Promise<RESPONSE>
+  }
+
   public async delete<RESPONSE>(request: GetUrl) {
     return this.request<RESPONSE>({ ...request, method: 'DELETE' }) as Promise<RESPONSE>
   }
