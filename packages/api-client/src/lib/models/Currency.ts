@@ -99,6 +99,7 @@ export enum Currency {
   ISLM = "ISLM",
   FLR = "FLR",
   BASE = "BASE",
+  KADENA = "KADENA",
 }
 
 export const ERC20_CURRENCIES = [
@@ -206,5 +207,5 @@ export const NFT_SUPPORTED_CURRENCIES = [
   Currency.KLAY,
 ];
 
-export type NftSupportedCurrencies = typeof NFT_SUPPORTED_CURRENCIES[number];
-export type NativeCurrency = typeof NATIVE_CURRENCIES[number];
+export type NftSupportedCurrencies = (typeof NFT_SUPPORTED_CURRENCIES)[number];
+export type NativeCurrency = (typeof NATIVE_CURRENCIES)[number];
