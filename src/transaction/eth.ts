@@ -97,9 +97,8 @@ export const signEthKMSTransaction = async (tx: TransactionKMS, fromPrivateKey: 
   }
   const client = getClient(provider, fromPrivateKey);
   const transactionConfig = JSON.parse(tx.serializedTransaction);
-  const gas = await client.eth.estimateGas(transactionConfig);
   if (!transactionConfig.gas) {
-    transactionConfig.gas = gas;
+    transactionConfig.gas = await client.eth.estimateGas(transactionConfig);
   }
   if (!transactionConfig.nonce) {
     transactionConfig.nonce = await ethGetTransactionsCount(client.eth.defaultAccount as string);
