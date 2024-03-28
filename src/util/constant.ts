@@ -29,6 +29,7 @@ export const Constant = {
     [Network.NEAR]: 24,
     [Network.NEAR_TESTNET]: 24,
     [Network.BITCOIN_CASH]: 8,
+    [Network.ROSTRUM]: 8,
     [Network.BITCOIN_CASH_TESTNET]: 8,
     [Network.LITECOIN]: 8,
     [Network.LITECOIN_TESTNET]: 8,
@@ -218,6 +219,7 @@ export const Constant = {
     [Network.BASE_SEPOLIA]: 'BASE',
     [Network.KADENA]: 'KADENA',
     [Network.KADENA_TESTNET]: 'KADENA',
+    [Network.ROSTRUM]: 'BCH',
   },
   RPC: {
     MAINNETS: [

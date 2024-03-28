@@ -41,6 +41,7 @@ export enum Network {
   PALM = 'palm-mainnet',
   POLYGON = 'polygon-mainnet',
   POLKADOT = 'dot-mainnet',
+  ROSTRUM = 'rostrum-mainnet',
   RSK = 'rsk-mainnet',
   SOLANA = 'solana-mainnet',
   STELLAR = 'stellar-mainnet',
@@ -246,6 +247,7 @@ export const ALGORAND_INDEXER_NETWORKS = [Network.ALGORAND_INDEXER, Network.ALGO
 export const CARDANO_NETWORKS = [Network.CARDANO_ROSETTA, Network.CARDANO_ROSETTA_PREPROD]
 export const STELLAR_LOAD_BALANCER_NETWORKS = [Network.STELLAR]
 export const KADENA_LOAD_BALANCER_NETWORKS = [Network.KADENA, Network.KADENA_TESTNET]
+export const ROSTRUM_LOAD_BALANCER_NETWORKS = [Network.ROSTRUM]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -263,6 +265,7 @@ export const LOAD_BALANCER_NETWORKS = [
   ...CARDANO_NETWORKS,
   ...STELLAR_LOAD_BALANCER_NETWORKS,
   ...KADENA_LOAD_BALANCER_NETWORKS,
+  ...ROSTRUM_LOAD_BALANCER_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -330,6 +333,9 @@ export const isXrpLoadBalancerNetwork = (network: Network) => XRP_LOAD_BALANCER_
 
 export const isKadenaLoadBalancerNetwork = (network: Network) =>
   KADENA_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isRostrumLoadBalancerNetwork = (network: Network) =>
+  ROSTRUM_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isNativeEvmLoadBalancerNetwork = (network: Network) =>
   NATIVE_EVM_LOAD_BALANCER_NETWORKS.includes(network)
@@ -887,5 +893,9 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     defaultTestnet: true,
     testnet: true,
     chainId: 84532,
+  },
+  [Network.ROSTRUM]: {
+    currency: Currency.BCH,
+    testnet: false,
   },
 }
