@@ -4,6 +4,7 @@ import { SolanaWeb3 } from './solana.web3'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
 import { Currency, PendingTransaction } from '@tatumio/api-client'
 import { SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { solanaUtils } from '@tatumio/solana'
 
 export const solanaKmsService = (args: { web3: SolanaWeb3; blockchain: Blockchain }) => {
   return {
@@ -20,13 +21,8 @@ export const solanaKmsService = (args: { web3: SolanaWeb3; blockchain: Blockchai
       if (mintPK) {
         signers.push(args.web3.generateKeyPair(mintPK))
       }
-      const txId = await connection.sendTransaction(transaction, signers)
-      await new Promise((r) => setTimeout(r, 10000))
-      const confirmedTx = await connection.getConfirmedTransaction(txId, 'confirmed')
-      if (confirmedTx && !confirmedTx.meta?.err) {
-        return txId
-      }
-      throw new Error('Transaction not confirmed.')
+      const { txId } = await solanaUtils.sendTransactionWithConfirm(connection, transaction, signers)
+      return txId
     },
   }
 }
