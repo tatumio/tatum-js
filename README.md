@@ -16,7 +16,7 @@ The Tatum SDK is a comprehensive TypeScript/JavaScript library designed to simpl
 
 ---
 
-🔑 **Don't have an API key?** Unlock all networks, features, and monitor error logs & usage with ease.  
+🔑 **Don't have an API key?** Unlock all networks, features, and monitor error logs & usage with ease.
 [Create API Key for FREE](https://dashboard.tatum.io) - Start building on Tatum with full access to our powerful suite of features.
 
 ## Tailored for Developers
@@ -426,7 +426,7 @@ Any other calls not meeting the conditions for archive node calls can be service
 This section provides a list of various blockchain network status pages, powered by Tatum. These links direct you to real-time status updates for each network.
 
 | Status Pages                                                                                                 |
-| ------------------------------------------------------------------------------------------------------------ |
+|--------------------------------------------------------------------------------------------------------------|
 | [bitcoin-mainnet.status.tatum.io](https://bitcoin-mainnet.status.tatum.io)                                   |
 | [bitcoin-testnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)                                   |
 | [dogecoin-mainnet.status.tatum.io](https://dogecoin-mainnet.status.tatum.io)                                 |
@@ -482,6 +482,12 @@ This section provides a list of various blockchain network status pages, powered
 | [cardano-preprod.status.tatum.io](https://cardano-preprod.status.tatum.io)                                   |
 | [xinfin-mainnet-archive.status.tatum.io](https://xinfin-mainnet-archive.status.tatum.io)                     |
 | [stellar-mainnet-archive.status.tatum.io](https://stellar-mainnet-archive.status.tatum.io)                   |
+| [base-mainnet-archive.status.tatum.io](https://base-mainnet-archive.status.tatum.io)                         |
+| [kadena-mainnet.status.tatum.io](https://kadena-mainnet.status.tatum.io)                                     |
+| [kadena-testnet.status.tatum.io](https://kadena-testnet.status.tatum.io)                                     |
+| [rostrum-mainnet.status.tatum.io](https://rostrum-mainnet.status.tatum.io)                                   |
+| [cronos-mainnet-archive.status.tatum.io](https://cronos-mainnet-archive.status.tatum.io)                     |
+| [fantom-mainnet-archive.status.tatum.io](https://fantom-mainnet-archive.status.tatum.io)                            |
 
 ### Load Balancer
 
@@ -537,7 +543,7 @@ The list of nodes is dynamically fetched from the remote server and it is define
 Here are the list of nodes for each blockchain:
 
 | Nodes List                                                                                                                 |
-| -------------------------------------------------------------------------------------------------------------------------- |
+|----------------------------------------------------------------------------------------------------------------------------|
 | [rpc.tatum.io/bitcoin-mainnet/list.json](https://rpc.tatum.io/bitcoin-mainnet/list.json)                                   |
 | [rpc.tatum.io/bitcoin-testnet/list.json](https://rpc.tatum.io/bitcoin-testnet/list.json)                                   |
 | [rpc.tatum.io/dogecoin-mainnet/list.json](https://rpc.tatum.io/dogecoin-mainnet/list.json)                                 |
@@ -593,6 +599,12 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/cardano-preprod/list.json](https://rpc.tatum.io/cardano-preprod/list.json)                                   |
 | [rpc.tatum.io/xinfin-mainnet-archive/list.json](https://rpc.tatum.io/xinfin-mainnet-archive/list.json)                     |
 | [rpc.tatum.io/stellar-mainnet-archive/list.json](https://rpc.tatum.io/stellar-mainnet-archive/list.json)                   |
+| [rpc.tatum.io/base-mainnet-archive/list.json](https://rpc.tatum.io/base-mainnet-archive/list.json)                         |
+| [rpc.tatum.io/kadena-mainnet/list.json](https://rpc.tatum.io/kadena-mainnet/list.json)                                     |
+| [rpc.tatum.io/kadena-testnet/list.json](https://rpc.tatum.io/kadena-testnet/list.json)                                     |
+| [rpc.tatum.io/rostrum-mainnet/list.json](https://rpc.tatum.io/rostrum-mainnet/list.json)                                   |
+| [rpc.tatum.io/cronos-mainnet-archive/list.json](https://rpc.tatum.io/cronos-mainnet-archive/list.json)                     |
+| [rpc.tatum.io/fantom-mainnet-archive/list.json](https://rpc.tatum.io/fantom-mainnet-archive/list.json)                     |
 
 Following pattern defines the URL for fetching the list of nodes:
 

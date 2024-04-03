@@ -17,6 +17,7 @@ import {
   isEvmLoadBalancerNetwork,
   isKadenaLoadBalancerNetwork,
   isNativeEvmLoadBalancerNetwork,
+  isRostrumLoadBalancerNetwork,
   isSameGetBlockNetwork,
   isSolanaNetwork,
   isStellarLoadBalancerNetwork,
@@ -76,6 +77,7 @@ import {
   Optimism,
   Palm,
   Polygon,
+  Rostrum,
   Solana,
   Stellar,
   TatumConfig,
@@ -99,6 +101,7 @@ import { CardanoLoadBalancerRpc } from '../service/rpc/other/CardanoLoadBalancer
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
 import { KadenaLoadBalancerRpc } from '../service/rpc/other/KadenaLoadBalancerRpc'
+import { RostrumLoadBalancerRpc } from '../service/rpc/other/RostrumLoadBalancerRpc'
 import { SolanaArchiveLoadBalancerRpc } from '../service/rpc/other/SolanaArchiveLoadBalancerRpc'
 import { StellarLoadBalancerRpc } from '../service/rpc/other/StellarLoadBalancerRpc'
 import { StellarRpc } from '../service/rpc/other/StellarRpc'
@@ -114,6 +117,10 @@ import { CONFIG, LOGGER } from './di.tokens'
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+
+    if (isRostrumLoadBalancerNetwork(network)) {
+      return Container.of(id).get(RostrumLoadBalancerRpc) as T
+    }
 
     if (isKadenaLoadBalancerNetwork(network)) {
       return Container.of(id).get(KadenaLoadBalancerRpc) as T
@@ -226,6 +233,15 @@ export const Utils = {
     return mappedNetwork ?? network
   },
   getStatusPayload: (network: Network) => {
+    if (isRostrumLoadBalancerNetwork(network)) {
+      return {
+        jsonrpc: '2.0',
+        method: 'blockchain.headers.tip',
+        params: [],
+        id: 1,
+      }
+    }
+
     if (isXrpNetwork(network)) {
       return {
         method: 'ledger',
@@ -329,6 +345,10 @@ export const Utils = {
       return url
     }
 
+    if (isRostrumLoadBalancerNetwork(network)) {
+      return url
+    }
+
     if (isTezosNetwork(network)) {
       return `${url}chains/main/blocks/head/header`
     }
@@ -396,6 +416,10 @@ export const Utils = {
       return new BigNumber((response.hashes[0].height as number) || -1).toNumber()
     }
 
+    if (isRostrumLoadBalancerNetwork(network)) {
+      return new BigNumber((response.result.height as number) || -1).toNumber()
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
   isResponseOk: (network: Network, response: JsonRpcResponse<any> | any) => {
@@ -437,6 +461,10 @@ export const Utils = {
 
     if (isKadenaLoadBalancerNetwork(network)) {
       return response?.hashes?.[0]?.height !== undefined
+    }
+
+    if (isRostrumLoadBalancerNetwork(network)) {
+      return response?.result?.height !== undefined
     }
 
     throw new Error(`Network ${network} is not supported.`)
@@ -782,6 +810,8 @@ export const Utils = {
       case Network.KADENA:
       case Network.KADENA_TESTNET:
         return new Kadena(id) as T
+      case Network.ROSTRUM:
+        return new Rostrum(id) as T
       default:
         return new FullSdk(id) as T
     }

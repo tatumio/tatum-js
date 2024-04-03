@@ -6,6 +6,7 @@ import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
 import { CardanoRpcSuite } from '../../dto/rpc/CardanoRpcSuite'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
 import { KadenaRpcInterface } from '../../dto/rpc/KadenaRpcSuite'
+import { RostrumRpcInterface } from '../../dto/rpc/RostrumRpcSuite'
 import { StellarRpcSuite } from '../../dto/rpc/StellarRpcSuite'
 import { CONFIG, Utils } from '../../util'
 import { Address, AddressTezos, AddressTron } from '../address'
@@ -108,6 +109,15 @@ export class Kadena extends BaseOther {
   constructor(id: string) {
     super(id)
     this.rpc = Utils.getRpc<KadenaRpcInterface>(id, Container.of(id).get(CONFIG))
+  }
+}
+
+export class Rostrum extends BaseOther {
+  rpc: RostrumRpcInterface
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<RostrumRpcInterface>(id, Container.of(id).get(CONFIG))
   }
 }
 
