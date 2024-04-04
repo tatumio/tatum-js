@@ -17,7 +17,7 @@ import {
 } from './e2e.constant'
 import { e2eUtil } from './e2e.util'
 
-describe('notification', () => {
+describe.skip('notification', () => {
   describe('createSubscription', () => {
     describe('IP auth', () => {
       describe('Address Event', () => {

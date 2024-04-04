@@ -148,6 +148,15 @@ export class CardanoRosetta extends BaseOther {
   }
 }
 
+export class CosmosRosetta extends BaseOther {
+  rpc: CardanoRpcSuite
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<CardanoRpcSuite>(id, Container.of(id).get(CONFIG))
+  }
+}
+
 export class Stellar extends BaseOther {
   rpc: StellarRpcSuite
 

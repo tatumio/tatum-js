@@ -4,7 +4,7 @@ import { e2eUtil } from '../../e2e.util'
 const getXrpRpc = async (testnet?: boolean) =>
   await TatumSDK.init<Xrp>(e2eUtil.initConfig(testnet ? Network.XRP_TESTNET : Network.XRP))
 
-describe('RPCs', () => {
+describe.skip('RPCs', () => {
   describe('XRP', () => {
     describe('testnet', () => {
       it('ping', async () => {

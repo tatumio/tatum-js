@@ -120,6 +120,7 @@ export const Constant = {
     [Network.BASE_SEPOLIA]: 18,
     [Network.KADENA]: 18,
     [Network.KADENA_TESTNET]: 18,
+    [Network.COSMONS_ROSETTA]: 18,
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -220,6 +221,7 @@ export const Constant = {
     [Network.KADENA]: 'KADENA',
     [Network.KADENA_TESTNET]: 'KADENA',
     [Network.ROSTRUM]: 'BCH',
+    [Network.COSMONS_ROSETTA]: 'ATOM',
   },
   RPC: {
     MAINNETS: [
