@@ -1,3 +1,9 @@
+## [4.2.21] - 2024.4.4
+
+### Added
+
+- Added support for Cosmos API calls
+
 ## [4.2.20] - 2024.2.4
 
 ### Added
