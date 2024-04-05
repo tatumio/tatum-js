@@ -101,6 +101,7 @@ export enum Currency {
   BASE = "BASE",
   KADENA = "KADENA",
   ROSTRUM = "ROSTRUM",
+  ATOM = "ATOM",
 }
 
 export const ERC20_CURRENCIES = [
