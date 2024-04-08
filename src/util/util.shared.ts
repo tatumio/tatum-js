@@ -15,6 +15,7 @@ import {
   isEvmArchiveNonArchiveLoadBalancerNetwork,
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
+  isIotaNetwork,
   isKadenaLoadBalancerNetwork,
   isNativeEvmLoadBalancerNetwork,
   isRostrumLoadBalancerNetwork,
@@ -69,6 +70,7 @@ import {
   Haqq,
   HarmonyOne,
   HorizenEon,
+  Iota,
   Kadena,
   Klaytn,
   Kucoin,
@@ -100,6 +102,7 @@ import { BnbLoadBalancerRpc } from '../service/rpc/other/BnbLoadBalancerRpc'
 import { CardanoLoadBalancerRpc } from '../service/rpc/other/CardanoLoadBalancerRpc'
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
+import { IotaLoadBalancerRpc } from '../service/rpc/other/IotaLoadBalancerRpc'
 import { KadenaLoadBalancerRpc } from '../service/rpc/other/KadenaLoadBalancerRpc'
 import { RostrumLoadBalancerRpc } from '../service/rpc/other/RostrumLoadBalancerRpc'
 import { SolanaArchiveLoadBalancerRpc } from '../service/rpc/other/SolanaArchiveLoadBalancerRpc'
@@ -117,6 +120,10 @@ import { CONFIG, LOGGER } from './di.tokens'
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+
+    if (isIotaNetwork(network)) {
+      return Container.of(id).get(IotaLoadBalancerRpc) as T
+    }
 
     if (isRostrumLoadBalancerNetwork(network)) {
       return Container.of(id).get(RostrumLoadBalancerRpc) as T
@@ -309,7 +316,8 @@ export const Utils = {
       isAlgorandAlgodNetwork(network) ||
       isAlgorandIndexerNetwork(network) ||
       isStellarLoadBalancerNetwork(network) ||
-      isKadenaLoadBalancerNetwork(network)
+      isKadenaLoadBalancerNetwork(network) ||
+      isIotaNetwork(network)
     ) {
       return null
     }
@@ -317,6 +325,10 @@ export const Utils = {
     throw new Error(`Network ${network} is not supported.`)
   },
   getStatusUrl(network: Network, url: string): string {
+    if (isIotaNetwork(network)) {
+      return `${url}api/core/v2/info`
+    }
+
     if (isEosNetwork(network)) {
       return `${url}${Constant.EOS_PREFIX}get_info`
     }
@@ -369,7 +381,8 @@ export const Utils = {
       isAlgorandAlgodNetwork(network) ||
       isAlgorandIndexerNetwork(network) ||
       isStellarLoadBalancerNetwork(network) ||
-      isKadenaLoadBalancerNetwork(network)
+      isKadenaLoadBalancerNetwork(network) ||
+      isIotaNetwork(network)
     ) {
       return 'GET'
     }
@@ -420,6 +433,10 @@ export const Utils = {
       return new BigNumber((response.result.height as number) || -1).toNumber()
     }
 
+    if (isIotaNetwork(network)) {
+      return new BigNumber((response?.status?.latestMilestone?.index as number) || -1).toNumber()
+    }
+
     throw new Error(`Network ${network} is not supported.`)
   },
   isResponseOk: (network: Network, response: JsonRpcResponse<any> | any) => {
@@ -465,6 +482,10 @@ export const Utils = {
 
     if (isRostrumLoadBalancerNetwork(network)) {
       return response?.result?.height !== undefined
+    }
+
+    if (isIotaNetwork(network)) {
+      return response?.status?.latestMilestone?.index !== undefined
     }
 
     throw new Error(`Network ${network} is not supported.`)
@@ -660,6 +681,7 @@ export const Utils = {
   padWithZero: (data: string, length = 64) => data.replace('0x', '').padStart(length, '0'),
   camelToSnakeCase: (str: string) => str.replace(/[A-Z]/g, (letter) => `_${letter.toLowerCase()}`),
   camelToDashCase: (str: string) => str.replace(/[A-Z]/g, (letter) => `-${letter.toLowerCase()}`),
+  identity: <T>(x: T) => x,
   convertObjectWithStrategy: (
     obj: object,
     strategy: (key: string) => string,
@@ -814,6 +836,8 @@ export const Utils = {
         return new Kadena(id) as T
       case Network.ROSTRUM:
         return new Rostrum(id) as T
+      case Network.IOTA:
+        return new Iota(id) as T
       default:
         return new FullSdk(id) as T
     }
@@ -881,17 +905,24 @@ export const Utils = {
     }
     return rpc?.nodes?.[0].url || `${Constant.TATUM_API_URL.V3}blockchain/node/${network}`.concat(path || '')
   },
-  addQueryParams: (
-    basePath: string,
-    strategy: (key: string) => string,
-    queryParams?: QueryParams,
-  ): string => {
+  addQueryParams: ({
+    basePath,
+    strategy,
+    queryParams,
+  }: {
+    basePath: string
+    strategy?: (key: string) => string
+    queryParams?: QueryParams
+  }): string => {
     let queryString = ''
 
     if (queryParams) {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore
-      const query: Record<string, QueryValue> = Utils.convertObjectWithStrategy(queryParams, strategy)
+      const query: Record<string, QueryValue> = Utils.convertObjectWithStrategy(
+        queryParams,
+        strategy ?? Utils.identity,
+      )
       const params: string[] = []
 
       Object.entries(query).forEach(([key, value]) => {

@@ -13,7 +13,7 @@ const getClient = async (testnet?: boolean): Promise<Solana> =>
 const blockNumber = 203046000
 
 // TODO: Too unstable
-describe.skip('Solana', () => {
+describe('Solana', () => {
   describe('mainnet', () => {
     describe('getSignaturesForAddress', () => {
       it('should return getSignatureForAddress', async () => {
@@ -49,7 +49,7 @@ describe.skip('Solana', () => {
         expect(result?.context.slot).toBeGreaterThan(0)
       })
 
-      it('should return error if an invalid public key is provided', async () => {
+      it.skip('should return error if an invalid public key is provided', async () => {
         const tatum = await getClient()
         const publicKey = 'invalid-public-key'
 

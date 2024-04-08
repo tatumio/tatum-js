@@ -31,6 +31,7 @@ export enum Network {
   GNOSIS = 'gno-mainnet',
   HAQQ = 'haqq-mainnet',
   HARMONY_ONE_SHARD_0 = 'one-mainnet-s0',
+  IOTA = 'iota-mainnet',
   KADENA = 'kadena-mainnet',
   KLAYTN = 'klaytn-mainnet',
   KUCOIN = 'kcs-mainnet',
@@ -253,6 +254,7 @@ export const CARDANO_NETWORKS = [
 export const STELLAR_LOAD_BALANCER_NETWORKS = [Network.STELLAR]
 export const KADENA_LOAD_BALANCER_NETWORKS = [Network.KADENA, Network.KADENA_TESTNET]
 export const ROSTRUM_LOAD_BALANCER_NETWORKS = [Network.ROSTRUM]
+export const IOTA_LOAD_BALANCER_NETWORKS = [Network.IOTA]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -271,6 +273,7 @@ export const LOAD_BALANCER_NETWORKS = [
   ...STELLAR_LOAD_BALANCER_NETWORKS,
   ...KADENA_LOAD_BALANCER_NETWORKS,
   ...ROSTRUM_LOAD_BALANCER_NETWORKS,
+  ...IOTA_LOAD_BALANCER_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -360,6 +363,8 @@ export const isStellarLoadBalancerNetwork = (network: Network) =>
 
 export const isStellarNetwork = (network: Network) =>
   [Network.STELLAR, Network.STELLAR_TESTNET].includes(network)
+
+export const isIotaNetwork = (network: Network) => IOTA_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isSameGetBlockNetwork = (network: Network) =>
   isUtxoBasedNetwork(network) ||
@@ -907,5 +912,10 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   [Network.ROSTRUM]: {
     currency: Currency.BCH,
     testnet: false,
+  },
+  [Network.IOTA]: {
+    currency: Currency.IOTA,
+    testnet: false,
+    defaultMainnet: true,
   },
 }

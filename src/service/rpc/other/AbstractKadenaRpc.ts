@@ -56,7 +56,11 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
 
   private prepareRequest({ path, body, queryParams, network }: RequestI): PostI {
     return {
-      path: Utils.addQueryParams(path, Utils.camelToDashCase, queryParams),
+      path: Utils.addQueryParams({
+        basePath: path,
+        strategy: Utils.camelToDashCase,
+        queryParams: queryParams,
+      }),
       prefix: network ? this.urlWithPrefix(network) : undefined,
       body,
     }
@@ -80,7 +84,11 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
     network?: NetworkParams | ApiParams
   }): Promise<T> {
     return this.get({
-      path: Utils.addQueryParams(path, Utils.camelToDashCase, queryParams),
+      path: Utils.addQueryParams({
+        basePath: path,
+        strategy: Utils.camelToDashCase,
+        queryParams: queryParams,
+      }),
       prefix: network ? this.urlWithPrefix(network) : undefined,
     })
   }
