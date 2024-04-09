@@ -1,3 +1,9 @@
+## [4.2.22] - 2024.4.9
+
+### Fixed
+
+- Fixed types for `getTransactions` method in `address` module.
+
 ## [4.2.21] - 2024.4.4
 
 ### Added

@@ -20,6 +20,7 @@ import {
   AddressBalance,
   AddressBalanceDataApi,
   AddressTransaction,
+  AddressTransactionUTXO,
   GetAddressTransactionsQuery,
   GetAddressTransactionsQueryTezos,
 } from './address.dto'
@@ -286,7 +287,7 @@ export class Address {
     pageSize = 10,
     page = 0,
     tokenAddress,
-  }: GetAddressTransactionsQuery): Promise<ResponseDto<AddressTransaction[]>> {
+  }: GetAddressTransactionsQuery): Promise<ResponseDto<(AddressTransaction | AddressTransactionUTXO)[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(async () => {
       if (isDataApiEnabledNetwork(chain)) {
@@ -402,9 +403,9 @@ export class Address {
         },
       })
       .then((r) => {
-        const result: AddressTransaction[] = []
+        const result: AddressTransactionUTXO[] = []
         for (const tx of r) {
-          const item: AddressTransaction = {
+          const item: AddressTransactionUTXO = {
             chain,
             blockNumber: tx.blockNumber,
             timestamp: tx.time,
