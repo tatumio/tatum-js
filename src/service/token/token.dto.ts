@@ -1,4 +1,4 @@
-import { ApiBalanceResponse, ApiTxData, FungibleInfo } from '../../api/api.dto'
+import { ApiBalanceResponse, ApiTxData, FungibleInfo, TxType } from '../../api/api.dto'
 import { TokenAddress } from '../../dto'
 
 export interface CreateFungibleToken {
@@ -144,7 +144,7 @@ export interface Transaction {
   /**
    * Transaction type
    */
-  transactionType: 'fungible' | 'nft' | 'multitoken' | 'native' | 'internal'
+  transactionType: TxType
   /**
    * Transaction sub type
    */

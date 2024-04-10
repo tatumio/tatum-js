@@ -1,3 +1,9 @@
+## [4.2.23] - 2024.4.10
+
+### Updated
+
+- Improved `getBalance` method in `address` module by introducing `tokenTypes` filter along with `native` option.
+
 ## [4.2.22] - 2024.4.10
 
 ### Fixed

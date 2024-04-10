@@ -1,3 +1,4 @@
+import { NftTokenType } from '../../api/api.dto'
 import { TokenIdContractAddress } from '../../dto'
 export interface CreateNftCollectionBase {
   /**
@@ -129,7 +130,7 @@ export interface NftTokenDetail {
   /**
    * Token type. Either 'nft' (ERC-721) or 'multitoken' (ERC-1155)
    */
-  type: 'nft' | 'multitoken'
+  type: NftTokenType
   /**
    * Token URI
    */
