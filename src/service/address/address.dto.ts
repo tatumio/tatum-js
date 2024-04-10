@@ -1,3 +1,5 @@
+import { TokenTypeWithNative, TxType } from '../../api/api.dto'
+
 export interface AddressBalance {
   /**
    * Blockchain address of the balance.
@@ -18,7 +20,7 @@ export interface AddressBalance {
   /**
    * Type of the balance.
    */
-  type: 'native' | 'fungible' | 'nft' | 'mutlitoken'
+  type: TokenTypeWithNative
   /**
    * Optional token contract address. Valid only for tokens (USDT, NFTs of any kind), not for native network balances (ETH, BTC).
    */
@@ -51,7 +53,7 @@ export interface GetAddressTransactionsQuery {
   /**
    * Optional transaction type. If not specified, all transactions are returned. For networks that support only native transactions, this parameter is ignored.
    */
-  transactionTypes?: ['fungible' | 'nft' | 'multitoken' | 'native']
+  transactionTypes?: TokenTypeWithNative[]
   /**
    * Optional transaction type. If not specified, both incoming and outgoing transactions are returned.
    */
@@ -161,7 +163,7 @@ export interface AddressTransaction extends AddrTxCommon {
   /**
    * Transaction type
    */
-  transactionType: 'fungible' | 'nft' | 'multitoken' | 'native' | 'internal'
+  transactionType: TxType
 }
 
 export interface AddressTransactionUTXO extends AddrTxCommon {

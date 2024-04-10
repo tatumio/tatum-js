@@ -1,3 +1,5 @@
+import { TokenType, TokenTypeWithNative } from '../api/api.dto'
+
 export interface IdDto {
   id: string
 }
@@ -37,7 +39,7 @@ export interface AddressBalanceFilters extends Pagination {
    * Optional filter for token types. If not specified, all token types are returned.
    * Allowed values are `native`, `fungible`, `nft` and `multitoken`.
    */
-  tokenTypes?: string[]
+  tokenTypes?: TokenTypeWithNative[]
 }
 
 export interface AddressBalanceFiltersTron {
@@ -57,7 +59,7 @@ export interface AddressBalanceFiltersTezos extends Pagination {
    * Optional filter for token types. If not specified, all token types are returned.
    * Allowed values are `fungible`, `nft` and `multitoken`.
    */
-  tokenTypes?: string[]
+  tokenTypes?: TokenType[]
 }
 
 export interface TokenDetails {
@@ -72,7 +74,7 @@ export interface TokenDetails {
   /**
    * Type of the token
    */
-  tokenType: 'fungbile' | 'nft' | 'multitoken'
+  tokenType: TokenType
   /**
    * Decimals of the token. Available only for `fungible` tokens
    */

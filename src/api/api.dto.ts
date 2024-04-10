@@ -1,9 +1,11 @@
 import { DefaultParamsType } from '../connector/connector.dto'
 import { Network } from '../dto'
 
-export type TokenType = 'native' | 'fungible' | 'nft' | 'multitoken'
+export type NftTokenType = 'nft' | 'multitoken'
+export type TokenType = NftTokenType | 'fungible'
+export type TokenTypeWithNative = TokenType | 'native'
+export type TxType = TokenTypeWithNative | 'internal'
 export type TxSubtype = 'incoming' | 'outgoing' | 'zero-transfer'
-export type TxType = 'fungible' | 'nft' | 'multitoken' | 'native' | 'internal'
 
 export type Chain =
   | 'ethereum'
@@ -73,7 +75,7 @@ export interface ApiBalanceRequest extends DefaultParamsType {
   /**
    * Optional. Token types
    */
-  tokenTypes?: 'nft' | 'multitoken' | 'fungible' | string
+  tokenTypes?: TokenType | string
 
   /**
    * Optional. The option to exclude metadata from the response.
@@ -100,7 +102,7 @@ export interface ApiBalanceResponse {
   /**
    * Token type
    */
-  type: 'native' | 'fungible' | 'nft' | 'multitoken'
+  type: TokenTypeWithNative
 
   /**
    * Address
@@ -159,7 +161,7 @@ export interface ApiMetadataResponse {
   /**
    * Token type
    */
-  tokenType: 'native' | 'fungible' | 'nft' | 'multitoken'
+  tokenType: TokenTypeWithNative
 
   /**
    * Metadata URL of the token. This data doesn't have to be present. The safest way to obtain them in that case is from the NFT Contract.tokenURI() method call.
@@ -189,7 +191,7 @@ export interface ApiCollectionsRequest extends DefaultParamsType {
    * Use nft (includes ERC-721 and ERC-1155) or multitoken (ERC-1155 only).
    *
    */
-  tokenTypes?: 'nft' | 'multitoken'
+  tokenTypes?: NftTokenType
   /**
    * The option to exclude metadata from the response.
    */
@@ -304,7 +306,7 @@ export interface ApiCollectionsResponse {
   chain?: Chain
   tokenId?: string
   tokenAddress?: string
-  tokenType?: TokenType
+  tokenType?: TokenTypeWithNative
   metadataURI?: string
   metadata?: object
 }
@@ -425,7 +427,7 @@ export interface ApiTransactionsRequest extends DefaultParamsType {
    * Use fungible (ERC-20), nft (ERC-721 and ERC-1155), multitoken (ERC-1155), native or internal.
    *
    */
-  transactionTypes?: 'fungible' | 'nft' | 'multitoken' | 'native' | 'internal'
+  transactionTypes?: TxType
   /**
    * The option to filter transaction based on subtype.
    */
@@ -749,7 +751,7 @@ export interface ApiCreateTokenRequest extends DefaultParamsType {
   /**
    * Type of the contract
    */
-  contractType: 'fungible' | 'nft' | 'multitoken'
+  contractType: TokenType
   /**
    * Address of the fungible token owner
    */
