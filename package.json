@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "4.2.21",
+  "version": "4.2.22",
   "description": "Tatum JS SDK",
   "author": "Tatum",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -50,6 +50,6 @@
     "ts-node": "^10.7.0",
     "tslib": "^2.5.0",
     "typescript": "^5.0.4",
-    "undici": "^5.21.0"
+    "undici": "^5.28.3"
   }
 }

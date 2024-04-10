@@ -109,50 +109,68 @@ export interface GetAddressTransactionsQueryTezos {
   cursor?: string
 }
 
-export interface AddressTransaction {
+export interface AddrTxCommon {
   /**
    * Blockchain network
    */
   chain: string
   /**
-   * Block number
-   */
-  blockNumber: number
-  /**
    * Transaction hash
    */
   hash: string
-  /**
-   * Transaction type
-   */
-  transactionType: 'incoming' | 'outgoing' | 'zero-transfer'
-  /**
-   * Index of the transaction in the block
-   */
-  transactionIndex?: number
-  /**
-   * Address of the token collection, if the transaction is related to a token (ERC-20, ERC-721, ERC-1155)
-   */
-  tokenAddress?: string
-  /**
-   * Token ID, if the transaction is related to a NFT (ERC-721) or MutiToken (ERC-1155)
-   */
-  tokenId?: string
-  /**
-   * Amount transferred. For outgoing transactions, it's a negative number. For zero-transfer transactions, it's always 0. For incoming transactions, it's a positive number.
-   */
-  amount: string
-  /**
-   * Transaction timestamp - UTC millis
-   */
-  timestamp: number
   /**
    * Address, on which transaction occurred. This is receiver address for incoming transactions and sender address for outgoing transactions.
    */
   address: string
   /**
+   * Block number
+   */
+  blockNumber: number
+  /**
+   * Amount transferred. For outgoing transactions, it's a negative number. For zero-transfer transactions, it's always 0. For incoming transactions, it's a positive number.
+   */
+  amount: string
+  /**
+   * Index of the transaction in the block
+   */
+  transactionIndex?: number
+  /**
+   * Transaction subtype (only relevant for non-UTXO chains, for UTXO chains this exists as transactionType)
+   */
+  transactionSubtype?: 'incoming' | 'outgoing' | 'zero-transfer'
+  /**
+   * Address of the token collection, if the transaction is related to a token (ERC-20, ERC-721, ERC-1155)
+   */
+  tokenAddress?: string
+  /**
+   * Token ID, if the transaction is related to an NFT (ERC-721) or MutiToken (ERC-1155)
+   */
+  tokenId?: string
+  /**
    * Counter address of the transaction. This is sender address for incoming transactions on `address` and receiver address for outgoing transactions on `address`.
-   * Not all blockchain networks can identify the counter address (UTXO chains like Bitcoin e.g., where there is multiple senders or recipients). In this case, the counter address is not returned.
+   * Not all blockchain networks can identify the counter address (e.g. UTXO chains like Bitcoin e.g., where there is multiple senders or recipients). In this case, the counter address is not returned.
    */
   counterAddress?: string
+}
+
+export interface AddressTransaction extends AddrTxCommon {
+  /**
+   * Transaction timestamp - UTC millis
+   */
+  timestamp: number
+  /**
+   * Transaction type
+   */
+  transactionType: 'fungible' | 'nft' | 'multitoken' | 'native' | 'internal'
+}
+
+export interface AddressTransactionUTXO extends AddrTxCommon {
+  /**
+   * Transaction timestamp - UTC seconds
+   */
+  timestamp: number
+  /**
+   * Transaction type
+   */
+  transactionType: 'incoming' | 'outgoing' | 'zero-transfer'
 }
