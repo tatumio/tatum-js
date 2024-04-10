@@ -246,10 +246,25 @@ export class Address {
     page = 0,
     pageSize = 10,
     addresses,
+    tokenTypes,
   }: AddressBalanceFilters): Promise<ResponseDto<AddressBalance[]>> {
     const chain = this.config.network
     return ErrorUtils.tryFail(async () => {
-      const nativeBalances = await this.getNativeBalance(addresses)
+      const result: AddressBalance[] = []
+
+      if (!tokenTypes || tokenTypes.includes('native')) {
+        const nativeBalances = await this.getNativeBalance(addresses)
+        result.push(...formatNativeBalances(nativeBalances, addresses, chain))
+
+        if (tokenTypes) {
+          tokenTypes = tokenTypes.filter((tokenType) => tokenType !== 'native')
+        }
+      }
+
+      if (tokenTypes?.length === 0) {
+        return result
+      }
+
       const tokenBalances =
         isDataApiEvmEnabledNetwork(chain) &&
         (await this.connector
@@ -261,17 +276,17 @@ export class Address {
               excludeMetadata: true,
               chain,
               addresses: addresses.join(','),
+              tokenTypes: tokenTypes?.join(','),
             },
           })
           .then((r) => r.result))
 
-      const result = formatNativeBalances(nativeBalances, addresses, chain)
-
-      if (!tokenBalances) {
-        return result
+      if (tokenBalances) {
+        const serializedTokenBalances = await this.processTokenBalanceDetails(tokenBalances, chain)
+        result.push(...serializedTokenBalances)
       }
-      const serializedTokenBalances = await this.processTokenBalanceDetails(tokenBalances, chain)
-      return [...result, ...serializedTokenBalances]
+
+      return result
     })
   }
 

@@ -45,6 +45,21 @@ describe.skip('Address', () => {
         })
       })
 
+      it('should get only native balance with native assets only', async () => {
+        const { data } = await tatum.address.getBalance({
+          addresses: ['0x514D547c8aC8ccBEc29b5144810454BD7d3625CA'],
+          tokenTypes: ['native'],
+        })
+        expect(data).toHaveLength(1)
+        expect(data[0]).toStrictEqual({
+          asset: 'ETH',
+          decimals: 18,
+          address: '0x514D547c8aC8ccBEc29b5144810454BD7d3625CA',
+          balance: expect.any(String),
+          type: 'native',
+        })
+      })
+
       it('should get balance with native assets only for 2 addresses', async () => {
         const { data } = await tatum.address.getBalance({
           addresses: [

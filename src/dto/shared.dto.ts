@@ -32,6 +32,12 @@ export interface AddressBalanceFilters extends Pagination {
    * List of addresses to check.
    */
   addresses: string[]
+
+  /**
+   * Optional filter for token types. If not specified, all token types are returned.
+   * Allowed values are `native`, `fungible`, `nft` and `multitoken`.
+   */
+  tokenTypes?: string[]
 }
 
 export interface AddressBalanceFiltersTron {
@@ -48,7 +54,8 @@ export interface AddressBalanceFiltersTezos extends Pagination {
   address: string
 
   /**
-   * Optional filter for token types. If not specified, all token types are returned. Allowed values are `fungible`, `nft` and `multitoken`.
+   * Optional filter for token types. If not specified, all token types are returned.
+   * Allowed values are `fungible`, `nft` and `multitoken`.
    */
   tokenTypes?: string[]
 }
