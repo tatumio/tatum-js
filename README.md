@@ -38,7 +38,7 @@ Need help or want to contribute? [Report Bugs](https://github.com/tatumio/tatum-
 Interact seamlessly with various blockchains through native RPC calls. Say goodbye to the hassle of juggling separate RPC clients for each blockchain.
 
 | Documentation                                                                                             |
-| --------------------------------------------------------------------------------------------------------- |
+|-----------------------------------------------------------------------------------------------------------|
 | **EVM Blockchains**                                                                                       |
 | [Ethereum RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-rpc-documentation)                 |
 | [Polygon RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/polygon-rpc-documentation)                   |
@@ -53,6 +53,8 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Avalanche RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/avalanche-rpc-documentation)               |
 | [Celo RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/celo-rpc-documentation)                         |
 | [XinFin RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/xinfin-rpc-documentation)                     |
+| [Fantom RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/fantom-rpc-documentation)                     |
+| [Base RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/base-rpc-documentation)                         |
 | **UTXO Blockchains**                                                                                      |
 | [Bitcoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/bitcoin-rpc-documentation)                  |
 | [Litecoin RPC](https://docs.tatum.io/docs/rpc/utxo-blockchains/litecoin-rpc-documentation)                |
@@ -68,6 +70,10 @@ Interact seamlessly with various blockchains through native RPC calls. Say goodb
 | [Agorand RPC](https://docs.tatum.io/docs/rpc/algo-rpc-documentation)                                      |
 | [Cardano RPC](https://docs.tatum.io/docs/rpc/cardano-rpc-documentation)                                   |
 | [Stellar RPC](https://docs.tatum.io/docs/rpc/stellar-rpc-documentation)                                   |
+| [Iota RPC](https://docs.tatum.io/docs/rpc/iota-rpc-documentation)                                         |
+| [Kadena RPC](https://docs.tatum.io/docs/rpc/kadena-rpc-documentation)                                     |
+| [Rostrum RPC](https://docs.tatum.io/docs/rpc/rostrum-rpc-documentation)                                   |
+| [Cronos RPC](https://docs.tatum.io/docs/rpc/cronos-rpc-documentation)                                     |
 
 ### 🔔 Create Notifications
 
@@ -487,7 +493,8 @@ This section provides a list of various blockchain network status pages, powered
 | [kadena-testnet.status.tatum.io](https://kadena-testnet.status.tatum.io)                                     |
 | [rostrum-mainnet.status.tatum.io](https://rostrum-mainnet.status.tatum.io)                                   |
 | [cronos-mainnet-archive.status.tatum.io](https://cronos-mainnet-archive.status.tatum.io)                     |
-| [fantom-mainnet-archive.status.tatum.io](https://fantom-mainnet-archive.status.tatum.io)                            |
+| [fantom-mainnet-archive.status.tatum.io](https://fantom-mainnet-archive.status.tatum.io)                     |
+| [iota-mainnet.status.tatum.io](https://iota-mainnet.status.tatum.io)                                         |
 
 ### Load Balancer
 
@@ -605,6 +612,7 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/rostrum-mainnet/list.json](https://rpc.tatum.io/rostrum-mainnet/list.json)                                   |
 | [rpc.tatum.io/cronos-mainnet-archive/list.json](https://rpc.tatum.io/cronos-mainnet-archive/list.json)                     |
 | [rpc.tatum.io/fantom-mainnet-archive/list.json](https://rpc.tatum.io/fantom-mainnet-archive/list.json)                     |
+| [rpc.tatum.io/iota-mainnet/list.json](https://rpc.tatum.io/iota-mainnet/list.json)                                         |
 
 Following pattern defines the URL for fetching the list of nodes:
 

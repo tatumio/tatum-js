@@ -53,7 +53,11 @@ export abstract class AbstractAlgorandAlgodRpc implements AlgorandAlgodRpcSuite 
     queryParams?: QueryParams
   }): Promise<T> {
     const post: PostI = {
-      path: Utils.addQueryParams(path, Utils.camelToDashCase, queryParams),
+      path: Utils.addQueryParams({
+        basePath: path,
+        strategy: Utils.camelToDashCase,
+        queryParams: queryParams,
+      }),
     }
 
     if (body) {
@@ -64,7 +68,13 @@ export abstract class AbstractAlgorandAlgodRpc implements AlgorandAlgodRpcSuite 
   }
 
   private async sendGet<T>({ path, queryParams }: { path: string; queryParams?: QueryParams }): Promise<T> {
-    return this.get({ path: Utils.addQueryParams(path, Utils.camelToDashCase, queryParams) })
+    return this.get({
+      path: Utils.addQueryParams({
+        basePath: path,
+        strategy: Utils.camelToDashCase,
+        queryParams: queryParams,
+      }),
+    })
   }
 
   broadcastTransaction(params: TransactionBroadcastRequest): Promise<TransactionBroadcastResponse> {

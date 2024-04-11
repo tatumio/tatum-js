@@ -50,6 +50,7 @@ enum RequestType {
   GET = 'GET',
   BATCH = 'BATCH',
   PUT = 'PUT',
+  DELETE = 'DELETE',
 }
 
 interface HandleFailedRpcCallParams {
@@ -573,6 +574,23 @@ export class LoadBalancer implements AbstractRpcInterface {
         url: basePath,
       })
       return await this.put({ path, body, prefix })
+    }
+  }
+
+  async delete<T>({ path, prefix }: GetI): Promise<T> {
+    const { url, type } = this.getActiveNormalUrlWithFallback()
+    const basePath = prefix ? `${url}${prefix}` : url
+    try {
+      return await this.connector.delete<T>({ basePath, path })
+    } catch (e) {
+      await this.handleFailedRpcCall({
+        rpcCall: { path },
+        e,
+        nodeType: type,
+        requestType: RequestType.DELETE,
+        url: basePath,
+      })
+      return await this.delete({ path, prefix })
     }
   }
 

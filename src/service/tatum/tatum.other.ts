@@ -5,6 +5,7 @@ import { AlgorandIndexerRpcSuite } from '../../dto/rpc/AlgorandIndexerRpcSuite'
 import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
 import { CardanoRpcSuite } from '../../dto/rpc/CardanoRpcSuite'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
+import { IotaRpcSuite } from '../../dto/rpc/IotaRpcSuite'
 import { KadenaRpcInterface } from '../../dto/rpc/KadenaRpcSuite'
 import { RostrumRpcInterface } from '../../dto/rpc/RostrumRpcSuite'
 import { StellarRpcSuite } from '../../dto/rpc/StellarRpcSuite'
@@ -109,6 +110,15 @@ export class Kadena extends BaseOther {
   constructor(id: string) {
     super(id)
     this.rpc = Utils.getRpc<KadenaRpcInterface>(id, Container.of(id).get(CONFIG))
+  }
+}
+
+export class Iota extends BaseOther {
+  rpc: IotaRpcSuite
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<IotaRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 

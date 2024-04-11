@@ -1,3 +1,10 @@
+## [4.2.24] - 2024.4.11
+
+### Added
+
+- Added support for Iota API calls
+
+
 ## [4.2.23] - 2024.4.10
 
 ### Updated

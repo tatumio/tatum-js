@@ -18,11 +18,11 @@ export abstract class AbstractBeaconV1EvmRpc implements EvmBeaconV1Interface {
   protected abstract get<T>(get: GetI): Promise<T>
 
   private sendGet<T>(path: string, params: QueryParams, prefix?: string): Promise<T> {
-    const fullPath = Utils.addQueryParams(
-      `${prefix ?? Constant.BEACON_PREFIX}/${path}`,
-      Utils.camelToSnakeCase,
-      params,
-    )
+    const fullPath = Utils.addQueryParams({
+      basePath: `${prefix ?? Constant.BEACON_PREFIX}/${path}`,
+      strategy: Utils.camelToSnakeCase,
+      queryParams: params,
+    })
     return this.get({ path: fullPath })
   }
 

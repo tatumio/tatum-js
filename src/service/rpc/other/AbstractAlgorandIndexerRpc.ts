@@ -49,7 +49,13 @@ export abstract class AbstractAlgorandIndexerRpc implements AlgorandIndexerRpcSu
   protected abstract get<T>(get: GetI): Promise<T>
 
   private async sendGet<T>({ path, queryParams }: { path: string; queryParams?: QueryParams }): Promise<T> {
-    return this.get({ path: Utils.addQueryParams(path, Utils.camelToDashCase, queryParams) })
+    return this.get({
+      path: Utils.addQueryParams({
+        basePath: path,
+        strategy: Utils.camelToDashCase,
+        queryParams: queryParams,
+      }),
+    })
   }
 
   getAccount(params: AccountInformationRequest): Promise<AccountResponse> {

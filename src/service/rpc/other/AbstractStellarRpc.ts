@@ -82,7 +82,13 @@ export abstract class AbstractStellarRpc implements StellarRpcSuite {
 
   private async sendGet<T>({ path, queryParams }: { path: string; queryParams?: QueryParams }): Promise<T> {
     if (queryParams && Object.keys(queryParams).length > 0) {
-      return this.get({ path: Utils.addQueryParams(path, Utils.camelToSnakeCase, queryParams) })
+      return this.get({
+        path: Utils.addQueryParams({
+          basePath: path,
+          strategy: Utils.camelToSnakeCase,
+          queryParams: queryParams,
+        }),
+      })
     }
 
     return this.get({ path })
@@ -102,7 +108,11 @@ export abstract class AbstractStellarRpc implements StellarRpcSuite {
     }
 
     if (queryParams && Object.keys(queryParams).length > 0) {
-      post.path = Utils.addQueryParams(path, Utils.camelToSnakeCase, queryParams)
+      post.path = Utils.addQueryParams({
+        basePath: path,
+        strategy: Utils.camelToSnakeCase,
+        queryParams: queryParams,
+      })
     }
 
     if (body) {
