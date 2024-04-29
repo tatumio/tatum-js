@@ -109,7 +109,7 @@ export const getAuctionFeeRecipient = async (chain: Currency, contractAddress: s
  */
 export const deployAuction = async (testnet: boolean, body: DeployNftAuction, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/auction`, body);
+    return await post(`/v3/blockchain/auction`, body);
   }
   return helperBroadcastTx(body.chain, await prepareDeployAuction(testnet, body, provider))
 };
@@ -336,7 +336,7 @@ export const sendAuctionUpdateFeeRecipient = async (testnet: boolean, body: Upda
  */
 export const sendAuctionApproveNftTransfer = async (testnet: boolean, body: ApproveNftTransfer, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/auction/approve`, body);
+    return await post(`/v3/blockchain/auction/approve`, body);
   }
   return helperBroadcastTx(body.chain, await prepareAuctionApproveNftTransfer(testnet, body, provider))
 }
@@ -349,7 +349,7 @@ export const sendAuctionApproveNftTransfer = async (testnet: boolean, body: Appr
  */
 export const sendAuctionApproveErc20Transfer = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/token/approve`, body);
+    return await post(`/v3/blockchain/token/approve`, body);
   }
   return helperBroadcastTx(body.chain, await prepareAuctionApproveErc20Transfer(testnet, body, provider))
 }
@@ -364,7 +364,7 @@ export const sendAuctionApproveErc20Transfer = async (testnet: boolean, body: Ap
  */
 export const sendAuctionCreate = async (testnet: boolean, body: CreateAuction, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/auction/sell`, body);
+    return await post(`/v3/blockchain/auction/sell`, body);
   }
   return helperBroadcastTx(body.chain, await prepareAuctionCreate(testnet, body, provider))
 };
@@ -378,7 +378,7 @@ export const sendAuctionCreate = async (testnet: boolean, body: CreateAuction, p
  */
 export const sendAuctionBid = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/auction/bid`, body);
+    return await post(`/v3/blockchain/auction/bid`, body);
   }
   return helperBroadcastTx(body.chain, await prepareAuctionBid(testnet, body, provider))
 }
@@ -391,7 +391,7 @@ export const sendAuctionBid = async (testnet: boolean, body: InvokeAuctionOperat
  */
 export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/auction/cancel`, body);
+    return await post(`/v3/blockchain/auction/cancel`, body);
   }
   return helperBroadcastTx(body.chain, await prepareAuctionCancel(testnet, body, provider))
 }
@@ -405,7 +405,7 @@ export const sendAuctionCancel = async (testnet: boolean, body: InvokeAuctionOpe
  */
 export const sendAuctionSettle = async (testnet: boolean, body: InvokeAuctionOperation, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/auction`, body);
+    return await post(`/v3/blockchain/auction`, body);
   }
   return helperBroadcastTx(body.chain, await prepareAuctionSettle(testnet, body, provider))
 }

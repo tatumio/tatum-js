@@ -356,7 +356,7 @@ export const sendMarketplaceUpdateFeeRecipient = async (testnet: boolean, body: 
  */
 export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/token/approve`, body);
+    return await post(`/v3/blockchain/token/approve`, body);
   }
   return helperBroadcastTx(body.chain, await prepareMarketplaceApproveErc20Spending(testnet, body, provider))
 }
@@ -371,7 +371,7 @@ export const sendMarketplaceApproveErc20Spending = async (testnet: boolean, body
  */
 export const sendMarketplaceCreateListing = async (testnet: boolean, body: CreateMarketplaceListing | CreateTronMarketplaceListing, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/marketplace/listing/sell`, body);
+    return await post(`/v3/blockchain/marketplace/listing/sell`, body);
   }
   return helperBroadcastTx(body.chain, await prepareMarketplaceCreateListing(testnet, body, provider))
 }
@@ -385,7 +385,7 @@ export const sendMarketplaceCreateListing = async (testnet: boolean, body: Creat
  */
 export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/marketplace/listing/buy`, body);
+    return await post(`/v3/blockchain/marketplace/listing/buy`, body);
   }
   return helperBroadcastTx(body.chain, await prepareMarketplaceBuyListing(testnet, body, provider))
 }
@@ -398,7 +398,7 @@ export const sendMarketplaceBuyListing = async (testnet: boolean, body: InvokeMa
  */
 export const sendMarketplaceCancelListing = async (testnet: boolean, body: InvokeMarketplaceListingOperation | InvokeTronMarketplaceListingOperation, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/marketplace/listing/cancel`, body);
+    return await post(`/v3/blockchain/marketplace/listing/cancel`, body);
   }
   return helperBroadcastTx(body.chain, await prepareMarketplaceCancelListing(testnet, body, provider))
 }

@@ -502,7 +502,7 @@ export const prepareAddNFTMinter = async (testnet: boolean, body: AddMinter, pro
  */
 export const sendAddNFTMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/nft/mint/add`, body);
+    return await post(`/v3/nft/mint/add`, body);
   }
   return helperBroadcastTx(body.chain, await prepareAddNFTMinter(testnet, body, provider))
 };
