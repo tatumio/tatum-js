@@ -229,7 +229,7 @@ export const generateCustodialWalletBatch = async (testnet: boolean, body: Gener
     return await generateBatch(body);
   }
   if (body.signatureId) {
-    return await post(`v3/blockchain/sc/custodial/batch`, body);
+    return await post(`/v3/blockchain/sc/custodial/batch`, body);
   }
   const txData = await prepareCustodialWalletBatch(testnet, body, provider);
   switch (body.chain) {
@@ -288,7 +288,7 @@ export const prepareCustodialWalletBatch = async (testnet: boolean, body: Genera
  */
 export const sendCustodialWallet = async (testnet: boolean, body: GenerateCustodialAddress | GenerateTronCustodialAddress, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/sc/custodial`, body);
+    return await post(`/v3/blockchain/sc/custodial`, body);
   }
   let txData;
   switch (body.chain) {
@@ -429,7 +429,7 @@ export const prepareTransferFromCustodialWallet = async (testnet: boolean, body:
  */
 export const sendTransferFromCustodialWallet = async (testnet: boolean, body: TransferFromCustodialAddress | TransferFromTronCustodialAddress, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/sc/custodial/transfer`, body);
+    return await post(`/v3/blockchain/sc/custodial/transfer`, body);
   }
   return helperBroadcastTx(body.chain, await prepareTransferFromCustodialWallet(testnet, body, provider))
 };
@@ -546,7 +546,7 @@ export const prepareBatchTransferFromCustodialWallet = async (testnet: boolean,
 export const sendBatchTransferFromCustodialWallet = async (testnet: boolean,
                                                            body: TransferFromCustodialAddressBatch | TransferFromTronCustodialAddressBatch, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/sc/custodial/transfer/batch`, body);
+    return await post(`/v3/blockchain/sc/custodial/transfer/batch`, body);
   }
   return helperBroadcastTx(body.chain, await prepareBatchTransferFromCustodialWallet(testnet, body, provider))
 };
@@ -580,7 +580,7 @@ export const prepareApproveFromCustodialWallet = async (testnet: boolean, body: 
  */
 export const sendApproveFromCustodialWallet = async (testnet: boolean, body: ApproveCustodialTransfer, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/sc/custodial/approve`, body);
+    return await post(`/v3/blockchain/sc/custodial/approve`, body);
   }
   return helperBroadcastTx(body.chain, await prepareApproveFromCustodialWallet(testnet, body, provider))
 };

@@ -287,7 +287,7 @@ export const prepareAddMultiTokenMinter = async (testnet: boolean, body: AddMint
  */
 export const sendAddMultiTokenMinter = async (testnet: boolean, body: AddMinter, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/multitoken/mint/add`, body);
+    return await post(`/v3/multitoken/mint/add`, body);
   }
   return helperBroadcastTx(body.chain, await prepareAddMultiTokenMinter(testnet, body, provider))
 };

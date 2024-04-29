@@ -22,7 +22,7 @@ import Caver from 'caver-js'
  */
 export const sendApproveErc20 = async (testnet: boolean, body: ApproveErc20, provider?: string) => {
   if (body.signatureId) {
-    return await post(`v3/blockchain/token/approve`, body);
+    return await post(`/v3/blockchain/token/approve`, body);
   }
   return helperBroadcastTx(body.chain, await prepareApproveErc20(testnet, body, provider))
 };
