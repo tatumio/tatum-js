@@ -92,7 +92,7 @@ export enum Network {
   OASIS_TESTNET = 'oasis-testnet',
   OPTIMISM_TESTNET = 'optimism-testnet',
   PALM_TESTNET = 'palm-testnet',
-  POLYGON_MUMBAI = 'polygon-mumbai',
+  POLYGON_AMOY = 'polygon-amoy',
   POLKADOT_TESTNET = 'dot-testnet',
   RSK_TESTNET = 'rsk-testnet',
   SOLANA_DEVNET = 'solana-devnet',
@@ -114,7 +114,7 @@ export const EVM_BASED_NETWORKS = [
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
   Network.POLYGON,
-  Network.POLYGON_MUMBAI,
+  Network.POLYGON_AMOY,
   Network.GNOSIS,
   Network.GNOSIS_TESTNET,
   Network.FANTOM,
@@ -187,7 +187,7 @@ export const DATA_API_EVM_NETWORKS = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
   Network.POLYGON,
-  Network.POLYGON_MUMBAI,
+  Network.POLYGON_AMOY,
   Network.BINANCE_SMART_CHAIN,
   Network.BINANCE_SMART_CHAIN_TESTNET,
   Network.CELO,
@@ -219,7 +219,7 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.ETHEREUM_SEPOLIA,
   Network.ETHEREUM_HOLESKY,
   Network.POLYGON,
-  Network.POLYGON_MUMBAI,
+  Network.POLYGON_AMOY,
   Network.OPTIMISM,
   Network.OPTIMISM_TESTNET,
   Network.HORIZEN_EON,
@@ -282,7 +282,7 @@ export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
   Network.HAQQ,
   Network.HAQQ_TESTNET,
   Network.POLYGON,
-  Network.POLYGON_MUMBAI,
+  Network.POLYGON_AMOY,
   Network.CHILIZ,
 ]
 
@@ -425,11 +425,11 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     defaultMainnet: true,
     chainId: 1,
   },
-  [Network.POLYGON_MUMBAI]: {
+  [Network.POLYGON_AMOY]: {
     currency: Currency.MATIC,
     testnet: true,
     defaultTestnet: true,
-    chainId: 80001,
+    chainId: 80002,
   },
   [Network.POLYGON]: {
     currency: Currency.MATIC,

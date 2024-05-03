@@ -40,7 +40,7 @@ export const e2eUtil = {
           return '0xdb4C3b4350EE869F2D0a2F43ce0292865E2Aa149'
         case Network.CELO_ALFAJORES:
           return '0xdf083B077F1FD890fC71feCaBbd3F68F94cD21Bf'
-        case Network.POLYGON_MUMBAI:
+        case Network.POLYGON_AMOY:
           return '0xcf3c930601111c216fc0232d32cf5c2a86f107da'
         case Network.KLAYTN_BAOBAB:
           return '0xdc7Dfb8Aa86D41b7e39441711Fe1669f2d843C06'

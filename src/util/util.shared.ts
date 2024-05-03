@@ -547,7 +547,7 @@ export const Utils = {
       case Network.ETHEREUM_HOLESKY:
         return AddressEventNotificationChain.ETH
       case Network.POLYGON:
-      case Network.POLYGON_MUMBAI:
+      case Network.POLYGON_AMOY:
         return AddressEventNotificationChain.MATIC
       case Network.CELO:
       case Network.CELO_ALFAJORES:
@@ -784,7 +784,7 @@ export const Utils = {
       case Network.PALM_TESTNET:
         return new Palm(id) as T
       case Network.POLYGON:
-      case Network.POLYGON_MUMBAI:
+      case Network.POLYGON_AMOY:
         return new Polygon(id) as T
       case Network.VECHAIN:
       case Network.VECHAIN_TESTNET:
