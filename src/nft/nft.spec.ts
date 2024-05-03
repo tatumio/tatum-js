@@ -308,7 +308,7 @@ describe('NFT tests', () => {
                 fromPrivateKey: '0x1a4344e55c562db08700dd32e52e62e7c40b1ef5e27c6ddd969de9891a899b29',
                 name: 'TatumToken',
                 fee: {gasLimit: '6000000', gasPrice: '5'}
-            }, 'https://rpc-mumbai.matic.today');
+            }, 'https://rpc-amoy.matic.today');
             expect(deployErc721Token).not.toBeNull();
             console.log(deployErc721Token);
         });
@@ -325,7 +325,7 @@ describe('NFT tests', () => {
                 authorAddresses: [['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9'], ['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342', '0x811dfbff13adfbc3cf653dcc373c03616d3471c9']],
                 cashbackValues: [['0.25', '0.25'], ['0.25', '0.25']],
                 fee: {gasLimit: '6000000', gasPrice: '100'}
-            }, 'https://rpc-mumbai.matic.today');
+            }, 'https://rpc-amoy.matic.today');
             console.log(mintedTokens);
             expect(mintedTokens).not.toBeNull();
         });
@@ -339,7 +339,7 @@ describe('NFT tests', () => {
                 contractAddress: '0xdb778b39bd7a7c479b3bb1d70df6665fe73e7e1d',
             };
             console.log(await createNFT(true, body, readFileSync('/Users/ssramko/Downloads/logo_tatum.png'),
-                'Tatum LOGO', 'description', undefined, 'https://rpc-mumbai.matic.today'));
+                'Tatum LOGO', 'description', undefined, 'https://rpc-amoy.matic.today'));
         });
         it('should obtain metadata from NFT on IPFS on MATIC', async () => {
             const data = await getNFTImage(Currency.MATIC, '0x6d8eae641416b8b79e0fb3a92b17448cfff02b11', '1629193549967');
@@ -362,7 +362,7 @@ describe('NFT tests', () => {
                     contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',
                     authorAddresses: ['0x6c4A48886b77D1197eCFBDaA3D3f35d81d584342'],
                     cashbackValues: ['0.25']
-                }, 'https://rpc-mumbai.matic.today');
+                }, 'https://rpc-amoy.matic.today');
                 console.log('mintedToken', mintedToken);
                 expect(mintedToken).not.toBeNull();
             } catch (e) {
@@ -377,7 +377,7 @@ describe('NFT tests', () => {
                 fromPrivateKey: '0x4874827a55d87f2309c55b835af509e3427aa4d52321eeb49a2b93b5c0f8edfb',
                 contractAddress: '0xdf82c2f74aa7b629bda65b1cfd258248c9c2b7d3',
                 value: '1'
-            }, 'https://rpc-mumbai.matic.today');
+            }, 'https://rpc-amoy.matic.today');
             console.log('response: ', sendErc721Token);
             expect(sendErc721Token).not.toBeNull();
         });

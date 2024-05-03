@@ -189,7 +189,7 @@ describe('Marketplace Listing tests', () => {
             body.feeRecipient = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9';
             body.marketplaceFee = 150;
             body.chain = Currency.MATIC;
-            const test = await deployMarketplaceListing(true, body, 'https://rpc-mumbai.matic.today');
+            const test = await deployMarketplaceListing(true, body, 'https://rpc-amoy.matic.today');
             console.log(test);
             expect(test).toBeDefined();
         })
@@ -205,7 +205,7 @@ describe('Marketplace Listing tests', () => {
             body.price = '0.001';
             body.seller = '0x811dfbff13adfbc3cf653dcc373c03616d3471c9';
             body.chain = Currency.MATIC;
-            console.log(await sendMarketplaceCreateListing(true, body, 'https://rpc-mumbai.matic.today'));
+            console.log(await sendMarketplaceCreateListing(true, body, 'https://rpc-amoy.matic.today'));
 
             await new Promise(r => setTimeout(r, 5000));
             console.log(await transferNFT(true, {
@@ -223,7 +223,7 @@ describe('Marketplace Listing tests', () => {
             r.methodName = 'getListing';
             r.methodABI = listing.abi.find(a => a.name === r.methodName);
             r.params = ['8'];
-            console.log(await sendPolygonSmartContractMethodInvocationTransaction(true, r, 'https://rpc-mumbai.matic.today'));
+            console.log(await sendPolygonSmartContractMethodInvocationTransaction(true, r, 'https://rpc-amoy.matic.today'));
         })
 
         it('should get marketplace fee', async () => {
@@ -232,7 +232,7 @@ describe('Marketplace Listing tests', () => {
             r.methodName = 'getMarketplaceFee';
             r.methodABI = listing.abi.find(a => a.name === r.methodName);
             r.params = [];
-            console.log(await sendPolygonSmartContractReadMethodInvocationTransaction(true, r, 'https://rpc-mumbai.matic.today'));
+            console.log(await sendPolygonSmartContractReadMethodInvocationTransaction(true, r, 'https://rpc-amoy.matic.today'));
         })
 
         it('should buy listing native', async () => {
@@ -242,7 +242,7 @@ describe('Marketplace Listing tests', () => {
             body.listingId = '111';
             body.amount = '0.0015';
             body.chain = Currency.MATIC;
-            console.log(await sendMarketplaceBuyListing(true, body, 'https://rpc-mumbai.matic.today'));
+            console.log(await sendMarketplaceBuyListing(true, body, 'https://rpc-amoy.matic.today'));
         })
 
         it('should approve erc20', async () => {
@@ -252,7 +252,7 @@ describe('Marketplace Listing tests', () => {
             approve.chain = Currency.MATIC;
             approve.amount = '0.002';
             approve.fromPrivateKey = '0xf09110a0aae3dddba3d722c6c629fb08082963d8ed38afaf25cfce084c22e3d2';
-            console.log(await sendMarketplaceApproveErc20Spending(true, approve, 'https://rpc-mumbai.matic.today'));
+            console.log(await sendMarketplaceApproveErc20Spending(true, approve, 'https://rpc-amoy.matic.today'));
         });
     })
     describe.skip('Marketplace Listing TRON transactions', () => {
