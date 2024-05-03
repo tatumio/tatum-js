@@ -1,8 +1,8 @@
 import { EvmBasedKMSServiceArgs, EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import { Currency, PendingTransaction } from '@tatumio/api-client'
 import { abstractBlockchainKms } from '@tatumio/shared-blockchain-abstract'
-import { BigNumber } from 'ethers'
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import BigNumber from 'bignumber.js'
 
 export const polygonKmsService = (args: EvmBasedKMSServiceArgs) => {
   return {
@@ -25,7 +25,7 @@ export const polygonKmsService = (args: EvmBasedKMSServiceArgs) => {
         })
       }
 
-      if (!transactionConfig.gasPrice || BigNumber.from(transactionConfig.gasPrice).isZero()) {
+      if (!transactionConfig.gasPrice || BigNumber(transactionConfig.gasPrice).isZero()) {
         transactionConfig.gasPrice = await args.web3.getGasPriceInWei()
       }
 

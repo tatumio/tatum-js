@@ -55,7 +55,7 @@
     "base-58": "^0.0.1",
     "base32.js": "^0.1.0",
     "bchaddrjs": "^0.5.2",
-    "bignumber.js": "^9.0.2",
+    "bignumber.js": "^9.1.2",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
     "bitcoinjs-lib": "^5.2.0",
