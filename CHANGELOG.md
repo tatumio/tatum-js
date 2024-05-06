@@ -1,3 +1,14 @@
+## [4.2.27] - 2024.5.6
+
+### Added
+
+- Support for Polygon Amoy
+
+### Removed
+
+- Polygon Mumbai
+
+
 ## [4.2.26] - 2024.5.6
 
 ### Added
