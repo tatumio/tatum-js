@@ -2,6 +2,7 @@ import {
   AccountService,
   AlgorandService,
   AuctionService,
+  AvalancheService,
   BaseService,
   BitcoinCashService,
   BitcoinService,
@@ -82,6 +83,7 @@ export type EvmBasedApiService = EthereumService | CeloService
 export const ApiServices = {
   blockchain: {
     ada: CardanoService,
+    avalanche: AvalancheService,
     algo: AlgorandService,
     base: BaseService,
     bnb: BnbBeaconChainService,

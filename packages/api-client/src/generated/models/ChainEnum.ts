@@ -2,4 +2,4 @@
 /* tslint:disable */
 /* eslint-disable */
 
-export type ChainEnum = 'ethereum' | 'ethereum-sepolia' | 'celo' | 'celo-testnet' | 'bsc' | 'bsc-testnet' | 'polygon' | 'polygon-mumbai' | 'eon' | 'chiliz';
+export type ChainEnum = 'ethereum' | 'ethereum-sepolia' | 'ethereum-holesky' | 'celo' | 'celo-testnet' | 'bsc' | 'bsc-testnet' | 'polygon' | 'eon' | 'chiliz';

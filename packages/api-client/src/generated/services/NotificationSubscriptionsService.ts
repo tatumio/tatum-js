@@ -144,6 +144,13 @@ export class NotificationSubscriptionsService {
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>25 credits / day / address</td>
      * </tr>
+     * <tr>
+     * <td>Base</td>
+     * <td>Yes/Yes</td>
+     * <td>BASE, ERC20, ERC721, ERC1155</td>
+     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
+     * <td>25 credits / day / address</td>
+     * </tr>
      * </table>
      * The request body of the POST request is a JSON object with the following structure:<br/>
      * <pre>{
@@ -178,7 +185,7 @@ export class NotificationSubscriptionsService {
          * </tr>
          * <tr>
          * <td>Polygon</td>
-         * <td>polygon-mumbai / polygon-mainnet</td>
+         * <td>polygon-amoy / polygon-mainnet</td>
          * <td>500,000 credits / day</td>
          * </tr>
          * <tr>
@@ -204,6 +211,11 @@ export class NotificationSubscriptionsService {
          * <tr>
          * <td>Cronos</td>
          * <td>cronos-mainnet / cronos-testnet</td>
+         * <td>500,000 credits / day</td>
+         * </tr>
+         * <tr>
+         * <td>Base</td>
+         * <td>base-mainnet / base-sepolia</td>
          * <td>500,000 credits / day</td>
          * </tr>
          * </table>
@@ -244,7 +256,7 @@ export class NotificationSubscriptionsService {
                      * </tr>
                      * <tr>
                      * <td>Polygon</td>
-                     * <td>polygon-mumbai / polygon-mainnet</td>
+                     * <td>polygon-amoy / polygon-mainnet</td>
                      * <td>500,000 credits / day</td>
                      * </tr>
                      * <tr>
@@ -270,6 +282,11 @@ export class NotificationSubscriptionsService {
                      * <tr>
                      * <td>Cronos</td>
                      * <td>cronos-mainnet / cronos-testnet</td>
+                     * <td>500,000 credits / day</td>
+                     * </tr>
+                     * <tr>
+                     * <td>Base</td>
+                     * <td>base-mainnet / base-testnet</td>
                      * <td>500,000 credits / day</td>
                      * </tr>
                      * </table>
@@ -310,7 +327,7 @@ export class NotificationSubscriptionsService {
                                  * </tr>
                                  * <tr>
                                  * <td>Polygon</td>
-                                 * <td>polygon-mumbai / polygon-mainnet</td>
+                                 * <td>polygon-amoy / polygon-mainnet</td>
                                  * <td>50,000 credits / day</td>
                                  * </tr>
                                  * <tr>
@@ -333,6 +350,16 @@ export class NotificationSubscriptionsService {
                                  * <td>bsc-testnet / bsc-mainnet</td>
                                  * <td>50,000 credits / day</td>
                                  * </tr>
+                                 * <tr>
+                                 * <td>Cronos</td>
+                                 * <td>cronos-mainnet</td>
+                                 * <td>50,000 credits / day</td>
+                                 * </tr>
+                                 * <tr>
+                                 * <td>Base</td>
+                                 * <td>base-mainnet</td>
+                                 * <td>50,000 credits / day</td>
+                                 * </tr>
                                  * </table>
                                  * The request body of the POST request is a JSON object with the following structure:<br/>
                                  * <pre>{
@@ -350,7 +377,7 @@ export class NotificationSubscriptionsService {
                                              * }
                                              * ],
                                              * "blockNumber": 32447538,
-                                             * "chain": "polygon-mumbai",
+                                             * "chain": "polygon-amoy",
                                              * "subscriptionType": "CONTRACT_LOG_EVENT"
                                              * }</pre>
                                              * <b>1 credit is debited for each fired web hook.</b><br/></li>

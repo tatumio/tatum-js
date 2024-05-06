@@ -42,11 +42,12 @@ export const EvmBasedBlockchains = [
   Blockchain.CHILIZ,
   Blockchain.CRO,
   Blockchain.BASE,
+  Blockchain.AVAX,
 ]
 
 // @TODO tmp solution
 export const BtcBasedBlockchains = [Blockchain.BTC, Blockchain.LTC, Blockchain.DOGE, Blockchain.BCH] as const
-export type BtcBasedBlockchain = (typeof BtcBasedBlockchains)[number]
+export type BtcBasedBlockchain = typeof BtcBasedBlockchains[number]
 
 export type EvmBasedBlockchain =
   | Blockchain.ETH
@@ -62,3 +63,4 @@ export type EvmBasedBlockchain =
   | Blockchain.FLR
   | Blockchain.CRO
   | Blockchain.BASE
+  | Blockchain.AVAX

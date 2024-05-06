@@ -8,7 +8,7 @@ export type BurnNft = {
     /**
      * The blockchain to work with
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'ZEN' | 'FLR' | 'CRO' | 'BASE';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'ZEN' | 'FLR' | 'CRO' | 'BASE' | 'AVAX';
     /**
      * The ID of the NFT to burn
      */

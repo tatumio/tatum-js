@@ -5,6 +5,7 @@
     "algo-example": "examples/algo-example",
     "api-client": "packages/api-client",
     "automation": "packages/automation",
+    "avalanche": "packages/blockchain/avalanche",
     "base": "packages/blockchain/base",
     "bch": "packages/blockchain/bch",
     "bch-example": "examples/bch-example",

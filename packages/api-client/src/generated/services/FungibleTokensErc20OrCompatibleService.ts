@@ -55,8 +55,9 @@ export class FungibleTokensErc20OrCompatibleService {
     /**
      * Deploy a fungible token smart contract
      * <p><b>2 credits per API call</b></p>
-     * <p>Deploy a fungible token smart contract on the blockchain. In a deployed smart contract, you can mint and burn fungible tokens. The whole supply of fungible tokens (the <code>supply</code> parameter in the request body) will be transferred to the specified blockchain address (the <code>address</code> parameter in the request body).<br/>
-     * Smart contracts are standardized and audited.</p>
+     * <p>Deploy a fungible token smart contract on the blockchain. In a deployed smart contract, you can mint and burn fungible tokens. The whole supply of fungible tokens (the <code>supply</code> parameter in the request body) will be transferred to the specified blockchain address (the <code>address</code> parameter in the request body).</p>
+     * <p>Additionally, you can specify the number of additional digits for the token amounts using the <code>digits</code> parameter. Please note that the maximum value for the <code>supply</code> parameter with added digits is within the range of <code>uint64</code>.</p>
+     * <p>Smart contracts are standardized and audited.</p>
      * <p>This API is supported for the following blockchains:</p>
      * <ul>
      * <li>Algorand</li>
@@ -72,6 +73,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Flare</li>
      * <li>Cronos</li>
      * <li>Base</li>
+     * <li>Avalanche</li>
      * </ul>
      * <p>You can review the code of a deployed smart contract <a href="https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/token.sol" target="_blank">here</a>.</p>
      * <p><b>Signing a transaction</b><br/>
@@ -127,6 +129,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Flare</li>
      * <li>Cronos</li>
      * <li>Base</li>
+     * <li>Avalanche</li>
      * </ul>
      * <p><b>Signing a transaction</b><br/>
      * When minting fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -182,6 +185,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Flare</li>
      * <li>Cronos</li>
      * <li>Base</li>
+     * <li>Avalanche</li>
      * </ul>
      * <p><b>Signing a transaction</b><br/>
      * When burning fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -234,6 +238,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Flare</li>
      * <li>Cronos</li>
      * <li>Base</li>
+     * <li>Avalanche</li>
      * </ul>
      * <p><b>Signing a transaction</b><br/>
      * When allowing a blockchain address to transfer and burn fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -291,6 +296,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Flare</li>
      * <li>Cronos</li>
      * <li>Base</li>
+     * <li>Avalanche</li>
      * </ul>
      * <p><b>Transferring fungible tokens on Algorand</b><br/>
      * On Algorand, the recipient has to agree in advance to receive your fungible tokens because Algorand charges users for storing the tokens on their addresses, and an Algorand blockchain address by default does not receive the tokens unless explicitly agreed. Before transferring the fungible tokens, make sure that the recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">has agreed to receive the NFT</a> to their address.</p>
@@ -309,6 +315,8 @@ export class FungibleTokensErc20OrCompatibleService {
      * When transferring fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
      * <p>Providing the private key in the API is not a secure way of signing transactions, because the private key can be stolen or exposed. Your private keys should never leave your security perimeter. You should use the private keys only for testing a solution you are building on the <b>testnet</b> of a blockchain.</p>
      * <p>For signing transactions on the <b>mainnet</b>, we strongly recommend that you use the Tatum <a href="https://github.com/tatumio/tatum-kms" target="_blank">Key Management System (KMS)</a> and provide the signature ID instead of the private key in the API. Alternatively, you can use the <a href="https://github.com/tatumio/tatum-js/tree/v2" target="_blank">Tatum JavaScript client</a>.</p>
+     * <p>When transferring a token on Solana blockchain, this call waits for maximum 45 seconds to check whether the transaction was confirmed on chain. If the transaction was successfully added it returns a success response. Otherwise error is returned with a message:
+     * "Transaction {##tx_hash##} has not been confirmed yet. The transaction could still be accepted by the Solana network. We advise to manually check if the transaction has been dropped or accepted before you try to send the transaction again".</p>
      *
      * @param requestBody
      * @param testnetType Type of testnet in query. The default type is based on the currency: ethereum-sepolia for ETH, and flare-coston for FLR. This parameter is valid only for ETH or FLR invocations with a testnet API Key. For mainnet API Key, this value is ignored. The currency/chain must be specified to determine the applicable set of testnet types.
@@ -412,6 +420,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Flare</li>
      * <li>Cronos</li>
      * <li>Base</li>
+     * <li>Avalanche</li>
      * </ul>
      *
      * @param chain Network name
@@ -423,7 +432,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * @throws ApiError
      */
     public static erc20GetBalance(
-        chain: 'CELO' | 'ALGO' | 'MATIC' | 'ETH' | 'BSC' | 'XDC' | 'KLAY' | 'ONE' | 'EGLD' | 'KCS' | 'SOL' | 'FLR' | 'CRO' | 'BASE',
+        chain: 'CELO' | 'ALGO' | 'MATIC' | 'ETH' | 'BSC' | 'XDC' | 'KLAY' | 'ONE' | 'EGLD' | 'KCS' | 'SOL' | 'FLR' | 'CRO' | 'BASE' | 'AVAX',
         address: string,
         contractAddress: string,
         testnetType?: TestnetType,

@@ -41,9 +41,9 @@ export class DataApiService {
      * <p>Get all NFTs (ERC-721 and ERC-1155) and multitokens (ERC-1155 only) of your favorite collections! Our API lets you search for all tokens on:</p>
      * <ul>
      * <li>Celo - celo / celo-testnet</li>
-     * <li>Ethereum - ethereum / ethereum-sepolia</li>
+     * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-mumbai</li>
+     * <li>Polygon - polygon / polygon-amoy</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
      * <li>Tezos - tezos-mainnet</li>
@@ -104,9 +104,9 @@ export class DataApiService {
      * <p>Get metadata of NFTs (ERC-721 and ERC-1155) or multitokens (ERC-1155 only) by IDs for a given token address! Our API lets you search for all tokens on:</p>
      * <ul>
      * <li>Celo - celo / celo-testnet</li>
-     * <li>Ethereum - ethereum / ethereum-sepolia</li>
+     * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-mumbai</li>
+     * <li>Polygon - polygon</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
      * </ul>
@@ -159,9 +159,9 @@ export class DataApiService {
      * <p>Get balances of fungible tokens (ERC-20), NFTs (ERC-721 and ERC-1155) or multitokens (ERC-1155 only) for a specific wallet address on the following blockchains:</p>
      * <ul>
      * <li>Celo - celo / celo-testnet</li>
-     * <li>Ethereum - ethereum / ethereum-sepolia</li>
+     * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-mumbai</li>
+     * <li>Polygon - polygon</li>
      * <li>Tezos - tezos-mainnet</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
@@ -235,9 +235,9 @@ export class DataApiService {
      * <p>Get all addresses that own your favorite token (ERC-20, ERC-721 or ERC-1155)! Our API lets you search for all token owners on:</p>
      * <ul>
      * <li>Celo - celo / celo-testnet</li>
-     * <li>Ethereum - ethereum / ethereum-sepolia</li>
+     * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-mumbai</li>
+     * <li>Polygon - polygon</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
      * </ul>
@@ -287,9 +287,9 @@ export class DataApiService {
      * <p>Check if wallet address owns any specified token (ERC-20, ERC-721 or ERC-1155) on the following blockchains:</p>
      * <ul>
      * <li>Celo - celo / celo-testnet</li>
-     * <li>Ethereum - ethereum / ethereum-sepolia</li>
+     * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-mumbai</li>
+     * <li>Polygon - polygon</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
      * </ul>
@@ -337,9 +337,9 @@ export class DataApiService {
      * <p>Get transactions on the following blockchains:</p>
      * <ul>
      * <li>Celo - celo / celo-testnet</li>
-     * <li>Ethereum - ethereum / ethereum-sepolia</li>
+     * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-mumbai</li>
+     * <li>Polygon - polygon</li>
      * <li>Tezos - tezos-mainnet</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
@@ -352,7 +352,7 @@ export class DataApiService {
      * <li>For Tezos blockchain, the API accepts only one wallet address in <code>addresses</code> query parameter. Following query parameters won't have any effect on filtering data: <code>transactionTypes</code>, <code>transactionSubtype</code>, <code>tokenId</code>, <code>blockTo</code>.</li>
      * <li>When querying Tezos transactions for a specified wallet or contract address, pagination is supported via <code>pageSize</code> and <code>offset</code> query parameters.
      * <li>When querying Tezos transactions for a specified block, pagination is supported via <code>cursor</code> query parameter, by filling in the value from <code>prevPage</code> or <code>nextPage</code> field in the response body.</li>
-     * <li><b>When you are filtering data using blockFrom and not using blockTo, query might take longer time to finish. It is always recommended to use both filters blockFrom and blockTo.</b></li>
+     * <li><b>When you are filtering data using blockFrom and not using blockTo, blockTo is automatically added as blockFrom + 1000. The same applies when blockTo is present and blockFrom is not. In that case blockFrom is automatically added as blockTo - 1000.</b></li>
      * </ul>
      *
      * @param chain The blockchain to work with.
@@ -366,8 +366,8 @@ export class DataApiService {
      * @param transactionSubtype The option to filter transaction based on subtype.
      * @param tokenAddress Address of a token (smart contract).
      * @param tokenId ID of a token.
-     * @param blockFrom Transactions from this block onwards will be included.
-     * @param blockTo Transactions up to this block will be included.
+     * @param blockFrom Transactions from this block onwards will be included. If blockTo is not specified, it is automatically calculated as blockFrom + 1000.
+     * @param blockTo Transactions up to this block will be included. If blockFrom is not specified, it is automatically calculated as blockTo - 1000.
      * @param pageSize The number of items per page (default is 50).
      * @param offset The offset to obtain next page of the data.
      * @param cursor The cursor to obtain previous page or next page of the data. Available only for Tezos blockchain.
@@ -431,9 +431,9 @@ export class DataApiService {
      * <p>Get transactions by hash on the following blockchains:</p>
      * <ul>
      * <li>Celo - celo / celo-testnet</li>
-     * <li>Ethereum - ethereum / ethereum-sepolia</li>
+     * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-mumbai</li>
+     * <li>Polygon - polygon</li>
      * <li>Tezos - tezos-mainnet</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
@@ -475,9 +475,9 @@ export class DataApiService {
      * <p>Get all events on given addresses and / or in the requested block range on the following blockchains:</p>
      * <ul>
      * <li>Celo - celo / celo-testnet</li>
-     * <li>Ethereum - ethereum / ethereum-sepolia</li>
+     * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-mumbai</li>
+     * <li>Polygon - polygon</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
      * </ul>
@@ -486,6 +486,7 @@ export class DataApiService {
      * <li>To improve response times and obtain specific data, it is recommended to use proper filtering techniques. Please provide a chain name and a combination of filters that will accomplish this (at least block range or contract addresses must be specified).</li>
      * <li>It is possible to specify multiple contract addresses at once by passing them as a comma separated string.</li>
      * <li>If block range is not specified, the API attempts to go through all available blocks, which may result in a timeout error.</li>
+     * <li>When you are filtering data using blockFrom and not using blockTo, blockTo is automatically added as blockFrom + 1000. The same applies when blockTo is present and blockFrom is not. In that case blockFrom is automatically added as blockTo - 1000.</li>
      * <li>It is recommended to filter only one specific type of events, which comes with built-in decoding for all the supported types.</li>
      * <li>It is, however, also possible to filter by signature hashes, which can be passed together as a comma separated string.</li>
      * </ul>
@@ -553,9 +554,9 @@ export class DataApiService {
      * <p>Get information about blocks (when they were added, how many NFTs and events were ingested and list of transaction hashes that were processed within them) on the following blockchains:</p>
      * <ul>
      * <li>Celo - celo / celo-testnet</li>
-     * <li>Ethereum - ethereum / ethereum-sepolia</li>
+     * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-mumbai</li>
+     * <li>Polygon - polygon</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
      * </ul>
@@ -564,6 +565,7 @@ export class DataApiService {
      * <li>List of block numbers separated by comma</li>
      * <li>Range of block numbers</li>
      * <li>Date range when blocks were processed</li>
+     * <li>When you are filtering data using blockFrom and not using blockTo, blockTo is automatically added as blockFrom + 1000. The same applies when blockTo is present and blockFrom is not. In that case blockFrom is automatically added as blockTo - 1000.</li>
      * </ul>
      *
      * @param chain The blockchain to work with.
@@ -615,9 +617,9 @@ export class DataApiService {
      * <p>Get information about latest added block on the following blockchains:</p>
      * <ul>
      * <li>Celo - celo / celo-testnet</li>
-     * <li>Ethereum - ethereum / ethereum-sepolia</li>
+     * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-mumbai</li>
+     * <li>Polygon - polygon</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
      * </ul>
@@ -651,9 +653,9 @@ export class DataApiService {
      * <p>Get information about your favorite token! Our API lets you search for all tokens on:</p>
      * <ul>
      * <li>Celo - celo / celo-testnet</li>
-     * <li>Ethereum - ethereum / ethereum-sepolia</li>
+     * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-mumbai</li>
+     * <li>Polygon - polygon</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
      * <li>Tezos - tezos-mainnet</li>

@@ -228,7 +228,7 @@ export class BitcoinService {
     /**
      * Get all transactions for a Bitcoin address
      * <p><b>1 credit per API call</b></p>
-     * <p>Get all transactions for a Bitcoin address.</p>
+     * <p>Get all transactions for a Bitcoin address. Returns also transactions that are in mempool and haven't been included in a block. In that case blockNumber has a null value.</p>
      *
      * @param address Address
      * @param pageSize Max number of items per page is 50.

@@ -8,7 +8,7 @@ export type DeployNft = {
     /**
      * The blockchain to work with
      */
-    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'ZEN' | 'FLR' | 'CRO' | 'BASE';
+    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'BSC' | 'ZEN' | 'FLR' | 'CRO' | 'BASE' | 'AVAX';
     /**
      * Name of the NFT token
      */
