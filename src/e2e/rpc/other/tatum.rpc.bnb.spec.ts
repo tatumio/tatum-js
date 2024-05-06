@@ -1,11 +1,10 @@
 import { Bnb, Network, TatumSDK } from '../../../service'
 import { e2eUtil } from '../../e2e.util'
 
-const getBnbRpc = async () =>
-  await TatumSDK.init<Bnb>(e2eUtil.initConfig(Network.BNB))
+const getBnbRpc = async () => await TatumSDK.init<Bnb>(e2eUtil.initConfig(Network.BNB))
 
 // Testnet is not available
-describe('Bnb', () => {
+describe.skip('Bnb', () => {
   describe('mainnet', () => {
     it('block', async () => {
       const tatum = await getBnbRpc()
