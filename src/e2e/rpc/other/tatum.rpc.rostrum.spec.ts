@@ -72,4 +72,11 @@ describe('Rostrum', () => {
     await rostrum.destroy()
     expect(result.result).toBeDefined()
   })
+
+  it('server.banner', async () => {
+    const rostrum = await getRostrumRpc()
+    const result = await rostrum.rpc.serverBanner()
+    await rostrum.destroy()
+    expect(result.result).toBeDefined()
+  })
 })

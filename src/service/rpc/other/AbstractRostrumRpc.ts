@@ -482,4 +482,8 @@ export abstract class AbstractRostrumRpc implements RostrumRpcInterface {
   }: CashAccountQueryNameParams): Promise<JsonRpcResponse<CashAccountQueryResult>> {
     return this.rpcCall('cashaccount.query.name', [name, height])
   }
+
+  async serverBanner(): Promise<JsonRpcResponse<string>> {
+    return this.rpcCall('server.banner')
+  }
 }
