@@ -106,7 +106,7 @@ export class DataApiService {
      * <li>Celo - celo / celo-testnet</li>
      * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-amoy</li>
+     * <li>Polygon - polygon</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
      * </ul>
@@ -161,7 +161,7 @@ export class DataApiService {
      * <li>Celo - celo / celo-testnet</li>
      * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-amoy</li>
+     * <li>Polygon - polygon</li>
      * <li>Tezos - tezos-mainnet</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
@@ -237,7 +237,7 @@ export class DataApiService {
      * <li>Celo - celo / celo-testnet</li>
      * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon / polygon-amoy</li>
+     * <li>Polygon - polygon</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
      * </ul>
@@ -802,4 +802,3 @@ export class DataApiService {
     }
 
 }
-

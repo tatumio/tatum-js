@@ -70,7 +70,7 @@
     "dedent-js": "^1.0.1",
     "ed25519-hd-key": "^1.2.0",
     "ethereumjs-wallet": "^1.0.2",
-    "ethers": "^6.12.1",
+    "ethers": "^5.5.4",
     "form-data": "^4.0.0",
     "hdkey": "^2.0.1",
     "lodash": "^4.17.21",
