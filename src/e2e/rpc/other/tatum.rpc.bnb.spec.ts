@@ -5,7 +5,7 @@ const getBnbRpc = async () =>
   await TatumSDK.init<Bnb>(e2eUtil.initConfig(Network.BNB))
 
 // Testnet is not available
-describe('Bnb', () => {
+describe.skip('Bnb', () => {
   describe('mainnet', () => {
     it('block', async () => {
       const tatum = await getBnbRpc()

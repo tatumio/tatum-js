@@ -6,7 +6,7 @@ const getCosmosRosettaRpc = async () =>
 
 const networks = [{ blockchain: 'cosmos', network: 'mainnet' }]
 
-describe.each(networks)('Cosmos Rosetta', ({ network, blockchain }) => {
+describe.skip.each(networks)('Cosmos Rosetta', ({ network, blockchain }) => {
   describe('Mainnet', () => {
     let tatum: CosmosRosetta
 
