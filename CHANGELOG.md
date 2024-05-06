@@ -1,3 +1,9 @@
+## [4.2.26] - 2024.5.6
+
+### Added
+
+- Rostrum server.banner method
+
 ## [4.2.24] - 2024.4.11
 
 ### Added
