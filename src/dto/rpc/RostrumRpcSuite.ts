@@ -805,4 +805,6 @@ export interface RostrumRpcInterface {
   cashAccountQueryName: (
     params: CashAccountQueryNameParams,
   ) => Promise<JsonRpcResponse<CashAccountQueryResult>>
+
+  serverBanner: () => Promise<JsonRpcResponse<string>>
 }
