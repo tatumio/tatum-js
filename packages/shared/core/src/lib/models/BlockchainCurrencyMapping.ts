@@ -1,4 +1,3 @@
-import { Blockchain } from './Blockchain'
 import {
   BSC_BASED_CURRENCIES,
   CELO_CURRENCIES,
@@ -9,6 +8,7 @@ import {
   NativeCurrency,
   TRON_CURRENCIES,
 } from '@tatumio/api-client'
+import { Blockchain } from './Blockchain'
 
 export const BlockchainCurrencyMapping: Record<
   Blockchain,
@@ -61,6 +61,7 @@ export const BlockchainCurrencyMapping: Record<
   FLR: Currency.FLR,
   CRO: Currency.CRO,
   BASE: Currency.BASE,
+  AVAX: Currency.AVAX,
 }
 
 export const CurrencyToBlockchainMapping: Record<Currency, Blockchain> = buildCurrencyBlockchainMapping()

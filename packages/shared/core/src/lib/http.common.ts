@@ -1,7 +1,7 @@
-import axios, { AxiosRequestConfig } from 'axios'
-import { Blockchain, EvmBasedBlockchain } from './models/Blockchain'
 import { TATUM_API_CONSTANTS } from '@tatumio/api-client'
+import axios from 'axios'
 import { blockchainHelper } from './blockchain.common'
+import { Blockchain, EvmBasedBlockchain } from './models/Blockchain'
 
 const EndpointsMapping: Record<Blockchain, string> = {
   HARMONY: 'one',
@@ -33,6 +33,7 @@ const EndpointsMapping: Record<Blockchain, string> = {
   FLR: 'flare',
   CRO: 'cronos',
   BASE: 'base',
+  AVAX: 'avalanche',
 }
 
 const isWebWorker =
