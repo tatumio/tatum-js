@@ -24,6 +24,10 @@ export type XrpTx = {
      */
     Destination?: string;
     /**
+     * The DestinationTag is used to distinguish transactions sent to accounts that serve multiple users.
+     */
+    DestinationTag?: number;
+    /**
      * Integer amount of XRP, in drops, to be destroyed as a cost for distributing this transaction to the network. Some transaction types have different minimum requirements.
      */
     Fee?: string;

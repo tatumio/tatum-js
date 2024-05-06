@@ -64,7 +64,7 @@ export class NodeRpcService {
                      * <li><a href="https://cronos.org/docs/resources/chain-integration.html" target="_blank">Cronos</a></li>
                      * <li><a href="https://dogecoin.com/" target="_blank">Dogecoin</a></li>
                      * <li><a href="https://docs.elrond.com/sdk-and-tools/rest-api/nodes/" target="_blank">Elrond</a></li>
-                     * <li><a href="https://developers.eos.io/welcome/latest/reference/nodeos-rpc-api-reference" target="_blank">EOSIO</a></li>
+                     * <li><a href="https://developers.eos.io/welcome/latest/reference/nodeos-rpc-api-reference" target="_blank">EOSIO</a> - Please note that for EOS you are able to get data only from block number 260742168 and newer.</li>
                      * <li><a href="https://ethereum.org/en/developers/docs/apis/json-rpc/" target="_blank">Ethereum</a></li>
                      * <li><a href="https://docs.fantom.foundation/api/public-api-endpoints" target="_blank">Fantom</a></li>
                      * <li><a href="https://developers.flow.com/http-api" target="_blank">Flow</a></li>
