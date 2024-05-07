@@ -253,12 +253,12 @@ describe.skip('Tatum NFT - Test mint flow', () => {
     const ownerAddress = '0x89144c7c7b4d44e9f99a465f58f47ae62f018a4c'
 
     const client = await TatumSDK.init<Polygon>({
-      network: Network.POLYGON_MUMBAI,
+      network: Network.POLYGON_AMOY,
     })
 
     const result = await client.nft.createNftCollection({
       name: 'Test contract',
-      symbol: 'MUMBAI_TEST',
+      symbol: 'AMOY_TEST',
       owner: ownerAddress,
     })
     console.log('deploy result', JSON.stringify(result))

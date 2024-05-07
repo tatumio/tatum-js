@@ -15,7 +15,6 @@ export type Chain =
   | 'bsc'
   | 'bsc-testnet'
   | 'polygon'
-  | 'polygon-mumbai'
 
 export type ChainUtxoEnum =
   | 'bitcoin'
@@ -35,7 +34,6 @@ export enum ChainEnum {
   BSC = 'bsc',
   BSC_TESTNET = 'bsc-testnet',
   POLYGON = 'polygon',
-  POLYGON_MUMBAI = 'polygon-mumbai',
 }
 
 export function networkToChain(network: Network): Chain {
@@ -54,8 +52,6 @@ export function networkToChain(network: Network): Chain {
       return ChainEnum.BSC_TESTNET
     case Network.POLYGON:
       return ChainEnum.POLYGON
-    case Network.POLYGON_MUMBAI:
-      return ChainEnum.POLYGON_MUMBAI
     default:
       throw new Error(`Unsupported network ${network}`)
   }
