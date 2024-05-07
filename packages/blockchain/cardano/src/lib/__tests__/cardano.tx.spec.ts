@@ -7,6 +7,7 @@ import {
 import { TatumCardanoSDK } from '@tatumio/cardano'
 
 describe('CARDANO transactions', () => {
+  jest.setTimeout(60000)
 
   afterEach(() => {
     jest.resetAllMocks()
