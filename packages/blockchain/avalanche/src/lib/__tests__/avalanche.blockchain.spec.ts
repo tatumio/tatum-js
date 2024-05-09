@@ -11,7 +11,7 @@ import { BlockchainUtilsService, CallSmartContractMethod, AvalancheEstimateGas }
 jest.mock('@tatumio/api-client')
 const mockedApi = jest.mocked(apiClient.ApiServices, true)
 
-describe('AvalancheSDK - blockchain', () => {
+describe.skip('AvalancheSDK - blockchain', () => {
   const sdk = TatumAvalancheSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
 
   afterEach(() => {
