@@ -43,7 +43,7 @@ export class DataApiService {
      * <li>Celo - celo / celo-testnet</li>
      * <li>Ethereum - ethereum / ethereum-sepolia / ethereum-holesky</li>
      * <li>BNB (Binance) Smart Chain - bsc / bsc-testnet</li>
-     * <li>Polygon - polygon</li>
+     * <li>Polygon - polygon / polygon-amoy</li>
      * <li>Horizen EON - eon-mainnet</li>
      * <li>Chiliz - chiliz-mainnet</li>
      * <li>Tezos - tezos-mainnet</li>
