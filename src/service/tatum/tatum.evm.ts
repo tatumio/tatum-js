@@ -52,7 +52,7 @@ export class FullEvm extends NotificationEvm {
 export class ArbitrumNova extends BaseEvm {}
 export class ArbitrumOne extends BaseEvm {}
 export class Aurora extends BaseEvm {}
-export class AvalancheC extends BaseEvm {}
+export class AvalancheC extends NotificationEvm {}
 export class Cronos extends NotificationEvm {}
 export class EthereumClassic extends BaseEvm {}
 export class Fantom extends BaseEvm {}

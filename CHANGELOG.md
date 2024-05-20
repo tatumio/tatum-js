@@ -1,3 +1,10 @@
+## [4.2.28] - 2024.5.20
+
+### Added
+
+- Support for Avalanche Notifications
+
+
 ## [4.2.27] - 2024.5.6
 
 ### Added
