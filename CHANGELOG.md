@@ -1,3 +1,9 @@
+## [4.2.29] - 2024.5.27
+
+### Added
+
+- Support for Data API on Polygon Amoy
+
 ## [4.2.28] - 2024.5.20
 
 ### Added
