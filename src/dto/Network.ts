@@ -187,6 +187,7 @@ export const DATA_API_EVM_NETWORKS = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
   Network.POLYGON,
+  Network.POLYGON_AMOY,
   Network.BINANCE_SMART_CHAIN,
   Network.BINANCE_SMART_CHAIN_TESTNET,
   Network.CELO,
