@@ -103,6 +103,7 @@ export enum Currency {
   ROSTRUM = 'ROSTRUM',
   ATOM = 'ATOM',
   IOTA = 'IOTA',
+  'ELECTRUM' = 'ELECTRUM',
 }
 
 export const ERC20_CURRENCIES = [
