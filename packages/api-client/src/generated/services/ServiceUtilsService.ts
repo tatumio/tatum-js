@@ -22,7 +22,7 @@ export class ServiceUtilsService {
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -49,7 +49,7 @@ export class ServiceUtilsService {
             path: `/v3/tatum/version`,
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -69,7 +69,7 @@ export class ServiceUtilsService {
             path: `/v3/tatum/freeze`,
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -89,7 +89,7 @@ export class ServiceUtilsService {
             path: `/v3/tatum/freeze`,
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }

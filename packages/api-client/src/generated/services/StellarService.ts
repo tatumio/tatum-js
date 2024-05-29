@@ -34,7 +34,7 @@ export class StellarService {
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -52,7 +52,7 @@ export class StellarService {
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -71,10 +71,10 @@ export class StellarService {
             method: 'GET',
             path: `/v3/xlm/ledger/${sequence}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -93,10 +93,10 @@ export class StellarService {
             method: 'GET',
             path: `/v3/xlm/ledger/${sequence}/transaction`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -114,7 +114,7 @@ export class StellarService {
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -138,10 +138,10 @@ export class StellarService {
                 'pagination': pagination,
             },
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -160,10 +160,10 @@ export class StellarService {
             method: 'GET',
             path: `/v3/xlm/transaction/${hash}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -182,10 +182,10 @@ export class StellarService {
             method: 'GET',
             path: `/v3/xlm/account/${account}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -214,10 +214,10 @@ export class StellarService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -247,10 +247,10 @@ export class StellarService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -274,10 +274,10 @@ export class StellarService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }

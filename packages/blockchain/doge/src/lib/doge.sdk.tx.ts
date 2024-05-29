@@ -2,12 +2,11 @@
 import { PrivateKey, Script, Transaction } from 'bitcore-lib-doge'
 import {
   ApiServices,
-  DataApiService,
   DogeTransactionAddress,
   DogeTransactionAddressKMS,
   DogeTransactionUTXO,
   DogeTransactionUTXOKMS,
-  TransactionHash,
+  TransactionHash, WalletApiService,
 } from '@tatumio/api-client'
 import { BtcBasedFromUtxoReplaceableTypes, BtcBasedTx } from '@tatumio/shared-blockchain-btc-based'
 import { amountUtils, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
@@ -25,11 +24,11 @@ type DogeTxOptions = { testnet: boolean }
 export const dogeTransactions = (
   apiCalls: {
     dogeBroadcast: typeof ApiServices.blockchain.doge.dogeBroadcast
-    getUTXOsByAddress: typeof DataApiService.getUtxosByAddress
+    getUTXOsByAddress: typeof WalletApiService.getUtxosByAddress
     getUtxo: typeof ApiServices.blockchain.doge.dogeGetUtxo
   } = {
     dogeBroadcast: ApiServices.blockchain.doge.dogeBroadcast,
-    getUTXOsByAddress: DataApiService.getUtxosByAddress,
+    getUTXOsByAddress: WalletApiService.getUtxosByAddress,
     getUtxo: ApiServices.blockchain.doge.dogeGetUtxo,
   },
 ): BtcBasedTx<DogeTransactionTypes> => {

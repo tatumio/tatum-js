@@ -30,9 +30,9 @@ export class CustomerService {
                 'offset': offset,
             },
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -51,10 +51,10 @@ export class CustomerService {
             method: 'GET',
             path: `/v3/ledger/customer/${id}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -77,10 +77,10 @@ export class CustomerService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -99,10 +99,10 @@ export class CustomerService {
             method: 'PUT',
             path: `/v3/ledger/customer/${id}/activate`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -121,10 +121,10 @@ export class CustomerService {
             method: 'PUT',
             path: `/v3/ledger/customer/${id}/deactivate`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -143,10 +143,10 @@ export class CustomerService {
             method: 'PUT',
             path: `/v3/ledger/customer/${id}/enable`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -165,10 +165,10 @@ export class CustomerService {
             method: 'PUT',
             path: `/v3/ledger/customer/${id}/disable`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }

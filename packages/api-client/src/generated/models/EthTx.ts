@@ -20,7 +20,7 @@ export type EthTx = {
     /**
      * Block number where this transaction was in.
      */
-    blockNumber?: number | null;
+    blockNumber?: number;
     /**
      * Address of the sender.
      */
@@ -52,7 +52,7 @@ export type EthTx = {
     /**
      * Integer of the transactions index position in the block.
      */
-    transactionIndex?: number | null;
+    transactionIndex?: number;
     /**
      * Value transferred in wei.
      */
@@ -60,11 +60,11 @@ export type EthTx = {
     /**
      * The amount of gas used by this specific transaction alone.
      */
-    gasUsed?: number | null;
+    gasUsed?: number;
     /**
      * The total amount of gas used when this transaction was executed in the block.
      */
-    cumulativeGasUsed?: number | null;
+    cumulativeGasUsed?: number;
     /**
      * The contract address created, if the transaction was a contract creation, otherwise null.
      */

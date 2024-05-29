@@ -14,29 +14,25 @@ export type DeployErc20KMS = {
     /**
      * Max supply of ERC20 token.
      */
-    totalCap?: string;
-    /**
-     * Max supply of ERC20 token.
-     */
     supply: string;
     /**
      * Number of decimal points
      */
     digits: number;
     /**
-     * Address on XDC blockchain, where all created ERC20 tokens will be transferred.
+     * Address on Ethereum blockchain, where all created ERC20 tokens will be transferred.
      */
     address: string;
-    /**
-     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
-     */
-    index?: number;
     /**
      * Identifier of the private key associated in signing application. Private key, or signature Id must be present.
      */
     signatureId: string;
     /**
-     * Nonce to be set to XDC transaction. If not present, last known nonce will be used.
+     * If signatureId is mnemonic-based, this is the index to the specific address from that mnemonic.
+     */
+    index?: number;
+    /**
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**

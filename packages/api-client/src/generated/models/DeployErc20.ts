@@ -12,27 +12,27 @@ export type DeployErc20 = {
      */
     name: string;
     /**
-     * Max supply of ERC20 token.
+     * Initial supply of ERC20 token. If totalCap is not defined, this supply is max supply.
      */
-    totalCap?: string;
+    supply: string;
     /**
      * Max supply of ERC20 token.
      */
-    supply: string;
+    totalCap?: string;
     /**
      * Number of decimal points
      */
     digits: number;
     /**
-     * Address on XDC blockchain, where all created ERC20 tokens will be transferred.
+     * Address on Ethereum blockchain, where all created ERC20 tokens will be transferred.
      */
     address: string;
     /**
-     * Private key of XDC account address, from which the fee for the deployment of ERC20 will be paid. Private key, or signature Id must be present.
+     * Private key of Ethereum account address, from which the fee for the deployment of ERC20 will be paid. Private key, or signature Id must be present.
      */
     fromPrivateKey: string;
     /**
-     * Nonce to be set to XDC transaction. If not present, last known nonce will be used.
+     * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
     /**

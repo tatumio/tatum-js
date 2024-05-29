@@ -28,7 +28,7 @@ import { request as __request } from '../core/request';
 export class NotificationSubscriptionsService {
 
     /**
-     * Create a subscription
+     * Create a subscription (V3)
      * <p><b>2 credits per API call + credits spent on subscriptions themselves<br/>
      * Each subscription type consumes a different number of credits.</b></p>
      * <p>For Free plans, there is a monthly limit of sent webhooks, which is <b>1000</b>.</p>
@@ -151,6 +151,13 @@ export class NotificationSubscriptionsService {
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>25 credits / day / address</td>
      * </tr>
+     * <tr>
+     * <td>Avalanche</td>
+     * <td>Yes/Yes</td>
+     * <td>AVAX, ERC20, ERC721, ERC1155</td>
+     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
+     * <td>25 credits / day / address</td>
+     * </tr>
      * </table>
      * The request body of the POST request is a JSON object with the following structure:<br/>
      * <pre>{
@@ -162,7 +169,7 @@ export class NotificationSubscriptionsService {
          * "tokenId": "1", // (ERC-721 / ERC-1155 only) the ID of the transferred token
          * "type": "token", // the type of the transaction; can be either "native" or "token"
          * "mempool": true, // (EVM-based blockchains only) if appears and set to "true", the transaction is in the mempool; if set to "false" or does not appear at all, the transaction has been added to a block
-         * "counterAddress": undefined // an optional counter party address of the transaction; for EVM-based blockchains, this is the recipient's address
+         * "counterAddress": undefined // an optional counter party address of the transaction; for EVM-based blockchains, this is the recipient's address // UTXO based chains return without this parameter, since UTXO is many-to-many by design.
          * "addressesRiskRatio": [ // (optional, subject to change; for Solana mainnet only) risk levels assigned to the addresses with which the address communicated within the transaction; the addresses are assessed using the AML/CFT solution by blockmate.io, see https://docs.blockmate.io/docs/risk-API/sources
          * {"vTEfAhXTmvgFmepgfhzBbRrJ4EtUP9adbMJjpzLsDMk": 0},
          * {"zBbRrJ4EtUP9adbMJjpzLsDMkvTEfAhXTmvgFmepgfh": 100}
@@ -216,6 +223,11 @@ export class NotificationSubscriptionsService {
          * <tr>
          * <td>Base</td>
          * <td>base-mainnet / base-sepolia</td>
+         * <td>500,000 credits / day</td>
+         * </tr>
+         * <tr>
+         * <td>Avalanche</td>
+         * <td>avalanche-mainnet / avalanche-testnet</td>
          * <td>500,000 credits / day</td>
          * </tr>
          * </table>
@@ -289,6 +301,11 @@ export class NotificationSubscriptionsService {
                      * <td>base-mainnet / base-testnet</td>
                      * <td>500,000 credits / day</td>
                      * </tr>
+                     * <tr>
+                     * <td>Avalanche</td>
+                     * <td>avalanche-mainnet / avalanche-testnet</td>
+                     * <td>500,000 credits / day</td>
+                     * </tr>
                      * </table>
                      * The request body of the POST request is a JSON object with the following structure:<br/>
                      * <pre>{
@@ -343,7 +360,7 @@ export class NotificationSubscriptionsService {
                                  * <tr>
                                  * <td>Flare</td>
                                  * <td>flare-coston / flare-coston2 / flare-songbird / flare-mainnet</td>
-                                 * <td>500,000 credits / day</td>
+                                 * <td>50,000 credits / day</td>
                                  * </tr>
                                  * <tr>
                                  * <td>BNB Smart Chain</td>
@@ -358,6 +375,11 @@ export class NotificationSubscriptionsService {
                                  * <tr>
                                  * <td>Base</td>
                                  * <td>base-mainnet</td>
+                                 * <td>50,000 credits / day</td>
+                                 * </tr>
+                                 * <tr>
+                                 * <td>Avalanche</td>
+                                 * <td>avalanche-mainnet / avalanche-testnet</td>
                                  * <td>50,000 credits / day</td>
                                  * </tr>
                                  * </table>
@@ -517,10 +539,10 @@ export class NotificationSubscriptionsService {
                                                                                 body: requestBody,
                                                                                 mediaType: 'application/json',
                                                                                 errors: {
-                                                                                    400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                                                    400: `Bad Request`,
                                                                                     401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                                                                                     403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                                                                                    500: `Internal server error. There was an error on the server while processing the request.`,
+                                                                                    500: `Internal server error. There was an error on the server during the processing of the request.`,
                                                                                 },
                                                                             });
                                                                         }
@@ -548,9 +570,9 @@ export class NotificationSubscriptionsService {
                                                                                     'address': address,
                                                                                 },
                                                                                 errors: {
-                                                                                    400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                                                    400: `Bad Request`,
                                                                                     401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                                                                                    500: `Internal server error. There was an error on the server while processing the request.`,
+                                                                                    500: `Internal server error. There was an error on the server during the processing of the request.`,
                                                                                 },
                                                                             });
                                                                         }
@@ -581,7 +603,7 @@ export class NotificationSubscriptionsService {
                                                                                 mediaType: 'application/json',
                                                                                 errors: {
                                                                                     401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                                                                                    500: `Internal server error. There was an error on the server while processing the request.`,
+                                                                                    500: `Internal server error. There was an error on the server during the processing of the request.`,
                                                                                 },
                                                                             });
                                                                         }
@@ -599,7 +621,7 @@ export class NotificationSubscriptionsService {
                                                                                 path: `/v3/subscription`,
                                                                                 errors: {
                                                                                     401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                                                                                    500: `Internal server error. There was an error on the server while processing the request.`,
+                                                                                    500: `Internal server error. There was an error on the server during the processing of the request.`,
                                                                                 },
                                                                             });
                                                                         }
@@ -627,9 +649,9 @@ export class NotificationSubscriptionsService {
                                                                                     'address': address,
                                                                                 },
                                                                                 errors: {
-                                                                                    400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                                                    400: `Bad Request`,
                                                                                     401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                                                                                    500: `Internal server error. There was an error on the server while processing the request.`,
+                                                                                    500: `Internal server error. There was an error on the server during the processing of the request.`,
                                                                                 },
                                                                             });
                                                                         }
@@ -657,9 +679,9 @@ export class NotificationSubscriptionsService {
                                                                                 body: requestBody,
                                                                                 mediaType: 'application/json',
                                                                                 errors: {
-                                                                                    400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                                                    400: `Bad Request`,
                                                                                     401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                                                                                    500: `Internal server error. There was an error on the server while processing the request.`,
+                                                                                    500: `Internal server error. There was an error on the server during the processing of the request.`,
                                                                                 },
                                                                             });
                                                                         }
@@ -678,9 +700,9 @@ export class NotificationSubscriptionsService {
                                                                                 method: 'DELETE',
                                                                                 path: `/v3/subscription/${id}`,
                                                                                 errors: {
-                                                                                    400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                                                    400: `Bad Request`,
                                                                                     401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                                                                                    500: `Internal server error. There was an error on the server while processing the request.`,
+                                                                                    500: `Internal server error. There was an error on the server during the processing of the request.`,
                                                                                 },
                                                                             });
                                                                         }
@@ -705,10 +727,10 @@ export class NotificationSubscriptionsService {
                                                                                 method: 'GET',
                                                                                 path: `/v3/subscription/report/${id}`,
                                                                                 errors: {
-                                                                                    400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                                                    400: `Bad Request`,
                                                                                     401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                                                                                     403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                                                                                    500: `Internal server error. There was an error on the server while processing the request.`,
+                                                                                    500: `Internal server error. There was an error on the server during the processing of the request.`,
                                                                                 },
                                                                             });
                                                                         }
@@ -739,9 +761,9 @@ export class NotificationSubscriptionsService {
                                                                                     'failed': failed,
                                                                                 },
                                                                                 errors: {
-                                                                                    400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                                                    400: `Bad Request`,
                                                                                     401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                                                                                    500: `Internal server error. There was an error on the server while processing the request.`,
+                                                                                    500: `Internal server error. There was an error on the server during the processing of the request.`,
                                                                                 },
                                                                             });
                                                                         }
@@ -772,9 +794,9 @@ export class NotificationSubscriptionsService {
                                                                                     'failed': failed,
                                                                                 },
                                                                                 errors: {
-                                                                                    400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                                                                                    400: `Bad Request`,
                                                                                     401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                                                                                    500: `Internal server error. There was an error on the server while processing the request.`,
+                                                                                    500: `Internal server error. There was an error on the server during the processing of the request.`,
                                                                                 },
                                                                             });
                                                                         }

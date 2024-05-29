@@ -18,7 +18,11 @@ import {
   CronosService,
   CustodialManagedWalletsService,
   CustomerService,
-  DataApiService,
+  TokenApiService,
+  NftApiService,
+  WalletApiService,
+  TransactionsApiService,
+  DeFiApiService,
   DogecoinService,
   ElrondService,
   EthereumService,
@@ -80,6 +84,12 @@ export type BtcBasedApiService = BitcoinService | BitcoinCashService | DogecoinS
 
 export type EvmBasedApiService = EthereumService | CeloService
 
+export type ApiServiceTypes = typeof TokenApiService &
+  typeof NftApiService &
+  typeof WalletApiService &
+  typeof TransactionsApiService &
+  typeof DeFiApiService
+
 export const ApiServices = {
   blockchain: {
     ada: CardanoService,
@@ -133,7 +143,13 @@ export const ApiServices = {
   },
   security: MaliciousAddressService,
   kms: KeyManagementSystemService,
-  data: DataApiService,
+  data: {
+    ...DeFiApiService,
+    ...WalletApiService,
+    ...TokenApiService,
+    ...TransactionsApiService,
+    ...NftApiService,
+  },
   exchangeRate: ExchangeRateService,
   tatum: ServiceUtilsService,
   custodial: CustodialManagedWalletsService,

@@ -18,7 +18,9 @@ export const cardanoWallet = (
   const deriveAddressFromPubKey = (key: string, testnet: boolean) =>
     apiCalls
       .rpcCall(
+        args.apiKey,
         testnet ? 'cardano-preprod' : 'cardano-mainnet',
+        'construction/derive',
         {
           ...cardanoUtils.networkIdentifier(testnet),
           public_key: {
@@ -27,8 +29,6 @@ export const cardanoWallet = (
           },
           metadata: {},
         },
-        args.apiKey,
-        'construction/derive',
       )
       .then((r) => r.account_identifier.address)
 

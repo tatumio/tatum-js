@@ -3,12 +3,11 @@ import {
   AdaTransactionFromAddressKMS,
   AdaTransactionFromUTXO,
   AdaTransactionFromUTXOKMS,
-  ApiServices,
+  ApiServices, ApiServiceTypes,
   Currency,
-  DataApiService,
   NodeRpcService,
   PendingTransaction,
-  TransactionHash,
+  TransactionHash, WalletApiService,
 } from '@tatumio/api-client'
 import { amountUtils, SDKArguments, SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { CardanoSdkError } from './cardano.sdk.errors'
@@ -16,15 +15,19 @@ import { cardanoUtils } from './cardano.utils'
 
 type CardanoTxOptions = { testnet: boolean }
 
+
+
+type ApiCallsType = {
+  cardanoBroadcast: typeof ApiServices.blockchain.ada.adaBroadcast;
+  getUTXOsByAddress: ApiServiceTypes['getUtxosByAddress'];
+  rpcCall: typeof NodeRpcService.nodeJsonPostRpcDriver;
+};
+
 export const cardanoTransactions = (
   args: SDKArguments,
-  apiCalls: {
-    cardanoBroadcast: typeof ApiServices.blockchain.ada.adaBroadcast
-    getUTXOsByAddress: typeof DataApiService.getUtxosByAddress
-    rpcCall: typeof NodeRpcService.nodeJsonPostRpcDriver
-  } = {
+  apiCalls: ApiCallsType = {
     cardanoBroadcast: ApiServices.blockchain.ada.adaBroadcast,
-    getUTXOsByAddress: DataApiService.getUtxosByAddress,
+    getUTXOsByAddress: WalletApiService.getUtxosByAddress,
     rpcCall: NodeRpcService.nodeJsonPostRpcDriver,
   },
   cardanoWallet,
@@ -36,7 +39,9 @@ export const cardanoTransactions = (
     options: CardanoTxOptions,
   ): Promise<string> => {
     const preprocess = await apiCalls.rpcCall(
+      args.apiKey,
       options?.testnet ? 'cardano-preprod' : 'cardano-mainnet',
+      'construction/preprocess',
       {
         network_identifier,
         operations,
@@ -44,8 +49,6 @@ export const cardanoTransactions = (
           relative_ttl: 1000,
         },
       },
-      args.apiKey,
-      'construction/preprocess',
     )
     const metadata = await apiCalls.rpcCall(
       options?.testnet ? 'cardano-preprod' : 'cardano-mainnet',
@@ -84,14 +87,14 @@ export const cardanoTransactions = (
     }
 
     const { signed_transaction } = await apiCalls.rpcCall(
+      args.apiKey,
       options?.testnet ? 'cardano-preprod' : 'cardano-mainnet',
+      'construction/combine',
       {
         network_identifier,
         unsigned_transaction,
         signatures,
       },
-      args.apiKey,
-      'construction/combine',
     )
 
     return signed_transaction

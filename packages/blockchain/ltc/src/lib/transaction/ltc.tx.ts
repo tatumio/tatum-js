@@ -1,4 +1,4 @@
-import { ApiServices, BlockchainFeesService, Currency } from '@tatumio/api-client'
+import { ApiServices, BlockchainFeesService, Currency, WalletApiService } from '@tatumio/api-client'
 import {
   btcBasedTransactions,
   BtcBasedTx,
@@ -12,14 +12,14 @@ import { PrivateKey, Script, Transaction } from 'bitcore-lib-ltc'
 
 export const ltcTransactions = (
   apiCalls: {
-    getUTXOsByAddress: typeof ApiServices.data.getUtxosByAddress
+    getUTXOsByAddress: typeof WalletApiService.getUtxosByAddress
     broadcast: typeof ApiServices.blockchain.ltc.ltcBroadcast
     getRawTransaction: typeof ApiServices.blockchain.ltc.ltcGetRawTransaction
     getUtxo: typeof ApiServices.blockchain.ltc.ltcGetUtxo
     getUtxoBatch?: GetUtxoBatchType
     estimateFee: typeof BlockchainFeesService.estimateFeeBlockchain
   } = {
-    getUTXOsByAddress: ApiServices.data.getUtxosByAddress,
+    getUTXOsByAddress: WalletApiService.getUtxosByAddress,
     broadcast: ApiServices.blockchain.ltc.ltcBroadcast,
     getRawTransaction: ApiServices.blockchain.ltc.ltcGetRawTransaction,
     getUtxo: ApiServices.blockchain.ltc.ltcGetUtxo,

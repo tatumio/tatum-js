@@ -39,5 +39,5 @@ export type TransferFlareBlockchain = {
     /**
      * Private key of sender address. Private key, or signature Id must be present.
      */
-    fromPrivateKey: string;
+    fromPrivateKey?: string;
 }

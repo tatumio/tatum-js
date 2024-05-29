@@ -1,4 +1,4 @@
-import { ApiServices, BlockchainFeesService, Currency } from '@tatumio/api-client'
+import { ApiServices, BlockchainFeesService, Currency, WalletApiService } from '@tatumio/api-client'
 import {
   btcBasedTransactions,
   BtcBasedTx,
@@ -9,13 +9,13 @@ import { btcWalletUtils } from '../btc.wallet.utils'
 
 export const btcTransactions = (
   apiCalls: {
-    getUTXOsByAddress: typeof ApiServices.data.getUtxosByAddress
+    getUTXOsByAddress: typeof WalletApiService.getUtxosByAddress
     getUtxo: typeof ApiServices.blockchain.bitcoin.btcGetUtxo
     getUtxoBatch?: GetUtxoBatchType
     broadcast: typeof ApiServices.blockchain.bitcoin.btcBroadcast
     estimateFee: typeof BlockchainFeesService.estimateFeeBlockchain
   } = {
-    getUTXOsByAddress: ApiServices.data.getUtxosByAddress,
+    getUTXOsByAddress: WalletApiService.getUtxosByAddress,
     getUtxo: ApiServices.blockchain.bitcoin.btcGetUtxo,
     broadcast: ApiServices.blockchain.bitcoin.btcBroadcast,
     estimateFee: BlockchainFeesService.estimateFeeBlockchain,

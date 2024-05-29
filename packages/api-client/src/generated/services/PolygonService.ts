@@ -43,7 +43,7 @@ export class PolygonService {
                 'mnemonic': mnemonic,
             },
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -69,7 +69,7 @@ export class PolygonService {
             method: 'GET',
             path: `/v3/polygon/address/${xpub}/${index}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -95,7 +95,7 @@ export class PolygonService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -125,7 +125,7 @@ export class PolygonService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -167,7 +167,7 @@ export class PolygonService {
             method: 'GET',
             path: `/v3/polygon/block/${hash}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -190,7 +190,7 @@ export class PolygonService {
             method: 'GET',
             path: `/v3/polygon/account/balance/${address}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -213,7 +213,7 @@ export class PolygonService {
             method: 'GET',
             path: `/v3/polygon/transaction/${hash}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
@@ -256,7 +256,7 @@ export class PolygonService {
                 'sort': sort,
             },
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -281,7 +281,7 @@ export class PolygonService {
             method: 'GET',
             path: `/v3/polygon/transaction/count/${address}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -310,7 +310,7 @@ export class PolygonService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
@@ -350,7 +350,7 @@ export class PolygonService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
@@ -377,7 +377,7 @@ export class PolygonService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,

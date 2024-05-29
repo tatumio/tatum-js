@@ -36,7 +36,7 @@ export class AlgorandService {
                 'mnemonic': mnemonic,
             },
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -64,7 +64,7 @@ export class AlgorandService {
             method: 'GET',
             path: `/v3/algorand/address/${priv}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -96,7 +96,7 @@ export class AlgorandService {
             method: 'GET',
             path: `/v3/algorand/node/indexer/${xApiKey}/${indexerPath}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -129,7 +129,7 @@ export class AlgorandService {
             method: 'GET',
             path: `/v3/algorand/node/algod/${xApiKey}/${algodPath}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -176,7 +176,7 @@ export class AlgorandService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -214,7 +214,7 @@ export class AlgorandService {
             method: 'GET',
             path: `/v3/algorand/account/balance/${address}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -252,7 +252,7 @@ export class AlgorandService {
             method: 'GET',
             path: `/v3/algorand/block/${roundNumber}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -281,7 +281,7 @@ export class AlgorandService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -312,7 +312,7 @@ export class AlgorandService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -333,7 +333,7 @@ export class AlgorandService {
             method: 'GET',
             path: `/v3/algorand/transaction/${txid}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -368,7 +368,7 @@ export class AlgorandService {
                 'next': next,
             },
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
@@ -394,7 +394,7 @@ export class AlgorandService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 500: `Internal server error. There was an error on the server during the processing of the request.`,
             },

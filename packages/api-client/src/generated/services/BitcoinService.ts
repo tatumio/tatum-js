@@ -44,10 +44,10 @@ export class BitcoinService {
                 'mnemonic': mnemonic,
             },
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -70,10 +70,10 @@ export class BitcoinService {
             method: 'GET',
             path: `/v3/bitcoin/address/${xpub}/${index}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -96,10 +96,10 @@ export class BitcoinService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -119,7 +119,7 @@ export class BitcoinService {
             errors: {
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -140,10 +140,10 @@ export class BitcoinService {
             method: 'GET',
             path: `/v3/bitcoin/block/hash/${i}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -164,10 +164,10 @@ export class BitcoinService {
             method: 'GET',
             path: `/v3/bitcoin/block/${hash}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 404: `Block not found.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -189,10 +189,10 @@ export class BitcoinService {
             method: 'GET',
             path: `/v3/bitcoin/address/balance/${address}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -217,10 +217,10 @@ export class BitcoinService {
                 'addresses': addresses,
             },
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -258,10 +258,10 @@ export class BitcoinService {
                 'txType': txType,
             },
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -293,10 +293,10 @@ export class BitcoinService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -333,10 +333,10 @@ export class BitcoinService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -357,10 +357,10 @@ export class BitcoinService {
             method: 'GET',
             path: `/v3/bitcoin/transaction/${hash}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -388,10 +388,10 @@ export class BitcoinService {
             method: 'GET',
             path: `/v3/bitcoin/utxo/${hash}/${index}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -409,10 +409,10 @@ export class BitcoinService {
             method: 'GET',
             path: `/v3/bitcoin/mempool`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -436,10 +436,10 @@ export class BitcoinService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to perform the required operation due to a logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -483,9 +483,9 @@ export class BitcoinService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }

@@ -8,7 +8,6 @@ import {
   BtcUTXO,
   ChainUtxoEnum,
   Currency,
-  DataApiService,
   EstimateFeeFromUTXO,
   FeeBtcBased,
   LtcTransactionAddress,
@@ -16,7 +15,7 @@ import {
   LtcTransactionUTXO,
   LtcTransactionUTXOKMS,
   LtcUTXO,
-  TransactionHash,
+  TransactionHash, WalletApiService,
 } from '@tatumio/api-client'
 import { PrivateKey, Script, Transaction } from 'bitcore-lib'
 import { amountUtils, SdkError, SdkErrorCode } from '@tatumio/shared-abstract-sdk'
@@ -87,7 +86,7 @@ export const btcBasedTransactions = (
   currency: Currency.BTC | Currency.LTC,
   utils: BtcBasedWalletUtils,
   apiCalls: {
-    getUTXOsByAddress: typeof DataApiService.getUtxosByAddress
+    getUTXOsByAddress: typeof WalletApiService.getUtxosByAddress
     getUtxo: GetUtxoType
     getUtxoBatch?: GetUtxoBatchType
     broadcast: BroadcastType

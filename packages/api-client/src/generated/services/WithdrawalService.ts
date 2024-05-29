@@ -62,10 +62,10 @@ export class WithdrawalService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -96,9 +96,9 @@ export class WithdrawalService {
                 'offset': offset,
             },
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -121,10 +121,10 @@ export class WithdrawalService {
             method: 'PUT',
             path: `/v3/offchain/withdrawal/${id}/${txId}`,
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -137,6 +137,15 @@ export class WithdrawalService {
      * By default, the transaction fee is included in the reverted transaction. There are situations, like sending ERC20 on ETH, TRC token on TRON, XLM or XRP based assets, when the fee should not be reverted, because e.g. the fee is in calculated
      * in Ethereum and transaction was in ERC20 currency. In this situation, only the transaction amount should be reverted, not the fee.
      * </p>
+     *
+     * <pre>
+     * Tip: For Virtual Accounts where withdrawal currency is a token, \n
+     * it is recommended to use “revert=false”. Otherwise, the blockchain \n
+     * transaction fee in native currency will be reverted as effective \n
+     * Virtual Account balance. Example: tx out fails and cancel \n
+     * “revert=true” from a 10 USDT + 0.10 TRX as “fee” would be \n
+     * reverted as 10+30 USDT (where the TRX of the fee is converted to USDT)
+     * </pre>
      *
      * @param id ID of created withdrawal
      * @param revert Defines whether fee should be reverted to account balance as well as amount. Defaults to true. Revert true would be typically used when withdrawal was not broadcast to blockchain. False is used usually for Ethereum based currencies when gas was consumed but transaction was reverted.
@@ -154,10 +163,10 @@ export class WithdrawalService {
                 'revert': revert,
             },
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
@@ -182,10 +191,10 @@ export class WithdrawalService {
             body: requestBody,
             mediaType: 'application/json',
             errors: {
-                400: `Bad Request. Validation failed for the given object in the HTTP Body or Request parameters.`,
+                400: `Bad Request`,
                 401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
                 403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
-                500: `Internal server error. There was an error on the server while processing the request.`,
+                500: `Internal server error. There was an error on the server during the processing of the request.`,
             },
         });
     }
