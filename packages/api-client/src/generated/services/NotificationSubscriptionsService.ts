@@ -151,13 +151,6 @@ export class NotificationSubscriptionsService {
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>25 credits / day / address</td>
      * </tr>
-     * <tr>
-     * <td>Avalanche</td>
-     * <td>Yes/Yes</td>
-     * <td>AVAX, ERC20, ERC721, ERC1155</td>
-     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
-     * <td>25 credits / day / address</td>
-     * </tr>
      * </table>
      * The request body of the POST request is a JSON object with the following structure:<br/>
      * <pre>{
@@ -223,16 +216,6 @@ export class NotificationSubscriptionsService {
          * <tr>
          * <td>Base</td>
          * <td>base-mainnet / base-sepolia</td>
-         * <td>500,000 credits / day</td>
-         * </tr>
-         * <tr>
-         * <td>Avalanche</td>
-         * <td>avalanche-mainnet / avalanche-testnet</td>
-         * <td>500,000 credits / day</td>
-         * </tr>
-         * <tr>
-         * <td>Optimism</td>
-         * <td>optimism-mainnet / optimism-testnet</td>
          * <td>500,000 credits / day</td>
          * </tr>
          * </table>
@@ -306,16 +289,6 @@ export class NotificationSubscriptionsService {
                      * <td>base-mainnet / base-testnet</td>
                      * <td>500,000 credits / day</td>
                      * </tr>
-                     * <tr>
-                     * <td>Avalanche</td>
-                     * <td>avalanche-mainnet / avalanche-testnet</td>
-                     * <td>500,000 credits / day</td>
-                     * </tr>
-                     * <tr>
-                     * <td>Optimism</td>
-                     * <td>optimism-mainnet / optimism-testnet</td>
-                     * <td>500,000 credits / day</td>
-                     * </tr>
                      * </table>
                      * The request body of the POST request is a JSON object with the following structure:<br/>
                      * <pre>{
@@ -370,7 +343,7 @@ export class NotificationSubscriptionsService {
                                  * <tr>
                                  * <td>Flare</td>
                                  * <td>flare-coston / flare-coston2 / flare-songbird / flare-mainnet</td>
-                                 * <td>50,000 credits / day</td>
+                                 * <td>500,000 credits / day</td>
                                  * </tr>
                                  * <tr>
                                  * <td>BNB Smart Chain</td>
@@ -385,16 +358,6 @@ export class NotificationSubscriptionsService {
                                  * <tr>
                                  * <td>Base</td>
                                  * <td>base-mainnet</td>
-                                 * <td>50,000 credits / day</td>
-                                 * </tr>
-                                 * <tr>
-                                 * <td>Avalanche</td>
-                                 * <td>avalanche-mainnet / avalanche-testnet</td>
-                                 * <td>50,000 credits / day</td>
-                                 * </tr>
-                                 * <tr>
-                                 * <td>Optimism</td>
-                                 * <td>optimism-mainnet / optimism-testnet</td>
                                  * <td>50,000 credits / day</td>
                                  * </tr>
                                  * </table>

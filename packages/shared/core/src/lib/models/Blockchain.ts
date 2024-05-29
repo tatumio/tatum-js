@@ -29,7 +29,6 @@ export enum Blockchain {
   CRO = 'CRO',
   BASE = 'BASE',
   AVAX = 'AVAX',
-  OPTIMISM = 'OPTIMISM',
 }
 
 export const EvmBasedBlockchains = [
@@ -44,7 +43,6 @@ export const EvmBasedBlockchains = [
   Blockchain.CRO,
   Blockchain.BASE,
   Blockchain.AVAX,
-  Blockchain.OPTIMISM,
 ]
 
 // @TODO tmp solution
@@ -66,4 +64,3 @@ export type EvmBasedBlockchain =
   | Blockchain.CRO
   | Blockchain.BASE
   | Blockchain.AVAX
-  | Blockchain.OPTIMISM

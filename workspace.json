@@ -39,7 +39,6 @@
     "ltc-example": "examples/ltc-example",
     "one": "packages/blockchain/one",
     "one-example": "examples/one-example",
-    "optimism": "packages/blockchain/optimism",
     "polygon": "packages/blockchain/polygon",
     "polygon-example": "examples/polygon-example",
     "sdk": "packages/sdk",

@@ -60,7 +60,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When deploying a Multi Token smart contract, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -115,7 +114,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When minting a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -170,7 +168,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When minting multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -225,7 +222,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When burning a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -280,7 +276,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When burning multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -336,7 +331,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When transferring a Multi Token, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -392,7 +386,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When transferring multiple Multi Tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -447,7 +440,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b></p>
      * <p>When adding a Multi Token minter, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -549,7 +541,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      *
      * @param chain Blockchain to work with
@@ -560,7 +551,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @throws ApiError
      */
     public static multiTokenGetTransaction(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX',
         hash: string,
         testnetType?: TestnetType,
         xTestnetType?: TestnetType,
@@ -670,7 +661,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      *
      * @param chain Blockchain to work with
@@ -683,7 +673,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @throws ApiError
      */
     public static multiTokenGetBalance(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX',
         address: string,
         contractAddress: string,
         tokenId: string,
@@ -730,7 +720,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      *
      * @param chain Blockchain to work with
@@ -743,7 +732,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @throws ApiError
      */
     public static multiTokenGetBalanceBatch(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLARE' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLARE' | 'CRO' | 'BASE' | 'AVAX',
         contractAddress: string,
         tokenId: string,
         address: string,
@@ -787,7 +776,6 @@ export class MultiTokensErc1155OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      *
      * @param chain Blockchain to work with
@@ -799,7 +787,7 @@ export class MultiTokensErc1155OrCompatibleService {
      * @throws ApiError
      */
     public static multiTokenGetMetadata(
-        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM',
+        chain: 'ETH' | 'MATIC' | 'KCS' | 'KLAY' | 'ONE' | 'CELO' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX',
         token: string,
         contractAddress: string,
         testnetType?: TestnetType,

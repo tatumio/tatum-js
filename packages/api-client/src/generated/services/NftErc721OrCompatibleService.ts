@@ -119,7 +119,6 @@ export class NftErc721OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      * <p><b>General NFT smart contracts</b><br/>
      * By default, an NFT smart contract is deployed as a <b>general NFT smart contract compatible with OpenSea royalties</b>. This is a standard NFT contract with <code>AccessControl</code> and <code>Ownable</code>, enhanced with NFT batch minting. NFTs minted on this smart contract are compatible with OpenSea and its royalty structure.<p>
@@ -184,7 +183,6 @@ export class NftErc721OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
-     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b><br/>
      * When allowing a blockchain address to mint NFTs, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -384,7 +382,6 @@ export class NftErc721OrCompatibleService {
              * <li>Cronos</li>
              * <li>Base</li>
              * <li>Avalanche</li>
-             * <li>Optimism</li>
              * </ul>
              * <p>Depending on what blockchain you use, choose the request body schema to use in the API call.</p>
              * <ul>
@@ -467,7 +464,6 @@ export class NftErc721OrCompatibleService {
              * <li>Cronos</li>
              * <li>Base</li>
              * <li>Avalanche</li>
-             * <li>Optimism</li>
              * </ul>
              * <p>For Ethereum, Celo, Flare and BNB Smart Chain, transferring NFTs invokes the <code>safeTransfer()</code> method.</p>
              * <p><b>Transferring NFTs on Algorand</b></p>
@@ -540,7 +536,6 @@ export class NftErc721OrCompatibleService {
              * <li>Cronos</li>
              * <li>Base</li>
              * <li>Avalanche</li>
-             * <li>Optimism</li>
              * </ul>
              * This operation works in two modes.
              *
@@ -659,7 +654,6 @@ export class NftErc721OrCompatibleService {
                  * <li>Cronos</li>
                  * <li>Base</li>
                  * <li>Avalanche</li>
-                 * <li>Optimism</li>
                  * </ul>
                  * <p><b>Burning NFTs on Algorand</b><br/>
                  * You can burn only the NFTs that were minted with the address of the manager account specified in the <code>manager</code> parameter in the <a href="#operation/NftMintErc721">minting call</a> (see the <code>MintNftExpressAlgorand</code>, <code>MintNftAlgorand</code>, and <code>MintNftAlgorandKMS</code> schemas of the request body).</p>
@@ -838,7 +832,6 @@ export class NftErc721OrCompatibleService {
                  * <li>Cronos</li>
                  * <li>Base</li>
                  * <li>Avalanche</li>
-                 * <li>Optimism</li>
                  * </ul>
                  *
                  * @param chain The blockchain to work with
@@ -849,7 +842,7 @@ export class NftErc721OrCompatibleService {
                  * @throws ApiError
                  */
                 public static nftGetTransactErc721(
-                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM',
+                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX',
                     hash: string,
                     testnetType?: TestnetType,
                     xTestnetType?: TestnetType,
@@ -980,7 +973,7 @@ export class NftErc721OrCompatibleService {
                  * @throws ApiError
                  */
                 public static nftGetBalanceErc721(
-                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC' | 'SOL' | 'ALGO' | 'EGLD' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM',
+                    chain: 'ETH' | 'MATIC' | 'KCS' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'BSC' | 'SOL' | 'ALGO' | 'EGLD' | 'FLR' | 'CRO' | 'BASE' | 'AVAX',
                     address: string,
                     contractAddress: string,
                     testnetType?: TestnetType,
@@ -1025,7 +1018,6 @@ export class NftErc721OrCompatibleService {
                  * <li>Cronos</li>
                  * <li>Base</li>
                  * <li>Avalanche</li>
-                 * <li>Optimism</li>
                  * </ul>
                  *
                  * @param chain The blockchain to work with
@@ -1038,7 +1030,7 @@ export class NftErc721OrCompatibleService {
                  * @throws ApiError
                  */
                 public static nftGetMetadataErc721(
-                    chain: 'BSC' | 'CELO' | 'ETH' | 'FLOW' | 'KCS' | 'KLAY' | 'MATIC' | 'ONE' | 'SOL' | 'TRON' | 'ALGO' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM',
+                    chain: 'BSC' | 'CELO' | 'ETH' | 'FLOW' | 'KCS' | 'KLAY' | 'MATIC' | 'ONE' | 'SOL' | 'TRON' | 'ALGO' | 'FLR' | 'CRO' | 'BASE' | 'AVAX',
                     contractAddress: string,
                     tokenId: string,
                     account?: string,
@@ -1087,7 +1079,6 @@ export class NftErc721OrCompatibleService {
                  * <li>Cronos</li>
                  * <li>Base</li>
                  * <li>Avalanche</li>
-                 * <li>Optimism</li>
                  * </ul>
                  *
                  * @param chain The blockchain to work with
@@ -1097,7 +1088,7 @@ export class NftErc721OrCompatibleService {
                  * @throws ApiError
                  */
                 public static nftGetContractAddress(
-                    chain: 'ALGO' | 'ETH' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'MATIC' | 'KCS' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM',
+                    chain: 'ALGO' | 'ETH' | 'ONE' | 'KLAY' | 'CELO' | 'TRON' | 'FLOW' | 'MATIC' | 'KCS' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX',
                     hash: string,
                     xTestnetType: 'ethereum-sepolia' = 'ethereum-sepolia',
                 ): CancelablePromise<{

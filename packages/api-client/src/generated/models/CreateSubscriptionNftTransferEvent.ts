@@ -14,7 +14,7 @@ export type CreateSubscriptionNftTransferEvent = {
         /**
          * The blockchain on which events should be monitored.
          */
-        chain: 'ETH' | 'MATIC' | 'CELO' | 'KLAY' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM';
+        chain: 'ETH' | 'MATIC' | 'CELO' | 'KLAY' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX';
         /**
          * The URL of the endpoint where an HTTP POST request will be sent when the block where the events from the smart contracts are reflected gets completed.
          */

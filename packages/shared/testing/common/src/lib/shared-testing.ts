@@ -99,7 +99,6 @@ export const TEST_DATA = {
   CRO: ETH_TEST_DATA,
   BASE: ETH_TEST_DATA,
   AVAX: ETH_TEST_DATA,
-  OPTIMISM: ETH_TEST_DATA,
 }
 
 export function expectHexString(value: string): void {
