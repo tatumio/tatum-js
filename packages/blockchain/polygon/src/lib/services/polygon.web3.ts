@@ -23,7 +23,8 @@ export const polygonWeb3 = (args: { blockchain: EvmBasedBlockchain; client?: Web
 
       const possiblyGasStationApiKey = gasStationApiKey ?? process.env['TATUM_GAS_STATION_API_KEY']
       if (possiblyGasStationApiKey) {
-        gasStationUrl = `${gasStationUrl}?apiKey=${possiblyGasStationApiKey}`
+        // TODO: find API key and put it here
+        gasStationUrl = `${gasStationUrl}`
       }
 
       const data = (await httpHelper.get(gasStationUrl)).data as GasStationResponse
