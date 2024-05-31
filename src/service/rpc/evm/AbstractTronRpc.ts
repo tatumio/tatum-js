@@ -12,7 +12,7 @@ import {
   FreezeAccountOptions,
   GetCanWithdrawUnfreezeAmountOptions,
   JsonRpcCall,
-  JsonRpcResponse,
+  JsonRpcResponse, QueryParams,
   TransferAssetIssueByAccountOptions,
   TriggerConstantContractOptions,
   TriggerSmartContractOptions,
@@ -30,10 +30,12 @@ import {
 import { PostI } from '../../../dto/PostI'
 import { Utils } from '../../../util'
 import { AbstractEvmRpc } from './AbstractEvmRpc'
+import { GetI } from '../../../dto/GetI'
 
 @Service()
 export abstract class AbstractTronRpc extends AbstractEvmRpc implements TronRpcSuite {
   protected abstract post<T>(post: PostI): Promise<T>
+  protected abstract get<T>(get: GetI): Promise<T>
   abstract destroy(): void
   abstract getRpcNodeUrl(): string
 
@@ -59,6 +61,16 @@ export abstract class AbstractTronRpc extends AbstractEvmRpc implements TronRpcS
     }
 
     return this.post(post)
+  }
+
+  private async sendGet<T>({ path, queryParams }: { path: string; queryParams?: QueryParams }): Promise<T> {
+    return this.get({
+      path: Utils.addQueryParams({
+        basePath: path,
+        strategy: Utils.camelToDashCase,
+        queryParams: queryParams,
+      }),
+    })
   }
 
   accountPermissionUpdate(
@@ -351,7 +363,7 @@ export abstract class AbstractTronRpc extends AbstractEvmRpc implements TronRpcS
   }
 
   getBurnTRX(): Promise<any> {
-    return this.sendPost({
+    return this.sendGet({
       path: '/wallet/getburntrx',
     })
   }
@@ -378,7 +390,7 @@ export abstract class AbstractTronRpc extends AbstractEvmRpc implements TronRpcS
   }
 
   getChainParameters(): Promise<any> {
-    return this.sendPost({
+    return this.sendGet({
       path: '/wallet/getchainparameters',
     })
   }
@@ -426,13 +438,13 @@ export abstract class AbstractTronRpc extends AbstractEvmRpc implements TronRpcS
   }
 
   getEnergyPrices(): Promise<TronPrices> {
-    return this.sendPost({
+    return this.sendGet({
       path: '/wallet/getenergyprices',
     })
   }
 
   getNodeInfo(): Promise<any> {
-    return this.sendPost({
+    return this.sendGet({
       path: '/wallet/getnodeinfo',
     })
   }
@@ -472,7 +484,7 @@ export abstract class AbstractTronRpc extends AbstractEvmRpc implements TronRpcS
   }
 
   listNodes(): Promise<any> {
-    return this.sendPost({
+    return this.sendGet({
       path: '/wallet/listnodes',
     })
   }

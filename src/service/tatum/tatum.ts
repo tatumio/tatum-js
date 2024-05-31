@@ -1,5 +1,5 @@
 import { Container, Service } from 'typedi'
-import { isLoadBalancerNetwork } from '../../dto'
+import { isLoadBalancerNetwork, Network } from '../../dto'
 import { CONFIG, Constant, EnvUtils, LOGGER, LoggerUtils, Utils } from '../../util'
 import {
   ExtensionConstructor,
@@ -8,7 +8,7 @@ import {
   TatumSdkContainer,
   TatumSdkExtension,
 } from '../extensions'
-import { LoadBalancer } from '../rpc/generic/LoadBalancer'
+import { LoadBalancer, TronLoadBalancer } from '../rpc/generic/LoadBalancer'
 import { MetaMask, WalletProvider } from '../walletProvider'
 import { ApiVersion, TatumConfig } from './tatum.dto'
 
@@ -48,7 +48,7 @@ export abstract class TatumSdkChain implements ITatumSdkChain {
     }
 
     // calls destroy on load balancer
-    Container.of(this.id).remove(LoadBalancer)
+    Container.of(this.id).remove(config.network === Network.TRON ? TronLoadBalancer : LoadBalancer)
   }
 
   private async destroyExtension(extensionConfig: ExtensionConstructorOrConfig, id: string) {
@@ -103,7 +103,7 @@ export class TatumSDK {
     }
 
     if (isLoadBalancerNetwork(mergedConfig.network)) {
-      const loadBalancer = Container.of(id).get(LoadBalancer)
+      const loadBalancer = Container.of(id).get(mergedConfig.network === Network.TRON ? TronLoadBalancer : LoadBalancer)
       await loadBalancer.init()
     }
 

@@ -125,7 +125,7 @@ export class LoadBalancer implements AbstractRpcInterface {
       for (const node of nodes) {
         if (node.type === RpcNodeType.NORMAL) {
           this.rpcUrls[RpcNodeType.NORMAL].push({
-            node: { url: node.url },
+            node: { url: Utils.removeLastSlash(node.url) },
             lastBlock: 0,
             lastResponseTime: 0,
             failed: false,
@@ -133,7 +133,7 @@ export class LoadBalancer implements AbstractRpcInterface {
         }
         if (node.type === RpcNodeType.ARCHIVE) {
           this.rpcUrls[RpcNodeType.ARCHIVE].push({
-            node: { url: node.url },
+            node: { url: Utils.removeLastSlash(node.url) },
             lastBlock: 0,
             lastResponseTime: 0,
             failed: false,
@@ -381,7 +381,7 @@ export class LoadBalancer implements AbstractRpcInterface {
     this.rpcUrls[nodeType] = [
       ...this.rpcUrls[nodeType],
       ...filteredNodes.map((s) => ({
-        node: { url: s.url },
+        node: { url: Utils.removeLastSlash(s.url) },
         lastBlock: 0,
         lastResponseTime: 0,
         failed: false,
@@ -543,69 +543,75 @@ export class LoadBalancer implements AbstractRpcInterface {
     }
   }
 
-  async post<T>({ path, body, prefix }: PostI): Promise<T> {
+  modifyNodeUrl(url: string) {
+    return url
+  }
+
+  private getUrlForHttpMethod(prefix?: string) {
     const { url, type } = this.getActiveNormalUrlWithFallback()
-    const basePath = prefix ? `${url}${prefix}` : url
+    const modifiedUrl = this.modifyNodeUrl(url)
+    return { url: prefix ? `${modifiedUrl}${prefix}` : modifiedUrl, type }
+  }
+
+  async post<T>({ path, body, prefix }: PostI): Promise<T> {
+    const { url, type } = this.getUrlForHttpMethod(prefix)
     try {
-      return await this.connector.post<T>({ basePath, path, body })
+      return await this.connector.post<T>({ basePath: url, path, body })
     } catch (e) {
       await this.handleFailedRpcCall({
         rpcCall: { path, body },
         e,
         nodeType: type,
         requestType: RequestType.POST,
-        url: basePath,
+        url,
       })
       return await this.post({ path, body, prefix })
     }
   }
 
   async put<T>({ path, body, prefix }: PostI): Promise<T> {
-    const { url, type } = this.getActiveNormalUrlWithFallback()
-    const basePath = prefix ? `${url}${prefix}` : url
+    const { url, type } = this.getUrlForHttpMethod(prefix)
     try {
-      return await this.connector.put<T>({ basePath, path, body })
+      return await this.connector.put<T>({ basePath: url, path, body })
     } catch (e) {
       await this.handleFailedRpcCall({
         rpcCall: { path, body },
         e,
         nodeType: type,
         requestType: RequestType.PUT,
-        url: basePath,
+        url,
       })
       return await this.put({ path, body, prefix })
     }
   }
 
   async delete<T>({ path, prefix }: GetI): Promise<T> {
-    const { url, type } = this.getActiveNormalUrlWithFallback()
-    const basePath = prefix ? `${url}${prefix}` : url
+    const { url, type } = this.getUrlForHttpMethod(prefix)
     try {
-      return await this.connector.delete<T>({ basePath, path })
+      return await this.connector.delete<T>({ basePath: url, path })
     } catch (e) {
       await this.handleFailedRpcCall({
         rpcCall: { path },
         e,
         nodeType: type,
         requestType: RequestType.DELETE,
-        url: basePath,
+        url,
       })
       return await this.delete({ path, prefix })
     }
   }
 
   async get<T>({ path, prefix }: GetI): Promise<T> {
-    const { url, type } = this.getActiveNormalUrlWithFallback()
-    const basePath = prefix ? `${url}${prefix}` : url
+    const { url, type } = this.getUrlForHttpMethod(prefix)
     try {
-      return await this.connector.get<T>({ basePath, path })
+      return await this.connector.get<T>({ basePath: url, path })
     } catch (e) {
       await this.handleFailedRpcCall({
         rpcCall: { path },
         e,
         nodeType: type,
         requestType: RequestType.GET,
-        url: basePath,
+        url,
       })
       return await this.get({ path, prefix })
     }
@@ -613,5 +619,22 @@ export class LoadBalancer implements AbstractRpcInterface {
 
   getRpcNodeUrl(): string {
     return this.getActiveNormalUrlWithFallback().url
+  }
+}
+
+@Service({
+  factory: (data: { id: string }) => {
+    return new TronLoadBalancer(data.id)
+  },
+  transient: true,
+})
+export class TronLoadBalancer extends LoadBalancer {
+  constructor(id: string) {
+    super(id)
+  }
+
+  // remove jsonrpc from end of the url
+  modifyNodeUrl(url: string): string {
+    return url.replace(/\/jsonrpc$/, '')
   }
 }

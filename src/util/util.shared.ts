@@ -15,7 +15,7 @@ import {
   isEvmArchiveNonArchiveLoadBalancerNetwork,
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
-  isIotaNetwork,
+  isIotaLoadBalancerNetwork, isIotaNetwork,
   isKadenaLoadBalancerNetwork,
   isNativeEvmLoadBalancerNetwork,
   isRostrumLoadBalancerNetwork,
@@ -50,7 +50,7 @@ import {
   Base,
   BinanceSmartChain,
   Bitcoin,
-  BitcoinCash,
+  BitcoinCash, BitcoinElectrs,
   Bnb,
   CardanoRosetta,
   Celo,
@@ -116,13 +116,17 @@ import { UtxoLoadBalancerRpcEstimateFee } from '../service/rpc/utxo/UtxoLoadBala
 import { UtxoRpcEstimateFee } from '../service/rpc/utxo/UtxoRpcEstimateFee'
 import { Constant } from './constant'
 import { CONFIG, LOGGER } from './di.tokens'
+import { IotaRpc } from '../service/rpc/other/IotaRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+    if (isIotaLoadBalancerNetwork(network)) {
+      return Container.of(id).get(IotaLoadBalancerRpc) as T
+    }
 
     if (isIotaNetwork(network)) {
-      return Container.of(id).get(IotaLoadBalancerRpc) as T
+      return Container.of(id).get(IotaRpc) as T
     }
 
     if (isRostrumLoadBalancerNetwork(network)) {
@@ -317,7 +321,7 @@ export const Utils = {
       isAlgorandIndexerNetwork(network) ||
       isStellarLoadBalancerNetwork(network) ||
       isKadenaLoadBalancerNetwork(network) ||
-      isIotaNetwork(network)
+      isIotaLoadBalancerNetwork(network)
     ) {
       return null
     }
@@ -325,7 +329,7 @@ export const Utils = {
     throw new Error(`Network ${network} is not supported.`)
   },
   getStatusUrl(network: Network, url: string): string {
-    if (isIotaNetwork(network)) {
+    if (isIotaLoadBalancerNetwork(network)) {
       return `${url}api/core/v2/info`
     }
 
@@ -382,7 +386,7 @@ export const Utils = {
       isAlgorandIndexerNetwork(network) ||
       isStellarLoadBalancerNetwork(network) ||
       isKadenaLoadBalancerNetwork(network) ||
-      isIotaNetwork(network)
+      isIotaLoadBalancerNetwork(network)
     ) {
       return 'GET'
     }
@@ -433,7 +437,7 @@ export const Utils = {
       return new BigNumber((response.result.height as number) || -1).toNumber()
     }
 
-    if (isIotaNetwork(network)) {
+    if (isIotaLoadBalancerNetwork(network)) {
       return new BigNumber((response?.status?.latestMilestone?.index as number) || -1).toNumber()
     }
 
@@ -484,7 +488,7 @@ export const Utils = {
       return response?.result?.height !== undefined
     }
 
-    if (isIotaNetwork(network)) {
+    if (isIotaLoadBalancerNetwork(network)) {
       return response?.status?.latestMilestone?.index !== undefined
     }
 
@@ -842,7 +846,10 @@ export const Utils = {
       case Network.ROSTRUM:
         return new Rostrum(id) as T
       case Network.IOTA:
+      case Network.IOTA_TESTNET:
         return new Iota(id) as T
+      case Network.BITCOIN_ELECTRS:
+        return new BitcoinElectrs(id) as T
       default:
         return new FullSdk(id) as T
     }
@@ -947,4 +954,5 @@ export const Utils = {
 
     return basePath + queryString
   },
+  removeLastSlash: (url: string) => url.replace(/\/$/, ''),
 }

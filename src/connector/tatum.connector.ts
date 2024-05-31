@@ -162,7 +162,9 @@ export class TatumConnector {
     basePath,
   }: GetUrl<PARAMS>) {
     const config = Container.of(this.id).get(CONFIG)
-    const url = new URL(path || '', basePath || this.getBaseUrl())
+    const base = basePath || this.getBaseUrl()
+
+    const url = new URL(path && path?.length > 1 ? `${base}${path}` : base)
 
     if (params) {
       Object.keys(params)
