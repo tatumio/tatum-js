@@ -1,3 +1,9 @@
+## [4.2.31] - 2024.6.3
+
+### Fixed
+
+- Fix Kadena rpc double slash
+
 ## [4.2.30] - 2024.5.31
 
 ### Added
