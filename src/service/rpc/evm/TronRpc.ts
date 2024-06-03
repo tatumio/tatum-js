@@ -8,6 +8,7 @@ import { CONFIG, Constant, LOGGER, Utils } from '../../../util'
 import { TatumConfig } from '../../tatum'
 import { GenericRpc } from '../generic/GenericRpc'
 import { AbstractTronRpc } from './AbstractTronRpc'
+import { GetI } from '../../../dto/GetI'
 
 @Service({
   factory: (data: { id: string }) => {
@@ -46,6 +47,12 @@ export class TronRpc extends AbstractTronRpc {
     return this.connector.post({
       basePath: `${Constant.TRON_SHASTA_BASE_URL.BASE}${post.path}`,
       body: post.body,
+    })
+  }
+
+  protected get<T>(get: GetI): Promise<T> {
+    return this.connector.get({
+      basePath: `${Constant.TRON_SHASTA_BASE_URL.BASE}${get.path}`,
     })
   }
 

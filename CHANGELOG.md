@@ -1,3 +1,9 @@
+## [4.2.30] - 2024.5.31
+
+### Added
+
+- Support for Electrs calls and Iota testnet, renamed bch rostrum
+
 ## [4.2.29] - 2024.5.27
 
 ### Added

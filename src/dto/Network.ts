@@ -43,7 +43,7 @@ export enum Network {
   PALM = 'palm-mainnet',
   POLYGON = 'polygon-mainnet',
   POLKADOT = 'dot-mainnet',
-  ROSTRUM = 'rostrum-mainnet',
+  ROSTRUM = 'bch-mainnet-rostrum',
   RSK = 'rsk-mainnet',
   SOLANA = 'solana-mainnet',
   STELLAR = 'stellar-mainnet',
@@ -54,6 +54,8 @@ export enum Network {
   XRP = 'ripple-mainnet',
   ZCASH = 'zcash-mainnet',
   ZILLIQA = 'zilliqa-mainnet',
+  BITCOIN_ELECTRS = 'bitcoin-mainnet-electrs',
+
 
   // Testnets
   ALGORAND_ALGOD_TESTNET = 'algorand-testnet-algod',
@@ -104,6 +106,7 @@ export enum Network {
   XRP_TESTNET = 'ripple-testnet',
   ZCASH_TESTNET = 'zcash-testnet',
   ZILLIQA_TESTNET = 'zilliqa-testnet',
+  IOTA_TESTNET = 'iota-testnet',
 }
 
 export const EVM_BASED_NETWORKS = [
@@ -253,8 +256,10 @@ export const CARDANO_NETWORKS = [
 ]
 export const STELLAR_LOAD_BALANCER_NETWORKS = [Network.STELLAR]
 export const KADENA_LOAD_BALANCER_NETWORKS = [Network.KADENA, Network.KADENA_TESTNET]
-export const ROSTRUM_LOAD_BALANCER_NETWORKS = [Network.ROSTRUM]
+export const ROSTRUM_LOAD_BALANCER_NETWORKS = [Network.ROSTRUM, Network.BITCOIN_ELECTRS]
 export const IOTA_LOAD_BALANCER_NETWORKS = [Network.IOTA]
+export const BITCOIN_ELECTRS_NETWORKS = [Network.BITCOIN_ELECTRS]
+export const IOTA_NETWORKS = [Network.IOTA, Network.IOTA_TESTNET]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -274,6 +279,7 @@ export const LOAD_BALANCER_NETWORKS = [
   ...KADENA_LOAD_BALANCER_NETWORKS,
   ...ROSTRUM_LOAD_BALANCER_NETWORKS,
   ...IOTA_LOAD_BALANCER_NETWORKS,
+  ...BITCOIN_ELECTRS_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -364,7 +370,11 @@ export const isStellarLoadBalancerNetwork = (network: Network) =>
 export const isStellarNetwork = (network: Network) =>
   [Network.STELLAR, Network.STELLAR_TESTNET].includes(network)
 
-export const isIotaNetwork = (network: Network) => IOTA_LOAD_BALANCER_NETWORKS.includes(network)
+export const isIotaLoadBalancerNetwork = (network: Network) => IOTA_LOAD_BALANCER_NETWORKS.includes(network)
+
+export const isIotaNetwork = (network: Network) => IOTA_NETWORKS.includes(network)
+
+export const isElectrsNetwork = (network: Network) => BITCOIN_ELECTRS_NETWORKS.includes(network)
 
 export const isSameGetBlockNetwork = (network: Network) =>
   isUtxoBasedNetwork(network) ||
@@ -917,5 +927,14 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.IOTA,
     testnet: false,
     defaultMainnet: true,
+  },
+  [Network.IOTA_TESTNET]: {
+    currency: Currency.IOTA,
+    testnet: true,
+    defaultTestnet: true,
+  },
+  [Network.BITCOIN_ELECTRS]: {
+    currency: Currency.BTC,
+    testnet: false,
   },
 }

@@ -95,18 +95,18 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
 
   getCurrentCut(params: GetCurrentCutParams): Promise<Cut> {
     const { network, ...rest } = params
-    return this.sendGet({ path: `cut`, queryParams: rest, network })
+    return this.sendGet({ path: `/cut`, queryParams: rest, network })
   }
 
   publishCut(params: Cut): Promise<void> {
     const { network, ...rest } = params
-    return this.sendPut({ path: 'cut', body: rest, network })
+    return this.sendPut({ path: '/cut', body: rest, network })
   }
 
   getBlockHashes(params: GetBlockParams): Promise<BlockHashesPage> {
     const { network, query } = params
     return this.sendGet({
-      path: `hash`,
+      path: `/hash`,
       queryParams: query,
       network,
     })
@@ -115,7 +115,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   getBlockHashBranches(params: GetBlockParamsLowerUpper): Promise<BlockHashesPage> {
     const { network, query, ...rest } = params
     return this.sendPost({
-      path: `hash/branch`,
+      path: `/hash/branch`,
       queryParams: query,
       body: rest,
       network,
@@ -125,7 +125,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   getBlock(params: GetBlockParams): Promise<BlockHashesPage> {
     const { network, query } = params
     return this.sendGet({
-      path: `block`,
+      path: `/block`,
       queryParams: query,
       network,
     })
@@ -134,7 +134,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   getBlockBranches(params: GetBlockParamsLowerUpper): Promise<BlockHashesPage> {
     const { network, query, ...rest } = params
     return this.sendPost({
-      path: `block/branch`,
+      path: `/block/branch`,
       queryParams: query,
       body: rest,
     })
@@ -143,7 +143,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   getBlockHeaders(params: GetBlockParams): Promise<Base64HashesPage> {
     const { network, query } = params
     return this.sendGet({
-      path: `header`,
+      path: `/header`,
       queryParams: query,
       network,
     })
@@ -152,7 +152,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   getBlockHeaderByHash(params: GetBlockHeaderByHashParams): Promise<Base64UrlBlockHeader> {
     const { network, blockHash } = params
     return this.sendGet({
-      path: `header/${blockHash}`,
+      path: `/header/${blockHash}`,
       network,
     })
   }
@@ -160,7 +160,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   getBlockHeaderBranches(params: GetBlockParamsLowerUpper): Promise<BlockHashesPage> {
     const { network, query, ...rest } = params
     return this.sendPost({
-      path: `header/branch`,
+      path: `/header/branch`,
       queryParams: query,
       body: rest,
       network,
@@ -170,7 +170,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   getPayloadByHash(params: GetPayloadByHashParams): Promise<Payload> {
     const { network, payloadHash, height } = params
     return this.sendGet({
-      path: `payload/${payloadHash}`,
+      path: `/payload/${payloadHash}`,
       queryParams: { height },
       network,
     })
@@ -179,7 +179,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   getBatchOfBlockPayload(params: PayloadRequest): Promise<Payload[]> {
     const { network, body } = params
     return this.sendPost({
-      path: `payload/batch`,
+      path: `/payload/batch`,
       body: body,
       network,
     })
@@ -188,7 +188,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   getBlockPayloadWithOutputs(params: GetBlockPayloadWithOutputsParams): Promise<PayloadWithOutputs> {
     const { network, payloadHash, height } = params
     return this.sendGet({
-      path: `payload/${payloadHash}/outputs`,
+      path: `/payload/${payloadHash}/outputs`,
       queryParams: { height },
       network,
     })
@@ -197,7 +197,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   getBatchBlockPayloadWithOutputs(params: PayloadRequest): Promise<Array<PayloadWithOutputs>> {
     const { network, body } = params
     return this.sendPost({
-      path: `payload/outputs/batch`,
+      path: `/payload/outputs/batch`,
       body,
       network,
     })
@@ -206,7 +206,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   getPendingTransactions(params: GetPendingTransactionsParams): Promise<PendingTransactionsResponse> {
     const { network, ...rest } = params
     return this.sendGet({
-      path: `mempool/getPending`,
+      path: `/mempool/getPending`,
       queryParams: rest,
       network,
     })
@@ -215,7 +215,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   checkPendingTransactionsInMempool(params: MempoolTransactionsParams): Promise<boolean[]> {
     const { network, headers } = params
     return this.sendPost({
-      path: `mempool/member`,
+      path: `/mempool/member`,
       body: headers,
       network,
     })
@@ -226,7 +226,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   ): Promise<Array<{ tag: 'Missing' | 'Pending'; contents?: SignedTransactionText }>> {
     const { network, headers } = params
     return this.sendPost({
-      path: `mempool/lookup`,
+      path: `/mempool/lookup`,
       body: headers,
       network,
     })
@@ -235,7 +235,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   insertTransactionsIntoMempool(params: InsertTransactionIntoMempoolParams): Promise<void> {
     const { network, body } = params
     return this.sendPut({
-      path: `mempool/insert`,
+      path: `/mempool/insert`,
       body,
       network,
     })
@@ -243,13 +243,13 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
 
   checkNodeHealth(): Promise<string> {
     return this.sendGet({
-      path: 'health',
+      path: '/health',
     })
   }
 
   getNodeInfo(): Promise<ChainwebNodeInfo> {
     return this.sendGet({
-      path: 'info',
+      path: '/info',
     })
   }
 
@@ -258,7 +258,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
   ): Promise<{ items: Peer[]; page: BlockHashesPage }> {
     const { network, next, limit } = params
     return this.sendGet({
-      path: 'cut/peer',
+      path: '/cut/peer',
       queryParams: {
         limit,
         next,
@@ -269,7 +269,7 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
 
   putCutNetworkPeerInfo(peerData: Peer): Promise<void> {
     return this.sendPut({
-      path: 'cut/peer',
+      path: '/cut/peer',
       body: peerData,
     })
   }

@@ -131,6 +131,15 @@ export class Rostrum extends BaseOther {
   }
 }
 
+export class BitcoinElectrs extends BaseOther {
+  rpc: RostrumRpcInterface
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<RostrumRpcInterface>(id, Container.of(id).get(CONFIG))
+  }
+}
+
 export class AlgorandAlgod extends BaseOther {
   rpc: AlgorandAlgodRpcSuite
 
