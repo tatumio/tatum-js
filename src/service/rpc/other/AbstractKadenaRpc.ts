@@ -49,9 +49,9 @@ export abstract class AbstractKadenaRpc implements KadenaRpcInterface {
 
   private urlWithPrefix({ apiVersion, chain, nodeVersion }: Partial<NetworkParams>): string {
     if (chain) {
-      return `chainweb/${apiVersion}/${nodeVersion}/chain/${chain}/`
+      return `/chainweb/${apiVersion}/${nodeVersion}/chain/${chain}`
     }
-    return `chainweb/${apiVersion}/${nodeVersion}/`
+    return `/chainweb/${apiVersion}/${nodeVersion}`
   }
 
   private prepareRequest({ path, body, queryParams, network }: RequestI): PostI {
