@@ -7,7 +7,7 @@ import {
   isAlgorandAlgodNetwork,
   isAlgorandIndexerNetwork,
   isBnbLoadBalancerNetwork,
-  isCardanoNetwork,
+  isCardanoNetwork, isCosmosNetwork,
   isDogecoinLoadBalancedNetwork,
   isEosLoadBalancerNetwork,
   isEosNetwork,
@@ -54,7 +54,7 @@ import {
   Bnb,
   CardanoRosetta,
   Celo,
-  Chiliz,
+  Chiliz, CosmosRosetta,
   Cronos,
   Dogecoin,
   Eos,
@@ -117,10 +117,15 @@ import { UtxoRpcEstimateFee } from '../service/rpc/utxo/UtxoRpcEstimateFee'
 import { Constant } from './constant'
 import { CONFIG, LOGGER } from './di.tokens'
 import { IotaRpc } from '../service/rpc/other/IotaRpc'
+import { CosmosLoadBalancerRpc } from '../service/rpc/other/CosmosLoadBalancerRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+    if (isCosmosNetwork(network)) {
+      return Container.of(id).get(CosmosLoadBalancerRpc) as T
+    }
+
     if (isIotaLoadBalancerNetwork(network)) {
       return Container.of(id).get(IotaLoadBalancerRpc) as T
     }
@@ -833,7 +838,7 @@ export const Utils = {
       case Network.CARDANO_ROSETTA_PREPROD:
         return new CardanoRosetta(id) as T
       case Network.COSMONS_ROSETTA:
-        return new CardanoRosetta(id) as T
+        return new CosmosRosetta(id) as T
       case Network.STELLAR:
       case Network.STELLAR_TESTNET:
         return new Stellar(id) as T

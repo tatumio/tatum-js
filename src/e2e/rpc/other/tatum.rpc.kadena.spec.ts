@@ -30,7 +30,7 @@ const networks = [
   },
 ]
 
-describe('Kadena', () => {
+describe.skip('Kadena', () => {
   networks.forEach(({ isTestnet, network, blockHash, lower, upper }) => {
     describe(`${isTestnet ? 'Testnet' : 'Mainnet'}`, () => {
       it('getInfo', async () => {

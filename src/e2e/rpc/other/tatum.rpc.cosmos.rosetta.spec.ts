@@ -37,5 +37,22 @@ describe.skip.each(networks)('Cosmos Rosetta', ({ network, blockchain }) => {
       })
       expect(response).toBeDefined()
     })
+
+    it.skip('should get all accounts', async () => {
+      const response = await tatum.rpc.getAccounts()
+      expect(response).toBeDefined()
+    })
+
+    it('should get all params', async () => {
+      const response = await tatum.rpc.getAllParams()
+      expect(response).toBeDefined()
+    })
+
+    it('should get all community pool', async () => {
+      const response = await tatum.rpc.getCommunityPool()
+      expect(response).toBeDefined()
+    })
   })
 })
+
+
