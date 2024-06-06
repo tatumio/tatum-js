@@ -17,6 +17,7 @@ import { Notification } from '../notification'
 import { Rates } from '../rate'
 import { Token } from '../token'
 import { TatumSdkChain } from './tatum'
+import { CosmosRpcSuite } from '../../dto/rpc/CosmosRpcSuite'
 
 export abstract class BaseOther extends TatumSdkChain {
   ipfs: Ipfs
@@ -168,11 +169,11 @@ export class CardanoRosetta extends BaseOther {
 }
 
 export class CosmosRosetta extends BaseOther {
-  rpc: CardanoRpcSuite
+  rpc: CosmosRpcSuite
 
   constructor(id: string) {
     super(id)
-    this.rpc = Utils.getRpc<CardanoRpcSuite>(id, Container.of(id).get(CONFIG))
+    this.rpc = Utils.getRpc<CosmosRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 

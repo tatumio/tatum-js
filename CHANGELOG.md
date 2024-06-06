@@ -1,3 +1,9 @@
+## [4.2.32] - 2024.6.5
+
+### Added
+
+- Support for cosmos additional api
+
 ## [4.2.31] - 2024.6.3
 
 ### Fixed

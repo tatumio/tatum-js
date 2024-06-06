@@ -254,6 +254,9 @@ export const CARDANO_NETWORKS = [
   Network.CARDANO_ROSETTA_PREPROD,
   Network.COSMONS_ROSETTA,
 ]
+export const COSMOS_NETWORKS = [
+  Network.COSMONS_ROSETTA,
+]
 export const STELLAR_LOAD_BALANCER_NETWORKS = [Network.STELLAR]
 export const KADENA_LOAD_BALANCER_NETWORKS = [Network.KADENA, Network.KADENA_TESTNET]
 export const ROSTRUM_LOAD_BALANCER_NETWORKS = [Network.ROSTRUM, Network.BITCOIN_ELECTRS]
@@ -363,6 +366,8 @@ export const isAlgorandAlgodNetwork = (network: Network) => ALGORAND_ALGOD_NETWO
 export const isAlgorandIndexerNetwork = (network: Network) => ALGORAND_INDEXER_NETWORKS.includes(network)
 
 export const isCardanoNetwork = (network: Network) => CARDANO_NETWORKS.includes(network)
+
+export const isCosmosNetwork = (network: Network) => COSMOS_NETWORKS.includes(network)
 
 export const isStellarLoadBalancerNetwork = (network: Network) =>
   STELLAR_LOAD_BALANCER_NETWORKS.includes(network)

@@ -45,7 +45,7 @@ import { Utils } from '../../../util'
 export abstract class AbstractCardanoRpc implements CardanoRpcSuite {
   protected abstract post<T>(post: PostI): Promise<T>
 
-  private sendPost<T>({ path, body }: { path: string; body?: any }): Promise<T> {
+  protected sendPost<T>({ path, body }: { path: string; body?: any }): Promise<T> {
     const post: PostI = {
       path,
     }
