@@ -1,3 +1,9 @@
+## [4.2.33] - 2024.6.17
+
+### Added
+
+- Support for Electrs & Rostrum testnet
+
 ## [4.2.32] - 2024.6.5
 
 ### Added

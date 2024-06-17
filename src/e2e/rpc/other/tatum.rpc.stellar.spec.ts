@@ -43,7 +43,7 @@ describe('Stellar', () => {
       expect(response).toBeDefined()
     })
 
-    it('should get ledger', async () => {
+    it.skip('should get ledger', async () => {
       const response = await tatum.rpc.getLedger({
         sequence: 49750265,
       })

@@ -1,11 +1,15 @@
 import { Network, Rostrum, TatumSDK } from '../../../service'
 import { e2eUtil } from '../../e2e.util'
 
-const getRostrumRpc = async () => await TatumSDK.init<Rostrum>(e2eUtil.initConfig(Network.ROSTRUM))
+const getRostrumRpc = async (testnet: boolean) => await TatumSDK.init<Rostrum>(e2eUtil.initConfig(testnet ? Network.ROSTRUM_TESTNET : Network.ROSTRUM))
 
-describe('Rostrum', () => {
+// Testnet will be added later
+describe.each([
+  [false]
+])('Rostrum (%s)', (testnet) => {
+
   it('server.version', async () => {
-    const rostrum = await getRostrumRpc()
+    const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.serverVersion({
       client_name: '1.9.5',
       protocol_version: '0.6',
@@ -16,7 +20,7 @@ describe('Rostrum', () => {
   })
 
   it('blockchain.headers.tip', async () => {
-    const rostrum = await getRostrumRpc()
+    const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.blockchainHeadersTip()
     await rostrum.destroy()
     expect(result.result?.hex).toBeDefined()
@@ -24,7 +28,7 @@ describe('Rostrum', () => {
   })
 
   it('blockchain.headers.subscribe', async () => {
-    const rostrum = await getRostrumRpc()
+    const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.blockchainHeadersSubscribe()
     await rostrum.destroy()
     expect(result.result?.hex).toBeDefined()
@@ -32,7 +36,7 @@ describe('Rostrum', () => {
   })
 
   it('blockchain.address.get_balance', async () => {
-    const rostrum = await getRostrumRpc()
+    const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.blockchainAddressGetBalance({
       address: 'qrmfkegyf83zh5kauzwgygf82sdahd5a55x9wse7ve',
     })
@@ -42,7 +46,7 @@ describe('Rostrum', () => {
   })
 
   it('blockchain.address.get_history', async () => {
-    const rostrum = await getRostrumRpc()
+    const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.blockchainAddressGetHistory({
       address: 'qrmfkegyf83zh5kauzwgygf82sdahd5a55x9wse7ve',
     })
@@ -51,21 +55,21 @@ describe('Rostrum', () => {
   })
 
   it('blockchain.block.get', async () => {
-    const rostrum = await getRostrumRpc()
+    const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.blockchainBlockGet(800000)
     await rostrum.destroy()
     expect(result.result).toBeDefined()
   })
 
   it('blockchain.block.header', async () => {
-    const rostrum = await getRostrumRpc()
+    const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.blockchainBlockHeader({ height: 800000 })
     await rostrum.destroy()
     expect(result.result).toBeDefined()
   })
 
   it('blockchain.transaction.get', async () => {
-    const rostrum = await getRostrumRpc()
+    const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.blockchainTransactionGet({
       tx_hash: '05ad7b2bd59e33df49827f2a62002b8f5cccb2a6dc5d96e87089bee9d2f705e2',
     })
@@ -74,7 +78,7 @@ describe('Rostrum', () => {
   })
 
   it('server.banner', async () => {
-    const rostrum = await getRostrumRpc()
+    const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.serverBanner()
     await rostrum.destroy()
     expect(result.result).toBeDefined()
