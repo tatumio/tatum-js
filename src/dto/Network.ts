@@ -107,6 +107,8 @@ export enum Network {
   ZCASH_TESTNET = 'zcash-testnet',
   ZILLIQA_TESTNET = 'zilliqa-testnet',
   IOTA_TESTNET = 'iota-testnet',
+  BITCOIN_ELECTRS_TESTNET = 'bitcoin-testnet-electrs',
+  ROSTRUM_TESTNET = 'bch-testnet-rostrum',
 }
 
 export const EVM_BASED_NETWORKS = [
@@ -259,9 +261,9 @@ export const COSMOS_NETWORKS = [
 ]
 export const STELLAR_LOAD_BALANCER_NETWORKS = [Network.STELLAR]
 export const KADENA_LOAD_BALANCER_NETWORKS = [Network.KADENA, Network.KADENA_TESTNET]
-export const ROSTRUM_LOAD_BALANCER_NETWORKS = [Network.ROSTRUM, Network.BITCOIN_ELECTRS]
+export const ROSTRUM_LOAD_BALANCER_NETWORKS = [Network.ROSTRUM, Network.BITCOIN_ELECTRS, Network.ROSTRUM_TESTNET, Network.BITCOIN_ELECTRS_TESTNET]
 export const IOTA_LOAD_BALANCER_NETWORKS = [Network.IOTA]
-export const BITCOIN_ELECTRS_NETWORKS = [Network.BITCOIN_ELECTRS]
+export const BITCOIN_ELECTRS_NETWORKS = [Network.BITCOIN_ELECTRS, Network.BITCOIN_ELECTRS_TESTNET]
 export const IOTA_NETWORKS = [Network.IOTA, Network.IOTA_TESTNET]
 
 export const LOAD_BALANCER_NETWORKS = [
@@ -928,6 +930,10 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.BCH,
     testnet: false,
   },
+  [Network.ROSTRUM_TESTNET]: {
+    currency: Currency.BCH,
+    testnet: true,
+  },
   [Network.IOTA]: {
     currency: Currency.IOTA,
     testnet: false,
@@ -941,5 +947,9 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   [Network.BITCOIN_ELECTRS]: {
     currency: Currency.BTC,
     testnet: false,
+  },
+  [Network.BITCOIN_ELECTRS_TESTNET]: {
+    currency: Currency.BTC,
+    testnet: true,
   },
 }

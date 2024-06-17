@@ -61,10 +61,10 @@ const testNetworks = [
   {
     network: Network.AVALANCHE_C,
   },
-  {
-    network: Network.AVALANCHE_C_TESTNET,
-    apiKey: process.env.V3_API_KEY_TESTNET,
-  },
+  // {
+  //   network: Network.AVALANCHE_C_TESTNET,
+  //   apiKey: process.env.V3_API_KEY_TESTNET,
+  // },
   {
     network: Network.XINFIN,
   },

@@ -849,11 +849,13 @@ export const Utils = {
       case Network.KADENA_TESTNET:
         return new Kadena(id) as T
       case Network.ROSTRUM:
+      case Network.ROSTRUM_TESTNET:
         return new Rostrum(id) as T
       case Network.IOTA:
       case Network.IOTA_TESTNET:
         return new Iota(id) as T
       case Network.BITCOIN_ELECTRS:
+      case Network.BITCOIN_ELECTRS_TESTNET:
         return new BitcoinElectrs(id) as T
       default:
         return new FullSdk(id) as T

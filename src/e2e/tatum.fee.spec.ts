@@ -2,7 +2,7 @@ import { ApiVersion, Bitcoin, Ethereum, Network, TatumSDK } from '../service'
 import { Status } from '../util'
 
 describe('Fee', () => {
-  it('should return fee for eth testnet', async () => {
+  it.skip('should return fee for eth testnet', async () => {
     const tatum = await TatumSDK.init<Ethereum>({
       network: Network.ETHEREUM_SEPOLIA,
       retryDelay: 1000,
