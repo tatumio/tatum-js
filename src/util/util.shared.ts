@@ -7,7 +7,7 @@ import {
   isAlgorandAlgodNetwork,
   isAlgorandIndexerNetwork,
   isBnbLoadBalancerNetwork,
-  isCardanoNetwork, isCosmosNetwork,
+  isCardanoNetwork, isCasperNetwork, isCosmosNetwork,
   isDogecoinLoadBalancedNetwork,
   isEosLoadBalancerNetwork,
   isEosNetwork,
@@ -52,7 +52,7 @@ import {
   Bitcoin,
   BitcoinCash, BitcoinElectrs,
   Bnb,
-  CardanoRosetta,
+  CardanoRosetta, Casper,
   Celo,
   Chiliz, CosmosRosetta,
   Cronos,
@@ -118,10 +118,16 @@ import { Constant } from './constant'
 import { CONFIG, LOGGER } from './di.tokens'
 import { IotaRpc } from '../service/rpc/other/IotaRpc'
 import { CosmosLoadBalancerRpc } from '../service/rpc/other/CosmosLoadBalancerRpc'
+import { CasperLoadBalancerRpc } from '../service/rpc/other/CasperLoadBalancerRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+
+    if(isCasperNetwork(network)) {
+      return Container.of(id).get(CasperLoadBalancerRpc) as T
+    }
+
     if (isCosmosNetwork(network)) {
       return Container.of(id).get(CosmosLoadBalancerRpc) as T
     }
@@ -249,6 +255,15 @@ export const Utils = {
     return mappedNetwork ?? network
   },
   getStatusPayload: (network: Network) => {
+    if (isCasperNetwork(network)) {
+      return {
+        jsonrpc: '2.0',
+        method: 'info_get_status_result',
+        params: [],
+        id: 1,
+      }
+    }
+
     if (isRostrumLoadBalancerNetwork(network)) {
       return {
         jsonrpc: '2.0',
@@ -354,6 +369,10 @@ export const Utils = {
       return `${url}network/status`
     }
 
+    if (isCasperNetwork(network)) {
+      return `${url}/rpc`
+    }
+
     if (isXrpNetwork(network)) {
       return url
     }
@@ -398,6 +417,10 @@ export const Utils = {
     return 'POST'
   },
   parseStatusPayload: (network: Network, response: JsonRpcResponse<any> | any) => {
+    if (isCasperNetwork(network)) {
+      return new BigNumber((response.result.last_added_block_info.height as number) || -1).toNumber()
+    }
+
     if (isSameGetBlockNetwork(network)) {
       return new BigNumber((response.result as number) || -1).toNumber()
     }
@@ -449,6 +472,10 @@ export const Utils = {
     throw new Error(`Network ${network} is not supported.`)
   },
   isResponseOk: (network: Network, response: JsonRpcResponse<any> | any) => {
+    if (isCasperNetwork(network)) {
+      return response.result.last_added_block_info.height !== undefined
+    }
+
     if (isEosNetwork(network)) {
       return response.head_block_num !== undefined
     }
@@ -857,6 +884,8 @@ export const Utils = {
       case Network.BITCOIN_ELECTRS:
       case Network.BITCOIN_ELECTRS_TESTNET:
         return new BitcoinElectrs(id) as T
+      case Network.CASPER:
+        return new Casper(id) as T
       default:
         return new FullSdk(id) as T
     }

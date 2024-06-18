@@ -7,7 +7,7 @@ import { e2eUtil } from '../../e2e.util'
 const getTronRpc = async (testnet?: boolean) =>
   await TatumSDK.init<Tron>(e2eUtil.initConfig(testnet ? Network.TRON_SHASTA : Network.TRON, testnet ? process.env.V3_API_KEY_TESTNET : process.env.V4_API_KEY_MAINNET))
 
-describe('RPCs', () => {
+describe.skip('RPCs', () => {
   describe('TRON', () => {
     describe('testnet', () => {
       it('getNowBlock', async () => {

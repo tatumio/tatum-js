@@ -18,6 +18,7 @@ import { Rates } from '../rate'
 import { Token } from '../token'
 import { TatumSdkChain } from './tatum'
 import { CosmosRpcSuite } from '../../dto/rpc/CosmosRpcSuite'
+import { CasperRpcSuite } from '../../dto/rpc/CasperRpcSuite'
 
 export abstract class BaseOther extends TatumSdkChain {
   ipfs: Ipfs
@@ -138,6 +139,15 @@ export class BitcoinElectrs extends BaseOther {
   constructor(id: string) {
     super(id)
     this.rpc = Utils.getRpc<RostrumRpcInterface>(id, Container.of(id).get(CONFIG))
+  }
+}
+
+export class Casper extends BaseOther {
+  rpc: CasperRpcSuite
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<CasperRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 

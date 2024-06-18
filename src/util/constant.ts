@@ -125,7 +125,8 @@ export const Constant = {
     [Network.IOTA_TESTNET]: 18,
     [Network.BITCOIN_ELECTRS]: 18,
     [Network.BITCOIN_ELECTRS_TESTNET]: 18,
-    [Network.ROSTRUM_TESTNET]: 18
+    [Network.ROSTRUM_TESTNET]: 18,
+    [Network.CASPER]: 18
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -231,7 +232,8 @@ export const Constant = {
     [Network.IOTA_TESTNET]: 'IOTA',
     [Network.BITCOIN_ELECTRS]: 'BTC',
     [Network.BITCOIN_ELECTRS_TESTNET]: 'BTC',
-    [Network.ROSTRUM_TESTNET]: 'BCH'
+    [Network.ROSTRUM_TESTNET]: 'BCH',
+    [Network.CASPER]: 'CASPER'
   },
   RPC: {
     MAINNETS: [

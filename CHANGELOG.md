@@ -1,3 +1,8 @@
+## [4.2.34] - 2024.6.178
+### Added
+
+- Support for Casper mainnet
+
 ## [4.2.33] - 2024.6.17
 
 ### Added
