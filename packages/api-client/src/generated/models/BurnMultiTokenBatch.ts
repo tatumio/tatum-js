@@ -6,7 +6,7 @@ export type BurnMultiTokenBatch = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX';
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM';
     /**
      * Address of holder
      */

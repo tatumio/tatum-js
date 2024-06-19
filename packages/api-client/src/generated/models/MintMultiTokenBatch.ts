@@ -6,7 +6,7 @@ export type MintMultiTokenBatch = {
     /**
      * Chain to work with.
      */
-    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX';
+    chain: 'ETH' | 'ONE' | 'MATIC' | 'KCS' | 'KLAY' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM';
     /**
      * The blockchain address to send the Multi Tokens to.
      */

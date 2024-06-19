@@ -8,7 +8,7 @@ export type ChainBurnErc20 = {
     /**
      * The blockchain to work with
      */
-    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'FLR' | 'CRO' | 'BASE' | 'AVAX';
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM';
     /**
      * Amount of tokens to be destroyed.
      */

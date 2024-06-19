@@ -74,6 +74,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
+     * <li>Optimism</li>
      * </ul>
      * <p>You can review the code of a deployed smart contract <a href="https://github.com/tatumio/tatum-middleware/blob/master/src/contracts/token.sol" target="_blank">here</a>.</p>
      * <p><b>Signing a transaction</b><br/>
@@ -130,6 +131,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
+     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b><br/>
      * When minting fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -186,6 +188,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
+     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b><br/>
      * When burning fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -239,6 +242,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
+     * <li>Optimism</li>
      * </ul>
      * <p><b>Signing a transaction</b><br/>
      * When allowing a blockchain address to transfer and burn fungible tokens, you are charged a fee for the transaction, and you must sign the transaction with the private key of the blockchain address from which the fee will be deducted.</p>
@@ -297,6 +301,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
+     * <li>Optimism</li>
      * </ul>
      * <p><b>Transferring fungible tokens on Algorand</b><br/>
      * On Algorand, the recipient has to agree in advance to receive your fungible tokens because Algorand charges users for storing the tokens on their addresses, and an Algorand blockchain address by default does not receive the tokens unless explicitly agreed. Before transferring the fungible tokens, make sure that the recipient <a href="https://apidoc.tatum.io/tag/Algorand#operation/AlgorandBlockchainReceiveAsset" target="_blank">has agreed to receive the NFT</a> to their address.</p>
@@ -422,6 +427,7 @@ export class FungibleTokensErc20OrCompatibleService {
      * <li>Cronos</li>
      * <li>Base</li>
      * <li>Avalanche</li>
+     * <li>Optimism</li>
      * </ul>
      *
      * @param chain Network name

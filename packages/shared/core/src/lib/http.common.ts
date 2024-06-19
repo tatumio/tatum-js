@@ -34,6 +34,7 @@ const EndpointsMapping: Record<Blockchain, string> = {
   CRO: 'cronos',
   BASE: 'base',
   AVAX: 'avalanche',
+  OPTIMISM: 'optimism',
 }
 
 const isWebWorker =

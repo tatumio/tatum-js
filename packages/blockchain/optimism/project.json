@@ -1,0 +1,38 @@
+{
+  "sourceRoot": "packages/blockchain/optimism/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/optimism",
+        "tsConfig": "packages/blockchain/optimism/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/optimism/package.json",
+        "main": "packages/blockchain/optimism/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/optimism/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/optimism"],
+      "options": {
+        "jestConfig": "packages/blockchain/optimism/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:sdk", "scope:evm-based"]
+}
