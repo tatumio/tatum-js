@@ -1,4 +1,11 @@
-## [4.2.34] - 2024.6.178
+## [4.2.35] - 2024.6.18
+
+### Updated
+
+- Disable auto-discovery of RPC nodes when there is only one node.
+
+## [4.2.34] - 2024.6.18
+
 ### Added
 
 - Support for Casper mainnet
