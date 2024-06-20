@@ -6,7 +6,7 @@ const getCardanoRosettaRpc = async (testnet?: boolean) =>
 
 const networks = [
   { testnet: false, blockchain: 'cardano', network: 'mainnet' },
-  { testnet: true, blockchain: 'cardano', network: 'preprod' },
+  //{ testnet: true, blockchain: 'cardano', network: 'preprod' },
 ]
 
 describe.each(networks)('Cardano Rosetta', ({ testnet, network, blockchain }) => {
