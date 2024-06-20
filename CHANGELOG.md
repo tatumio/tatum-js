@@ -3,6 +3,7 @@
 ### Updated
 
 - Disable auto-discovery of RPC nodes when there is only one node.
+- Disable Cardano Rosetta testnet tests
 
 ## [4.2.34] - 2024.6.18
 
