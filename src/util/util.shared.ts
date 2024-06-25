@@ -328,7 +328,7 @@ export const Utils = {
     if (isCardanoNetwork(network)) {
       return {
         network_identifier: {
-          blockchain: Network.COSMONS_ROSETTA === network ? 'cosmos' : 'cardano',
+          blockchain: Network.COSMOS_ROSETTA === network ? 'cosmos' : 'cardano',
           network: Network.CARDANO_ROSETTA === network ? 'mainnet' : 'preprod',
         },
       }
@@ -864,7 +864,7 @@ export const Utils = {
       case Network.CARDANO_ROSETTA:
       case Network.CARDANO_ROSETTA_PREPROD:
         return new CardanoRosetta(id) as T
-      case Network.COSMONS_ROSETTA:
+      case Network.COSMOS_ROSETTA:
         return new CosmosRosetta(id) as T
       case Network.STELLAR:
       case Network.STELLAR_TESTNET:

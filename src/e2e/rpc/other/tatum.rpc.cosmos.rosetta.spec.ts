@@ -2,7 +2,7 @@ import { CosmosRosetta, Network, TatumSDK } from '../../../service'
 import { e2eUtil } from '../../e2e.util'
 
 const getCosmosRosettaRpc = async () =>
-  await TatumSDK.init<CosmosRosetta>(e2eUtil.initConfig(Network.COSMONS_ROSETTA))
+  await TatumSDK.init<CosmosRosetta>(e2eUtil.initConfig(Network.COSMOS_ROSETTA))
 
 const networks = [{ blockchain: 'cosmos', network: 'mainnet' }]
 
