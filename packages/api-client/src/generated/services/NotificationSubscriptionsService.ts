@@ -658,7 +658,7 @@ export class NotificationSubscriptionsService {
 
                                                                         /**
                                                                          * Update subscription url
-                                                                         * <h4>1 credit for API call</h4><br/><p>Update subscription url.</p>
+                                                                         * <h4>1 credit for API call</h4><br/><p>Update subscription.</p>
                                                                          * @param id Subscription ID
                                                                          * @param requestBody
                                                                          * @returns void
@@ -671,6 +671,10 @@ export class NotificationSubscriptionsService {
                                                                                  * New webhook url
                                                                                  */
                                                                                 url: string;
+                                                                                /**
+                                                                                 * Flag indicating whether the subscription should include mempool transactions. Only available on BTC blockchain.
+                                                                                 */
+                                                                                mempool?: boolean;
                                                                             },
                                                                         ): CancelablePromise<void> {
                                                                             return __request({

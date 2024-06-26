@@ -18,10 +18,14 @@ export type CreateSubscriptionNotification = {
         /**
          * Blockchain of the address.
          */
-        chain: 'SOL' | 'ETH' | 'MATIC' | 'CELO' | 'KLAY' | 'BTC' | 'LTC' | 'BCH' | 'DOGE' | 'TRON' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX';
+        chain: 'SOL' | 'ETH' | 'MATIC' | 'CELO' | 'KLAY' | 'BTC' | 'LTC' | 'BCH' | 'DOGE' | 'TRON' | 'BSC' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'FTM';
         /**
          * URL of the endpoint, where HTTP POST request will be sent, when transaction is detected on the address.
          */
         url: string;
     };
+    /**
+     * Flag indicating whether the subscription should include mempool transactions. Only available on BTC blockchain.
+     */
+    mempool?: boolean;
 }
