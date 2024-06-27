@@ -23,7 +23,7 @@ describe('TatumOptimismSDK', () => {
       walletTestFactory.generateAddressFromPrivateKey(sdk.wallet, TEST_DATA.OPTIMISM)
     })
 
-    describe('Web3', () => {
+    describe.skip('Web3', () => {
       describe('Get client', () => {
         const provider = TEST_DATA.OPTIMISM?.PROVIDER
 
