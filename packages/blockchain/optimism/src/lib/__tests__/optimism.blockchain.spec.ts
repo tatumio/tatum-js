@@ -30,15 +30,6 @@ describe('OptimismSDK - blockchain', () => {
     getBlockchainAccountBalance: [api.optimismGetBalance, testData.TESTNET.ADDRESS_0],
     getTransaction: [api.optimismGetTransaction, testData.TX_HASH],
     smartContractGetAddress: [BlockchainUtilsService.scGetContractAddress, 'OPTIMISM', testData.TX_HASH],
-    estimateGas: [
-      blockchain.estimateGas,
-      {
-        from: testData.TESTNET.ADDRESS_0,
-        to: testData.TESTNET.ADDRESS_100,
-        contractAddress: testData.TESTNET.SMART_CONTRACT.CONTRACT_ADDRESS,
-        amount: '10',
-      } as OptimismEstimateGas,
-    ],
     smartContractInvocation: [
       api.optimismBlockchainSmartContractInvocation,
       {

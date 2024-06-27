@@ -3,7 +3,7 @@ import {
   AdaTransactionFromAddressKMS,
   AdaTransactionFromUTXO,
   AdaTransactionFromUTXOKMS,
-  ApiServices, ApiServiceTypes,
+  ApiServices,
   Currency,
   NodeRpcService,
   PendingTransaction,
@@ -19,7 +19,7 @@ type CardanoTxOptions = { testnet: boolean }
 
 type ApiCallsType = {
   cardanoBroadcast: typeof ApiServices.blockchain.ada.adaBroadcast;
-  getUTXOsByAddress: ApiServiceTypes['getUtxosByAddress'];
+  getUTXOsByAddress: typeof WalletApiService.getUtxosByAddress;
   rpcCall: typeof NodeRpcService.nodeJsonPostRpcDriver;
 };
 
