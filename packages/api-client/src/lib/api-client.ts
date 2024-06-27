@@ -54,7 +54,7 @@ import {
   VirtualCurrencyService,
   WithdrawalService,
   XinFinService,
-  XrpService,
+  XrpService, FantomService,
 } from '../generated'
 import { OpenAPI } from '../generated/core/OpenAPI'
 
@@ -109,6 +109,7 @@ export const ApiServices = {
     polygon: PolygonService,
     solana: SolanaService,
     optimism: OptimismService,
+    fantom: FantomService,
     tron: TronService,
     util: BlockchainUtilsService,
     gasPump: GasPumpService,

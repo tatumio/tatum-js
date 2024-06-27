@@ -158,6 +158,20 @@ export class NotificationSubscriptionsService {
      * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
      * <td>25 credits / day / address</td>
      * </tr>
+     * <tr>
+     * <td>Optimism</td>
+     * <td>Yes/Yes</td>
+     * <td>OPTIMISM, ERC20, ERC721, ERC1155</td>
+     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
+     * <td>25 credits / day / address</td>
+     * </tr>
+     * <tr>
+     * <td>Fantom</td>
+     * <td>Yes/Yes</td>
+     * <td>FTM, ERC20, ERC721, ERC1155</td>
+     * <td>Free plans - 10 addresses across all blockchains, Paid plans - unlimited addresses across all blockchains</td>
+     * <td>25 credits / day / address</td>
+     * </tr>
      * </table>
      * The request body of the POST request is a JSON object with the following structure:<br/>
      * <pre>{
@@ -228,6 +242,16 @@ export class NotificationSubscriptionsService {
          * <tr>
          * <td>Avalanche</td>
          * <td>avalanche-mainnet / avalanche-testnet</td>
+         * <td>500,000 credits / day</td>
+         * </tr>
+         * <tr>
+         * <td>Optimism</td>
+         * <td>optimism-mainnet / optimism-testnet</td>
+         * <td>500,000 credits / day</td>
+         * </tr>
+         * <tr>
+         * <td>Fantom</td>
+         * <td>fantom-mainnet / fantom-testnet</td>
          * <td>500,000 credits / day</td>
          * </tr>
          * </table>
@@ -306,6 +330,16 @@ export class NotificationSubscriptionsService {
                      * <td>avalanche-mainnet / avalanche-testnet</td>
                      * <td>500,000 credits / day</td>
                      * </tr>
+                     * <tr>
+                     * <td>Optimism</td>
+                     * <td>optimism-mainnet / optimism-testnet</td>
+                     * <td>500,000 credits / day</td>
+                     * </tr>
+                     * <tr>
+                     * <td>Fantom</td>
+                     * <td>fantom-mainnet / fantom-testnet</td>
+                     * <td>500,000 credits / day</td>
+                     * </tr>
                      * </table>
                      * The request body of the POST request is a JSON object with the following structure:<br/>
                      * <pre>{
@@ -380,6 +414,16 @@ export class NotificationSubscriptionsService {
                                  * <tr>
                                  * <td>Avalanche</td>
                                  * <td>avalanche-mainnet / avalanche-testnet</td>
+                                 * <td>50,000 credits / day</td>
+                                 * </tr>
+                                 * <tr>
+                                 * <td>Optimism</td>
+                                 * <td>optimism-mainnet / optimism-testnet</td>
+                                 * <td>50,000 credits / day</td>
+                                 * </tr>
+                                 * <tr>
+                                 * <td>Fantom</td>
+                                 * <td>fantom-mainnet / fantom-testnet</td>
                                  * <td>50,000 credits / day</td>
                                  * </tr>
                                  * </table>
@@ -658,7 +702,7 @@ export class NotificationSubscriptionsService {
 
                                                                         /**
                                                                          * Update subscription url
-                                                                         * <h4>1 credit for API call</h4><br/><p>Update subscription url.</p>
+                                                                         * <h4>1 credit for API call</h4><br/><p>Update subscription.</p>
                                                                          * @param id Subscription ID
                                                                          * @param requestBody
                                                                          * @returns void
@@ -671,6 +715,10 @@ export class NotificationSubscriptionsService {
                                                                                  * New webhook url
                                                                                  */
                                                                                 url: string;
+                                                                                /**
+                                                                                 * Flag indicating whether the subscription should include mempool transactions. Only available on BTC blockchain.
+                                                                                 */
+                                                                                mempool?: boolean;
                                                                             },
                                                                         ): CancelablePromise<void> {
                                                                             return __request({

@@ -8,7 +8,7 @@ export type ChainDeployErc20 = {
     /**
      * The blockchain to work with
      */
-    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM';
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM' | 'FTM';
     /**
      * Symbol of the ERC20 token
      */

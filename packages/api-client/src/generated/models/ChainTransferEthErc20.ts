@@ -8,7 +8,7 @@ export type ChainTransferEthErc20 = {
     /**
      * The blockchain to work with
      */
-    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM';
+    chain: 'ETH' | 'BSC' | 'MATIC' | 'KLAY' | 'XDC' | 'ONE' | 'FLR' | 'CRO' | 'BASE' | 'AVAX' | 'OPTIMISM' | 'FTM';
     /**
      * The blockchain address to send the fungible tokens to
      */

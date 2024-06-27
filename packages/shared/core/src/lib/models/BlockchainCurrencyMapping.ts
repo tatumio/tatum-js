@@ -63,6 +63,7 @@ export const BlockchainCurrencyMapping: Record<
   BASE: Currency.BASE,
   AVAX: Currency.AVAX,
   OPTIMISM: Currency.OPTIMISM,
+  FTM: Currency.FTM,
 }
 
 export const CurrencyToBlockchainMapping: Record<Currency, Blockchain> = buildCurrencyBlockchainMapping()

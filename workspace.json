@@ -28,6 +28,7 @@
     "eth": "packages/blockchain/eth",
     "eth-example": "examples/eth-example",
     "example": "examples/sdk-example",
+    "fantom": "packages/blockchain/fantom",
     "flare": "packages/blockchain/flare",
     "flow": "packages/blockchain/flow",
     "flow-example": "examples/flow-example",
