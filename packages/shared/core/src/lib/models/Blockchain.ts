@@ -30,6 +30,7 @@ export enum Blockchain {
   BASE = 'BASE',
   AVAX = 'AVAX',
   OPTIMISM = 'OPTIMISM',
+  FTM = 'FTM',
 }
 
 export const EvmBasedBlockchains = [
@@ -45,6 +46,7 @@ export const EvmBasedBlockchains = [
   Blockchain.BASE,
   Blockchain.AVAX,
   Blockchain.OPTIMISM,
+  Blockchain.FTM,
 ]
 
 // @TODO tmp solution
@@ -67,3 +69,4 @@ export type EvmBasedBlockchain =
   | Blockchain.BASE
   | Blockchain.AVAX
   | Blockchain.OPTIMISM
+  | Blockchain.FTM

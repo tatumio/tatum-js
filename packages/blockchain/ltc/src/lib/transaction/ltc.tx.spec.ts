@@ -157,9 +157,9 @@ describe('LTC transactions', () => {
     },
   ) {
     if (obj === -1) {
-      mockedApi.data.getUtxosByAddress.mockResolvedValue([])
+      mockedApi.data.wallet.getUtxosByAddress.mockResolvedValue([])
     } else {
-      mockedApi.data.getUtxosByAddress.mockResolvedValue([obj])
+      mockedApi.data.wallet.getUtxosByAddress.mockResolvedValue([obj])
     }
   }
 

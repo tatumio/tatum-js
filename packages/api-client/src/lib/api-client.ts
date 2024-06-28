@@ -54,7 +54,7 @@ import {
   VirtualCurrencyService,
   WithdrawalService,
   XinFinService,
-  XrpService,
+  XrpService, FantomService,
 } from '../generated'
 import { OpenAPI } from '../generated/core/OpenAPI'
 
@@ -85,12 +85,6 @@ export type BtcBasedApiService = BitcoinService | BitcoinCashService | DogecoinS
 
 export type EvmBasedApiService = EthereumService | CeloService
 
-export type ApiServiceTypes = typeof TokenApiService &
-  typeof NftApiService &
-  typeof WalletApiService &
-  typeof TransactionsApiService &
-  typeof DeFiApiService
-
 export const ApiServices = {
   blockchain: {
     ada: CardanoService,
@@ -115,6 +109,7 @@ export const ApiServices = {
     polygon: PolygonService,
     solana: SolanaService,
     optimism: OptimismService,
+    fantom: FantomService,
     tron: TronService,
     util: BlockchainUtilsService,
     gasPump: GasPumpService,
@@ -145,16 +140,15 @@ export const ApiServices = {
   },
   security: MaliciousAddressService,
   kms: KeyManagementSystemService,
-  data: {
-    ...DeFiApiService,
-    ...WalletApiService,
-    ...TokenApiService,
-    ...TransactionsApiService,
-    ...NftApiService,
-  },
   exchangeRate: ExchangeRateService,
   tatum: ServiceUtilsService,
   custodial: CustodialManagedWalletsService,
   auction: AuctionService,
   gasPump: GasPumpService,
+  data: {
+    defi: DeFiApiService,
+    wallet: WalletApiService,
+    token: TokenApiService,
+    nftService: NftApiService,
+  },
 }
