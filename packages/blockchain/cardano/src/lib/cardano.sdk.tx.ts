@@ -51,23 +51,23 @@ export const cardanoTransactions = (
       },
     )
     const metadata = await apiCalls.rpcCall(
+      args.apiKey,
       options?.testnet ? 'cardano-preprod' : 'cardano-mainnet',
+      'construction/metadata',
       {
         network_identifier,
         ...preprocess,
       },
-      args.apiKey,
-      'construction/metadata',
     )
     const { unsigned_transaction, payloads } = await apiCalls.rpcCall(
+      args.apiKey,
       options?.testnet ? 'cardano-preprod' : 'cardano-mainnet',
+      'construction/payloads',
       {
         network_identifier,
         operations,
         ...metadata,
       },
-      args.apiKey,
-      'construction/payloads',
     )
 
     const signatures = []
