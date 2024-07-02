@@ -42,6 +42,8 @@ export const AddressEventNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.OPTIMISM,
+  Network.OPTIMISM_TESTNET,
 ]
 
 export const IncomingNativeTxNetworks = [
@@ -81,6 +83,8 @@ export const IncomingNativeTxNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.OPTIMISM,
+  Network.OPTIMISM_TESTNET,
 ]
 
 export const OutgoingNativeTxNetworks = [
@@ -118,6 +122,8 @@ export const OutgoingNativeTxNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.OPTIMISM,
+  Network.OPTIMISM_TESTNET,
 ]
 
 export const OutgoingFailedNetworks = [
@@ -143,6 +149,8 @@ export const OutgoingFailedNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.OPTIMISM,
+  Network.OPTIMISM_TESTNET,
 ]
 
 export const PaidFeeNetworks = [
@@ -172,6 +180,8 @@ export const PaidFeeNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.OPTIMISM,
+  Network.OPTIMISM_TESTNET,
 ]
 
 export const FungibleTxNetworks = [
@@ -201,6 +211,8 @@ export const FungibleTxNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.OPTIMISM,
+  Network.OPTIMISM_TESTNET,
 ]
 
 export const NftNetworks = [
@@ -230,6 +242,8 @@ export const NftNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.OPTIMISM,
+  Network.OPTIMISM_TESTNET,
 ]
 
 export const MultitokenNetworks = [
@@ -254,6 +268,8 @@ export const MultitokenNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.OPTIMISM,
+  Network.OPTIMISM_TESTNET,
 ]
 
 export const FailedTxPerBlockNetworks = [
@@ -283,6 +299,8 @@ export const FailedTxPerBlockNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.OPTIMISM,
+  Network.OPTIMISM_TESTNET,
 ]
 
 export const ContractAddressLogEventNetworks = [
@@ -320,4 +338,5 @@ export const InternalTxNetworks = [
   Network.CRONOS,
   Network.BASE,
   Network.AVALANCHE_C,
+  Network.OPTIMISM,
 ]

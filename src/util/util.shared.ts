@@ -562,6 +562,8 @@ export const Utils = {
         return Network.BASE
       case AddressEventNotificationChain.AVAX:
         return Network.AVALANCHE_C
+      case AddressEventNotificationChain.OPTIMISM:
+        return Network.OPTIMISM
       default:
         throw new Error(`Chain ${chain} is not supported.`)
     }
@@ -625,6 +627,9 @@ export const Utils = {
       case Network.AVALANCHE_C:
       case Network.AVALANCHE_C_TESTNET:
         return AddressEventNotificationChain.AVAX
+      case Network.OPTIMISM:
+      case Network.OPTIMISM_TESTNET:
+        return AddressEventNotificationChain.OPTIMISM
       default:
         throw new Error(`Network ${network} is not supported.`)
     }
