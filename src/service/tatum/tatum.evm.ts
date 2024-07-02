@@ -61,7 +61,7 @@ export class Haqq extends BaseEvm {}
 export class HarmonyOne extends BaseEvm {}
 export class Kucoin extends BaseEvm {}
 export class Oasis extends BaseEvm {}
-export class Optimism extends BaseEvm {}
+export class Optimism extends NotificationEvm {}
 export class Palm extends BaseEvm {}
 export class Vechain extends BaseEvm {}
 export class XinFin extends BaseEvm {}

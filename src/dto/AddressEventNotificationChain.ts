@@ -18,4 +18,5 @@ export enum AddressEventNotificationChain {
   CRO = 'CRO',
   BASE = 'BASE',
   AVAX = 'AVAX',
+  OPTIMISM = 'OPTIMISM',
 }

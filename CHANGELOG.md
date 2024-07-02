@@ -1,3 +1,9 @@
+## [4.2.36] - 2024.7.2
+
+### Added
+
+- Support for Optimism Notifications
+
 ## [4.2.35] - 2024.6.18
 
 ### Updated
