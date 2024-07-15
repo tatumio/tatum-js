@@ -31,6 +31,7 @@ export enum Blockchain {
   AVAX = 'AVAX',
   OPTIMISM = 'OPTIMISM',
   FTM = 'FTM',
+  TON = 'TON',
 }
 
 export const EvmBasedBlockchains = [
