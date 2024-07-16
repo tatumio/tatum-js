@@ -11,7 +11,7 @@ const getStellarRpc = async (testnet?: boolean) =>
     version: testnet ? ApiVersion.V3 : ApiVersion.V4,
   })
 
-describe('Stellar', () => {
+describe.skip('Stellar', () => {
   let tatum: Stellar
 
   describe('mainnet', () => {

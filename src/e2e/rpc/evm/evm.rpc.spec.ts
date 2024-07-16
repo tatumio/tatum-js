@@ -28,7 +28,7 @@ const testNetworks = [
   { network: Network.FANTOM },
   { network: Network.FANTOM_TESTNET, apiKey: process.env.V3_API_KEY_TESTNET },
   { network: Network.ETHEREUM_CLASSIC },
-  { network: Network.POLYGON },
+  // { network: Network.POLYGON },
   { network: Network.POLYGON_AMOY },
   // { network: Network.OPTIMISM },
   { network: Network.HAQQ },

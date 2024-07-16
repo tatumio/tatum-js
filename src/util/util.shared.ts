@@ -7,7 +7,9 @@ import {
   isAlgorandAlgodNetwork,
   isAlgorandIndexerNetwork,
   isBnbLoadBalancerNetwork,
-  isCardanoNetwork, isCasperNetwork, isCosmosNetwork,
+  isCardanoNetwork,
+  isCasperNetwork,
+  isCosmosNetwork,
   isDogecoinLoadBalancedNetwork,
   isEosLoadBalancerNetwork,
   isEosNetwork,
@@ -15,7 +17,8 @@ import {
   isEvmArchiveNonArchiveLoadBalancerNetwork,
   isEvmBasedNetwork,
   isEvmLoadBalancerNetwork,
-  isIotaLoadBalancerNetwork, isIotaNetwork,
+  isIotaLoadBalancerNetwork,
+  isIotaNetwork,
   isKadenaLoadBalancerNetwork,
   isNativeEvmLoadBalancerNetwork,
   isRostrumLoadBalancerNetwork,
@@ -24,6 +27,7 @@ import {
   isStellarLoadBalancerNetwork,
   isStellarNetwork,
   isTezosNetwork,
+  isTonNetwork,
   isTronLoadBalancerNetwork,
   isTronNetwork,
   isUtxoBasedNetwork,
@@ -50,11 +54,14 @@ import {
   Base,
   BinanceSmartChain,
   Bitcoin,
-  BitcoinCash, BitcoinElectrs,
+  BitcoinCash,
+  BitcoinElectrs,
   Bnb,
-  CardanoRosetta, Casper,
+  CardanoRosetta,
+  Casper,
   Celo,
-  Chiliz, CosmosRosetta,
+  Chiliz,
+  CosmosRosetta,
   Cronos,
   Dogecoin,
   Eos,
@@ -83,7 +90,7 @@ import {
   Solana,
   Stellar,
   TatumConfig,
-  Tezos,
+  Tezos, Ton,
   Tron,
   UtxoRpc,
   Vechain,
@@ -119,10 +126,15 @@ import { CONFIG, LOGGER } from './di.tokens'
 import { IotaRpc } from '../service/rpc/other/IotaRpc'
 import { CosmosLoadBalancerRpc } from '../service/rpc/other/CosmosLoadBalancerRpc'
 import { CasperLoadBalancerRpc } from '../service/rpc/other/CasperLoadBalancerRpc'
+import { TonRpc } from '../service/rpc/other/TonRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+
+    if(isTonNetwork(network)) {
+      return Container.of(id).get(TonRpc) as T
+    }
 
     if(isCasperNetwork(network)) {
       return Container.of(id).get(CasperLoadBalancerRpc) as T
@@ -341,7 +353,8 @@ export const Utils = {
       isAlgorandIndexerNetwork(network) ||
       isStellarLoadBalancerNetwork(network) ||
       isKadenaLoadBalancerNetwork(network) ||
-      isIotaLoadBalancerNetwork(network)
+      isIotaLoadBalancerNetwork(network) ||
+      isTonNetwork(network)
     ) {
       return null
     }
@@ -349,6 +362,10 @@ export const Utils = {
     throw new Error(`Network ${network} is not supported.`)
   },
   getStatusUrl(network: Network, url: string): string {
+    if (isTonNetwork(network)) {
+      return `${url}v2/liteserver/get_masterchain_info`
+    }
+
     if (isIotaLoadBalancerNetwork(network)) {
       return `${url}api/core/v2/info`
     }
@@ -410,13 +427,18 @@ export const Utils = {
       isAlgorandIndexerNetwork(network) ||
       isStellarLoadBalancerNetwork(network) ||
       isKadenaLoadBalancerNetwork(network) ||
-      isIotaLoadBalancerNetwork(network)
+      isIotaLoadBalancerNetwork(network) ||
+      isTonNetwork(network)
     ) {
       return 'GET'
     }
     return 'POST'
   },
   parseStatusPayload: (network: Network, response: JsonRpcResponse<any> | any) => {
+    if (isTonNetwork(network)) {
+      return new BigNumber((response.last.seqno as number) || -1).toNumber()
+    }
+
     if (isCasperNetwork(network)) {
       return new BigNumber((response.result.last_added_block_info.height as number) || -1).toNumber()
     }
@@ -472,6 +494,10 @@ export const Utils = {
     throw new Error(`Network ${network} is not supported.`)
   },
   isResponseOk: (network: Network, response: JsonRpcResponse<any> | any) => {
+    if (isTonNetwork(network)) {
+      return response.last.seqno !== undefined
+    }
+
     if (isCasperNetwork(network)) {
       return response.result.last_added_block_info.height !== undefined
     }
@@ -625,6 +651,12 @@ export const Utils = {
       case Network.AVALANCHE_C:
       case Network.AVALANCHE_C_TESTNET:
         return AddressEventNotificationChain.AVAX
+      case Network.FANTOM:
+      case Network.FANTOM_TESTNET:
+        return AddressEventNotificationChain.FTM
+      case Network.OPTIMISM:
+      case Network.OPTIMISM_TESTNET:
+        return AddressEventNotificationChain.OPTIMISM
       default:
         throw new Error(`Network ${network} is not supported.`)
     }
@@ -886,6 +918,9 @@ export const Utils = {
         return new BitcoinElectrs(id) as T
       case Network.CASPER:
         return new Casper(id) as T
+      case Network.TON:
+      case Network.TON_TESTNET:
+        return new Ton(id) as T
       default:
         return new FullSdk(id) as T
     }
@@ -976,10 +1011,14 @@ export const Utils = {
       Object.entries(query).forEach(([key, value]) => {
         if (Array.isArray(value)) {
           value.forEach((val) => {
-            params.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
+            if (val != null) {
+              params.push(`${encodeURIComponent(key)}=${encodeURIComponent(val)}`)
+            }
           })
         } else {
-          params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+          if (value != null) {
+            params.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`)
+          }
         }
       })
 
