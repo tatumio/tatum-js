@@ -19,6 +19,7 @@ import { Token } from '../token'
 import { TatumSdkChain } from './tatum'
 import { CosmosRpcSuite } from '../../dto/rpc/CosmosRpcSuite'
 import { CasperRpcSuite } from '../../dto/rpc/CasperRpcSuite'
+import { TonRpcSuite } from '../../dto/rpc/ton/TonRpcSuite'
 
 export abstract class BaseOther extends TatumSdkChain {
   ipfs: Ipfs
@@ -148,6 +149,15 @@ export class Casper extends BaseOther {
   constructor(id: string) {
     super(id)
     this.rpc = Utils.getRpc<CasperRpcSuite>(id, Container.of(id).get(CONFIG))
+  }
+}
+
+export class Ton extends BaseOther {
+  rpc: TonRpcSuite
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<TonRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
 

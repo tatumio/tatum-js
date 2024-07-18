@@ -55,13 +55,13 @@ export class Aurora extends BaseEvm {}
 export class AvalancheC extends NotificationEvm {}
 export class Cronos extends NotificationEvm {}
 export class EthereumClassic extends BaseEvm {}
-export class Fantom extends BaseEvm {}
+export class Fantom extends NotificationEvm {}
 export class Gnosis extends BaseEvm {}
 export class Haqq extends BaseEvm {}
 export class HarmonyOne extends BaseEvm {}
 export class Kucoin extends BaseEvm {}
 export class Oasis extends BaseEvm {}
-export class Optimism extends BaseEvm {}
+export class Optimism extends NotificationEvm {}
 export class Palm extends BaseEvm {}
 export class Vechain extends BaseEvm {}
 export class XinFin extends BaseEvm {}

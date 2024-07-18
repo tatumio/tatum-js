@@ -39,6 +39,10 @@ export const e2eUtil = {
         case Network.BASE_SEPOLIA:
         case Network.AVALANCHE_C:
         case Network.AVALANCHE_C_TESTNET:
+        case Network.FANTOM:
+        case Network.FANTOM_TESTNET:
+        case Network.OPTIMISM:
+        case Network.OPTIMISM_TESTNET:
           return '0xdb4C3b4350EE869F2D0a2F43ce0292865E2Aa149'
         case Network.CELO_ALFAJORES:
           return '0xdf083B077F1FD890fC71feCaBbd3F68F94cD21Bf'

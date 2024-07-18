@@ -52,6 +52,7 @@ export enum Currency {
   ATOM = 'ATOM',
   IOTA = 'IOTA',
   CSPR = 'CSPR',
+  TON = 'TON'
 }
 
 export function networkToCurrency(network: Network): Currency {

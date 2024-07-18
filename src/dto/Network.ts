@@ -56,6 +56,7 @@ export enum Network {
   ZILLIQA = 'zilliqa-mainnet',
   BITCOIN_ELECTRS = 'bitcoin-mainnet-electrs',
   CASPER = 'casper-mainnet',
+  TON = 'ton-mainnet',
 
 
   // Testnets
@@ -110,6 +111,7 @@ export enum Network {
   IOTA_TESTNET = 'iota-testnet',
   BITCOIN_ELECTRS_TESTNET = 'bitcoin-testnet-electrs',
   ROSTRUM_TESTNET = 'bch-testnet-rostrum',
+  TON_TESTNET = 'ton-testnet'
 }
 
 export const EVM_BASED_NETWORKS = [
@@ -267,6 +269,7 @@ export const IOTA_LOAD_BALANCER_NETWORKS = [Network.IOTA]
 export const BITCOIN_ELECTRS_NETWORKS = [Network.BITCOIN_ELECTRS, Network.BITCOIN_ELECTRS_TESTNET]
 export const IOTA_NETWORKS = [Network.IOTA, Network.IOTA_TESTNET]
 export const CASPER_NETWORKS = [Network.CASPER]
+export const TON_NETWORKS = [Network.TON, Network.TON_TESTNET]
 
 export const LOAD_BALANCER_NETWORKS = [
   ...UTXO_LOAD_BALANCER_NETWORKS,
@@ -288,6 +291,7 @@ export const LOAD_BALANCER_NETWORKS = [
   ...IOTA_LOAD_BALANCER_NETWORKS,
   ...BITCOIN_ELECTRS_NETWORKS,
   ...CASPER_NETWORKS,
+  ...TON_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
@@ -387,6 +391,8 @@ export const isIotaNetwork = (network: Network) => IOTA_NETWORKS.includes(networ
 export const isElectrsNetwork = (network: Network) => BITCOIN_ELECTRS_NETWORKS.includes(network)
 
 export const isCasperNetwork = (network: Network) => CASPER_NETWORKS.includes(network)
+
+export const isTonNetwork = (network: Network) => TON_NETWORKS.includes(network)
 
 export const isSameGetBlockNetwork = (network: Network) =>
   isUtxoBasedNetwork(network) ||
@@ -960,5 +966,13 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   [Network.CASPER]: {
     currency: Currency.CSPR,
     testnet: false,
+  },
+  [Network.TON]: {
+    currency: Currency.TON,
+    testnet: false,
+  },
+  [Network.TON_TESTNET]: {
+    currency: Currency.TON,
+    testnet: true
   }
 }

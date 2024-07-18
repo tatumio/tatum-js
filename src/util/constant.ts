@@ -126,7 +126,9 @@ export const Constant = {
     [Network.BITCOIN_ELECTRS]: 18,
     [Network.BITCOIN_ELECTRS_TESTNET]: 18,
     [Network.ROSTRUM_TESTNET]: 18,
-    [Network.CASPER]: 18
+    [Network.CASPER]: 18,
+    [Network.TON]: 9,
+    [Network.TON_TESTNET]: 9,
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -233,7 +235,9 @@ export const Constant = {
     [Network.BITCOIN_ELECTRS]: 'BTC',
     [Network.BITCOIN_ELECTRS_TESTNET]: 'BTC',
     [Network.ROSTRUM_TESTNET]: 'BCH',
-    [Network.CASPER]: 'CASPER'
+    [Network.CASPER]: 'CASPER',
+    [Network.TON]: 'TON',
+    [Network.TON_TESTNET]: 'TON',
   },
   RPC: {
     MAINNETS: [
