@@ -16,7 +16,7 @@ export enum Network {
   BITCOIN = 'bitcoin-mainnet',
   BITCOIN_CASH = 'bitcoin-cash-mainnet',
   CARDANO_ROSETTA = 'cardano-mainnet',
-  COSMONS_ROSETTA = 'cosmos-mainnet',
+  COSMOS_ROSETTA = 'cosmos-mainnet',
   CELO = 'celo-mainnet',
   CRONOS = 'cronos-mainnet',
   DOGECOIN = 'doge-mainnet',
@@ -257,10 +257,10 @@ export const ALGORAND_INDEXER_NETWORKS = [Network.ALGORAND_INDEXER, Network.ALGO
 export const CARDANO_NETWORKS = [
   Network.CARDANO_ROSETTA,
   Network.CARDANO_ROSETTA_PREPROD,
-  Network.COSMONS_ROSETTA,
+  Network.COSMOS_ROSETTA,
 ]
 export const COSMOS_NETWORKS = [
-  Network.COSMONS_ROSETTA,
+  Network.COSMOS_ROSETTA,
 ]
 export const STELLAR_LOAD_BALANCER_NETWORKS = [Network.STELLAR]
 export const KADENA_LOAD_BALANCER_NETWORKS = [Network.KADENA, Network.KADENA_TESTNET]
@@ -554,7 +554,7 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     testnet: true,
     defaultTestnet: true,
   },
-  [Network.COSMONS_ROSETTA]: {
+  [Network.COSMOS_ROSETTA]: {
     currency: Currency.ATOM,
     testnet: false,
     defaultMainnet: true,
