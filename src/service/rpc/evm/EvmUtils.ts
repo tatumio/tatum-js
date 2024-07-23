@@ -1,4 +1,7 @@
-import { JsonRpcCall } from '../../../dto'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { JsonRpcCall, JsonRpcResponse } from '../../../dto'
+import { BigNumber } from 'bignumber.js'
+import { decodeHexString } from '../../../util/decode'
 
 export const ARCHIVE_METHODS = ['getCode', 'call']
 
@@ -37,4 +40,16 @@ export const EvmUtils = {
   isParamForArchiveNode(param: unknown): boolean {
     return !!param && param !== 'latest'
   },
+  toBigNumber(response: JsonRpcResponse<any>): JsonRpcResponse<BigNumber> {
+    if (response.result) {
+      response.result = new BigNumber(response.result)
+    }
+    return response
+  },
+  toDecodedString(response: JsonRpcResponse<any>): JsonRpcResponse<string> {
+    if (response.result) {
+      response.result = decodeHexString(response.result)
+    }
+    return response
+  }
 }

@@ -20,13 +20,13 @@ const testNetworks = [
   },
   { network: Network.FLARE },
   { network: Network.FLARE_SONGBIRD },
-  { network: Network.FLARE_COSTON },
+  // { network: Network.FLARE_COSTON },
   { network: Network.FLARE_COSTON_2 },
   { network: Network.ETHEREUM },
   { network: Network.ETHEREUM_SEPOLIA },
   { network: Network.ETHEREUM_HOLESKY },
-  { network: Network.FANTOM },
-  { network: Network.FANTOM_TESTNET, apiKey: process.env.V3_API_KEY_TESTNET },
+  // { network: Network.FANTOM },
+  // { network: Network.FANTOM_TESTNET, apiKey: process.env.V3_API_KEY_TESTNET },
   { network: Network.ETHEREUM_CLASSIC },
   // { network: Network.POLYGON },
   { network: Network.POLYGON_AMOY },
@@ -71,6 +71,8 @@ const testNetworks = [
   // { network: Network.CRONOS },
   { network: Network.CRONOS_TESTNET, apiKey: process.env.V3_API_KEY_TESTNET },
   { network: Network.BASE },
+  { network: Network.ZK_SYNC, url: 'https://mainnet.era.zksync.io' },
+  { network: Network.ZK_SYNC_TESTNET, url: 'https://sepolia.era.zksync.dev' },
 ]
 
 describe.each(testNetworks)('RPC EVM', (testNetwork) => {

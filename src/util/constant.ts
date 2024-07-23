@@ -129,6 +129,8 @@ export const Constant = {
     [Network.CASPER]: 18,
     [Network.TON]: 9,
     [Network.TON_TESTNET]: 9,
+    [Network.ZK_SYNC]: 18,
+    [Network.ZK_SYNC_TESTNET]: 18,
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -238,6 +240,8 @@ export const Constant = {
     [Network.CASPER]: 'CASPER',
     [Network.TON]: 'TON',
     [Network.TON_TESTNET]: 'TON',
+    [Network.ZK_SYNC]: 'ZKS',
+    [Network.ZK_SYNC_TESTNET]: 'ZKS',
   },
   RPC: {
     MAINNETS: [
