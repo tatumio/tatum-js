@@ -106,6 +106,7 @@ export enum Currency {
   'ELECTRUM' = 'ELECTRUM',
   'CSPR' = 'CSPR',
   TON = 'TON',
+  ZK_SYNC = 'ZK_SYNC',
 }
 
 export const ERC20_CURRENCIES = [
@@ -175,6 +176,7 @@ export const NATIVE_CURRENCIES = [
   Currency.SOL,
   Currency.KCS,
   Currency.KLAY,
+  Currency.ZK_SYNC,
 ]
 
 export const TRON_CURRENCIES = [Currency.TRON, Currency.USDT_TRON, Currency.INRT_TRON]
