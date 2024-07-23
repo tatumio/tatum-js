@@ -8,13 +8,15 @@ import {
   FullSdk,
   Network,
   NotificationSubscription,
+  RpcNodeType,
+  TatumConfig,
 } from '../service'
 import { ResponseDto } from '../util'
 import { NetworkUtils } from '../util/network.utils'
 
 export const e2eUtil = {
-  initConfig: (network: Network, apiKey?: string) => {
-    return {
+  initConfig: (network: Network, apiKey?: string, url?: string) => {
+    const config: TatumConfig = {
       network,
       verbose: e2eUtil.isVerbose,
       retryCount: 5,
@@ -23,6 +25,13 @@ export const e2eUtil = {
         v4: apiKey ?? NetworkUtils.getV4ApiKeyForNetwork(network),
       },
     }
+
+    if (url) {
+      config.rpc = {
+        nodes: [{ url: url, type: RpcNodeType.NORMAL }]
+      }
+    }
+    return config
   },
   subscriptions: {
     getAddress: (network: Network): string => {

@@ -10,6 +10,7 @@ import { Notification } from '../notification'
 import { Rates } from '../rate'
 import { Token } from '../token'
 import { TatumSdkChain } from './tatum'
+import { ZkSyncRpcSuite } from '../../dto/rpc/ZkSyncRpcSuite'
 
 export abstract class BaseEvm extends TatumSdkChain {
   rpc: EvmBasedRpcSuite
@@ -86,6 +87,22 @@ export class Klaytn extends NotificationEvm {
     this.rpc = Utils.getRpc<EvmBasedRpcSuite>(id, Container.of(id).get(CONFIG))
   }
 }
+
+export class ZkSync extends TatumSdkChain {
+  rpc: ZkSyncRpcSuite
+  fee: FeeEvm
+  ipfs: Ipfs
+  rates: Rates
+
+  constructor(id: string) {
+    super(id)
+    this.rpc = Utils.getRpc<ZkSyncRpcSuite>(id, Container.of(id).get(CONFIG))
+    this.fee = Container.of(id).get(FeeEvm)
+    this.ipfs = Container.of(id).get(Ipfs)
+    this.rates = Container.of(id).get(Rates)
+  }
+}
+
 
 // Full support for chains
 export class Ethereum extends FullEvm {

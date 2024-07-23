@@ -57,6 +57,7 @@ export enum Network {
   BITCOIN_ELECTRS = 'bitcoin-mainnet-electrs',
   CASPER = 'casper-mainnet',
   TON = 'ton-mainnet',
+  ZK_SYNC = 'zks-mainnet',
 
 
   // Testnets
@@ -111,7 +112,8 @@ export enum Network {
   IOTA_TESTNET = 'iota-testnet',
   BITCOIN_ELECTRS_TESTNET = 'bitcoin-testnet-electrs',
   ROSTRUM_TESTNET = 'bch-testnet-rostrum',
-  TON_TESTNET = 'ton-testnet'
+  TON_TESTNET = 'ton-testnet',
+  ZK_SYNC_TESTNET = 'zks-testnet',
 }
 
 export const EVM_BASED_NETWORKS = [
@@ -163,6 +165,8 @@ export const EVM_BASED_NETWORKS = [
   Network.HORIZEN_EON,
   Network.HORIZEN_EON_GOBI,
   Network.CHILIZ,
+  Network.ZK_SYNC,
+  Network.ZK_SYNC_TESTNET,
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -216,6 +220,8 @@ export const UTXO_LOAD_BALANCER_NETWORKS = [
 
 export const DOGECOIN_LOAD_BALANCED_NETWORKS = [Network.DOGECOIN, Network.DOGECOIN_TESTNET]
 
+export const ZK_SYNC_LOAD_BALANCER_NETWORKS = [Network.ZK_SYNC, Network.ZK_SYNC_TESTNET]
+
 export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.FLARE,
   Network.FLARE_COSTON,
@@ -243,7 +249,9 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.FANTOM,
   Network.CRONOS,
   Network.BASE,
+  ...ZK_SYNC_LOAD_BALANCER_NETWORKS,
 ]
+
 
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
 export const EOS_LOAD_BALANCER_NETWORKS = [Network.EOS]
@@ -389,6 +397,8 @@ export const isIotaLoadBalancerNetwork = (network: Network) => IOTA_LOAD_BALANCE
 export const isIotaNetwork = (network: Network) => IOTA_NETWORKS.includes(network)
 
 export const isElectrsNetwork = (network: Network) => BITCOIN_ELECTRS_NETWORKS.includes(network)
+
+export const isZkSyncNetwork = (network: Network) => ZK_SYNC_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isCasperNetwork = (network: Network) => CASPER_NETWORKS.includes(network)
 
@@ -974,5 +984,15 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   [Network.TON_TESTNET]: {
     currency: Currency.TON,
     testnet: true
-  }
+  },
+  [Network.ZK_SYNC]: {
+    currency: Currency.ZKS,
+    testnet: false,
+    chainId: 324
+  },
+  [Network.ZK_SYNC_TESTNET]: {
+    currency: Currency.ZKS,
+    testnet: true,
+    chainId: 300
+  },
 }

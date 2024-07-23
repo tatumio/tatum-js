@@ -11,20 +11,18 @@ import {
   TxPayload,
 } from '../../../dto'
 import { Logger } from '../../../service/logger/logger.types'
-import { decodeHexString, decodeUInt256 } from '../../../util/decode'
+import { decodeUInt256 } from '../../../util/decode'
+import { EvmUtils } from './EvmUtils'
 
 @Service()
 export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
   protected abstract logger: Logger
+
   protected abstract rpcCall<T>(method: string, params?: unknown[]): Promise<T>
 
   async blockNumber(): Promise<JsonRpcResponse<any>> {
     const response = await this.rpcCall<JsonRpcResponse<any>>('eth_blockNumber')
-
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async call(callObject: TxPayload, blockNumber: BlockNumber = 'latest'): Promise<JsonRpcResponse<string>> {
@@ -36,11 +34,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
 
   async chainId(): Promise<JsonRpcResponse<BigNumber>> {
     const response = await this.rpcCall<JsonRpcResponse<any>>('eth_chainId')
-
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async clientVersion(): Promise<JsonRpcResponse<string>> {
@@ -117,26 +111,17 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
   async estimateGas(callObject: TxPayload): Promise<JsonRpcResponse<BigNumber>> {
     const response = await this.rpcCall<JsonRpcResponse<any>>('eth_estimateGas', [callObject])
 
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async gasPrice(): Promise<JsonRpcResponse<BigNumber>> {
     const response = await this.rpcCall<JsonRpcResponse<any>>('eth_gasPrice')
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async maxPriorityFeePerGas(): Promise<JsonRpcResponse<BigNumber>> {
     const response = await this.rpcCall<JsonRpcResponse<any>>('eth_maxPriorityFeePerGas')
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async getBalance(
@@ -147,10 +132,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
       address,
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
     ])
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async getTokenDecimals(tokenAddress: string): Promise<JsonRpcResponse<BigNumber>> {
@@ -158,10 +140,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
       { to: tokenAddress, data: '0x313ce567' },
       'latest',
     ])
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async getTokenSymbol(tokenAddress: string): Promise<JsonRpcResponse<string>> {
@@ -169,10 +148,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
       { to: tokenAddress, data: '0x95d89b41' },
       'latest',
     ])
-    if (response.result) {
-      response.result = decodeHexString(response.result)
-    }
-    return response
+    return EvmUtils.toDecodedString(response)
   }
 
   async getTokenName(tokenAddress: string): Promise<JsonRpcResponse<string>> {
@@ -180,10 +156,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
       { to: tokenAddress, data: '0x06fdde03' },
       'latest',
     ])
-    if (response.result) {
-      response.result = decodeHexString(response.result)
-    }
-    return response
+    return EvmUtils.toDecodedString(response)
   }
 
   async getTokenCap(tokenAddress: string): Promise<JsonRpcResponse<BigNumber>> {
@@ -191,10 +164,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
       { to: tokenAddress, data: '0x355274ea' },
       'latest',
     ])
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async getTokenTotalSupply(tokenAddress: string): Promise<JsonRpcResponse<BigNumber>> {
@@ -202,10 +172,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
       { to: tokenAddress, data: '0x18160ddd' },
       'latest',
     ])
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async supportsInterfaceERC1155(tokenAddress: string): Promise<JsonRpcResponse<boolean>> {
@@ -234,6 +201,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
       return null
     }
   }
+
   async getBlockByHash(blockHash: string, includeTransactions = false): Promise<JsonRpcResponse<any>> {
     return this.rpcCall<JsonRpcResponse<any>>('eth_getBlockByHash', [blockHash, includeTransactions])
   }
@@ -328,10 +296,7 @@ export abstract class AbstractEvmRpc implements EvmBasedRpcInterface {
       typeof blockNumber === 'number' ? '0x' + new BigNumber(blockNumber).toString(16) : blockNumber,
     ])
 
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async getTransactionReceipt(transactionHash: string): Promise<JsonRpcResponse<any>> {

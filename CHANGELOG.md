@@ -1,3 +1,9 @@
+## [4.2.37] - 2024.7.23
+
+### Added
+
+- Support for zkSync mainnet & testnet
+
 ## [4.2.36] - 2024.7.18
 
 ### Added

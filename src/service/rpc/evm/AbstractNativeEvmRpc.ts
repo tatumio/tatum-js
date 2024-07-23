@@ -5,17 +5,19 @@ import { BlockNumber, JsonRpcResponse, LogFilter, TxPayload } from '../../../dto
 import { NativeEvmBasedRpcInterface } from '../../../dto/rpc/NativeEvmBasedRpcInterface'
 import { Constant } from '../../../util'
 import { AbstractEvmRpc } from './AbstractEvmRpc'
+import { EvmUtils } from './EvmUtils'
 
 @Service()
 export abstract class AbstractNativeEvmRpc extends AbstractEvmRpc implements NativeEvmBasedRpcInterface {
   protected abstract rpcCall<T>(method: string, params?: unknown[]): Promise<T>
+
   protected abstract getNativePrefix(): string
 
   private nativeRpcCall<T>({
-    method,
-    params,
-    nativePrefix,
-  }: {
+                             method,
+                             params,
+                             nativePrefix,
+                           }: {
     method: string
     params?: unknown[]
     nativePrefix?: boolean
@@ -28,20 +30,12 @@ export abstract class AbstractNativeEvmRpc extends AbstractEvmRpc implements Nat
 
   async blockNumber(nativePrefix?: boolean): Promise<JsonRpcResponse<any>> {
     const response = await this.nativeRpcCall<JsonRpcResponse<any>>({ method: 'blockNumber', nativePrefix })
-
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async chainId(nativePrefix?: boolean): Promise<JsonRpcResponse<BigNumber>> {
     const response = await this.nativeRpcCall<JsonRpcResponse<any>>({ method: 'chainId', nativePrefix })
-
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async estimateGas(callObject: TxPayload, nativePrefix?: boolean): Promise<JsonRpcResponse<BigNumber>> {
@@ -50,19 +44,12 @@ export abstract class AbstractNativeEvmRpc extends AbstractEvmRpc implements Nat
       params: [callObject],
       nativePrefix,
     })
-
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async gasPrice(nativePrefix?: boolean): Promise<JsonRpcResponse<BigNumber>> {
     const response = await this.nativeRpcCall<JsonRpcResponse<any>>({ method: 'gasPrice', nativePrefix })
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async maxPriorityFeePerGas(nativePrefix?: boolean): Promise<JsonRpcResponse<BigNumber>> {
@@ -70,10 +57,7 @@ export abstract class AbstractNativeEvmRpc extends AbstractEvmRpc implements Nat
       method: 'maxPriorityFeePerGas',
       nativePrefix,
     })
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async getBalance(
@@ -89,10 +73,7 @@ export abstract class AbstractNativeEvmRpc extends AbstractEvmRpc implements Nat
       ],
       nativePrefix,
     })
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async getBlockByHash(
@@ -236,10 +217,7 @@ export abstract class AbstractNativeEvmRpc extends AbstractEvmRpc implements Nat
       nativePrefix,
     })
 
-    if (response.result) {
-      response.result = new BigNumber(response.result)
-    }
-    return response
+    return EvmUtils.toBigNumber(response)
   }
 
   async getTransactionReceipt(

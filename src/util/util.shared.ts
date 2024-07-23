@@ -35,6 +35,7 @@ import {
   isUtxoLoadBalancerEstimateFeeNetwork,
   isUtxoLoadBalancerNetwork,
   isXrpNetwork,
+  isZkSyncNetwork,
   JsonRpcCall,
   JsonRpcResponse,
   MAPPED_NETWORK,
@@ -90,13 +91,14 @@ import {
   Solana,
   Stellar,
   TatumConfig,
-  Tezos, Ton,
+  Tezos,
+  Ton,
   Tron,
   UtxoRpc,
   Vechain,
   XinFin,
   Xrp,
-  ZCash,
+  ZCash, ZkSync,
 } from '../service'
 import { EvmArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmArchiveLoadBalancerRpc'
 import { EvmBeaconArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmBeaconArchiveLoadBalancerRpc'
@@ -127,10 +129,14 @@ import { IotaRpc } from '../service/rpc/other/IotaRpc'
 import { CosmosLoadBalancerRpc } from '../service/rpc/other/CosmosLoadBalancerRpc'
 import { CasperLoadBalancerRpc } from '../service/rpc/other/CasperLoadBalancerRpc'
 import { TonRpc } from '../service/rpc/other/TonRpc'
+import { ZkSyncLoadBalancerRpc } from '../service/rpc/evm/ZkSyncLoadBalancerRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
+    if(isZkSyncNetwork(network)) {
+      return Container.of(id).get(ZkSyncLoadBalancerRpc) as T
+    }
 
     if(isTonNetwork(network)) {
       return Container.of(id).get(TonRpc) as T
@@ -921,6 +927,9 @@ export const Utils = {
       case Network.TON:
       case Network.TON_TESTNET:
         return new Ton(id) as T
+      case Network.ZK_SYNC:
+      case Network.ZK_SYNC_TESTNET:
+        return new ZkSync(id) as T
       default:
         return new FullSdk(id) as T
     }

@@ -11,15 +11,16 @@ interface EvmE2eI {
     estimateGas?: any
   }
   skipEstimateGas?: boolean
+  url?: string
 }
 
 export const EvmE2eUtils = {
-  initTatum: async <T extends BaseEvm>(network: Network, apiKey?: string) =>
-    TatumSDK.init<T>(e2eUtil.initConfig(network, apiKey)),
+  initTatum: async <T extends BaseEvm>(network: Network, apiKey?: string, url?: string) =>
+    TatumSDK.init<T>(e2eUtil.initConfig(network, apiKey, url)),
   e2e: (evmE2eI: EvmE2eI) => {
-    const { network, data, skipEstimateGas, apiKey } = evmE2eI
+    const { network, data, skipEstimateGas, apiKey, url } = evmE2eI
     it('eth_blockNumber', async () => {
-      const tatum = await EvmE2eUtils.initTatum(network, apiKey)
+      const tatum = await EvmE2eUtils.initTatum(network, apiKey, url)
       const { result } = await tatum.rpc.blockNumber()
 
       await tatum.destroy()
@@ -27,7 +28,7 @@ export const EvmE2eUtils = {
     })
 
     it('eth_chainId', async () => {
-      const tatum = await EvmE2eUtils.initTatum(network, apiKey)
+      const tatum = await EvmE2eUtils.initTatum(network, apiKey, url)
       const { result } = await tatum.rpc.chainId()
 
       tatum.rpc.destroy()
@@ -36,7 +37,7 @@ export const EvmE2eUtils = {
 
     if (!skipEstimateGas) {
       it('eth_estimateGas', async () => {
-        const tatum = await EvmE2eUtils.initTatum(network, apiKey)
+        const tatum = await EvmE2eUtils.initTatum(network, apiKey, url)
         const estimateGas = data?.estimateGas ?? {
           from: '0xb4c9E4617a16Be36B92689b9e07e9F64757c1792',
           to: '0x4675C7e5BaAFBFFbca748158bEcBA61ef3b0a263',
@@ -49,7 +50,7 @@ export const EvmE2eUtils = {
     }
 
     it('eth_gasPrice', async () => {
-      const tatum = await EvmE2eUtils.initTatum(network, apiKey)
+      const tatum = await EvmE2eUtils.initTatum(network, apiKey, url)
       const { result } = await tatum.rpc.gasPrice()
 
       await tatum.destroy()
@@ -57,7 +58,7 @@ export const EvmE2eUtils = {
     })
 
     it('web3_clientVersion', async () => {
-      const tatum = await EvmE2eUtils.initTatum(network, apiKey)
+      const tatum = await EvmE2eUtils.initTatum(network, apiKey, url)
       const { result } = await tatum.rpc.clientVersion()
 
       await tatum.destroy()
@@ -65,7 +66,7 @@ export const EvmE2eUtils = {
     })
 
     it('eth_getBlockByNumber', async () => {
-      const tatum = await EvmE2eUtils.initTatum(network, apiKey)
+      const tatum = await EvmE2eUtils.initTatum(network, apiKey, url)
       const { result } = await tatum.rpc.blockNumber()
       const { result: block } = await tatum.rpc.getBlockByNumber((result as BigNumber).toNumber() - 1000)
       await tatum.destroy()
