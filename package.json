@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.37.53",
+  "version": "1.37.54",
   "description": "Tatum API client allows browsers and Node.js clients to interact with Tatum API.",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
