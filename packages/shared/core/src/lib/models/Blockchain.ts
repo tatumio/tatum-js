@@ -32,6 +32,7 @@ export enum Blockchain {
   OPTIMISM = 'OPTIMISM',
   FTM = 'FTM',
   TON = 'TON',
+  ZK_SYNC = 'ZK_SYNC',
 }
 
 export const EvmBasedBlockchains = [
@@ -48,6 +49,7 @@ export const EvmBasedBlockchains = [
   Blockchain.AVAX,
   Blockchain.OPTIMISM,
   Blockchain.FTM,
+  Blockchain.ZK_SYNC
 ]
 
 // @TODO tmp solution
@@ -71,3 +73,4 @@ export type EvmBasedBlockchain =
   | Blockchain.AVAX
   | Blockchain.OPTIMISM
   | Blockchain.FTM
+  | Blockchain.ZK_SYNC
