@@ -65,6 +65,7 @@ export const BlockchainCurrencyMapping: Record<
   OPTIMISM: Currency.OPTIMISM,
   FTM: Currency.FTM,
   TON: Currency.TON,
+  ZK_SYNC: Currency.ZK_SYNC,
 }
 
 export const CurrencyToBlockchainMapping: Record<Currency, Blockchain> = buildCurrencyBlockchainMapping()
