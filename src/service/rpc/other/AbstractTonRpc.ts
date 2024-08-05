@@ -60,6 +60,25 @@ import { BlockchainAccountInspect } from '../../../dto/rpc/ton/models/Blockchain
 import { Account } from '../../../dto/rpc/ton/models/Account'
 import { DomainNames } from '../../../dto/rpc/ton/models/DomainNames'
 import { JettonsBalances } from '../../../dto/rpc/ton/models/JettonsBalances'
+import { TonResponse } from '../../../dto/rpc/ton/models/TonResponse'
+import { GetTransactions } from '../../../dto/rpc/ton/models/GetTransactions'
+import { GetShardBlockProof } from '../../../dto/rpc/ton/models/GetShardBlockProof'
+import { LookupBlock } from '../../../dto/rpc/ton/models/LookupBlock'
+import { GetBlockTransactions } from '../../../dto/rpc/ton/models/GetBlockTransactions'
+import { GetBlockTransactionsExt } from '../../../dto/rpc/ton/models/GetBlockTransactionsExt'
+import { GetBlockHeader } from '../../../dto/rpc/ton/models/GetBlockHeader'
+import { TryLocateTx } from '../../../dto/rpc/ton/models/TryLocateTx'
+import {
+  Body_run_get_method_runGetMethod_post
+} from '../../../dto/rpc/ton/models/Body_run_get_method_runGetMethod_post'
+import { Body_send_boc_sendBoc_post } from '../../../dto/rpc/ton/models/Body_send_boc_sendBoc_post'
+import {
+  Body_send_boc_return_hash_sendBocReturnHash_post
+} from '../../../dto/rpc/ton/models/Body_send_boc_return_hash_sendBocReturnHash_post'
+import { Body_send_query_sendQuery_post } from '../../../dto/rpc/ton/models/Body_send_query_sendQuery_post'
+import { Body_estimate_fee_estimateFee_post } from '../../../dto/rpc/ton/models/Body_estimate_fee_estimateFee_post'
+import { TonRequestJsonRPC } from '../../../dto/rpc/ton/models/TonRequestJsonRPC'
+import { DeprecatedTonResponseJsonRPC } from '../../../dto/rpc/ton/models/DeprecatedTonResponseJsonRPC'
 
 interface RequestI {
   path: string
@@ -1040,5 +1059,207 @@ export abstract class AbstractTonRpc implements TonRpcSuite {
       path: `/v2/accounts/${accountId}/diff`,
       queryParams: { start_date: startDate, end_date: endDate },
     });
+  }
+
+  // Ton Http API
+
+  getAddressInformation(address: string): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getAddressInformation`,
+      queryParams: { address },
+    })
+  }
+
+  getExtendedAddressInformation(address: string): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getExtendedAddressInformation`,
+      queryParams: { address },
+    })
+  }
+
+  getWalletInformation(address: string): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getWalletInformation`,
+      queryParams: { address },
+    })
+  }
+
+  getTransactions(params: GetTransactions): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getTransactions`,
+      queryParams: params as unknown as QueryParams,
+    })
+  }
+
+  getAddressBalance(address: string): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getAddressBalance`,
+      queryParams: { address },
+    })
+  }
+
+  getAddressState(address: string): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getAddressState`,
+      queryParams: { address },
+    })
+  }
+
+  packAddress(address: string): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/packAddress`,
+      queryParams: { address },
+    })
+  }
+
+  unpackAddress(address: string): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/unpackAddress`,
+      queryParams: { address },
+    })
+  }
+
+  getTokenMetadata(address: string): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getTokenMetadata`,
+      queryParams: { address },
+    })
+  }
+
+  detectAddress(address: string): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/detectAddress`,
+      queryParams: { address },
+    })
+  }
+
+  getMasterchainInfo(): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getMasterchainInfo`,
+    })
+  }
+
+  getMasterchainBlockSignatures(seqno: number): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getMasterchainBlockSignatures`,
+      queryParams: { seqno },
+    })
+  }
+
+  getShardBlockProof(params: GetShardBlockProof): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getShardBlockProof`,
+      queryParams: params as unknown as QueryParams,
+    })
+  }
+
+  getConsensusBlock(): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getConsensusBlock`,
+    })
+  }
+
+  lookupBlock(params: LookupBlock): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/lookupBlock`,
+      queryParams: params as unknown as QueryParams,
+    })
+  }
+
+  shards(seqno: number): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/shards`,
+      queryParams: { seqno },
+    })
+  }
+
+  getBlockTransactions(params: GetBlockTransactions): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getBlockTransactions`,
+      queryParams: params as unknown as QueryParams,
+    })
+  }
+
+  getBlockTransactionsExt(params: GetBlockTransactionsExt): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getBlockTransactionsExt`,
+      queryParams: params as unknown as QueryParams,
+    })
+  }
+
+  getBlockHeader(params: GetBlockHeader): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getBlockHeader`,
+      queryParams: params as unknown as QueryParams,
+    })
+  }
+
+  getOutMsqQueueSizes(): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/getOutMsqQueueSizes`,
+    })
+  }
+
+  tryLocateTx(params: TryLocateTx): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/tryLocateTx`,
+      queryParams: params as unknown as QueryParams,
+    })
+  }
+
+  tryLocateResultTx(params: TryLocateTx): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/tryLocateResultTx`,
+      queryParams: params as unknown as QueryParams,
+    })
+  }
+
+  tryLocateSourceTx(params: TryLocateTx): Promise<TonResponse> {
+    return this.sendGet({
+      path: `/tryLocateSourceTx`,
+      queryParams: params as unknown as QueryParams,
+    })
+  }
+
+  runGetMethod(params: Body_run_get_method_runGetMethod_post): Promise<TonResponse> {
+    return this.sendPost({
+      path: `/runGetMethod`,
+      body: params,
+    })
+  }
+
+  sendBoc(params: Body_send_boc_sendBoc_post): Promise<TonResponse> {
+    return this.sendPost({
+      path: `/sendBoc`,
+      body: params,
+    })
+  }
+
+  sendBocReturnHash(params: Body_send_boc_return_hash_sendBocReturnHash_post): Promise<TonResponse> {
+    return this.sendPost({
+      path: `/sendBocReturnHash`,
+      body: params,
+    })
+  }
+
+  sendQuery(params: Body_send_query_sendQuery_post): Promise<TonResponse> {
+    return this.sendPost({
+      path: `/sendQuery`,
+      body: params,
+    })
+  }
+
+  estimateFee(params: Body_estimate_fee_estimateFee_post): Promise<TonResponse> {
+    return this.sendPost({
+      path: `/estimateFee`,
+      body: params,
+    })
+  }
+
+  jsonRPC(params: TonRequestJsonRPC): Promise<DeprecatedTonResponseJsonRPC> {
+    return this.sendPost({
+      path: `/jsonRPC`,
+      body: params,
+    })
   }
 }
