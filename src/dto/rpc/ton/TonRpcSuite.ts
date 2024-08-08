@@ -54,6 +54,23 @@ import type { PoolInfo } from './models/PoolInfo';
 import type { StorageProvider } from './models/StorageProvider';
 import type { Seqno } from './models/Seqno';
 import { NftItem } from './models/NftItem'
+import { TonResponse } from './models/TonResponse'
+import { GetTransactions } from './models/GetTransactions'
+import { GetShardBlockProof } from './models/GetShardBlockProof'
+import { LookupBlock } from './models/LookupBlock'
+import { GetBlockTransactions } from './models/GetBlockTransactions'
+import { GetBlockTransactionsExt } from './models/GetBlockTransactionsExt'
+import { GetBlockHeader } from './models/GetBlockHeader'
+import { TryLocateTx } from './models/TryLocateTx'
+import { Body_run_get_method_runGetMethod_post } from './models/Body_run_get_method_runGetMethod_post'
+import { Body_send_boc_sendBoc_post } from './models/Body_send_boc_sendBoc_post'
+import {
+  Body_send_boc_return_hash_sendBocReturnHash_post
+} from './models/Body_send_boc_return_hash_sendBocReturnHash_post'
+import { Body_send_query_sendQuery_post } from './models/Body_send_query_sendQuery_post'
+import { Body_estimate_fee_estimateFee_post } from './models/Body_estimate_fee_estimateFee_post'
+import { TonRequestJsonRPC } from './models/TonRequestJsonRPC'
+import { DeprecatedTonResponseJsonRPC } from './models/DeprecatedTonResponseJsonRPC'
 
 export interface TonRpcSuite {
   status(): Promise<ServiceStatus | { error: string }>;
@@ -539,4 +556,70 @@ export interface TonRpcSuite {
   getWalletsByPublicKey(publicKey: string): Promise<Accounts | { error: string }>;
 
   getAccountSeqno(accountId: string): Promise<Seqno | { error: string }>;
+
+  // Ton Http API
+
+  // Accounts
+  getAddressInformation(address: string): Promise<TonResponse>;
+
+  getExtendedAddressInformation(address: string): Promise<TonResponse>;
+
+  getWalletInformation(address: string): Promise<TonResponse>;
+
+  getTransactions(params: GetTransactions): Promise<TonResponse>;
+
+  getAddressBalance(address: string): Promise<TonResponse>;
+
+  getAddressState(address: string): Promise<TonResponse>;
+
+  packAddress(address: string): Promise<TonResponse>;
+
+  unpackAddress(address: string): Promise<TonResponse>;
+
+  getTokenMetadata(token: string): Promise<TonResponse>;
+
+  detectAddress(address: string): Promise<TonResponse>;
+
+  // Blocks
+  getMasterchainInfo(): Promise<TonResponse>;
+
+  getMasterchainBlockSignatures(seqno: number): Promise<TonResponse>;
+
+  getShardBlockProof(params: GetShardBlockProof): Promise<TonResponse>;
+
+  getConsensusBlock(): Promise<TonResponse>
+
+  lookupBlock(params: LookupBlock): Promise<TonResponse>;
+
+  shards(seqno: number): Promise<TonResponse>;
+
+  getBlockTransactions(params: GetBlockTransactions): Promise<TonResponse>;
+
+  getBlockTransactionsExt(params: GetBlockTransactionsExt): Promise<TonResponse>;
+
+  getBlockHeader(params: GetBlockHeader): Promise<TonResponse>;
+
+  getOutMsqQueueSizes(): Promise<TonResponse>;
+
+  // Transactions
+  tryLocateTx(params: TryLocateTx): Promise<TonResponse>;
+
+  tryLocateResultTx(params: TryLocateTx): Promise<TonResponse>;
+
+  tryLocateSourceTx(params: TryLocateTx): Promise<TonResponse>;
+
+  // Run method
+  runGetMethod(params: Body_run_get_method_runGetMethod_post): Promise<TonResponse>;
+
+  // Send
+  sendBoc(params: Body_send_boc_sendBoc_post): Promise<TonResponse>;
+
+  sendBocReturnHash(params: Body_send_boc_return_hash_sendBocReturnHash_post): Promise<TonResponse>;
+
+  sendQuery(params: Body_send_query_sendQuery_post): Promise<TonResponse>;
+
+  estimateFee(params: Body_estimate_fee_estimateFee_post): Promise<TonResponse>;
+
+  // Json Rpc
+  jsonRPC(params: TonRequestJsonRPC): Promise<DeprecatedTonResponseJsonRPC>
 }

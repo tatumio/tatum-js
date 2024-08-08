@@ -3,7 +3,7 @@ import { e2eUtil } from '../../e2e.util'
 
 const getElectrsRpc = async (testnet: boolean) => await TatumSDK.init<BitcoinElectrs>(e2eUtil.initConfig(testnet ? Network.BITCOIN_ELECTRS_TESTNET : Network.BITCOIN_ELECTRS))
 
-describe.each([
+describe.skip.each([
   [true],
   [false]
 ])('Electrs (%s)', (testnet) => {

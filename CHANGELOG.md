@@ -1,3 +1,9 @@
+## [4.2.38] - 2024.7.23
+
+### Added
+
+- Support for Ton basic api
+
 ## [4.2.37] - 2024.7.23
 
 ### Added

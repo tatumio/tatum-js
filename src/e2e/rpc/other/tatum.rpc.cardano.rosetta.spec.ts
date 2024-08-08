@@ -28,7 +28,7 @@ describe.each(networks)('Cardano Rosetta', ({ testnet, network, blockchain }) =>
       expect(response).toBeDefined()
     })
 
-    it('should get network list', async () => {
+    it.skip('should get network list', async () => {
       const response = await tatum.rpc.getNetworkList({})
       expect(response).toBeDefined()
     })

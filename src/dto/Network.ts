@@ -57,7 +57,7 @@ export enum Network {
   BITCOIN_ELECTRS = 'bitcoin-mainnet-electrs',
   CASPER = 'casper-mainnet',
   TON = 'ton-mainnet',
-  ZK_SYNC = 'zks-mainnet',
+  ZK_SYNC = 'zksync-mainnet',
 
 
   // Testnets
@@ -113,7 +113,7 @@ export enum Network {
   BITCOIN_ELECTRS_TESTNET = 'bitcoin-testnet-electrs',
   ROSTRUM_TESTNET = 'bch-testnet-rostrum',
   TON_TESTNET = 'ton-testnet',
-  ZK_SYNC_TESTNET = 'zks-testnet',
+  ZK_SYNC_TESTNET = 'zksync-testnet',
 }
 
 export const EVM_BASED_NETWORKS = [
@@ -299,7 +299,6 @@ export const LOAD_BALANCER_NETWORKS = [
   ...IOTA_LOAD_BALANCER_NETWORKS,
   ...BITCOIN_ELECTRS_NETWORKS,
   ...CASPER_NETWORKS,
-  ...TON_NETWORKS,
 ]
 
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
