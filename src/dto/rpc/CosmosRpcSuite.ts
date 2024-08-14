@@ -1346,9 +1346,9 @@ export interface CosmosRpcSuite extends CardanoRpcSuite {
 
   getCommunityPool(): Promise<GetCommunityPoolResponse>
 
-  getDelegateTotalRewards(params: GetDelegationTotalRewardsRequest): Promise<GetDelegationTotalRewardsResponse>
+  getDelegationTotalRewards(params: GetDelegationTotalRewardsRequest): Promise<GetDelegationTotalRewardsResponse>
 
-  getDelegateRewards(params: GetDelegationRewardsRequest): Promise<GetDelegationRewardsResponse>
+  getDelegationRewards(params: GetDelegationRewardsRequest): Promise<GetDelegationRewardsResponse>
 
   getDelegatorValidators(params: GetDelegatorValidatorsRequest): Promise<GetDelegatorValidatorsResponse>
 

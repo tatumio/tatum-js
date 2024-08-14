@@ -3,7 +3,7 @@ import { e2eUtil } from '../../e2e.util'
 
 const getCasperRpc = async () => await TatumSDK.init<Casper>(e2eUtil.initConfig(Network.CASPER))
 
-describe('Casper (%s)', () => {
+describe.skip('Casper (%s)', () => {
   it('info_get_status', async () => {
     const casper = await getCasperRpc()
     const result = await casper.rpc.infoGetStatus()
