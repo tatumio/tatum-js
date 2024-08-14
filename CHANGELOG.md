@@ -1,3 +1,9 @@
+## [4.2.39] - 2024.8.14
+
+### Updated
+
+- Rename delegation methods
+
 ## [4.2.38] - 2024.7.23
 
 ### Added

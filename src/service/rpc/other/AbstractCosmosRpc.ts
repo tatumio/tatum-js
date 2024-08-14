@@ -221,14 +221,14 @@ export abstract class AbstractCosmosRpc extends AbstractCardanoRpc implements Co
     });
   }
 
-  getDelegateTotalRewards(params: GetDelegationTotalRewardsRequest): Promise<GetDelegationTotalRewardsResponse> {
+  getDelegationTotalRewards(params: GetDelegationTotalRewardsRequest): Promise<GetDelegationTotalRewardsResponse> {
     const { delegator_address } = params;
     return this.sendGet({
       path: `/api/cosmos/distribution/v1beta1/delegators/${delegator_address}/rewards`,
     });
   }
 
-  getDelegateRewards(params: GetDelegationRewardsRequest): Promise<GetDelegationRewardsResponse> {
+  getDelegationRewards(params: GetDelegationRewardsRequest): Promise<GetDelegationRewardsResponse> {
     const { delegator_address, validator_address } = params;
     return this.sendGet({
       path: `/api/cosmos/distribution/v1beta1/delegators/${delegator_address}/rewards/${validator_address}`,
