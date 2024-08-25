@@ -338,7 +338,7 @@ export class LoadBalancer implements AbstractRpcInterface {
   private checkSSRF(url: string): boolean {
     try {
       const parsedUrl = new URL(url)
-      return parsedUrl.hostname.endsWith('rpc.tatum.io')
+      return parsedUrl.hostname.endsWith('tatum.io')
     } catch (e) {
       Utils.log({
         id: this.id,
@@ -358,7 +358,7 @@ export class LoadBalancer implements AbstractRpcInterface {
         return typeMatch
       }
 
-      // If noSSRFCheck is false or undefined, check if the URL ends with 'rpc.tatum.io'.
+      // If noSSRFCheck is false or undefined, check if the URL ends with 'tatum.io'.
       const ssrfCheckPassed = this.checkSSRF(node.url)
 
       // Log if the URL doesn't pass the SSRF check
