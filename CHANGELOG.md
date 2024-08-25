@@ -1,3 +1,9 @@
+## [4.2.40] - 2024.8.25
+
+### Fixed
+
+- Relax SSRF checks and allow tatum gateway nodes
+
 ## [4.2.39] - 2024.8.14
 
 ### Updated
@@ -71,7 +77,6 @@
 
 - Support for Avalanche Notifications
 
-
 ## [4.2.27] - 2024.5.6
 
 ### Added
@@ -81,7 +86,6 @@
 ### Removed
 
 - Polygon Mumbai
-
 
 ## [4.2.26] - 2024.5.6
 
@@ -94,7 +98,6 @@
 ### Added
 
 - Added support for Iota API calls
-
 
 ## [4.2.23] - 2024.4.10
 
