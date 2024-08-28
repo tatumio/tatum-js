@@ -30,6 +30,10 @@ export type ChainTransferEthErc20KMS = {
      */
     signatureId: string;
     /**
+     * (Only if the signature ID is mnemonic-based) The index of the address from which the fee will be deducted that was generated from the mnemonic
+     */
+    index?: number;
+    /**
      * The nonce to be set to the transaction; if not present, the last known nonce will be used
      */
     nonce?: number;
