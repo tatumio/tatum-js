@@ -15,6 +15,7 @@ export enum Currency {
   MATIC = 'MATIC',
   GAMEE = 'GAMEE',
   MATIC_ETH = 'MATIC_ETH',
+  POL_ETH = 'POL_ETH',
   USDC_MATIC = 'USDC_MATIC',
   USDC_MATIC_NATIVE = 'USDC_MATIC_NATIVE',
   USDC_BSC = 'USDC_BSC',
@@ -115,6 +116,7 @@ export const ERC20_CURRENCIES = [
   Currency.LINK,
   Currency.UNI,
   Currency.MATIC_ETH,
+  Currency.POL_ETH,
   Currency.BUSD,
   Currency.SAND,
   Currency.REVV,
@@ -211,5 +213,5 @@ export const NFT_SUPPORTED_CURRENCIES = [
   Currency.KLAY,
 ]
 
-export type NftSupportedCurrencies = (typeof NFT_SUPPORTED_CURRENCIES)[number]
-export type NativeCurrency = (typeof NATIVE_CURRENCIES)[number]
+export type NftSupportedCurrencies = typeof NFT_SUPPORTED_CURRENCIES[number]
+export type NativeCurrency = typeof NATIVE_CURRENCIES[number]
