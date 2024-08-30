@@ -751,6 +751,7 @@ export const generateAddressFromXPub = (
     case Currency.PAX:
     case Currency.PAXG:
     case Currency.MATIC_ETH:
+    case Currency.POL_ETH:
     case Currency.PLTC:
     case Currency.XCON:
     case Currency.REVV:
@@ -863,6 +864,7 @@ export const generatePrivateKeyFromMnemonic = (
     case Currency.SAND:
     case Currency.ETH:
     case Currency.MATIC_ETH:
+    case Currency.POL_ETH:
     case Currency.BSC:
     case Currency.BETH:
     case Currency.GAMEE:
@@ -948,6 +950,7 @@ export const generateAddressFromPrivatekey = (
     case Currency.REVV:
     case Currency.SAND:
     case Currency.MATIC_ETH:
+    case Currency.POL_ETH:
     case Currency.BSC:
     case Currency.MMY:
     case Currency.MATIC:
