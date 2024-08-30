@@ -340,7 +340,7 @@ export const Constant = {
     BASE: 'https://api.shasta.trongrid.io',
     RPC: 'https://api.shasta.trongrid.io/jsonrpc',
   },
-  EOS_PREFIX: 'v1/chain/',
+  EOS_PREFIX: '/v1/chain/',
   BEACON_PREFIX: '/eth/v1/beacon',
   BEACON_BASE_PREFIX: '/eth/v1',
 }
