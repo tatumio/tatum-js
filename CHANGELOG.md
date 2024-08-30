@@ -1,3 +1,9 @@
+## [4.2.41] - 2024.8.30
+
+### Fixed
+
+- EOS prefix slash missing
+
 ## [4.2.40] - 2024.8.25
 
 ### Fixed
