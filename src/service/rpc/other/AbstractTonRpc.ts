@@ -1119,9 +1119,9 @@ export abstract class AbstractTonRpc implements TonRpcSuite {
     })
   }
 
-  getTokenMetadata(address: string): Promise<TonResponse> {
+  getTokenData(address: string): Promise<TonResponse> {
     return this.sendGet({
-      path: `/getTokenMetadata`,
+      path: `/getTokenData`,
       queryParams: { address },
     })
   }

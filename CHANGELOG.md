@@ -1,3 +1,9 @@
+## [4.2.42] - 2024.9.4
+
+### Fixed
+
+- Replaced Ton method `getTokenMetadata` with working `getTokenData`
+
 ## [4.2.41] - 2024.8.30
 
 ### Fixed
