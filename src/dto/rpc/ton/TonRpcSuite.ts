@@ -576,7 +576,7 @@ export interface TonRpcSuite {
 
   unpackAddress(address: string): Promise<TonResponse>;
 
-  getTokenMetadata(token: string): Promise<TonResponse>;
+  getTokenData(token: string): Promise<TonResponse>;
 
   detectAddress(address: string): Promise<TonResponse>;
 
