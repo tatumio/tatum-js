@@ -33,7 +33,7 @@ export interface UtxoBasedCommonRpcInterface {
   ): Promise<JsonRpcResponse<string>>
   decodeRawTransaction(hexstring: string): Promise<JsonRpcResponse<any>>
   decodeScript(hexstring: string): Promise<JsonRpcResponse<any>>
-  getRawTransaction(txId: string, verbose?: boolean): Promise<JsonRpcResponse<any>>
+  getRawTransaction(txId: string, verbose: 0 | 1 | 2): Promise<JsonRpcResponse<any>>
   sendRawTransaction(hexstring: string): Promise<JsonRpcResponse<string>>
 
   // utility methods

@@ -1,3 +1,9 @@
+## [4.2.43] - 2024.9.13
+
+### Fixed
+
+- UTXO rpc method `getRawTransaction` now accepts verbose parameter in correct type
+
 ## [4.2.42] - 2024.9.4
 
 ### Fixed

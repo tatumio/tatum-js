@@ -88,7 +88,7 @@ export abstract class AbstractCommonUtxoRpc implements UtxoBasedCommonRpcInterfa
     return this.rpcCall<JsonRpcResponse<any>>('getrawmempool', [verbose])
   }
 
-  async getRawTransaction(txId: string, verbose = false): Promise<JsonRpcResponse<any>> {
+  async getRawTransaction(txId: string, verbose: 0 | 1 | 2 = 0): Promise<JsonRpcResponse<any>> {
     return this.rpcCall<JsonRpcResponse<any>>('getrawtransaction', [txId, verbose])
   }
 
