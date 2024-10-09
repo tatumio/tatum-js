@@ -2,7 +2,7 @@ import process from 'process'
 import { Container, Service } from 'typedi'
 import { JsonRpcCall } from '../dto'
 import { ApiVersion } from '../service'
-import { CONFIG, Constant, Utils } from '../util'
+import { CONFIG, Constant, EnvUtils, Utils } from '../util'
 import { DefaultBodyType, DefaultParamsType, FileUploadRequest, GetUrl, SdkRequest } from './connector.dto'
 
 @Service({
@@ -150,7 +150,7 @@ export class TatumConnector {
 
   private getBaseUrl() {
     const config = Container.of(this.id).get(CONFIG)
-    if (process.env.TATUM_URL) {
+    if (EnvUtils.isProcessAvailable() && process.env?.TATUM_URL) {
       return process.env.TATUM_URL
     }
     return config.version === ApiVersion.V3 ? Constant.TATUM_API_URL.V3 : Constant.TATUM_API_URL.V4
