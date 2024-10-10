@@ -1,12 +1,12 @@
-import * as process from 'process'
 import { ApiVersion, Eos, Network, TatumSDK } from '../../../service'
+import { ApiKey, ApiKeyV3 } from '../../e2e.constant'
 import { e2eUtil } from '../../e2e.util'
 
 const getEosRpc = async (testnet?: boolean) =>
   await TatumSDK.init<Eos>({
     network: testnet ? Network.EOS_TESTNET : Network.EOS,
     apiKey: {
-      v4: testnet ? process.env.V3_API_KEY_TESTNET : process.env.V4_API_KEY_MAINNET,
+      v4: testnet ? ApiKeyV3.testnet : ApiKey.mainnet,
     },
     version: ApiVersion.V3,
     retryCount: 1,

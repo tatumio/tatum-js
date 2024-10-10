@@ -1,4 +1,5 @@
 import { ApiVersion, Ethereum, Network, TatumSDK } from '../service'
+import { ApiKey } from './e2e.constant'
 
 describe('Rates', () => {
   let tatum: Ethereum
@@ -9,7 +10,7 @@ describe('Rates', () => {
       retryDelay: 1000,
       retryCount: 2,
       version: ApiVersion.V4,
-      apiKey: process.env.V4_API_KEY_TESTNET,
+      apiKey: ApiKey.testnet,
     })
   })
 

@@ -1,13 +1,13 @@
-import process from 'process'
 import { ApiVersion, Network, Stellar, TatumSDK } from '../../../service'
+import { ApiKey, ApiKeyV3 } from '../../e2e.constant'
 import { e2eUtil } from '../../e2e.util'
 
 const getStellarRpc = async (testnet?: boolean) =>
   await TatumSDK.init<Stellar>({
     network: testnet ? Network.STELLAR_TESTNET : Network.STELLAR,
     verbose: e2eUtil.isVerbose,
-    ...(testnet && { apiKey: { v3: process.env.V3_API_KEY_TESTNET } }),
-    ...(!testnet && { apiKey: process.env.V4_API_KEY_MAINNET }),
+    ...(testnet && { apiKey: { v3: ApiKeyV3.testnet } }),
+    ...(!testnet && { apiKey: ApiKey.mainnet }),
     version: testnet ? ApiVersion.V3 : ApiVersion.V4,
   })
 

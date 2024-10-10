@@ -1,11 +1,12 @@
 import { Network } from '../../../dto'
+import { ApiKey, ApiKeyV3 } from '../../e2e.constant'
 import { EvmE2eUtils } from './evm.e2e.utils'
 
 const testNetworks = [
   { network: Network.CELO },
   { network: Network.CELO_ALFAJORES },
   // { network: Network.ARBITRUM_ONE },
-  { network: Network.ARBITRUM_NOVA, apiKey: process.env.V3_API_KEY_MAINNET },
+  { network: Network.ARBITRUM_NOVA, apiKey: ApiKeyV3.mainnet },
   {
     network: Network.ARBITRUM_NOVA_TESTNET,
     apiKey: process.env.V3_API_KEY_TESTNET,
@@ -56,7 +57,7 @@ const testNetworks = [
   },
   {
     network: Network.KLAYTN_BAOBAB,
-    apiKey: process.env.V4_API_KEY_TESTNET,
+    apiKey: ApiKey.testnet,
   },
   {
     network: Network.AVALANCHE_C,
