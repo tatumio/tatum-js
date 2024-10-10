@@ -6,7 +6,7 @@ import { GetI } from '../../../dto/GetI'
 import { PostI } from '../../../dto/PostI'
 import { AbstractRpcInterface } from '../../../dto/rpc/AbstractJsonRpcInterface'
 import { Logger } from '../../../service/logger/logger.types'
-import { CONFIG, Constant, LOGGER, Utils } from '../../../util'
+import { CONFIG, Constant, EnvUtils, LOGGER, Utils } from '../../../util'
 import { RpcNode, RpcNodeType } from '../../tatum'
 
 interface RpcStatus {
@@ -100,7 +100,7 @@ export class LoadBalancer implements AbstractRpcInterface {
       await this.initRemoteHostsUrls()
     }
 
-    if (typeof process !== 'undefined' && process.release && process.release.name === 'node') {
+    if (EnvUtils.isProcessAvailable() && process.release && process.release.name === 'node') {
       process.on('exit', () => this.destroy())
     }
 
