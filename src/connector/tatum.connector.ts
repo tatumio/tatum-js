@@ -1,4 +1,3 @@
-import process from 'process'
 import { Container, Service } from 'typedi'
 import { JsonRpcCall } from '../dto'
 import { ApiVersion } from '../service'
