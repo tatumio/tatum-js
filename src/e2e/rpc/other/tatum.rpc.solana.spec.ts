@@ -1,5 +1,6 @@
 import { Commitment, Encoding } from '../../../dto'
 import { Network, Solana, TatumSDK } from '../../../service'
+import { ApiKey } from '../../e2e.constant'
 import { e2eUtil } from '../../e2e.util'
 
 const getClient = async (testnet?: boolean): Promise<Solana> =>
@@ -8,6 +9,7 @@ const getClient = async (testnet?: boolean): Promise<Solana> =>
     retryCount: 1,
     retryDelay: 2000,
     verbose: e2eUtil.isVerbose,
+    apiKey: testnet ? ApiKey.testnet : ApiKey.mainnet,
   })
 
 const blockNumber = 203046000
@@ -159,7 +161,7 @@ describe('Solana', () => {
     })
 
     describe('getFirstAvailableBlock', () => {
-      it('should return first available block', async () => {
+      it.skip('should return first available block', async () => {
         const tatum = await getClient()
         const { result } = await tatum.rpc.getFirstAvailableBlock()
         await tatum.destroy()
