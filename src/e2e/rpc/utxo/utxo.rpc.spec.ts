@@ -1,4 +1,5 @@
 import { Network } from '../../../service'
+import { ApiKeyV3 } from '../../e2e.constant'
 import { UtxoE2eUtils, UtxoNetworkType } from './utxo.e2e.utils'
 
 const utxoTestNetworks = [
@@ -11,7 +12,7 @@ const utxoTestNetworks = [
   {
     network: Network.ZCASH_TESTNET,
     type: UtxoNetworkType.TEST,
-    apiKey: process.env.V3_API_KEY_TESTNET,
+    apiKey: ApiKeyV3.testnet,
     skipEstimateSmartFee: true,
   },
   // { network: Network.ZCASH, type: UtxoNetworkType.MAIN, skipEstimateSmartFee: true },

@@ -1,14 +1,15 @@
 import { Network } from '../../../dto'
+import { ApiKey } from '../../e2e.constant'
 import { EvmE2eUtils } from './evm.e2e.utils'
 
 const testNetworks = [
   { network: Network.CELO },
   { network: Network.CELO_ALFAJORES },
   // { network: Network.ARBITRUM_ONE },
-  { network: Network.ARBITRUM_NOVA, apiKey: process.env.V3_API_KEY_MAINNET },
+  { network: Network.ARBITRUM_NOVA, apiKey: ApiKey.mainnet },
   {
     network: Network.ARBITRUM_NOVA_TESTNET,
-    apiKey: process.env.V3_API_KEY_TESTNET,
+    apiKey: ApiKey.testnet,
   },
   { network: Network.HORIZEN_EON },
   // { network: Network.HORIZEN_EON_GOBI },
@@ -16,7 +17,7 @@ const testNetworks = [
   { network: Network.BINANCE_SMART_CHAIN },
   {
     network: Network.BINANCE_SMART_CHAIN_TESTNET,
-    apiKey: process.env.V3_API_KEY_TESTNET,
+    apiKey: ApiKey.testnet,
   },
   { network: Network.FLARE },
   { network: Network.FLARE_SONGBIRD },
@@ -49,14 +50,14 @@ const testNetworks = [
   {
     network: Network.TRON_SHASTA,
     skipEstimateGas: true,
-    apiKey: process.env.V3_API_KEY_TESTNET,
+    apiKey: ApiKey.testnet,
   },
   {
     network: Network.KLAYTN,
   },
   {
     network: Network.KLAYTN_BAOBAB,
-    apiKey: process.env.V4_API_KEY_TESTNET,
+    apiKey: ApiKey.testnet,
   },
   {
     network: Network.AVALANCHE_C,
@@ -69,7 +70,7 @@ const testNetworks = [
     network: Network.XINFIN,
   },
   // { network: Network.CRONOS },
-  { network: Network.CRONOS_TESTNET, apiKey: process.env.V3_API_KEY_TESTNET },
+  { network: Network.CRONOS_TESTNET, apiKey: ApiKey.testnet },
   { network: Network.BASE },
   { network: Network.ZK_SYNC, url: 'https://mainnet.era.zksync.io' },
   { network: Network.ZK_SYNC_TESTNET, url: 'https://sepolia.era.zksync.dev' },

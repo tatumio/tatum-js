@@ -1,3 +1,10 @@
+## [4.2.43] - 2024.10.11
+
+### Fixed
+
+- Fixed Tatum Connector issue with process is undefined on the pure browser
+- Fixed and refactored some tests
+
 ## [4.2.42] - 2024.9.4
 
 ### Fixed
