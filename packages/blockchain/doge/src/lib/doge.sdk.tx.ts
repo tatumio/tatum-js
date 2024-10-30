@@ -51,7 +51,7 @@ export const dogeTransactions = (
         transaction.to(item.address, amount)
       }
 
-      const privateKeysToSign = []
+      const privateKeysToSign = new Set<string>()
       if ('fromUTXO' in body) {
         for (const item of body.fromUTXO) {
           const satoshis = amountUtils.toSatoshis(item.value)
@@ -64,8 +64,8 @@ export const dogeTransactions = (
               satoshis,
             }),
           ])
-          if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
-          else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
+          if ('signatureId' in item) privateKeysToSign.add(item.signatureId)
+          else if ('privateKey' in item) privateKeysToSign.add(item.privateKey)
         }
       } else if ('fromAddress' in body) {
         for (const item of body.fromAddress) {
@@ -89,8 +89,8 @@ export const dogeTransactions = (
               }),
             ])
 
-            if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
-            else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
+            if ('signatureId' in item) privateKeysToSign.add(item.signatureId)
+            else if ('privateKey' in item) privateKeysToSign.add(item.privateKey)
           }
         }
       }
