@@ -140,7 +140,7 @@ export const btcBasedTransactions = (
       totalOutputs += item.satoshis
     }
     try {
-      const privateKeysToSign = []
+      const privateKeysToSign = new Set<string>()
 
       for (const item of body.fromAddress) {
         if (totalInputs >= totalOutputs) {
@@ -163,12 +163,12 @@ export const btcBasedTransactions = (
             }),
           ])
 
-          if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
-          else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
+          if ('signatureId' in item) privateKeysToSign.add(item.signatureId)
+          else if ('privateKey' in item) privateKeysToSign.add(item.privateKey)
         }
       }
 
-      return privateKeysToSign
+      return Array.from(privateKeysToSign)
     } catch (e: any) {
       if (e instanceof SdkError) {
         throw e
