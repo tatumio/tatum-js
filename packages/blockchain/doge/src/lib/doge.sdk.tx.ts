@@ -51,7 +51,7 @@ export const dogeTransactions = (
         transaction.to(item.address, amount)
       }
 
-      const privateKeysToSign = []
+      const privateKeysToSign = new Set<string>()
       if ('fromUTXO' in body) {
         for (const item of body.fromUTXO) {
           const satoshis = amountUtils.toSatoshis(item.value)
@@ -64,8 +64,8 @@ export const dogeTransactions = (
               satoshis,
             }),
           ])
-          if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
-          else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
+          if ('signatureId' in item) privateKeysToSign.add(item.signatureId)
+          else if ('privateKey' in item) privateKeysToSign.add(item.privateKey)
         }
       } else if ('fromAddress' in body) {
         for (const item of body.fromAddress) {
@@ -88,10 +88,9 @@ export const dogeTransactions = (
                 satoshis,
               }),
             ])
-
-            if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
-            else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
           }
+          if ('signatureId' in item) privateKeysToSign.add(item.signatureId)
+          else if ('privateKey' in item) privateKeysToSign.add(item.privateKey)
         }
       }
 
@@ -110,9 +109,9 @@ export const dogeTransactions = (
         return JSON.stringify(transaction)
       }
 
-      for (const pk of privateKeysToSign) {
+      privateKeysToSign.forEach((pk) => {
         transaction.sign(PrivateKey.fromWIF(pk))
-      }
+      })
 
       return transaction.serialize()
     } catch (e: any) {

@@ -129,7 +129,7 @@ export const btcBasedTransactions = (
     transaction: BtcBasedTransaction,
     body: BtcFromAddressTypes | LtcFromAddressTypes,
     options: BtcBasedTxOptions,
-  ): Promise<Array<string>> => {
+  ): Promise<Set<string>> => {
     if (body.fromAddress.length === 0 && !options.skipAllChecks) {
       throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NO_INPUTS)
     }
@@ -140,7 +140,7 @@ export const btcBasedTransactions = (
       totalOutputs += item.satoshis
     }
     try {
-      const privateKeysToSign = []
+      const privateKeysToSign = new Set<string>()
 
       for (const item of body.fromAddress) {
         if (totalInputs >= totalOutputs) {
@@ -162,10 +162,9 @@ export const btcBasedTransactions = (
               satoshis: amountUtils.toSatoshis(utxo.value),
             }),
           ])
-
-          if ('signatureId' in item) privateKeysToSign.push(item.signatureId)
-          else if ('privateKey' in item) privateKeysToSign.push(item.privateKey)
         }
+        if ('signatureId' in item) privateKeysToSign.add(item.signatureId)
+        else if ('privateKey' in item) privateKeysToSign.add(item.privateKey)
       }
 
       return privateKeysToSign
@@ -205,13 +204,13 @@ export const btcBasedTransactions = (
     transaction: Transaction,
     body: BtcFromUtxoTypes | LtcFromUtxoTypes,
     options: BtcBasedTxOptions,
-  ): Promise<Array<string>> => {
+  ): Promise<Set<string>> => {
     if (body.fromUTXO.length === 0 && !options.skipAllChecks) {
       throw new BtcBasedSdkError(SdkErrorCode.BTC_BASED_NO_INPUTS)
     }
 
     try {
-      const privateKeysToSign = []
+      const privateKeysToSign = new Set<string>()
       const utxos: BtcUTXO[] = []
 
       const filteredUtxos = await getUtxoBatch(getChain(options), body)
@@ -233,8 +232,8 @@ export const btcBasedTransactions = (
           }),
         ])
 
-        if ('signatureId' in utxoItem) privateKeysToSign.push(utxoItem.signatureId)
-        else if ('privateKey' in utxoItem) privateKeysToSign.push(utxoItem.privateKey)
+        if ('signatureId' in utxoItem) privateKeysToSign.add(utxoItem.signatureId)
+        else if ('privateKey' in utxoItem) privateKeysToSign.add(utxoItem.privateKey)
       }
 
       if (!options.skipAllChecks) {
@@ -325,7 +324,7 @@ export const btcBasedTransactions = (
   ): Promise<string> {
     try {
       const tx: BtcBasedTransaction = new createTransaction()
-      let privateKeysToSign: string[] = []
+      let privateKeysToSign = new Set<string>()
 
       if (body.changeAddress) {
         tx.change(body.changeAddress)
@@ -359,7 +358,7 @@ export const btcBasedTransactions = (
         }
       }
 
-      new Set(privateKeysToSign).forEach((key) => {
+      privateKeysToSign.forEach((key) => {
         tx.sign(new createPrivateKey(key))
       })
 
