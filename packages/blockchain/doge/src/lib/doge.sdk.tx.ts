@@ -88,10 +88,9 @@ export const dogeTransactions = (
                 satoshis,
               }),
             ])
-
-            if ('signatureId' in item) privateKeysToSign.add(item.signatureId)
-            else if ('privateKey' in item) privateKeysToSign.add(item.privateKey)
           }
+          if ('signatureId' in item) privateKeysToSign.add(item.signatureId)
+          else if ('privateKey' in item) privateKeysToSign.add(item.privateKey)
         }
       }
 
@@ -110,9 +109,9 @@ export const dogeTransactions = (
         return JSON.stringify(transaction)
       }
 
-      for (const pk of privateKeysToSign) {
+      privateKeysToSign.forEach((pk) => {
         transaction.sign(PrivateKey.fromWIF(pk))
-      }
+      })
 
       return transaction.serialize()
     } catch (e: any) {
