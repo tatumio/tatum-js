@@ -44,6 +44,12 @@ export const CONTRACT_ADDRESSES = {
   [Currency.CAKE.toString()]: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
   [Currency.BUSD_BSC.toString()]: '0xe9e7cea3dedca5984780bafc599bd69add087d56',
   [Currency.GMC_BSC.toString()]: '0xa6272359bc37f61af398071b65c8934aca744d53',
+  [Currency.USDC_ARB]: '0xaf88d065e77c8cC2239327C5EDb3A432268e5831',
+  [Currency.USDT_ARB]: '0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9',
+  [Currency.USDC_OP]: '0x0b2c639c533813f4aa9d7837caf62653d097ff85',
+  [Currency.USDT_OP]: '0x94b008aA00579c1307B0EF2c499aD98a8ce58e58',
+  [Currency.USDC_BASE]: '0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913',
+  [Currency.USDT_BASE]: '0xfde4C96c8593536E31F229EA8f37b2ADa2699bb2',
 }
 
 export const CONTRACT_DECIMALS = {
@@ -90,6 +96,12 @@ export const CONTRACT_DECIMALS = {
   [Currency.BXRP.toString()]: 18,
   [Currency.BLTC.toString()]: 18,
   [Currency.BBCH.toString()]: 18,
+  [Currency.USDC_ARB.toString()]: 6,
+  [Currency.USDT_ARB.toString()]: 6,
+  [Currency.USDC_OP.toString()]: 6,
+  [Currency.USDT_OP.toString()]: 6,
+  [Currency.USDC_BASE.toString()]: 6,
+  [Currency.USDT_BASE.toString()]: 6,
 }
 
 export const CUSTODIAL_PROXY_ABI = {

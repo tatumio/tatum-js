@@ -1,4 +1,5 @@
 import {
+  BASE_BASED_CURRENCIES,
   BSC_BASED_CURRENCIES,
   CELO_CURRENCIES,
   Currency,
@@ -6,6 +7,7 @@ import {
   FLOW_CURRENCIES,
   MATIC_BASED_CURRENCIES,
   NativeCurrency,
+  OPTIMISM_BASED_CURRENCIES,
   TRON_CURRENCIES,
 } from '@tatumio/api-client'
 import { Blockchain } from './Blockchain'
@@ -60,9 +62,15 @@ export const BlockchainCurrencyMapping: Record<
   CHILIZ: Currency.CHZ,
   FLR: Currency.FLR,
   CRO: Currency.CRO,
-  BASE: Currency.BASE,
+  BASE: {
+    nativeCurrency: Currency.ETH_BASE,
+    currencies: BASE_BASED_CURRENCIES,
+  },
   AVAX: Currency.AVAX,
-  OPTIMISM: Currency.OPTIMISM,
+  OPTIMISM: {
+    nativeCurrency: Currency.ETH_OP,
+    currencies: OPTIMISM_BASED_CURRENCIES
+  },
   FTM: Currency.FTM,
   TON: Currency.TON,
   ZK_SYNC: Currency.ZK_SYNC,

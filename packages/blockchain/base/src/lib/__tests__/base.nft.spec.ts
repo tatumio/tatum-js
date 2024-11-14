@@ -29,7 +29,7 @@ describe.skip('BaseSDK - nft', () => {
     deployNFTSmartContract: [
       api.nftDeployErc721,
       {
-        chain: Currency.BASE,
+        chain: 'BASE',
         name: 'erc721-token',
         symbol: 'erc721-token',
         fromPrivateKey: testData.TESTNET.ERC_721.PRIVATE_KEY,
@@ -38,7 +38,7 @@ describe.skip('BaseSDK - nft', () => {
     mintNFT: [
       api.nftMintErc721,
       {
-        chain: Currency.BASE,
+        chain: 'BASE',
         to: testData.TESTNET.ERC_721?.ADDRESS,
         url: 'https://google.com/',
       },
@@ -46,7 +46,7 @@ describe.skip('BaseSDK - nft', () => {
     transferNFT: [
       api.nftTransferErc721,
       {
-        chain: Currency.BASE,
+        chain: 'BASE',
         to: testData.TESTNET.ERC_721?.ADDRESS,
         contractAddress: testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
         tokenId: 'erc721-token',
@@ -56,7 +56,7 @@ describe.skip('BaseSDK - nft', () => {
     mintMultipleNFTs: [
       api.nftMintMultipleErc721,
       {
-        chain: Currency.BASE,
+        chain: 'BASE',
         to: testData.TESTNET.ERC_721?.ADDRESS,
         tokenId: 'erc721-token',
         minter: testData.TESTNET.ERC_721?.ADDRESS,
@@ -67,7 +67,7 @@ describe.skip('BaseSDK - nft', () => {
     burnNFT: [
       api.nftBurnErc721,
       {
-        chain: Currency.BASE,
+        chain: 'BASE',
         tokenId: 'erc721-token',
         contractAddress: testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
         fromPrivateKey: testData.TESTNET.ERC_721?.PRIVATE_KEY,
@@ -76,7 +76,7 @@ describe.skip('BaseSDK - nft', () => {
     addNFTMinter: [
       api.nftAddMinter,
       {
-        chain: Currency.BASE,
+        chain: 'BASE',
         contractAddress: testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
         minter: testData.TESTNET.ERC_721?.ADDRESS,
         fromPrivateKey: testData.TESTNET.ERC_721?.PRIVATE_KEY,
@@ -84,37 +84,37 @@ describe.skip('BaseSDK - nft', () => {
     ],
     getNFTTransaction: [
       api.nftGetTransactErc721,
-      Currency.BASE,
+      'BASE',
       '0xe6e7340394958674cdf8606936d292f565e4ecc476aaa8b258ec8a141f7c75d7',
     ],
     getNFTTransactionsByToken: [
       api.nftGetTransactionByToken,
-      Currency.BASE,
+      'BASE',
       'erc721-token',
       testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
       20,
     ],
     getNFTTransactionsByAddress: [
       api.nftGetTransactionByAddress,
-      Currency.BASE,
+      'BASE',
       testData.TESTNET.ERC_721?.ADDRESS,
       testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
       20,
     ],
     getNFTsByAddress: [
       api.nftGetTokensByAddressErc721,
-      Currency.BASE,
+      'BASE',
       testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
     ],
     getNFTAccountBalance: [
       api.nftGetBalanceErc721,
-      Currency.BASE,
+      'BASE',
       testData.TESTNET.ERC_721?.ADDRESS,
       testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
     ],
     getNFTMetadataURI: [
       api.nftGetMetadataErc721,
-      Currency.BASE,
+      'BASE',
       testData.TESTNET.ERC_721?.CONTRACT_ADDRESS,
       'erc721-token',
     ],
