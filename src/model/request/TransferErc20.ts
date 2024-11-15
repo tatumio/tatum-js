@@ -12,7 +12,7 @@ import {
     ValidateIf,
     ValidateNested,
 } from 'class-validator';
-import { BSC_BASED_CURRENCIES, Currency, ETH_BASED_CURRENCIES, MATIC_BASED_CURRENCIES } from './Currency';
+import { ARB_BASED_CURRENCIES, BASE_BASED_CURRENCIES, BSC_BASED_CURRENCIES, Currency, ETH_BASED_CURRENCIES, MATIC_BASED_CURRENCIES, OPTIMISM_BASED_CURRENCIES } from './Currency';
 import { Fee } from './Fee';
 import { PrivateKeyOrSignatureId } from './PrivateKeyOrSignatureId';
 import { OneOf } from '../validation/OneOf'
@@ -34,7 +34,7 @@ export class TransferErc20 extends PrivateKeyOrSignatureId {
   public data?: string;
 
   @IsOptional()
-  @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.KLAY, Currency.ONE, ...BSC_BASED_CURRENCIES, Currency.ALGO])
+  @IsIn([...ETH_BASED_CURRENCIES, ...MATIC_BASED_CURRENCIES, Currency.XDC, Currency.KLAY, Currency.ONE, ...BSC_BASED_CURRENCIES, Currency.ALGO, ...ARB_BASED_CURRENCIES, ...BASE_BASED_CURRENCIES, ...OPTIMISM_BASED_CURRENCIES])
   public currency?: Currency;
 
   @OneOf(['currency', 'contractAddress'])

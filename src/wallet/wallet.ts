@@ -389,6 +389,15 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
     case Currency.BLTC:
     case Currency.BBCH:
     case Currency.MMY:
+    case Currency.ETH_ARB:
+    case Currency.ETH_BASE:
+    case Currency.ETH_OP:
+    case Currency.USDC_ARB:
+    case Currency.USDT_ARB:
+    case Currency.USDC_BASE:
+    case Currency.USDT_BASE:
+    case Currency.USDC_OP:
+    case Currency.USDT_OP:
       return generateEthWallet(testnet, mnem)
     case Currency.MATIC:
     case Currency.USDC_MATIC:

@@ -81,8 +81,8 @@ export enum Currency {
   EOS = 'EOS',
   AVAX = 'AVAX',
   FTM = 'FTM',
-  ARB = 'ARB',
-  OPTIMISM = 'OPTIMISM',
+  ETH_ARB = 'ETH_ARB',
+  ETH_OP = 'ETH_OP',
   NEAR = 'NEAR',
   CRO = 'CRO',
   RSK = 'RSK',
@@ -99,7 +99,7 @@ export enum Currency {
   CHZ = 'CHZ',
   ISLM = 'ISLM',
   FLR = 'FLR',
-  BASE = 'BASE',
+  ETH_BASE = 'ETH_BASE',
   KADENA = 'KADENA',
   ROSTRUM = 'ROSTRUM',
   ATOM = 'ATOM',
@@ -108,6 +108,12 @@ export enum Currency {
   CSPR = 'CSPR',
   TON = 'TON',
   ZK_SYNC = 'ZK_SYNC',
+  USDC_ARB = 'USDC_ARB',
+  USDC_OP = 'USDC_OP',
+  USDC_BASE = 'USDC_BASE',
+  USDT_ARB = 'USDT_ARB',
+  USDT_OP = 'USDT_OP',
+  USDT_BASE = 'USDT_BASE',
 }
 
 export const ERC20_CURRENCIES = [
@@ -170,3 +176,12 @@ export const ETH_BASED_CURRENCIES = [Currency.ETH.toString(), ...ERC20_CURRENCIE
 export const MATIC_BASED_CURRENCIES = [Currency.MATIC.toString(), ...MATIC20_CURRENCIES]
 
 export const BSC_BASED_CURRENCIES = [Currency.BSC.toString(), ...BEP20_CURRENCIES]
+
+export const ARB_CURRENCIES = [Currency.USDC_ARB.toString(), Currency.USDT_ARB.toString()]
+export const ARB_BASED_CURRENCIES = [Currency.ETH_ARB.toString(), ...ARB_CURRENCIES]
+
+export const OPTIMISM_CURRENCIES = [Currency.USDC_OP.toString(), Currency.USDT_OP.toString()]
+export const OPTIMISM_BASED_CURRENCIES = [Currency.ETH_OP.toString(), ...OPTIMISM_CURRENCIES]
+
+export const BASE_CURRENCIES = [Currency.USDC_BASE.toString(), Currency.USDT_BASE.toString()]
+export const BASE_BASED_CURRENCIES = [Currency.ETH_BASE.toString(), ...BASE_CURRENCIES]
