@@ -788,6 +788,15 @@ export const generateAddressFromXPub = (
     case Currency.BLTC:
     case Currency.BBCH:
     case Currency.MMY:
+    case Currency.ETH_ARB:
+    case Currency.ETH_BASE:
+    case Currency.ETH_OP:
+    case Currency.USDC_ARB:
+    case Currency.USDT_ARB:
+    case Currency.USDC_BASE:
+    case Currency.USDT_BASE:
+    case Currency.USDC_OP:
+    case Currency.USDT_OP:
       return generateEthAddress(testnet, xpub, i);
     case Currency.ONE:
       return generateOneAddress(testnet, xpub, i);
@@ -888,6 +897,15 @@ export const generatePrivateKeyFromMnemonic = (
     case Currency.BLTC:
     case Currency.BBCH:
     case Currency.MMY:
+    case Currency.ETH_ARB:
+    case Currency.ETH_BASE:
+    case Currency.ETH_OP:
+    case Currency.USDC_ARB:
+    case Currency.USDT_ARB:
+    case Currency.USDC_BASE:
+    case Currency.USDT_BASE:
+    case Currency.USDC_OP:
+    case Currency.USDT_OP:
       return generateEthPrivateKey(testnet, mnemonic, i);
     case Currency.ONE:
       return generateOnePrivateKey(testnet, mnemonic, i);
@@ -955,7 +973,15 @@ export const generateAddressFromPrivatekey = (
     case Currency.MMY:
     case Currency.MATIC:
     case Currency.KLAY:
-    case Currency.BASE:
+    case Currency.ETH_ARB:
+    case Currency.ETH_BASE:
+    case Currency.ETH_OP:
+    case Currency.USDC_ARB:
+    case Currency.USDT_ARB:
+    case Currency.USDC_BASE:
+    case Currency.USDT_BASE:
+    case Currency.USDC_OP:
+    case Currency.USDT_OP:
       return convertEthPrivateKey(testnet, privateKey);
     case Currency.ONE:
       return convertOnePrivateKey(testnet, privateKey);
