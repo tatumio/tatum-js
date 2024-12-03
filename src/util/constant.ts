@@ -24,6 +24,7 @@ export const Constant = {
   DECIMALS: {
     [Network.BITCOIN]: 8,
     [Network.BITCOIN_TESTNET]: 8,
+    [Network.BITCOIN_TESTNET_4]: 8,
     [Network.MULTIVERSX]: 18,
     [Network.MULTIVERSX_TESTNET]: 18,
     [Network.NEAR]: 24,
@@ -135,6 +136,7 @@ export const Constant = {
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
     [Network.BITCOIN_TESTNET]: 'BTC',
+    [Network.BITCOIN_TESTNET_4]: 'BTC',
     [Network.NEAR]: 'NEAR',
     [Network.NEAR_TESTNET]: 'NEAR',
     [Network.MULTIVERSX]: 'EGLD',
@@ -297,6 +299,7 @@ export const Constant = {
       Network.AVALANCHE_X_TESTNET,
       Network.BINANCE_SMART_CHAIN_TESTNET,
       Network.BITCOIN_TESTNET,
+      Network.BITCOIN_TESTNET_4,
       Network.BITCOIN_CASH_TESTNET,
       Network.CARDANO_ROSETTA_PREPROD,
       Network.CELO_ALFAJORES,

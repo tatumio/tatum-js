@@ -435,6 +435,7 @@ This section provides a list of various blockchain network status pages, powered
 |--------------------------------------------------------------------------------------------------------------|
 | [bitcoin-mainnet.status.tatum.io](https://bitcoin-mainnet.status.tatum.io)                                   |
 | [bitcoin-testnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)                                   |
+| [bitcoin-testnet4.status.tatum.io](https://bitcoin-testnet4.status.tatum.io)                                   |
 | [dogecoin-mainnet.status.tatum.io](https://dogecoin-mainnet.status.tatum.io)                                 |
 | [dogecoin-testnet.status.tatum.io](https://dogecoin-testnet.status.tatum.io)                                 |
 | [eos-mainnet-archive.status.tatum.io](https://eos-mainnet-archive.status.tatum.io)                           |

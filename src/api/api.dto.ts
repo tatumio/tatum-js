@@ -19,6 +19,7 @@ export type Chain =
 export type ChainUtxoEnum =
   | 'bitcoin'
   | 'bitcoin-testnet'
+  | 'bitcoin-testnet4'
   | 'litecoin'
   | 'litecoin-testnet'
   | 'doge'

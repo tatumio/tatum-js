@@ -98,26 +98,32 @@ import {
   Vechain,
   XinFin,
   Xrp,
-  ZCash, ZkSync,
+  ZCash,
+  ZkSync,
 } from '../service'
 import { EvmArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmArchiveLoadBalancerRpc'
 import { EvmBeaconArchiveLoadBalancerRpc } from '../service/rpc/evm/EvmBeaconArchiveLoadBalancerRpc'
 import { NativeEvmArchiveLoadBalancerRpc } from '../service/rpc/evm/NativeEvmArchiveLoadBalancerRpc'
 import { TronLoadBalancerRpc } from '../service/rpc/evm/TronLoadBalancerRpc'
 import { TronRpc } from '../service/rpc/evm/TronRpc'
+import { ZkSyncLoadBalancerRpc } from '../service/rpc/evm/ZkSyncLoadBalancerRpc'
 import { AlgorandAlgodLoadBalancerRpc } from '../service/rpc/other/AlgorandAlgodLoadBalancerRpc'
 import { AlgorandIndexerLoadBalancerRpc } from '../service/rpc/other/AlgorandIndexerLoadBalancerRpc'
 import { BnbLoadBalancerRpc } from '../service/rpc/other/BnbLoadBalancerRpc'
 import { CardanoLoadBalancerRpc } from '../service/rpc/other/CardanoLoadBalancerRpc'
+import { CasperLoadBalancerRpc } from '../service/rpc/other/CasperLoadBalancerRpc'
+import { CosmosLoadBalancerRpc } from '../service/rpc/other/CosmosLoadBalancerRpc'
 import { EosLoadBalancerRpc } from '../service/rpc/other/EosLoadBalancerRpc'
 import { EosRpc } from '../service/rpc/other/EosRpc'
 import { IotaLoadBalancerRpc } from '../service/rpc/other/IotaLoadBalancerRpc'
+import { IotaRpc } from '../service/rpc/other/IotaRpc'
 import { KadenaLoadBalancerRpc } from '../service/rpc/other/KadenaLoadBalancerRpc'
 import { RostrumLoadBalancerRpc } from '../service/rpc/other/RostrumLoadBalancerRpc'
 import { SolanaArchiveLoadBalancerRpc } from '../service/rpc/other/SolanaArchiveLoadBalancerRpc'
 import { StellarLoadBalancerRpc } from '../service/rpc/other/StellarLoadBalancerRpc'
 import { StellarRpc } from '../service/rpc/other/StellarRpc'
 import { TezosLoadBalancerRpc } from '../service/rpc/other/TezosLoadBalancerRpc'
+import { TonRpc } from '../service/rpc/other/TonRpc'
 import { XrpLoadBalancerRpc } from '../service/rpc/other/XrpLoadBalancerRpc'
 import { DogeLoadBalancedRpc } from '../service/rpc/utxo/DogeLoadBalancedRpc'
 import { UtxoLoadBalancerRpc } from '../service/rpc/utxo/UtxoLoadBalancerRpc'
@@ -125,24 +131,19 @@ import { UtxoLoadBalancerRpcEstimateFee } from '../service/rpc/utxo/UtxoLoadBala
 import { UtxoRpcEstimateFee } from '../service/rpc/utxo/UtxoRpcEstimateFee'
 import { Constant } from './constant'
 import { CONFIG, LOGGER } from './di.tokens'
-import { IotaRpc } from '../service/rpc/other/IotaRpc'
-import { CosmosLoadBalancerRpc } from '../service/rpc/other/CosmosLoadBalancerRpc'
-import { CasperLoadBalancerRpc } from '../service/rpc/other/CasperLoadBalancerRpc'
-import { TonRpc } from '../service/rpc/other/TonRpc'
-import { ZkSyncLoadBalancerRpc } from '../service/rpc/evm/ZkSyncLoadBalancerRpc'
 
 export const Utils = {
   getRpc: <T>(id: string, config: TatumConfig): T => {
     const { network } = config
-    if(isZkSyncNetwork(network)) {
+    if (isZkSyncNetwork(network)) {
       return Container.of(id).get(ZkSyncLoadBalancerRpc) as T
     }
 
-    if(isTonNetwork(network)) {
+    if (isTonNetwork(network)) {
       return Container.of(id).get(TonRpc) as T
     }
 
-    if(isCasperNetwork(network)) {
+    if (isCasperNetwork(network)) {
       return Container.of(id).get(CasperLoadBalancerRpc) as T
     }
 
@@ -602,6 +603,7 @@ export const Utils = {
     switch (network) {
       case Network.BITCOIN:
       case Network.BITCOIN_TESTNET:
+      case Network.BITCOIN_TESTNET_4:
         return AddressEventNotificationChain.BTC
       case Network.BITCOIN_CASH:
       case Network.BITCOIN_CASH_TESTNET:
@@ -787,6 +789,7 @@ export const Utils = {
     switch (network) {
       case Network.BITCOIN:
       case Network.BITCOIN_TESTNET:
+      case Network.BITCOIN_TESTNET_4:
         return new Bitcoin(id) as T
       case Network.LITECOIN:
       case Network.LITECOIN_TESTNET:
