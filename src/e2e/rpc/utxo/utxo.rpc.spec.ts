@@ -1,9 +1,10 @@
 import { Network } from '../../../service'
-import { ApiKeyV3 } from '../../e2e.constant'
+import { ApiKey } from '../../e2e.constant'
 import { UtxoE2eUtils, UtxoNetworkType } from './utxo.e2e.utils'
 
 const utxoTestNetworks = [
   { network: Network.BITCOIN_TESTNET, type: UtxoNetworkType.TEST },
+  { network: Network.BITCOIN_TESTNET_4, type: UtxoNetworkType.TESTNET4 },
   { network: Network.BITCOIN, type: UtxoNetworkType.MAIN },
   { network: Network.DOGECOIN_TESTNET, type: UtxoNetworkType.TEST },
   { network: Network.DOGECOIN, type: UtxoNetworkType.MAIN },
@@ -12,7 +13,7 @@ const utxoTestNetworks = [
   {
     network: Network.ZCASH_TESTNET,
     type: UtxoNetworkType.TEST,
-    apiKey: ApiKeyV3.testnet,
+    apiKey: ApiKey.testnet,
     skipEstimateSmartFee: true,
   },
   // { network: Network.ZCASH, type: UtxoNetworkType.MAIN, skipEstimateSmartFee: true },

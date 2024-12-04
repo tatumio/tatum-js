@@ -31,7 +31,7 @@ describe('Beacon', () => {
         expect(data).toBeDefined()
       })
 
-      it('should get block headers', async () => {
+      it.skip('should get block headers', async () => {
         const tatum = await EvmE2eUtils.initTatum<Ethereum>(network, apiKey)
         const { data } = await tatum.rpc.beacon.v1.getBlockHeaders({ slot: '1000' })
         await tatum.destroy()

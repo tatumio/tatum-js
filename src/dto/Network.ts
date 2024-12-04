@@ -213,7 +213,6 @@ export const DATA_API_NETWORKS = [...DATA_API_EVM_NETWORKS, Network.TEZOS]
 export const UTXO_LOAD_BALANCER_NETWORKS = [
   Network.BITCOIN,
   Network.BITCOIN_TESTNET,
-  Network.BITCOIN_TESTNET_4,
   Network.LITECOIN,
   Network.LITECOIN_TESTNET,
   Network.ZCASH,
