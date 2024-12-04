@@ -324,7 +324,7 @@ export class Address {
           .then((r) => r.result)
       }
       let path
-      if ([Network.BITCOIN, Network.BITCOIN_TESTNET, Network.BITCOIN_TESTNET_4].includes(chain)) {
+      if ([Network.BITCOIN, Network.BITCOIN_TESTNET].includes(chain)) {
         path = `bitcoin/transaction/address/${address}`
       } else if ([Network.LITECOIN, Network.LITECOIN_TESTNET].includes(chain)) {
         path = `litecoin/transaction/address/${address}`
