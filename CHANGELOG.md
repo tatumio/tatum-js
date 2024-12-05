@@ -1,3 +1,9 @@
+## [4.2.44] - 2024.12.5
+
+### Added
+
+- Support for Bitcoin Testnet 4
+
 ## [4.2.43] - 2024.10.11
 
 ### Fixed

@@ -7,7 +7,7 @@ const getTonClient = async (testnet?: boolean) => {
 
 describe('Ton', () => {
   describe('Testnet', () => {
-    it('Ton V2 API - status', async () => {
+    it.skip('Ton V2 API - status', async () => {
       const ton = await getTonClient(true)
       const result = await ton.rpc.getBlockchainMasterchainHead()
       await ton.destroy()

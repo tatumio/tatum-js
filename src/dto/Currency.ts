@@ -63,6 +63,7 @@ export function networkToCurrency(network: Network): Currency {
       return Currency.ETH
     case Network.BITCOIN:
     case Network.BITCOIN_TESTNET:
+    case Network.BITCOIN_TESTNET_4:
       return Currency.BTC
     case Network.DOGECOIN:
     case Network.DOGECOIN_TESTNET:

@@ -59,7 +59,6 @@ export enum Network {
   TON = 'ton-mainnet',
   ZK_SYNC = 'zksync-mainnet',
 
-
   // Testnets
   ALGORAND_ALGOD_TESTNET = 'algorand-testnet-algod',
   ALGORAND_INDEXER_TESTNET = 'algorand-testnet-indexer',
@@ -71,6 +70,7 @@ export enum Network {
   BASE_SEPOLIA = 'base-sepolia',
   BINANCE_SMART_CHAIN_TESTNET = 'bsc-testnet',
   BITCOIN_TESTNET = 'bitcoin-testnet',
+  BITCOIN_TESTNET_4 = 'bitcoin-testnet4',
   BITCOIN_CASH_TESTNET = 'bch-testnet',
   CARDANO_ROSETTA_PREPROD = 'cardano-preprod',
   CELO_ALFAJORES = 'celo-testnet',
@@ -172,6 +172,7 @@ export const EVM_BASED_NETWORKS = [
 export const UTXO_BASED_NETWORKS = [
   Network.BITCOIN,
   Network.BITCOIN_TESTNET,
+  Network.BITCOIN_TESTNET_4,
   Network.BITCOIN_CASH,
   Network.BITCOIN_CASH_TESTNET,
   Network.LITECOIN,
@@ -252,7 +253,6 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   ...ZK_SYNC_LOAD_BALANCER_NETWORKS,
 ]
 
-
 export const TRON_LOAD_BALANCER_NETWORKS = [Network.TRON]
 export const EOS_LOAD_BALANCER_NETWORKS = [Network.EOS]
 export const XRP_LOAD_BALANCER_NETWORKS = [Network.XRP, Network.XRP_TESTNET]
@@ -267,12 +267,15 @@ export const CARDANO_NETWORKS = [
   Network.CARDANO_ROSETTA_PREPROD,
   Network.COSMOS_ROSETTA,
 ]
-export const COSMOS_NETWORKS = [
-  Network.COSMOS_ROSETTA,
-]
+export const COSMOS_NETWORKS = [Network.COSMOS_ROSETTA]
 export const STELLAR_LOAD_BALANCER_NETWORKS = [Network.STELLAR]
 export const KADENA_LOAD_BALANCER_NETWORKS = [Network.KADENA, Network.KADENA_TESTNET]
-export const ROSTRUM_LOAD_BALANCER_NETWORKS = [Network.ROSTRUM, Network.BITCOIN_ELECTRS, Network.ROSTRUM_TESTNET, Network.BITCOIN_ELECTRS_TESTNET]
+export const ROSTRUM_LOAD_BALANCER_NETWORKS = [
+  Network.ROSTRUM,
+  Network.BITCOIN_ELECTRS,
+  Network.ROSTRUM_TESTNET,
+  Network.BITCOIN_ELECTRS_TESTNET,
+]
 export const IOTA_LOAD_BALANCER_NETWORKS = [Network.IOTA]
 export const BITCOIN_ELECTRS_NETWORKS = [Network.BITCOIN_ELECTRS, Network.BITCOIN_ELECTRS_TESTNET]
 export const IOTA_NETWORKS = [Network.IOTA, Network.IOTA_TESTNET]
@@ -543,6 +546,10 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.BTC,
     testnet: true,
     defaultTestnet: true,
+  },
+  [Network.BITCOIN_TESTNET_4]: {
+    currency: Currency.BTC,
+    testnet: true,
   },
   [Network.LITECOIN]: {
     currency: Currency.LTC,
@@ -982,16 +989,16 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   },
   [Network.TON_TESTNET]: {
     currency: Currency.TON,
-    testnet: true
+    testnet: true,
   },
   [Network.ZK_SYNC]: {
     currency: Currency.ZKS,
     testnet: false,
-    chainId: 324
+    chainId: 324,
   },
   [Network.ZK_SYNC_TESTNET]: {
     currency: Currency.ZKS,
     testnet: true,
-    chainId: 300
+    chainId: 300,
   },
 }

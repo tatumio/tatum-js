@@ -1,10 +1,11 @@
 import { Network } from '../../../dto'
-import { BaseUtxo, TatumSDK, Dogecoin } from '../../../service'
+import { BaseUtxo, Dogecoin, TatumSDK } from '../../../service'
 import { e2eUtil } from '../../e2e.util'
 
 export enum UtxoNetworkType {
   MAIN = 'main',
   TEST = 'test',
+  TESTNET4 = 'testnet4',
 }
 
 interface TatumBtcUtils {
