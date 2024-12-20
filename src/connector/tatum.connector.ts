@@ -115,10 +115,9 @@ export class TatumConnector {
           return await res.blob()
         }
         const response = await res.json()
-        if (response?.error) {
-          return await this.retry(url, request, res, retry)
+        if (!response?.error) {
+          return response
         }
-        return response
       }
 
       // Retry only in case of 5xx error

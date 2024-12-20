@@ -508,7 +508,7 @@ export class LoadBalancer implements AbstractRpcInterface {
     )
     if (index === -1) {
       this.logger.error(
-        `All RPC nodes are unavailable. Looks like your request is malformed or all nodes are down. Turn on verbose mode to see more details and check status pages.`,
+        `Looks like your request is malformed or all RPC nodes are down. Turn on verbose mode to see more details and check status pages.`,
       )
       throw e
     }
