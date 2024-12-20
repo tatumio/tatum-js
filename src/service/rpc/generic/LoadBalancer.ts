@@ -81,11 +81,16 @@ export class LoadBalancer implements AbstractRpcInterface {
   }
   private interval: ReturnType<typeof setInterval>
   private network: Network
+  private evictNodesOnFailure: boolean
   private noActiveNode = false
 
   constructor(private readonly id: string) {
     this.connector = Container.of(this.id).get(TatumConnector)
-    this.network = Container.of(this.id).get(CONFIG).network
+
+    const config = Container.of(this.id).get(CONFIG)
+    this.network = config.network
+    this.evictNodesOnFailure = !!config.rpc?.evictNodesOnFailure
+
     this.logger = Container.of(this.id).get(LOGGER)
   }
 
@@ -144,6 +149,12 @@ export class LoadBalancer implements AbstractRpcInterface {
       }
     } else {
       Utils.log({ id: this.id, message: 'No RPC URLs provided' })
+    }
+  }
+
+  private resetFailedStatuses(nodeType: RpcNodeType) {
+    for (const server of this.rpcUrls[nodeType]) {
+      server.failed = false
     }
   }
 
@@ -496,20 +507,30 @@ export class LoadBalancer implements AbstractRpcInterface {
       throw e
     }
 
+    const servers = this.rpcUrls[nodeType] as RpcStatus[]
+
     /**
      * If the node is not responding, it will be marked as failed.
      * New node will be selected and will be used for the given blockchain.
      */
-    const servers = this.rpcUrls[nodeType] as RpcStatus[]
+
     servers[activeIndex].failed = true
+
     const { index, fastestServer } = LoadBalancer.getFastestServer(
       servers,
       rpcConfig?.allowedBlocksBehind as number,
     )
+
     if (index === -1) {
-      this.logger.error(
-        `Looks like your request is malformed or all RPC nodes are down. Turn on verbose mode to see more details and check status pages.`,
-      )
+      if (this.evictNodesOnFailure) {
+        this.logger.error(
+          `Looks like your request is malformed or all RPC nodes are down. Turn on verbose mode to see more details and check status pages.`,
+        )
+      } else {
+        // Recover failed nodes, prepare them for the next round of requests
+        this.resetFailedStatuses(nodeType)
+      }
+
       throw e
     }
     Utils.log({

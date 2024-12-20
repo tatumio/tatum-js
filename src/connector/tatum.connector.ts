@@ -116,7 +116,7 @@ export class TatumConnector {
         }
         const response = await res.json()
         if (response?.error) {
-          return await this.retry(url, request, responseBody, retry)
+          return response
         }
         return response
       }

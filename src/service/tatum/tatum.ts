@@ -1,5 +1,5 @@
 import { Container, Service } from 'typedi'
-import { isLoadBalancerNetwork, Network } from '../../dto'
+import { Network, isLoadBalancerNetwork } from '../../dto'
 import { CONFIG, Constant, EnvUtils, LOGGER, LoggerUtils, Utils } from '../../util'
 import {
   ExtensionConstructor,
@@ -84,6 +84,10 @@ export class TatumSDK {
 
     const mergedConfig = Utils.deepMerge(defaultConfig, config) as TatumConfig
 
+    if (mergedConfig.rpc && this.shouldEvictNodesOnFailure(mergedConfig)) {
+      mergedConfig.rpc.evictNodesOnFailure = true
+    }
+
     LoggerUtils.setLoggerForEnv(mergedConfig, EnvUtils.isDevelopment(), EnvUtils.isBrowser())
 
     // TODO: check when rpc is customized if there is allowedBlocksBehind if not throw error or set default
@@ -103,7 +107,9 @@ export class TatumSDK {
     }
 
     if (isLoadBalancerNetwork(mergedConfig.network)) {
-      const loadBalancer = Container.of(id).get(mergedConfig.network === Network.TRON ? TronLoadBalancer : LoadBalancer)
+      const loadBalancer = Container.of(id).get(
+        mergedConfig.network === Network.TRON ? TronLoadBalancer : LoadBalancer,
+      )
       await loadBalancer.init()
     }
 
@@ -184,5 +190,17 @@ export class TatumSDK {
       result += characters.charAt(Math.floor(Math.random() * characters.length))
     }
     return result
+  }
+
+  private static shouldEvictNodesOnFailure(config: TatumConfig): boolean | undefined {
+    if (config.rpc?.evictNodesOnFailure !== undefined && config.rpc?.oneTimeLoadBalancing !== null) {
+      return config.rpc.evictNodesOnFailure
+    }
+
+    if (!config.rpc?.nodes) {
+      return false
+    }
+
+    return !config.rpc?.oneTimeLoadBalancing
   }
 }
