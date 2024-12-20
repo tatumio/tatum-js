@@ -116,14 +116,14 @@ export class TatumConnector {
         }
         const response = await res.json()
         if (response?.error) {
-          return await this.retry(url, request, res, retry)
+          return response
         }
         return response
       }
 
       // Retry only in case of 5xx error
       if (res.status >= 500 && res.status < 600) {
-        return await this.retry(url, request, res, retry)
+        return await this.retry(url, request, responseBody, retry)
       }
 
       throw responseBody
@@ -181,7 +181,7 @@ export class TatumConnector {
   private async retry<RESPONSE>(
     url: string,
     request: RequestInit,
-    response: Response,
+    responseBody: string,
     retry: number,
   ): Promise<RESPONSE | Blob | undefined> {
     const { retryDelay, retryCount } = Container.of(this.id).get(CONFIG)
@@ -191,7 +191,7 @@ export class TatumConnector {
         message: `Not retrying the request - no max retry count defined`,
         data: { url, requestBody: request.body },
       })
-      return Promise.reject(await response.text())
+      return Promise.reject(responseBody)
     }
 
     if (retry >= retryCount) {
@@ -200,7 +200,7 @@ export class TatumConnector {
         message: `Not retrying the request for the '${retry}' time - exceeded max retry count ${retryCount}: `,
         data: { url, requestBody: request.body },
       })
-      return Promise.reject(await response.text())
+      return Promise.reject(responseBody)
     }
 
     retry++

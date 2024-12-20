@@ -66,9 +66,16 @@ export interface TatumConfig {
     nodes?: RpcNode[]
 
     /**
-     * If this is set to `true`, the SDK will not automatically load balance and failover between the available OpenRPC nodes and will use the fastest URL fetched during the startup. Defaults to `false`.
+     * If this is set to `true`, the SDK will not automatically load balance and failover between the available OpenRPC nodes and will use the fastest URL fetched during the startup. Defaults to `false` unless there only a single node is provided.
      */
     oneTimeLoadBalancing?: boolean
+
+    /**
+     * If this is set to `true`, the SDK will evict nodes from routing pool if they are failing. If `oneTimeLoadBalancing` is set to `true` or you haven't provided your own rpc nodes, this parameter will default to `false`. Defaults to `true` otherwise.
+     *
+     * We discourage setting this to `true` if you are using `oneTimeLoadBalancing` as it will result in the SDK not being able to recover a failing node.
+     */
+    evictNodesOnFailure?: boolean
   }
 
   /**

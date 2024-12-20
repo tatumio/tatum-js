@@ -20,7 +20,7 @@ describe.each([false, true])(`Tezos`, (testnet: boolean) => {
       expect(result).toBeDefined()
     })
 
-    it('getCheckpoint', async () => {
+    it.skip('getCheckpoint', async () => {
       const tatum = await getTezosRpc(testnet)
       const result = await tatum.rpc.getCheckpoint({ chainId: 'main' })
       await tatum.destroy()

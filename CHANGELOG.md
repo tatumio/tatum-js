@@ -1,3 +1,9 @@
+## [4.2.45] - 2024.12.20
+
+### Fixed
+
+- Fixed Tatum Connector retry logic causing generic error
+
 ## [4.2.44] - 2024.12.5
 
 ### Added
