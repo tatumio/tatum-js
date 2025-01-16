@@ -58,6 +58,7 @@ export enum Network {
   CASPER = 'casper-mainnet',
   TON = 'ton-mainnet',
   ZK_SYNC = 'zksync-mainnet',
+  RONIN = 'ronin-mainnet',
 
   // Testnets
   ALGORAND_ALGOD_TESTNET = 'algorand-testnet-algod',
@@ -114,6 +115,7 @@ export enum Network {
   ROSTRUM_TESTNET = 'bch-testnet-rostrum',
   TON_TESTNET = 'ton-testnet',
   ZK_SYNC_TESTNET = 'zksync-testnet',
+  RONIN_SAIGON = 'ronin-saigon',
 }
 
 export const EVM_BASED_NETWORKS = [
@@ -167,6 +169,8 @@ export const EVM_BASED_NETWORKS = [
   Network.CHILIZ,
   Network.ZK_SYNC,
   Network.ZK_SYNC_TESTNET,
+  Network.RONIN,
+  Network.RONIN_SAIGON,
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -1000,5 +1004,15 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.ZKS,
     testnet: true,
     chainId: 300,
+  },
+  [Network.RONIN]: {
+    currency: Currency.RON,
+    testnet: false,
+    chainId: 2020
+  },
+  [Network.RONIN_SAIGON]: {
+    currency: Currency.RON,
+    chainId: 2021,
+    testnet: true,
   },
 }

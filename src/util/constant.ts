@@ -132,6 +132,8 @@ export const Constant = {
     [Network.TON_TESTNET]: 9,
     [Network.ZK_SYNC]: 18,
     [Network.ZK_SYNC_TESTNET]: 18,
+    [Network.RONIN]: 18,
+    [Network.RONIN_SAIGON]: 18,
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -244,6 +246,8 @@ export const Constant = {
     [Network.TON_TESTNET]: 'TON',
     [Network.ZK_SYNC]: 'ZKS',
     [Network.ZK_SYNC_TESTNET]: 'ZKS',
+    [Network.RONIN]: 'RON',
+    [Network.RONIN_SAIGON]: 'RON',
   },
   RPC: {
     MAINNETS: [
