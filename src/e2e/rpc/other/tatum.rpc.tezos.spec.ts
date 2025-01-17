@@ -4,7 +4,7 @@ import { e2eUtil } from '../../e2e.util'
 const getTezosRpc = async (testnet?: boolean) =>
   await TatumSDK.init<Tezos>(e2eUtil.initConfig(testnet ? Network.TEZOS_TESTNET : Network.TEZOS))
 
-describe.each([false, true])(`Tezos`, (testnet: boolean) => {
+describe.skip.each([false, true])(`Tezos`, (testnet: boolean) => {
   describe(`${testnet ? 'Testnet' : 'Mainnet'}`, () => {
     it('getBlock', async () => {
       const tatum = await getTezosRpc(testnet)

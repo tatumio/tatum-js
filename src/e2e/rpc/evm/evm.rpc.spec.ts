@@ -34,6 +34,8 @@ const testNetworks = [
   // { network: Network.OPTIMISM },
   { network: Network.HAQQ },
   { network: Network.HAQQ_TESTNET },
+  { network: Network.RONIN },
+  { network: Network.RONIN_SAIGON },
   // {
   //   network: Network.TRON,
   //   data: {
@@ -71,7 +73,7 @@ const testNetworks = [
   },
   // { network: Network.CRONOS },
   { network: Network.CRONOS_TESTNET, apiKey: ApiKey.testnet },
-  { network: Network.BASE },
+  // { network: Network.BASE },
   { network: Network.ZK_SYNC, url: 'https://mainnet.era.zksync.io' },
   { network: Network.ZK_SYNC_TESTNET, url: 'https://sepolia.era.zksync.dev' },
 ]

@@ -86,7 +86,7 @@ import {
   Oasis,
   Optimism,
   Palm,
-  Polygon,
+  Polygon, Ronin,
   Rostrum,
   Solana,
   Stellar,
@@ -913,6 +913,9 @@ export const Utils = {
       case Network.BASE:
       case Network.BASE_SEPOLIA:
         return new Base(id) as T
+      case Network.RONIN:
+      case Network.RONIN_SAIGON:
+        return new Ronin(id) as T
       case Network.KADENA:
       case Network.KADENA_TESTNET:
         return new Kadena(id) as T
