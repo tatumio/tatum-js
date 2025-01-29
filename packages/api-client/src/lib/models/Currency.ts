@@ -114,6 +114,7 @@ export enum Currency {
   USDT_ARB = 'USDT_ARB',
   USDT_OP = 'USDT_OP',
   USDT_BASE = 'USDT_BASE',
+  RON = 'RON',
 }
 
 export const ERC20_CURRENCIES = [
@@ -228,5 +229,5 @@ export const NFT_SUPPORTED_CURRENCIES = [
   Currency.KLAY,
 ]
 
-export type NftSupportedCurrencies = typeof NFT_SUPPORTED_CURRENCIES[number]
-export type NativeCurrency = typeof NATIVE_CURRENCIES[number]
+export type NftSupportedCurrencies = (typeof NFT_SUPPORTED_CURRENCIES)[number]
+export type NativeCurrency = (typeof NATIVE_CURRENCIES)[number]

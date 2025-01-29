@@ -33,6 +33,7 @@ export enum Blockchain {
   FTM = 'FTM',
   TON = 'TON',
   ZK_SYNC = 'ZK_SYNC',
+  RON = 'RON',
 }
 
 export const EvmBasedBlockchains = [
@@ -49,12 +50,13 @@ export const EvmBasedBlockchains = [
   Blockchain.AVAX,
   Blockchain.OPTIMISM,
   Blockchain.FTM,
-  Blockchain.ZK_SYNC
+  Blockchain.ZK_SYNC,
+  Blockchain.RON,
 ]
 
 // @TODO tmp solution
 export const BtcBasedBlockchains = [Blockchain.BTC, Blockchain.LTC, Blockchain.DOGE, Blockchain.BCH] as const
-export type BtcBasedBlockchain = typeof BtcBasedBlockchains[number]
+export type BtcBasedBlockchain = (typeof BtcBasedBlockchains)[number]
 
 export type EvmBasedBlockchain =
   | Blockchain.ETH
@@ -74,3 +76,4 @@ export type EvmBasedBlockchain =
   | Blockchain.OPTIMISM
   | Blockchain.FTM
   | Blockchain.ZK_SYNC
+  | Blockchain.RON

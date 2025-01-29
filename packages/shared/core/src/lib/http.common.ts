@@ -38,6 +38,7 @@ const EndpointsMapping: Record<Blockchain, string> = {
   FTM: 'fantom',
   TON: 'ton',
   ZK_SYNC: 'zks',
+  RON: 'ron',
 }
 
 const isWebWorker =
