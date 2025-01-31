@@ -275,7 +275,7 @@ export const ZERO_ADDRESS = {
     ZERO_ADDRESS_58_CHARS: '0000000000000000000000000000000000000000000000000000000000',
 }
 
-export const TRON_ABI = [
+export const TRC_20_MIN_ABI = [
   {
     "constant": true,
     "inputs": [],

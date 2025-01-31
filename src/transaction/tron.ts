@@ -2,7 +2,7 @@ import { AxiosRequestConfig } from 'axios';
 import BigNumber from 'bignumber.js';
 import { tronBroadcast } from '../blockchain';
 import { axios, validateBody } from '../connector/tatum';
-import { TATUM_API_URL, TRON_ABI } from '../constants'
+import { TATUM_API_URL, TRC_20_MIN_ABI } from '../constants'
 import { listing } from '../contracts/marketplace';
 import abi from '../contracts/trc20/token_abi';
 import bytecode from '../contracts/trc20/token_bytecode';
@@ -324,7 +324,7 @@ export const getTronTrc20ContractDecimals = async (testnet: boolean, contractAdd
     }
     const tronWeb = prepareTronWeb(testnet, provider)
     tronWeb.setAddress(contractAddress)
-    const contractInstance = await tronWeb.contract(TRON_ABI, contractAddress);
+    const contractInstance = await tronWeb.contract(TRC_20_MIN_ABI, contractAddress);
     const decimalsBigNum = await contractInstance.decimals().call()
     return new BigNumber(decimalsBigNum).toNumber()
 }
