@@ -274,3 +274,20 @@ export const ZERO_ADDRESS = {
     ZERO_ADDRESS_42_CHARS: '0x0000000000000000000000000000000000000000',
     ZERO_ADDRESS_58_CHARS: '0000000000000000000000000000000000000000000000000000000000',
 }
+
+export const TRC_20_MIN_ABI = [
+  {
+    "constant": true,
+    "inputs": [],
+    "name": "decimals",
+    "outputs": [
+      {
+        "name": "",
+        "type": "uint8"
+      }
+    ],
+    "payable": false,
+    "stateMutability": "View",
+    "type": "Function"
+  }
+];
