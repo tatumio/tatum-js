@@ -12,7 +12,6 @@ export enum Network {
   AVALANCHE_X = 'avax-x-mainnet',
   BASE = 'base-mainnet',
   BINANCE_SMART_CHAIN = 'bsc-mainnet',
-  BNB = 'bnb-beacon-chain-mainnet',
   BITCOIN = 'bitcoin-mainnet',
   BITCOIN_CASH = 'bitcoin-cash-mainnet',
   CARDANO_ROSETTA = 'cardano-mainnet',
@@ -262,7 +261,6 @@ export const EOS_LOAD_BALANCER_NETWORKS = [Network.EOS]
 export const XRP_LOAD_BALANCER_NETWORKS = [Network.XRP, Network.XRP_TESTNET]
 export const NATIVE_EVM_LOAD_BALANCER_NETWORKS = [Network.KLAYTN, Network.KLAYTN_BAOBAB]
 export const SOLANA_NETWORKS = [Network.SOLANA, Network.SOLANA_DEVNET]
-export const BNB_LOAD_BALANCER_NETWORKS = [Network.BNB]
 export const TEZOS_NETWORKS = [Network.TEZOS, Network.TEZOS_TESTNET]
 export const ALGORAND_ALGOD_NETWORKS = [Network.ALGORAND_ALGOD, Network.ALGORAND_ALGOD_TESTNET]
 export const ALGORAND_INDEXER_NETWORKS = [Network.ALGORAND_INDEXER, Network.ALGORAND_INDEXER_TESTNET]
@@ -295,7 +293,6 @@ export const LOAD_BALANCER_NETWORKS = [
   ...XRP_LOAD_BALANCER_NETWORKS,
   ...NATIVE_EVM_LOAD_BALANCER_NETWORKS,
   ...SOLANA_NETWORKS,
-  ...BNB_LOAD_BALANCER_NETWORKS,
   ...TEZOS_NETWORKS,
   ...ALGORAND_ALGOD_NETWORKS,
   ...ALGORAND_INDEXER_NETWORKS,
@@ -379,8 +376,6 @@ export const isRostrumLoadBalancerNetwork = (network: Network) =>
 
 export const isNativeEvmLoadBalancerNetwork = (network: Network) =>
   NATIVE_EVM_LOAD_BALANCER_NETWORKS.includes(network)
-
-export const isBnbLoadBalancerNetwork = (network: Network) => BNB_LOAD_BALANCER_NETWORKS.includes(network)
 
 export const isTezosNetwork = (network: Network) => TEZOS_NETWORKS.includes(network)
 
@@ -657,11 +652,6 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.XLM,
     testnet: true,
     defaultTestnet: true,
-  },
-  [Network.BNB]: {
-    currency: Currency.BNB,
-    testnet: false,
-    defaultMainnet: true,
   },
   [Network.DOGECOIN]: {
     currency: Currency.DOGE,

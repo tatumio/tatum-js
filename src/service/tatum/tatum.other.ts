@@ -2,7 +2,6 @@ import { Container } from 'typedi'
 import { SolanaRpcSuite, TezosRpcInterface, TronRpcSuite, XrpRpcInterface } from '../../dto'
 import { AlgorandAlgodRpcSuite } from '../../dto/rpc/AlgorandAlgodRpcSuite'
 import { AlgorandIndexerRpcSuite } from '../../dto/rpc/AlgorandIndexerRpcSuite'
-import { BnbRpcSuite } from '../../dto/rpc/BnbRpcSuite'
 import { CardanoRpcSuite } from '../../dto/rpc/CardanoRpcSuite'
 import { EosRpcSuite } from '../../dto/rpc/EosRpcSuite'
 import { IotaRpcSuite } from '../../dto/rpc/IotaRpcSuite'
@@ -29,19 +28,6 @@ export abstract class BaseOther extends TatumSdkChain {
     super(id)
     this.ipfs = Container.of(id).get(Ipfs)
     this.rates = Container.of(id).get(Rates)
-  }
-}
-
-export class Bnb extends BaseOther {
-  rpc: BnbRpcSuite
-  notification: Notification
-  address: Address
-
-  constructor(id: string) {
-    super(id)
-    this.rpc = Utils.getRpc<BnbRpcSuite>(id, Container.of(id).get(CONFIG))
-    this.notification = Container.of(id).get(Notification)
-    this.address = Container.of(id).get(Address)
   }
 }
 

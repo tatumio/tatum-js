@@ -22,7 +22,6 @@ export enum Currency {
   FLOW = 'FLOW',
   XDC = 'XDC',
   XLM = 'XLM',
-  BNB = 'BNB',
   ONE = 'ONE',
   EOS = 'EOS',
   AVAX = 'AVAX',

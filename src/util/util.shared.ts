@@ -6,7 +6,6 @@ import {
   AddressEventNotificationChain,
   isAlgorandAlgodNetwork,
   isAlgorandIndexerNetwork,
-  isBnbLoadBalancerNetwork,
   isCardanoNetwork,
   isCasperNetwork,
   isCosmosNetwork,
@@ -57,7 +56,6 @@ import {
   Bitcoin,
   BitcoinCash,
   BitcoinElectrs,
-  Bnb,
   CardanoRosetta,
   Casper,
   Celo,
@@ -109,7 +107,6 @@ import { TronRpc } from '../service/rpc/evm/TronRpc'
 import { ZkSyncLoadBalancerRpc } from '../service/rpc/evm/ZkSyncLoadBalancerRpc'
 import { AlgorandAlgodLoadBalancerRpc } from '../service/rpc/other/AlgorandAlgodLoadBalancerRpc'
 import { AlgorandIndexerLoadBalancerRpc } from '../service/rpc/other/AlgorandIndexerLoadBalancerRpc'
-import { BnbLoadBalancerRpc } from '../service/rpc/other/BnbLoadBalancerRpc'
 import { CardanoLoadBalancerRpc } from '../service/rpc/other/CardanoLoadBalancerRpc'
 import { CasperLoadBalancerRpc } from '../service/rpc/other/CasperLoadBalancerRpc'
 import { CosmosLoadBalancerRpc } from '../service/rpc/other/CosmosLoadBalancerRpc'
@@ -189,10 +186,6 @@ export const Utils = {
 
     if (isTezosNetwork(network)) {
       return Container.of(id).get(TezosLoadBalancerRpc) as T
-    }
-
-    if (isBnbLoadBalancerNetwork(network)) {
-      return Container.of(id).get(BnbLoadBalancerRpc) as T
     }
 
     if (isDogecoinLoadBalancedNetwork(network)) {
@@ -335,15 +328,6 @@ export const Utils = {
       }
     }
 
-    if (isBnbLoadBalancerNetwork(network)) {
-      return {
-        jsonrpc: '2.0',
-        method: 'block',
-        params: {},
-        id: 1,
-      }
-    }
-
     if (isCardanoNetwork(network)) {
       return {
         network_identifier: {
@@ -405,10 +389,6 @@ export const Utils = {
       return url
     }
 
-    if (isBnbLoadBalancerNetwork(network)) {
-      return url
-    }
-
     if (isRostrumLoadBalancerNetwork(network)) {
       return url
     }
@@ -452,10 +432,6 @@ export const Utils = {
 
     if (isSameGetBlockNetwork(network)) {
       return new BigNumber((response.result as number) || -1).toNumber()
-    }
-
-    if (isBnbLoadBalancerNetwork(network)) {
-      return new BigNumber((response.result.block.header.height as number) || -1).toNumber()
     }
 
     if (isEosNetwork(network)) {
@@ -511,10 +487,6 @@ export const Utils = {
 
     if (isEosNetwork(network)) {
       return response.head_block_num !== undefined
-    }
-
-    if (isBnbLoadBalancerNetwork(network)) {
-      return response.result.block.header.height !== undefined
     }
 
     if (isSameGetBlockNetwork(network)) {
@@ -894,8 +866,6 @@ export const Utils = {
         return new Eos(id) as T
       case Network.CHILIZ:
         return new Chiliz(id) as T
-      case Network.BNB:
-        return new Bnb(id) as T
       case Network.ALGORAND_ALGOD:
       case Network.ALGORAND_ALGOD_TESTNET:
         return new AlgorandAlgod(id) as T
