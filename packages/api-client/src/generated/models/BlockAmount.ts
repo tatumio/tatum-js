@@ -15,4 +15,8 @@ export type BlockAmount = {
      * The description of the blockage that you are applying
      */
     description?: string;
+    /**
+     * Enable sufficient balance check. When set to true, blocking an amount greater than the account's available balance will throw an error.
+     */
+    ensureSufficientBalance?: boolean;
 }
