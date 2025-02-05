@@ -1,3 +1,9 @@
+## [4.2.46] - 2025.2.5
+
+### Removed
+
+- Removed BNB support
+
 ## [4.2.45] - 2024.12.20
 
 ### Fixed

@@ -11,7 +11,7 @@ const testNetworks = [
     network: Network.ARBITRUM_NOVA_TESTNET,
     apiKey: ApiKey.testnet,
   },
-  { network: Network.HORIZEN_EON },
+  // { network: Network.HORIZEN_EON },
   // { network: Network.HORIZEN_EON_GOBI },
   { network: Network.CHILIZ },
   { network: Network.BINANCE_SMART_CHAIN },
