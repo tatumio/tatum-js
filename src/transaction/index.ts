@@ -1,6 +1,5 @@
 export * from './bitcoin'
 export * from './klaytn'
-export * from './bnb'
 export * from './litecoin'
 export * from './flow'
 export * from './bcash'
@@ -19,5 +18,3 @@ export * from './ada'
 export * from './xdc'
 export * from './egld'
 export * from './algo'
-
-// TODO: add support for BNB local send tx / NEO transactions
