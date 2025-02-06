@@ -1,6 +1,5 @@
 export * from './xrp'
 export * from './klay'
-export * from './bnb'
 export * from './xlm'
 export * from './bitcoin'
 export * from './litecoin'

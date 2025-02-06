@@ -1,6 +1,6 @@
 {
   "name": "@tatumio/tatum",
-  "version": "1.37.58",
+  "version": "1.37.59",
   "description": "Tatum API client allows browsers and Node.js clients to interact with Tatum API.",
   "main": "dist/src/index.js",
   "repository": "https://github.com/tatumio/tatum-js",
@@ -30,7 +30,6 @@
   "author": "Tatum, hello@tatum.io",
   "license": "MIT",
   "dependencies": {
-    "@binance-chain/javascript-sdk": "^4.1.1",
     "@celo-tools/celo-ethers-wrapper": "0.0.5",
     "@cityofzion/neon-js": "^4.8.0",
     "@elrondnetwork/erdjs": "^7.0.0",

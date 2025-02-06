@@ -1,4 +1,3 @@
-import { getAddressFromPrivateKey } from "@binance-chain/javascript-sdk/lib/crypto";
 import { HarmonyAddress } from "@harmony-js/crypto";
 // @ts-ignore
 // import {ECDSA_secp256k1, encodeKey, SHA3_256} from '@onflow/util-encode-key';
@@ -939,8 +938,6 @@ export const generateAddressFromPrivatekey = (
   switch (currency) {
     case Currency.BTC:
       return convertBtcPrivateKey(testnet, privateKey);
-    case Currency.BNB:
-      return getAddressFromPrivateKey(privateKey, testnet ? "tbnb" : "bnb");
     case Currency.TRON:
     case Currency.USDT_TRON:
     case Currency.INRT_TRON:

@@ -5,7 +5,7 @@ import {
     generateFlowPublicKeyFromPrivateKey,
     generatePrivateKeyFromMnemonic,
 } from './address'
-import { generateBnbWallet, generateTronWallet } from './wallet'
+import { generateTronWallet } from './wallet'
 // tslint:disable-next-line:no-var-requires
 const TronWeb = require('tronweb')
 describe('Address tests', () => {
@@ -107,11 +107,6 @@ describe('Address tests', () => {
   it('should generate private key 1 for BTC testnet', async () => {
     const privateKey = await generatePrivateKeyFromMnemonic(Currency.BTC, true, 'quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten', 1)
     expect(privateKey).toBe('cQ1YZMep3CiAnMTA9y62ha6BjGaaTFsTvtDuGmucGvpAVmS89khV')
-  })
-
-  it('should generate address from private key for BNB testnet', async () => {
-    const { address, privateKey } = await generateBnbWallet(true)
-    expect(address).toBe(await generateAddressFromPrivatekey(Currency.BNB, true, privateKey))
   })
 
   it('should generate private key 1 for DOGE mainnet', async () => {

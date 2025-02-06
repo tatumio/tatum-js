@@ -148,18 +148,6 @@ describe('Wallet tests', () => {
         expect(wallet.mnemonic).toBe('quantum tobacco key they maid mean crime youth chief jungle mind design broken tilt bus shoulder leaf good forward erupt split divert bread kitten')
     })
 
-    it('should generate wallet for BNB mainnet', async () => {
-        const wallet = await generateWallet(Currency.BNB, false) as { address: string, privateKey: string }
-        expect(wallet.address).not.toBe('')
-        expect(wallet.privateKey).not.toBe('')
-    })
-
-    it('should generate wallet for BNB testnet', async () => {
-        const wallet = await generateWallet(Currency.BNB, true) as { address: string, privateKey: string }
-        expect(wallet.address).not.toBe('')
-        expect(wallet.privateKey).not.toBe('')
-    })
-
     it('should generate wallet for XLM', async () => {
         const wallet = await generateXlmWallet()
         expect(wallet.address).not.toBe('')

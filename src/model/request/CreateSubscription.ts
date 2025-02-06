@@ -35,7 +35,7 @@ export class SubscriptionAttrOffchainWithdrawal extends Subscription {
 
   @IsNotEmpty()
   @Length(1, 30)
-  @Matches(/^BTC|BNB|LTC|BCH|ETH|USDT|LEO|LINK|UNI|FREE|MKR|USDC|BAT|TUSD|PAX|PAXG|PLTC|XCON|MMY|[a-zA-Z0-9_]+$/)
+  @Matches(/^BTC|LTC|BCH|ETH|USDT|LEO|LINK|UNI|FREE|MKR|USDC|BAT|TUSD|PAX|PAXG|PLTC|XCON|MMY|[a-zA-Z0-9_]+$/)
   public currency: string;
 }
 

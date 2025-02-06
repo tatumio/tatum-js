@@ -1,4 +1,3 @@
-import { generatePrivateKey, getAddressFromPrivateKey } from '@binance-chain/javascript-sdk/lib/crypto';
 import { generateMnemonic, mnemonicToSeed } from 'bip39';
 import { bip32, networks } from 'bitcoinjs-lib';
 import { hdkey as ethHdKey } from 'ethereumjs-wallet';
@@ -43,20 +42,6 @@ export interface Wallet {
    * extended public key to derive addresses from
    */
   xpub: string;
-}
-
-/**
- * Generate BnB wallet
- * @param testnet testnet or mainnet version of address
- * @returns wallet
- */
-export const generateBnbWallet = async (testnet: boolean) => {
-  const privateKey = generatePrivateKey()
-  const prefix = testnet ? 'tbnb' : 'bnb'
-  return {
-    address: getAddressFromPrivateKey(privateKey, prefix),
-    privateKey,
-  }
 }
 
 /**
@@ -412,8 +397,6 @@ export const generateWallet = (currency: Currency, testnet: boolean, mnemonic?: 
       return generateXlmWallet()
     case Currency.VET:
       return generateVetWallet(testnet, mnem)
-    case Currency.BNB:
-      return generateBnbWallet(testnet)
     case Currency.ADA:
       return generateAdaWallet(mnem)
     case Currency.ALGO:

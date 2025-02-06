@@ -14,7 +14,6 @@ export enum Currency {
   DOGE = "DOGE",
   VET = "VET",
   NEO = "NEO",
-  BNB = "BNB",
   BSC = "BSC",
   CAKE = "CAKE",
   ZIL = "ZIL",
