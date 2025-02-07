@@ -26,7 +26,6 @@ const EndpointsMapping: Record<Blockchain, string> = {
   XLM: 'xlm',
   KCS: 'kcs',
   KLAY: 'klaytn',
-  BNB: 'bnb',
   TEZOS: 'tezos',
   EON: 'eon',
   CHILIZ: 'chiliz',

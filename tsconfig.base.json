@@ -24,7 +24,6 @@
       "@tatumio/automation": ["packages/automation/src/index.ts"],
       "@tatumio/base": ["packages/blockchain/base/src/index.ts"],
       "@tatumio/bch": ["packages/blockchain/bch/src/index.ts"],
-      "@tatumio/bnb": ["packages/blockchain/bnb/src/index.ts"],
       "@tatumio/bsc": ["packages/blockchain/bsc/src/index.ts"],
       "@tatumio/btc": ["packages/blockchain/btc/src/index.ts"],
       "@tatumio/cardano": ["packages/blockchain/cardano/src/index.ts"],
