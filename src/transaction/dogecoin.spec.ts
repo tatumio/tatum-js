@@ -145,7 +145,6 @@ describe('DOGE transactions', () => {
   })
 
   it('should test DOGE - send transaction', async () => {
-    process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
     const body = new TransferDogeBlockchain()
     body.fromUTXO = [{
       txHash: '20c569c3d7722a11d004646e1f00b35e1f51da0dcbe8d2446a544c0daa88097d',

@@ -33,14 +33,10 @@ import {
 } from './tron'
 
 const IS_TESTNET = true
-const API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
 const PRIVATE_KEY = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701'
 const RECEIVER_ADDR = 'TYMwiDu22V6XG3yk6W9cTVBz48okKLRczh'
 const SENDER_ADDR = 'TVAEYCmc15awaDRAjUZ1kvcHwQQaoPw2CW'
 const TRC20_TOKEN = 'TWgHeettKLgq1hCdEUPaZNCM6hPg8JkG2X'
-
-process.env.TATUM_API_KEY = API_KEY
-process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'
 
 describe('Tron transactions', () => {
     jest.setTimeout(9999)
@@ -127,8 +123,6 @@ describe('Tron transactions', () => {
     // ERC-721 tests
 
     it.skip('should test valid deploy 721 transaction', async () => {
-        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'
-        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
         const body = new TronDeployTrc721()
         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701'
         body.chain = Currency.TRON
@@ -145,8 +139,6 @@ describe('Tron transactions', () => {
     })
 
     it.skip('should test valid mint 721 transaction', async () => {
-        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'
-        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
         const body = new TronMintTrc721()
         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701'
         body.chain = Currency.TRON
@@ -161,8 +153,6 @@ describe('Tron transactions', () => {
     })
 
     it.skip('should test valid mint 721 with cashback transaction', async () => {
-        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'
-        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
         const body = new TronMintTrc721()
         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701'
         body.chain = Currency.TRON
@@ -179,8 +169,6 @@ describe('Tron transactions', () => {
     })
 
     it.skip('should test valid mint multiple 721 transaction', async () => {
-        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'
-        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
         const body = new TronMintMultipleTrc721()
         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701'
         body.chain = Currency.TRON
@@ -195,8 +183,6 @@ describe('Tron transactions', () => {
     })
 
     it.skip('should test valid update 721 cashback transaction', async () => {
-        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'
-        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
         const body = new TronUpdateCashbackTrc721()
         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701'
         body.chain = Currency.TRON
@@ -210,8 +196,6 @@ describe('Tron transactions', () => {
     })
 
     it.skip('should test valid burn 721 transaction', async () => {
-        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'
-        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
         const body = new TronBurnTrc721()
         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701'
         body.chain = Currency.TRON
@@ -224,8 +208,6 @@ describe('Tron transactions', () => {
     })
 
     it.skip('should test valid transfer 721 transaction without cashback', async () => {
-        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'
-        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
         const body = new TronTransferTrc721()
         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701'
         body.chain = Currency.TRON
@@ -240,8 +222,6 @@ describe('Tron transactions', () => {
     })
 
     it.skip('should test valid transfer 721 transaction with cashback', async () => {
-        process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5'
-        process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
         const body = new TronTransferTrc721()
         body.fromPrivateKey = '842E09EB40D8175979EFB0071B28163E11AED0F14BDD84090A4CEFB936EF5701'
         body.chain = Currency.TRON

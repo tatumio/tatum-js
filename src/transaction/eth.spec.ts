@@ -21,7 +21,6 @@ import {
   prepareEthMintErc721ProvenanceSignedTransaction,
   sendSmartContractReadMethodInvocationTransaction
 } from './eth';
-process.env.TATUM_API_KEY='13320948-488c-4963-8eb4-e4a1d541a559'
 describe('ETH transactions', () => {
   // it('should test valid transaction ETH data', async () => {
   //   const body = new TransferErc20();
