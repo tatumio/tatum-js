@@ -5,7 +5,6 @@ import {TransferBtcLtcBlockchain} from "../model/request/TransferBtcLtcBlockchai
 describe('BTC transactions', () => {
   describe('Change address and fee support', () => {
     it('Should prepare tx with change address and fee', async () => {
-      process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
       const body = new TransferBtcLtcBlockchain()
       body.fromAddress = [{
         address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
@@ -22,7 +21,6 @@ describe('BTC transactions', () => {
     })
 
     it('fail - only changeAddress', async () => {
-      process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
       try {
         const body = new TransferBtcLtcBlockchain()
         body.fromAddress = [{
@@ -42,7 +40,6 @@ describe('BTC transactions', () => {
     })
 
     it('fail - only fee', async () => {
-      process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
       try {
         const body = new TransferBtcLtcBlockchain()
         body.fromAddress = [{
@@ -62,7 +59,6 @@ describe('BTC transactions', () => {
     })
 
     it('Should generate the same output for changeaddress/fee and to clause', async () => {
-      process.env.TATUM_API_KEY = '8a66adad-9e68-4f5b-a9b9-8efd971a14d3'
       const bodyWithChangeAddressFee = new TransferBtcLtcBlockchain()
       bodyWithChangeAddressFee.fromAddress = [{
         address: 'tb1q38rca7ju5870r0s9hgcdnae66ls8hswg4t47fq',
@@ -95,7 +91,6 @@ describe('BTC transactions', () => {
   })
   
   it('should test BTC transaction data', async () => {
-    process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
     const body = new TransferBtcBasedBlockchain()
     body.fromUTXO = [{
       txHash: 'fcdc23f5c8bd811195921cd113f5724f3cf8b3fa0287a04366c51b9e8545c4c7',
@@ -111,7 +106,6 @@ describe('BTC transactions', () => {
   })
 
   it('should test BTC send transaction', async () => {
-      process.env.TATUM_API_KEY = '4966d428-9507-45cb-9f90-02cca00674bd'
       const body = new TransferBtcBasedBlockchain()
       body.fromUTXO = [{
         txHash: '3eb96bf6a4f4dedf50cce45ec7ad0c15529d745cb4733d0c40d6806e53245a62',

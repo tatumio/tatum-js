@@ -45,8 +45,6 @@ import {
 import { validateBody } from '../connector/tatum'
 
 describe('Custodial wallet tests', () => {
-
-  process.env.TRON_PRO_API_KEY = 'b35409b4-7d11-491e-8760-32d2506a90b5';
   jest.setTimeout(99999);
 
   describe('Feature enablement logic - deprecated', () => {
