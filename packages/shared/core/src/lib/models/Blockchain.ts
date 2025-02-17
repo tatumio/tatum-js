@@ -20,6 +20,9 @@ export enum Blockchain {
   ADA = 'ADA',
   ALGO = 'ALGO',
   KCS = 'KCS',
+  /**
+   * @deprecated Use `KAIA` instead
+   */
   KLAY = 'KLAY',
   TEZOS = 'TEZOS',
   EON = 'EON',
@@ -33,6 +36,8 @@ export enum Blockchain {
   TON = 'TON',
   ZK_SYNC = 'ZK_SYNC',
   RON = 'RON',
+  S = 'S',
+  KAIA = 'KAIA',
 }
 
 export const EvmBasedBlockchains = [
