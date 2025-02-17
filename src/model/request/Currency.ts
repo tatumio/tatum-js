@@ -3,6 +3,9 @@ export enum Currency {
   BCH = "BCH",
   LTC = "LTC",
   CELO = "CELO",
+  /**
+   * @deprecated Use `KAIA` instead
+   */
   KLAY = "KLAY",
   ONE = "ONE",
   CUSD = "CUSD",
@@ -114,6 +117,8 @@ export enum Currency {
   USDT_OP = "USDT_OP",
   USDT_BASE = "USDT_BASE",
   RON = "RON",
+  S = "S",
+  KAIA = "KAIA",
 }
 
 export const ERC20_CURRENCIES = [
