@@ -73,6 +73,9 @@ export enum Currency {
   SOL = 'SOL',
   KCS = 'KCS',
   NEO = 'NEO',
+  /**
+   * @deprecated Use `KAIA` instead
+   */
   KLAY = 'KLAY',
   EOS = 'EOS',
   ETH_ARB = 'ETH_ARB',
@@ -114,6 +117,8 @@ export enum Currency {
   USDT_OP = 'USDT_OP',
   USDT_BASE = 'USDT_BASE',
   RON = 'RON',
+  S = 'S',
+  KAIA = 'KAIA',
 }
 
 export const ERC20_CURRENCIES = [

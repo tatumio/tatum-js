@@ -74,6 +74,8 @@ export const BlockchainCurrencyMapping: Record<
   TON: Currency.TON,
   ZK_SYNC: Currency.ZK_SYNC,
   RON: Currency.RON,
+  S: Currency.S,
+  KAIA: Currency.KAIA,
 }
 
 export const CurrencyToBlockchainMapping: Record<Currency, Blockchain> = buildCurrencyBlockchainMapping()

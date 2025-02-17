@@ -40,6 +40,8 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   TON: "m/44'/60'/0'/0",
   ZK_SYNC: "m/44'/60'/0'/0",
   RON: "m/44'/60'/0'/0",
+  S: "m/44'/60'/0'/0",
+  KAIA: "m/44'/60'/0'/0",
 }
 
 export const COMMON_TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"
