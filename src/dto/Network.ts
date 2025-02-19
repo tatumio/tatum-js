@@ -58,6 +58,8 @@ export enum Network {
   TON = 'ton-mainnet',
   ZK_SYNC = 'zksync-mainnet',
   RONIN = 'ronin-mainnet',
+  SONIC_MAINNET = 'sonic-mainnet',
+  KAIA_MAINNET = 'kaia-mainnet',
 
   // Testnets
   ALGORAND_ALGOD_TESTNET = 'algorand-testnet-algod',
@@ -115,6 +117,8 @@ export enum Network {
   TON_TESTNET = 'ton-testnet',
   ZK_SYNC_TESTNET = 'zksync-testnet',
   RONIN_SAIGON = 'ronin-saigon',
+  SONIC_BLAZE = 'sonic-blaze',
+  KAIA_KAIROS = 'kaia-kairos',
 }
 
 export const EVM_BASED_NETWORKS = [
@@ -170,6 +174,10 @@ export const EVM_BASED_NETWORKS = [
   Network.ZK_SYNC_TESTNET,
   Network.RONIN,
   Network.RONIN_SAIGON,
+  Network.KAIA_MAINNET,
+  Network.KAIA_KAIROS,
+  Network.SONIC_MAINNET,
+  Network.SONIC_BLAZE
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -1005,4 +1013,24 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     chainId: 2021,
     testnet: true,
   },
+  [Network.SONIC_MAINNET]: {
+    currency: Currency.S,
+    testnet: false,
+    chainId: 146
+  },
+  [Network.SONIC_BLAZE]: {
+    currency: Currency.S,
+    testnet: true,
+    chainId: 57054
+  },
+  [Network.KAIA_MAINNET]: {
+    currency: Currency.KAIA,
+    testnet: false,
+    chainId: 8217
+  },
+  [Network.KAIA_KAIROS]: {
+    currency: Currency.KAIA,
+    testnet: true,
+    chainId: 1001
+  }
 }

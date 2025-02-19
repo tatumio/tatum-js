@@ -54,6 +54,8 @@ export enum Currency {
   TON = 'TON',
   ZKS = 'ZKS',
   RON = 'RON',
+  S = 'S',
+  KAIA = 'KAIA',
 }
 
 export function networkToCurrency(network: Network): Currency {

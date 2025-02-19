@@ -133,6 +133,10 @@ export const Constant = {
     [Network.ZK_SYNC_TESTNET]: 18,
     [Network.RONIN]: 18,
     [Network.RONIN_SAIGON]: 18,
+    [Network.KAIA_MAINNET]: 18,
+    [Network.KAIA_KAIROS]: 18,
+    [Network.SONIC_MAINNET]: 18,
+    [Network.SONIC_BLAZE]: 18
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -246,6 +250,10 @@ export const Constant = {
     [Network.ZK_SYNC_TESTNET]: 'ZKS',
     [Network.RONIN]: 'RON',
     [Network.RONIN_SAIGON]: 'RON',
+    [Network.KAIA_MAINNET]: 'KAIA',
+    [Network.KAIA_KAIROS]: 'KAIA',
+    [Network.SONIC_MAINNET]: 'SONIC',
+    [Network.SONIC_BLAZE]: 'SONIC',
   },
   RPC: {
     MAINNETS: [
