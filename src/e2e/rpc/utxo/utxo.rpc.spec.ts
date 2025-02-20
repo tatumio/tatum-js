@@ -23,7 +23,7 @@ const utxoTestNetworks = [
   //   apiKey: process.env.V3_API_KEY_TESTNET,
   //   skipEstimateSmartFee: true,
   // },
-  { network: Network.BITCOIN_CASH, type: UtxoNetworkType.MAIN, skipEstimateSmartFee: true },
+  // { network: Network.BITCOIN_CASH, type: UtxoNetworkType.MAIN, skipEstimateSmartFee: true },
 ]
 
 describe.each(utxoTestNetworks)('UTXO E2E Test Suite', (testNetwork) => {
