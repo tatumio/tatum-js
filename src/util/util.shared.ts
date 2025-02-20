@@ -77,16 +77,17 @@ import {
   HarmonyOne,
   HorizenEon,
   Iota,
-  Kadena,
+  Kadena, Kaia,
   Klaytn,
   Kucoin,
   Litecoin,
   Oasis,
   Optimism,
   Palm,
-  Polygon, Ronin,
+  Polygon,
+  Ronin,
   Rostrum,
-  Solana,
+  Solana, Sonic,
   Stellar,
   TatumConfig,
   Tezos,
@@ -886,6 +887,12 @@ export const Utils = {
       case Network.RONIN:
       case Network.RONIN_SAIGON:
         return new Ronin(id) as T
+      case Network.SONIC_BLAZE:
+      case Network.SONIC_MAINNET:
+        return new Sonic(id) as T
+      case Network.KAIA_MAINNET:
+      case Network.KAIA_KAIROS:
+        return new Kaia(id) as T
       case Network.KADENA:
       case Network.KADENA_TESTNET:
         return new Kadena(id) as T
