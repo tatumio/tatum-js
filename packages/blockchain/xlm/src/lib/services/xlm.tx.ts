@@ -71,7 +71,7 @@ export const xlmTxService = (apiCalls: XlmApiCallsType) => {
       const balance = account.balances?.find((b) => b.asset_type === Asset.native().getAssetType())
       const requiredBalance = new BigNumber(amount).plus(0.00001)
       const accountBalance = new BigNumber(balance?.balance || 0)
-      if (accountBalance.isLessThan(requiredBalance)) {
+      if (!options?.token && !options?.issuerAccount && accountBalance.isLessThan(requiredBalance)) {
         throw new XlmSdkError(
           SdkErrorCode.INSUFFICIENT_FUNDS,
           `Insufficient funds to create transaction from sender account ${fromAccount} -> available balance is ${accountBalance.toString()}, required balance is ${requiredBalance.toString()}.`,
