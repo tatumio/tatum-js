@@ -69,6 +69,7 @@ export class XinFin extends BaseEvm {}
 export class Ronin extends BaseEvm {}
 export class Sonic extends BaseEvm {}
 export class Kaia extends BaseEvm {}
+export class Berachain extends BaseEvm {}
 export class Base extends NotificationEvm {}
 export class Flare extends NotificationEvm {}
 export class Chiliz extends NotificationEvm {}

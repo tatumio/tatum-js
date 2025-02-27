@@ -136,7 +136,8 @@ export const Constant = {
     [Network.KAIA_MAINNET]: 18,
     [Network.KAIA_KAIROS]: 18,
     [Network.SONIC_MAINNET]: 18,
-    [Network.SONIC_BLAZE]: 18
+    [Network.SONIC_BLAZE]: 18,
+    [Network.BERACHAIN_MAINNET]: 18
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -254,6 +255,7 @@ export const Constant = {
     [Network.KAIA_KAIROS]: 'KAIA',
     [Network.SONIC_MAINNET]: 'SONIC',
     [Network.SONIC_BLAZE]: 'SONIC',
+    [Network.BERACHAIN_MAINNET]: 'BERA',
   },
   RPC: {
     MAINNETS: [
