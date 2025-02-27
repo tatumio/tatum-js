@@ -76,6 +76,7 @@ export const BlockchainCurrencyMapping: Record<
   RON: Currency.RON,
   S: Currency.S,
   KAIA: Currency.KAIA,
+  BERA: Currency.BERA,
 }
 
 export const CurrencyToBlockchainMapping: Record<Currency, Blockchain> = buildCurrencyBlockchainMapping()
