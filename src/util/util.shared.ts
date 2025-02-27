@@ -51,7 +51,7 @@ import {
   ArbitrumOne,
   Aurora,
   AvalancheC,
-  Base,
+  Base, Berachain,
   BinanceSmartChain,
   Bitcoin,
   BitcoinCash,
@@ -893,6 +893,8 @@ export const Utils = {
       case Network.KAIA_MAINNET:
       case Network.KAIA_KAIROS:
         return new Kaia(id) as T
+      case Network.BERACHAIN_MAINNET:
+        return new Berachain(id) as T
       case Network.KADENA:
       case Network.KADENA_TESTNET:
         return new Kadena(id) as T

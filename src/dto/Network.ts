@@ -60,6 +60,7 @@ export enum Network {
   RONIN = 'ronin-mainnet',
   SONIC_MAINNET = 'sonic-mainnet',
   KAIA_MAINNET = 'kaia-mainnet',
+  BERACHAIN_MAINNET = 'berachain-mainnet',
 
   // Testnets
   ALGORAND_ALGOD_TESTNET = 'algorand-testnet-algod',
@@ -455,6 +456,11 @@ export type NetworkMetadata = {
 }
 
 export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
+  [Network.BERACHAIN_MAINNET]: {
+    currency: Currency.BERA,
+    testnet: false,
+    defaultMainnet: true,
+  },
   [Network.ETHEREUM_SEPOLIA]: {
     currency: Currency.ETH,
     testnet: true,

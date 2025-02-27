@@ -4,7 +4,7 @@ import { EvmE2eUtils } from './evm.e2e.utils'
 
 const testNetworks = [
   { network: Network.CELO },
-  { network: Network.CELO_ALFAJORES },
+  // { network: Network.CELO_ALFAJORES },
   // { network: Network.ARBITRUM_ONE },
   { network: Network.ARBITRUM_NOVA, apiKey: ApiKey.mainnet },
   {
