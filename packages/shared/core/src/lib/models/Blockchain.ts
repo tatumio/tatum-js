@@ -57,6 +57,7 @@ export const EvmBasedBlockchains = [
   Blockchain.FTM,
   Blockchain.ZK_SYNC,
   Blockchain.RON,
+  Blockchain.BERA,
 ]
 
 // @TODO tmp solution
