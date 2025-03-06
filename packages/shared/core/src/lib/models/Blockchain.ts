@@ -83,3 +83,4 @@ export type EvmBasedBlockchain =
   | Blockchain.FTM
   | Blockchain.ZK_SYNC
   | Blockchain.RON
+  | Blockchain.BERA
