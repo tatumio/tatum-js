@@ -56,6 +56,7 @@ export const AddressEventNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.BERACHAIN_MAINNET,
 ]
 
 export const IncomingNativeTxNetworks = [
@@ -99,6 +100,7 @@ export const IncomingNativeTxNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.BERACHAIN_MAINNET,
 ]
 
 export const OutgoingNativeTxNetworks = [
@@ -140,6 +142,7 @@ export const OutgoingNativeTxNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.BERACHAIN_MAINNET,
 ]
 
 export const OutgoingFailedNetworks = [
@@ -169,6 +172,7 @@ export const OutgoingFailedNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.BERACHAIN_MAINNET,
 ]
 
 export const PaidFeeNetworks = [
@@ -202,6 +206,7 @@ export const PaidFeeNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.BERACHAIN_MAINNET,
 ]
 
 export const FungibleTxNetworks = [
@@ -235,6 +240,7 @@ export const FungibleTxNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.BERACHAIN_MAINNET,
 ]
 
 export const NftNetworks = [
@@ -268,6 +274,7 @@ export const NftNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.BERACHAIN_MAINNET,
 ]
 
 export const MultitokenNetworks = [
@@ -296,6 +303,7 @@ export const MultitokenNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.BERACHAIN_MAINNET,
 ]
 
 export const FailedTxPerBlockNetworks = [
@@ -329,6 +337,7 @@ export const FailedTxPerBlockNetworks = [
   Network.BASE_SEPOLIA,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
+  Network.BERACHAIN_MAINNET,
 ]
 
 export const ContractAddressLogEventNetworks = [
@@ -351,6 +360,7 @@ export const ContractAddressLogEventNetworks = [
   Network.FANTOM,
   Network.BASE,
   Network.AVALANCHE_C,
+  Network.BERACHAIN_MAINNET,
 ]
 
 export const InternalTxNetworks = [
@@ -368,4 +378,5 @@ export const InternalTxNetworks = [
   Network.FANTOM,
   Network.BASE,
   Network.AVALANCHE_C,
+  Network.BERACHAIN_MAINNET,
 ]

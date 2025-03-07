@@ -1,6 +1,7 @@
 import { Container } from 'typedi'
 import { EvmBasedBeaconRpcSuite, EvmBasedRpcSuite } from '../../dto'
 import { NativeEvmBasedRpcSuite } from '../../dto/rpc/NativeEvmBasedRpcInterface'
+import { ZkSyncRpcSuite } from '../../dto/rpc/ZkSyncRpcSuite'
 import { CONFIG, Utils } from '../../util'
 import { Address } from '../address'
 import { FeeEvm } from '../fee'
@@ -10,7 +11,6 @@ import { Notification } from '../notification'
 import { Rates } from '../rate'
 import { Token } from '../token'
 import { TatumSdkChain } from './tatum'
-import { ZkSyncRpcSuite } from '../../dto/rpc/ZkSyncRpcSuite'
 
 export abstract class BaseEvm extends TatumSdkChain {
   rpc: EvmBasedRpcSuite
@@ -69,7 +69,7 @@ export class XinFin extends BaseEvm {}
 export class Ronin extends BaseEvm {}
 export class Sonic extends BaseEvm {}
 export class Kaia extends BaseEvm {}
-export class Berachain extends BaseEvm {}
+export class Berachain extends NotificationEvm {}
 export class Base extends NotificationEvm {}
 export class Flare extends NotificationEvm {}
 export class Chiliz extends NotificationEvm {}
@@ -106,7 +106,6 @@ export class ZkSync extends TatumSdkChain {
     this.rates = Container.of(id).get(Rates)
   }
 }
-
 
 // Full support for chains
 export class Ethereum extends FullEvm {

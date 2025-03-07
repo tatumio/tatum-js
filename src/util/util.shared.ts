@@ -51,7 +51,8 @@ import {
   ArbitrumOne,
   Aurora,
   AvalancheC,
-  Base, Berachain,
+  Base,
+  Berachain,
   BinanceSmartChain,
   Bitcoin,
   BitcoinCash,
@@ -77,7 +78,8 @@ import {
   HarmonyOne,
   HorizenEon,
   Iota,
-  Kadena, Kaia,
+  Kadena,
+  Kaia,
   Klaytn,
   Kucoin,
   Litecoin,
@@ -87,7 +89,8 @@ import {
   Polygon,
   Ronin,
   Rostrum,
-  Solana, Sonic,
+  Solana,
+  Sonic,
   Stellar,
   TatumConfig,
   Tezos,
@@ -568,6 +571,8 @@ export const Utils = {
         return Network.BASE
       case AddressEventNotificationChain.AVAX:
         return Network.AVALANCHE_C
+      case AddressEventNotificationChain.BERA:
+        return Network.BERACHAIN_MAINNET
       default:
         throw new Error(`Chain ${chain} is not supported.`)
     }
@@ -638,6 +643,8 @@ export const Utils = {
       case Network.OPTIMISM:
       case Network.OPTIMISM_TESTNET:
         return AddressEventNotificationChain.OPTIMISM
+      case Network.BERACHAIN_MAINNET:
+        return AddressEventNotificationChain.BERA
       default:
         throw new Error(`Network ${network} is not supported.`)
     }
