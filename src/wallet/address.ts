@@ -771,6 +771,7 @@ export const generateAddressFromXPub = (
     case Currency.BUSD:
     case Currency.KLAY:
     case Currency.USDC_BSC:
+    case Currency.USDT_BSC:
     case Currency.COIIN_BSC:
     case Currency.B2U_BSC:
     case Currency.CAKE:
@@ -884,6 +885,7 @@ export const generatePrivateKeyFromMnemonic = (
     case Currency.WBNB:
     case Currency.BUSD:
     case Currency.USDC_BSC:
+    case Currency.USDT_BSC:
     case Currency.COIIN_BSC:
     case Currency.B2U_BSC:
     case Currency.CAKE:
