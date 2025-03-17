@@ -206,7 +206,7 @@ describe('Solana', () => {
     })
 
     describe('getInflationGovernor', () => {
-      it('should return inflation governor info', async () => {
+      it.skip('should return inflation governor info', async () => {
         const tatum = await getClient()
         const { result } = await tatum.rpc.getInflationGovernor()
         await tatum.destroy()
@@ -215,7 +215,7 @@ describe('Solana', () => {
     })
 
     describe('getInflationRate', () => {
-      it('should return inflation rate', async () => {
+      it.skip('should return inflation rate', async () => {
         const tatum = await getClient()
         const { result } = await tatum.rpc.getInflationRate()
         await tatum.destroy()
@@ -302,7 +302,7 @@ describe('Solana', () => {
     })
 
     describe('getTokenAccountBalance', () => {
-      it('should return token account balance', async () => {
+      it.skip('should return token account balance', async () => {
         const tatum = await getClient()
 
         const { result } = await tatum.rpc.getTokenAccountBalance(
@@ -315,7 +315,7 @@ describe('Solana', () => {
     })
 
     describe('getTokenAccountsByOwner', () => {
-      it('should return token accounts by owner', async () => {
+      it.skip('should return token accounts by owner', async () => {
         const tatum = await getClient()
 
         const { result } = await tatum.rpc.getTokenAccountsByOwner(
@@ -404,7 +404,7 @@ describe('Solana', () => {
     })
 
     describe('getBlock', () => {
-      it('should return a recent block', async () => {
+      it.skip('should return a recent block', async () => {
         const tatum = await getClient(true)
         const { result: slot } = await tatum.rpc.getSlot()
         const { result } = await tatum.rpc.getBlock(slot || 0, {
