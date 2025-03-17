@@ -28,7 +28,7 @@ export const e2eUtil = {
 
     if (url) {
       config.rpc = {
-        nodes: [{ url: url, type: RpcNodeType.NORMAL }]
+        nodes: [{ url: url, type: RpcNodeType.NORMAL }],
       }
     }
     return config
@@ -52,6 +52,7 @@ export const e2eUtil = {
         case Network.FANTOM_TESTNET:
         case Network.OPTIMISM:
         case Network.OPTIMISM_TESTNET:
+        case Network.BERACHAIN_MAINNET:
           return '0xdb4C3b4350EE869F2D0a2F43ce0292865E2Aa149'
         case Network.CELO_ALFAJORES:
           return '0xdf083B077F1FD890fC71feCaBbd3F68F94cD21Bf'

@@ -20,4 +20,5 @@ export enum AddressEventNotificationChain {
   AVAX = 'AVAX',
   FTM = 'FTM',
   OPTIMISM = 'OPTIMISM',
+  BERA = 'BERA',
 }

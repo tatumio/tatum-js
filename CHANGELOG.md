@@ -1,3 +1,9 @@
+## [4.2.51] - 2025.3.17
+
+### Added
+
+- Added support for berachain mainnet subscriptions
+
 ## [4.2.50] - 2025.2.27
 
 ### Added

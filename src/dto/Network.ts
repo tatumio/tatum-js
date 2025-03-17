@@ -178,7 +178,8 @@ export const EVM_BASED_NETWORKS = [
   Network.KAIA_MAINNET,
   Network.KAIA_KAIROS,
   Network.SONIC_MAINNET,
-  Network.SONIC_BLAZE
+  Network.SONIC_BLAZE,
+  Network.BERACHAIN_MAINNET,
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -1012,7 +1013,7 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   [Network.RONIN]: {
     currency: Currency.RON,
     testnet: false,
-    chainId: 2020
+    chainId: 2020,
   },
   [Network.RONIN_SAIGON]: {
     currency: Currency.RON,
@@ -1022,21 +1023,21 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   [Network.SONIC_MAINNET]: {
     currency: Currency.S,
     testnet: false,
-    chainId: 146
+    chainId: 146,
   },
   [Network.SONIC_BLAZE]: {
     currency: Currency.S,
     testnet: true,
-    chainId: 57054
+    chainId: 57054,
   },
   [Network.KAIA_MAINNET]: {
     currency: Currency.KAIA,
     testnet: false,
-    chainId: 8217
+    chainId: 8217,
   },
   [Network.KAIA_KAIROS]: {
     currency: Currency.KAIA,
     testnet: true,
-    chainId: 1001
-  }
+    chainId: 1001,
+  },
 }
