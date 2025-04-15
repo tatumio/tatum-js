@@ -1,0 +1,38 @@
+{
+  "sourceRoot": "packages/blockchain/sonic/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/blockchain/sonic",
+        "tsConfig": "packages/blockchain/sonic/tsconfig.lib.json",
+        "packageJson": "packages/blockchain/sonic/package.json",
+        "main": "packages/blockchain/sonic/src/index.ts"
+      },
+      "configurations": {
+        "production": {
+          "updateBuildableProjectDepsInPackageJson": true,
+          "buildableProjectDepsInPackageJsonType": "dependencies"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/blockchain/sonic/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/blockchain/sonic"],
+      "options": {
+        "jestConfig": "packages/blockchain/sonic/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:sdk", "scope:evm-based"]
+}

@@ -31,6 +31,7 @@ import type { VetEstimateGas } from '../models/VetEstimateGas';
 import type { XdcEstimateGas } from '../models/XdcEstimateGas';
 import type { CancelablePromise } from '../core/CancelablePromise';
 import { request as __request } from '../core/request';
+import { SonicEstimateGas } from '../models/SonicEstimateGas'
 
 export class BlockchainFeesService {
 
@@ -468,6 +469,33 @@ export class BlockchainFeesService {
             },
         });
     }
+
+  /**
+   * Estimate the fee for a Cronos transaction
+   * <p><b>2 credits per API call</b></p>
+   * <p>Get an estimated gas price and the number of gas units needed for a Base transaction.</p>
+   * <p style="border:4px solid DeepSkyBlue;"><b>NOTE:</b> The estimated gas price is returned in <b>wei</b>. However, when <a href="https://apidoc.tatum.io/tag/Cronos#operation/CronosBlockchainTransfer" target="_blank">making the transaction itself</a> and providing the custom fee, you have to provide the gas price in <b>Gwei</b>. Make sure to convert the estimated gas price from wei to Gwei before submitting your transaction.</p>
+   *
+   * @param requestBody
+   * @returns GasEstimated OK
+   * @throws ApiError
+   */
+  public static sonicEstimateGas(
+    requestBody: SonicEstimateGas,
+  ): CancelablePromise<GasEstimated> {
+    return __request({
+      method: 'POST',
+      path: `/v3/sonic/gas`,
+      body: requestBody,
+      mediaType: 'application/json',
+      errors: {
+        400: `Bad Request`,
+        401: `Unauthorized. Not valid or inactive subscription key present in the HTTP Header.`,
+        403: `Forbidden. The request is authenticated, but it is not possible to required perform operation due to logical error or invalid permissions.`,
+        500: `Internal server error. There was an error on the server during the processing of the request.`,
+      },
+    });
+  }
 
     /**
      * Estimate the fee for a Polygon transaction

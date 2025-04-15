@@ -1218,6 +1218,7 @@ export { ElrondService } from './services/ElrondService';
 export { EthereumService } from './services/EthereumService';
 export { ExchangeRateService } from './services/ExchangeRateService';
 export { FantomService } from './services/FantomService';
+export { SonicTatumApiService as SonicService } from './services/SonicTatumApiService';
 export { FlareService } from './services/FlareService';
 export { FlowService } from './services/FlowService';
 export { FungibleTokensErc20OrCompatibleService } from './services/FungibleTokensErc20OrCompatibleService';
