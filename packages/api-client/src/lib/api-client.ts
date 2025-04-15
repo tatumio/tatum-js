@@ -54,9 +54,10 @@ import {
   VirtualCurrencyService,
   WithdrawalService,
   XinFinService,
-  XrpService, FantomService,
+  XrpService, FantomService
 } from '../generated'
 import { OpenAPI } from '../generated/core/OpenAPI'
+import { SonicTatumApiService } from '../generated/services/SonicTatumApiService'
 
 export type TatumApiType = ReturnType<typeof TatumApi>
 
@@ -117,6 +118,7 @@ export const ApiServices = {
     xdc: XinFinService,
     xlm: StellarService,
     xrp: XrpService,
+    sonic: SonicTatumApiService,
   },
   fee: BlockchainFeesService,
   ipfs: IpfsService,
