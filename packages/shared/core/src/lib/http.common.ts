@@ -41,6 +41,7 @@ const EndpointsMapping: Record<Blockchain, string> = {
   S: 'sonic',
   KAIA: 'kaia',
   BERA: 'bera',
+  SUI: 'sui'
 }
 
 const isWebWorker =
