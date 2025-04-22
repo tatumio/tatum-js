@@ -39,6 +39,7 @@ export enum Blockchain {
   S = 'S',
   KAIA = 'KAIA',
   BERA = 'BERA',
+  SUI = 'SUI',
 }
 
 export const EvmBasedBlockchains = [

@@ -120,7 +120,8 @@ export enum Currency {
   RON = 'RON',
   S = 'S',
   KAIA = 'KAIA',
-  BERA = 'BERA'
+  BERA = 'BERA',
+  SUI = 'SUI',
 }
 
 export const ERC20_CURRENCIES = [
