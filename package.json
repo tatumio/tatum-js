@@ -1,6 +1,6 @@
 {
   "name": "tatumio",
-  "version": "2.2.97",
+  "version": "2.2.98",
   "license": "MIT",
   "repository": "https://github.com/tatumio/tatum-js",
   "scripts": {
@@ -59,7 +59,7 @@
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
     "bitcoinjs-lib": "^5.2.0",
-    "bitcore-lib": "10.0.2",
+    "bitcore-lib": "10.8.0",
     "bitcore-lib-doge": "10.0.0",
     "bitcore-lib-ltc": "10.0.0",
     "bn.js": "^5.2.1",
