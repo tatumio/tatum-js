@@ -2,7 +2,7 @@ diff --git a/node_modules/bitcore-lib/lib/transaction/transaction.js b/node_modu
 index 3d61478..d131e06 100644
 --- a/node_modules/bitcore-lib/lib/transaction/transaction.js
 +++ b/node_modules/bitcore-lib/lib/transaction/transaction.js
-@@ -184,8 +184,6 @@ Transaction.prototype.uncheckedSerialize = Transaction.prototype.toString = func
+@@ -210,8 +210,6 @@ Transaction.prototype.uncheckedSerialize = Transaction.prototype.toString = func
  Transaction.prototype.checkedSerialize = function(opts) {
    var serializationError = this.getSerializationError(opts);
    if (serializationError) {
