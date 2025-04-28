@@ -29,7 +29,6 @@ const sendCeloVirtualAccountTransaction = async (
   const { mnemonic, index, privateKey, gasLimit, gasPrice, nonce, feeCurrency, ...withdrawal } = body
   const { amount, address } = withdrawal
   let fromPrivKey: string
-  let txData: any
 
   if (mnemonic && index !== undefined) {
     fromPrivKey = await evmBasedUtils.generatePrivateKeyFromMnemonic(Blockchain.CELO, mnemonic, index)
@@ -45,23 +44,9 @@ const sendCeloVirtualAccountTransaction = async (
     gasPrice: gasPrice || '1',
   }
 
-  if (celoUtils.isCeloFeeCurrency(account.currency)) {
-    txData = await txService.native.prepare.celoOrCUsdSignedTransaction(
-      {
-        amount,
-        fromPrivateKey: fromPrivKey,
-        currency: account.currency,
-        feeCurrency,
-        nonce,
-        to: address,
-        fee: { gasLimit: fee.gasLimit, gasPrice: fee.gasPrice },
-      },
-      undefined,
-      testnet,
-    )
-  } else {
+
     const vc = await VirtualCurrencyService.getCurrency(account.currency)
-    txData = await txService.erc20.prepare.transferSignedTransaction({
+    const txData = await txService.erc20.prepare.transferSignedTransaction({
       amount,
       fromPrivateKey: fromPrivKey,
       to: address,
@@ -70,7 +55,7 @@ const sendCeloVirtualAccountTransaction = async (
       feeCurrency,
       fee: { gasLimit: fee.gasLimit, gasPrice: fee.gasPrice },
     })
-  }
+
 
   const withdrawalFee = web3
     .getClient()

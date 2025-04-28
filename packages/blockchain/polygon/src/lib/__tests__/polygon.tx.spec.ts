@@ -47,7 +47,7 @@ describe.skip('PolygonSDK - tx', () => {
             gasLimit: '53632',
             gasPrice: '20',
           })
-
+          console.log(result)
           expectHexString(result)
         })
 

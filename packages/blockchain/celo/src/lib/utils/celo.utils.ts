@@ -32,7 +32,6 @@ import { Blockchain, httpHelper } from '@tatumio/shared-core'
 import { Erc20Token, EvmBasedSdkError, evmBasedUtils } from '@tatumio/shared-blockchain-evm-based'
 import BigNumber from 'bignumber.js'
 import Web3 from 'web3'
-
 export interface CeloTransactionConfig {
   from?: string
   to?: string

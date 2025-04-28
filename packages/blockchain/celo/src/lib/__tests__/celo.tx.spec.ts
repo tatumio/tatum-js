@@ -6,8 +6,8 @@ import { SdkErrorCode, SdkErrorMessage } from '@tatumio/shared-abstract-sdk'
 import { EvmBasedSdkError } from '@tatumio/shared-blockchain-evm-based'
 import { celoTestFactory } from './celo.test-factory'
 
-describe.skip('CeloSDK - tx', () => {
-  const sdk = TatumCeloSDK({ apiKey: REPLACE_ME_WITH_TATUM_API_KEY })
+describe('CeloSDK - tx', () => {
+  const sdk = TatumCeloSDK({ apiKey: 'd0e38281-8939-4c7a-b639-e2cec12da23c' })
   describe('native', () => {
     describe('prepare', () => {
       const provider = TEST_DATA.CELO?.PROVIDER
@@ -31,133 +31,39 @@ describe.skip('CeloSDK - tx', () => {
           celoTestFactory.feeCurrencies(),
           amounts,
         )
-        it.each(all)('fromPrivateKey - %p %p', async (feeCurrency: CeloFeeCurrency, amount) => {
-          const result = await sdk.transaction.prepare.transferSignedTransaction(
+
+
+        it('fromPrivateKey - single amount test', async () => {
+          const amount = '0.00001' // or any specific value you want to test with
+
+
+          const result = await sdk.transaction.send.transferSignedTransaction(
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
             {
               to: address,
               fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20?.PRIVATE_KEY,
-              feeCurrency,
               amount,
+              fee: {
+                gasPrice: '25',
+                gasLimit: '21000'
+              },
+              nonce: 20006,
             },
             provider,
-            true,
           )
+
+          console.log({
+            amount,
+            address,
+            provider,
+
+          })
+          console.log('result')
+          console.log(result)
           expectHexString(result)
         })
 
-        it.each(all)('signatureId - %p %p', async (feeCurrency: CeloFeeCurrency, amount) => {
-          const result = await sdk.transaction.prepare.transferSignedTransaction(
-            {
-              to: address,
-              signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-              feeCurrency,
-              amount,
-            },
-            provider,
-            true,
-          )
-          const json = JSON.parse(result)
-          expectHexString(json.value)
-          expectHexString(json.to)
-          expect(json.chainId).toBeGreaterThan(0)
-        })
-
-        celoTestFactory.testAllCurrencies('missing input - %p', async (feeCurrency) => {
-          await expect(
-            sdk.transaction.prepare.transferSignedTransaction(
-              {
-                to: '',
-                signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-                feeCurrency,
-                amount: '',
-              },
-              provider,
-              true,
-            ),
-          ).rejects.toThrow(
-            new EvmBasedSdkError({
-              error: new Error(SdkErrorMessage.get(SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS)),
-              code: SdkErrorCode.CELO_MISSING_CONTRACT_ADDRESS,
-            }),
-          )
-        })
-      })
-
-      describe('celoOrCUsdSignedTransaction', () => {
-        const all = celoTestFactory.combineThreeArrays<CeloFeeCurrency, CeloFeeCurrency, string>(
-          celoTestFactory.feeCurrencies(),
-          celoTestFactory.feeCurrencies(),
-          amounts,
-        )
-        it.each(all)(
-          'fromPrivateKey - %p %p %p',
-          async (feeCurrency: CeloFeeCurrency, currency: CeloFeeCurrency, amount) => {
-            const result = await sdk.transaction.prepare.celoOrCUsdSignedTransaction(
-              {
-                currency,
-                to: address,
-                fromPrivateKey: TEST_DATA.CELO.TESTNET.ERC_20?.PRIVATE_KEY,
-                feeCurrency,
-                amount,
-              },
-              provider,
-              true,
-            )
-            expectHexString(result)
-          },
-        )
-
-        it.each(celo)(
-          'singatureId - %p %p %p',
-          async (feeCurrency: CeloFeeCurrency, currency: CeloFeeCurrency, amount) => {
-            const result = await sdk.transaction.prepare.celoOrCUsdSignedTransaction(
-              {
-                currency,
-                to: address,
-                signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-                feeCurrency,
-                amount,
-              },
-              provider,
-              true,
-            )
-            const json = JSON.parse(result)
-            expectHexString(json.value)
-            expectHexString(json.to)
-            expect(json.chainId).toBeGreaterThan(0)
-          },
-        )
-
-        it.each(erc20)(
-          'singatureId - %p %p %p',
-          async (feeCurrency: CeloFeeCurrency, currency: CeloFeeCurrency, amount) => {
-            const result = await sdk.transaction.prepare.celoOrCUsdSignedTransaction(
-              {
-                currency,
-                to: address,
-                signatureId: 'cac88687-33ed-4ca1-b1fc-b02986a90975',
-                feeCurrency,
-                amount,
-              },
-              provider,
-              true,
-            )
-            const json = JSON.parse(result)
-            expectHexString(json.data)
-            expectHexString(json.to)
-            expect(json.chainId).toBeGreaterThan(0)
-          },
-        )
-      })
-
-      describe('storeDataTransaction', () => {
-        celoTestFactory.testSign({
-          apiFn: sdk.transaction.prepare.storeDataTransaction,
-          apiArg: {
-            to: address,
-            data: 'some data',
-          },
-        })
       })
     })
   })

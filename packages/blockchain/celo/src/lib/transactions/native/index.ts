@@ -26,13 +26,13 @@ const transferSignedTransaction = async (
   const { fromPrivateKey, signatureId, to, fee, feeCurrency, amount, nonce, data } = body
   const celoProvider = celoUtils.getProvider(provider)
 
-  if (to && feeCurrency && amount) {
+  if (to && amount) {
     const network = await celoProvider.ready
-    const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
+    // const feeCurrencyContractAddress = celoUtils.getFeeCurrency(feeCurrency, testnet)
 
     const txBody = {
       chainId: network.chainId,
-      feeCurrency: feeCurrencyContractAddress,
+      // feeCurrency: feeCurrencyContractAddress,
       data,
       to: to.trim(),
       gasLimit: evmBasedUtils.gasLimitToHexWithFallback(fee?.gasLimit),
@@ -49,11 +49,10 @@ const transferSignedTransaction = async (
 
     const wallet = new CeloWallet(fromPrivateKey as string, celoProvider)
 
-    await celoUtils.checkCeloBalance(wallet, amount)
+    // await celoUtils.checkCeloBalance(wallet, amount)
 
     const { txCount, gasPrice, from } = await celoUtils.obtainWalletInformation(
       wallet,
-      feeCurrencyContractAddress,
     )
 
     const tx: CeloTransactionConfig = {
