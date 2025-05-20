@@ -1,3 +1,9 @@
+## [4.2.52] - 2025.5.20
+
+### Added
+
+- Added support for Ethereum Hoodi
+
 ## [4.2.51] - 2025.3.17
 
 ### Added

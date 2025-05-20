@@ -5,7 +5,7 @@ import { EvmE2eUtils } from '../evm.e2e.utils'
 
 describe('Beacon', () => {
   describe('v1', () => {
-    const networks = [Network.ETHEREUM_HOLESKY, Network.ETHEREUM]
+    const networks = [Network.ETHEREUM_HOODI, Network.ETHEREUM_HOLESKY, Network.ETHEREUM]
 
     describe.each(networks)('%s', (network) => {
       const apiKey = network === Network.ETHEREUM ? ApiKey.mainnet : ApiKey.testnet

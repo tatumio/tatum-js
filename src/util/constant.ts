@@ -41,6 +41,7 @@ export const Constant = {
     [Network.ETHEREUM]: 18,
     [Network.ETHEREUM_SEPOLIA]: 18,
     [Network.ETHEREUM_HOLESKY]: 18,
+    [Network.ETHEREUM_HOODI]: 18,
     [Network.POLYGON]: 18,
     [Network.POLYGON_AMOY]: 18,
     [Network.CELO]: 18,
@@ -137,7 +138,7 @@ export const Constant = {
     [Network.KAIA_KAIROS]: 18,
     [Network.SONIC_MAINNET]: 18,
     [Network.SONIC_BLAZE]: 18,
-    [Network.BERACHAIN_MAINNET]: 18
+    [Network.BERACHAIN_MAINNET]: 18,
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -158,6 +159,7 @@ export const Constant = {
     [Network.ETHEREUM]: 'ETH',
     [Network.ETHEREUM_SEPOLIA]: 'ETH',
     [Network.ETHEREUM_HOLESKY]: 'ETH',
+    [Network.ETHEREUM_HOODI]: 'ETH',
     [Network.POLYGON]: 'MATIC',
     [Network.POLYGON_AMOY]: 'MATIC',
     [Network.CELO]: 'CELO',
@@ -319,6 +321,7 @@ export const Constant = {
       Network.DOGECOIN_TESTNET,
       Network.ETHEREUM_SEPOLIA,
       Network.ETHEREUM_HOLESKY,
+      Network.ETHEREUM_HOODI,
       Network.EOS_TESTNET,
       Network.FANTOM_TESTNET,
       Network.FLOW_TESTNET,

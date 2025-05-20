@@ -81,6 +81,7 @@ export enum Network {
   DOGECOIN_TESTNET = 'doge-testnet',
   ETHEREUM_SEPOLIA = 'ethereum-sepolia',
   ETHEREUM_HOLESKY = 'ethereum-holesky',
+  ETHEREUM_HOODI = 'ethereum-hoodi',
   EOS_TESTNET = 'eos-testnet',
   FANTOM_TESTNET = 'fantom-testnet',
   FLARE_COSTON = 'flare-coston',
@@ -472,6 +473,11 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.ETH,
     testnet: true,
     chainId: 17000,
+  },
+  [Network.ETHEREUM_HOODI]: {
+    currency: Currency.ETH,
+    testnet: true,
+    chainId: 560048,
   },
   [Network.ETHEREUM]: {
     currency: Currency.ETH,

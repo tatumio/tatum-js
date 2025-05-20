@@ -38,7 +38,7 @@ Need help or want to contribute? [Report Bugs](https://github.com/tatumio/tatum-
 Interact seamlessly with various blockchains through native RPC calls. Say goodbye to the hassle of juggling separate RPC clients for each blockchain.
 
 | Documentation                                                                                             |
-|-----------------------------------------------------------------------------------------------------------|
+| --------------------------------------------------------------------------------------------------------- |
 | **EVM Blockchains**                                                                                       |
 | [Ethereum RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/ethereum-rpc-documentation)                 |
 | [Polygon RPC](https://docs.tatum.io/docs/rpc/evm-blockchains/polygon-rpc-documentation)                   |
@@ -432,10 +432,10 @@ Any other calls not meeting the conditions for archive node calls can be service
 This section provides a list of various blockchain network status pages, powered by Tatum. These links direct you to real-time status updates for each network.
 
 | Status Pages                                                                                                 |
-|--------------------------------------------------------------------------------------------------------------|
+| ------------------------------------------------------------------------------------------------------------ |
 | [bitcoin-mainnet.status.tatum.io](https://bitcoin-mainnet.status.tatum.io)                                   |
 | [bitcoin-testnet.status.tatum.io](https://bitcoin-testnet.status.tatum.io)                                   |
-| [bitcoin-testnet4.status.tatum.io](https://bitcoin-testnet4.status.tatum.io)                                   |
+| [bitcoin-testnet4.status.tatum.io](https://bitcoin-testnet4.status.tatum.io)                                 |
 | [dogecoin-mainnet.status.tatum.io](https://dogecoin-mainnet.status.tatum.io)                                 |
 | [dogecoin-testnet.status.tatum.io](https://dogecoin-testnet.status.tatum.io)                                 |
 | [eos-mainnet-archive.status.tatum.io](https://eos-mainnet-archive.status.tatum.io)                           |
@@ -443,7 +443,8 @@ This section provides a list of various blockchain network status pages, powered
 | [ethereum-mainnet.status.tatum.io](https://ethereum-mainnet.status.tatum.io)                                 |
 | [ethereum-sepolia-archive.status.tatum.io](https://ethereum-sepolia-archive.status.tatum.io)                 |
 | [ethereum-holesky-archive.status.tatum.io](https://ethereum-holesky-archive.status.tatum.io)                 |
-| [ethereum-sepolia.status.tatum.io](https://ethereum-sepolia.status.tatum.io)                                 |
+| [ethereum-hoodi.status.tatum.io](https://ethereum-hoodi.status.tatum.io)                                     |
+| [ethereum-mainnet.status.tatum.io](https://ethereum-mainnet.status.tatum.io)                                 |
 | [flare-coston-archive.status.tatum.io](https://flare-coston-archive.status.tatum.io)                         |
 | [flare-coston2-archive.status.tatum.io](https://flare-coston2-archive.status.tatum.io)                       |
 | [flare-songbird-archive.status.tatum.io](https://flare-songbird-archive.status.tatum.io)                     |
@@ -550,70 +551,70 @@ The list of nodes is dynamically fetched from the remote server and it is define
 
 Here are the list of nodes for each blockchain:
 
-| Nodes List                                                                                                               |
-|--------------------------------------------------------------------------------------------------------------------------|
-| [rpc.tatum.io/bitcoin-mainnet/list.json](https://rpc.tatum.io/bitcoin-mainnet/list.json)                                 |
-| [rpc.tatum.io/bitcoin-testnet/list.json](https://rpc.tatum.io/bitcoin-testnet/list.json)                                 |
-| [rpc.tatum.io/dogecoin-mainnet/list.json](https://rpc.tatum.io/dogecoin-mainnet/list.json)                               |
-| [rpc.tatum.io/dogecoin-testnet/list.json](https://rpc.tatum.io/dogecoin-testnet/list.json)                               |
-| [rpc.tatum.io/eos-mainnet-archive/list.json](https://rpc.tatum.io/eos-mainnet-archive/list.json)                         |
-| [rpc.tatum.io/ethereum-mainnet-archive/list.json](https://rpc.tatum.io/ethereum-mainnet-archive/list.json)               |
-| [rpc.tatum.io/ethereum-mainnet/list.json](https://rpc.tatum.io/ethereum-mainnet/list.json)                               |
-| [rpc.tatum.io/ethereum-sepolia-archive/list.json](https://rpc.tatum.io/ethereum-sepolia-archive/list.json)               |
-| [rpc.tatum.io/ethereum-holesky-archive/list.json](https://rpc.tatum.io/ethereum-holesky-archive/list.json)               |
-| [rpc.tatum.io/ethereum-sepolia/list.json](https://rpc.tatum.io/ethereum-sepolia/list.json)                               |
-| [rpc.tatum.io/flare-coston-archive/list.json](https://rpc.tatum.io/flare-coston-archive/list.json)                       |
-| [rpc.tatum.io/flare-coston2-archive/list.json](https://rpc.tatum.io/flare-coston2-archive/list.json)                     |
-| [rpc.tatum.io/flare-mainnet-archive/list.json](https://rpc.tatum.io/flare-mainnet-archive/list.json)                     |
-| [rpc.tatum.io/flare-songbird-archive/list.json](https://rpc.tatum.io/flare-songbird-archive/list.json)                   |
-| [rpc.tatum.io/haqq-mainnet-archive/list.json](https://rpc.tatum.io/haqq-mainnet-archive/list.json)                       |
-| [rpc.tatum.io/haqq-mainnet/list.json](https://rpc.tatum.io/haqq-mainnet/list.json)                                       |
-| [rpc.tatum.io/haqq-testnet/list.json](https://rpc.tatum.io/haqq-testnet/list.json)                                       |
-| [rpc.tatum.io/chiliz-mainnet/list.json](https://rpc.tatum.io/chiliz-mainnet/list.json)                                   |
-| [rpc.tatum.io/chiliz-mainnet-archive/list.json](https://rpc.tatum.io/chiliz-mainnet-archive/list.json)                   |
-| [rpc.tatum.io/litecoin-mainnet/list.json](https://rpc.tatum.io/litecoin-mainnet/list.json)                               |
-| [rpc.tatum.io/litecoin-testnet/list.json](https://rpc.tatum.io/litecoin-testnet/list.json)                               |
-| [rpc.tatum.io/optimism-mainnet-archive/list.json](https://rpc.tatum.io/optimism-mainnet-archive/list.json)               |
-| [rpc.tatum.io/polygon-mainnet-archive/list.json](https://rpc.tatum.io/polygon-mainnet-archive/list.json)                 |
-| [rpc.tatum.io/polygon-mainnet/list.json](https://rpc.tatum.io/polygon-mainnet/list.json)                                 |
-| [rpc.tatum.io/horizen-eon-mainnet-archive/list.json](https://rpc.tatum.io/horizen-eon-mainnet-archive/list.json)         |
-| [rpc.tatum.io/horizen-eon-gobi/list.json](https://rpc.tatum.io/horizen-eon-gobi/list.json)                               |
-| [rpc.tatum.io/bsc-mainnet-archive/list.json](https://rpc.tatum.io/bsc-mainnet-archive/list.json)                         |
-| [rpc.tatum.io/polygon-amoy-archive/list.json](https://rpc.tatum.io/polygon-amoy-archive/list.json)                   |
-| [rpc.tatum.io/polygon-amoy/list.json](https://rpc.tatum.io/polygon-amoy/list.json)                                     |
-| [rpc.tatum.io/tron-mainnet-archive/list.json](https://rpc.tatum.io/tron-mainnet-archive/list.json)                       |
-| [rpc.tatum.io/arbitrum-one-mainnet-archive/list.json](https://rpc.tatum.io/arbitrum-one-mainnet-archive/list.json)       |
+| Nodes List                                                                                                                 |
+| -------------------------------------------------------------------------------------------------------------------------- |
+| [rpc.tatum.io/bitcoin-mainnet/list.json](https://rpc.tatum.io/bitcoin-mainnet/list.json)                                   |
+| [rpc.tatum.io/bitcoin-testnet/list.json](https://rpc.tatum.io/bitcoin-testnet/list.json)                                   |
+| [rpc.tatum.io/dogecoin-mainnet/list.json](https://rpc.tatum.io/dogecoin-mainnet/list.json)                                 |
+| [rpc.tatum.io/dogecoin-testnet/list.json](https://rpc.tatum.io/dogecoin-testnet/list.json)                                 |
+| [rpc.tatum.io/eos-mainnet-archive/list.json](https://rpc.tatum.io/eos-mainnet-archive/list.json)                           |
+| [rpc.tatum.io/ethereum-mainnet-archive/list.json](https://rpc.tatum.io/ethereum-mainnet-archive/list.json)                 |
+| [rpc.tatum.io/ethereum-mainnet/list.json](https://rpc.tatum.io/ethereum-mainnet/list.json)                                 |
+| [rpc.tatum.io/ethereum-sepolia-archive/list.json](https://rpc.tatum.io/ethereum-sepolia-archive/list.json)                 |
+| [rpc.tatum.io/ethereum-holesky-archive/list.json](https://rpc.tatum.io/ethereum-holesky-archive/list.json)                 |
+| [rpc.tatum.io/ethereum-sepolia/list.json](https://rpc.tatum.io/ethereum-sepolia/list.json)                                 |
+| [rpc.tatum.io/flare-coston-archive/list.json](https://rpc.tatum.io/flare-coston-archive/list.json)                         |
+| [rpc.tatum.io/flare-coston2-archive/list.json](https://rpc.tatum.io/flare-coston2-archive/list.json)                       |
+| [rpc.tatum.io/flare-mainnet-archive/list.json](https://rpc.tatum.io/flare-mainnet-archive/list.json)                       |
+| [rpc.tatum.io/flare-songbird-archive/list.json](https://rpc.tatum.io/flare-songbird-archive/list.json)                     |
+| [rpc.tatum.io/haqq-mainnet-archive/list.json](https://rpc.tatum.io/haqq-mainnet-archive/list.json)                         |
+| [rpc.tatum.io/haqq-mainnet/list.json](https://rpc.tatum.io/haqq-mainnet/list.json)                                         |
+| [rpc.tatum.io/haqq-testnet/list.json](https://rpc.tatum.io/haqq-testnet/list.json)                                         |
+| [rpc.tatum.io/chiliz-mainnet/list.json](https://rpc.tatum.io/chiliz-mainnet/list.json)                                     |
+| [rpc.tatum.io/chiliz-mainnet-archive/list.json](https://rpc.tatum.io/chiliz-mainnet-archive/list.json)                     |
+| [rpc.tatum.io/litecoin-mainnet/list.json](https://rpc.tatum.io/litecoin-mainnet/list.json)                                 |
+| [rpc.tatum.io/litecoin-testnet/list.json](https://rpc.tatum.io/litecoin-testnet/list.json)                                 |
+| [rpc.tatum.io/optimism-mainnet-archive/list.json](https://rpc.tatum.io/optimism-mainnet-archive/list.json)                 |
+| [rpc.tatum.io/polygon-mainnet-archive/list.json](https://rpc.tatum.io/polygon-mainnet-archive/list.json)                   |
+| [rpc.tatum.io/polygon-mainnet/list.json](https://rpc.tatum.io/polygon-mainnet/list.json)                                   |
+| [rpc.tatum.io/horizen-eon-mainnet-archive/list.json](https://rpc.tatum.io/horizen-eon-mainnet-archive/list.json)           |
+| [rpc.tatum.io/horizen-eon-gobi/list.json](https://rpc.tatum.io/horizen-eon-gobi/list.json)                                 |
+| [rpc.tatum.io/bsc-mainnet-archive/list.json](https://rpc.tatum.io/bsc-mainnet-archive/list.json)                           |
+| [rpc.tatum.io/polygon-amoy-archive/list.json](https://rpc.tatum.io/polygon-amoy-archive/list.json)                         |
+| [rpc.tatum.io/polygon-amoy/list.json](https://rpc.tatum.io/polygon-amoy/list.json)                                         |
+| [rpc.tatum.io/tron-mainnet-archive/list.json](https://rpc.tatum.io/tron-mainnet-archive/list.json)                         |
+| [rpc.tatum.io/arbitrum-one-mainnet-archive/list.json](https://rpc.tatum.io/arbitrum-one-mainnet-archive/list.json)         |
 | [rpc.tatum.io/ethereum-classic-mainnet-archive/list.json](https://rpc.tatum.io/ethereum-classic-mainnet-archive/list.json) |
-| [rpc.tatum.io/zcash-mainnet/list.json](https://rpc.tatum.io/zcash-mainnet/list.json)                                     |
-| [rpc.tatum.io/ripple-mainnet/list.json](https://rpc.tatum.io/ripple-mainnet/list.json)                                   |
-| [rpc.tatum.io/ripple-testnet/list.json](https://rpc.tatum.io/ripple-testnet/list.json)                                   |
-| [rpc.tatum.io/klaytn-mainnet/list.json](https://rpc.tatum.io/klaytn-mainnet/list.json)                                   |
-| [rpc.tatum.io/klaytn-mainnet-archive/list.json](https://rpc.tatum.io/klaytn-mainnet-archive/list.json)                   |
-| [rpc.tatum.io/klaytn-baobab/list.json](https://rpc.tatum.io/klaytn-baobab/list.json)                                     |
-| [rpc.tatum.io/klaytn-baobab-archive/list.json](https://rpc.tatum.io/klaytn-baobab-archive/list.json)                     |
-| [rpc.tatum.io/bitcoin-cash-mainnet/list.json](https://rpc.tatum.io/bitcoin-cash-mainnet/list.json)                       |
-| [rpc.tatum.io/avalanche-c-mainnet-archive/list.json](https://rpc.tatum.io/avalanche-c-mainnet-archive/list.json)         |
-| [rpc.tatum.io/solana-mainnet/list.json](https://rpc.tatum.io/solana-mainnet/list.json)                                   |
-| [rpc.tatum.io/solana-devnet/list.json](https://rpc.tatum.io/solana-devnet/list.json)                                     |
-| [rpc.tatum.io/celo-mainnet-archive/list.json](https://rpc.tatum.io/celo-mainnet-archive/list.json)                       |
-| [rpc.tatum.io/celo-testnet-archive/list.json](https://rpc.tatum.io/celo-testnet-archive/list.json)                       |
-| [rpc.tatum.io/tezos-testnet/list.json](https://rpc.tatum.io/tezos-testnet/list.json)                                     |
-| [rpc.tatum.io/tezos-mainnet/list.json](https://rpc.tatum.io/tezos-mainnet/list.json)                                     |
-| [rpc.tatum.io/algorand-mainnet-algod/list.json](https://rpc.tatum.io/algorand-mainnet-algod/list.json)                   |
-| [rpc.tatum.io/algorand-testnet-algod/list.json](https://rpc.tatum.io/algorand-testnet-algod/list.json)                   |
-| [rpc.tatum.io/algorand-mainnet-indexer/list.json](https://rpc.tatum.io/algorand-mainnet-indexer/list.json)               |
-| [rpc.tatum.io/algorand-testnet-indexer/list.json](https://rpc.tatum.io/algorand-testnet-indexer/list.json)               |
-| [rpc.tatum.io/cardano-mainnet/list.json](https://rpc.tatum.io/cardano-mainnet/list.json)                                 |
-| [rpc.tatum.io/cardano-preprod/list.json](https://rpc.tatum.io/cardano-preprod/list.json)                                 |
-| [rpc.tatum.io/xinfin-mainnet-archive/list.json](https://rpc.tatum.io/xinfin-mainnet-archive/list.json)                   |
-| [rpc.tatum.io/stellar-mainnet-archive/list.json](https://rpc.tatum.io/stellar-mainnet-archive/list.json)                 |
-| [rpc.tatum.io/base-mainnet-archive/list.json](https://rpc.tatum.io/base-mainnet-archive/list.json)                       |
-| [rpc.tatum.io/kadena-mainnet/list.json](https://rpc.tatum.io/kadena-mainnet/list.json)                                   |
-| [rpc.tatum.io/kadena-testnet/list.json](https://rpc.tatum.io/kadena-testnet/list.json)                                   |
-| [rpc.tatum.io/rostrum-mainnet/list.json](https://rpc.tatum.io/rostrum-mainnet/list.json)                                 |
-| [rpc.tatum.io/cronos-mainnet-archive/list.json](https://rpc.tatum.io/cronos-mainnet-archive/list.json)                   |
-| [rpc.tatum.io/fantom-mainnet-archive/list.json](https://rpc.tatum.io/fantom-mainnet-archive/list.json)                   |
-| [rpc.tatum.io/iota-mainnet/list.json](https://rpc.tatum.io/iota-mainnet/list.json)                                       |
+| [rpc.tatum.io/zcash-mainnet/list.json](https://rpc.tatum.io/zcash-mainnet/list.json)                                       |
+| [rpc.tatum.io/ripple-mainnet/list.json](https://rpc.tatum.io/ripple-mainnet/list.json)                                     |
+| [rpc.tatum.io/ripple-testnet/list.json](https://rpc.tatum.io/ripple-testnet/list.json)                                     |
+| [rpc.tatum.io/klaytn-mainnet/list.json](https://rpc.tatum.io/klaytn-mainnet/list.json)                                     |
+| [rpc.tatum.io/klaytn-mainnet-archive/list.json](https://rpc.tatum.io/klaytn-mainnet-archive/list.json)                     |
+| [rpc.tatum.io/klaytn-baobab/list.json](https://rpc.tatum.io/klaytn-baobab/list.json)                                       |
+| [rpc.tatum.io/klaytn-baobab-archive/list.json](https://rpc.tatum.io/klaytn-baobab-archive/list.json)                       |
+| [rpc.tatum.io/bitcoin-cash-mainnet/list.json](https://rpc.tatum.io/bitcoin-cash-mainnet/list.json)                         |
+| [rpc.tatum.io/avalanche-c-mainnet-archive/list.json](https://rpc.tatum.io/avalanche-c-mainnet-archive/list.json)           |
+| [rpc.tatum.io/solana-mainnet/list.json](https://rpc.tatum.io/solana-mainnet/list.json)                                     |
+| [rpc.tatum.io/solana-devnet/list.json](https://rpc.tatum.io/solana-devnet/list.json)                                       |
+| [rpc.tatum.io/celo-mainnet-archive/list.json](https://rpc.tatum.io/celo-mainnet-archive/list.json)                         |
+| [rpc.tatum.io/celo-testnet-archive/list.json](https://rpc.tatum.io/celo-testnet-archive/list.json)                         |
+| [rpc.tatum.io/tezos-testnet/list.json](https://rpc.tatum.io/tezos-testnet/list.json)                                       |
+| [rpc.tatum.io/tezos-mainnet/list.json](https://rpc.tatum.io/tezos-mainnet/list.json)                                       |
+| [rpc.tatum.io/algorand-mainnet-algod/list.json](https://rpc.tatum.io/algorand-mainnet-algod/list.json)                     |
+| [rpc.tatum.io/algorand-testnet-algod/list.json](https://rpc.tatum.io/algorand-testnet-algod/list.json)                     |
+| [rpc.tatum.io/algorand-mainnet-indexer/list.json](https://rpc.tatum.io/algorand-mainnet-indexer/list.json)                 |
+| [rpc.tatum.io/algorand-testnet-indexer/list.json](https://rpc.tatum.io/algorand-testnet-indexer/list.json)                 |
+| [rpc.tatum.io/cardano-mainnet/list.json](https://rpc.tatum.io/cardano-mainnet/list.json)                                   |
+| [rpc.tatum.io/cardano-preprod/list.json](https://rpc.tatum.io/cardano-preprod/list.json)                                   |
+| [rpc.tatum.io/xinfin-mainnet-archive/list.json](https://rpc.tatum.io/xinfin-mainnet-archive/list.json)                     |
+| [rpc.tatum.io/stellar-mainnet-archive/list.json](https://rpc.tatum.io/stellar-mainnet-archive/list.json)                   |
+| [rpc.tatum.io/base-mainnet-archive/list.json](https://rpc.tatum.io/base-mainnet-archive/list.json)                         |
+| [rpc.tatum.io/kadena-mainnet/list.json](https://rpc.tatum.io/kadena-mainnet/list.json)                                     |
+| [rpc.tatum.io/kadena-testnet/list.json](https://rpc.tatum.io/kadena-testnet/list.json)                                     |
+| [rpc.tatum.io/rostrum-mainnet/list.json](https://rpc.tatum.io/rostrum-mainnet/list.json)                                   |
+| [rpc.tatum.io/cronos-mainnet-archive/list.json](https://rpc.tatum.io/cronos-mainnet-archive/list.json)                     |
+| [rpc.tatum.io/fantom-mainnet-archive/list.json](https://rpc.tatum.io/fantom-mainnet-archive/list.json)                     |
+| [rpc.tatum.io/iota-mainnet/list.json](https://rpc.tatum.io/iota-mainnet/list.json)                                         |
 
 Following pattern defines the URL for fetching the list of nodes:
 
