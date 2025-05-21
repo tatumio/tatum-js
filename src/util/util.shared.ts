@@ -595,6 +595,7 @@ export const Utils = {
       case Network.ETHEREUM:
       case Network.ETHEREUM_SEPOLIA:
       case Network.ETHEREUM_HOLESKY:
+      case Network.ETHEREUM_HOODI:
         return AddressEventNotificationChain.ETH
       case Network.POLYGON:
       case Network.POLYGON_AMOY:
@@ -786,6 +787,7 @@ export const Utils = {
       case Network.ETHEREUM:
       case Network.ETHEREUM_SEPOLIA:
       case Network.ETHEREUM_HOLESKY:
+      case Network.ETHEREUM_HOODI:
         return new Ethereum(id) as T
       case Network.ETHEREUM_CLASSIC:
         return new EthereumClassic(id) as T

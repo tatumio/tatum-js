@@ -81,6 +81,7 @@ export enum Network {
   DOGECOIN_TESTNET = 'doge-testnet',
   ETHEREUM_SEPOLIA = 'ethereum-sepolia',
   ETHEREUM_HOLESKY = 'ethereum-holesky',
+  ETHEREUM_HOODI = 'ethereum-hoodi',
   EOS_TESTNET = 'eos-testnet',
   FANTOM_TESTNET = 'fantom-testnet',
   FLARE_COSTON = 'flare-coston',
@@ -127,6 +128,7 @@ export const EVM_BASED_NETWORKS = [
   Network.ETHEREUM_SEPOLIA,
   Network.ETHEREUM_CLASSIC,
   Network.ETHEREUM_HOLESKY,
+  Network.ETHEREUM_HOODI,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
   Network.POLYGON,
@@ -246,6 +248,7 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
   Network.ETHEREUM_HOLESKY,
+  Network.ETHEREUM_HOODI,
   Network.POLYGON,
   Network.POLYGON_AMOY,
   Network.OPTIMISM,
@@ -318,6 +321,8 @@ export const LOAD_BALANCER_NETWORKS = [
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
+  Network.ETHEREUM_HOLESKY,
+  Network.ETHEREUM_HOODI,
   Network.HAQQ,
   Network.HAQQ_TESTNET,
   Network.POLYGON,
@@ -329,6 +334,7 @@ export const EVM_ARCHIVE_NON_ARCHIVE_BEACON_LOAD_BALANCER_NETWORKS = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
   Network.ETHEREUM_HOLESKY,
+  Network.ETHEREUM_HOODI,
 ]
 
 export const TRON_NETWORKS = [Network.TRON, Network.TRON_SHASTA]
@@ -472,6 +478,11 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.ETH,
     testnet: true,
     chainId: 17000,
+  },
+  [Network.ETHEREUM_HOODI]: {
+    currency: Currency.ETH,
+    testnet: true,
+    chainId: 560048,
   },
   [Network.ETHEREUM]: {
     currency: Currency.ETH,
