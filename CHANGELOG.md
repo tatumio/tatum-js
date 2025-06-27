@@ -1,3 +1,9 @@
+## [4.2.53] - 2025.6.27
+
+### Updated
+
+- Updated SDK to call new version of data-api endpoints
+
 ## [4.2.52] - 2025.5.20
 
 ### Added

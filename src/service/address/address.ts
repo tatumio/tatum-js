@@ -51,7 +51,7 @@ export class AddressTezos {
 
     return ErrorUtils.tryFail(async () => {
       const data = await this.connector.get<{ result: AddressBalanceDataApi[] }, ApiBalanceRequest>({
-        path: `data/balances`,
+        path: `data/wallet/portfolio`,
         params: {
           pageSize,
           offset: page,
@@ -104,7 +104,7 @@ export class AddressTezos {
         prevPage: string
         nextPage: string
       }>({
-        path: `data/transactions`,
+        path: `data/transaction/history`,
         params: {
           chain,
           addresses: address,
@@ -269,7 +269,7 @@ export class Address {
         isDataApiEvmEnabledNetwork(chain) &&
         (await this.connector
           .get<{ result: AddressBalance[] }, ApiBalanceRequest>({
-            path: `data/balances`,
+            path: `data/wallet/portfolio`,
             params: {
               pageSize,
               offset: page,
@@ -308,7 +308,7 @@ export class Address {
       if (isDataApiEnabledNetwork(chain)) {
         return this.connector
           .get<{ result: AddressTransaction[] }>({
-            path: `data/transactions`,
+            path: `data/transaction/history`,
             params: {
               chain,
               addresses: address,
