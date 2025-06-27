@@ -58,7 +58,7 @@ export class TatumApi {
 
   public async getBalancesOfAddresses(params: ApiBalanceRequest): Promise<ApiBalanceResponse[]> {
     const { result } = await this.connector.get<{ result: ApiBalanceResponse[] }, ApiBalanceRequest>({
-      path: `data/balances`,
+      path: `data/wallet/portfolio`,
       params,
     })
     return result
@@ -81,7 +81,7 @@ export class TatumApi {
 
   public async getTransactions(params: ApiTransactionsRequest): Promise<ApiTxData[]> {
     const { result } = await this.connector.get<{ result: ApiTxData[] }, ApiTransactionsRequest>({
-      path: `data/transactions`,
+      path: `data/transaction/history`,
       params,
     })
     return result
@@ -97,7 +97,7 @@ export class TatumApi {
 
   public async getEvents(params: ApiEventsRequest): Promise<Event[]> {
     const { result } = await this.connector.get<{ result: Event[] }, ApiEventsRequest>({
-      path: `data/events`,
+      path: `data/defi/events`,
       params,
     })
     return result
@@ -105,14 +105,14 @@ export class TatumApi {
 
   public getBlocks(params: ApiGetBlockRequest): Promise<Block[]> {
     return this.connector.get<Block[], ApiGetBlockRequest>({
-      path: `data/blocks`,
+      path: `data/defi/blocks`,
       params,
     })
   }
 
   public getLatestBlock(params: ApiLatestBlockRequest): Promise<Block> {
     return this.connector.get<Block, ApiLatestBlockRequest>({
-      path: `data/blocks/latest`,
+      path: `data/defi/blocks/latest`,
       params,
     })
   }

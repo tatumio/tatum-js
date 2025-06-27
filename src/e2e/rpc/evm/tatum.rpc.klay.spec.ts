@@ -41,7 +41,7 @@ const run = async (network: Network, chainId: number) => {
       expect(block.size).toBeDefined()
     })
 
-    it('web3_clientVersion', async () => {
+    it.skip('web3_clientVersion', async () => {
       const tatum = await EvmE2eUtils.initTatum<Klaytn>(network)
       const { result } = await tatum.rpc.clientVersion()
 

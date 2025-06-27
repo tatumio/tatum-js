@@ -188,7 +188,7 @@ export class Nft {
     return ErrorUtils.tryFail(() =>
       this.connector
         .get<{ result: NftAddressBalance[] }, ApiBalanceRequest>({
-          path: `data/balances`,
+          path: `data/wallet/portfolio`,
           params: {
             pageSize,
             offset: page,
@@ -220,7 +220,7 @@ export class Nft {
     return ErrorUtils.tryFail(() =>
       this.connector
         .get<{ result: NftTransaction[] }>({
-          path: `data/transactions`,
+          path: `data/transaction/history`,
           params: {
             pageSize,
             offset: page,
@@ -257,7 +257,7 @@ export class Nft {
     return ErrorUtils.tryFail(() =>
       this.connector
         .get<{ result: NftTransaction[] }>({
-          path: `data/transactions`,
+          path: `data/transaction/history`,
           params: {
             pageSize,
             offset: page,

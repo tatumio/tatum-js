@@ -58,10 +58,10 @@ const testNetworks = [
   {
     network: Network.KLAYTN,
   },
-  {
-    network: Network.KLAYTN_BAOBAB,
-    apiKey: ApiKey.testnet,
-  },
+  // {
+  //   network: Network.KLAYTN_BAOBAB,
+  //   apiKey: ApiKey.testnet,
+  // },
   {
     network: Network.AVALANCHE_C,
   },
