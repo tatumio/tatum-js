@@ -61,6 +61,7 @@ export enum Network {
   SONIC_MAINNET = 'sonic-mainnet',
   KAIA_MAINNET = 'kaia-mainnet',
   BERACHAIN_MAINNET = 'berachain-mainnet',
+  UNICHAIN_MAINNET = 'unichain-mainnet',
 
   // Testnets
   ALGORAND_ALGOD_TESTNET = 'algorand-testnet-algod',
@@ -121,6 +122,7 @@ export enum Network {
   RONIN_SAIGON = 'ronin-saigon',
   SONIC_BLAZE = 'sonic-blaze',
   KAIA_KAIROS = 'kaia-kairos',
+  UNICHAIN_SEPOLIA = 'unichain-sepolia',
 }
 
 export const EVM_BASED_NETWORKS = [
@@ -182,6 +184,8 @@ export const EVM_BASED_NETWORKS = [
   Network.SONIC_MAINNET,
   Network.SONIC_BLAZE,
   Network.BERACHAIN_MAINNET,
+  Network.UNICHAIN_MAINNET,
+  Network.UNICHAIN_SEPOLIA,
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -467,6 +471,18 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.BERA,
     testnet: false,
     defaultMainnet: true,
+  },
+  [Network.UNICHAIN_MAINNET]: {
+    currency: Currency.UNI,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 130,
+  },
+  [Network.UNICHAIN_SEPOLIA]: {
+    currency: Currency.UNI,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 1301,
   },
   [Network.ETHEREUM_SEPOLIA]: {
     currency: Currency.ETH,
