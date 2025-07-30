@@ -121,7 +121,8 @@ export enum Currency {
   S = "S",
   KAIA = "KAIA",
   BERA = "BERA",
-  SUI =  'SUI'
+  SUI =  'SUI',
+  ETH_UNI = 'ETH_UNI',
 }
 
 export const ERC20_CURRENCIES = [
