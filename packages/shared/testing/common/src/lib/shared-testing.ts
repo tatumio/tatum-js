@@ -112,3 +112,4 @@ export function expectHexString(value: string): void {
  * @deprecated Replace it with API key from https://tatum.io/
  */
 export const REPLACE_ME_WITH_TATUM_API_KEY = process.env['TATUM_API_KEY'] as string
+export const REPLACE_ME_WITH_TATUM_TESTNET_API_KEY = process.env['TATUM_API_KEY_TESTNET'] as string

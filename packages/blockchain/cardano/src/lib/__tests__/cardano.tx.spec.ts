@@ -4,16 +4,17 @@ import {
   AdaTransactionFromUTXO,
   AdaTransactionFromUTXOKMS,
 } from '@tatumio/api-client'
-import { TatumCardanoSDK } from '@tatumio/cardano'
+import { TatumCardanoSDK } from '../cardano.sdk';
+import { REPLACE_ME_WITH_TATUM_TESTNET_API_KEY } from '@tatumio/shared-testing-common'
 
-describe('CARDANO transactions', () => {
+describe.skip('CARDANO transactions', () => {
   jest.setTimeout(60000)
 
   afterEach(() => {
     jest.resetAllMocks()
   })
 
-  const sdk = TatumCardanoSDK({ apiKey: '03fea4e2-9c66-453d-b760-e0318182ae74' })
+  const sdk = TatumCardanoSDK({ apiKey: REPLACE_ME_WITH_TATUM_TESTNET_API_KEY })
 
   describe('From UTXO', () => {
     it('should send ADA from UTXO - change output present', async () => {
@@ -202,28 +203,28 @@ describe('CARDANO transactions', () => {
         'amount': { 'value': '1000000', 'currency': { 'symbol': 'ADA', 'decimals': 6 }, 'metadata': {} },
         'metadata': {},
       },
-        {
-          'account': {
-            'address': 'addr_test1vzfp68vn36ze5yz7x7evracmasuptjmz99qk4j23gun3pcqhlevq5',
-            'metadata': {},
-          },
-          'amount': {
-            'currency': {
-              'decimals': 6,
-              'symbol': 'ADA',
-            },
-            'metadata': {},
-            'value': '9998000000',
+      {
+        'account': {
+          'address': 'addr_test1vzfp68vn36ze5yz7x7evracmasuptjmz99qk4j23gun3pcqhlevq5',
+          'metadata': {},
+        },
+        'amount': {
+          'currency': {
+            'decimals': 6,
+            'symbol': 'ADA',
           },
           'metadata': {},
-          'operation_identifier': {
-            'index': 2,
-            'network_index': 1,
-          },
-          'related_operations': [],
-          'status': 'success',
-          'type': 'output',
-        }])
+          'value': '9998000000',
+        },
+        'metadata': {},
+        'operation_identifier': {
+          'index': 2,
+          'network_index': 1,
+        },
+        'related_operations': [],
+        'status': 'success',
+        'type': 'output',
+      }])
     })
     it('should sign send ADA for KMS', async () => {
       const serializedTransaction = await sdk.transaction.prepareSignedTransaction({

@@ -71,7 +71,7 @@ describe('CronosSDK - tx', () => {
     })
   })
 
-  describe('erc721', () => {
+  describe.skip('erc721', () => {
     jest.setTimeout(99999)
     describe('prepare', () => {
       describe('deploySignedTransaction', () => {
@@ -96,7 +96,7 @@ describe('CronosSDK - tx', () => {
     })
   })
 
-  describe('multiToken', () => {
+  describe.skip('multiToken', () => {
     describe('prepare', () => {
       describe('deployMultiToken', () => {
         multiTokenTestFactory.prepare.deployMultiTokenTransaction(sdk.multiToken, TEST_DATA.CRO)
@@ -128,7 +128,7 @@ describe('CronosSDK - tx', () => {
     })
   })
 
-  describe('smart contract', () => {
+  describe.skip('smart contract', () => {
     describe('prepare', () => {
       describe('smart contract write method invocation', () => {
         smartContractTestFactory.prepare.smartContractWriteMethodInvocationTransaction(

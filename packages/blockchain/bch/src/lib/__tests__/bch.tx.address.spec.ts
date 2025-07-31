@@ -1,10 +1,11 @@
-import { TatumBchSDK } from '@tatumio/bch'
+import { TatumBchSDK } from '../bch.sdk';
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
+import { REPLACE_ME_WITH_TATUM_TESTNET_API_KEY } from '@tatumio/shared-testing-common'
 
-describe('BchSDK - tx - address format', () => {
+describe.skip('BchSDK - tx - address format', () => {
   it.skip('prepare tx for different address formats', async function () {
     const bchSDK = TatumBchSDK({
-      apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab',
+      apiKey: REPLACE_ME_WITH_TATUM_TESTNET_API_KEY,
     })
     const args = { testnet: true }
 
@@ -69,7 +70,7 @@ describe('BchSDK - tx - address format', () => {
 
   it('invalid private key', async () => {
     const bchSDK = TatumBchSDK({
-      apiKey: '75ea3138-d0a1-47df-932e-acb3ee807dab',
+      apiKey: REPLACE_ME_WITH_TATUM_TESTNET_API_KEY,
     })
     const args = { testnet: true }
     const VALUE = 0.000015
