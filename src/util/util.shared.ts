@@ -96,6 +96,7 @@ import {
   Tezos,
   Ton,
   Tron,
+  Unichain,
   UtxoRpc,
   Vechain,
   XinFin,
@@ -904,6 +905,9 @@ export const Utils = {
         return new Kaia(id) as T
       case Network.BERACHAIN_MAINNET:
         return new Berachain(id) as T
+      case Network.UNICHAIN_MAINNET:
+      case Network.UNICHAIN_SEPOLIA:
+        return new Unichain(id) as T
       case Network.KADENA:
       case Network.KADENA_TESTNET:
         return new Kadena(id) as T

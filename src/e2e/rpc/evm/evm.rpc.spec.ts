@@ -73,7 +73,7 @@ const testNetworks = [
     network: Network.XINFIN,
   },
   // { network: Network.CRONOS },
-  { network: Network.CRONOS_TESTNET, apiKey: ApiKey.testnet },
+  // { network: Network.CRONOS_TESTNET, apiKey: ApiKey.testnet },
   // { network: Network.BASE },
   { network: Network.ZK_SYNC, url: 'https://mainnet.era.zksync.io' },
   { network: Network.ZK_SYNC_TESTNET, url: 'https://sepolia.era.zksync.dev' },

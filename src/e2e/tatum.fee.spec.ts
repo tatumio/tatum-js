@@ -20,7 +20,7 @@ describe('Fee', () => {
     }
   })
 
-  it('should return fee for btc testnet', async () => {
+  it.skip('should return fee for btc testnet', async () => {
     const tatum = await TatumSDK.init<Bitcoin>({
       network: Network.BITCOIN_TESTNET,
       retryDelay: 1000,

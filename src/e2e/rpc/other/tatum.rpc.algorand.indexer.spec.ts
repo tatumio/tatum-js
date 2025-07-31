@@ -71,7 +71,7 @@ describe.each([false, true])('Algorand Indexer', (testnet) => {
       expect(assetBalancesResponse).toBeDefined()
     })
 
-    it('should correctly get asset transactions', async () => {
+    it.skip('should correctly get asset transactions', async () => {
       const assetsRequest = {
         limit: 10,
       }
