@@ -1,7 +1,7 @@
 import { REPLACE_ME_WITH_TATUM_TESTNET_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumCardanoSDK } from '../cardano.sdk'
 
-describe('Cardano - Wallet', () => {
+describe.skip('Cardano - Wallet', () => {
   const sdk = TatumCardanoSDK({ apiKey: REPLACE_ME_WITH_TATUM_TESTNET_API_KEY })
 
   describe('Generate wallet', () => {

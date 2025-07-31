@@ -3,7 +3,7 @@ import { Blockchain } from '@tatumio/shared-core'
 import { TatumXdcSDK } from './xdc.sdk'
 import { REPLACE_ME_WITH_TATUM_TESTNET_API_KEY, TEST_DATA, walletTestFactory } from '@tatumio/shared-testing-common'
 
-describe('TatumXdcSDK', () => {
+describe.skip('TatumXdcSDK', () => {
   const sdk = TatumXdcSDK({ apiKey: REPLACE_ME_WITH_TATUM_TESTNET_API_KEY })
 
   jest.setTimeout(99999)

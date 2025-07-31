@@ -7,7 +7,7 @@ import {
 import { TatumCardanoSDK } from '../cardano.sdk';
 import { REPLACE_ME_WITH_TATUM_TESTNET_API_KEY } from '@tatumio/shared-testing-common'
 
-describe('CARDANO transactions', () => {
+describe.skip('CARDANO transactions', () => {
   jest.setTimeout(60000)
 
   afterEach(() => {

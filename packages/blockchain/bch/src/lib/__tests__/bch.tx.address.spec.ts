@@ -2,7 +2,7 @@ import { TatumBchSDK } from '../bch.sdk';
 import { SdkErrorCode } from '@tatumio/shared-abstract-sdk'
 import { REPLACE_ME_WITH_TATUM_TESTNET_API_KEY } from '@tatumio/shared-testing-common'
 
-describe('BchSDK - tx - address format', () => {
+describe.skip('BchSDK - tx - address format', () => {
   it.skip('prepare tx for different address formats', async function () {
     const bchSDK = TatumBchSDK({
       apiKey: REPLACE_ME_WITH_TATUM_TESTNET_API_KEY,
