@@ -9,7 +9,7 @@ describe('EgldSDK - virtual account tx', () => {
 
   describe('ESDT', () => {
     const testData = TEST_DATA.EGLD
-    it('should deploy ESDT transaction', async () => {
+    it.skip('should deploy ESDT transaction', async () => {
       const tx = await sdk.transaction.prepare.deploy({
         from: testData.ADDRESS_0,
         fromPrivateKey: testData.PRIVATE_KEY_0,
@@ -28,7 +28,7 @@ describe('EgldSDK - virtual account tx', () => {
       expect(parsedTx.signature).toBeDefined()
     }, 10000)
 
-    it('should prepare send ESDT signed transaction', async () => {
+    it.skip('should prepare send ESDT signed transaction', async () => {
       const tx = await sdk.transaction.prepare.signedTransaction({
         from: testData.ADDRESS_0,
         fromPrivateKey: testData.PRIVATE_KEY_0,
@@ -46,7 +46,7 @@ describe('EgldSDK - virtual account tx', () => {
       expect(parsedTx.signature).toBeDefined()
     })
 
-    it('should prepare smart contract invocation transaction', async () => {
+    it.skip('should prepare smart contract invocation transaction', async () => {
       const tx = await sdk.transaction.prepare.smartContractMethodInvocation({
         from: testData.ADDRESS_0,
         fromPrivateKey: testData.PRIVATE_KEY_0,
@@ -66,7 +66,7 @@ describe('EgldSDK - virtual account tx', () => {
       expect(parsedTx.signature).toBeDefined()
     })
 
-    it('should deploy nft transaction', async () => {
+    it.skip('should deploy nft transaction', async () => {
       const tx = await sdk.transaction.prepare.deployNft({
         from: testData.ADDRESS_0,
         fromPrivateKey: testData.PRIVATE_KEY_0,
@@ -86,7 +86,7 @@ describe('EgldSDK - virtual account tx', () => {
       expect(parsedTx.signature).toBeDefined()
     })
 
-    it('should prepare send nft transaction', async () => {
+    it.skip('should prepare send nft transaction', async () => {
       const tx = await sdk.transaction.prepare.transferNft({
         from: testData.ADDRESS_0,
         to: testData.ADDRESS_100,

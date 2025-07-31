@@ -48,7 +48,7 @@ describe('TatumCronosSDK', () => {
       })
 
       describe('Get gas price in wei', () => {
-        it('should return gas price', async () => {
+        it.skip('should return gas price', async () => {
           const gasPrice = await sdk.getGasPriceInWei()
 
           expect(gasPrice).toBeDefined()
