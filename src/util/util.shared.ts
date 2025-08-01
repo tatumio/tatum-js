@@ -83,6 +83,7 @@ import {
   Klaytn,
   Kucoin,
   Litecoin,
+  Monad,
   Oasis,
   Optimism,
   Palm,
@@ -908,6 +909,8 @@ export const Utils = {
       case Network.UNICHAIN_MAINNET:
       case Network.UNICHAIN_SEPOLIA:
         return new Unichain(id) as T
+      case Network.MONAD_TESTNET:
+        return new Monad(id) as T        
       case Network.KADENA:
       case Network.KADENA_TESTNET:
         return new Kadena(id) as T
