@@ -123,6 +123,7 @@ export enum Network {
   SONIC_BLAZE = 'sonic-blaze',
   KAIA_KAIROS = 'kaia-kairos',
   UNICHAIN_SEPOLIA = 'unichain-sepolia',
+  MONAD_TESTNET = 'monad-testnet',
 }
 
 export const EVM_BASED_NETWORKS = [
@@ -186,6 +187,7 @@ export const EVM_BASED_NETWORKS = [
   Network.BERACHAIN_MAINNET,
   Network.UNICHAIN_MAINNET,
   Network.UNICHAIN_SEPOLIA,
+  Network.MONAD_TESTNET,
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -483,6 +485,12 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     testnet: true,
     defaultTestnet: true,
     chainId: 1301,
+  },
+    [Network.MONAD_TESTNET]: {
+    currency: Currency.MON,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 10143,
   },
   [Network.ETHEREUM_SEPOLIA]: {
     currency: Currency.ETH,
