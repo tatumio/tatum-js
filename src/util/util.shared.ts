@@ -575,6 +575,10 @@ export const Utils = {
         return Network.AVALANCHE_C
       case AddressEventNotificationChain.BERA:
         return Network.BERACHAIN_MAINNET
+      case AddressEventNotificationChain.MON:
+        return Network.MONAD_TESTNET
+      case AddressEventNotificationChain.UNI:
+        return Network.UNICHAIN_MAINNET
       default:
         throw new Error(`Chain ${chain} is not supported.`)
     }
@@ -648,6 +652,10 @@ export const Utils = {
         return AddressEventNotificationChain.OPTIMISM
       case Network.BERACHAIN_MAINNET:
         return AddressEventNotificationChain.BERA
+      case Network.MONAD_TESTNET:
+        return AddressEventNotificationChain.MON
+      case Network.UNICHAIN_MAINNET:
+        return AddressEventNotificationChain.UNI
       default:
         throw new Error(`Network ${network} is not supported.`)
     }
@@ -910,7 +918,7 @@ export const Utils = {
       case Network.UNICHAIN_SEPOLIA:
         return new Unichain(id) as T
       case Network.MONAD_TESTNET:
-        return new Monad(id) as T        
+        return new Monad(id) as T
       case Network.KADENA:
       case Network.KADENA_TESTNET:
         return new Kadena(id) as T
