@@ -22,5 +22,5 @@ export enum AddressEventNotificationChain {
   OPTIMISM = 'OPTIMISM',
   BERA = 'BERA',
   MON = 'MON',
-  UNI = 'UNI',
+  UNI = 'ETH_UNI',
 }

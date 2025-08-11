@@ -57,7 +57,7 @@ export enum Currency {
   S = 'S',
   KAIA = 'KAIA',
   BERA = 'BERA',
-  UNI = 'UNI',
+  ETH_UNI = 'ETH_UNI',
   MON = 'MON',
 }
 

@@ -475,18 +475,18 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     defaultMainnet: true,
   },
   [Network.UNICHAIN_MAINNET]: {
-    currency: Currency.UNI,
+    currency: Currency.ETH_UNI,
     testnet: false,
     defaultMainnet: true,
     chainId: 130,
   },
   [Network.UNICHAIN_SEPOLIA]: {
-    currency: Currency.UNI,
+    currency: Currency.ETH_UNI,
     testnet: true,
     defaultTestnet: true,
     chainId: 1301,
   },
-    [Network.MONAD_TESTNET]: {
+  [Network.MONAD_TESTNET]: {
     currency: Currency.MON,
     testnet: true,
     defaultTestnet: true,
