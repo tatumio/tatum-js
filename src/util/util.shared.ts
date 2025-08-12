@@ -569,10 +569,18 @@ export const Utils = {
         return Network.CHILIZ
       case AddressEventNotificationChain.FLR:
         return Network.FLARE
+      case AddressEventNotificationChain.CRO:
+        return Network.CRONOS
       case AddressEventNotificationChain.BASE:
         return Network.BASE
       case AddressEventNotificationChain.AVAX:
         return Network.AVALANCHE_C
+      case AddressEventNotificationChain.FTM:
+        return Network.FANTOM
+      case AddressEventNotificationChain.OP:
+        return Network.OPTIMISM
+      case AddressEventNotificationChain.ARB:
+        return Network.ARBITRUM_ONE
       case AddressEventNotificationChain.BERA:
         return Network.BERACHAIN_MAINNET
       case AddressEventNotificationChain.MON:
@@ -649,7 +657,9 @@ export const Utils = {
         return AddressEventNotificationChain.FTM
       case Network.OPTIMISM:
       case Network.OPTIMISM_TESTNET:
-        return AddressEventNotificationChain.OPTIMISM
+        return AddressEventNotificationChain.OP
+      case Network.ARBITRUM_ONE:
+        return AddressEventNotificationChain.ARB
       case Network.BERACHAIN_MAINNET:
         return AddressEventNotificationChain.BERA
       case Network.MONAD_TESTNET:

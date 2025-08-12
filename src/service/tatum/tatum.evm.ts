@@ -51,7 +51,7 @@ export class FullEvm extends NotificationEvm {
 
 // Base class for all EVM based chains
 export class ArbitrumNova extends BaseEvm {}
-export class ArbitrumOne extends BaseEvm {}
+export class ArbitrumOne extends NotificationEvm {}
 export class Aurora extends BaseEvm {}
 export class AvalancheC extends NotificationEvm {}
 export class Cronos extends NotificationEvm {}

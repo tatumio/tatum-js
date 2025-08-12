@@ -261,8 +261,8 @@ export const Constant = {
     [Network.SONIC_MAINNET]: 'SONIC',
     [Network.SONIC_BLAZE]: 'SONIC',
     [Network.BERACHAIN_MAINNET]: 'BERA',
-    [Network.UNICHAIN_MAINNET]: 'ETH_UNI',
-    [Network.UNICHAIN_SEPOLIA]: 'ETH_UNI',
+    [Network.UNICHAIN_MAINNET]: 'UNI',
+    [Network.UNICHAIN_SEPOLIA]: 'UNI',
     [Network.MONAD_TESTNET]: 'MON',
   },
   RPC: {
