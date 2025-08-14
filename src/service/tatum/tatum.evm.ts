@@ -51,7 +51,7 @@ export class FullEvm extends NotificationEvm {
 
 // Base class for all EVM based chains
 export class ArbitrumNova extends BaseEvm {}
-export class ArbitrumOne extends BaseEvm {}
+export class ArbitrumOne extends NotificationEvm {}
 export class Aurora extends BaseEvm {}
 export class AvalancheC extends NotificationEvm {}
 export class Cronos extends NotificationEvm {}
@@ -70,8 +70,8 @@ export class Ronin extends BaseEvm {}
 export class Sonic extends BaseEvm {}
 export class Kaia extends BaseEvm {}
 export class Berachain extends NotificationEvm {}
-export class Unichain extends BaseEvm {}
-export class Monad extends BaseEvm {}
+export class Unichain extends NotificationEvm {}
+export class Monad extends NotificationEvm {}
 export class Base extends NotificationEvm {}
 export class Flare extends NotificationEvm {}
 export class Chiliz extends NotificationEvm {}

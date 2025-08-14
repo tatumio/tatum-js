@@ -1,3 +1,9 @@
+## [4.2.56] - 2025.8.14
+
+### Added
+
+- Added support for monad testnet and unichain mainnet subscriptions
+
 ## [4.2.55] - 2025.8.1
 
 ### Added

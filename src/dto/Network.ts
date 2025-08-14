@@ -475,18 +475,18 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     defaultMainnet: true,
   },
   [Network.UNICHAIN_MAINNET]: {
-    currency: Currency.UNI,
+    currency: Currency.ETH_UNI,
     testnet: false,
     defaultMainnet: true,
     chainId: 130,
   },
   [Network.UNICHAIN_SEPOLIA]: {
-    currency: Currency.UNI,
+    currency: Currency.ETH_UNI,
     testnet: true,
     defaultTestnet: true,
     chainId: 1301,
   },
-    [Network.MONAD_TESTNET]: {
+  [Network.MONAD_TESTNET]: {
     currency: Currency.MON,
     testnet: true,
     defaultTestnet: true,
@@ -773,30 +773,30 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     chainId: 4002,
   },
   [Network.ARBITRUM_NOVA]: {
-    currency: Currency.ARB,
+    currency: Currency.ETH_ARB,
     testnet: false,
     defaultMainnet: true,
     chainId: 42170,
   },
   [Network.ARBITRUM_NOVA_TESTNET]: {
-    currency: Currency.ARB,
+    currency: Currency.ETH_ARB,
     testnet: true,
     defaultTestnet: true,
     chainId: 421614,
   },
   [Network.ARBITRUM_ONE]: {
-    currency: Currency.ARB,
+    currency: Currency.ETH_ARB,
     testnet: false,
     chainId: 42161,
   },
   [Network.OPTIMISM]: {
-    currency: Currency.OP,
+    currency: Currency.ETH_OP,
     testnet: false,
     defaultMainnet: true,
     chainId: 10,
   },
   [Network.OPTIMISM_TESTNET]: {
-    currency: Currency.OP,
+    currency: Currency.ETH_OP,
     testnet: true,
     defaultTestnet: true,
   },
@@ -987,12 +987,12 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     chainId: 0,
   },
   [Network.BASE]: {
-    currency: Currency.BASE,
+    currency: Currency.ETH_BASE,
     testnet: false,
     chainId: 8453,
   },
   [Network.BASE_SEPOLIA]: {
-    currency: Currency.BASE,
+    currency: Currency.ETH_BASE,
     defaultTestnet: true,
     testnet: true,
     chainId: 84532,
