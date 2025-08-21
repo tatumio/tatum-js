@@ -1,3 +1,9 @@
+## [4.2.57] - 2025.8.25
+
+### Removed
+
+- Removed support for cronos testnet subscriptions
+
 ## [4.2.56] - 2025.8.14
 
 ### Added
