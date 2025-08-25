@@ -644,7 +644,6 @@ export const Utils = {
       case Network.FLARE_SONGBIRD:
         return AddressEventNotificationChain.FLR
       case Network.CRONOS:
-      case Network.CRONOS_TESTNET:
         return AddressEventNotificationChain.CRO
       case Network.BASE:
       case Network.BASE_SEPOLIA:
