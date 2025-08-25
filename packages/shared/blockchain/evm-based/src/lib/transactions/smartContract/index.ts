@@ -14,12 +14,14 @@ export const smartContractWriteMethodInvocation = async ({
   provider,
   chain,
   addressTransformer = (address: string) => address,
+  testnet,
 }: {
   body: ChainSmartContractMethodInvocation
   web3: EvmBasedWeb3
   provider?: string
   chain?: GasPumpChain
   addressTransformer?: AddressTransformer
+  testnet?: boolean
 }) => {
   const { fromPrivateKey, fee, params, methodName, methodABI, nonce, amount, signatureId } = body
   const contractAddress = addressTransformer(body.contractAddress?.trim())
@@ -44,6 +46,8 @@ export const smartContractWriteMethodInvocation = async ({
     fee?.gasLimit,
     fee?.gasPrice,
     provider,
+    chain,
+    testnet,
   )
 }
 
