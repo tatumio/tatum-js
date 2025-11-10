@@ -37,7 +37,6 @@ export const e2eUtil = {
     getAddress: (network: Network): string => {
       switch (network) {
         case Network.ETHEREUM_SEPOLIA:
-        case Network.ETHEREUM_HOLESKY:
         case Network.ETHEREUM_HOODI:
         case Network.FLARE:
         case Network.FLARE_COSTON:

@@ -28,7 +28,6 @@ describe('Network Utils', () => {
     it.each([
       [Network.ETHEREUM, false],
       [Network.ETHEREUM_SEPOLIA, false],
-      [Network.ETHEREUM_HOLESKY, true],
       [Network.ETHEREUM_HOODI, true],
       [Network.CELO, false],
       [Network.CELO_ALFAJORES, false],

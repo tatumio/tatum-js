@@ -5,6 +5,10 @@
 - Added mocachain
 - Added support for mocachain mainnet subscriptions
 
+### Removed
+
+- Removed support for ethereum-holesky (testnet shutdown)
+
 ## [4.2.57] - 2025.8.25
 
 ### Removed

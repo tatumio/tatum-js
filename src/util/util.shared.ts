@@ -83,8 +83,8 @@ import {
   Klaytn,
   Kucoin,
   Litecoin,
-  Monad,
   Moca,
+  Monad,
   Oasis,
   Optimism,
   Palm,
@@ -609,7 +609,6 @@ export const Utils = {
         return AddressEventNotificationChain.DOGE
       case Network.ETHEREUM:
       case Network.ETHEREUM_SEPOLIA:
-      case Network.ETHEREUM_HOLESKY:
       case Network.ETHEREUM_HOODI:
         return AddressEventNotificationChain.ETH
       case Network.POLYGON:
@@ -664,7 +663,7 @@ export const Utils = {
         return AddressEventNotificationChain.BERA
       case Network.MONAD_TESTNET:
         return AddressEventNotificationChain.MON
-      case Network.MOCACHAIN_DEVNET: 
+      case Network.MOCACHAIN_DEVNET:
         return AddressEventNotificationChain.MOCA
       case Network.UNICHAIN_MAINNET:
         return AddressEventNotificationChain.UNI
@@ -808,7 +807,6 @@ export const Utils = {
         return new ZCash(id) as T
       case Network.ETHEREUM:
       case Network.ETHEREUM_SEPOLIA:
-      case Network.ETHEREUM_HOLESKY:
       case Network.ETHEREUM_HOODI:
         return new Ethereum(id) as T
       case Network.ETHEREUM_CLASSIC:

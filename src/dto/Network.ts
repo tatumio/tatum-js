@@ -81,7 +81,6 @@ export enum Network {
   CRONOS_TESTNET = 'cro-testnet',
   DOGECOIN_TESTNET = 'doge-testnet',
   ETHEREUM_SEPOLIA = 'ethereum-sepolia',
-  ETHEREUM_HOLESKY = 'ethereum-holesky',
   ETHEREUM_HOODI = 'ethereum-hoodi',
   EOS_TESTNET = 'eos-testnet',
   FANTOM_TESTNET = 'fantom-testnet',
@@ -131,7 +130,6 @@ export const EVM_BASED_NETWORKS = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
   Network.ETHEREUM_CLASSIC,
-  Network.ETHEREUM_HOLESKY,
   Network.ETHEREUM_HOODI,
   Network.AVALANCHE_C,
   Network.AVALANCHE_C_TESTNET,
@@ -255,7 +253,6 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.HAQQ_TESTNET,
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
-  Network.ETHEREUM_HOLESKY,
   Network.ETHEREUM_HOODI,
   Network.POLYGON,
   Network.POLYGON_AMOY,
@@ -329,7 +326,6 @@ export const LOAD_BALANCER_NETWORKS = [
 export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
-  Network.ETHEREUM_HOLESKY,
   Network.ETHEREUM_HOODI,
   Network.HAQQ,
   Network.HAQQ_TESTNET,
@@ -341,7 +337,6 @@ export const EVM_ARCHIVE_NON_ARCHIVE_LOAD_BALANCER_NETWORKS = [
 export const EVM_ARCHIVE_NON_ARCHIVE_BEACON_LOAD_BALANCER_NETWORKS = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
-  Network.ETHEREUM_HOLESKY,
   Network.ETHEREUM_HOODI,
 ]
 
@@ -505,11 +500,6 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     testnet: true,
     defaultTestnet: true,
     chainId: 11155111,
-  },
-  [Network.ETHEREUM_HOLESKY]: {
-    currency: Currency.ETH,
-    testnet: true,
-    chainId: 17000,
   },
   [Network.ETHEREUM_HOODI]: {
     currency: Currency.ETH,
