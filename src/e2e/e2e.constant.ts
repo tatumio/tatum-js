@@ -59,6 +59,7 @@ export const AddressEventNetworks = [
   Network.BERACHAIN_MAINNET,
   Network.MONAD_TESTNET,
   Network.UNICHAIN_MAINNET,
+  Network.MOCACHAIN_DEVNET,
 ]
 
 export const IncomingNativeTxNetworks = [
@@ -105,6 +106,7 @@ export const IncomingNativeTxNetworks = [
   Network.BERACHAIN_MAINNET,
   Network.MONAD_TESTNET,
   Network.UNICHAIN_MAINNET,
+  Network.MOCACHAIN_DEVNET,
 ]
 
 export const OutgoingNativeTxNetworks = [
@@ -149,6 +151,7 @@ export const OutgoingNativeTxNetworks = [
   Network.BERACHAIN_MAINNET,
   Network.MONAD_TESTNET,
   Network.UNICHAIN_MAINNET,
+  Network.MOCACHAIN_DEVNET,
 ]
 
 export const OutgoingFailedNetworks = [
@@ -181,6 +184,7 @@ export const OutgoingFailedNetworks = [
   Network.BERACHAIN_MAINNET,
   Network.MONAD_TESTNET,
   Network.UNICHAIN_MAINNET,
+  Network.MOCACHAIN_DEVNET,
 ]
 
 export const PaidFeeNetworks = [
@@ -217,6 +221,7 @@ export const PaidFeeNetworks = [
   Network.BERACHAIN_MAINNET,
   Network.MONAD_TESTNET,
   Network.UNICHAIN_MAINNET,
+  Network.MOCACHAIN_DEVNET,
 ]
 
 export const FungibleTxNetworks = [
@@ -253,6 +258,7 @@ export const FungibleTxNetworks = [
   Network.BERACHAIN_MAINNET,
   Network.MONAD_TESTNET,
   Network.UNICHAIN_MAINNET,
+  Network.MOCACHAIN_DEVNET,
 ]
 
 export const NftNetworks = [
@@ -289,6 +295,7 @@ export const NftNetworks = [
   Network.BERACHAIN_MAINNET,
   Network.MONAD_TESTNET,
   Network.UNICHAIN_MAINNET,
+  Network.MOCACHAIN_DEVNET,
 ]
 
 export const MultitokenNetworks = [
@@ -320,6 +327,7 @@ export const MultitokenNetworks = [
   Network.BERACHAIN_MAINNET,
   Network.MONAD_TESTNET,
   Network.UNICHAIN_MAINNET,
+  Network.MOCACHAIN_DEVNET,
 ]
 
 export const FailedTxPerBlockNetworks = [
@@ -356,6 +364,7 @@ export const FailedTxPerBlockNetworks = [
   Network.BERACHAIN_MAINNET,
   Network.MONAD_TESTNET,
   Network.UNICHAIN_MAINNET,
+  Network.MOCACHAIN_DEVNET,
 ]
 
 export const ContractAddressLogEventNetworks = [
@@ -382,6 +391,7 @@ export const ContractAddressLogEventNetworks = [
   Network.BERACHAIN_MAINNET,
   Network.MONAD_TESTNET,
   Network.UNICHAIN_MAINNET,
+  Network.MOCACHAIN_DEVNET,
 ]
 
 export const InternalTxNetworks = [
@@ -403,4 +413,5 @@ export const InternalTxNetworks = [
   Network.BERACHAIN_MAINNET,
   Network.MONAD_TESTNET,
   Network.UNICHAIN_MAINNET,
+  Network.MOCACHAIN_DEVNET,
 ]

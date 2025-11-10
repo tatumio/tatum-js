@@ -26,4 +26,5 @@ export enum AddressEventNotificationChain {
   BERA = Currency.BERA,
   MON = Currency.MON,
   UNI = Currency.ETH_UNI,
+  MOCA = Currency.MOCA,
 }

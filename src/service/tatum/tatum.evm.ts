@@ -72,6 +72,7 @@ export class Kaia extends BaseEvm {}
 export class Berachain extends NotificationEvm {}
 export class Unichain extends NotificationEvm {}
 export class Monad extends NotificationEvm {}
+export class Moca extends NotificationEvm {}
 export class Base extends NotificationEvm {}
 export class Flare extends NotificationEvm {}
 export class Chiliz extends NotificationEvm {}

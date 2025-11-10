@@ -1,3 +1,10 @@
+## [4.2.58] - 2025.11.10
+
+### Added
+
+- Added mocachain
+- Added support for mocachain mainnet subscriptions
+
 ## [4.2.57] - 2025.8.25
 
 ### Removed
