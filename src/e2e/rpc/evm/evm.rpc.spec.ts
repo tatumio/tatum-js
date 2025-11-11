@@ -25,6 +25,7 @@ const testNetworks = [
   { network: Network.FLARE_COSTON_2 },
   { network: Network.ETHEREUM },
   { network: Network.ETHEREUM_SEPOLIA },
+  { network: Network.ETHEREUM_HOLESKY },
   { network: Network.ETHEREUM_HOODI },
   // { network: Network.FANTOM },
   // { network: Network.FANTOM_TESTNET, apiKey: process.env.V3_API_KEY_TESTNET },
