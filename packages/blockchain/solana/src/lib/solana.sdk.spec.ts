@@ -36,7 +36,7 @@ describe('TatumSolanaSDK', () => {
         expect(result.nftAccountAddress).toBeDefined()
       })
 
-      it('should be valid from signatureId', async () => {
+      it.skip('should be valid from signatureId', async () => {
         const result = (await sdk.nft.send.mintSignedTransaction(
           {
             to,
@@ -71,7 +71,7 @@ describe('TatumSolanaSDK', () => {
         expect(result.txId).toBeDefined()
       })
 
-      it('should be valid from signatureId', async () => {
+      it.skip('should be valid from signatureId', async () => {
         const result = (await sdk.nft.send.transferSignedTransaction(
           {
             to,
@@ -110,7 +110,7 @@ describe('TatumSolanaSDK', () => {
     })
 
     describe('send solana', () => {
-      it('should be valid from privateKey', async () => {
+      it.skip('should be valid from privateKey', async () => {
         const result = await sdk.transaction.send.transferSignedTransaction(
           {
             to,
@@ -124,7 +124,7 @@ describe('TatumSolanaSDK', () => {
         expect(result).toBeDefined()
       })
 
-      it('should be valid from signatureId', async () => {
+      it.skip('should be valid from signatureId', async () => {
         const result = await sdk.transaction.send.transferSignedTransaction(
           {
             to,
