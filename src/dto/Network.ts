@@ -124,6 +124,7 @@ export enum Network {
   KAIA_KAIROS = 'kaia-kairos',
   UNICHAIN_SEPOLIA = 'unichain-sepolia',
   MONAD_TESTNET = 'monad-testnet',
+  MOCACHAIN_DEVNET = 'mocachain-devnet',
 }
 
 export const EVM_BASED_NETWORKS = [
@@ -188,6 +189,7 @@ export const EVM_BASED_NETWORKS = [
   Network.UNICHAIN_MAINNET,
   Network.UNICHAIN_SEPOLIA,
   Network.MONAD_TESTNET,
+  Network.MOCACHAIN_DEVNET,
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -473,6 +475,12 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     currency: Currency.BERA,
     testnet: false,
     defaultMainnet: true,
+  },
+  [Network.MOCACHAIN_DEVNET]: {
+    currency: Currency.MOCA,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 5151,
   },
   [Network.UNICHAIN_MAINNET]: {
     currency: Currency.ETH_UNI,

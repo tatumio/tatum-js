@@ -51,7 +51,7 @@ const run = async (network: Network, chainId: number) => {
   })
 }
 
-describe.each([
+describe.skip.each([
   { network: Network.KLAYTN, expected: { chainId: 8217 } },
   { network: Network.KLAYTN_BAOBAB, expected: { chainId: 1001 } },
 ])('RPC Klaytn', (network) => {

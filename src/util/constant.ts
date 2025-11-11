@@ -142,6 +142,7 @@ export const Constant = {
     [Network.UNICHAIN_MAINNET]: 18,
     [Network.UNICHAIN_SEPOLIA]: 18,
     [Network.MONAD_TESTNET]: 18,
+    [Network.MOCACHAIN_DEVNET]: 18,
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -264,6 +265,7 @@ export const Constant = {
     [Network.UNICHAIN_MAINNET]: 'UNI',
     [Network.UNICHAIN_SEPOLIA]: 'UNI',
     [Network.MONAD_TESTNET]: 'MON',
+    [Network.MOCACHAIN_DEVNET]: 'MOCA',
   },
   RPC: {
     MAINNETS: [

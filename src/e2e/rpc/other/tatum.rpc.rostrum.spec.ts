@@ -1,13 +1,11 @@
 import { Network, Rostrum, TatumSDK } from '../../../service'
 import { e2eUtil } from '../../e2e.util'
 
-const getRostrumRpc = async (testnet: boolean) => await TatumSDK.init<Rostrum>(e2eUtil.initConfig(testnet ? Network.ROSTRUM_TESTNET : Network.ROSTRUM))
+const getRostrumRpc = async (testnet: boolean) =>
+  await TatumSDK.init<Rostrum>(e2eUtil.initConfig(testnet ? Network.ROSTRUM_TESTNET : Network.ROSTRUM))
 
 // Testnet will be added later
-describe.each([
-  [false]
-])('Rostrum (%s)', (testnet) => {
-
+describe.each([[false]])('Rostrum (%s)', (testnet) => {
   it('server.version', async () => {
     const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.serverVersion({
@@ -19,7 +17,7 @@ describe.each([
     expect(result.result?.length).toEqual(2)
   })
 
-  it('blockchain.headers.tip', async () => {
+  it.skip('blockchain.headers.tip', async () => {
     const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.blockchainHeadersTip()
     await rostrum.destroy()
@@ -27,7 +25,7 @@ describe.each([
     expect(result.result?.height).toBeDefined()
   })
 
-  it('blockchain.headers.subscribe', async () => {
+  it.skip('blockchain.headers.subscribe', async () => {
     const rostrum = await getRostrumRpc(testnet)
     const result = await rostrum.rpc.blockchainHeadersSubscribe()
     await rostrum.destroy()

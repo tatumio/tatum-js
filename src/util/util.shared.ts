@@ -84,6 +84,7 @@ import {
   Kucoin,
   Litecoin,
   Monad,
+  Moca,
   Oasis,
   Optimism,
   Palm,
@@ -663,6 +664,8 @@ export const Utils = {
         return AddressEventNotificationChain.BERA
       case Network.MONAD_TESTNET:
         return AddressEventNotificationChain.MON
+      case Network.MOCACHAIN_DEVNET: 
+        return AddressEventNotificationChain.MOCA
       case Network.UNICHAIN_MAINNET:
         return AddressEventNotificationChain.UNI
       default:
@@ -928,6 +931,8 @@ export const Utils = {
         return new Unichain(id) as T
       case Network.MONAD_TESTNET:
         return new Monad(id) as T
+      case Network.MOCACHAIN_DEVNET:
+        return new Moca(id) as T
       case Network.KADENA:
       case Network.KADENA_TESTNET:
         return new Kadena(id) as T

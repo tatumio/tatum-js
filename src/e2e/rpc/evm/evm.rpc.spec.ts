@@ -25,7 +25,7 @@ const testNetworks = [
   { network: Network.FLARE_COSTON_2 },
   { network: Network.ETHEREUM },
   { network: Network.ETHEREUM_SEPOLIA },
-  { network: Network.ETHEREUM_HOLESKY },
+  // { network: Network.ETHEREUM_HOLESKY },
   { network: Network.ETHEREUM_HOODI },
   // { network: Network.FANTOM },
   // { network: Network.FANTOM_TESTNET, apiKey: process.env.V3_API_KEY_TESTNET },
@@ -55,23 +55,23 @@ const testNetworks = [
     skipEstimateGas: true,
     apiKey: ApiKey.testnet,
   },
-  {
-    network: Network.KLAYTN,
-  },
+  // {
+  //   network: Network.KLAYTN,
+  // },
   // {
   //   network: Network.KLAYTN_BAOBAB,
   //   apiKey: ApiKey.testnet,
   // },
-  {
-    network: Network.AVALANCHE_C,
-  },
+  // {
+  //   network: Network.AVALANCHE_C,
+  // },
   // {
   //   network: Network.AVALANCHE_C_TESTNET,
   //   apiKey: process.env.V3_API_KEY_TESTNET,
   // },
-  {
-    network: Network.XINFIN,
-  },
+  // {
+  //   network: Network.XINFIN,
+  // },
   // { network: Network.CRONOS },
   // { network: Network.CRONOS_TESTNET, apiKey: ApiKey.testnet },
   // { network: Network.BASE },

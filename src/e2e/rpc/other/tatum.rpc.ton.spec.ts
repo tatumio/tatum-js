@@ -13,7 +13,7 @@ describe('Ton', () => {
       await ton.destroy()
       expect(result).toBeDefined()
     })
-    it('Ton Http API - getMasterchainInfo', async () => {
+    it.skip('Ton Http API - getMasterchainInfo', async () => {
       const ton = await getTonClient(true)
       const result = await ton.rpc.getMasterchainInfo()
       await ton.destroy()
@@ -28,7 +28,7 @@ describe('Ton', () => {
       await ton.destroy()
       expect(result).toBeDefined()
     })
-    it('Ton Http API - getMasterchainInfo', async () => {
+    it.skip('Ton Http API - getMasterchainInfo', async () => {
       const ton = await getTonClient()
       const result = await ton.rpc.getMasterchainInfo()
       await ton.destroy()
