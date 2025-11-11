@@ -470,8 +470,8 @@ This section provides a list of various blockchain network status pages, powered
 | [ripple-mainnet.status.tatum.io](https://ripple-mainnet.status.tatum.io)                                     |
 | [ripple-testnet.status.tatum.io](https://ripple-testnet.status.tatum.io)                                     |
 | [bitcoin-cash-mainnet.status.tatum.io](https://bitcoin-cash-mainnet.status.tatum.io)                         |
-| [klaytn-mainnet.status.tatum.io](https://klaytn-mainnet.status.tatum.io)                                     |
-| [klaytn-mainnet-archive.status.tatum.io](https://klaytn-mainnet-archive.status.tatum.io)                     |
+| [kaia-mainnet.status.tatum.io](https://kaia-mainnet.status.tatum.io)                                         |
+| [kaia-mainnet-archive.status.tatum.io](https://kaia-mainnet-archive.status.tatum.io)                         |
 | [klaytn-baobab.status.tatum.io](https://klaytn-baobab.status.tatum.io)                                       |
 | [klaytn-baobab-archive.status.tatum.io](https://klaytn-baobab-archive.status.tatum.io)                       |
 | [avalanche-c-mainnet-archive.status.tatum.io](https://avalanche-c-mainnet-archive.status.tatum.io)           |
@@ -587,8 +587,8 @@ Here are the list of nodes for each blockchain:
 | [rpc.tatum.io/zcash-mainnet/list.json](https://rpc.tatum.io/zcash-mainnet/list.json)                                       |
 | [rpc.tatum.io/ripple-mainnet/list.json](https://rpc.tatum.io/ripple-mainnet/list.json)                                     |
 | [rpc.tatum.io/ripple-testnet/list.json](https://rpc.tatum.io/ripple-testnet/list.json)                                     |
-| [rpc.tatum.io/klaytn-mainnet/list.json](https://rpc.tatum.io/klaytn-mainnet/list.json)                                     |
-| [rpc.tatum.io/klaytn-mainnet-archive/list.json](https://rpc.tatum.io/klaytn-mainnet-archive/list.json)                     |
+| [rpc.tatum.io/kaia-mainnet/list.json](https://rpc.tatum.io/kaia-mainnet/list.json)                                         |
+| [rpc.tatum.io/kaia-mainnet-archive/list.json](https://rpc.tatum.io/kaia-mainnet-archive/list.json)                         |
 | [rpc.tatum.io/klaytn-baobab/list.json](https://rpc.tatum.io/klaytn-baobab/list.json)                                       |
 | [rpc.tatum.io/klaytn-baobab-archive/list.json](https://rpc.tatum.io/klaytn-baobab-archive/list.json)                       |
 | [rpc.tatum.io/bitcoin-cash-mainnet/list.json](https://rpc.tatum.io/bitcoin-cash-mainnet/list.json)                         |

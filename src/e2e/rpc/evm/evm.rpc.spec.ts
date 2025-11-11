@@ -54,23 +54,23 @@ const testNetworks = [
     skipEstimateGas: true,
     apiKey: ApiKey.testnet,
   },
-  {
-    network: Network.KLAYTN,
-  },
+  // {
+  //   network: Network.KLAYTN,
+  // },
   // {
   //   network: Network.KLAYTN_BAOBAB,
   //   apiKey: ApiKey.testnet,
   // },
-  {
-    network: Network.AVALANCHE_C,
-  },
+  // {
+  //   network: Network.AVALANCHE_C,
+  // },
   // {
   //   network: Network.AVALANCHE_C_TESTNET,
   //   apiKey: process.env.V3_API_KEY_TESTNET,
   // },
-  {
-    network: Network.XINFIN,
-  },
+  // {
+  //   network: Network.XINFIN,
+  // },
   // { network: Network.CRONOS },
   // { network: Network.CRONOS_TESTNET, apiKey: ApiKey.testnet },
   // { network: Network.BASE },
