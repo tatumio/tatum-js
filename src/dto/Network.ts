@@ -7,7 +7,7 @@ export enum Network {
   ARBITRUM_NOVA = 'arb-nova-mainnet',
   ARBITRUM_ONE = 'arbitrum-one-mainnet',
   AURORA = 'aurora-mainnet',
-  AVALANCHE_C = 'avax-mainnet',
+  AVALANCHE_C = 'avalanche-c-mainnet',
   AVALANCHE_P = 'avax-p-mainnet',
   AVALANCHE_X = 'avax-x-mainnet',
   BASE = 'base-mainnet',
