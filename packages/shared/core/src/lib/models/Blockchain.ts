@@ -42,6 +42,7 @@ export enum Blockchain {
   SUI = 'SUI',
   UNI = 'UNI',
   MONAD = 'MONAD',
+  MOCA = 'MOCA',
 }
 
 export const EvmBasedBlockchains = [
@@ -63,6 +64,7 @@ export const EvmBasedBlockchains = [
   Blockchain.BERA,
   Blockchain.UNI,
   Blockchain.MONAD,
+  Blockchain.MOCA,
 ]
 
 // @TODO tmp solution
@@ -92,3 +94,4 @@ export type EvmBasedBlockchain =
   | Blockchain.S
   | Blockchain.UNI
   | Blockchain.MONAD
+  | Blockchain.MOCA
