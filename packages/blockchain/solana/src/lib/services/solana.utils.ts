@@ -113,10 +113,7 @@ export const solanaUtils = {
     const txId = await connection.sendTransaction(transaction, signers)
     let confirmedTx
     for (let attempt = 1; attempt <= attempts; attempt++) {
-      confirmedTx = await connection.getTransaction(txId, {
-        commitment: 'confirmed',
-        maxSupportedTransactionVersion: 0,
-      })
+      confirmedTx = await connection.getTransaction(txId, { commitment: 'confirmed' })
       if (confirmedTx && !confirmedTx.meta?.err) {
         return { txId }
       }
