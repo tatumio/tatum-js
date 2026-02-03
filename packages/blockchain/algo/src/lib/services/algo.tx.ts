@@ -75,7 +75,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
     const decoder = new base32.Decoder({ type: 'rfc4648' })
     const from = isWithSignatureId(body)
       ? body.from
-      : algoWallet().generateAddressFromPrivatetKey(body.fromPrivateKey)
+      : algoWallet().generateAddressFromPrivateKey(body.fromPrivateKey)
     const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
       from,
       from,
@@ -474,7 +474,7 @@ export const algoTxService = (args: { algoWeb: AlgoWeb }, apiCalls: AlgoApiCalls
           const vc = await ApiServices.ledger.virtualCurrency.getCurrency(account.currency)
           txData = await prepareTransferFTSignedTransaction({
             body: {
-              from: algoWallet().generateAddressFromPrivatetKey(privateKey),
+              from: algoWallet().generateAddressFromPrivateKey(privateKey),
               fromPrivateKey: privateKey,
               to: body.address,
               amount: body.amount,

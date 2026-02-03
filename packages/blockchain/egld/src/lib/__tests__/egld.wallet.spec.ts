@@ -1,5 +1,6 @@
 import { REPLACE_ME_WITH_TATUM_API_KEY, TEST_DATA } from '@tatumio/shared-testing-common'
 import { TatumEgldSDK } from '../egld.sdk'
+import { egldWallet } from '../services/egld.wallet'
 
 // Too unstable
 describe.skip('EgldSDK - tx', () => {
@@ -31,5 +32,33 @@ describe.skip('EgldSDK - tx', () => {
 
       expect(address).toBe('erd1ej4y5ygndu76vcvfzrv4h3vnrwy30gze0mtv4psv90awp7z08l2sqlc7fl')
     })
+  })
+})
+
+describe('egldWallet - generateAddressFromXPub', () => {
+  const wallet = egldWallet()
+
+  it('should generate same address as generateAddress (testnet)', async () => {
+    const addressFromXPub = await wallet.generateAddressFromXPub(TEST_DATA.MNEMONIC, 3, true)
+    const addressFromGenerate = await wallet.generateAddress(true, TEST_DATA.MNEMONIC, 3)
+
+    expect(addressFromXPub).toBe(addressFromGenerate)
+    expect(addressFromXPub).toBe('erd1ej4y5ygndu76vcvfzrv4h3vnrwy30gze0mtv4psv90awp7z08l2sqlc7fl')
+  })
+
+  it('should generate same address as generateAddress (mainnet)', async () => {
+    const addressFromXPub = await wallet.generateAddressFromXPub(TEST_DATA.MNEMONIC, 0, false)
+    const addressFromGenerate = await wallet.generateAddress(false, TEST_DATA.MNEMONIC, 0)
+
+    expect(addressFromXPub).toBe(addressFromGenerate)
+  })
+
+  it('should generate same address for multiple derivation indices', async () => {
+    for (const i of [0, 1, 2, 5, 10]) {
+      const addressFromXPub = await wallet.generateAddressFromXPub(TEST_DATA.MNEMONIC, i, true)
+      const addressFromGenerate = await wallet.generateAddress(true, TEST_DATA.MNEMONIC, i)
+
+      expect(addressFromXPub).toBe(addressFromGenerate)
+    }
   })
 })

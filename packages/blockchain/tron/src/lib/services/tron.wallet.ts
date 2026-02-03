@@ -2,7 +2,7 @@ import { TronWallet, Wallet } from '@tatumio/api-client'
 import { Blockchain, DERIVATION_PATH } from '@tatumio/shared-core'
 import { BIP32Interface, fromBase58, fromPublicKey, fromSeed } from 'bip32'
 import { generateMnemonic, mnemonicToSeed } from 'bip39'
-import { generateAddress, isBase58 } from './tron.utils'
+import { convertAddressFromHex, convertAddressToHex, generateAddress, isBase58 } from './tron.utils'
 
 // tronweb lib dont have any typings (not even in @types)
 // @ts-ignore
@@ -73,10 +73,12 @@ export const tronWallet = (args: { tronWeb: ITronWeb }) => {
      * @param privateKey private key to use
      * @returns blockchain private key to the address
      */
-    generateAddressFromPrivatekey(privateKey: string): string {
+    generateAddressFromPrivateKey(privateKey: string): string {
       return TronWeb.address.fromPrivateKey(privateKey)
     },
     custodial: tronCustodial(args),
     gasPump: tronGasPump(args),
+    convertAddressFromHex: convertAddressFromHex,
+    convertAddressToHex: convertAddressToHex,
   }
 }
