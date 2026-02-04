@@ -10,6 +10,6 @@ export async function algoWalletExample() {
 
   // Generate an address from the private key.
   // https://apidoc.tatum.io/tag/Algorand#operation/AlgorandGenerateAddress
-  const addressFromPrivateKey = await algoSDK.wallet.generateAddressFromPrivatetKey(secret)
+  const addressFromPrivateKey = await algoSDK.wallet.generateAddressFromPrivateKey(secret)
   console.log(`addressFromPrivateKey is ${addressFromPrivateKey}`)
 }

@@ -1,5 +1,8 @@
 import { ec as EC } from 'elliptic'
 import { keccak_256 } from 'js-sha3'
+// tronweb lib dont have any typings (not even in @types)
+// @ts-ignore
+import TronWeb from 'tronweb'
 
 const hexChar2byte = (c: string) => {
   let d = 0
@@ -95,3 +98,7 @@ export const generateAddress = (publicKey: Buffer) =>
   byteArray2hexStr(computeAddress(hexStr2byteArray(generatePubKey(publicKey))))
 
 export const isBase58 = (value: string): boolean => /^[A-HJ-NP-Za-km-z1-9]*$/.test(value)
+
+export const convertAddressFromHex = (address: string) => TronWeb.address.fromHex(address)
+
+export const convertAddressToHex = (address: string) => TronWeb.address.toHex(address)

@@ -33,7 +33,7 @@ export const prepareSignedTransaction = async ({
 
   const from = isWithSignatureId(body as TransferAlgoKMS | TransferAlgoBlockchainKMS)
     ? account
-    : algoWallet().generateAddressFromPrivatetKey(privateKey)
+    : algoWallet().generateAddressFromPrivateKey(privateKey)
 
   if ((body as TransferAlgoBlockchain).to) {
     const { balance } = await apiCalls.getBlockchainAccountBalance(from)

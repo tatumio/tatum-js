@@ -38,7 +38,7 @@ export const prepareCreateNFTSignedTransaction = async ({
 
   const from = isWithSignatureId(body)
     ? body.from
-    : algoWallet().generateAddressFromPrivatetKey(body.fromPrivateKey)
+    : algoWallet().generateAddressFromPrivateKey(body.fromPrivateKey)
 
   const decimals = (body as unknown as MintNftExpressAlgorand).attr?.decimals || 0
   const total = new BigNumber((body as unknown as MintNftExpressAlgorand).attr?.total || 1).toNumber()
@@ -91,7 +91,7 @@ export const prepareTransferNFTSignedTransaction = async ({
 
   const from = isWithSignatureId(body as TransferNftAlgoKMS)
     ? (body as TransferNftAlgoKMS).from
-    : algoWallet().generateAddressFromPrivatetKey((body as TransferNftAlgo).fromPrivateKey)
+    : algoWallet().generateAddressFromPrivateKey((body as TransferNftAlgo).fromPrivateKey)
 
   const amount = new BigNumber((body as TransferNftAlgoExpress).amount || 1).toNumber()
 
@@ -136,7 +136,7 @@ export const prepareBurnNFTSignedTransaction = async ({
   const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
     isWithSignatureId(body as BurnNftAlgoKMS)
       ? (body as BurnNftAlgoKMS).from
-      : algoWallet().generateAddressFromPrivatetKey((body as BurnNftAlgo).fromPrivateKey),
+      : algoWallet().generateAddressFromPrivateKey((body as BurnNftAlgo).fromPrivateKey),
     undefined,
     Number(body.contractAddress),
     {

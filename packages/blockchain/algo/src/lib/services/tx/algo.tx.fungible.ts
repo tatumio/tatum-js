@@ -36,7 +36,7 @@ export const prepareCreateFTSignedTransaction = async ({
 
   const from = isWithSignatureId(body as DeployAlgoErc20KMS)
     ? (body as DeployAlgoErc20KMS).from
-    : algoWallet().generateAddressFromPrivatetKey((body as DeployAlgoErc20).fromPrivateKey)
+    : algoWallet().generateAddressFromPrivateKey((body as DeployAlgoErc20).fromPrivateKey)
 
   const decimals = body.digits || 0
   /**
@@ -92,7 +92,7 @@ export const prepareTransferFTSignedTransaction = async ({
 
   const from = isWithSignatureId(body)
     ? body.from
-    : algoWallet().generateAddressFromPrivatetKey(body.fromPrivateKey)
+    : algoWallet().generateAddressFromPrivateKey(body.fromPrivateKey)
 
   const decimals = body.digits || 0
   const txn = algosdk.makeAssetTransferTxnWithSuggestedParams(
@@ -139,7 +139,7 @@ export const prepareBurnFTSignedTransaction = async ({
 
   const from = isWithSignatureId(body)
     ? body.from
-    : algoWallet().generateAddressFromPrivatetKey(body.fromPrivateKey)
+    : algoWallet().generateAddressFromPrivateKey(body.fromPrivateKey)
 
   const txn = algosdk.makeAssetDestroyTxnWithSuggestedParams(
     from,
