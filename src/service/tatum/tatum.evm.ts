@@ -66,6 +66,8 @@ export class Optimism extends NotificationEvm {}
 export class Palm extends BaseEvm {}
 export class Vechain extends BaseEvm {}
 export class XinFin extends BaseEvm {}
+export class Rsk extends BaseEvm {}
+export class Lisk extends BaseEvm {}
 export class Ronin extends BaseEvm {}
 export class Sonic extends BaseEvm {}
 export class Kaia extends BaseEvm {}

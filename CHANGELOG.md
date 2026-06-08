@@ -1,3 +1,12 @@
+## [4.2.59] - 2026.6.8
+
+### Added
+
+- Added lisk mainnet and lisk sepolia testnet
+- Added rsk mainnet and rsk testnet EVM support
+- Added ethereum classic mordor testnet
+- Fixed gnosis chiado testnet chainId (69 -> 10200)
+
 ## [4.2.58] - 2025.11.10
 
 ### Added
