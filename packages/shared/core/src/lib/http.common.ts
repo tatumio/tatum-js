@@ -45,6 +45,10 @@ const EndpointsMapping: Record<Blockchain, string> = {
   UNI: 'uni',
   MONAD: 'mon',
   MOCA: 'moca',
+  GNO: 'gno',
+  RSK: 'rsk',
+  ETC: 'etc',
+  LISK: 'lisk',
 }
 
 const isWebWorker =
