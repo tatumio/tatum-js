@@ -6,6 +6,7 @@
 - Added rsk mainnet and rsk testnet EVM support
 - Added ethereum classic mordor testnet
 - Fixed gnosis chiado testnet chainId (69 -> 10200)
+- Updated ronin saigon testnet chainId (2021 -> 202601) after Ethereum L2 migration
 
 ## [4.2.58] - 2025.11.10
 

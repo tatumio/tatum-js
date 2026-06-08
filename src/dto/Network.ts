@@ -1089,7 +1089,7 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   },
   [Network.RONIN_SAIGON]: {
     currency: Currency.RON,
-    chainId: 2021,
+    chainId: 202601,
     testnet: true,
   },
   [Network.SONIC_MAINNET]: {
