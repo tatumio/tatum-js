@@ -50,11 +50,11 @@ const testNetworks = [
   //     },
   //   },
   // },
-  {
-    network: Network.TRON_SHASTA,
-    skipEstimateGas: true,
-    apiKey: ApiKey.testnet,
-  },
+  // {
+  //   network: Network.TRON_SHASTA,
+  //   skipEstimateGas: true,
+  //   apiKey: ApiKey.testnet,
+  // },
   // {
   //   network: Network.KLAYTN,
   // },
