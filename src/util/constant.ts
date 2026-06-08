@@ -86,6 +86,7 @@ export const Constant = {
     [Network.KUCOIN]: 18,
     [Network.KUCOIN_TESTNET]: 18,
     [Network.ETHEREUM_CLASSIC]: 18,
+    [Network.ETHEREUM_CLASSIC_TESTNET]: 18,
     [Network.EOS]: 4,
     [Network.HORIZEN_EON]: 18,
     [Network.HORIZEN_EON_GOBI]: 18,
@@ -143,6 +144,8 @@ export const Constant = {
     [Network.UNICHAIN_SEPOLIA]: 18,
     [Network.MONAD_TESTNET]: 18,
     [Network.MOCACHAIN_DEVNET]: 18,
+    [Network.LISK_MAINNET]: 18,
+    [Network.LISK_SEPOLIA]: 18,
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -212,6 +215,7 @@ export const Constant = {
     [Network.KUCOIN]: 'KCS',
     [Network.KUCOIN_TESTNET]: 'KCS',
     [Network.ETHEREUM_CLASSIC]: 'ETC',
+    [Network.ETHEREUM_CLASSIC_TESTNET]: 'ETC',
     [Network.EOS]: 'EOS',
     [Network.HORIZEN_EON]: 'EON',
     [Network.HORIZEN_EON_GOBI]: 'EON',
@@ -266,6 +270,8 @@ export const Constant = {
     [Network.UNICHAIN_SEPOLIA]: 'UNI',
     [Network.MONAD_TESTNET]: 'MON',
     [Network.MOCACHAIN_DEVNET]: 'MOCA',
+    [Network.LISK_MAINNET]: 'LISK',
+    [Network.LISK_SEPOLIA]: 'LISK',
   },
   RPC: {
     MAINNETS: [
@@ -330,6 +336,7 @@ export const Constant = {
       Network.ETHEREUM_SEPOLIA,
       Network.ETHEREUM_HOLESKY,
       Network.ETHEREUM_HOODI,
+      Network.ETHEREUM_CLASSIC_TESTNET,
       Network.EOS_TESTNET,
       Network.FANTOM_TESTNET,
       Network.FLOW_TESTNET,

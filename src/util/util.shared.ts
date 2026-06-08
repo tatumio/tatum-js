@@ -82,6 +82,7 @@ import {
   Kaia,
   Klaytn,
   Kucoin,
+  Lisk,
   Litecoin,
   Monad,
   Moca,
@@ -91,6 +92,7 @@ import {
   Polygon,
   Ronin,
   Rostrum,
+  Rsk,
   Solana,
   Sonic,
   Stellar,
@@ -664,7 +666,7 @@ export const Utils = {
         return AddressEventNotificationChain.BERA
       case Network.MONAD_TESTNET:
         return AddressEventNotificationChain.MON
-      case Network.MOCACHAIN_DEVNET: 
+      case Network.MOCACHAIN_DEVNET:
         return AddressEventNotificationChain.MOCA
       case Network.UNICHAIN_MAINNET:
         return AddressEventNotificationChain.UNI
@@ -812,6 +814,7 @@ export const Utils = {
       case Network.ETHEREUM_HOODI:
         return new Ethereum(id) as T
       case Network.ETHEREUM_CLASSIC:
+      case Network.ETHEREUM_CLASSIC_TESTNET:
         return new EthereumClassic(id) as T
       case Network.ARBITRUM_NOVA:
       case Network.ARBITRUM_NOVA_TESTNET:
@@ -953,6 +956,12 @@ export const Utils = {
       case Network.ZK_SYNC:
       case Network.ZK_SYNC_TESTNET:
         return new ZkSync(id) as T
+      case Network.RSK:
+      case Network.RSK_TESTNET:
+        return new Rsk(id) as T
+      case Network.LISK_MAINNET:
+      case Network.LISK_SEPOLIA:
+        return new Lisk(id) as T
       default:
         return new FullSdk(id) as T
     }

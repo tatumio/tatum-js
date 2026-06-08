@@ -62,6 +62,7 @@ export enum Network {
   KAIA_MAINNET = 'kaia-mainnet',
   BERACHAIN_MAINNET = 'berachain-mainnet',
   UNICHAIN_MAINNET = 'unichain-mainnet',
+  LISK_MAINNET = 'lisk-mainnet',
 
   // Testnets
   ALGORAND_ALGOD_TESTNET = 'algorand-testnet-algod',
@@ -83,6 +84,7 @@ export enum Network {
   ETHEREUM_SEPOLIA = 'ethereum-sepolia',
   ETHEREUM_HOLESKY = 'ethereum-holesky',
   ETHEREUM_HOODI = 'ethereum-hoodi',
+  ETHEREUM_CLASSIC_TESTNET = 'ethereum-classic-testnet',
   EOS_TESTNET = 'eos-testnet',
   FANTOM_TESTNET = 'fantom-testnet',
   FLARE_COSTON = 'flare-coston',
@@ -125,12 +127,14 @@ export enum Network {
   UNICHAIN_SEPOLIA = 'unichain-sepolia',
   MONAD_TESTNET = 'monad-testnet',
   MOCACHAIN_DEVNET = 'mocachain-devnet',
+  LISK_SEPOLIA = 'lisk-sepolia',
 }
 
 export const EVM_BASED_NETWORKS = [
   Network.ETHEREUM,
   Network.ETHEREUM_SEPOLIA,
   Network.ETHEREUM_CLASSIC,
+  Network.ETHEREUM_CLASSIC_TESTNET,
   Network.ETHEREUM_HOLESKY,
   Network.ETHEREUM_HOODI,
   Network.AVALANCHE_C,
@@ -190,6 +194,10 @@ export const EVM_BASED_NETWORKS = [
   Network.UNICHAIN_SEPOLIA,
   Network.MONAD_TESTNET,
   Network.MOCACHAIN_DEVNET,
+  Network.RSK,
+  Network.RSK_TESTNET,
+  Network.LISK_MAINNET,
+  Network.LISK_SEPOLIA,
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -267,6 +275,7 @@ export const EVM_LOAD_BALANCER_NETWORKS = [
   Network.BINANCE_SMART_CHAIN,
   Network.CHILIZ,
   Network.ETHEREUM_CLASSIC,
+  Network.ETHEREUM_CLASSIC_TESTNET,
   Network.AVALANCHE_C,
   Network.CELO,
   Network.CELO_ALFAJORES,
@@ -499,6 +508,18 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     testnet: true,
     defaultTestnet: true,
     chainId: 10143,
+  },
+  [Network.LISK_MAINNET]: {
+    currency: Currency.ETH_LISK,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 1135,
+  },
+  [Network.LISK_SEPOLIA]: {
+    currency: Currency.ETH_LISK,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 4202,
   },
   [Network.ETHEREUM_SEPOLIA]: {
     currency: Currency.ETH,
@@ -820,11 +841,13 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   [Network.RSK]: {
     currency: Currency.RSK,
     testnet: false,
+    chainId: 30,
   },
   [Network.RSK_TESTNET]: {
     currency: Currency.RSK,
     testnet: true,
     defaultTestnet: true,
+    chainId: 31,
   },
   [Network.AURORA]: {
     currency: Currency.AURORA,
@@ -893,6 +916,12 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     defaultMainnet: true,
     chainId: 61,
   },
+  [Network.ETHEREUM_CLASSIC_TESTNET]: {
+    currency: Currency.ETC,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 63,
+  },
   [Network.FLARE]: {
     currency: Currency.FLR,
     testnet: false,
@@ -950,7 +979,7 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   [Network.GNOSIS_TESTNET]: {
     currency: Currency.GNO,
     testnet: true,
-    chainId: 69,
+    chainId: 10200,
   },
   [Network.CRONOS]: {
     currency: Currency.CRO,
@@ -1060,7 +1089,7 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
   },
   [Network.RONIN_SAIGON]: {
     currency: Currency.RON,
-    chainId: 2021,
+    chainId: 202601,
     testnet: true,
   },
   [Network.SONIC_MAINNET]: {
