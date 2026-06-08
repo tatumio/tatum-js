@@ -47,6 +47,10 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   UNI: "m/44'/60'/0'/0",
   MONAD: "m/44'/60'/0'/0",
   MOCA: "m/44'/60'/0'/0",
+  GNO: "m/44'/60'/0'/0",
+  RSK: "m/44'/60'/0'/0",
+  ETC: "m/44'/60'/0'/0",
+  LISK: "m/44'/60'/0'/0",
 }
 
 export const COMMON_TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"

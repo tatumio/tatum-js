@@ -43,6 +43,10 @@ export enum Blockchain {
   UNI = 'UNI',
   MONAD = 'MONAD',
   MOCA = 'MOCA',
+  GNO = 'GNO',
+  RSK = 'RSK',
+  ETC = 'ETC',
+  LISK = 'LISK',
 }
 
 export const EvmBasedBlockchains = [
@@ -65,11 +69,15 @@ export const EvmBasedBlockchains = [
   Blockchain.UNI,
   Blockchain.MONAD,
   Blockchain.MOCA,
+  Blockchain.GNO,
+  Blockchain.RSK,
+  Blockchain.ETC,
+  Blockchain.LISK,
 ]
 
 // @TODO tmp solution
 export const BtcBasedBlockchains = [Blockchain.BTC, Blockchain.LTC, Blockchain.DOGE, Blockchain.BCH] as const
-export type BtcBasedBlockchain = (typeof BtcBasedBlockchains)[number]
+export type BtcBasedBlockchain = typeof BtcBasedBlockchains[number]
 
 export type EvmBasedBlockchain =
   | Blockchain.ETH
@@ -95,3 +103,7 @@ export type EvmBasedBlockchain =
   | Blockchain.UNI
   | Blockchain.MONAD
   | Blockchain.MOCA
+  | Blockchain.GNO
+  | Blockchain.RSK
+  | Blockchain.ETC
+  | Blockchain.LISK

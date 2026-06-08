@@ -81,6 +81,10 @@ export const BlockchainCurrencyMapping: Record<
   UNI: Currency.ETH_UNI,
   MONAD: Currency.MON,
   MOCA: Currency.MOCA,
+  GNO: Currency.GNO,
+  RSK: Currency.RSK,
+  ETC: Currency.ETC,
+  LISK: Currency.LISK,
 }
 
 export const CurrencyToBlockchainMapping: Record<Currency, Blockchain> = buildCurrencyBlockchainMapping()
