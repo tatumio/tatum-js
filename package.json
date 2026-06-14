@@ -51,5 +51,9 @@
     "tslib": "^2.5.0",
     "typescript": "^5.0.4",
     "undici": "^5.28.3"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/tatumio/tatum-js/issues"
+  },
+  "homepage": "https://github.com/tatumio/tatum-js#readme"
 }
