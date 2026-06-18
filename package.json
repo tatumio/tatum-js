@@ -29,7 +29,7 @@
     "pack-all": "yarn build-all && yarn pack"
   },
   "dependencies": {
-    "bignumber.js": "^9.1.1",
+    "bignumber.js": "^9.2.1",
     "chalk": "^4.1.2",
     "reflect-metadata": "^0.1.13",
     "typedi": "^0.10.0"
