@@ -90,6 +90,7 @@ import {
   Optimism,
   Palm,
   Polygon,
+  Robinhood,
   Ronin,
   Rostrum,
   Rsk,
@@ -962,6 +963,9 @@ export const Utils = {
       case Network.LISK_MAINNET:
       case Network.LISK_SEPOLIA:
         return new Lisk(id) as T
+      case Network.ROBINHOOD_MAINNET:
+      case Network.ROBINHOOD_TESTNET:
+        return new Robinhood(id) as T
       default:
         return new FullSdk(id) as T
     }

@@ -1,3 +1,9 @@
+## [4.2.60] - 2026.9.7
+
+### Added
+
+- Added robinhood mainnet and robinhood testnet
+
 ## [4.2.59] - 2026.6.8
 
 ### Added

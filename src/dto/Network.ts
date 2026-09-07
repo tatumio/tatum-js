@@ -63,6 +63,7 @@ export enum Network {
   BERACHAIN_MAINNET = 'berachain-mainnet',
   UNICHAIN_MAINNET = 'unichain-mainnet',
   LISK_MAINNET = 'lisk-mainnet',
+  ROBINHOOD_MAINNET = 'robinhood-mainnet',
 
   // Testnets
   ALGORAND_ALGOD_TESTNET = 'algorand-testnet-algod',
@@ -128,6 +129,7 @@ export enum Network {
   MONAD_TESTNET = 'monad-testnet',
   MOCACHAIN_DEVNET = 'mocachain-devnet',
   LISK_SEPOLIA = 'lisk-sepolia',
+  ROBINHOOD_TESTNET = 'robinhood-testnet',
 }
 
 export const EVM_BASED_NETWORKS = [
@@ -198,6 +200,8 @@ export const EVM_BASED_NETWORKS = [
   Network.RSK_TESTNET,
   Network.LISK_MAINNET,
   Network.LISK_SEPOLIA,
+  Network.ROBINHOOD_MAINNET,
+  Network.ROBINHOOD_TESTNET,
 ]
 
 export const UTXO_BASED_NETWORKS = [
@@ -520,6 +524,18 @@ export const NETWORK_METADATA: Record<Network, NetworkMetadata> = {
     testnet: true,
     defaultTestnet: true,
     chainId: 4202,
+  },
+  [Network.ROBINHOOD_MAINNET]: {
+    currency: Currency.ETH_ROBINHOOD,
+    testnet: false,
+    defaultMainnet: true,
+    chainId: 4663,
+  },
+  [Network.ROBINHOOD_TESTNET]: {
+    currency: Currency.ETH_ROBINHOOD,
+    testnet: true,
+    defaultTestnet: true,
+    chainId: 46630,
   },
   [Network.ETHEREUM_SEPOLIA]: {
     currency: Currency.ETH,

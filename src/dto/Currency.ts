@@ -61,6 +61,7 @@ export enum Currency {
   MON = 'MON',
   MOCA = 'MOCA',
   ETH_LISK = 'ETH_LISK',
+  ETH_ROBINHOOD = 'ETH_ROBINHOOD',
 }
 
 export function networkToCurrency(network: Network): Currency {
