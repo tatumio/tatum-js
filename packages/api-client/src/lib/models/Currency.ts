@@ -125,6 +125,7 @@ export enum Currency {
   ETH_UNI = 'ETH_UNI',
   MON = 'MON',
   MOCA = 'MOCA',
+  ETH_ROBINHOOD = 'ETH_ROBINHOOD',
 }
 
 export const ERC20_CURRENCIES = [

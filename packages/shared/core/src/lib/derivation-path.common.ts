@@ -51,6 +51,7 @@ export const DERIVATION_PATH: Record<Blockchain, string> = {
   RSK: "m/44'/60'/0'/0",
   ETC: "m/44'/60'/0'/0",
   LISK: "m/44'/60'/0'/0",
+  ROBINHOOD: "m/44'/60'/0'/0",
 }
 
 export const COMMON_TESTNET_DERIVATION_PATH = "m/44'/1'/0'/0"
