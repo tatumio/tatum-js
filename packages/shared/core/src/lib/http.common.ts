@@ -49,6 +49,7 @@ const EndpointsMapping: Record<Blockchain, string> = {
   RSK: 'rsk',
   ETC: 'etc',
   LISK: 'lisk',
+  ROBINHOOD: 'robinhood',
 }
 
 const isWebWorker =

@@ -47,6 +47,7 @@ export enum Blockchain {
   RSK = 'RSK',
   ETC = 'ETC',
   LISK = 'LISK',
+  ROBINHOOD = 'ROBINHOOD',
 }
 
 export const EvmBasedBlockchains = [
@@ -73,6 +74,7 @@ export const EvmBasedBlockchains = [
   Blockchain.RSK,
   Blockchain.ETC,
   Blockchain.LISK,
+  Blockchain.ROBINHOOD,
 ]
 
 // @TODO tmp solution
@@ -107,3 +109,4 @@ export type EvmBasedBlockchain =
   | Blockchain.RSK
   | Blockchain.ETC
   | Blockchain.LISK
+  | Blockchain.ROBINHOOD

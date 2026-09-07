@@ -85,6 +85,7 @@ export const BlockchainCurrencyMapping: Record<
   RSK: Currency.RSK,
   ETC: Currency.ETC,
   LISK: Currency.LISK,
+  ROBINHOOD: Currency.ETH_ROBINHOOD,
 }
 
 export const CurrencyToBlockchainMapping: Record<Currency, Blockchain> = buildCurrencyBlockchainMapping()
