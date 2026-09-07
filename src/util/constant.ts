@@ -146,6 +146,8 @@ export const Constant = {
     [Network.MOCACHAIN_DEVNET]: 18,
     [Network.LISK_MAINNET]: 18,
     [Network.LISK_SEPOLIA]: 18,
+    [Network.ROBINHOOD_MAINNET]: 18,
+    [Network.ROBINHOOD_TESTNET]: 18,
   },
   CURRENCY_NAMES: {
     [Network.BITCOIN]: 'BTC',
@@ -272,6 +274,8 @@ export const Constant = {
     [Network.MOCACHAIN_DEVNET]: 'MOCA',
     [Network.LISK_MAINNET]: 'LISK',
     [Network.LISK_SEPOLIA]: 'LISK',
+    [Network.ROBINHOOD_MAINNET]: 'ROBINHOOD',
+    [Network.ROBINHOOD_TESTNET]: 'ROBINHOOD',
   },
   RPC: {
     MAINNETS: [
