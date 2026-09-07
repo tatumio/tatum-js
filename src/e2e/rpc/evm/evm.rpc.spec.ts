@@ -33,8 +33,8 @@ const testNetworks = [
   // { network: Network.POLYGON },
   { network: Network.POLYGON_AMOY },
   // { network: Network.OPTIMISM },
-  { network: Network.HAQQ },
-  { network: Network.HAQQ_TESTNET },
+  // { network: Network.HAQQ },
+  // { network: Network.HAQQ_TESTNET },
   { network: Network.RONIN },
   { network: Network.RONIN_SAIGON },
   // {
