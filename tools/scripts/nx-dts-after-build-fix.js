@@ -13,6 +13,11 @@ const _ = require('lodash')
  * So this script basically finds all the d.ts files and replaces the import paths
  */
 function fixDtsImportIssue() {
+  if (!fs.existsSync('dist/packages')) {
+    console.debug(`No dist/packages directory, nothing built to fix.`)
+    return
+  }
+
   let grepResult
 
   try {
