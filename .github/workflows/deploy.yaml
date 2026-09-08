@@ -31,8 +31,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Checkout
-        with:
-          token: ${{ secrets.PAT_GITHUB_ADMIN }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -64,5 +62,4 @@ jobs:
       - name: Publish packages
         run: node tools/scripts/publish-all.js
         env:
-          GITHUB_TOKEN: ${{ secrets.PAT_GITHUB_ADMIN }}
           NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
