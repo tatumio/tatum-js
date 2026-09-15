@@ -52,7 +52,7 @@ export const evmBasedSmartContract = (web3: EvmBasedWeb3) => {
       testnet?: boolean,
     ) => {
       const r = buildSmartContractMethodInvocation(body, params, methodName, abi)
-      return await smartContractWriteMethodInvocation({ body: r, web3, provider, chain: body.chain })
+      return await smartContractWriteMethodInvocation({ body: r, web3, provider, chain: body.chain, testnet })
     },
   }
 }
