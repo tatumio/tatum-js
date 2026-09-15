@@ -4,6 +4,10 @@
   "description": "Tatum JS SDK",
   "author": "Tatum",
   "repository": "https://github.com/tatumio/tatum-js",
+  "homepage": "https://github.com/tatumio/tatum-js#readme",
+  "bugs": {
+    "url": "https://github.com/tatumio/tatum-js/issues"
+  },
   "files": [
     "dist/"
   ],
