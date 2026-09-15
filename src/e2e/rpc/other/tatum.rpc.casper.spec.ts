@@ -18,7 +18,7 @@ describe.skip('Casper (%s)', () => {
     expect(result.result?.api_version).toBeDefined()
   })
 
-  it('chain_get_block - heigh', async () => {
+  it('chain_get_block - height', async () => {
     const casper = await getCasperRpc()
     const result = await casper.rpc.chainGetBlock(3126090)
     await casper.destroy()

@@ -109,7 +109,7 @@ export interface Record {
   signers: Signers[]
   data: Record
   num_sponsoring: number
-  num_sponsered: number
+  num_sponsored: number
   sponser?: string
   paging_token: string
 }
